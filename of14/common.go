@@ -44,53 +44,53 @@ func (self *AsyncConfigProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeAsyncConfigProp(decoder *goloxi.Decoder) (IAsyncConfigProp, error) {
-	asyncconfigprop := &AsyncConfigProp{}
+func DecodeAsyncConfigProp(decoder *goloxi.Decoder) (IAsyncConfigProp, error) {
+	_asyncconfigprop := &AsyncConfigProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigProp packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigprop.Type = uint16(decoder.ReadUint16())
-	asyncconfigprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(asyncconfigprop.Length), 2+2)
+	_asyncconfigprop.Type = uint16(decoder.ReadUint16())
+	_asyncconfigprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_asyncconfigprop.Length), 2+2)
 
-	switch asyncconfigprop.Type {
+	switch _asyncconfigprop.Type {
 	case 0:
-		return decodeAsyncConfigPropPacketInSlave(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropPacketInSlave(_asyncconfigprop, decoder)
 	case 1:
-		return decodeAsyncConfigPropPacketInMaster(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropPacketInMaster(_asyncconfigprop, decoder)
 	case 2:
-		return decodeAsyncConfigPropPortStatusSlave(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropPortStatusSlave(_asyncconfigprop, decoder)
 	case 3:
-		return decodeAsyncConfigPropPortStatusMaster(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropPortStatusMaster(_asyncconfigprop, decoder)
 	case 4:
-		return decodeAsyncConfigPropFlowRemovedSlave(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropFlowRemovedSlave(_asyncconfigprop, decoder)
 	case 5:
-		return decodeAsyncConfigPropFlowRemovedMaster(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropFlowRemovedMaster(_asyncconfigprop, decoder)
 	case 6:
-		return decodeAsyncConfigPropRoleStatusSlave(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropRoleStatusSlave(_asyncconfigprop, decoder)
 	case 7:
-		return decodeAsyncConfigPropRoleStatusMaster(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropRoleStatusMaster(_asyncconfigprop, decoder)
 	case 8:
-		return decodeAsyncConfigPropTableStatusSlave(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropTableStatusSlave(_asyncconfigprop, decoder)
 	case 9:
-		return decodeAsyncConfigPropTableStatusMaster(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropTableStatusMaster(_asyncconfigprop, decoder)
 	case 10:
-		return decodeAsyncConfigPropRequestforwardSlave(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropRequestforwardSlave(_asyncconfigprop, decoder)
 	case 11:
-		return decodeAsyncConfigPropRequestforwardMaster(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropRequestforwardMaster(_asyncconfigprop, decoder)
 	case 65534:
-		return decodeAsyncConfigPropExperimenterSlave(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropExperimenterSlave(_asyncconfigprop, decoder)
 	case 65535:
-		return decodeAsyncConfigPropExperimenterMaster(asyncconfigprop, decoder)
+		return DecodeAsyncConfigPropExperimenterMaster(_asyncconfigprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'AsyncConfigProp'", asyncconfigprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'AsyncConfigProp'", _asyncconfigprop.Type)
 	}
 }
 
 func NewAsyncConfigProp(_type uint16) *AsyncConfigProp {
-	return &AsyncConfigProp{
-		Type: _type,
-	}
+	obj := &AsyncConfigProp{}
+	obj.Type = _type
+	return obj
 }
 
 type AsyncConfigPropExperimenterMaster struct {
@@ -108,15 +108,16 @@ func (self *AsyncConfigPropExperimenterMaster) Serialize(encoder *goloxi.Encoder
 	return nil
 }
 
-func decodeAsyncConfigPropExperimenterMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropExperimenterMaster, error) {
-	asyncconfigpropexperimentermaster := &AsyncConfigPropExperimenterMaster{AsyncConfigProp: parent}
-	return asyncconfigpropexperimentermaster, nil
+func DecodeAsyncConfigPropExperimenterMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropExperimenterMaster, error) {
+	_asyncconfigpropexperimentermaster := &AsyncConfigPropExperimenterMaster{AsyncConfigProp: parent}
+	return _asyncconfigpropexperimentermaster, nil
 }
 
 func NewAsyncConfigPropExperimenterMaster() *AsyncConfigPropExperimenterMaster {
-	return &AsyncConfigPropExperimenterMaster{
+	obj := &AsyncConfigPropExperimenterMaster{
 		AsyncConfigProp: NewAsyncConfigProp(65535),
 	}
+	return obj
 }
 
 type AsyncConfigPropExperimenterSlave struct {
@@ -134,15 +135,16 @@ func (self *AsyncConfigPropExperimenterSlave) Serialize(encoder *goloxi.Encoder)
 	return nil
 }
 
-func decodeAsyncConfigPropExperimenterSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropExperimenterSlave, error) {
-	asyncconfigpropexperimenterslave := &AsyncConfigPropExperimenterSlave{AsyncConfigProp: parent}
-	return asyncconfigpropexperimenterslave, nil
+func DecodeAsyncConfigPropExperimenterSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropExperimenterSlave, error) {
+	_asyncconfigpropexperimenterslave := &AsyncConfigPropExperimenterSlave{AsyncConfigProp: parent}
+	return _asyncconfigpropexperimenterslave, nil
 }
 
 func NewAsyncConfigPropExperimenterSlave() *AsyncConfigPropExperimenterSlave {
-	return &AsyncConfigPropExperimenterSlave{
+	obj := &AsyncConfigPropExperimenterSlave{
 		AsyncConfigProp: NewAsyncConfigProp(65534),
 	}
+	return obj
 }
 
 type AsyncConfigPropFlowRemovedMaster struct {
@@ -163,19 +165,20 @@ func (self *AsyncConfigPropFlowRemovedMaster) Serialize(encoder *goloxi.Encoder)
 	return nil
 }
 
-func decodeAsyncConfigPropFlowRemovedMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropFlowRemovedMaster, error) {
-	asyncconfigpropflowremovedmaster := &AsyncConfigPropFlowRemovedMaster{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropFlowRemovedMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropFlowRemovedMaster, error) {
+	_asyncconfigpropflowremovedmaster := &AsyncConfigPropFlowRemovedMaster{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropFlowRemovedMaster packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigpropflowremovedmaster.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigpropflowremovedmaster, nil
+	_asyncconfigpropflowremovedmaster.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigpropflowremovedmaster, nil
 }
 
 func NewAsyncConfigPropFlowRemovedMaster() *AsyncConfigPropFlowRemovedMaster {
-	return &AsyncConfigPropFlowRemovedMaster{
+	obj := &AsyncConfigPropFlowRemovedMaster{
 		AsyncConfigProp: NewAsyncConfigProp(5),
 	}
+	return obj
 }
 
 type AsyncConfigPropFlowRemovedSlave struct {
@@ -196,19 +199,20 @@ func (self *AsyncConfigPropFlowRemovedSlave) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeAsyncConfigPropFlowRemovedSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropFlowRemovedSlave, error) {
-	asyncconfigpropflowremovedslave := &AsyncConfigPropFlowRemovedSlave{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropFlowRemovedSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropFlowRemovedSlave, error) {
+	_asyncconfigpropflowremovedslave := &AsyncConfigPropFlowRemovedSlave{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropFlowRemovedSlave packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigpropflowremovedslave.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigpropflowremovedslave, nil
+	_asyncconfigpropflowremovedslave.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigpropflowremovedslave, nil
 }
 
 func NewAsyncConfigPropFlowRemovedSlave() *AsyncConfigPropFlowRemovedSlave {
-	return &AsyncConfigPropFlowRemovedSlave{
+	obj := &AsyncConfigPropFlowRemovedSlave{
 		AsyncConfigProp: NewAsyncConfigProp(4),
 	}
+	return obj
 }
 
 type AsyncConfigPropPacketInMaster struct {
@@ -229,19 +233,20 @@ func (self *AsyncConfigPropPacketInMaster) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeAsyncConfigPropPacketInMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropPacketInMaster, error) {
-	asyncconfigproppacketinmaster := &AsyncConfigPropPacketInMaster{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropPacketInMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropPacketInMaster, error) {
+	_asyncconfigproppacketinmaster := &AsyncConfigPropPacketInMaster{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropPacketInMaster packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigproppacketinmaster.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigproppacketinmaster, nil
+	_asyncconfigproppacketinmaster.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigproppacketinmaster, nil
 }
 
 func NewAsyncConfigPropPacketInMaster() *AsyncConfigPropPacketInMaster {
-	return &AsyncConfigPropPacketInMaster{
+	obj := &AsyncConfigPropPacketInMaster{
 		AsyncConfigProp: NewAsyncConfigProp(1),
 	}
+	return obj
 }
 
 type AsyncConfigPropPacketInSlave struct {
@@ -262,19 +267,20 @@ func (self *AsyncConfigPropPacketInSlave) Serialize(encoder *goloxi.Encoder) err
 	return nil
 }
 
-func decodeAsyncConfigPropPacketInSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropPacketInSlave, error) {
-	asyncconfigproppacketinslave := &AsyncConfigPropPacketInSlave{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropPacketInSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropPacketInSlave, error) {
+	_asyncconfigproppacketinslave := &AsyncConfigPropPacketInSlave{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropPacketInSlave packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigproppacketinslave.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigproppacketinslave, nil
+	_asyncconfigproppacketinslave.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigproppacketinslave, nil
 }
 
 func NewAsyncConfigPropPacketInSlave() *AsyncConfigPropPacketInSlave {
-	return &AsyncConfigPropPacketInSlave{
+	obj := &AsyncConfigPropPacketInSlave{
 		AsyncConfigProp: NewAsyncConfigProp(0),
 	}
+	return obj
 }
 
 type AsyncConfigPropPortStatusMaster struct {
@@ -295,19 +301,20 @@ func (self *AsyncConfigPropPortStatusMaster) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeAsyncConfigPropPortStatusMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropPortStatusMaster, error) {
-	asyncconfigpropportstatusmaster := &AsyncConfigPropPortStatusMaster{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropPortStatusMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropPortStatusMaster, error) {
+	_asyncconfigpropportstatusmaster := &AsyncConfigPropPortStatusMaster{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropPortStatusMaster packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigpropportstatusmaster.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigpropportstatusmaster, nil
+	_asyncconfigpropportstatusmaster.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigpropportstatusmaster, nil
 }
 
 func NewAsyncConfigPropPortStatusMaster() *AsyncConfigPropPortStatusMaster {
-	return &AsyncConfigPropPortStatusMaster{
+	obj := &AsyncConfigPropPortStatusMaster{
 		AsyncConfigProp: NewAsyncConfigProp(3),
 	}
+	return obj
 }
 
 type AsyncConfigPropPortStatusSlave struct {
@@ -328,19 +335,20 @@ func (self *AsyncConfigPropPortStatusSlave) Serialize(encoder *goloxi.Encoder) e
 	return nil
 }
 
-func decodeAsyncConfigPropPortStatusSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropPortStatusSlave, error) {
-	asyncconfigpropportstatusslave := &AsyncConfigPropPortStatusSlave{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropPortStatusSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropPortStatusSlave, error) {
+	_asyncconfigpropportstatusslave := &AsyncConfigPropPortStatusSlave{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropPortStatusSlave packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigpropportstatusslave.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigpropportstatusslave, nil
+	_asyncconfigpropportstatusslave.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigpropportstatusslave, nil
 }
 
 func NewAsyncConfigPropPortStatusSlave() *AsyncConfigPropPortStatusSlave {
-	return &AsyncConfigPropPortStatusSlave{
+	obj := &AsyncConfigPropPortStatusSlave{
 		AsyncConfigProp: NewAsyncConfigProp(2),
 	}
+	return obj
 }
 
 type AsyncConfigPropRequestforwardMaster struct {
@@ -361,19 +369,20 @@ func (self *AsyncConfigPropRequestforwardMaster) Serialize(encoder *goloxi.Encod
 	return nil
 }
 
-func decodeAsyncConfigPropRequestforwardMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropRequestforwardMaster, error) {
-	asyncconfigproprequestforwardmaster := &AsyncConfigPropRequestforwardMaster{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropRequestforwardMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropRequestforwardMaster, error) {
+	_asyncconfigproprequestforwardmaster := &AsyncConfigPropRequestforwardMaster{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropRequestforwardMaster packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigproprequestforwardmaster.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigproprequestforwardmaster, nil
+	_asyncconfigproprequestforwardmaster.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigproprequestforwardmaster, nil
 }
 
 func NewAsyncConfigPropRequestforwardMaster() *AsyncConfigPropRequestforwardMaster {
-	return &AsyncConfigPropRequestforwardMaster{
+	obj := &AsyncConfigPropRequestforwardMaster{
 		AsyncConfigProp: NewAsyncConfigProp(11),
 	}
+	return obj
 }
 
 type AsyncConfigPropRequestforwardSlave struct {
@@ -394,19 +403,20 @@ func (self *AsyncConfigPropRequestforwardSlave) Serialize(encoder *goloxi.Encode
 	return nil
 }
 
-func decodeAsyncConfigPropRequestforwardSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropRequestforwardSlave, error) {
-	asyncconfigproprequestforwardslave := &AsyncConfigPropRequestforwardSlave{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropRequestforwardSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropRequestforwardSlave, error) {
+	_asyncconfigproprequestforwardslave := &AsyncConfigPropRequestforwardSlave{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropRequestforwardSlave packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigproprequestforwardslave.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigproprequestforwardslave, nil
+	_asyncconfigproprequestforwardslave.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigproprequestforwardslave, nil
 }
 
 func NewAsyncConfigPropRequestforwardSlave() *AsyncConfigPropRequestforwardSlave {
-	return &AsyncConfigPropRequestforwardSlave{
+	obj := &AsyncConfigPropRequestforwardSlave{
 		AsyncConfigProp: NewAsyncConfigProp(10),
 	}
+	return obj
 }
 
 type AsyncConfigPropRoleStatusMaster struct {
@@ -427,19 +437,20 @@ func (self *AsyncConfigPropRoleStatusMaster) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeAsyncConfigPropRoleStatusMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropRoleStatusMaster, error) {
-	asyncconfigproprolestatusmaster := &AsyncConfigPropRoleStatusMaster{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropRoleStatusMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropRoleStatusMaster, error) {
+	_asyncconfigproprolestatusmaster := &AsyncConfigPropRoleStatusMaster{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropRoleStatusMaster packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigproprolestatusmaster.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigproprolestatusmaster, nil
+	_asyncconfigproprolestatusmaster.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigproprolestatusmaster, nil
 }
 
 func NewAsyncConfigPropRoleStatusMaster() *AsyncConfigPropRoleStatusMaster {
-	return &AsyncConfigPropRoleStatusMaster{
+	obj := &AsyncConfigPropRoleStatusMaster{
 		AsyncConfigProp: NewAsyncConfigProp(7),
 	}
+	return obj
 }
 
 type AsyncConfigPropRoleStatusSlave struct {
@@ -460,19 +471,20 @@ func (self *AsyncConfigPropRoleStatusSlave) Serialize(encoder *goloxi.Encoder) e
 	return nil
 }
 
-func decodeAsyncConfigPropRoleStatusSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropRoleStatusSlave, error) {
-	asyncconfigproprolestatusslave := &AsyncConfigPropRoleStatusSlave{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropRoleStatusSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropRoleStatusSlave, error) {
+	_asyncconfigproprolestatusslave := &AsyncConfigPropRoleStatusSlave{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropRoleStatusSlave packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigproprolestatusslave.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigproprolestatusslave, nil
+	_asyncconfigproprolestatusslave.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigproprolestatusslave, nil
 }
 
 func NewAsyncConfigPropRoleStatusSlave() *AsyncConfigPropRoleStatusSlave {
-	return &AsyncConfigPropRoleStatusSlave{
+	obj := &AsyncConfigPropRoleStatusSlave{
 		AsyncConfigProp: NewAsyncConfigProp(6),
 	}
+	return obj
 }
 
 type AsyncConfigPropTableStatusMaster struct {
@@ -493,19 +505,20 @@ func (self *AsyncConfigPropTableStatusMaster) Serialize(encoder *goloxi.Encoder)
 	return nil
 }
 
-func decodeAsyncConfigPropTableStatusMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropTableStatusMaster, error) {
-	asyncconfigproptablestatusmaster := &AsyncConfigPropTableStatusMaster{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropTableStatusMaster(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropTableStatusMaster, error) {
+	_asyncconfigproptablestatusmaster := &AsyncConfigPropTableStatusMaster{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropTableStatusMaster packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigproptablestatusmaster.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigproptablestatusmaster, nil
+	_asyncconfigproptablestatusmaster.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigproptablestatusmaster, nil
 }
 
 func NewAsyncConfigPropTableStatusMaster() *AsyncConfigPropTableStatusMaster {
-	return &AsyncConfigPropTableStatusMaster{
+	obj := &AsyncConfigPropTableStatusMaster{
 		AsyncConfigProp: NewAsyncConfigProp(9),
 	}
+	return obj
 }
 
 type AsyncConfigPropTableStatusSlave struct {
@@ -526,19 +539,20 @@ func (self *AsyncConfigPropTableStatusSlave) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeAsyncConfigPropTableStatusSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropTableStatusSlave, error) {
-	asyncconfigproptablestatusslave := &AsyncConfigPropTableStatusSlave{AsyncConfigProp: parent}
+func DecodeAsyncConfigPropTableStatusSlave(parent *AsyncConfigProp, decoder *goloxi.Decoder) (*AsyncConfigPropTableStatusSlave, error) {
+	_asyncconfigproptablestatusslave := &AsyncConfigPropTableStatusSlave{AsyncConfigProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("AsyncConfigPropTableStatusSlave packet too short: %d < 4", decoder.Length())
 	}
-	asyncconfigproptablestatusslave.Mask = uint32(decoder.ReadUint32())
-	return asyncconfigproptablestatusslave, nil
+	_asyncconfigproptablestatusslave.Mask = uint32(decoder.ReadUint32())
+	return _asyncconfigproptablestatusslave, nil
 }
 
 func NewAsyncConfigPropTableStatusSlave() *AsyncConfigPropTableStatusSlave {
-	return &AsyncConfigPropTableStatusSlave{
+	obj := &AsyncConfigPropTableStatusSlave{
 		AsyncConfigProp: NewAsyncConfigProp(8),
 	}
+	return obj
 }
 
 type BsnControllerConnection struct {
@@ -558,21 +572,22 @@ func (self *BsnControllerConnection) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnControllerConnection(decoder *goloxi.Decoder) (*BsnControllerConnection, error) {
-	bsncontrollerconnection := &BsnControllerConnection{}
+func DecodeBsnControllerConnection(decoder *goloxi.Decoder) (*BsnControllerConnection, error) {
+	_bsncontrollerconnection := &BsnControllerConnection{}
 	if decoder.Length() < 264 {
 		return nil, fmt.Errorf("BsnControllerConnection packet too short: %d < 264", decoder.Length())
 	}
-	bsncontrollerconnection.State = BsnControllerConnectionState(decoder.ReadByte())
-	bsncontrollerconnection.AuxiliaryId = uint8(decoder.ReadByte())
+	_bsncontrollerconnection.State = BsnControllerConnectionState(decoder.ReadByte())
+	_bsncontrollerconnection.AuxiliaryId = uint8(decoder.ReadByte())
 	decoder.Skip(2)
-	bsncontrollerconnection.Role = ControllerRole(decoder.ReadUint32())
-	bsncontrollerconnection.Uri = string(bytes.Trim(decoder.Read(256), "\x00"))
-	return bsncontrollerconnection, nil
+	_bsncontrollerconnection.Role = ControllerRole(decoder.ReadUint32())
+	_bsncontrollerconnection.Uri = string(bytes.Trim(decoder.Read(256), "\x00"))
+	return _bsncontrollerconnection, nil
 }
 
 func NewBsnControllerConnection() *BsnControllerConnection {
-	return &BsnControllerConnection{}
+	obj := &BsnControllerConnection{}
+	return obj
 }
 
 type BsnDebugCounterDescStatsEntry struct {
@@ -589,19 +604,20 @@ func (self *BsnDebugCounterDescStatsEntry) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeBsnDebugCounterDescStatsEntry(decoder *goloxi.Decoder) (*BsnDebugCounterDescStatsEntry, error) {
-	bsndebugcounterdescstatsentry := &BsnDebugCounterDescStatsEntry{}
+func DecodeBsnDebugCounterDescStatsEntry(decoder *goloxi.Decoder) (*BsnDebugCounterDescStatsEntry, error) {
+	_bsndebugcounterdescstatsentry := &BsnDebugCounterDescStatsEntry{}
 	if decoder.Length() < 328 {
 		return nil, fmt.Errorf("BsnDebugCounterDescStatsEntry packet too short: %d < 328", decoder.Length())
 	}
-	bsndebugcounterdescstatsentry.CounterId = uint64(decoder.ReadUint64())
-	bsndebugcounterdescstatsentry.Name = string(bytes.Trim(decoder.Read(64), "\x00"))
-	bsndebugcounterdescstatsentry.Description = string(bytes.Trim(decoder.Read(256), "\x00"))
-	return bsndebugcounterdescstatsentry, nil
+	_bsndebugcounterdescstatsentry.CounterId = uint64(decoder.ReadUint64())
+	_bsndebugcounterdescstatsentry.Name = string(bytes.Trim(decoder.Read(64), "\x00"))
+	_bsndebugcounterdescstatsentry.Description = string(bytes.Trim(decoder.Read(256), "\x00"))
+	return _bsndebugcounterdescstatsentry, nil
 }
 
 func NewBsnDebugCounterDescStatsEntry() *BsnDebugCounterDescStatsEntry {
-	return &BsnDebugCounterDescStatsEntry{}
+	obj := &BsnDebugCounterDescStatsEntry{}
+	return obj
 }
 
 type BsnDebugCounterStatsEntry struct {
@@ -616,18 +632,19 @@ func (self *BsnDebugCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnDebugCounterStatsEntry(decoder *goloxi.Decoder) (*BsnDebugCounterStatsEntry, error) {
-	bsndebugcounterstatsentry := &BsnDebugCounterStatsEntry{}
+func DecodeBsnDebugCounterStatsEntry(decoder *goloxi.Decoder) (*BsnDebugCounterStatsEntry, error) {
+	_bsndebugcounterstatsentry := &BsnDebugCounterStatsEntry{}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("BsnDebugCounterStatsEntry packet too short: %d < 16", decoder.Length())
 	}
-	bsndebugcounterstatsentry.CounterId = uint64(decoder.ReadUint64())
-	bsndebugcounterstatsentry.Value = uint64(decoder.ReadUint64())
-	return bsndebugcounterstatsentry, nil
+	_bsndebugcounterstatsentry.CounterId = uint64(decoder.ReadUint64())
+	_bsndebugcounterstatsentry.Value = uint64(decoder.ReadUint64())
+	return _bsndebugcounterstatsentry, nil
 }
 
 func NewBsnDebugCounterStatsEntry() *BsnDebugCounterStatsEntry {
-	return &BsnDebugCounterStatsEntry{}
+	obj := &BsnDebugCounterStatsEntry{}
+	return obj
 }
 
 type BsnFlowChecksumBucketStatsEntry struct {
@@ -640,17 +657,18 @@ func (self *BsnFlowChecksumBucketStatsEntry) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeBsnFlowChecksumBucketStatsEntry(decoder *goloxi.Decoder) (*BsnFlowChecksumBucketStatsEntry, error) {
-	bsnflowchecksumbucketstatsentry := &BsnFlowChecksumBucketStatsEntry{}
+func DecodeBsnFlowChecksumBucketStatsEntry(decoder *goloxi.Decoder) (*BsnFlowChecksumBucketStatsEntry, error) {
+	_bsnflowchecksumbucketstatsentry := &BsnFlowChecksumBucketStatsEntry{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnFlowChecksumBucketStatsEntry packet too short: %d < 8", decoder.Length())
 	}
-	bsnflowchecksumbucketstatsentry.Checksum = uint64(decoder.ReadUint64())
-	return bsnflowchecksumbucketstatsentry, nil
+	_bsnflowchecksumbucketstatsentry.Checksum = uint64(decoder.ReadUint64())
+	return _bsnflowchecksumbucketstatsentry, nil
 }
 
 func NewBsnFlowChecksumBucketStatsEntry() *BsnFlowChecksumBucketStatsEntry {
-	return &BsnFlowChecksumBucketStatsEntry{}
+	obj := &BsnFlowChecksumBucketStatsEntry{}
+	return obj
 }
 
 type BsnGenericStatsEntry struct {
@@ -672,26 +690,27 @@ func (self *BsnGenericStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGenericStatsEntry(decoder *goloxi.Decoder) (*BsnGenericStatsEntry, error) {
-	bsngenericstatsentry := &BsnGenericStatsEntry{}
+func DecodeBsnGenericStatsEntry(decoder *goloxi.Decoder) (*BsnGenericStatsEntry, error) {
+	_bsngenericstatsentry := &BsnGenericStatsEntry{}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnGenericStatsEntry packet too short: %d < 2", decoder.Length())
 	}
-	bsngenericstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bsngenericstatsentry.Length), 2+0)
+	_bsngenericstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bsngenericstatsentry.Length), 2+0)
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngenericstatsentry.Tlvs = append(bsngenericstatsentry.Tlvs, item)
+		_bsngenericstatsentry.Tlvs = append(_bsngenericstatsentry.Tlvs, item)
 	}
-	return bsngenericstatsentry, nil
+	return _bsngenericstatsentry, nil
 }
 
 func NewBsnGenericStatsEntry() *BsnGenericStatsEntry {
-	return &BsnGenericStatsEntry{}
+	obj := &BsnGenericStatsEntry{}
+	return obj
 }
 
 type BsnGentableBucketStatsEntry struct {
@@ -704,17 +723,18 @@ func (self *BsnGentableBucketStatsEntry) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnGentableBucketStatsEntry(decoder *goloxi.Decoder) (*BsnGentableBucketStatsEntry, error) {
-	bsngentablebucketstatsentry := &BsnGentableBucketStatsEntry{}
+func DecodeBsnGentableBucketStatsEntry(decoder *goloxi.Decoder) (*BsnGentableBucketStatsEntry, error) {
+	_bsngentablebucketstatsentry := &BsnGentableBucketStatsEntry{}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("BsnGentableBucketStatsEntry packet too short: %d < 16", decoder.Length())
 	}
-	bsngentablebucketstatsentry.Checksum.Decode(decoder)
-	return bsngentablebucketstatsentry, nil
+	_bsngentablebucketstatsentry.Checksum.Decode(decoder)
+	return _bsngentablebucketstatsentry, nil
 }
 
 func NewBsnGentableBucketStatsEntry() *BsnGentableBucketStatsEntry {
-	return &BsnGentableBucketStatsEntry{}
+	obj := &BsnGentableBucketStatsEntry{}
+	return obj
 }
 
 type BsnGentableDescStatsEntry struct {
@@ -739,23 +759,24 @@ func (self *BsnGentableDescStatsEntry) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnGentableDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentableDescStatsEntry, error) {
-	bsngentabledescstatsentry := &BsnGentableDescStatsEntry{}
+func DecodeBsnGentableDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentableDescStatsEntry, error) {
+	_bsngentabledescstatsentry := &BsnGentableDescStatsEntry{}
 	if decoder.Length() < 48 {
 		return nil, fmt.Errorf("BsnGentableDescStatsEntry packet too short: %d < 48", decoder.Length())
 	}
-	bsngentabledescstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bsngentabledescstatsentry.Length), 2+0)
-	bsngentabledescstatsentry.TableId = uint16(decoder.ReadUint16())
-	bsngentabledescstatsentry.Name = string(bytes.Trim(decoder.Read(32), "\x00"))
-	bsngentabledescstatsentry.BucketsSize = uint32(decoder.ReadUint32())
-	bsngentabledescstatsentry.MaxEntries = uint32(decoder.ReadUint32())
+	_bsngentabledescstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bsngentabledescstatsentry.Length), 2+0)
+	_bsngentabledescstatsentry.TableId = uint16(decoder.ReadUint16())
+	_bsngentabledescstatsentry.Name = string(bytes.Trim(decoder.Read(32), "\x00"))
+	_bsngentabledescstatsentry.BucketsSize = uint32(decoder.ReadUint32())
+	_bsngentabledescstatsentry.MaxEntries = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return bsngentabledescstatsentry, nil
+	return _bsngentabledescstatsentry, nil
 }
 
 func NewBsnGentableDescStatsEntry() *BsnGentableDescStatsEntry {
-	return &BsnGentableDescStatsEntry{}
+	obj := &BsnGentableDescStatsEntry{}
+	return obj
 }
 
 type BsnGentableEntryDescStatsEntry struct {
@@ -787,36 +808,37 @@ func (self *BsnGentableEntryDescStatsEntry) Serialize(encoder *goloxi.Encoder) e
 	return nil
 }
 
-func decodeBsnGentableEntryDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentableEntryDescStatsEntry, error) {
-	bsngentableentrydescstatsentry := &BsnGentableEntryDescStatsEntry{}
+func DecodeBsnGentableEntryDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentableEntryDescStatsEntry, error) {
+	_bsngentableentrydescstatsentry := &BsnGentableEntryDescStatsEntry{}
 	if decoder.Length() < 20 {
 		return nil, fmt.Errorf("BsnGentableEntryDescStatsEntry packet too short: %d < 20", decoder.Length())
 	}
-	bsngentableentrydescstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bsngentableentrydescstatsentry.Length), 2+0)
-	bsngentableentrydescstatsentry.KeyLength = uint16(decoder.ReadUint16())
-	bsngentableentrydescstatsentry.Checksum.Decode(decoder)
+	_bsngentableentrydescstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bsngentableentrydescstatsentry.Length), 2+0)
+	_bsngentableentrydescstatsentry.KeyLength = uint16(decoder.ReadUint16())
+	_bsngentableentrydescstatsentry.Checksum.Decode(decoder)
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentrydescstatsentry.Key = append(bsngentableentrydescstatsentry.Key, item)
+		_bsngentableentrydescstatsentry.Key = append(_bsngentableentrydescstatsentry.Key, item)
 	}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentrydescstatsentry.Value = append(bsngentableentrydescstatsentry.Value, item)
+		_bsngentableentrydescstatsentry.Value = append(_bsngentableentrydescstatsentry.Value, item)
 	}
-	return bsngentableentrydescstatsentry, nil
+	return _bsngentableentrydescstatsentry, nil
 }
 
 func NewBsnGentableEntryDescStatsEntry() *BsnGentableEntryDescStatsEntry {
-	return &BsnGentableEntryDescStatsEntry{}
+	obj := &BsnGentableEntryDescStatsEntry{}
+	return obj
 }
 
 type BsnGentableEntryStatsEntry struct {
@@ -846,35 +868,36 @@ func (self *BsnGentableEntryStatsEntry) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnGentableEntryStatsEntry(decoder *goloxi.Decoder) (*BsnGentableEntryStatsEntry, error) {
-	bsngentableentrystatsentry := &BsnGentableEntryStatsEntry{}
+func DecodeBsnGentableEntryStatsEntry(decoder *goloxi.Decoder) (*BsnGentableEntryStatsEntry, error) {
+	_bsngentableentrystatsentry := &BsnGentableEntryStatsEntry{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnGentableEntryStatsEntry packet too short: %d < 4", decoder.Length())
 	}
-	bsngentableentrystatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bsngentableentrystatsentry.Length), 2+0)
-	bsngentableentrystatsentry.KeyLength = uint16(decoder.ReadUint16())
+	_bsngentableentrystatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bsngentableentrystatsentry.Length), 2+0)
+	_bsngentableentrystatsentry.KeyLength = uint16(decoder.ReadUint16())
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentrystatsentry.Key = append(bsngentableentrystatsentry.Key, item)
+		_bsngentableentrystatsentry.Key = append(_bsngentableentrystatsentry.Key, item)
 	}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentrystatsentry.Stats = append(bsngentableentrystatsentry.Stats, item)
+		_bsngentableentrystatsentry.Stats = append(_bsngentableentrystatsentry.Stats, item)
 	}
-	return bsngentableentrystatsentry, nil
+	return _bsngentableentrystatsentry, nil
 }
 
 func NewBsnGentableEntryStatsEntry() *BsnGentableEntryStatsEntry {
-	return &BsnGentableEntryStatsEntry{}
+	obj := &BsnGentableEntryStatsEntry{}
+	return obj
 }
 
 type BsnGentableStatsEntry struct {
@@ -892,20 +915,21 @@ func (self *BsnGentableStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGentableStatsEntry(decoder *goloxi.Decoder) (*BsnGentableStatsEntry, error) {
-	bsngentablestatsentry := &BsnGentableStatsEntry{}
+func DecodeBsnGentableStatsEntry(decoder *goloxi.Decoder) (*BsnGentableStatsEntry, error) {
+	_bsngentablestatsentry := &BsnGentableStatsEntry{}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("BsnGentableStatsEntry packet too short: %d < 24", decoder.Length())
 	}
-	bsngentablestatsentry.TableId = uint16(decoder.ReadUint16())
+	_bsngentablestatsentry.TableId = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	bsngentablestatsentry.EntryCount = uint32(decoder.ReadUint32())
-	bsngentablestatsentry.Checksum.Decode(decoder)
-	return bsngentablestatsentry, nil
+	_bsngentablestatsentry.EntryCount = uint32(decoder.ReadUint32())
+	_bsngentablestatsentry.Checksum.Decode(decoder)
+	return _bsngentablestatsentry, nil
 }
 
 func NewBsnGentableStatsEntry() *BsnGentableStatsEntry {
-	return &BsnGentableStatsEntry{}
+	obj := &BsnGentableStatsEntry{}
+	return obj
 }
 
 type BsnInterface struct {
@@ -925,21 +949,22 @@ func (self *BsnInterface) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnInterface(decoder *goloxi.Decoder) (*BsnInterface, error) {
-	bsninterface := &BsnInterface{}
+func DecodeBsnInterface(decoder *goloxi.Decoder) (*BsnInterface, error) {
+	_bsninterface := &BsnInterface{}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("BsnInterface packet too short: %d < 32", decoder.Length())
 	}
-	bsninterface.HwAddr = net.HardwareAddr(decoder.Read(6))
+	_bsninterface.HwAddr = net.HardwareAddr(decoder.Read(6))
 	decoder.Skip(2)
-	bsninterface.Name = string(bytes.Trim(decoder.Read(16), "\x00"))
-	bsninterface.Ipv4Addr = net.IP(decoder.Read(4))
-	bsninterface.Ipv4Netmask = net.IP(decoder.Read(4))
-	return bsninterface, nil
+	_bsninterface.Name = string(bytes.Trim(decoder.Read(16), "\x00"))
+	_bsninterface.Ipv4Addr = net.IP(decoder.Read(4))
+	_bsninterface.Ipv4Netmask = net.IP(decoder.Read(4))
+	return _bsninterface, nil
 }
 
 func NewBsnInterface() *BsnInterface {
-	return &BsnInterface{}
+	obj := &BsnInterface{}
+	return obj
 }
 
 type BsnLacpStatsEntry struct {
@@ -976,30 +1001,31 @@ func (self *BsnLacpStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnLacpStatsEntry(decoder *goloxi.Decoder) (*BsnLacpStatsEntry, error) {
-	bsnlacpstatsentry := &BsnLacpStatsEntry{}
+func DecodeBsnLacpStatsEntry(decoder *goloxi.Decoder) (*BsnLacpStatsEntry, error) {
+	_bsnlacpstatsentry := &BsnLacpStatsEntry{}
 	if decoder.Length() < 36 {
 		return nil, fmt.Errorf("BsnLacpStatsEntry packet too short: %d < 36", decoder.Length())
 	}
-	bsnlacpstatsentry.PortNo.Decode(decoder)
-	bsnlacpstatsentry.ActorSysPriority = uint16(decoder.ReadUint16())
-	bsnlacpstatsentry.ActorSysMac = net.HardwareAddr(decoder.Read(6))
-	bsnlacpstatsentry.ActorPortPriority = uint16(decoder.ReadUint16())
-	bsnlacpstatsentry.ActorPortNum = uint16(decoder.ReadUint16())
-	bsnlacpstatsentry.ActorKey = uint16(decoder.ReadUint16())
-	bsnlacpstatsentry.ConvergenceStatus = uint8(decoder.ReadByte())
+	_bsnlacpstatsentry.PortNo.Decode(decoder)
+	_bsnlacpstatsentry.ActorSysPriority = uint16(decoder.ReadUint16())
+	_bsnlacpstatsentry.ActorSysMac = net.HardwareAddr(decoder.Read(6))
+	_bsnlacpstatsentry.ActorPortPriority = uint16(decoder.ReadUint16())
+	_bsnlacpstatsentry.ActorPortNum = uint16(decoder.ReadUint16())
+	_bsnlacpstatsentry.ActorKey = uint16(decoder.ReadUint16())
+	_bsnlacpstatsentry.ConvergenceStatus = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	bsnlacpstatsentry.PartnerSysPriority = uint16(decoder.ReadUint16())
-	bsnlacpstatsentry.PartnerSysMac = net.HardwareAddr(decoder.Read(6))
-	bsnlacpstatsentry.PartnerPortPriority = uint16(decoder.ReadUint16())
-	bsnlacpstatsentry.PartnerPortNum = uint16(decoder.ReadUint16())
-	bsnlacpstatsentry.PartnerKey = uint16(decoder.ReadUint16())
+	_bsnlacpstatsentry.PartnerSysPriority = uint16(decoder.ReadUint16())
+	_bsnlacpstatsentry.PartnerSysMac = net.HardwareAddr(decoder.Read(6))
+	_bsnlacpstatsentry.PartnerPortPriority = uint16(decoder.ReadUint16())
+	_bsnlacpstatsentry.PartnerPortNum = uint16(decoder.ReadUint16())
+	_bsnlacpstatsentry.PartnerKey = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return bsnlacpstatsentry, nil
+	return _bsnlacpstatsentry, nil
 }
 
 func NewBsnLacpStatsEntry() *BsnLacpStatsEntry {
-	return &BsnLacpStatsEntry{}
+	obj := &BsnLacpStatsEntry{}
+	return obj
 }
 
 type BsnPortCounterStatsEntry struct {
@@ -1024,28 +1050,29 @@ func (self *BsnPortCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnPortCounterStatsEntry(decoder *goloxi.Decoder) (*BsnPortCounterStatsEntry, error) {
-	bsnportcounterstatsentry := &BsnPortCounterStatsEntry{}
+func DecodeBsnPortCounterStatsEntry(decoder *goloxi.Decoder) (*BsnPortCounterStatsEntry, error) {
+	_bsnportcounterstatsentry := &BsnPortCounterStatsEntry{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnPortCounterStatsEntry packet too short: %d < 8", decoder.Length())
 	}
-	bsnportcounterstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bsnportcounterstatsentry.Length), 2+0)
+	_bsnportcounterstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bsnportcounterstatsentry.Length), 2+0)
 	decoder.Skip(2)
-	bsnportcounterstatsentry.PortNo.Decode(decoder)
+	_bsnportcounterstatsentry.PortNo.Decode(decoder)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeUint64(decoder)
+		item, err := DecodeUint64(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnportcounterstatsentry.Values = append(bsnportcounterstatsentry.Values, item)
+		_bsnportcounterstatsentry.Values = append(_bsnportcounterstatsentry.Values, item)
 	}
-	return bsnportcounterstatsentry, nil
+	return _bsnportcounterstatsentry, nil
 }
 
 func NewBsnPortCounterStatsEntry() *BsnPortCounterStatsEntry {
-	return &BsnPortCounterStatsEntry{}
+	obj := &BsnPortCounterStatsEntry{}
+	return obj
 }
 
 type BsnSwitchPipelineStatsEntry struct {
@@ -1058,17 +1085,18 @@ func (self *BsnSwitchPipelineStatsEntry) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnSwitchPipelineStatsEntry(decoder *goloxi.Decoder) (*BsnSwitchPipelineStatsEntry, error) {
-	bsnswitchpipelinestatsentry := &BsnSwitchPipelineStatsEntry{}
+func DecodeBsnSwitchPipelineStatsEntry(decoder *goloxi.Decoder) (*BsnSwitchPipelineStatsEntry, error) {
+	_bsnswitchpipelinestatsentry := &BsnSwitchPipelineStatsEntry{}
 	if decoder.Length() < 256 {
 		return nil, fmt.Errorf("BsnSwitchPipelineStatsEntry packet too short: %d < 256", decoder.Length())
 	}
-	bsnswitchpipelinestatsentry.Pipeline = string(bytes.Trim(decoder.Read(256), "\x00"))
-	return bsnswitchpipelinestatsentry, nil
+	_bsnswitchpipelinestatsentry.Pipeline = string(bytes.Trim(decoder.Read(256), "\x00"))
+	return _bsnswitchpipelinestatsentry, nil
 }
 
 func NewBsnSwitchPipelineStatsEntry() *BsnSwitchPipelineStatsEntry {
-	return &BsnSwitchPipelineStatsEntry{}
+	obj := &BsnSwitchPipelineStatsEntry{}
+	return obj
 }
 
 type BsnTableChecksumStatsEntry struct {
@@ -1083,18 +1111,19 @@ func (self *BsnTableChecksumStatsEntry) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnTableChecksumStatsEntry(decoder *goloxi.Decoder) (*BsnTableChecksumStatsEntry, error) {
-	bsntablechecksumstatsentry := &BsnTableChecksumStatsEntry{}
+func DecodeBsnTableChecksumStatsEntry(decoder *goloxi.Decoder) (*BsnTableChecksumStatsEntry, error) {
+	_bsntablechecksumstatsentry := &BsnTableChecksumStatsEntry{}
 	if decoder.Length() < 9 {
 		return nil, fmt.Errorf("BsnTableChecksumStatsEntry packet too short: %d < 9", decoder.Length())
 	}
-	bsntablechecksumstatsentry.TableId = uint8(decoder.ReadByte())
-	bsntablechecksumstatsentry.Checksum = uint64(decoder.ReadUint64())
-	return bsntablechecksumstatsentry, nil
+	_bsntablechecksumstatsentry.TableId = uint8(decoder.ReadByte())
+	_bsntablechecksumstatsentry.Checksum = uint64(decoder.ReadUint64())
+	return _bsntablechecksumstatsentry, nil
 }
 
 func NewBsnTableChecksumStatsEntry() *BsnTableChecksumStatsEntry {
-	return &BsnTableChecksumStatsEntry{}
+	obj := &BsnTableChecksumStatsEntry{}
+	return obj
 }
 
 type BsnTlv struct {
@@ -1123,393 +1152,393 @@ func (self *BsnTlv) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlv(decoder *goloxi.Decoder) (IBsnTlv, error) {
-	bsntlv := &BsnTlv{}
+func DecodeBsnTlv(decoder *goloxi.Decoder) (IBsnTlv, error) {
+	_bsntlv := &BsnTlv{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlv packet too short: %d < 4", decoder.Length())
 	}
-	bsntlv.Type = uint16(decoder.ReadUint16())
-	bsntlv.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bsntlv.Length), 2+2)
+	_bsntlv.Type = uint16(decoder.ReadUint16())
+	_bsntlv.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bsntlv.Length), 2+2)
 
-	switch bsntlv.Type {
+	switch _bsntlv.Type {
 	case 0:
-		return decodeBsnTlvPort(bsntlv, decoder)
+		return DecodeBsnTlvPort(_bsntlv, decoder)
 	case 1:
-		return decodeBsnTlvMac(bsntlv, decoder)
+		return DecodeBsnTlvMac(_bsntlv, decoder)
 	case 2:
-		return decodeBsnTlvRxPackets(bsntlv, decoder)
+		return DecodeBsnTlvRxPackets(_bsntlv, decoder)
 	case 3:
-		return decodeBsnTlvTxPackets(bsntlv, decoder)
+		return DecodeBsnTlvTxPackets(_bsntlv, decoder)
 	case 4:
-		return decodeBsnTlvIpv4(bsntlv, decoder)
+		return DecodeBsnTlvIpv4(_bsntlv, decoder)
 	case 5:
-		return decodeBsnTlvIdleTime(bsntlv, decoder)
+		return DecodeBsnTlvIdleTime(_bsntlv, decoder)
 	case 6:
-		return decodeBsnTlvVlanVid(bsntlv, decoder)
+		return DecodeBsnTlvVlanVid(_bsntlv, decoder)
 	case 7:
-		return decodeBsnTlvIdleNotification(bsntlv, decoder)
+		return DecodeBsnTlvIdleNotification(_bsntlv, decoder)
 	case 8:
-		return decodeBsnTlvIdleTimeout(bsntlv, decoder)
+		return DecodeBsnTlvIdleTimeout(_bsntlv, decoder)
 	case 9:
-		return decodeBsnTlvUnicastQueryTimeout(bsntlv, decoder)
+		return DecodeBsnTlvUnicastQueryTimeout(_bsntlv, decoder)
 	case 10:
-		return decodeBsnTlvBroadcastQueryTimeout(bsntlv, decoder)
+		return DecodeBsnTlvBroadcastQueryTimeout(_bsntlv, decoder)
 	case 11:
-		return decodeBsnTlvRequestPackets(bsntlv, decoder)
+		return DecodeBsnTlvRequestPackets(_bsntlv, decoder)
 	case 12:
-		return decodeBsnTlvReplyPackets(bsntlv, decoder)
+		return DecodeBsnTlvReplyPackets(_bsntlv, decoder)
 	case 13:
-		return decodeBsnTlvMissPackets(bsntlv, decoder)
+		return DecodeBsnTlvMissPackets(_bsntlv, decoder)
 	case 14:
-		return decodeBsnTlvCircuitId(bsntlv, decoder)
+		return DecodeBsnTlvCircuitId(_bsntlv, decoder)
 	case 15:
-		return decodeBsnTlvUdfId(bsntlv, decoder)
+		return DecodeBsnTlvUdfId(_bsntlv, decoder)
 	case 16:
-		return decodeBsnTlvUdfAnchor(bsntlv, decoder)
+		return DecodeBsnTlvUdfAnchor(_bsntlv, decoder)
 	case 17:
-		return decodeBsnTlvUdfOffset(bsntlv, decoder)
+		return DecodeBsnTlvUdfOffset(_bsntlv, decoder)
 	case 18:
-		return decodeBsnTlvUdfLength(bsntlv, decoder)
+		return DecodeBsnTlvUdfLength(_bsntlv, decoder)
 	case 19:
-		return decodeBsnTlvVrf(bsntlv, decoder)
+		return DecodeBsnTlvVrf(_bsntlv, decoder)
 	case 20:
-		return decodeBsnTlvQueueId(bsntlv, decoder)
+		return DecodeBsnTlvQueueId(_bsntlv, decoder)
 	case 21:
-		return decodeBsnTlvQueueWeight(bsntlv, decoder)
+		return DecodeBsnTlvQueueWeight(_bsntlv, decoder)
 	case 22:
-		return decodeBsnTlvCrcEnabled(bsntlv, decoder)
+		return DecodeBsnTlvCrcEnabled(_bsntlv, decoder)
 	case 23:
-		return decodeBsnTlvExternalIp(bsntlv, decoder)
+		return DecodeBsnTlvExternalIp(_bsntlv, decoder)
 	case 24:
-		return decodeBsnTlvExternalMac(bsntlv, decoder)
+		return DecodeBsnTlvExternalMac(_bsntlv, decoder)
 	case 25:
-		return decodeBsnTlvExternalNetmask(bsntlv, decoder)
+		return DecodeBsnTlvExternalNetmask(_bsntlv, decoder)
 	case 26:
-		return decodeBsnTlvExternalGatewayIp(bsntlv, decoder)
+		return DecodeBsnTlvExternalGatewayIp(_bsntlv, decoder)
 	case 27:
-		return decodeBsnTlvInternalMac(bsntlv, decoder)
+		return DecodeBsnTlvInternalMac(_bsntlv, decoder)
 	case 28:
-		return decodeBsnTlvInternalGatewayMac(bsntlv, decoder)
+		return DecodeBsnTlvInternalGatewayMac(_bsntlv, decoder)
 	case 29:
-		return decodeBsnTlvExternalGatewayMac(bsntlv, decoder)
+		return DecodeBsnTlvExternalGatewayMac(_bsntlv, decoder)
 	case 30:
-		return decodeBsnTlvSamplingRate(bsntlv, decoder)
+		return DecodeBsnTlvSamplingRate(_bsntlv, decoder)
 	case 31:
-		return decodeBsnTlvHeaderSize(bsntlv, decoder)
+		return DecodeBsnTlvHeaderSize(_bsntlv, decoder)
 	case 32:
-		return decodeBsnTlvEthSrc(bsntlv, decoder)
+		return DecodeBsnTlvEthSrc(_bsntlv, decoder)
 	case 33:
-		return decodeBsnTlvEthDst(bsntlv, decoder)
+		return DecodeBsnTlvEthDst(_bsntlv, decoder)
 	case 34:
-		return decodeBsnTlvIpv4Src(bsntlv, decoder)
+		return DecodeBsnTlvIpv4Src(_bsntlv, decoder)
 	case 35:
-		return decodeBsnTlvIpv4Dst(bsntlv, decoder)
+		return DecodeBsnTlvIpv4Dst(_bsntlv, decoder)
 	case 36:
-		return decodeBsnTlvUdpSrc(bsntlv, decoder)
+		return DecodeBsnTlvUdpSrc(_bsntlv, decoder)
 	case 37:
-		return decodeBsnTlvUdpDst(bsntlv, decoder)
+		return DecodeBsnTlvUdpDst(_bsntlv, decoder)
 	case 38:
-		return decodeBsnTlvSubAgentId(bsntlv, decoder)
+		return DecodeBsnTlvSubAgentId(_bsntlv, decoder)
 	case 39:
-		return decodeBsnTlvTxBytes(bsntlv, decoder)
+		return DecodeBsnTlvTxBytes(_bsntlv, decoder)
 	case 40:
-		return decodeBsnTlvActorSystemPriority(bsntlv, decoder)
+		return DecodeBsnTlvActorSystemPriority(_bsntlv, decoder)
 	case 41:
-		return decodeBsnTlvActorSystemMac(bsntlv, decoder)
+		return DecodeBsnTlvActorSystemMac(_bsntlv, decoder)
 	case 42:
-		return decodeBsnTlvActorPortPriority(bsntlv, decoder)
+		return DecodeBsnTlvActorPortPriority(_bsntlv, decoder)
 	case 43:
-		return decodeBsnTlvActorPortNum(bsntlv, decoder)
+		return DecodeBsnTlvActorPortNum(_bsntlv, decoder)
 	case 44:
-		return decodeBsnTlvActorKey(bsntlv, decoder)
+		return DecodeBsnTlvActorKey(_bsntlv, decoder)
 	case 45:
-		return decodeBsnTlvConvergenceStatus(bsntlv, decoder)
+		return DecodeBsnTlvConvergenceStatus(_bsntlv, decoder)
 	case 47:
-		return decodeBsnTlvPartnerSystemPriority(bsntlv, decoder)
+		return DecodeBsnTlvPartnerSystemPriority(_bsntlv, decoder)
 	case 48:
-		return decodeBsnTlvPartnerSystemMac(bsntlv, decoder)
+		return DecodeBsnTlvPartnerSystemMac(_bsntlv, decoder)
 	case 49:
-		return decodeBsnTlvPartnerPortPriority(bsntlv, decoder)
+		return DecodeBsnTlvPartnerPortPriority(_bsntlv, decoder)
 	case 50:
-		return decodeBsnTlvPartnerPortNum(bsntlv, decoder)
+		return DecodeBsnTlvPartnerPortNum(_bsntlv, decoder)
 	case 51:
-		return decodeBsnTlvPartnerKey(bsntlv, decoder)
+		return DecodeBsnTlvPartnerKey(_bsntlv, decoder)
 	case 52:
-		return decodeBsnTlvName(bsntlv, decoder)
+		return DecodeBsnTlvName(_bsntlv, decoder)
 	case 53:
-		return decodeBsnTlvActorState(bsntlv, decoder)
+		return DecodeBsnTlvActorState(_bsntlv, decoder)
 	case 54:
-		return decodeBsnTlvPartnerState(bsntlv, decoder)
+		return DecodeBsnTlvPartnerState(_bsntlv, decoder)
 	case 55:
-		return decodeBsnTlvData(bsntlv, decoder)
+		return DecodeBsnTlvData(_bsntlv, decoder)
 	case 56:
-		return decodeBsnTlvMacMask(bsntlv, decoder)
+		return DecodeBsnTlvMacMask(_bsntlv, decoder)
 	case 57:
-		return decodeBsnTlvPriority(bsntlv, decoder)
+		return DecodeBsnTlvPriority(_bsntlv, decoder)
 	case 58:
-		return decodeBsnTlvInterval(bsntlv, decoder)
+		return DecodeBsnTlvInterval(_bsntlv, decoder)
 	case 59:
-		return decodeBsnTlvReference(bsntlv, decoder)
+		return DecodeBsnTlvReference(_bsntlv, decoder)
 	case 60:
-		return decodeBsnTlvIpv4Netmask(bsntlv, decoder)
+		return DecodeBsnTlvIpv4Netmask(_bsntlv, decoder)
 	case 61:
-		return decodeBsnTlvMplsLabel(bsntlv, decoder)
+		return DecodeBsnTlvMplsLabel(_bsntlv, decoder)
 	case 62:
-		return decodeBsnTlvMplsControlWord(bsntlv, decoder)
+		return DecodeBsnTlvMplsControlWord(_bsntlv, decoder)
 	case 63:
-		return decodeBsnTlvMplsSequenced(bsntlv, decoder)
+		return DecodeBsnTlvMplsSequenced(_bsntlv, decoder)
 	case 64:
-		return decodeBsnTlvBucket(bsntlv, decoder)
+		return DecodeBsnTlvBucket(_bsntlv, decoder)
 	case 65:
-		return decodeBsnTlvTcpSrc(bsntlv, decoder)
+		return DecodeBsnTlvTcpSrc(_bsntlv, decoder)
 	case 66:
-		return decodeBsnTlvTcpDst(bsntlv, decoder)
+		return DecodeBsnTlvTcpDst(_bsntlv, decoder)
 	case 67:
-		return decodeBsnTlvIpProto(bsntlv, decoder)
+		return DecodeBsnTlvIpProto(_bsntlv, decoder)
 	case 68:
-		return decodeBsnTlvIcmpType(bsntlv, decoder)
+		return DecodeBsnTlvIcmpType(_bsntlv, decoder)
 	case 69:
-		return decodeBsnTlvIcmpCode(bsntlv, decoder)
+		return DecodeBsnTlvIcmpCode(_bsntlv, decoder)
 	case 70:
-		return decodeBsnTlvIcmpId(bsntlv, decoder)
+		return DecodeBsnTlvIcmpId(_bsntlv, decoder)
 	case 71:
-		return decodeBsnTlvRxBytes(bsntlv, decoder)
+		return DecodeBsnTlvRxBytes(_bsntlv, decoder)
 	case 72:
-		return decodeBsnTlvVlanPcp(bsntlv, decoder)
+		return DecodeBsnTlvVlanPcp(_bsntlv, decoder)
 	case 73:
-		return decodeBsnTlvStripVlanOnEgress(bsntlv, decoder)
+		return DecodeBsnTlvStripVlanOnEgress(_bsntlv, decoder)
 	case 74:
-		return decodeBsnTlvSetLoopbackMode(bsntlv, decoder)
+		return DecodeBsnTlvSetLoopbackMode(_bsntlv, decoder)
 	case 75:
-		return decodeBsnTlvStripMplsL2OnIngress(bsntlv, decoder)
+		return DecodeBsnTlvStripMplsL2OnIngress(_bsntlv, decoder)
 	case 76:
-		return decodeBsnTlvStripMplsL3OnIngress(bsntlv, decoder)
+		return DecodeBsnTlvStripMplsL3OnIngress(_bsntlv, decoder)
 	case 77:
-		return decodeBsnTlvVlanVidMask(bsntlv, decoder)
+		return DecodeBsnTlvVlanVidMask(_bsntlv, decoder)
 	case 78:
-		return decodeBsnTlvIgmpSnooping(bsntlv, decoder)
+		return DecodeBsnTlvIgmpSnooping(_bsntlv, decoder)
 	case 79:
-		return decodeBsnTlvL2MulticastLookup(bsntlv, decoder)
+		return DecodeBsnTlvL2MulticastLookup(_bsntlv, decoder)
 	case 80:
-		return decodeBsnTlvGenerationId(bsntlv, decoder)
+		return DecodeBsnTlvGenerationId(_bsntlv, decoder)
 	case 81:
-		return decodeBsnTlvAnchor(bsntlv, decoder)
+		return DecodeBsnTlvAnchor(_bsntlv, decoder)
 	case 82:
-		return decodeBsnTlvOffset(bsntlv, decoder)
+		return DecodeBsnTlvOffset(_bsntlv, decoder)
 	case 83:
-		return decodeBsnTlvNegate(bsntlv, decoder)
+		return DecodeBsnTlvNegate(_bsntlv, decoder)
 	case 84:
-		return decodeBsnTlvIpv6(bsntlv, decoder)
+		return DecodeBsnTlvIpv6(_bsntlv, decoder)
 	case 85:
-		return decodeBsnTlvDecap(bsntlv, decoder)
+		return DecodeBsnTlvDecap(_bsntlv, decoder)
 	case 86:
-		return decodeBsnTlvVni(bsntlv, decoder)
+		return DecodeBsnTlvVni(_bsntlv, decoder)
 	case 87:
-		return decodeBsnTlvMcgTypeVxlan(bsntlv, decoder)
+		return DecodeBsnTlvMcgTypeVxlan(_bsntlv, decoder)
 	case 88:
-		return decodeBsnTlvPortVxlanMode(bsntlv, decoder)
+		return DecodeBsnTlvPortVxlanMode(_bsntlv, decoder)
 	case 89:
-		return decodeBsnTlvRateUnit(bsntlv, decoder)
+		return DecodeBsnTlvRateUnit(_bsntlv, decoder)
 	case 90:
-		return decodeBsnTlvBroadcastRate(bsntlv, decoder)
+		return DecodeBsnTlvBroadcastRate(_bsntlv, decoder)
 	case 91:
-		return decodeBsnTlvKnownMulticastRate(bsntlv, decoder)
+		return DecodeBsnTlvKnownMulticastRate(_bsntlv, decoder)
 	case 92:
-		return decodeBsnTlvUnknownMulticastRate(bsntlv, decoder)
+		return DecodeBsnTlvUnknownMulticastRate(_bsntlv, decoder)
 	case 93:
-		return decodeBsnTlvUnicastRate(bsntlv, decoder)
+		return DecodeBsnTlvUnicastRate(_bsntlv, decoder)
 	case 94:
-		return decodeBsnTlvNexthopTypeVxlan(bsntlv, decoder)
+		return DecodeBsnTlvNexthopTypeVxlan(_bsntlv, decoder)
 	case 95:
-		return decodeBsnTlvMulticastInterfaceId(bsntlv, decoder)
+		return DecodeBsnTlvMulticastInterfaceId(_bsntlv, decoder)
 	case 96:
-		return decodeBsnTlvUsePacketState(bsntlv, decoder)
+		return DecodeBsnTlvUsePacketState(_bsntlv, decoder)
 	case 97:
-		return decodeBsnTlvStatus(bsntlv, decoder)
+		return DecodeBsnTlvStatus(_bsntlv, decoder)
 	case 98:
-		return decodeBsnTlvVlanMacList(bsntlv, decoder)
+		return DecodeBsnTlvVlanMacList(_bsntlv, decoder)
 	case 99:
-		return decodeBsnTlvVfi(bsntlv, decoder)
+		return DecodeBsnTlvVfi(_bsntlv, decoder)
 	case 100:
-		return decodeBsnTlvHashSeed(bsntlv, decoder)
+		return DecodeBsnTlvHashSeed(_bsntlv, decoder)
 	case 101:
-		return decodeBsnTlvHashType(bsntlv, decoder)
+		return DecodeBsnTlvHashType(_bsntlv, decoder)
 	case 102:
-		return decodeBsnTlvHashPacketType(bsntlv, decoder)
+		return DecodeBsnTlvHashPacketType(_bsntlv, decoder)
 	case 103:
-		return decodeBsnTlvHashPacketField(bsntlv, decoder)
+		return DecodeBsnTlvHashPacketField(_bsntlv, decoder)
 	case 104:
-		return decodeBsnTlvHashGtpHeaderMatch(bsntlv, decoder)
+		return DecodeBsnTlvHashGtpHeaderMatch(_bsntlv, decoder)
 	case 105:
-		return decodeBsnTlvHashGtpPortMatch(bsntlv, decoder)
+		return DecodeBsnTlvHashGtpPortMatch(_bsntlv, decoder)
 	case 106:
-		return decodeBsnTlvUntagged(bsntlv, decoder)
+		return DecodeBsnTlvUntagged(_bsntlv, decoder)
 	case 107:
-		return decodeBsnTlvVfpClassId(bsntlv, decoder)
+		return DecodeBsnTlvVfpClassId(_bsntlv, decoder)
 	case 108:
-		return decodeBsnTlvQosPriority(bsntlv, decoder)
+		return DecodeBsnTlvQosPriority(_bsntlv, decoder)
 	case 109:
-		return decodeBsnTlvParentPort(bsntlv, decoder)
+		return DecodeBsnTlvParentPort(_bsntlv, decoder)
 	case 110:
-		return decodeBsnTlvLoopbackPort(bsntlv, decoder)
+		return DecodeBsnTlvLoopbackPort(_bsntlv, decoder)
 	case 111:
-		return decodeBsnTlvVpnKey(bsntlv, decoder)
+		return DecodeBsnTlvVpnKey(_bsntlv, decoder)
 	case 112:
-		return decodeBsnTlvDscp(bsntlv, decoder)
+		return DecodeBsnTlvDscp(_bsntlv, decoder)
 	case 113:
-		return decodeBsnTlvTtl(bsntlv, decoder)
+		return DecodeBsnTlvTtl(_bsntlv, decoder)
 	case 114:
-		return decodeBsnTlvNextHopMac(bsntlv, decoder)
+		return DecodeBsnTlvNextHopMac(_bsntlv, decoder)
 	case 115:
-		return decodeBsnTlvNextHopIpv4(bsntlv, decoder)
+		return DecodeBsnTlvNextHopIpv4(_bsntlv, decoder)
 	case 116:
-		return decodeBsnTlvRateLimit(bsntlv, decoder)
+		return DecodeBsnTlvRateLimit(_bsntlv, decoder)
 	case 117:
-		return decodeBsnTlvVxlanEgressLag(bsntlv, decoder)
+		return DecodeBsnTlvVxlanEgressLag(_bsntlv, decoder)
 	case 118:
-		return decodeBsnTlvCpuLag(bsntlv, decoder)
+		return DecodeBsnTlvCpuLag(_bsntlv, decoder)
 	case 119:
-		return decodeBsnTlvUint64List(bsntlv, decoder)
+		return DecodeBsnTlvUint64List(_bsntlv, decoder)
 	case 120:
-		return decodeBsnTlvDisableSrcMacCheck(bsntlv, decoder)
+		return DecodeBsnTlvDisableSrcMacCheck(_bsntlv, decoder)
 	case 121:
-		return decodeBsnTlvDrop(bsntlv, decoder)
+		return DecodeBsnTlvDrop(_bsntlv, decoder)
 	case 122:
-		return decodeBsnTlvIpv6Prefix(bsntlv, decoder)
+		return DecodeBsnTlvIpv6Prefix(_bsntlv, decoder)
 	case 123:
-		return decodeBsnTlvNdpOffload(bsntlv, decoder)
+		return DecodeBsnTlvNdpOffload(_bsntlv, decoder)
 	case 124:
-		return decodeBsnTlvNdpStatic(bsntlv, decoder)
+		return DecodeBsnTlvNdpStatic(_bsntlv, decoder)
 	case 125:
-		return decodeBsnTlvIcmpv6Chksum(bsntlv, decoder)
+		return DecodeBsnTlvIcmpv6Chksum(_bsntlv, decoder)
 	case 126:
-		return decodeBsnTlvIpv6Src(bsntlv, decoder)
+		return DecodeBsnTlvIpv6Src(_bsntlv, decoder)
 	case 127:
-		return decodeBsnTlvIpv6Dst(bsntlv, decoder)
+		return DecodeBsnTlvIpv6Dst(_bsntlv, decoder)
 	case 128:
-		return decodeBsnTlvPushVlanOnIngress(bsntlv, decoder)
+		return DecodeBsnTlvPushVlanOnIngress(_bsntlv, decoder)
 	case 129:
-		return decodeBsnTlvApplyPackets(bsntlv, decoder)
+		return DecodeBsnTlvApplyPackets(_bsntlv, decoder)
 	case 130:
-		return decodeBsnTlvApplyBytes(bsntlv, decoder)
+		return DecodeBsnTlvApplyBytes(_bsntlv, decoder)
 	case 131:
-		return decodeBsnTlvEthType(bsntlv, decoder)
+		return DecodeBsnTlvEthType(_bsntlv, decoder)
 	case 132:
-		return decodeBsnTlvEcn(bsntlv, decoder)
+		return DecodeBsnTlvEcn(_bsntlv, decoder)
 	case 133:
-		return decodeBsnTlvTcpFlags(bsntlv, decoder)
+		return DecodeBsnTlvTcpFlags(_bsntlv, decoder)
 	case 134:
-		return decodeBsnTlvL3InterfaceClassId(bsntlv, decoder)
+		return DecodeBsnTlvL3InterfaceClassId(_bsntlv, decoder)
 	case 135:
-		return decodeBsnTlvL3SrcClassId(bsntlv, decoder)
+		return DecodeBsnTlvL3SrcClassId(_bsntlv, decoder)
 	case 136:
-		return decodeBsnTlvL3DstClassId(bsntlv, decoder)
+		return DecodeBsnTlvL3DstClassId(_bsntlv, decoder)
 	case 137:
-		return decodeBsnTlvEgressOnly(bsntlv, decoder)
+		return DecodeBsnTlvEgressOnly(_bsntlv, decoder)
 	case 138:
-		return decodeBsnTlvIngressPortGroupId(bsntlv, decoder)
+		return DecodeBsnTlvIngressPortGroupId(_bsntlv, decoder)
 	case 139:
-		return decodeBsnTlvEgressPortGroupId(bsntlv, decoder)
+		return DecodeBsnTlvEgressPortGroupId(_bsntlv, decoder)
 	case 140:
-		return decodeBsnTlvDataMask(bsntlv, decoder)
+		return DecodeBsnTlvDataMask(_bsntlv, decoder)
 	case 141:
-		return decodeBsnTlvPortUsage(bsntlv, decoder)
+		return DecodeBsnTlvPortUsage(_bsntlv, decoder)
 	case 142:
-		return decodeBsnTlvTunnelCapability(bsntlv, decoder)
+		return DecodeBsnTlvTunnelCapability(_bsntlv, decoder)
 	case 143:
-		return decodeBsnTlvEnhancedHashCapability(bsntlv, decoder)
+		return DecodeBsnTlvEnhancedHashCapability(_bsntlv, decoder)
 	case 144:
-		return decodeBsnTlvAutoNegotiation(bsntlv, decoder)
+		return DecodeBsnTlvAutoNegotiation(_bsntlv, decoder)
 	case 145:
-		return decodeBsnTlvHashAlgorithm(bsntlv, decoder)
+		return DecodeBsnTlvHashAlgorithm(_bsntlv, decoder)
 	case 146:
-		return decodeBsnTlvLoopbackMode(bsntlv, decoder)
+		return DecodeBsnTlvLoopbackMode(_bsntlv, decoder)
 	case 147:
-		return decodeBsnTlvNoArpResponse(bsntlv, decoder)
+		return DecodeBsnTlvNoArpResponse(_bsntlv, decoder)
 	case 148:
-		return decodeBsnTlvNoNsResponse(bsntlv, decoder)
+		return DecodeBsnTlvNoNsResponse(_bsntlv, decoder)
 	case 149:
-		return decodeBsnTlvForwardErrorCorrection(bsntlv, decoder)
+		return DecodeBsnTlvForwardErrorCorrection(_bsntlv, decoder)
 	case 150:
-		return decodeBsnTlvOpticsAlwaysEnabled(bsntlv, decoder)
+		return DecodeBsnTlvOpticsAlwaysEnabled(_bsntlv, decoder)
 	case 151:
-		return decodeBsnTlvForceLinkUp(bsntlv, decoder)
+		return DecodeBsnTlvForceLinkUp(_bsntlv, decoder)
 	case 152:
-		return decodeBsnTlvRestServer(bsntlv, decoder)
+		return DecodeBsnTlvRestServer(_bsntlv, decoder)
 	case 153:
-		return decodeBsnTlvUriScheme(bsntlv, decoder)
+		return DecodeBsnTlvUriScheme(_bsntlv, decoder)
 	case 154:
-		return decodeBsnTlvTimestamp(bsntlv, decoder)
+		return DecodeBsnTlvTimestamp(_bsntlv, decoder)
 	case 155:
-		return decodeBsnTlvRecordPackets(bsntlv, decoder)
+		return DecodeBsnTlvRecordPackets(_bsntlv, decoder)
 	case 156:
-		return decodeBsnTlvPortSpeedGbps(bsntlv, decoder)
+		return DecodeBsnTlvPortSpeedGbps(_bsntlv, decoder)
 	case 157:
-		return decodeBsnTlvOuterSrcMac(bsntlv, decoder)
+		return DecodeBsnTlvOuterSrcMac(_bsntlv, decoder)
 	case 158:
-		return decodeBsnTlvVirtual(bsntlv, decoder)
+		return DecodeBsnTlvVirtual(_bsntlv, decoder)
 	case 159:
-		return decodeBsnTlvPduaRxInstance(bsntlv, decoder)
+		return DecodeBsnTlvPduaRxInstance(_bsntlv, decoder)
 	case 160:
-		return decodeBsnTlvLagOptions(bsntlv, decoder)
+		return DecodeBsnTlvLagOptions(_bsntlv, decoder)
 	case 161:
-		return decodeBsnTlvRoutingParam(bsntlv, decoder)
+		return DecodeBsnTlvRoutingParam(_bsntlv, decoder)
 	case 162:
-		return decodeBsnTlvPushVlanOnEgress(bsntlv, decoder)
+		return DecodeBsnTlvPushVlanOnEgress(_bsntlv, decoder)
 	case 163:
-		return decodeBsnTlvFlood(bsntlv, decoder)
+		return DecodeBsnTlvFlood(_bsntlv, decoder)
 	case 164:
-		return decodeBsnTlvUpgrade(bsntlv, decoder)
+		return DecodeBsnTlvUpgrade(_bsntlv, decoder)
 	case 165:
-		return decodeBsnTlvFabricPortRole(bsntlv, decoder)
+		return DecodeBsnTlvFabricPortRole(_bsntlv, decoder)
 	case 166:
-		return decodeBsnTlvUserConfigured(bsntlv, decoder)
+		return DecodeBsnTlvUserConfigured(_bsntlv, decoder)
 	case 167:
-		return decodeBsnTlvUint32(bsntlv, decoder)
+		return DecodeBsnTlvUint32(_bsntlv, decoder)
 	case 168:
-		return decodeBsnTlvL3(bsntlv, decoder)
+		return DecodeBsnTlvL3(_bsntlv, decoder)
 	case 169:
-		return decodeBsnTlvIpTunnelType(bsntlv, decoder)
+		return DecodeBsnTlvIpTunnelType(_bsntlv, decoder)
 	case 170:
-		return decodeBsnTlvMulticastPacket(bsntlv, decoder)
+		return DecodeBsnTlvMulticastPacket(_bsntlv, decoder)
 	case 171:
-		return decodeBsnTlvPimDr(bsntlv, decoder)
+		return DecodeBsnTlvPimDr(_bsntlv, decoder)
 	case 172:
-		return decodeBsnTlvPassive(bsntlv, decoder)
+		return DecodeBsnTlvPassive(_bsntlv, decoder)
 	case 173:
-		return decodeBsnTlvIdentifier(bsntlv, decoder)
+		return DecodeBsnTlvIdentifier(_bsntlv, decoder)
 	case 174:
-		return decodeBsnTlvMultiplier(bsntlv, decoder)
+		return DecodeBsnTlvMultiplier(_bsntlv, decoder)
 	case 175:
-		return decodeBsnTlvEncap(bsntlv, decoder)
+		return DecodeBsnTlvEncap(_bsntlv, decoder)
 	case 176:
-		return decodeBsnTlvBfdEndpoint(bsntlv, decoder)
+		return DecodeBsnTlvBfdEndpoint(_bsntlv, decoder)
 	case 177:
-		return decodeBsnTlvBfdState(bsntlv, decoder)
+		return DecodeBsnTlvBfdState(_bsntlv, decoder)
 	case 178:
-		return decodeBsnTlvLrAllEnabled(bsntlv, decoder)
+		return DecodeBsnTlvLrAllEnabled(_bsntlv, decoder)
 	case 179:
-		return decodeBsnTlvPortMode(bsntlv, decoder)
+		return DecodeBsnTlvPortMode(_bsntlv, decoder)
 	case 180:
-		return decodeBsnTlvUdfCapability(bsntlv, decoder)
+		return DecodeBsnTlvUdfCapability(_bsntlv, decoder)
 	case 181:
-		return decodeBsnTlvPimHelloFlood(bsntlv, decoder)
+		return DecodeBsnTlvPimHelloFlood(_bsntlv, decoder)
 	case 182:
-		return decodeBsnTlvFlowClassify(bsntlv, decoder)
+		return DecodeBsnTlvFlowClassify(_bsntlv, decoder)
 	case 183:
-		return decodeBsnTlvFlowIdentifier(bsntlv, decoder)
+		return DecodeBsnTlvFlowIdentifier(_bsntlv, decoder)
 	case 184:
-		return decodeBsnTlvFlowClassifier(bsntlv, decoder)
+		return DecodeBsnTlvFlowClassifier(_bsntlv, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'BsnTlv'", bsntlv.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'BsnTlv'", _bsntlv.Type)
 	}
 }
 
 func NewBsnTlv(_type uint16) *BsnTlv {
-	return &BsnTlv{
-		Type: _type,
-	}
+	obj := &BsnTlv{}
+	obj.Type = _type
+	return obj
 }
 
 type BsnTlvActorKey struct {
@@ -1530,19 +1559,20 @@ func (self *BsnTlvActorKey) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvActorKey(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorKey, error) {
-	bsntlvactorkey := &BsnTlvActorKey{BsnTlv: parent}
+func DecodeBsnTlvActorKey(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorKey, error) {
+	_bsntlvactorkey := &BsnTlvActorKey{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvActorKey packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvactorkey.Value = uint16(decoder.ReadUint16())
-	return bsntlvactorkey, nil
+	_bsntlvactorkey.Value = uint16(decoder.ReadUint16())
+	return _bsntlvactorkey, nil
 }
 
 func NewBsnTlvActorKey() *BsnTlvActorKey {
-	return &BsnTlvActorKey{
+	obj := &BsnTlvActorKey{
 		BsnTlv: NewBsnTlv(44),
 	}
+	return obj
 }
 
 type BsnTlvActorPortNum struct {
@@ -1563,19 +1593,20 @@ func (self *BsnTlvActorPortNum) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvActorPortNum(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorPortNum, error) {
-	bsntlvactorportnum := &BsnTlvActorPortNum{BsnTlv: parent}
+func DecodeBsnTlvActorPortNum(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorPortNum, error) {
+	_bsntlvactorportnum := &BsnTlvActorPortNum{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvActorPortNum packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvactorportnum.Value = uint16(decoder.ReadUint16())
-	return bsntlvactorportnum, nil
+	_bsntlvactorportnum.Value = uint16(decoder.ReadUint16())
+	return _bsntlvactorportnum, nil
 }
 
 func NewBsnTlvActorPortNum() *BsnTlvActorPortNum {
-	return &BsnTlvActorPortNum{
+	obj := &BsnTlvActorPortNum{
 		BsnTlv: NewBsnTlv(43),
 	}
+	return obj
 }
 
 type BsnTlvActorPortPriority struct {
@@ -1596,19 +1627,20 @@ func (self *BsnTlvActorPortPriority) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvActorPortPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorPortPriority, error) {
-	bsntlvactorportpriority := &BsnTlvActorPortPriority{BsnTlv: parent}
+func DecodeBsnTlvActorPortPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorPortPriority, error) {
+	_bsntlvactorportpriority := &BsnTlvActorPortPriority{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvActorPortPriority packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvactorportpriority.Value = uint16(decoder.ReadUint16())
-	return bsntlvactorportpriority, nil
+	_bsntlvactorportpriority.Value = uint16(decoder.ReadUint16())
+	return _bsntlvactorportpriority, nil
 }
 
 func NewBsnTlvActorPortPriority() *BsnTlvActorPortPriority {
-	return &BsnTlvActorPortPriority{
+	obj := &BsnTlvActorPortPriority{
 		BsnTlv: NewBsnTlv(42),
 	}
+	return obj
 }
 
 type BsnTlvActorState struct {
@@ -1629,19 +1661,20 @@ func (self *BsnTlvActorState) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvActorState(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorState, error) {
-	bsntlvactorstate := &BsnTlvActorState{BsnTlv: parent}
+func DecodeBsnTlvActorState(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorState, error) {
+	_bsntlvactorstate := &BsnTlvActorState{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvActorState packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvactorstate.Value = BsnLacpState(decoder.ReadByte())
-	return bsntlvactorstate, nil
+	_bsntlvactorstate.Value = BsnLacpState(decoder.ReadByte())
+	return _bsntlvactorstate, nil
 }
 
 func NewBsnTlvActorState() *BsnTlvActorState {
-	return &BsnTlvActorState{
+	obj := &BsnTlvActorState{
 		BsnTlv: NewBsnTlv(53),
 	}
+	return obj
 }
 
 type BsnTlvActorSystemMac struct {
@@ -1662,19 +1695,20 @@ func (self *BsnTlvActorSystemMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvActorSystemMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorSystemMac, error) {
-	bsntlvactorsystemmac := &BsnTlvActorSystemMac{BsnTlv: parent}
+func DecodeBsnTlvActorSystemMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorSystemMac, error) {
+	_bsntlvactorsystemmac := &BsnTlvActorSystemMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvActorSystemMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvactorsystemmac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvactorsystemmac, nil
+	_bsntlvactorsystemmac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvactorsystemmac, nil
 }
 
 func NewBsnTlvActorSystemMac() *BsnTlvActorSystemMac {
-	return &BsnTlvActorSystemMac{
+	obj := &BsnTlvActorSystemMac{
 		BsnTlv: NewBsnTlv(41),
 	}
+	return obj
 }
 
 type BsnTlvActorSystemPriority struct {
@@ -1695,19 +1729,20 @@ func (self *BsnTlvActorSystemPriority) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnTlvActorSystemPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorSystemPriority, error) {
-	bsntlvactorsystempriority := &BsnTlvActorSystemPriority{BsnTlv: parent}
+func DecodeBsnTlvActorSystemPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvActorSystemPriority, error) {
+	_bsntlvactorsystempriority := &BsnTlvActorSystemPriority{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvActorSystemPriority packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvactorsystempriority.Value = uint16(decoder.ReadUint16())
-	return bsntlvactorsystempriority, nil
+	_bsntlvactorsystempriority.Value = uint16(decoder.ReadUint16())
+	return _bsntlvactorsystempriority, nil
 }
 
 func NewBsnTlvActorSystemPriority() *BsnTlvActorSystemPriority {
-	return &BsnTlvActorSystemPriority{
+	obj := &BsnTlvActorSystemPriority{
 		BsnTlv: NewBsnTlv(40),
 	}
+	return obj
 }
 
 type BsnTlvAnchor struct {
@@ -1728,19 +1763,20 @@ func (self *BsnTlvAnchor) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvAnchor(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvAnchor, error) {
-	bsntlvanchor := &BsnTlvAnchor{BsnTlv: parent}
+func DecodeBsnTlvAnchor(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvAnchor, error) {
+	_bsntlvanchor := &BsnTlvAnchor{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvAnchor packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvanchor.Value = BsnAnchor(decoder.ReadUint16())
-	return bsntlvanchor, nil
+	_bsntlvanchor.Value = BsnAnchor(decoder.ReadUint16())
+	return _bsntlvanchor, nil
 }
 
 func NewBsnTlvAnchor() *BsnTlvAnchor {
-	return &BsnTlvAnchor{
+	obj := &BsnTlvAnchor{
 		BsnTlv: NewBsnTlv(81),
 	}
+	return obj
 }
 
 type BsnTlvApplyBytes struct {
@@ -1761,19 +1797,20 @@ func (self *BsnTlvApplyBytes) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvApplyBytes(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvApplyBytes, error) {
-	bsntlvapplybytes := &BsnTlvApplyBytes{BsnTlv: parent}
+func DecodeBsnTlvApplyBytes(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvApplyBytes, error) {
+	_bsntlvapplybytes := &BsnTlvApplyBytes{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvApplyBytes packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvapplybytes.Value = uint64(decoder.ReadUint64())
-	return bsntlvapplybytes, nil
+	_bsntlvapplybytes.Value = uint64(decoder.ReadUint64())
+	return _bsntlvapplybytes, nil
 }
 
 func NewBsnTlvApplyBytes() *BsnTlvApplyBytes {
-	return &BsnTlvApplyBytes{
+	obj := &BsnTlvApplyBytes{
 		BsnTlv: NewBsnTlv(130),
 	}
+	return obj
 }
 
 type BsnTlvApplyPackets struct {
@@ -1794,19 +1831,20 @@ func (self *BsnTlvApplyPackets) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvApplyPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvApplyPackets, error) {
-	bsntlvapplypackets := &BsnTlvApplyPackets{BsnTlv: parent}
+func DecodeBsnTlvApplyPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvApplyPackets, error) {
+	_bsntlvapplypackets := &BsnTlvApplyPackets{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvApplyPackets packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvapplypackets.Value = uint64(decoder.ReadUint64())
-	return bsntlvapplypackets, nil
+	_bsntlvapplypackets.Value = uint64(decoder.ReadUint64())
+	return _bsntlvapplypackets, nil
 }
 
 func NewBsnTlvApplyPackets() *BsnTlvApplyPackets {
-	return &BsnTlvApplyPackets{
+	obj := &BsnTlvApplyPackets{
 		BsnTlv: NewBsnTlv(129),
 	}
+	return obj
 }
 
 type BsnTlvAutoNegotiation struct {
@@ -1827,19 +1865,20 @@ func (self *BsnTlvAutoNegotiation) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvAutoNegotiation(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvAutoNegotiation, error) {
-	bsntlvautonegotiation := &BsnTlvAutoNegotiation{BsnTlv: parent}
+func DecodeBsnTlvAutoNegotiation(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvAutoNegotiation, error) {
+	_bsntlvautonegotiation := &BsnTlvAutoNegotiation{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvAutoNegotiation packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvautonegotiation.Value = BsnAutoNegotiationType(decoder.ReadByte())
-	return bsntlvautonegotiation, nil
+	_bsntlvautonegotiation.Value = BsnAutoNegotiationType(decoder.ReadByte())
+	return _bsntlvautonegotiation, nil
 }
 
 func NewBsnTlvAutoNegotiation() *BsnTlvAutoNegotiation {
-	return &BsnTlvAutoNegotiation{
+	obj := &BsnTlvAutoNegotiation{
 		BsnTlv: NewBsnTlv(144),
 	}
+	return obj
 }
 
 type BsnTlvBfdEndpoint struct {
@@ -1860,19 +1899,20 @@ func (self *BsnTlvBfdEndpoint) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvBfdEndpoint(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBfdEndpoint, error) {
-	bsntlvbfdendpoint := &BsnTlvBfdEndpoint{BsnTlv: parent}
+func DecodeBsnTlvBfdEndpoint(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBfdEndpoint, error) {
+	_bsntlvbfdendpoint := &BsnTlvBfdEndpoint{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvBfdEndpoint packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvbfdendpoint.Value = BsnBfdEndpoint(decoder.ReadByte())
-	return bsntlvbfdendpoint, nil
+	_bsntlvbfdendpoint.Value = BsnBfdEndpoint(decoder.ReadByte())
+	return _bsntlvbfdendpoint, nil
 }
 
 func NewBsnTlvBfdEndpoint() *BsnTlvBfdEndpoint {
-	return &BsnTlvBfdEndpoint{
+	obj := &BsnTlvBfdEndpoint{
 		BsnTlv: NewBsnTlv(176),
 	}
+	return obj
 }
 
 type BsnTlvBfdState struct {
@@ -1893,19 +1933,20 @@ func (self *BsnTlvBfdState) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvBfdState(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBfdState, error) {
-	bsntlvbfdstate := &BsnTlvBfdState{BsnTlv: parent}
+func DecodeBsnTlvBfdState(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBfdState, error) {
+	_bsntlvbfdstate := &BsnTlvBfdState{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvBfdState packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvbfdstate.Value = BsnBfdEndpointState(decoder.ReadByte())
-	return bsntlvbfdstate, nil
+	_bsntlvbfdstate.Value = BsnBfdEndpointState(decoder.ReadByte())
+	return _bsntlvbfdstate, nil
 }
 
 func NewBsnTlvBfdState() *BsnTlvBfdState {
-	return &BsnTlvBfdState{
+	obj := &BsnTlvBfdState{
 		BsnTlv: NewBsnTlv(177),
 	}
+	return obj
 }
 
 type BsnTlvBroadcastQueryTimeout struct {
@@ -1926,19 +1967,20 @@ func (self *BsnTlvBroadcastQueryTimeout) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnTlvBroadcastQueryTimeout(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBroadcastQueryTimeout, error) {
-	bsntlvbroadcastquerytimeout := &BsnTlvBroadcastQueryTimeout{BsnTlv: parent}
+func DecodeBsnTlvBroadcastQueryTimeout(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBroadcastQueryTimeout, error) {
+	_bsntlvbroadcastquerytimeout := &BsnTlvBroadcastQueryTimeout{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvBroadcastQueryTimeout packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvbroadcastquerytimeout.Value = uint32(decoder.ReadUint32())
-	return bsntlvbroadcastquerytimeout, nil
+	_bsntlvbroadcastquerytimeout.Value = uint32(decoder.ReadUint32())
+	return _bsntlvbroadcastquerytimeout, nil
 }
 
 func NewBsnTlvBroadcastQueryTimeout() *BsnTlvBroadcastQueryTimeout {
-	return &BsnTlvBroadcastQueryTimeout{
+	obj := &BsnTlvBroadcastQueryTimeout{
 		BsnTlv: NewBsnTlv(10),
 	}
+	return obj
 }
 
 type BsnTlvBroadcastRate struct {
@@ -1959,19 +2001,20 @@ func (self *BsnTlvBroadcastRate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvBroadcastRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBroadcastRate, error) {
-	bsntlvbroadcastrate := &BsnTlvBroadcastRate{BsnTlv: parent}
+func DecodeBsnTlvBroadcastRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBroadcastRate, error) {
+	_bsntlvbroadcastrate := &BsnTlvBroadcastRate{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvBroadcastRate packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvbroadcastrate.Value = uint32(decoder.ReadUint32())
-	return bsntlvbroadcastrate, nil
+	_bsntlvbroadcastrate.Value = uint32(decoder.ReadUint32())
+	return _bsntlvbroadcastrate, nil
 }
 
 func NewBsnTlvBroadcastRate() *BsnTlvBroadcastRate {
-	return &BsnTlvBroadcastRate{
+	obj := &BsnTlvBroadcastRate{
 		BsnTlv: NewBsnTlv(90),
 	}
+	return obj
 }
 
 type BsnTlvBucket struct {
@@ -1996,23 +2039,24 @@ func (self *BsnTlvBucket) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvBucket(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBucket, error) {
-	bsntlvbucket := &BsnTlvBucket{BsnTlv: parent}
+func DecodeBsnTlvBucket(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBucket, error) {
+	_bsntlvbucket := &BsnTlvBucket{BsnTlv: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsntlvbucket.Value = append(bsntlvbucket.Value, item)
+		_bsntlvbucket.Value = append(_bsntlvbucket.Value, item)
 	}
-	return bsntlvbucket, nil
+	return _bsntlvbucket, nil
 }
 
 func NewBsnTlvBucket() *BsnTlvBucket {
-	return &BsnTlvBucket{
+	obj := &BsnTlvBucket{
 		BsnTlv: NewBsnTlv(64),
 	}
+	return obj
 }
 
 type BsnTlvCircuitId struct {
@@ -2033,16 +2077,17 @@ func (self *BsnTlvCircuitId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvCircuitId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvCircuitId, error) {
-	bsntlvcircuitid := &BsnTlvCircuitId{BsnTlv: parent}
-	bsntlvcircuitid.Value = decoder.Read(decoder.Length())
-	return bsntlvcircuitid, nil
+func DecodeBsnTlvCircuitId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvCircuitId, error) {
+	_bsntlvcircuitid := &BsnTlvCircuitId{BsnTlv: parent}
+	_bsntlvcircuitid.Value = decoder.Read(decoder.Length())
+	return _bsntlvcircuitid, nil
 }
 
 func NewBsnTlvCircuitId() *BsnTlvCircuitId {
-	return &BsnTlvCircuitId{
+	obj := &BsnTlvCircuitId{
 		BsnTlv: NewBsnTlv(14),
 	}
+	return obj
 }
 
 type BsnTlvConvergenceStatus struct {
@@ -2063,19 +2108,20 @@ func (self *BsnTlvConvergenceStatus) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvConvergenceStatus(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvConvergenceStatus, error) {
-	bsntlvconvergencestatus := &BsnTlvConvergenceStatus{BsnTlv: parent}
+func DecodeBsnTlvConvergenceStatus(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvConvergenceStatus, error) {
+	_bsntlvconvergencestatus := &BsnTlvConvergenceStatus{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvConvergenceStatus packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvconvergencestatus.Value = uint8(decoder.ReadByte())
-	return bsntlvconvergencestatus, nil
+	_bsntlvconvergencestatus.Value = uint8(decoder.ReadByte())
+	return _bsntlvconvergencestatus, nil
 }
 
 func NewBsnTlvConvergenceStatus() *BsnTlvConvergenceStatus {
-	return &BsnTlvConvergenceStatus{
+	obj := &BsnTlvConvergenceStatus{
 		BsnTlv: NewBsnTlv(45),
 	}
+	return obj
 }
 
 type BsnTlvCpuLag struct {
@@ -2093,15 +2139,16 @@ func (self *BsnTlvCpuLag) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvCpuLag(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvCpuLag, error) {
-	bsntlvcpulag := &BsnTlvCpuLag{BsnTlv: parent}
-	return bsntlvcpulag, nil
+func DecodeBsnTlvCpuLag(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvCpuLag, error) {
+	_bsntlvcpulag := &BsnTlvCpuLag{BsnTlv: parent}
+	return _bsntlvcpulag, nil
 }
 
 func NewBsnTlvCpuLag() *BsnTlvCpuLag {
-	return &BsnTlvCpuLag{
+	obj := &BsnTlvCpuLag{
 		BsnTlv: NewBsnTlv(118),
 	}
+	return obj
 }
 
 type BsnTlvCrcEnabled struct {
@@ -2122,19 +2169,20 @@ func (self *BsnTlvCrcEnabled) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvCrcEnabled(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvCrcEnabled, error) {
-	bsntlvcrcenabled := &BsnTlvCrcEnabled{BsnTlv: parent}
+func DecodeBsnTlvCrcEnabled(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvCrcEnabled, error) {
+	_bsntlvcrcenabled := &BsnTlvCrcEnabled{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvCrcEnabled packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvcrcenabled.Value = uint8(decoder.ReadByte())
-	return bsntlvcrcenabled, nil
+	_bsntlvcrcenabled.Value = uint8(decoder.ReadByte())
+	return _bsntlvcrcenabled, nil
 }
 
 func NewBsnTlvCrcEnabled() *BsnTlvCrcEnabled {
-	return &BsnTlvCrcEnabled{
+	obj := &BsnTlvCrcEnabled{
 		BsnTlv: NewBsnTlv(22),
 	}
+	return obj
 }
 
 type BsnTlvData struct {
@@ -2155,16 +2203,17 @@ func (self *BsnTlvData) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvData(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvData, error) {
-	bsntlvdata := &BsnTlvData{BsnTlv: parent}
-	bsntlvdata.Value = decoder.Read(decoder.Length())
-	return bsntlvdata, nil
+func DecodeBsnTlvData(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvData, error) {
+	_bsntlvdata := &BsnTlvData{BsnTlv: parent}
+	_bsntlvdata.Value = decoder.Read(decoder.Length())
+	return _bsntlvdata, nil
 }
 
 func NewBsnTlvData() *BsnTlvData {
-	return &BsnTlvData{
+	obj := &BsnTlvData{
 		BsnTlv: NewBsnTlv(55),
 	}
+	return obj
 }
 
 type BsnTlvDataMask struct {
@@ -2185,16 +2234,17 @@ func (self *BsnTlvDataMask) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvDataMask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDataMask, error) {
-	bsntlvdatamask := &BsnTlvDataMask{BsnTlv: parent}
-	bsntlvdatamask.Value = decoder.Read(decoder.Length())
-	return bsntlvdatamask, nil
+func DecodeBsnTlvDataMask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDataMask, error) {
+	_bsntlvdatamask := &BsnTlvDataMask{BsnTlv: parent}
+	_bsntlvdatamask.Value = decoder.Read(decoder.Length())
+	return _bsntlvdatamask, nil
 }
 
 func NewBsnTlvDataMask() *BsnTlvDataMask {
-	return &BsnTlvDataMask{
+	obj := &BsnTlvDataMask{
 		BsnTlv: NewBsnTlv(140),
 	}
+	return obj
 }
 
 type BsnTlvDecap struct {
@@ -2215,19 +2265,20 @@ func (self *BsnTlvDecap) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvDecap(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDecap, error) {
-	bsntlvdecap := &BsnTlvDecap{BsnTlv: parent}
+func DecodeBsnTlvDecap(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDecap, error) {
+	_bsntlvdecap := &BsnTlvDecap{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvDecap packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvdecap.Value = BsnDecap(decoder.ReadUint16())
-	return bsntlvdecap, nil
+	_bsntlvdecap.Value = BsnDecap(decoder.ReadUint16())
+	return _bsntlvdecap, nil
 }
 
 func NewBsnTlvDecap() *BsnTlvDecap {
-	return &BsnTlvDecap{
+	obj := &BsnTlvDecap{
 		BsnTlv: NewBsnTlv(85),
 	}
+	return obj
 }
 
 type BsnTlvDisableSrcMacCheck struct {
@@ -2245,15 +2296,16 @@ func (self *BsnTlvDisableSrcMacCheck) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvDisableSrcMacCheck(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDisableSrcMacCheck, error) {
-	bsntlvdisablesrcmaccheck := &BsnTlvDisableSrcMacCheck{BsnTlv: parent}
-	return bsntlvdisablesrcmaccheck, nil
+func DecodeBsnTlvDisableSrcMacCheck(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDisableSrcMacCheck, error) {
+	_bsntlvdisablesrcmaccheck := &BsnTlvDisableSrcMacCheck{BsnTlv: parent}
+	return _bsntlvdisablesrcmaccheck, nil
 }
 
 func NewBsnTlvDisableSrcMacCheck() *BsnTlvDisableSrcMacCheck {
-	return &BsnTlvDisableSrcMacCheck{
+	obj := &BsnTlvDisableSrcMacCheck{
 		BsnTlv: NewBsnTlv(120),
 	}
+	return obj
 }
 
 type BsnTlvDrop struct {
@@ -2271,15 +2323,16 @@ func (self *BsnTlvDrop) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvDrop(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDrop, error) {
-	bsntlvdrop := &BsnTlvDrop{BsnTlv: parent}
-	return bsntlvdrop, nil
+func DecodeBsnTlvDrop(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDrop, error) {
+	_bsntlvdrop := &BsnTlvDrop{BsnTlv: parent}
+	return _bsntlvdrop, nil
 }
 
 func NewBsnTlvDrop() *BsnTlvDrop {
-	return &BsnTlvDrop{
+	obj := &BsnTlvDrop{
 		BsnTlv: NewBsnTlv(121),
 	}
+	return obj
 }
 
 type BsnTlvDscp struct {
@@ -2300,19 +2353,20 @@ func (self *BsnTlvDscp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvDscp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDscp, error) {
-	bsntlvdscp := &BsnTlvDscp{BsnTlv: parent}
+func DecodeBsnTlvDscp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDscp, error) {
+	_bsntlvdscp := &BsnTlvDscp{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvDscp packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvdscp.Value = uint16(decoder.ReadUint16())
-	return bsntlvdscp, nil
+	_bsntlvdscp.Value = uint16(decoder.ReadUint16())
+	return _bsntlvdscp, nil
 }
 
 func NewBsnTlvDscp() *BsnTlvDscp {
-	return &BsnTlvDscp{
+	obj := &BsnTlvDscp{
 		BsnTlv: NewBsnTlv(112),
 	}
+	return obj
 }
 
 type BsnTlvEcn struct {
@@ -2333,19 +2387,20 @@ func (self *BsnTlvEcn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvEcn(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEcn, error) {
-	bsntlvecn := &BsnTlvEcn{BsnTlv: parent}
+func DecodeBsnTlvEcn(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEcn, error) {
+	_bsntlvecn := &BsnTlvEcn{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvEcn packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvecn.Value = uint8(decoder.ReadByte())
-	return bsntlvecn, nil
+	_bsntlvecn.Value = uint8(decoder.ReadByte())
+	return _bsntlvecn, nil
 }
 
 func NewBsnTlvEcn() *BsnTlvEcn {
-	return &BsnTlvEcn{
+	obj := &BsnTlvEcn{
 		BsnTlv: NewBsnTlv(132),
 	}
+	return obj
 }
 
 type BsnTlvEgressOnly struct {
@@ -2363,15 +2418,16 @@ func (self *BsnTlvEgressOnly) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvEgressOnly(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEgressOnly, error) {
-	bsntlvegressonly := &BsnTlvEgressOnly{BsnTlv: parent}
-	return bsntlvegressonly, nil
+func DecodeBsnTlvEgressOnly(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEgressOnly, error) {
+	_bsntlvegressonly := &BsnTlvEgressOnly{BsnTlv: parent}
+	return _bsntlvegressonly, nil
 }
 
 func NewBsnTlvEgressOnly() *BsnTlvEgressOnly {
-	return &BsnTlvEgressOnly{
+	obj := &BsnTlvEgressOnly{
 		BsnTlv: NewBsnTlv(137),
 	}
+	return obj
 }
 
 type BsnTlvEgressPortGroupId struct {
@@ -2392,19 +2448,20 @@ func (self *BsnTlvEgressPortGroupId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvEgressPortGroupId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEgressPortGroupId, error) {
-	bsntlvegressportgroupid := &BsnTlvEgressPortGroupId{BsnTlv: parent}
+func DecodeBsnTlvEgressPortGroupId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEgressPortGroupId, error) {
+	_bsntlvegressportgroupid := &BsnTlvEgressPortGroupId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvEgressPortGroupId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvegressportgroupid.Value = uint32(decoder.ReadUint32())
-	return bsntlvegressportgroupid, nil
+	_bsntlvegressportgroupid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvegressportgroupid, nil
 }
 
 func NewBsnTlvEgressPortGroupId() *BsnTlvEgressPortGroupId {
-	return &BsnTlvEgressPortGroupId{
+	obj := &BsnTlvEgressPortGroupId{
 		BsnTlv: NewBsnTlv(139),
 	}
+	return obj
 }
 
 type BsnTlvEncap struct {
@@ -2425,19 +2482,20 @@ func (self *BsnTlvEncap) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvEncap(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEncap, error) {
-	bsntlvencap := &BsnTlvEncap{BsnTlv: parent}
+func DecodeBsnTlvEncap(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEncap, error) {
+	_bsntlvencap := &BsnTlvEncap{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvEncap packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvencap.Value = BsnEncap(decoder.ReadByte())
-	return bsntlvencap, nil
+	_bsntlvencap.Value = BsnEncap(decoder.ReadByte())
+	return _bsntlvencap, nil
 }
 
 func NewBsnTlvEncap() *BsnTlvEncap {
-	return &BsnTlvEncap{
+	obj := &BsnTlvEncap{
 		BsnTlv: NewBsnTlv(175),
 	}
+	return obj
 }
 
 type BsnTlvEnhancedHashCapability struct {
@@ -2458,19 +2516,20 @@ func (self *BsnTlvEnhancedHashCapability) Serialize(encoder *goloxi.Encoder) err
 	return nil
 }
 
-func decodeBsnTlvEnhancedHashCapability(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEnhancedHashCapability, error) {
-	bsntlvenhancedhashcapability := &BsnTlvEnhancedHashCapability{BsnTlv: parent}
+func DecodeBsnTlvEnhancedHashCapability(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEnhancedHashCapability, error) {
+	_bsntlvenhancedhashcapability := &BsnTlvEnhancedHashCapability{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvEnhancedHashCapability packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvenhancedhashcapability.Value = BsnEnhancedHashType(decoder.ReadUint64())
-	return bsntlvenhancedhashcapability, nil
+	_bsntlvenhancedhashcapability.Value = BsnEnhancedHashType(decoder.ReadUint64())
+	return _bsntlvenhancedhashcapability, nil
 }
 
 func NewBsnTlvEnhancedHashCapability() *BsnTlvEnhancedHashCapability {
-	return &BsnTlvEnhancedHashCapability{
+	obj := &BsnTlvEnhancedHashCapability{
 		BsnTlv: NewBsnTlv(143),
 	}
+	return obj
 }
 
 type BsnTlvEthDst struct {
@@ -2491,19 +2550,20 @@ func (self *BsnTlvEthDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvEthDst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEthDst, error) {
-	bsntlvethdst := &BsnTlvEthDst{BsnTlv: parent}
+func DecodeBsnTlvEthDst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEthDst, error) {
+	_bsntlvethdst := &BsnTlvEthDst{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvEthDst packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvethdst.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvethdst, nil
+	_bsntlvethdst.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvethdst, nil
 }
 
 func NewBsnTlvEthDst() *BsnTlvEthDst {
-	return &BsnTlvEthDst{
+	obj := &BsnTlvEthDst{
 		BsnTlv: NewBsnTlv(33),
 	}
+	return obj
 }
 
 type BsnTlvEthSrc struct {
@@ -2524,19 +2584,20 @@ func (self *BsnTlvEthSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvEthSrc(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEthSrc, error) {
-	bsntlvethsrc := &BsnTlvEthSrc{BsnTlv: parent}
+func DecodeBsnTlvEthSrc(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEthSrc, error) {
+	_bsntlvethsrc := &BsnTlvEthSrc{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvEthSrc packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvethsrc.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvethsrc, nil
+	_bsntlvethsrc.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvethsrc, nil
 }
 
 func NewBsnTlvEthSrc() *BsnTlvEthSrc {
-	return &BsnTlvEthSrc{
+	obj := &BsnTlvEthSrc{
 		BsnTlv: NewBsnTlv(32),
 	}
+	return obj
 }
 
 type BsnTlvEthType struct {
@@ -2557,19 +2618,20 @@ func (self *BsnTlvEthType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvEthType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEthType, error) {
-	bsntlvethtype := &BsnTlvEthType{BsnTlv: parent}
+func DecodeBsnTlvEthType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvEthType, error) {
+	_bsntlvethtype := &BsnTlvEthType{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvEthType packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvethtype.Value = uint16(decoder.ReadUint16())
-	return bsntlvethtype, nil
+	_bsntlvethtype.Value = uint16(decoder.ReadUint16())
+	return _bsntlvethtype, nil
 }
 
 func NewBsnTlvEthType() *BsnTlvEthType {
-	return &BsnTlvEthType{
+	obj := &BsnTlvEthType{
 		BsnTlv: NewBsnTlv(131),
 	}
+	return obj
 }
 
 type BsnTlvExternalGatewayIp struct {
@@ -2590,19 +2652,20 @@ func (self *BsnTlvExternalGatewayIp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvExternalGatewayIp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalGatewayIp, error) {
-	bsntlvexternalgatewayip := &BsnTlvExternalGatewayIp{BsnTlv: parent}
+func DecodeBsnTlvExternalGatewayIp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalGatewayIp, error) {
+	_bsntlvexternalgatewayip := &BsnTlvExternalGatewayIp{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvExternalGatewayIp packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvexternalgatewayip.Value = net.IP(decoder.Read(4))
-	return bsntlvexternalgatewayip, nil
+	_bsntlvexternalgatewayip.Value = net.IP(decoder.Read(4))
+	return _bsntlvexternalgatewayip, nil
 }
 
 func NewBsnTlvExternalGatewayIp() *BsnTlvExternalGatewayIp {
-	return &BsnTlvExternalGatewayIp{
+	obj := &BsnTlvExternalGatewayIp{
 		BsnTlv: NewBsnTlv(26),
 	}
+	return obj
 }
 
 type BsnTlvExternalGatewayMac struct {
@@ -2623,19 +2686,20 @@ func (self *BsnTlvExternalGatewayMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvExternalGatewayMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalGatewayMac, error) {
-	bsntlvexternalgatewaymac := &BsnTlvExternalGatewayMac{BsnTlv: parent}
+func DecodeBsnTlvExternalGatewayMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalGatewayMac, error) {
+	_bsntlvexternalgatewaymac := &BsnTlvExternalGatewayMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvExternalGatewayMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvexternalgatewaymac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvexternalgatewaymac, nil
+	_bsntlvexternalgatewaymac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvexternalgatewaymac, nil
 }
 
 func NewBsnTlvExternalGatewayMac() *BsnTlvExternalGatewayMac {
-	return &BsnTlvExternalGatewayMac{
+	obj := &BsnTlvExternalGatewayMac{
 		BsnTlv: NewBsnTlv(29),
 	}
+	return obj
 }
 
 type BsnTlvExternalIp struct {
@@ -2656,19 +2720,20 @@ func (self *BsnTlvExternalIp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvExternalIp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalIp, error) {
-	bsntlvexternalip := &BsnTlvExternalIp{BsnTlv: parent}
+func DecodeBsnTlvExternalIp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalIp, error) {
+	_bsntlvexternalip := &BsnTlvExternalIp{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvExternalIp packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvexternalip.Value = net.IP(decoder.Read(4))
-	return bsntlvexternalip, nil
+	_bsntlvexternalip.Value = net.IP(decoder.Read(4))
+	return _bsntlvexternalip, nil
 }
 
 func NewBsnTlvExternalIp() *BsnTlvExternalIp {
-	return &BsnTlvExternalIp{
+	obj := &BsnTlvExternalIp{
 		BsnTlv: NewBsnTlv(23),
 	}
+	return obj
 }
 
 type BsnTlvExternalMac struct {
@@ -2689,19 +2754,20 @@ func (self *BsnTlvExternalMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvExternalMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalMac, error) {
-	bsntlvexternalmac := &BsnTlvExternalMac{BsnTlv: parent}
+func DecodeBsnTlvExternalMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalMac, error) {
+	_bsntlvexternalmac := &BsnTlvExternalMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvExternalMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvexternalmac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvexternalmac, nil
+	_bsntlvexternalmac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvexternalmac, nil
 }
 
 func NewBsnTlvExternalMac() *BsnTlvExternalMac {
-	return &BsnTlvExternalMac{
+	obj := &BsnTlvExternalMac{
 		BsnTlv: NewBsnTlv(24),
 	}
+	return obj
 }
 
 type BsnTlvExternalNetmask struct {
@@ -2722,19 +2788,20 @@ func (self *BsnTlvExternalNetmask) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvExternalNetmask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalNetmask, error) {
-	bsntlvexternalnetmask := &BsnTlvExternalNetmask{BsnTlv: parent}
+func DecodeBsnTlvExternalNetmask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvExternalNetmask, error) {
+	_bsntlvexternalnetmask := &BsnTlvExternalNetmask{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvExternalNetmask packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvexternalnetmask.Value = net.IP(decoder.Read(4))
-	return bsntlvexternalnetmask, nil
+	_bsntlvexternalnetmask.Value = net.IP(decoder.Read(4))
+	return _bsntlvexternalnetmask, nil
 }
 
 func NewBsnTlvExternalNetmask() *BsnTlvExternalNetmask {
-	return &BsnTlvExternalNetmask{
+	obj := &BsnTlvExternalNetmask{
 		BsnTlv: NewBsnTlv(25),
 	}
+	return obj
 }
 
 type BsnTlvFabricPortRole struct {
@@ -2755,19 +2822,20 @@ func (self *BsnTlvFabricPortRole) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvFabricPortRole(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFabricPortRole, error) {
-	bsntlvfabricportrole := &BsnTlvFabricPortRole{BsnTlv: parent}
+func DecodeBsnTlvFabricPortRole(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFabricPortRole, error) {
+	_bsntlvfabricportrole := &BsnTlvFabricPortRole{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvFabricPortRole packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvfabricportrole.Value = BsnFabricPortRole(decoder.ReadUint16())
-	return bsntlvfabricportrole, nil
+	_bsntlvfabricportrole.Value = BsnFabricPortRole(decoder.ReadUint16())
+	return _bsntlvfabricportrole, nil
 }
 
 func NewBsnTlvFabricPortRole() *BsnTlvFabricPortRole {
-	return &BsnTlvFabricPortRole{
+	obj := &BsnTlvFabricPortRole{
 		BsnTlv: NewBsnTlv(165),
 	}
+	return obj
 }
 
 type BsnTlvFlood struct {
@@ -2785,15 +2853,16 @@ func (self *BsnTlvFlood) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvFlood(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFlood, error) {
-	bsntlvflood := &BsnTlvFlood{BsnTlv: parent}
-	return bsntlvflood, nil
+func DecodeBsnTlvFlood(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFlood, error) {
+	_bsntlvflood := &BsnTlvFlood{BsnTlv: parent}
+	return _bsntlvflood, nil
 }
 
 func NewBsnTlvFlood() *BsnTlvFlood {
-	return &BsnTlvFlood{
+	obj := &BsnTlvFlood{
 		BsnTlv: NewBsnTlv(163),
 	}
+	return obj
 }
 
 type BsnTlvFlowClassifier struct {
@@ -2814,19 +2883,20 @@ func (self *BsnTlvFlowClassifier) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvFlowClassifier(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFlowClassifier, error) {
-	bsntlvflowclassifier := &BsnTlvFlowClassifier{BsnTlv: parent}
+func DecodeBsnTlvFlowClassifier(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFlowClassifier, error) {
+	_bsntlvflowclassifier := &BsnTlvFlowClassifier{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvFlowClassifier packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvflowclassifier.Value = BsnFlowClassifier(decoder.ReadUint16())
-	return bsntlvflowclassifier, nil
+	_bsntlvflowclassifier.Value = BsnFlowClassifier(decoder.ReadUint16())
+	return _bsntlvflowclassifier, nil
 }
 
 func NewBsnTlvFlowClassifier() *BsnTlvFlowClassifier {
-	return &BsnTlvFlowClassifier{
+	obj := &BsnTlvFlowClassifier{
 		BsnTlv: NewBsnTlv(184),
 	}
+	return obj
 }
 
 type BsnTlvFlowClassify struct {
@@ -2844,15 +2914,16 @@ func (self *BsnTlvFlowClassify) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvFlowClassify(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFlowClassify, error) {
-	bsntlvflowclassify := &BsnTlvFlowClassify{BsnTlv: parent}
-	return bsntlvflowclassify, nil
+func DecodeBsnTlvFlowClassify(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFlowClassify, error) {
+	_bsntlvflowclassify := &BsnTlvFlowClassify{BsnTlv: parent}
+	return _bsntlvflowclassify, nil
 }
 
 func NewBsnTlvFlowClassify() *BsnTlvFlowClassify {
-	return &BsnTlvFlowClassify{
+	obj := &BsnTlvFlowClassify{
 		BsnTlv: NewBsnTlv(182),
 	}
+	return obj
 }
 
 type BsnTlvFlowIdentifier struct {
@@ -2873,19 +2944,20 @@ func (self *BsnTlvFlowIdentifier) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvFlowIdentifier(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFlowIdentifier, error) {
-	bsntlvflowidentifier := &BsnTlvFlowIdentifier{BsnTlv: parent}
+func DecodeBsnTlvFlowIdentifier(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvFlowIdentifier, error) {
+	_bsntlvflowidentifier := &BsnTlvFlowIdentifier{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvFlowIdentifier packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvflowidentifier.Value = uint32(decoder.ReadUint32())
-	return bsntlvflowidentifier, nil
+	_bsntlvflowidentifier.Value = uint32(decoder.ReadUint32())
+	return _bsntlvflowidentifier, nil
 }
 
 func NewBsnTlvFlowIdentifier() *BsnTlvFlowIdentifier {
-	return &BsnTlvFlowIdentifier{
+	obj := &BsnTlvFlowIdentifier{
 		BsnTlv: NewBsnTlv(183),
 	}
+	return obj
 }
 
 type BsnTlvForceLinkUp struct {
@@ -2903,15 +2975,16 @@ func (self *BsnTlvForceLinkUp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvForceLinkUp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvForceLinkUp, error) {
-	bsntlvforcelinkup := &BsnTlvForceLinkUp{BsnTlv: parent}
-	return bsntlvforcelinkup, nil
+func DecodeBsnTlvForceLinkUp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvForceLinkUp, error) {
+	_bsntlvforcelinkup := &BsnTlvForceLinkUp{BsnTlv: parent}
+	return _bsntlvforcelinkup, nil
 }
 
 func NewBsnTlvForceLinkUp() *BsnTlvForceLinkUp {
-	return &BsnTlvForceLinkUp{
+	obj := &BsnTlvForceLinkUp{
 		BsnTlv: NewBsnTlv(151),
 	}
+	return obj
 }
 
 type BsnTlvForwardErrorCorrection struct {
@@ -2932,19 +3005,20 @@ func (self *BsnTlvForwardErrorCorrection) Serialize(encoder *goloxi.Encoder) err
 	return nil
 }
 
-func decodeBsnTlvForwardErrorCorrection(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvForwardErrorCorrection, error) {
-	bsntlvforwarderrorcorrection := &BsnTlvForwardErrorCorrection{BsnTlv: parent}
+func DecodeBsnTlvForwardErrorCorrection(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvForwardErrorCorrection, error) {
+	_bsntlvforwarderrorcorrection := &BsnTlvForwardErrorCorrection{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvForwardErrorCorrection packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvforwarderrorcorrection.Value = BsnForwardErrorCorrectionType(decoder.ReadByte())
-	return bsntlvforwarderrorcorrection, nil
+	_bsntlvforwarderrorcorrection.Value = BsnForwardErrorCorrectionType(decoder.ReadByte())
+	return _bsntlvforwarderrorcorrection, nil
 }
 
 func NewBsnTlvForwardErrorCorrection() *BsnTlvForwardErrorCorrection {
-	return &BsnTlvForwardErrorCorrection{
+	obj := &BsnTlvForwardErrorCorrection{
 		BsnTlv: NewBsnTlv(149),
 	}
+	return obj
 }
 
 type BsnTlvGenerationId struct {
@@ -2965,19 +3039,20 @@ func (self *BsnTlvGenerationId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvGenerationId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvGenerationId, error) {
-	bsntlvgenerationid := &BsnTlvGenerationId{BsnTlv: parent}
+func DecodeBsnTlvGenerationId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvGenerationId, error) {
+	_bsntlvgenerationid := &BsnTlvGenerationId{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvGenerationId packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvgenerationid.Value = uint64(decoder.ReadUint64())
-	return bsntlvgenerationid, nil
+	_bsntlvgenerationid.Value = uint64(decoder.ReadUint64())
+	return _bsntlvgenerationid, nil
 }
 
 func NewBsnTlvGenerationId() *BsnTlvGenerationId {
-	return &BsnTlvGenerationId{
+	obj := &BsnTlvGenerationId{
 		BsnTlv: NewBsnTlv(80),
 	}
+	return obj
 }
 
 type BsnTlvHashAlgorithm struct {
@@ -2998,19 +3073,20 @@ func (self *BsnTlvHashAlgorithm) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvHashAlgorithm(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashAlgorithm, error) {
-	bsntlvhashalgorithm := &BsnTlvHashAlgorithm{BsnTlv: parent}
+func DecodeBsnTlvHashAlgorithm(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashAlgorithm, error) {
+	_bsntlvhashalgorithm := &BsnTlvHashAlgorithm{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvHashAlgorithm packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvhashalgorithm.Value = BsnHashAlgorithmType(decoder.ReadUint16())
-	return bsntlvhashalgorithm, nil
+	_bsntlvhashalgorithm.Value = BsnHashAlgorithmType(decoder.ReadUint16())
+	return _bsntlvhashalgorithm, nil
 }
 
 func NewBsnTlvHashAlgorithm() *BsnTlvHashAlgorithm {
-	return &BsnTlvHashAlgorithm{
+	obj := &BsnTlvHashAlgorithm{
 		BsnTlv: NewBsnTlv(145),
 	}
+	return obj
 }
 
 type BsnTlvHashGtpHeaderMatch struct {
@@ -3033,20 +3109,21 @@ func (self *BsnTlvHashGtpHeaderMatch) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvHashGtpHeaderMatch(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashGtpHeaderMatch, error) {
-	bsntlvhashgtpheadermatch := &BsnTlvHashGtpHeaderMatch{BsnTlv: parent}
+func DecodeBsnTlvHashGtpHeaderMatch(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashGtpHeaderMatch, error) {
+	_bsntlvhashgtpheadermatch := &BsnTlvHashGtpHeaderMatch{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvHashGtpHeaderMatch packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvhashgtpheadermatch.FirstHeaderByte = uint8(decoder.ReadByte())
-	bsntlvhashgtpheadermatch.FirstHeaderMask = uint8(decoder.ReadByte())
-	return bsntlvhashgtpheadermatch, nil
+	_bsntlvhashgtpheadermatch.FirstHeaderByte = uint8(decoder.ReadByte())
+	_bsntlvhashgtpheadermatch.FirstHeaderMask = uint8(decoder.ReadByte())
+	return _bsntlvhashgtpheadermatch, nil
 }
 
 func NewBsnTlvHashGtpHeaderMatch() *BsnTlvHashGtpHeaderMatch {
-	return &BsnTlvHashGtpHeaderMatch{
+	obj := &BsnTlvHashGtpHeaderMatch{
 		BsnTlv: NewBsnTlv(104),
 	}
+	return obj
 }
 
 type BsnTlvHashGtpPortMatch struct {
@@ -3071,21 +3148,22 @@ func (self *BsnTlvHashGtpPortMatch) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvHashGtpPortMatch(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashGtpPortMatch, error) {
-	bsntlvhashgtpportmatch := &BsnTlvHashGtpPortMatch{BsnTlv: parent}
+func DecodeBsnTlvHashGtpPortMatch(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashGtpPortMatch, error) {
+	_bsntlvhashgtpportmatch := &BsnTlvHashGtpPortMatch{BsnTlv: parent}
 	if decoder.Length() < 5 {
 		return nil, fmt.Errorf("BsnTlvHashGtpPortMatch packet too short: %d < 5", decoder.Length())
 	}
-	bsntlvhashgtpportmatch.Match = BsnHashGtpPortMatch(decoder.ReadByte())
-	bsntlvhashgtpportmatch.SrcPort = uint16(decoder.ReadUint16())
-	bsntlvhashgtpportmatch.DstPort = uint16(decoder.ReadUint16())
-	return bsntlvhashgtpportmatch, nil
+	_bsntlvhashgtpportmatch.Match = BsnHashGtpPortMatch(decoder.ReadByte())
+	_bsntlvhashgtpportmatch.SrcPort = uint16(decoder.ReadUint16())
+	_bsntlvhashgtpportmatch.DstPort = uint16(decoder.ReadUint16())
+	return _bsntlvhashgtpportmatch, nil
 }
 
 func NewBsnTlvHashGtpPortMatch() *BsnTlvHashGtpPortMatch {
-	return &BsnTlvHashGtpPortMatch{
+	obj := &BsnTlvHashGtpPortMatch{
 		BsnTlv: NewBsnTlv(105),
 	}
+	return obj
 }
 
 type BsnTlvHashPacketField struct {
@@ -3106,19 +3184,20 @@ func (self *BsnTlvHashPacketField) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvHashPacketField(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashPacketField, error) {
-	bsntlvhashpacketfield := &BsnTlvHashPacketField{BsnTlv: parent}
+func DecodeBsnTlvHashPacketField(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashPacketField, error) {
+	_bsntlvhashpacketfield := &BsnTlvHashPacketField{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvHashPacketField packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvhashpacketfield.Value = BsnHashPacketField(decoder.ReadUint64())
-	return bsntlvhashpacketfield, nil
+	_bsntlvhashpacketfield.Value = BsnHashPacketField(decoder.ReadUint64())
+	return _bsntlvhashpacketfield, nil
 }
 
 func NewBsnTlvHashPacketField() *BsnTlvHashPacketField {
-	return &BsnTlvHashPacketField{
+	obj := &BsnTlvHashPacketField{
 		BsnTlv: NewBsnTlv(103),
 	}
+	return obj
 }
 
 type BsnTlvHashPacketType struct {
@@ -3139,19 +3218,20 @@ func (self *BsnTlvHashPacketType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvHashPacketType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashPacketType, error) {
-	bsntlvhashpackettype := &BsnTlvHashPacketType{BsnTlv: parent}
+func DecodeBsnTlvHashPacketType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashPacketType, error) {
+	_bsntlvhashpackettype := &BsnTlvHashPacketType{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvHashPacketType packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvhashpackettype.Value = BsnHashPacketType(decoder.ReadByte())
-	return bsntlvhashpackettype, nil
+	_bsntlvhashpackettype.Value = BsnHashPacketType(decoder.ReadByte())
+	return _bsntlvhashpackettype, nil
 }
 
 func NewBsnTlvHashPacketType() *BsnTlvHashPacketType {
-	return &BsnTlvHashPacketType{
+	obj := &BsnTlvHashPacketType{
 		BsnTlv: NewBsnTlv(102),
 	}
+	return obj
 }
 
 type BsnTlvHashSeed struct {
@@ -3174,20 +3254,21 @@ func (self *BsnTlvHashSeed) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvHashSeed(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashSeed, error) {
-	bsntlvhashseed := &BsnTlvHashSeed{BsnTlv: parent}
+func DecodeBsnTlvHashSeed(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashSeed, error) {
+	_bsntlvhashseed := &BsnTlvHashSeed{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvHashSeed packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvhashseed.Seed1 = uint32(decoder.ReadUint32())
-	bsntlvhashseed.Seed2 = uint32(decoder.ReadUint32())
-	return bsntlvhashseed, nil
+	_bsntlvhashseed.Seed1 = uint32(decoder.ReadUint32())
+	_bsntlvhashseed.Seed2 = uint32(decoder.ReadUint32())
+	return _bsntlvhashseed, nil
 }
 
 func NewBsnTlvHashSeed() *BsnTlvHashSeed {
-	return &BsnTlvHashSeed{
+	obj := &BsnTlvHashSeed{
 		BsnTlv: NewBsnTlv(100),
 	}
+	return obj
 }
 
 type BsnTlvHashType struct {
@@ -3208,19 +3289,20 @@ func (self *BsnTlvHashType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvHashType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashType, error) {
-	bsntlvhashtype := &BsnTlvHashType{BsnTlv: parent}
+func DecodeBsnTlvHashType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHashType, error) {
+	_bsntlvhashtype := &BsnTlvHashType{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvHashType packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvhashtype.Value = BsnHashType(decoder.ReadByte())
-	return bsntlvhashtype, nil
+	_bsntlvhashtype.Value = BsnHashType(decoder.ReadByte())
+	return _bsntlvhashtype, nil
 }
 
 func NewBsnTlvHashType() *BsnTlvHashType {
-	return &BsnTlvHashType{
+	obj := &BsnTlvHashType{
 		BsnTlv: NewBsnTlv(101),
 	}
+	return obj
 }
 
 type BsnTlvHeaderSize struct {
@@ -3241,19 +3323,20 @@ func (self *BsnTlvHeaderSize) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvHeaderSize(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHeaderSize, error) {
-	bsntlvheadersize := &BsnTlvHeaderSize{BsnTlv: parent}
+func DecodeBsnTlvHeaderSize(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvHeaderSize, error) {
+	_bsntlvheadersize := &BsnTlvHeaderSize{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvHeaderSize packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvheadersize.Value = uint32(decoder.ReadUint32())
-	return bsntlvheadersize, nil
+	_bsntlvheadersize.Value = uint32(decoder.ReadUint32())
+	return _bsntlvheadersize, nil
 }
 
 func NewBsnTlvHeaderSize() *BsnTlvHeaderSize {
-	return &BsnTlvHeaderSize{
+	obj := &BsnTlvHeaderSize{
 		BsnTlv: NewBsnTlv(31),
 	}
+	return obj
 }
 
 type BsnTlvIcmpCode struct {
@@ -3274,19 +3357,20 @@ func (self *BsnTlvIcmpCode) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIcmpCode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIcmpCode, error) {
-	bsntlvicmpcode := &BsnTlvIcmpCode{BsnTlv: parent}
+func DecodeBsnTlvIcmpCode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIcmpCode, error) {
+	_bsntlvicmpcode := &BsnTlvIcmpCode{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvIcmpCode packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvicmpcode.Value = uint8(decoder.ReadByte())
-	return bsntlvicmpcode, nil
+	_bsntlvicmpcode.Value = uint8(decoder.ReadByte())
+	return _bsntlvicmpcode, nil
 }
 
 func NewBsnTlvIcmpCode() *BsnTlvIcmpCode {
-	return &BsnTlvIcmpCode{
+	obj := &BsnTlvIcmpCode{
 		BsnTlv: NewBsnTlv(69),
 	}
+	return obj
 }
 
 type BsnTlvIcmpId struct {
@@ -3307,19 +3391,20 @@ func (self *BsnTlvIcmpId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIcmpId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIcmpId, error) {
-	bsntlvicmpid := &BsnTlvIcmpId{BsnTlv: parent}
+func DecodeBsnTlvIcmpId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIcmpId, error) {
+	_bsntlvicmpid := &BsnTlvIcmpId{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvIcmpId packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvicmpid.Value = uint16(decoder.ReadUint16())
-	return bsntlvicmpid, nil
+	_bsntlvicmpid.Value = uint16(decoder.ReadUint16())
+	return _bsntlvicmpid, nil
 }
 
 func NewBsnTlvIcmpId() *BsnTlvIcmpId {
-	return &BsnTlvIcmpId{
+	obj := &BsnTlvIcmpId{
 		BsnTlv: NewBsnTlv(70),
 	}
+	return obj
 }
 
 type BsnTlvIcmpType struct {
@@ -3340,19 +3425,20 @@ func (self *BsnTlvIcmpType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIcmpType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIcmpType, error) {
-	bsntlvicmptype := &BsnTlvIcmpType{BsnTlv: parent}
+func DecodeBsnTlvIcmpType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIcmpType, error) {
+	_bsntlvicmptype := &BsnTlvIcmpType{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvIcmpType packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvicmptype.Value = uint8(decoder.ReadByte())
-	return bsntlvicmptype, nil
+	_bsntlvicmptype.Value = uint8(decoder.ReadByte())
+	return _bsntlvicmptype, nil
 }
 
 func NewBsnTlvIcmpType() *BsnTlvIcmpType {
-	return &BsnTlvIcmpType{
+	obj := &BsnTlvIcmpType{
 		BsnTlv: NewBsnTlv(68),
 	}
+	return obj
 }
 
 type BsnTlvIcmpv6Chksum struct {
@@ -3373,19 +3459,20 @@ func (self *BsnTlvIcmpv6Chksum) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIcmpv6Chksum(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIcmpv6Chksum, error) {
-	bsntlvicmpv6chksum := &BsnTlvIcmpv6Chksum{BsnTlv: parent}
+func DecodeBsnTlvIcmpv6Chksum(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIcmpv6Chksum, error) {
+	_bsntlvicmpv6chksum := &BsnTlvIcmpv6Chksum{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvIcmpv6Chksum packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvicmpv6chksum.Value = uint16(decoder.ReadUint16())
-	return bsntlvicmpv6chksum, nil
+	_bsntlvicmpv6chksum.Value = uint16(decoder.ReadUint16())
+	return _bsntlvicmpv6chksum, nil
 }
 
 func NewBsnTlvIcmpv6Chksum() *BsnTlvIcmpv6Chksum {
-	return &BsnTlvIcmpv6Chksum{
+	obj := &BsnTlvIcmpv6Chksum{
 		BsnTlv: NewBsnTlv(125),
 	}
+	return obj
 }
 
 type BsnTlvIdentifier struct {
@@ -3406,19 +3493,20 @@ func (self *BsnTlvIdentifier) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIdentifier(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIdentifier, error) {
-	bsntlvidentifier := &BsnTlvIdentifier{BsnTlv: parent}
+func DecodeBsnTlvIdentifier(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIdentifier, error) {
+	_bsntlvidentifier := &BsnTlvIdentifier{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvIdentifier packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvidentifier.Value = uint32(decoder.ReadUint32())
-	return bsntlvidentifier, nil
+	_bsntlvidentifier.Value = uint32(decoder.ReadUint32())
+	return _bsntlvidentifier, nil
 }
 
 func NewBsnTlvIdentifier() *BsnTlvIdentifier {
-	return &BsnTlvIdentifier{
+	obj := &BsnTlvIdentifier{
 		BsnTlv: NewBsnTlv(173),
 	}
+	return obj
 }
 
 type BsnTlvIdleNotification struct {
@@ -3436,15 +3524,16 @@ func (self *BsnTlvIdleNotification) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIdleNotification(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIdleNotification, error) {
-	bsntlvidlenotification := &BsnTlvIdleNotification{BsnTlv: parent}
-	return bsntlvidlenotification, nil
+func DecodeBsnTlvIdleNotification(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIdleNotification, error) {
+	_bsntlvidlenotification := &BsnTlvIdleNotification{BsnTlv: parent}
+	return _bsntlvidlenotification, nil
 }
 
 func NewBsnTlvIdleNotification() *BsnTlvIdleNotification {
-	return &BsnTlvIdleNotification{
+	obj := &BsnTlvIdleNotification{
 		BsnTlv: NewBsnTlv(7),
 	}
+	return obj
 }
 
 type BsnTlvIdleTime struct {
@@ -3465,19 +3554,20 @@ func (self *BsnTlvIdleTime) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIdleTime(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIdleTime, error) {
-	bsntlvidletime := &BsnTlvIdleTime{BsnTlv: parent}
+func DecodeBsnTlvIdleTime(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIdleTime, error) {
+	_bsntlvidletime := &BsnTlvIdleTime{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvIdleTime packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvidletime.Value = uint64(decoder.ReadUint64())
-	return bsntlvidletime, nil
+	_bsntlvidletime.Value = uint64(decoder.ReadUint64())
+	return _bsntlvidletime, nil
 }
 
 func NewBsnTlvIdleTime() *BsnTlvIdleTime {
-	return &BsnTlvIdleTime{
+	obj := &BsnTlvIdleTime{
 		BsnTlv: NewBsnTlv(5),
 	}
+	return obj
 }
 
 type BsnTlvIdleTimeout struct {
@@ -3498,19 +3588,20 @@ func (self *BsnTlvIdleTimeout) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIdleTimeout(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIdleTimeout, error) {
-	bsntlvidletimeout := &BsnTlvIdleTimeout{BsnTlv: parent}
+func DecodeBsnTlvIdleTimeout(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIdleTimeout, error) {
+	_bsntlvidletimeout := &BsnTlvIdleTimeout{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvIdleTimeout packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvidletimeout.Value = uint32(decoder.ReadUint32())
-	return bsntlvidletimeout, nil
+	_bsntlvidletimeout.Value = uint32(decoder.ReadUint32())
+	return _bsntlvidletimeout, nil
 }
 
 func NewBsnTlvIdleTimeout() *BsnTlvIdleTimeout {
-	return &BsnTlvIdleTimeout{
+	obj := &BsnTlvIdleTimeout{
 		BsnTlv: NewBsnTlv(8),
 	}
+	return obj
 }
 
 type BsnTlvIgmpSnooping struct {
@@ -3528,15 +3619,16 @@ func (self *BsnTlvIgmpSnooping) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIgmpSnooping(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIgmpSnooping, error) {
-	bsntlvigmpsnooping := &BsnTlvIgmpSnooping{BsnTlv: parent}
-	return bsntlvigmpsnooping, nil
+func DecodeBsnTlvIgmpSnooping(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIgmpSnooping, error) {
+	_bsntlvigmpsnooping := &BsnTlvIgmpSnooping{BsnTlv: parent}
+	return _bsntlvigmpsnooping, nil
 }
 
 func NewBsnTlvIgmpSnooping() *BsnTlvIgmpSnooping {
-	return &BsnTlvIgmpSnooping{
+	obj := &BsnTlvIgmpSnooping{
 		BsnTlv: NewBsnTlv(78),
 	}
+	return obj
 }
 
 type BsnTlvIngressPortGroupId struct {
@@ -3557,19 +3649,20 @@ func (self *BsnTlvIngressPortGroupId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIngressPortGroupId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIngressPortGroupId, error) {
-	bsntlvingressportgroupid := &BsnTlvIngressPortGroupId{BsnTlv: parent}
+func DecodeBsnTlvIngressPortGroupId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIngressPortGroupId, error) {
+	_bsntlvingressportgroupid := &BsnTlvIngressPortGroupId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvIngressPortGroupId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvingressportgroupid.Value = uint32(decoder.ReadUint32())
-	return bsntlvingressportgroupid, nil
+	_bsntlvingressportgroupid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvingressportgroupid, nil
 }
 
 func NewBsnTlvIngressPortGroupId() *BsnTlvIngressPortGroupId {
-	return &BsnTlvIngressPortGroupId{
+	obj := &BsnTlvIngressPortGroupId{
 		BsnTlv: NewBsnTlv(138),
 	}
+	return obj
 }
 
 type BsnTlvInternalGatewayMac struct {
@@ -3590,19 +3683,20 @@ func (self *BsnTlvInternalGatewayMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvInternalGatewayMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvInternalGatewayMac, error) {
-	bsntlvinternalgatewaymac := &BsnTlvInternalGatewayMac{BsnTlv: parent}
+func DecodeBsnTlvInternalGatewayMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvInternalGatewayMac, error) {
+	_bsntlvinternalgatewaymac := &BsnTlvInternalGatewayMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvInternalGatewayMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvinternalgatewaymac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvinternalgatewaymac, nil
+	_bsntlvinternalgatewaymac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvinternalgatewaymac, nil
 }
 
 func NewBsnTlvInternalGatewayMac() *BsnTlvInternalGatewayMac {
-	return &BsnTlvInternalGatewayMac{
+	obj := &BsnTlvInternalGatewayMac{
 		BsnTlv: NewBsnTlv(28),
 	}
+	return obj
 }
 
 type BsnTlvInternalMac struct {
@@ -3623,19 +3717,20 @@ func (self *BsnTlvInternalMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvInternalMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvInternalMac, error) {
-	bsntlvinternalmac := &BsnTlvInternalMac{BsnTlv: parent}
+func DecodeBsnTlvInternalMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvInternalMac, error) {
+	_bsntlvinternalmac := &BsnTlvInternalMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvInternalMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvinternalmac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvinternalmac, nil
+	_bsntlvinternalmac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvinternalmac, nil
 }
 
 func NewBsnTlvInternalMac() *BsnTlvInternalMac {
-	return &BsnTlvInternalMac{
+	obj := &BsnTlvInternalMac{
 		BsnTlv: NewBsnTlv(27),
 	}
+	return obj
 }
 
 type BsnTlvInterval struct {
@@ -3656,19 +3751,20 @@ func (self *BsnTlvInterval) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvInterval(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvInterval, error) {
-	bsntlvinterval := &BsnTlvInterval{BsnTlv: parent}
+func DecodeBsnTlvInterval(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvInterval, error) {
+	_bsntlvinterval := &BsnTlvInterval{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvInterval packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvinterval.Value = uint32(decoder.ReadUint32())
-	return bsntlvinterval, nil
+	_bsntlvinterval.Value = uint32(decoder.ReadUint32())
+	return _bsntlvinterval, nil
 }
 
 func NewBsnTlvInterval() *BsnTlvInterval {
-	return &BsnTlvInterval{
+	obj := &BsnTlvInterval{
 		BsnTlv: NewBsnTlv(58),
 	}
+	return obj
 }
 
 type BsnTlvIpProto struct {
@@ -3689,19 +3785,20 @@ func (self *BsnTlvIpProto) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpProto(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpProto, error) {
-	bsntlvipproto := &BsnTlvIpProto{BsnTlv: parent}
+func DecodeBsnTlvIpProto(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpProto, error) {
+	_bsntlvipproto := &BsnTlvIpProto{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvIpProto packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvipproto.Value = uint8(decoder.ReadByte())
-	return bsntlvipproto, nil
+	_bsntlvipproto.Value = uint8(decoder.ReadByte())
+	return _bsntlvipproto, nil
 }
 
 func NewBsnTlvIpProto() *BsnTlvIpProto {
-	return &BsnTlvIpProto{
+	obj := &BsnTlvIpProto{
 		BsnTlv: NewBsnTlv(67),
 	}
+	return obj
 }
 
 type BsnTlvIpTunnelType struct {
@@ -3722,19 +3819,20 @@ func (self *BsnTlvIpTunnelType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpTunnelType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpTunnelType, error) {
-	bsntlviptunneltype := &BsnTlvIpTunnelType{BsnTlv: parent}
+func DecodeBsnTlvIpTunnelType(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpTunnelType, error) {
+	_bsntlviptunneltype := &BsnTlvIpTunnelType{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvIpTunnelType packet too short: %d < 2", decoder.Length())
 	}
-	bsntlviptunneltype.Value = BsnIpTunnelType(decoder.ReadUint16())
-	return bsntlviptunneltype, nil
+	_bsntlviptunneltype.Value = BsnIpTunnelType(decoder.ReadUint16())
+	return _bsntlviptunneltype, nil
 }
 
 func NewBsnTlvIpTunnelType() *BsnTlvIpTunnelType {
-	return &BsnTlvIpTunnelType{
+	obj := &BsnTlvIpTunnelType{
 		BsnTlv: NewBsnTlv(169),
 	}
+	return obj
 }
 
 type BsnTlvIpv4 struct {
@@ -3755,19 +3853,20 @@ func (self *BsnTlvIpv4) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpv4(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv4, error) {
-	bsntlvipv4 := &BsnTlvIpv4{BsnTlv: parent}
+func DecodeBsnTlvIpv4(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv4, error) {
+	_bsntlvipv4 := &BsnTlvIpv4{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvIpv4 packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvipv4.Value = net.IP(decoder.Read(4))
-	return bsntlvipv4, nil
+	_bsntlvipv4.Value = net.IP(decoder.Read(4))
+	return _bsntlvipv4, nil
 }
 
 func NewBsnTlvIpv4() *BsnTlvIpv4 {
-	return &BsnTlvIpv4{
+	obj := &BsnTlvIpv4{
 		BsnTlv: NewBsnTlv(4),
 	}
+	return obj
 }
 
 type BsnTlvIpv4Dst struct {
@@ -3788,19 +3887,20 @@ func (self *BsnTlvIpv4Dst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpv4Dst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv4Dst, error) {
-	bsntlvipv4dst := &BsnTlvIpv4Dst{BsnTlv: parent}
+func DecodeBsnTlvIpv4Dst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv4Dst, error) {
+	_bsntlvipv4dst := &BsnTlvIpv4Dst{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvIpv4Dst packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvipv4dst.Value = net.IP(decoder.Read(4))
-	return bsntlvipv4dst, nil
+	_bsntlvipv4dst.Value = net.IP(decoder.Read(4))
+	return _bsntlvipv4dst, nil
 }
 
 func NewBsnTlvIpv4Dst() *BsnTlvIpv4Dst {
-	return &BsnTlvIpv4Dst{
+	obj := &BsnTlvIpv4Dst{
 		BsnTlv: NewBsnTlv(35),
 	}
+	return obj
 }
 
 type BsnTlvIpv4Netmask struct {
@@ -3821,19 +3921,20 @@ func (self *BsnTlvIpv4Netmask) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpv4Netmask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv4Netmask, error) {
-	bsntlvipv4netmask := &BsnTlvIpv4Netmask{BsnTlv: parent}
+func DecodeBsnTlvIpv4Netmask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv4Netmask, error) {
+	_bsntlvipv4netmask := &BsnTlvIpv4Netmask{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvIpv4Netmask packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvipv4netmask.Value = net.IP(decoder.Read(4))
-	return bsntlvipv4netmask, nil
+	_bsntlvipv4netmask.Value = net.IP(decoder.Read(4))
+	return _bsntlvipv4netmask, nil
 }
 
 func NewBsnTlvIpv4Netmask() *BsnTlvIpv4Netmask {
-	return &BsnTlvIpv4Netmask{
+	obj := &BsnTlvIpv4Netmask{
 		BsnTlv: NewBsnTlv(60),
 	}
+	return obj
 }
 
 type BsnTlvIpv4Src struct {
@@ -3854,19 +3955,20 @@ func (self *BsnTlvIpv4Src) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpv4Src(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv4Src, error) {
-	bsntlvipv4src := &BsnTlvIpv4Src{BsnTlv: parent}
+func DecodeBsnTlvIpv4Src(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv4Src, error) {
+	_bsntlvipv4src := &BsnTlvIpv4Src{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvIpv4Src packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvipv4src.Value = net.IP(decoder.Read(4))
-	return bsntlvipv4src, nil
+	_bsntlvipv4src.Value = net.IP(decoder.Read(4))
+	return _bsntlvipv4src, nil
 }
 
 func NewBsnTlvIpv4Src() *BsnTlvIpv4Src {
-	return &BsnTlvIpv4Src{
+	obj := &BsnTlvIpv4Src{
 		BsnTlv: NewBsnTlv(34),
 	}
+	return obj
 }
 
 type BsnTlvIpv6 struct {
@@ -3887,19 +3989,20 @@ func (self *BsnTlvIpv6) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpv6(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv6, error) {
-	bsntlvipv6 := &BsnTlvIpv6{BsnTlv: parent}
+func DecodeBsnTlvIpv6(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv6, error) {
+	_bsntlvipv6 := &BsnTlvIpv6{BsnTlv: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("BsnTlvIpv6 packet too short: %d < 16", decoder.Length())
 	}
-	bsntlvipv6.Value = net.IP(decoder.Read(16))
-	return bsntlvipv6, nil
+	_bsntlvipv6.Value = net.IP(decoder.Read(16))
+	return _bsntlvipv6, nil
 }
 
 func NewBsnTlvIpv6() *BsnTlvIpv6 {
-	return &BsnTlvIpv6{
+	obj := &BsnTlvIpv6{
 		BsnTlv: NewBsnTlv(84),
 	}
+	return obj
 }
 
 type BsnTlvIpv6Dst struct {
@@ -3920,19 +4023,20 @@ func (self *BsnTlvIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpv6Dst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv6Dst, error) {
-	bsntlvipv6dst := &BsnTlvIpv6Dst{BsnTlv: parent}
+func DecodeBsnTlvIpv6Dst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv6Dst, error) {
+	_bsntlvipv6dst := &BsnTlvIpv6Dst{BsnTlv: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("BsnTlvIpv6Dst packet too short: %d < 16", decoder.Length())
 	}
-	bsntlvipv6dst.Value = net.IP(decoder.Read(16))
-	return bsntlvipv6dst, nil
+	_bsntlvipv6dst.Value = net.IP(decoder.Read(16))
+	return _bsntlvipv6dst, nil
 }
 
 func NewBsnTlvIpv6Dst() *BsnTlvIpv6Dst {
-	return &BsnTlvIpv6Dst{
+	obj := &BsnTlvIpv6Dst{
 		BsnTlv: NewBsnTlv(127),
 	}
+	return obj
 }
 
 type BsnTlvIpv6Prefix struct {
@@ -3955,20 +4059,21 @@ func (self *BsnTlvIpv6Prefix) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpv6Prefix(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv6Prefix, error) {
-	bsntlvipv6prefix := &BsnTlvIpv6Prefix{BsnTlv: parent}
+func DecodeBsnTlvIpv6Prefix(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv6Prefix, error) {
+	_bsntlvipv6prefix := &BsnTlvIpv6Prefix{BsnTlv: parent}
 	if decoder.Length() < 17 {
 		return nil, fmt.Errorf("BsnTlvIpv6Prefix packet too short: %d < 17", decoder.Length())
 	}
-	bsntlvipv6prefix.Value = net.IP(decoder.Read(16))
-	bsntlvipv6prefix.PrefixLength = uint8(decoder.ReadByte())
-	return bsntlvipv6prefix, nil
+	_bsntlvipv6prefix.Value = net.IP(decoder.Read(16))
+	_bsntlvipv6prefix.PrefixLength = uint8(decoder.ReadByte())
+	return _bsntlvipv6prefix, nil
 }
 
 func NewBsnTlvIpv6Prefix() *BsnTlvIpv6Prefix {
-	return &BsnTlvIpv6Prefix{
+	obj := &BsnTlvIpv6Prefix{
 		BsnTlv: NewBsnTlv(122),
 	}
+	return obj
 }
 
 type BsnTlvIpv6Src struct {
@@ -3989,19 +4094,20 @@ func (self *BsnTlvIpv6Src) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvIpv6Src(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv6Src, error) {
-	bsntlvipv6src := &BsnTlvIpv6Src{BsnTlv: parent}
+func DecodeBsnTlvIpv6Src(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvIpv6Src, error) {
+	_bsntlvipv6src := &BsnTlvIpv6Src{BsnTlv: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("BsnTlvIpv6Src packet too short: %d < 16", decoder.Length())
 	}
-	bsntlvipv6src.Value = net.IP(decoder.Read(16))
-	return bsntlvipv6src, nil
+	_bsntlvipv6src.Value = net.IP(decoder.Read(16))
+	return _bsntlvipv6src, nil
 }
 
 func NewBsnTlvIpv6Src() *BsnTlvIpv6Src {
-	return &BsnTlvIpv6Src{
+	obj := &BsnTlvIpv6Src{
 		BsnTlv: NewBsnTlv(126),
 	}
+	return obj
 }
 
 type BsnTlvKnownMulticastRate struct {
@@ -4022,19 +4128,20 @@ func (self *BsnTlvKnownMulticastRate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvKnownMulticastRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvKnownMulticastRate, error) {
-	bsntlvknownmulticastrate := &BsnTlvKnownMulticastRate{BsnTlv: parent}
+func DecodeBsnTlvKnownMulticastRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvKnownMulticastRate, error) {
+	_bsntlvknownmulticastrate := &BsnTlvKnownMulticastRate{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvKnownMulticastRate packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvknownmulticastrate.Value = uint32(decoder.ReadUint32())
-	return bsntlvknownmulticastrate, nil
+	_bsntlvknownmulticastrate.Value = uint32(decoder.ReadUint32())
+	return _bsntlvknownmulticastrate, nil
 }
 
 func NewBsnTlvKnownMulticastRate() *BsnTlvKnownMulticastRate {
-	return &BsnTlvKnownMulticastRate{
+	obj := &BsnTlvKnownMulticastRate{
 		BsnTlv: NewBsnTlv(91),
 	}
+	return obj
 }
 
 type BsnTlvL2MulticastLookup struct {
@@ -4052,15 +4159,16 @@ func (self *BsnTlvL2MulticastLookup) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvL2MulticastLookup(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL2MulticastLookup, error) {
-	bsntlvl2multicastlookup := &BsnTlvL2MulticastLookup{BsnTlv: parent}
-	return bsntlvl2multicastlookup, nil
+func DecodeBsnTlvL2MulticastLookup(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL2MulticastLookup, error) {
+	_bsntlvl2multicastlookup := &BsnTlvL2MulticastLookup{BsnTlv: parent}
+	return _bsntlvl2multicastlookup, nil
 }
 
 func NewBsnTlvL2MulticastLookup() *BsnTlvL2MulticastLookup {
-	return &BsnTlvL2MulticastLookup{
+	obj := &BsnTlvL2MulticastLookup{
 		BsnTlv: NewBsnTlv(79),
 	}
+	return obj
 }
 
 type BsnTlvL3 struct {
@@ -4078,15 +4186,16 @@ func (self *BsnTlvL3) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvL3(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL3, error) {
-	bsntlvl3 := &BsnTlvL3{BsnTlv: parent}
-	return bsntlvl3, nil
+func DecodeBsnTlvL3(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL3, error) {
+	_bsntlvl3 := &BsnTlvL3{BsnTlv: parent}
+	return _bsntlvl3, nil
 }
 
 func NewBsnTlvL3() *BsnTlvL3 {
-	return &BsnTlvL3{
+	obj := &BsnTlvL3{
 		BsnTlv: NewBsnTlv(168),
 	}
+	return obj
 }
 
 type BsnTlvL3DstClassId struct {
@@ -4107,19 +4216,20 @@ func (self *BsnTlvL3DstClassId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvL3DstClassId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL3DstClassId, error) {
-	bsntlvl3dstclassid := &BsnTlvL3DstClassId{BsnTlv: parent}
+func DecodeBsnTlvL3DstClassId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL3DstClassId, error) {
+	_bsntlvl3dstclassid := &BsnTlvL3DstClassId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvL3DstClassId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvl3dstclassid.Value = uint32(decoder.ReadUint32())
-	return bsntlvl3dstclassid, nil
+	_bsntlvl3dstclassid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvl3dstclassid, nil
 }
 
 func NewBsnTlvL3DstClassId() *BsnTlvL3DstClassId {
-	return &BsnTlvL3DstClassId{
+	obj := &BsnTlvL3DstClassId{
 		BsnTlv: NewBsnTlv(136),
 	}
+	return obj
 }
 
 type BsnTlvL3InterfaceClassId struct {
@@ -4140,19 +4250,20 @@ func (self *BsnTlvL3InterfaceClassId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvL3InterfaceClassId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL3InterfaceClassId, error) {
-	bsntlvl3interfaceclassid := &BsnTlvL3InterfaceClassId{BsnTlv: parent}
+func DecodeBsnTlvL3InterfaceClassId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL3InterfaceClassId, error) {
+	_bsntlvl3interfaceclassid := &BsnTlvL3InterfaceClassId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvL3InterfaceClassId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvl3interfaceclassid.Value = uint32(decoder.ReadUint32())
-	return bsntlvl3interfaceclassid, nil
+	_bsntlvl3interfaceclassid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvl3interfaceclassid, nil
 }
 
 func NewBsnTlvL3InterfaceClassId() *BsnTlvL3InterfaceClassId {
-	return &BsnTlvL3InterfaceClassId{
+	obj := &BsnTlvL3InterfaceClassId{
 		BsnTlv: NewBsnTlv(134),
 	}
+	return obj
 }
 
 type BsnTlvL3SrcClassId struct {
@@ -4173,19 +4284,20 @@ func (self *BsnTlvL3SrcClassId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvL3SrcClassId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL3SrcClassId, error) {
-	bsntlvl3srcclassid := &BsnTlvL3SrcClassId{BsnTlv: parent}
+func DecodeBsnTlvL3SrcClassId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvL3SrcClassId, error) {
+	_bsntlvl3srcclassid := &BsnTlvL3SrcClassId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvL3SrcClassId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvl3srcclassid.Value = uint32(decoder.ReadUint32())
-	return bsntlvl3srcclassid, nil
+	_bsntlvl3srcclassid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvl3srcclassid, nil
 }
 
 func NewBsnTlvL3SrcClassId() *BsnTlvL3SrcClassId {
-	return &BsnTlvL3SrcClassId{
+	obj := &BsnTlvL3SrcClassId{
 		BsnTlv: NewBsnTlv(135),
 	}
+	return obj
 }
 
 type BsnTlvLagOptions struct {
@@ -4206,19 +4318,20 @@ func (self *BsnTlvLagOptions) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvLagOptions(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvLagOptions, error) {
-	bsntlvlagoptions := &BsnTlvLagOptions{BsnTlv: parent}
+func DecodeBsnTlvLagOptions(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvLagOptions, error) {
+	_bsntlvlagoptions := &BsnTlvLagOptions{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvLagOptions packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvlagoptions.Flags = BsnLagFlag(decoder.ReadUint16())
-	return bsntlvlagoptions, nil
+	_bsntlvlagoptions.Flags = BsnLagFlag(decoder.ReadUint16())
+	return _bsntlvlagoptions, nil
 }
 
 func NewBsnTlvLagOptions() *BsnTlvLagOptions {
-	return &BsnTlvLagOptions{
+	obj := &BsnTlvLagOptions{
 		BsnTlv: NewBsnTlv(160),
 	}
+	return obj
 }
 
 type BsnTlvLoopbackMode struct {
@@ -4239,19 +4352,20 @@ func (self *BsnTlvLoopbackMode) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvLoopbackMode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvLoopbackMode, error) {
-	bsntlvloopbackmode := &BsnTlvLoopbackMode{BsnTlv: parent}
+func DecodeBsnTlvLoopbackMode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvLoopbackMode, error) {
+	_bsntlvloopbackmode := &BsnTlvLoopbackMode{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvLoopbackMode packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvloopbackmode.Value = BsnLoopbackMode(decoder.ReadByte())
-	return bsntlvloopbackmode, nil
+	_bsntlvloopbackmode.Value = BsnLoopbackMode(decoder.ReadByte())
+	return _bsntlvloopbackmode, nil
 }
 
 func NewBsnTlvLoopbackMode() *BsnTlvLoopbackMode {
-	return &BsnTlvLoopbackMode{
+	obj := &BsnTlvLoopbackMode{
 		BsnTlv: NewBsnTlv(146),
 	}
+	return obj
 }
 
 type BsnTlvLoopbackPort struct {
@@ -4272,19 +4386,20 @@ func (self *BsnTlvLoopbackPort) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvLoopbackPort(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvLoopbackPort, error) {
-	bsntlvloopbackport := &BsnTlvLoopbackPort{BsnTlv: parent}
+func DecodeBsnTlvLoopbackPort(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvLoopbackPort, error) {
+	_bsntlvloopbackport := &BsnTlvLoopbackPort{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvLoopbackPort packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvloopbackport.Value.Decode(decoder)
-	return bsntlvloopbackport, nil
+	_bsntlvloopbackport.Value.Decode(decoder)
+	return _bsntlvloopbackport, nil
 }
 
 func NewBsnTlvLoopbackPort() *BsnTlvLoopbackPort {
-	return &BsnTlvLoopbackPort{
+	obj := &BsnTlvLoopbackPort{
 		BsnTlv: NewBsnTlv(110),
 	}
+	return obj
 }
 
 type BsnTlvLrAllEnabled struct {
@@ -4302,15 +4417,16 @@ func (self *BsnTlvLrAllEnabled) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvLrAllEnabled(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvLrAllEnabled, error) {
-	bsntlvlrallenabled := &BsnTlvLrAllEnabled{BsnTlv: parent}
-	return bsntlvlrallenabled, nil
+func DecodeBsnTlvLrAllEnabled(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvLrAllEnabled, error) {
+	_bsntlvlrallenabled := &BsnTlvLrAllEnabled{BsnTlv: parent}
+	return _bsntlvlrallenabled, nil
 }
 
 func NewBsnTlvLrAllEnabled() *BsnTlvLrAllEnabled {
-	return &BsnTlvLrAllEnabled{
+	obj := &BsnTlvLrAllEnabled{
 		BsnTlv: NewBsnTlv(178),
 	}
+	return obj
 }
 
 type BsnTlvMac struct {
@@ -4331,19 +4447,20 @@ func (self *BsnTlvMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMac, error) {
-	bsntlvmac := &BsnTlvMac{BsnTlv: parent}
+func DecodeBsnTlvMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMac, error) {
+	_bsntlvmac := &BsnTlvMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvmac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvmac, nil
+	_bsntlvmac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvmac, nil
 }
 
 func NewBsnTlvMac() *BsnTlvMac {
-	return &BsnTlvMac{
+	obj := &BsnTlvMac{
 		BsnTlv: NewBsnTlv(1),
 	}
+	return obj
 }
 
 type BsnTlvMacMask struct {
@@ -4364,19 +4481,20 @@ func (self *BsnTlvMacMask) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMacMask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMacMask, error) {
-	bsntlvmacmask := &BsnTlvMacMask{BsnTlv: parent}
+func DecodeBsnTlvMacMask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMacMask, error) {
+	_bsntlvmacmask := &BsnTlvMacMask{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvMacMask packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvmacmask.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvmacmask, nil
+	_bsntlvmacmask.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvmacmask, nil
 }
 
 func NewBsnTlvMacMask() *BsnTlvMacMask {
-	return &BsnTlvMacMask{
+	obj := &BsnTlvMacMask{
 		BsnTlv: NewBsnTlv(56),
 	}
+	return obj
 }
 
 type BsnTlvMcgTypeVxlan struct {
@@ -4394,15 +4512,16 @@ func (self *BsnTlvMcgTypeVxlan) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMcgTypeVxlan(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMcgTypeVxlan, error) {
-	bsntlvmcgtypevxlan := &BsnTlvMcgTypeVxlan{BsnTlv: parent}
-	return bsntlvmcgtypevxlan, nil
+func DecodeBsnTlvMcgTypeVxlan(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMcgTypeVxlan, error) {
+	_bsntlvmcgtypevxlan := &BsnTlvMcgTypeVxlan{BsnTlv: parent}
+	return _bsntlvmcgtypevxlan, nil
 }
 
 func NewBsnTlvMcgTypeVxlan() *BsnTlvMcgTypeVxlan {
-	return &BsnTlvMcgTypeVxlan{
+	obj := &BsnTlvMcgTypeVxlan{
 		BsnTlv: NewBsnTlv(87),
 	}
+	return obj
 }
 
 type BsnTlvMissPackets struct {
@@ -4423,19 +4542,20 @@ func (self *BsnTlvMissPackets) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMissPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMissPackets, error) {
-	bsntlvmisspackets := &BsnTlvMissPackets{BsnTlv: parent}
+func DecodeBsnTlvMissPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMissPackets, error) {
+	_bsntlvmisspackets := &BsnTlvMissPackets{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvMissPackets packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvmisspackets.Value = uint64(decoder.ReadUint64())
-	return bsntlvmisspackets, nil
+	_bsntlvmisspackets.Value = uint64(decoder.ReadUint64())
+	return _bsntlvmisspackets, nil
 }
 
 func NewBsnTlvMissPackets() *BsnTlvMissPackets {
-	return &BsnTlvMissPackets{
+	obj := &BsnTlvMissPackets{
 		BsnTlv: NewBsnTlv(13),
 	}
+	return obj
 }
 
 type BsnTlvMplsControlWord struct {
@@ -4456,19 +4576,20 @@ func (self *BsnTlvMplsControlWord) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMplsControlWord(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMplsControlWord, error) {
-	bsntlvmplscontrolword := &BsnTlvMplsControlWord{BsnTlv: parent}
+func DecodeBsnTlvMplsControlWord(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMplsControlWord, error) {
+	_bsntlvmplscontrolword := &BsnTlvMplsControlWord{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvMplsControlWord packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvmplscontrolword.Value = uint8(decoder.ReadByte())
-	return bsntlvmplscontrolword, nil
+	_bsntlvmplscontrolword.Value = uint8(decoder.ReadByte())
+	return _bsntlvmplscontrolword, nil
 }
 
 func NewBsnTlvMplsControlWord() *BsnTlvMplsControlWord {
-	return &BsnTlvMplsControlWord{
+	obj := &BsnTlvMplsControlWord{
 		BsnTlv: NewBsnTlv(62),
 	}
+	return obj
 }
 
 type BsnTlvMplsLabel struct {
@@ -4489,19 +4610,20 @@ func (self *BsnTlvMplsLabel) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMplsLabel(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMplsLabel, error) {
-	bsntlvmplslabel := &BsnTlvMplsLabel{BsnTlv: parent}
+func DecodeBsnTlvMplsLabel(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMplsLabel, error) {
+	_bsntlvmplslabel := &BsnTlvMplsLabel{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvMplsLabel packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvmplslabel.Value = uint32(decoder.ReadUint32())
-	return bsntlvmplslabel, nil
+	_bsntlvmplslabel.Value = uint32(decoder.ReadUint32())
+	return _bsntlvmplslabel, nil
 }
 
 func NewBsnTlvMplsLabel() *BsnTlvMplsLabel {
-	return &BsnTlvMplsLabel{
+	obj := &BsnTlvMplsLabel{
 		BsnTlv: NewBsnTlv(61),
 	}
+	return obj
 }
 
 type BsnTlvMplsSequenced struct {
@@ -4522,19 +4644,20 @@ func (self *BsnTlvMplsSequenced) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMplsSequenced(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMplsSequenced, error) {
-	bsntlvmplssequenced := &BsnTlvMplsSequenced{BsnTlv: parent}
+func DecodeBsnTlvMplsSequenced(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMplsSequenced, error) {
+	_bsntlvmplssequenced := &BsnTlvMplsSequenced{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvMplsSequenced packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvmplssequenced.Value = uint8(decoder.ReadByte())
-	return bsntlvmplssequenced, nil
+	_bsntlvmplssequenced.Value = uint8(decoder.ReadByte())
+	return _bsntlvmplssequenced, nil
 }
 
 func NewBsnTlvMplsSequenced() *BsnTlvMplsSequenced {
-	return &BsnTlvMplsSequenced{
+	obj := &BsnTlvMplsSequenced{
 		BsnTlv: NewBsnTlv(63),
 	}
+	return obj
 }
 
 type BsnTlvMulticastInterfaceId struct {
@@ -4555,19 +4678,20 @@ func (self *BsnTlvMulticastInterfaceId) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnTlvMulticastInterfaceId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMulticastInterfaceId, error) {
-	bsntlvmulticastinterfaceid := &BsnTlvMulticastInterfaceId{BsnTlv: parent}
+func DecodeBsnTlvMulticastInterfaceId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMulticastInterfaceId, error) {
+	_bsntlvmulticastinterfaceid := &BsnTlvMulticastInterfaceId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvMulticastInterfaceId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvmulticastinterfaceid.Value = uint32(decoder.ReadUint32())
-	return bsntlvmulticastinterfaceid, nil
+	_bsntlvmulticastinterfaceid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvmulticastinterfaceid, nil
 }
 
 func NewBsnTlvMulticastInterfaceId() *BsnTlvMulticastInterfaceId {
-	return &BsnTlvMulticastInterfaceId{
+	obj := &BsnTlvMulticastInterfaceId{
 		BsnTlv: NewBsnTlv(95),
 	}
+	return obj
 }
 
 type BsnTlvMulticastPacket struct {
@@ -4588,19 +4712,20 @@ func (self *BsnTlvMulticastPacket) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMulticastPacket(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMulticastPacket, error) {
-	bsntlvmulticastpacket := &BsnTlvMulticastPacket{BsnTlv: parent}
+func DecodeBsnTlvMulticastPacket(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMulticastPacket, error) {
+	_bsntlvmulticastpacket := &BsnTlvMulticastPacket{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvMulticastPacket packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvmulticastpacket.Value = BsnMulticastPacket(decoder.ReadUint16())
-	return bsntlvmulticastpacket, nil
+	_bsntlvmulticastpacket.Value = BsnMulticastPacket(decoder.ReadUint16())
+	return _bsntlvmulticastpacket, nil
 }
 
 func NewBsnTlvMulticastPacket() *BsnTlvMulticastPacket {
-	return &BsnTlvMulticastPacket{
+	obj := &BsnTlvMulticastPacket{
 		BsnTlv: NewBsnTlv(170),
 	}
+	return obj
 }
 
 type BsnTlvMultiplier struct {
@@ -4621,19 +4746,20 @@ func (self *BsnTlvMultiplier) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvMultiplier(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMultiplier, error) {
-	bsntlvmultiplier := &BsnTlvMultiplier{BsnTlv: parent}
+func DecodeBsnTlvMultiplier(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvMultiplier, error) {
+	_bsntlvmultiplier := &BsnTlvMultiplier{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvMultiplier packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvmultiplier.Value = uint32(decoder.ReadUint32())
-	return bsntlvmultiplier, nil
+	_bsntlvmultiplier.Value = uint32(decoder.ReadUint32())
+	return _bsntlvmultiplier, nil
 }
 
 func NewBsnTlvMultiplier() *BsnTlvMultiplier {
-	return &BsnTlvMultiplier{
+	obj := &BsnTlvMultiplier{
 		BsnTlv: NewBsnTlv(174),
 	}
+	return obj
 }
 
 type BsnTlvName struct {
@@ -4654,16 +4780,17 @@ func (self *BsnTlvName) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvName(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvName, error) {
-	bsntlvname := &BsnTlvName{BsnTlv: parent}
-	bsntlvname.Value = decoder.Read(decoder.Length())
-	return bsntlvname, nil
+func DecodeBsnTlvName(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvName, error) {
+	_bsntlvname := &BsnTlvName{BsnTlv: parent}
+	_bsntlvname.Value = decoder.Read(decoder.Length())
+	return _bsntlvname, nil
 }
 
 func NewBsnTlvName() *BsnTlvName {
-	return &BsnTlvName{
+	obj := &BsnTlvName{
 		BsnTlv: NewBsnTlv(52),
 	}
+	return obj
 }
 
 type BsnTlvNdpOffload struct {
@@ -4681,15 +4808,16 @@ func (self *BsnTlvNdpOffload) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvNdpOffload(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNdpOffload, error) {
-	bsntlvndpoffload := &BsnTlvNdpOffload{BsnTlv: parent}
-	return bsntlvndpoffload, nil
+func DecodeBsnTlvNdpOffload(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNdpOffload, error) {
+	_bsntlvndpoffload := &BsnTlvNdpOffload{BsnTlv: parent}
+	return _bsntlvndpoffload, nil
 }
 
 func NewBsnTlvNdpOffload() *BsnTlvNdpOffload {
-	return &BsnTlvNdpOffload{
+	obj := &BsnTlvNdpOffload{
 		BsnTlv: NewBsnTlv(123),
 	}
+	return obj
 }
 
 type BsnTlvNdpStatic struct {
@@ -4707,15 +4835,16 @@ func (self *BsnTlvNdpStatic) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvNdpStatic(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNdpStatic, error) {
-	bsntlvndpstatic := &BsnTlvNdpStatic{BsnTlv: parent}
-	return bsntlvndpstatic, nil
+func DecodeBsnTlvNdpStatic(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNdpStatic, error) {
+	_bsntlvndpstatic := &BsnTlvNdpStatic{BsnTlv: parent}
+	return _bsntlvndpstatic, nil
 }
 
 func NewBsnTlvNdpStatic() *BsnTlvNdpStatic {
-	return &BsnTlvNdpStatic{
+	obj := &BsnTlvNdpStatic{
 		BsnTlv: NewBsnTlv(124),
 	}
+	return obj
 }
 
 type BsnTlvNegate struct {
@@ -4733,15 +4862,16 @@ func (self *BsnTlvNegate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvNegate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNegate, error) {
-	bsntlvnegate := &BsnTlvNegate{BsnTlv: parent}
-	return bsntlvnegate, nil
+func DecodeBsnTlvNegate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNegate, error) {
+	_bsntlvnegate := &BsnTlvNegate{BsnTlv: parent}
+	return _bsntlvnegate, nil
 }
 
 func NewBsnTlvNegate() *BsnTlvNegate {
-	return &BsnTlvNegate{
+	obj := &BsnTlvNegate{
 		BsnTlv: NewBsnTlv(83),
 	}
+	return obj
 }
 
 type BsnTlvNextHopIpv4 struct {
@@ -4762,19 +4892,20 @@ func (self *BsnTlvNextHopIpv4) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvNextHopIpv4(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNextHopIpv4, error) {
-	bsntlvnexthopipv4 := &BsnTlvNextHopIpv4{BsnTlv: parent}
+func DecodeBsnTlvNextHopIpv4(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNextHopIpv4, error) {
+	_bsntlvnexthopipv4 := &BsnTlvNextHopIpv4{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvNextHopIpv4 packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvnexthopipv4.Value = net.IP(decoder.Read(4))
-	return bsntlvnexthopipv4, nil
+	_bsntlvnexthopipv4.Value = net.IP(decoder.Read(4))
+	return _bsntlvnexthopipv4, nil
 }
 
 func NewBsnTlvNextHopIpv4() *BsnTlvNextHopIpv4 {
-	return &BsnTlvNextHopIpv4{
+	obj := &BsnTlvNextHopIpv4{
 		BsnTlv: NewBsnTlv(115),
 	}
+	return obj
 }
 
 type BsnTlvNextHopMac struct {
@@ -4795,19 +4926,20 @@ func (self *BsnTlvNextHopMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvNextHopMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNextHopMac, error) {
-	bsntlvnexthopmac := &BsnTlvNextHopMac{BsnTlv: parent}
+func DecodeBsnTlvNextHopMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNextHopMac, error) {
+	_bsntlvnexthopmac := &BsnTlvNextHopMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvNextHopMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvnexthopmac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvnexthopmac, nil
+	_bsntlvnexthopmac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvnexthopmac, nil
 }
 
 func NewBsnTlvNextHopMac() *BsnTlvNextHopMac {
-	return &BsnTlvNextHopMac{
+	obj := &BsnTlvNextHopMac{
 		BsnTlv: NewBsnTlv(114),
 	}
+	return obj
 }
 
 type BsnTlvNexthopTypeVxlan struct {
@@ -4825,15 +4957,16 @@ func (self *BsnTlvNexthopTypeVxlan) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvNexthopTypeVxlan(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNexthopTypeVxlan, error) {
-	bsntlvnexthoptypevxlan := &BsnTlvNexthopTypeVxlan{BsnTlv: parent}
-	return bsntlvnexthoptypevxlan, nil
+func DecodeBsnTlvNexthopTypeVxlan(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNexthopTypeVxlan, error) {
+	_bsntlvnexthoptypevxlan := &BsnTlvNexthopTypeVxlan{BsnTlv: parent}
+	return _bsntlvnexthoptypevxlan, nil
 }
 
 func NewBsnTlvNexthopTypeVxlan() *BsnTlvNexthopTypeVxlan {
-	return &BsnTlvNexthopTypeVxlan{
+	obj := &BsnTlvNexthopTypeVxlan{
 		BsnTlv: NewBsnTlv(94),
 	}
+	return obj
 }
 
 type BsnTlvNoArpResponse struct {
@@ -4851,15 +4984,16 @@ func (self *BsnTlvNoArpResponse) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvNoArpResponse(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNoArpResponse, error) {
-	bsntlvnoarpresponse := &BsnTlvNoArpResponse{BsnTlv: parent}
-	return bsntlvnoarpresponse, nil
+func DecodeBsnTlvNoArpResponse(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNoArpResponse, error) {
+	_bsntlvnoarpresponse := &BsnTlvNoArpResponse{BsnTlv: parent}
+	return _bsntlvnoarpresponse, nil
 }
 
 func NewBsnTlvNoArpResponse() *BsnTlvNoArpResponse {
-	return &BsnTlvNoArpResponse{
+	obj := &BsnTlvNoArpResponse{
 		BsnTlv: NewBsnTlv(147),
 	}
+	return obj
 }
 
 type BsnTlvNoNsResponse struct {
@@ -4877,15 +5011,16 @@ func (self *BsnTlvNoNsResponse) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvNoNsResponse(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNoNsResponse, error) {
-	bsntlvnonsresponse := &BsnTlvNoNsResponse{BsnTlv: parent}
-	return bsntlvnonsresponse, nil
+func DecodeBsnTlvNoNsResponse(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvNoNsResponse, error) {
+	_bsntlvnonsresponse := &BsnTlvNoNsResponse{BsnTlv: parent}
+	return _bsntlvnonsresponse, nil
 }
 
 func NewBsnTlvNoNsResponse() *BsnTlvNoNsResponse {
-	return &BsnTlvNoNsResponse{
+	obj := &BsnTlvNoNsResponse{
 		BsnTlv: NewBsnTlv(148),
 	}
+	return obj
 }
 
 type BsnTlvOffset struct {
@@ -4906,19 +5041,20 @@ func (self *BsnTlvOffset) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvOffset(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvOffset, error) {
-	bsntlvoffset := &BsnTlvOffset{BsnTlv: parent}
+func DecodeBsnTlvOffset(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvOffset, error) {
+	_bsntlvoffset := &BsnTlvOffset{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvOffset packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvoffset.Value = uint16(decoder.ReadUint16())
-	return bsntlvoffset, nil
+	_bsntlvoffset.Value = uint16(decoder.ReadUint16())
+	return _bsntlvoffset, nil
 }
 
 func NewBsnTlvOffset() *BsnTlvOffset {
-	return &BsnTlvOffset{
+	obj := &BsnTlvOffset{
 		BsnTlv: NewBsnTlv(82),
 	}
+	return obj
 }
 
 type BsnTlvOpticsAlwaysEnabled struct {
@@ -4936,15 +5072,16 @@ func (self *BsnTlvOpticsAlwaysEnabled) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnTlvOpticsAlwaysEnabled(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvOpticsAlwaysEnabled, error) {
-	bsntlvopticsalwaysenabled := &BsnTlvOpticsAlwaysEnabled{BsnTlv: parent}
-	return bsntlvopticsalwaysenabled, nil
+func DecodeBsnTlvOpticsAlwaysEnabled(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvOpticsAlwaysEnabled, error) {
+	_bsntlvopticsalwaysenabled := &BsnTlvOpticsAlwaysEnabled{BsnTlv: parent}
+	return _bsntlvopticsalwaysenabled, nil
 }
 
 func NewBsnTlvOpticsAlwaysEnabled() *BsnTlvOpticsAlwaysEnabled {
-	return &BsnTlvOpticsAlwaysEnabled{
+	obj := &BsnTlvOpticsAlwaysEnabled{
 		BsnTlv: NewBsnTlv(150),
 	}
+	return obj
 }
 
 type BsnTlvOuterSrcMac struct {
@@ -4965,19 +5102,20 @@ func (self *BsnTlvOuterSrcMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvOuterSrcMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvOuterSrcMac, error) {
-	bsntlvoutersrcmac := &BsnTlvOuterSrcMac{BsnTlv: parent}
+func DecodeBsnTlvOuterSrcMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvOuterSrcMac, error) {
+	_bsntlvoutersrcmac := &BsnTlvOuterSrcMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvOuterSrcMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvoutersrcmac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvoutersrcmac, nil
+	_bsntlvoutersrcmac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvoutersrcmac, nil
 }
 
 func NewBsnTlvOuterSrcMac() *BsnTlvOuterSrcMac {
-	return &BsnTlvOuterSrcMac{
+	obj := &BsnTlvOuterSrcMac{
 		BsnTlv: NewBsnTlv(157),
 	}
+	return obj
 }
 
 type BsnTlvParentPort struct {
@@ -4998,19 +5136,20 @@ func (self *BsnTlvParentPort) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvParentPort(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvParentPort, error) {
-	bsntlvparentport := &BsnTlvParentPort{BsnTlv: parent}
+func DecodeBsnTlvParentPort(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvParentPort, error) {
+	_bsntlvparentport := &BsnTlvParentPort{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvParentPort packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvparentport.Value.Decode(decoder)
-	return bsntlvparentport, nil
+	_bsntlvparentport.Value.Decode(decoder)
+	return _bsntlvparentport, nil
 }
 
 func NewBsnTlvParentPort() *BsnTlvParentPort {
-	return &BsnTlvParentPort{
+	obj := &BsnTlvParentPort{
 		BsnTlv: NewBsnTlv(109),
 	}
+	return obj
 }
 
 type BsnTlvPartnerKey struct {
@@ -5031,19 +5170,20 @@ func (self *BsnTlvPartnerKey) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPartnerKey(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerKey, error) {
-	bsntlvpartnerkey := &BsnTlvPartnerKey{BsnTlv: parent}
+func DecodeBsnTlvPartnerKey(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerKey, error) {
+	_bsntlvpartnerkey := &BsnTlvPartnerKey{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvPartnerKey packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvpartnerkey.Value = uint16(decoder.ReadUint16())
-	return bsntlvpartnerkey, nil
+	_bsntlvpartnerkey.Value = uint16(decoder.ReadUint16())
+	return _bsntlvpartnerkey, nil
 }
 
 func NewBsnTlvPartnerKey() *BsnTlvPartnerKey {
-	return &BsnTlvPartnerKey{
+	obj := &BsnTlvPartnerKey{
 		BsnTlv: NewBsnTlv(51),
 	}
+	return obj
 }
 
 type BsnTlvPartnerPortNum struct {
@@ -5064,19 +5204,20 @@ func (self *BsnTlvPartnerPortNum) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPartnerPortNum(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerPortNum, error) {
-	bsntlvpartnerportnum := &BsnTlvPartnerPortNum{BsnTlv: parent}
+func DecodeBsnTlvPartnerPortNum(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerPortNum, error) {
+	_bsntlvpartnerportnum := &BsnTlvPartnerPortNum{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvPartnerPortNum packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvpartnerportnum.Value = uint16(decoder.ReadUint16())
-	return bsntlvpartnerportnum, nil
+	_bsntlvpartnerportnum.Value = uint16(decoder.ReadUint16())
+	return _bsntlvpartnerportnum, nil
 }
 
 func NewBsnTlvPartnerPortNum() *BsnTlvPartnerPortNum {
-	return &BsnTlvPartnerPortNum{
+	obj := &BsnTlvPartnerPortNum{
 		BsnTlv: NewBsnTlv(50),
 	}
+	return obj
 }
 
 type BsnTlvPartnerPortPriority struct {
@@ -5097,19 +5238,20 @@ func (self *BsnTlvPartnerPortPriority) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnTlvPartnerPortPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerPortPriority, error) {
-	bsntlvpartnerportpriority := &BsnTlvPartnerPortPriority{BsnTlv: parent}
+func DecodeBsnTlvPartnerPortPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerPortPriority, error) {
+	_bsntlvpartnerportpriority := &BsnTlvPartnerPortPriority{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvPartnerPortPriority packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvpartnerportpriority.Value = uint16(decoder.ReadUint16())
-	return bsntlvpartnerportpriority, nil
+	_bsntlvpartnerportpriority.Value = uint16(decoder.ReadUint16())
+	return _bsntlvpartnerportpriority, nil
 }
 
 func NewBsnTlvPartnerPortPriority() *BsnTlvPartnerPortPriority {
-	return &BsnTlvPartnerPortPriority{
+	obj := &BsnTlvPartnerPortPriority{
 		BsnTlv: NewBsnTlv(49),
 	}
+	return obj
 }
 
 type BsnTlvPartnerState struct {
@@ -5130,19 +5272,20 @@ func (self *BsnTlvPartnerState) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPartnerState(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerState, error) {
-	bsntlvpartnerstate := &BsnTlvPartnerState{BsnTlv: parent}
+func DecodeBsnTlvPartnerState(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerState, error) {
+	_bsntlvpartnerstate := &BsnTlvPartnerState{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvPartnerState packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvpartnerstate.Value = BsnLacpState(decoder.ReadByte())
-	return bsntlvpartnerstate, nil
+	_bsntlvpartnerstate.Value = BsnLacpState(decoder.ReadByte())
+	return _bsntlvpartnerstate, nil
 }
 
 func NewBsnTlvPartnerState() *BsnTlvPartnerState {
-	return &BsnTlvPartnerState{
+	obj := &BsnTlvPartnerState{
 		BsnTlv: NewBsnTlv(54),
 	}
+	return obj
 }
 
 type BsnTlvPartnerSystemMac struct {
@@ -5163,19 +5306,20 @@ func (self *BsnTlvPartnerSystemMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPartnerSystemMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerSystemMac, error) {
-	bsntlvpartnersystemmac := &BsnTlvPartnerSystemMac{BsnTlv: parent}
+func DecodeBsnTlvPartnerSystemMac(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerSystemMac, error) {
+	_bsntlvpartnersystemmac := &BsnTlvPartnerSystemMac{BsnTlv: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("BsnTlvPartnerSystemMac packet too short: %d < 6", decoder.Length())
 	}
-	bsntlvpartnersystemmac.Value = net.HardwareAddr(decoder.Read(6))
-	return bsntlvpartnersystemmac, nil
+	_bsntlvpartnersystemmac.Value = net.HardwareAddr(decoder.Read(6))
+	return _bsntlvpartnersystemmac, nil
 }
 
 func NewBsnTlvPartnerSystemMac() *BsnTlvPartnerSystemMac {
-	return &BsnTlvPartnerSystemMac{
+	obj := &BsnTlvPartnerSystemMac{
 		BsnTlv: NewBsnTlv(48),
 	}
+	return obj
 }
 
 type BsnTlvPartnerSystemPriority struct {
@@ -5196,19 +5340,20 @@ func (self *BsnTlvPartnerSystemPriority) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnTlvPartnerSystemPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerSystemPriority, error) {
-	bsntlvpartnersystempriority := &BsnTlvPartnerSystemPriority{BsnTlv: parent}
+func DecodeBsnTlvPartnerSystemPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPartnerSystemPriority, error) {
+	_bsntlvpartnersystempriority := &BsnTlvPartnerSystemPriority{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvPartnerSystemPriority packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvpartnersystempriority.Value = uint16(decoder.ReadUint16())
-	return bsntlvpartnersystempriority, nil
+	_bsntlvpartnersystempriority.Value = uint16(decoder.ReadUint16())
+	return _bsntlvpartnersystempriority, nil
 }
 
 func NewBsnTlvPartnerSystemPriority() *BsnTlvPartnerSystemPriority {
-	return &BsnTlvPartnerSystemPriority{
+	obj := &BsnTlvPartnerSystemPriority{
 		BsnTlv: NewBsnTlv(47),
 	}
+	return obj
 }
 
 type BsnTlvPassive struct {
@@ -5226,15 +5371,16 @@ func (self *BsnTlvPassive) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPassive(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPassive, error) {
-	bsntlvpassive := &BsnTlvPassive{BsnTlv: parent}
-	return bsntlvpassive, nil
+func DecodeBsnTlvPassive(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPassive, error) {
+	_bsntlvpassive := &BsnTlvPassive{BsnTlv: parent}
+	return _bsntlvpassive, nil
 }
 
 func NewBsnTlvPassive() *BsnTlvPassive {
-	return &BsnTlvPassive{
+	obj := &BsnTlvPassive{
 		BsnTlv: NewBsnTlv(172),
 	}
+	return obj
 }
 
 type BsnTlvPduaRxInstance struct {
@@ -5255,16 +5401,17 @@ func (self *BsnTlvPduaRxInstance) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPduaRxInstance(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPduaRxInstance, error) {
-	bsntlvpduarxinstance := &BsnTlvPduaRxInstance{BsnTlv: parent}
-	bsntlvpduarxinstance.Value = decoder.Read(decoder.Length())
-	return bsntlvpduarxinstance, nil
+func DecodeBsnTlvPduaRxInstance(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPduaRxInstance, error) {
+	_bsntlvpduarxinstance := &BsnTlvPduaRxInstance{BsnTlv: parent}
+	_bsntlvpduarxinstance.Value = decoder.Read(decoder.Length())
+	return _bsntlvpduarxinstance, nil
 }
 
 func NewBsnTlvPduaRxInstance() *BsnTlvPduaRxInstance {
-	return &BsnTlvPduaRxInstance{
+	obj := &BsnTlvPduaRxInstance{
 		BsnTlv: NewBsnTlv(159),
 	}
+	return obj
 }
 
 type BsnTlvPimDr struct {
@@ -5282,15 +5429,16 @@ func (self *BsnTlvPimDr) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPimDr(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPimDr, error) {
-	bsntlvpimdr := &BsnTlvPimDr{BsnTlv: parent}
-	return bsntlvpimdr, nil
+func DecodeBsnTlvPimDr(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPimDr, error) {
+	_bsntlvpimdr := &BsnTlvPimDr{BsnTlv: parent}
+	return _bsntlvpimdr, nil
 }
 
 func NewBsnTlvPimDr() *BsnTlvPimDr {
-	return &BsnTlvPimDr{
+	obj := &BsnTlvPimDr{
 		BsnTlv: NewBsnTlv(171),
 	}
+	return obj
 }
 
 type BsnTlvPimHelloFlood struct {
@@ -5308,15 +5456,16 @@ func (self *BsnTlvPimHelloFlood) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPimHelloFlood(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPimHelloFlood, error) {
-	bsntlvpimhelloflood := &BsnTlvPimHelloFlood{BsnTlv: parent}
-	return bsntlvpimhelloflood, nil
+func DecodeBsnTlvPimHelloFlood(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPimHelloFlood, error) {
+	_bsntlvpimhelloflood := &BsnTlvPimHelloFlood{BsnTlv: parent}
+	return _bsntlvpimhelloflood, nil
 }
 
 func NewBsnTlvPimHelloFlood() *BsnTlvPimHelloFlood {
-	return &BsnTlvPimHelloFlood{
+	obj := &BsnTlvPimHelloFlood{
 		BsnTlv: NewBsnTlv(181),
 	}
+	return obj
 }
 
 type BsnTlvPort struct {
@@ -5337,19 +5486,20 @@ func (self *BsnTlvPort) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPort(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPort, error) {
-	bsntlvport := &BsnTlvPort{BsnTlv: parent}
+func DecodeBsnTlvPort(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPort, error) {
+	_bsntlvport := &BsnTlvPort{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvPort packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvport.Value.Decode(decoder)
-	return bsntlvport, nil
+	_bsntlvport.Value.Decode(decoder)
+	return _bsntlvport, nil
 }
 
 func NewBsnTlvPort() *BsnTlvPort {
-	return &BsnTlvPort{
+	obj := &BsnTlvPort{
 		BsnTlv: NewBsnTlv(0),
 	}
+	return obj
 }
 
 type BsnTlvPortMode struct {
@@ -5370,19 +5520,20 @@ func (self *BsnTlvPortMode) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPortMode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPortMode, error) {
-	bsntlvportmode := &BsnTlvPortMode{BsnTlv: parent}
+func DecodeBsnTlvPortMode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPortMode, error) {
+	_bsntlvportmode := &BsnTlvPortMode{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvPortMode packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvportmode.Value = BsnPortMode(decoder.ReadUint16())
-	return bsntlvportmode, nil
+	_bsntlvportmode.Value = BsnPortMode(decoder.ReadUint16())
+	return _bsntlvportmode, nil
 }
 
 func NewBsnTlvPortMode() *BsnTlvPortMode {
-	return &BsnTlvPortMode{
+	obj := &BsnTlvPortMode{
 		BsnTlv: NewBsnTlv(179),
 	}
+	return obj
 }
 
 type BsnTlvPortSpeedGbps struct {
@@ -5403,19 +5554,20 @@ func (self *BsnTlvPortSpeedGbps) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPortSpeedGbps(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPortSpeedGbps, error) {
-	bsntlvportspeedgbps := &BsnTlvPortSpeedGbps{BsnTlv: parent}
+func DecodeBsnTlvPortSpeedGbps(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPortSpeedGbps, error) {
+	_bsntlvportspeedgbps := &BsnTlvPortSpeedGbps{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvPortSpeedGbps packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvportspeedgbps.Value = uint32(decoder.ReadUint32())
-	return bsntlvportspeedgbps, nil
+	_bsntlvportspeedgbps.Value = uint32(decoder.ReadUint32())
+	return _bsntlvportspeedgbps, nil
 }
 
 func NewBsnTlvPortSpeedGbps() *BsnTlvPortSpeedGbps {
-	return &BsnTlvPortSpeedGbps{
+	obj := &BsnTlvPortSpeedGbps{
 		BsnTlv: NewBsnTlv(156),
 	}
+	return obj
 }
 
 type BsnTlvPortUsage struct {
@@ -5436,19 +5588,20 @@ func (self *BsnTlvPortUsage) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPortUsage(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPortUsage, error) {
-	bsntlvportusage := &BsnTlvPortUsage{BsnTlv: parent}
+func DecodeBsnTlvPortUsage(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPortUsage, error) {
+	_bsntlvportusage := &BsnTlvPortUsage{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvPortUsage packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvportusage.Value = BsnPortUsage(decoder.ReadUint16())
-	return bsntlvportusage, nil
+	_bsntlvportusage.Value = BsnPortUsage(decoder.ReadUint16())
+	return _bsntlvportusage, nil
 }
 
 func NewBsnTlvPortUsage() *BsnTlvPortUsage {
-	return &BsnTlvPortUsage{
+	obj := &BsnTlvPortUsage{
 		BsnTlv: NewBsnTlv(141),
 	}
+	return obj
 }
 
 type BsnTlvPortVxlanMode struct {
@@ -5469,19 +5622,20 @@ func (self *BsnTlvPortVxlanMode) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPortVxlanMode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPortVxlanMode, error) {
-	bsntlvportvxlanmode := &BsnTlvPortVxlanMode{BsnTlv: parent}
+func DecodeBsnTlvPortVxlanMode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPortVxlanMode, error) {
+	_bsntlvportvxlanmode := &BsnTlvPortVxlanMode{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvPortVxlanMode packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvportvxlanmode.Value = BsnPortVxlanMode(decoder.ReadByte())
-	return bsntlvportvxlanmode, nil
+	_bsntlvportvxlanmode.Value = BsnPortVxlanMode(decoder.ReadByte())
+	return _bsntlvportvxlanmode, nil
 }
 
 func NewBsnTlvPortVxlanMode() *BsnTlvPortVxlanMode {
-	return &BsnTlvPortVxlanMode{
+	obj := &BsnTlvPortVxlanMode{
 		BsnTlv: NewBsnTlv(88),
 	}
+	return obj
 }
 
 type BsnTlvPriority struct {
@@ -5502,19 +5656,20 @@ func (self *BsnTlvPriority) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPriority, error) {
-	bsntlvpriority := &BsnTlvPriority{BsnTlv: parent}
+func DecodeBsnTlvPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPriority, error) {
+	_bsntlvpriority := &BsnTlvPriority{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvPriority packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvpriority.Value = uint32(decoder.ReadUint32())
-	return bsntlvpriority, nil
+	_bsntlvpriority.Value = uint32(decoder.ReadUint32())
+	return _bsntlvpriority, nil
 }
 
 func NewBsnTlvPriority() *BsnTlvPriority {
-	return &BsnTlvPriority{
+	obj := &BsnTlvPriority{
 		BsnTlv: NewBsnTlv(57),
 	}
+	return obj
 }
 
 type BsnTlvPushVlanOnEgress struct {
@@ -5532,15 +5687,16 @@ func (self *BsnTlvPushVlanOnEgress) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPushVlanOnEgress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPushVlanOnEgress, error) {
-	bsntlvpushvlanonegress := &BsnTlvPushVlanOnEgress{BsnTlv: parent}
-	return bsntlvpushvlanonegress, nil
+func DecodeBsnTlvPushVlanOnEgress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPushVlanOnEgress, error) {
+	_bsntlvpushvlanonegress := &BsnTlvPushVlanOnEgress{BsnTlv: parent}
+	return _bsntlvpushvlanonegress, nil
 }
 
 func NewBsnTlvPushVlanOnEgress() *BsnTlvPushVlanOnEgress {
-	return &BsnTlvPushVlanOnEgress{
+	obj := &BsnTlvPushVlanOnEgress{
 		BsnTlv: NewBsnTlv(162),
 	}
+	return obj
 }
 
 type BsnTlvPushVlanOnIngress struct {
@@ -5561,19 +5717,20 @@ func (self *BsnTlvPushVlanOnIngress) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvPushVlanOnIngress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPushVlanOnIngress, error) {
-	bsntlvpushvlanoningress := &BsnTlvPushVlanOnIngress{BsnTlv: parent}
+func DecodeBsnTlvPushVlanOnIngress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPushVlanOnIngress, error) {
+	_bsntlvpushvlanoningress := &BsnTlvPushVlanOnIngress{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvPushVlanOnIngress packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvpushvlanoningress.Flags = BsnPushVlan(decoder.ReadByte())
-	return bsntlvpushvlanoningress, nil
+	_bsntlvpushvlanoningress.Flags = BsnPushVlan(decoder.ReadByte())
+	return _bsntlvpushvlanoningress, nil
 }
 
 func NewBsnTlvPushVlanOnIngress() *BsnTlvPushVlanOnIngress {
-	return &BsnTlvPushVlanOnIngress{
+	obj := &BsnTlvPushVlanOnIngress{
 		BsnTlv: NewBsnTlv(128),
 	}
+	return obj
 }
 
 type BsnTlvQosPriority struct {
@@ -5594,19 +5751,20 @@ func (self *BsnTlvQosPriority) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvQosPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvQosPriority, error) {
-	bsntlvqospriority := &BsnTlvQosPriority{BsnTlv: parent}
+func DecodeBsnTlvQosPriority(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvQosPriority, error) {
+	_bsntlvqospriority := &BsnTlvQosPriority{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvQosPriority packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvqospriority.Value = uint32(decoder.ReadUint32())
-	return bsntlvqospriority, nil
+	_bsntlvqospriority.Value = uint32(decoder.ReadUint32())
+	return _bsntlvqospriority, nil
 }
 
 func NewBsnTlvQosPriority() *BsnTlvQosPriority {
-	return &BsnTlvQosPriority{
+	obj := &BsnTlvQosPriority{
 		BsnTlv: NewBsnTlv(108),
 	}
+	return obj
 }
 
 type BsnTlvQueueId struct {
@@ -5627,19 +5785,20 @@ func (self *BsnTlvQueueId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvQueueId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvQueueId, error) {
-	bsntlvqueueid := &BsnTlvQueueId{BsnTlv: parent}
+func DecodeBsnTlvQueueId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvQueueId, error) {
+	_bsntlvqueueid := &BsnTlvQueueId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvQueueId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvqueueid.Value = uint32(decoder.ReadUint32())
-	return bsntlvqueueid, nil
+	_bsntlvqueueid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvqueueid, nil
 }
 
 func NewBsnTlvQueueId() *BsnTlvQueueId {
-	return &BsnTlvQueueId{
+	obj := &BsnTlvQueueId{
 		BsnTlv: NewBsnTlv(20),
 	}
+	return obj
 }
 
 type BsnTlvQueueWeight struct {
@@ -5660,19 +5819,20 @@ func (self *BsnTlvQueueWeight) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvQueueWeight(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvQueueWeight, error) {
-	bsntlvqueueweight := &BsnTlvQueueWeight{BsnTlv: parent}
+func DecodeBsnTlvQueueWeight(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvQueueWeight, error) {
+	_bsntlvqueueweight := &BsnTlvQueueWeight{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvQueueWeight packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvqueueweight.Value = uint32(decoder.ReadUint32())
-	return bsntlvqueueweight, nil
+	_bsntlvqueueweight.Value = uint32(decoder.ReadUint32())
+	return _bsntlvqueueweight, nil
 }
 
 func NewBsnTlvQueueWeight() *BsnTlvQueueWeight {
-	return &BsnTlvQueueWeight{
+	obj := &BsnTlvQueueWeight{
 		BsnTlv: NewBsnTlv(21),
 	}
+	return obj
 }
 
 type BsnTlvRateLimit struct {
@@ -5693,19 +5853,20 @@ func (self *BsnTlvRateLimit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvRateLimit(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRateLimit, error) {
-	bsntlvratelimit := &BsnTlvRateLimit{BsnTlv: parent}
+func DecodeBsnTlvRateLimit(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRateLimit, error) {
+	_bsntlvratelimit := &BsnTlvRateLimit{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvRateLimit packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvratelimit.Value = uint32(decoder.ReadUint32())
-	return bsntlvratelimit, nil
+	_bsntlvratelimit.Value = uint32(decoder.ReadUint32())
+	return _bsntlvratelimit, nil
 }
 
 func NewBsnTlvRateLimit() *BsnTlvRateLimit {
-	return &BsnTlvRateLimit{
+	obj := &BsnTlvRateLimit{
 		BsnTlv: NewBsnTlv(116),
 	}
+	return obj
 }
 
 type BsnTlvRateUnit struct {
@@ -5726,19 +5887,20 @@ func (self *BsnTlvRateUnit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvRateUnit(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRateUnit, error) {
-	bsntlvrateunit := &BsnTlvRateUnit{BsnTlv: parent}
+func DecodeBsnTlvRateUnit(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRateUnit, error) {
+	_bsntlvrateunit := &BsnTlvRateUnit{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvRateUnit packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvrateunit.Value = BsnRateUnit(decoder.ReadByte())
-	return bsntlvrateunit, nil
+	_bsntlvrateunit.Value = BsnRateUnit(decoder.ReadByte())
+	return _bsntlvrateunit, nil
 }
 
 func NewBsnTlvRateUnit() *BsnTlvRateUnit {
-	return &BsnTlvRateUnit{
+	obj := &BsnTlvRateUnit{
 		BsnTlv: NewBsnTlv(89),
 	}
+	return obj
 }
 
 type BsnTlvRecordPackets struct {
@@ -5759,19 +5921,20 @@ func (self *BsnTlvRecordPackets) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvRecordPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRecordPackets, error) {
-	bsntlvrecordpackets := &BsnTlvRecordPackets{BsnTlv: parent}
+func DecodeBsnTlvRecordPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRecordPackets, error) {
+	_bsntlvrecordpackets := &BsnTlvRecordPackets{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvRecordPackets packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvrecordpackets.Value = uint32(decoder.ReadUint32())
-	return bsntlvrecordpackets, nil
+	_bsntlvrecordpackets.Value = uint32(decoder.ReadUint32())
+	return _bsntlvrecordpackets, nil
 }
 
 func NewBsnTlvRecordPackets() *BsnTlvRecordPackets {
-	return &BsnTlvRecordPackets{
+	obj := &BsnTlvRecordPackets{
 		BsnTlv: NewBsnTlv(155),
 	}
+	return obj
 }
 
 type BsnTlvReference struct {
@@ -5798,27 +5961,28 @@ func (self *BsnTlvReference) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvReference(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvReference, error) {
-	bsntlvreference := &BsnTlvReference{BsnTlv: parent}
+func DecodeBsnTlvReference(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvReference, error) {
+	_bsntlvreference := &BsnTlvReference{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvReference packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvreference.TableId = uint16(decoder.ReadUint16())
+	_bsntlvreference.TableId = uint16(decoder.ReadUint16())
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsntlvreference.Key = append(bsntlvreference.Key, item)
+		_bsntlvreference.Key = append(_bsntlvreference.Key, item)
 	}
-	return bsntlvreference, nil
+	return _bsntlvreference, nil
 }
 
 func NewBsnTlvReference() *BsnTlvReference {
-	return &BsnTlvReference{
+	obj := &BsnTlvReference{
 		BsnTlv: NewBsnTlv(59),
 	}
+	return obj
 }
 
 type BsnTlvReplyPackets struct {
@@ -5839,19 +6003,20 @@ func (self *BsnTlvReplyPackets) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvReplyPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvReplyPackets, error) {
-	bsntlvreplypackets := &BsnTlvReplyPackets{BsnTlv: parent}
+func DecodeBsnTlvReplyPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvReplyPackets, error) {
+	_bsntlvreplypackets := &BsnTlvReplyPackets{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvReplyPackets packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvreplypackets.Value = uint64(decoder.ReadUint64())
-	return bsntlvreplypackets, nil
+	_bsntlvreplypackets.Value = uint64(decoder.ReadUint64())
+	return _bsntlvreplypackets, nil
 }
 
 func NewBsnTlvReplyPackets() *BsnTlvReplyPackets {
-	return &BsnTlvReplyPackets{
+	obj := &BsnTlvReplyPackets{
 		BsnTlv: NewBsnTlv(12),
 	}
+	return obj
 }
 
 type BsnTlvRequestPackets struct {
@@ -5872,19 +6037,20 @@ func (self *BsnTlvRequestPackets) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvRequestPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRequestPackets, error) {
-	bsntlvrequestpackets := &BsnTlvRequestPackets{BsnTlv: parent}
+func DecodeBsnTlvRequestPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRequestPackets, error) {
+	_bsntlvrequestpackets := &BsnTlvRequestPackets{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvRequestPackets packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvrequestpackets.Value = uint64(decoder.ReadUint64())
-	return bsntlvrequestpackets, nil
+	_bsntlvrequestpackets.Value = uint64(decoder.ReadUint64())
+	return _bsntlvrequestpackets, nil
 }
 
 func NewBsnTlvRequestPackets() *BsnTlvRequestPackets {
-	return &BsnTlvRequestPackets{
+	obj := &BsnTlvRequestPackets{
 		BsnTlv: NewBsnTlv(11),
 	}
+	return obj
 }
 
 type BsnTlvRestServer struct {
@@ -5902,15 +6068,16 @@ func (self *BsnTlvRestServer) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvRestServer(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRestServer, error) {
-	bsntlvrestserver := &BsnTlvRestServer{BsnTlv: parent}
-	return bsntlvrestserver, nil
+func DecodeBsnTlvRestServer(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRestServer, error) {
+	_bsntlvrestserver := &BsnTlvRestServer{BsnTlv: parent}
+	return _bsntlvrestserver, nil
 }
 
 func NewBsnTlvRestServer() *BsnTlvRestServer {
-	return &BsnTlvRestServer{
+	obj := &BsnTlvRestServer{
 		BsnTlv: NewBsnTlv(152),
 	}
+	return obj
 }
 
 type BsnTlvRoutingParam struct {
@@ -5931,19 +6098,20 @@ func (self *BsnTlvRoutingParam) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvRoutingParam(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRoutingParam, error) {
-	bsntlvroutingparam := &BsnTlvRoutingParam{BsnTlv: parent}
+func DecodeBsnTlvRoutingParam(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRoutingParam, error) {
+	_bsntlvroutingparam := &BsnTlvRoutingParam{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvRoutingParam packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvroutingparam.Value = BsnRoutingParam(decoder.ReadUint16())
-	return bsntlvroutingparam, nil
+	_bsntlvroutingparam.Value = BsnRoutingParam(decoder.ReadUint16())
+	return _bsntlvroutingparam, nil
 }
 
 func NewBsnTlvRoutingParam() *BsnTlvRoutingParam {
-	return &BsnTlvRoutingParam{
+	obj := &BsnTlvRoutingParam{
 		BsnTlv: NewBsnTlv(161),
 	}
+	return obj
 }
 
 type BsnTlvRxBytes struct {
@@ -5964,19 +6132,20 @@ func (self *BsnTlvRxBytes) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvRxBytes(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRxBytes, error) {
-	bsntlvrxbytes := &BsnTlvRxBytes{BsnTlv: parent}
+func DecodeBsnTlvRxBytes(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRxBytes, error) {
+	_bsntlvrxbytes := &BsnTlvRxBytes{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvRxBytes packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvrxbytes.Value = uint64(decoder.ReadUint64())
-	return bsntlvrxbytes, nil
+	_bsntlvrxbytes.Value = uint64(decoder.ReadUint64())
+	return _bsntlvrxbytes, nil
 }
 
 func NewBsnTlvRxBytes() *BsnTlvRxBytes {
-	return &BsnTlvRxBytes{
+	obj := &BsnTlvRxBytes{
 		BsnTlv: NewBsnTlv(71),
 	}
+	return obj
 }
 
 type BsnTlvRxPackets struct {
@@ -5997,19 +6166,20 @@ func (self *BsnTlvRxPackets) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvRxPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRxPackets, error) {
-	bsntlvrxpackets := &BsnTlvRxPackets{BsnTlv: parent}
+func DecodeBsnTlvRxPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRxPackets, error) {
+	_bsntlvrxpackets := &BsnTlvRxPackets{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvRxPackets packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvrxpackets.Value = uint64(decoder.ReadUint64())
-	return bsntlvrxpackets, nil
+	_bsntlvrxpackets.Value = uint64(decoder.ReadUint64())
+	return _bsntlvrxpackets, nil
 }
 
 func NewBsnTlvRxPackets() *BsnTlvRxPackets {
-	return &BsnTlvRxPackets{
+	obj := &BsnTlvRxPackets{
 		BsnTlv: NewBsnTlv(2),
 	}
+	return obj
 }
 
 type BsnTlvSamplingRate struct {
@@ -6030,19 +6200,20 @@ func (self *BsnTlvSamplingRate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvSamplingRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvSamplingRate, error) {
-	bsntlvsamplingrate := &BsnTlvSamplingRate{BsnTlv: parent}
+func DecodeBsnTlvSamplingRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvSamplingRate, error) {
+	_bsntlvsamplingrate := &BsnTlvSamplingRate{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvSamplingRate packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvsamplingrate.Value = uint32(decoder.ReadUint32())
-	return bsntlvsamplingrate, nil
+	_bsntlvsamplingrate.Value = uint32(decoder.ReadUint32())
+	return _bsntlvsamplingrate, nil
 }
 
 func NewBsnTlvSamplingRate() *BsnTlvSamplingRate {
-	return &BsnTlvSamplingRate{
+	obj := &BsnTlvSamplingRate{
 		BsnTlv: NewBsnTlv(30),
 	}
+	return obj
 }
 
 type BsnTlvSetLoopbackMode struct {
@@ -6060,15 +6231,16 @@ func (self *BsnTlvSetLoopbackMode) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvSetLoopbackMode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvSetLoopbackMode, error) {
-	bsntlvsetloopbackmode := &BsnTlvSetLoopbackMode{BsnTlv: parent}
-	return bsntlvsetloopbackmode, nil
+func DecodeBsnTlvSetLoopbackMode(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvSetLoopbackMode, error) {
+	_bsntlvsetloopbackmode := &BsnTlvSetLoopbackMode{BsnTlv: parent}
+	return _bsntlvsetloopbackmode, nil
 }
 
 func NewBsnTlvSetLoopbackMode() *BsnTlvSetLoopbackMode {
-	return &BsnTlvSetLoopbackMode{
+	obj := &BsnTlvSetLoopbackMode{
 		BsnTlv: NewBsnTlv(74),
 	}
+	return obj
 }
 
 type BsnTlvStatus struct {
@@ -6089,19 +6261,20 @@ func (self *BsnTlvStatus) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvStatus(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvStatus, error) {
-	bsntlvstatus := &BsnTlvStatus{BsnTlv: parent}
+func DecodeBsnTlvStatus(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvStatus, error) {
+	_bsntlvstatus := &BsnTlvStatus{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvStatus packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvstatus.Value = BsnStatus(decoder.ReadByte())
-	return bsntlvstatus, nil
+	_bsntlvstatus.Value = BsnStatus(decoder.ReadByte())
+	return _bsntlvstatus, nil
 }
 
 func NewBsnTlvStatus() *BsnTlvStatus {
-	return &BsnTlvStatus{
+	obj := &BsnTlvStatus{
 		BsnTlv: NewBsnTlv(97),
 	}
+	return obj
 }
 
 type BsnTlvStripMplsL2OnIngress struct {
@@ -6119,15 +6292,16 @@ func (self *BsnTlvStripMplsL2OnIngress) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnTlvStripMplsL2OnIngress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvStripMplsL2OnIngress, error) {
-	bsntlvstripmplsl2oningress := &BsnTlvStripMplsL2OnIngress{BsnTlv: parent}
-	return bsntlvstripmplsl2oningress, nil
+func DecodeBsnTlvStripMplsL2OnIngress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvStripMplsL2OnIngress, error) {
+	_bsntlvstripmplsl2oningress := &BsnTlvStripMplsL2OnIngress{BsnTlv: parent}
+	return _bsntlvstripmplsl2oningress, nil
 }
 
 func NewBsnTlvStripMplsL2OnIngress() *BsnTlvStripMplsL2OnIngress {
-	return &BsnTlvStripMplsL2OnIngress{
+	obj := &BsnTlvStripMplsL2OnIngress{
 		BsnTlv: NewBsnTlv(75),
 	}
+	return obj
 }
 
 type BsnTlvStripMplsL3OnIngress struct {
@@ -6145,15 +6319,16 @@ func (self *BsnTlvStripMplsL3OnIngress) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnTlvStripMplsL3OnIngress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvStripMplsL3OnIngress, error) {
-	bsntlvstripmplsl3oningress := &BsnTlvStripMplsL3OnIngress{BsnTlv: parent}
-	return bsntlvstripmplsl3oningress, nil
+func DecodeBsnTlvStripMplsL3OnIngress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvStripMplsL3OnIngress, error) {
+	_bsntlvstripmplsl3oningress := &BsnTlvStripMplsL3OnIngress{BsnTlv: parent}
+	return _bsntlvstripmplsl3oningress, nil
 }
 
 func NewBsnTlvStripMplsL3OnIngress() *BsnTlvStripMplsL3OnIngress {
-	return &BsnTlvStripMplsL3OnIngress{
+	obj := &BsnTlvStripMplsL3OnIngress{
 		BsnTlv: NewBsnTlv(76),
 	}
+	return obj
 }
 
 type BsnTlvStripVlanOnEgress struct {
@@ -6174,19 +6349,20 @@ func (self *BsnTlvStripVlanOnEgress) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvStripVlanOnEgress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvStripVlanOnEgress, error) {
-	bsntlvstripvlanonegress := &BsnTlvStripVlanOnEgress{BsnTlv: parent}
+func DecodeBsnTlvStripVlanOnEgress(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvStripVlanOnEgress, error) {
+	_bsntlvstripvlanonegress := &BsnTlvStripVlanOnEgress{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvStripVlanOnEgress packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvstripvlanonegress.Flags = BsnStripVlan(decoder.ReadByte())
-	return bsntlvstripvlanonegress, nil
+	_bsntlvstripvlanonegress.Flags = BsnStripVlan(decoder.ReadByte())
+	return _bsntlvstripvlanonegress, nil
 }
 
 func NewBsnTlvStripVlanOnEgress() *BsnTlvStripVlanOnEgress {
-	return &BsnTlvStripVlanOnEgress{
+	obj := &BsnTlvStripVlanOnEgress{
 		BsnTlv: NewBsnTlv(73),
 	}
+	return obj
 }
 
 type BsnTlvSubAgentId struct {
@@ -6207,19 +6383,20 @@ func (self *BsnTlvSubAgentId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvSubAgentId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvSubAgentId, error) {
-	bsntlvsubagentid := &BsnTlvSubAgentId{BsnTlv: parent}
+func DecodeBsnTlvSubAgentId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvSubAgentId, error) {
+	_bsntlvsubagentid := &BsnTlvSubAgentId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvSubAgentId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvsubagentid.Value = uint32(decoder.ReadUint32())
-	return bsntlvsubagentid, nil
+	_bsntlvsubagentid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvsubagentid, nil
 }
 
 func NewBsnTlvSubAgentId() *BsnTlvSubAgentId {
-	return &BsnTlvSubAgentId{
+	obj := &BsnTlvSubAgentId{
 		BsnTlv: NewBsnTlv(38),
 	}
+	return obj
 }
 
 type BsnTlvTcpDst struct {
@@ -6240,19 +6417,20 @@ func (self *BsnTlvTcpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvTcpDst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTcpDst, error) {
-	bsntlvtcpdst := &BsnTlvTcpDst{BsnTlv: parent}
+func DecodeBsnTlvTcpDst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTcpDst, error) {
+	_bsntlvtcpdst := &BsnTlvTcpDst{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvTcpDst packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvtcpdst.Value = uint16(decoder.ReadUint16())
-	return bsntlvtcpdst, nil
+	_bsntlvtcpdst.Value = uint16(decoder.ReadUint16())
+	return _bsntlvtcpdst, nil
 }
 
 func NewBsnTlvTcpDst() *BsnTlvTcpDst {
-	return &BsnTlvTcpDst{
+	obj := &BsnTlvTcpDst{
 		BsnTlv: NewBsnTlv(66),
 	}
+	return obj
 }
 
 type BsnTlvTcpFlags struct {
@@ -6273,19 +6451,20 @@ func (self *BsnTlvTcpFlags) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvTcpFlags(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTcpFlags, error) {
-	bsntlvtcpflags := &BsnTlvTcpFlags{BsnTlv: parent}
+func DecodeBsnTlvTcpFlags(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTcpFlags, error) {
+	_bsntlvtcpflags := &BsnTlvTcpFlags{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvTcpFlags packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvtcpflags.Value = uint16(decoder.ReadUint16())
-	return bsntlvtcpflags, nil
+	_bsntlvtcpflags.Value = uint16(decoder.ReadUint16())
+	return _bsntlvtcpflags, nil
 }
 
 func NewBsnTlvTcpFlags() *BsnTlvTcpFlags {
-	return &BsnTlvTcpFlags{
+	obj := &BsnTlvTcpFlags{
 		BsnTlv: NewBsnTlv(133),
 	}
+	return obj
 }
 
 type BsnTlvTcpSrc struct {
@@ -6306,19 +6485,20 @@ func (self *BsnTlvTcpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvTcpSrc(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTcpSrc, error) {
-	bsntlvtcpsrc := &BsnTlvTcpSrc{BsnTlv: parent}
+func DecodeBsnTlvTcpSrc(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTcpSrc, error) {
+	_bsntlvtcpsrc := &BsnTlvTcpSrc{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvTcpSrc packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvtcpsrc.Value = uint16(decoder.ReadUint16())
-	return bsntlvtcpsrc, nil
+	_bsntlvtcpsrc.Value = uint16(decoder.ReadUint16())
+	return _bsntlvtcpsrc, nil
 }
 
 func NewBsnTlvTcpSrc() *BsnTlvTcpSrc {
-	return &BsnTlvTcpSrc{
+	obj := &BsnTlvTcpSrc{
 		BsnTlv: NewBsnTlv(65),
 	}
+	return obj
 }
 
 type BsnTlvTimestamp struct {
@@ -6339,19 +6519,20 @@ func (self *BsnTlvTimestamp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvTimestamp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTimestamp, error) {
-	bsntlvtimestamp := &BsnTlvTimestamp{BsnTlv: parent}
+func DecodeBsnTlvTimestamp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTimestamp, error) {
+	_bsntlvtimestamp := &BsnTlvTimestamp{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvTimestamp packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvtimestamp.Value = uint64(decoder.ReadUint64())
-	return bsntlvtimestamp, nil
+	_bsntlvtimestamp.Value = uint64(decoder.ReadUint64())
+	return _bsntlvtimestamp, nil
 }
 
 func NewBsnTlvTimestamp() *BsnTlvTimestamp {
-	return &BsnTlvTimestamp{
+	obj := &BsnTlvTimestamp{
 		BsnTlv: NewBsnTlv(154),
 	}
+	return obj
 }
 
 type BsnTlvTtl struct {
@@ -6372,19 +6553,20 @@ func (self *BsnTlvTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvTtl(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTtl, error) {
-	bsntlvttl := &BsnTlvTtl{BsnTlv: parent}
+func DecodeBsnTlvTtl(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTtl, error) {
+	_bsntlvttl := &BsnTlvTtl{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvTtl packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvttl.Value = uint16(decoder.ReadUint16())
-	return bsntlvttl, nil
+	_bsntlvttl.Value = uint16(decoder.ReadUint16())
+	return _bsntlvttl, nil
 }
 
 func NewBsnTlvTtl() *BsnTlvTtl {
-	return &BsnTlvTtl{
+	obj := &BsnTlvTtl{
 		BsnTlv: NewBsnTlv(113),
 	}
+	return obj
 }
 
 type BsnTlvTunnelCapability struct {
@@ -6405,19 +6587,20 @@ func (self *BsnTlvTunnelCapability) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvTunnelCapability(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTunnelCapability, error) {
-	bsntlvtunnelcapability := &BsnTlvTunnelCapability{BsnTlv: parent}
+func DecodeBsnTlvTunnelCapability(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTunnelCapability, error) {
+	_bsntlvtunnelcapability := &BsnTlvTunnelCapability{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvTunnelCapability packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvtunnelcapability.Value = BsnTunnelType(decoder.ReadUint64())
-	return bsntlvtunnelcapability, nil
+	_bsntlvtunnelcapability.Value = BsnTunnelType(decoder.ReadUint64())
+	return _bsntlvtunnelcapability, nil
 }
 
 func NewBsnTlvTunnelCapability() *BsnTlvTunnelCapability {
-	return &BsnTlvTunnelCapability{
+	obj := &BsnTlvTunnelCapability{
 		BsnTlv: NewBsnTlv(142),
 	}
+	return obj
 }
 
 type BsnTlvTxBytes struct {
@@ -6438,19 +6621,20 @@ func (self *BsnTlvTxBytes) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvTxBytes(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTxBytes, error) {
-	bsntlvtxbytes := &BsnTlvTxBytes{BsnTlv: parent}
+func DecodeBsnTlvTxBytes(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTxBytes, error) {
+	_bsntlvtxbytes := &BsnTlvTxBytes{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvTxBytes packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvtxbytes.Value = uint64(decoder.ReadUint64())
-	return bsntlvtxbytes, nil
+	_bsntlvtxbytes.Value = uint64(decoder.ReadUint64())
+	return _bsntlvtxbytes, nil
 }
 
 func NewBsnTlvTxBytes() *BsnTlvTxBytes {
-	return &BsnTlvTxBytes{
+	obj := &BsnTlvTxBytes{
 		BsnTlv: NewBsnTlv(39),
 	}
+	return obj
 }
 
 type BsnTlvTxPackets struct {
@@ -6471,19 +6655,20 @@ func (self *BsnTlvTxPackets) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvTxPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTxPackets, error) {
-	bsntlvtxpackets := &BsnTlvTxPackets{BsnTlv: parent}
+func DecodeBsnTlvTxPackets(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvTxPackets, error) {
+	_bsntlvtxpackets := &BsnTlvTxPackets{BsnTlv: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTlvTxPackets packet too short: %d < 8", decoder.Length())
 	}
-	bsntlvtxpackets.Value = uint64(decoder.ReadUint64())
-	return bsntlvtxpackets, nil
+	_bsntlvtxpackets.Value = uint64(decoder.ReadUint64())
+	return _bsntlvtxpackets, nil
 }
 
 func NewBsnTlvTxPackets() *BsnTlvTxPackets {
-	return &BsnTlvTxPackets{
+	obj := &BsnTlvTxPackets{
 		BsnTlv: NewBsnTlv(3),
 	}
+	return obj
 }
 
 type BsnTlvUdfAnchor struct {
@@ -6504,19 +6689,20 @@ func (self *BsnTlvUdfAnchor) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUdfAnchor(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfAnchor, error) {
-	bsntlvudfanchor := &BsnTlvUdfAnchor{BsnTlv: parent}
+func DecodeBsnTlvUdfAnchor(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfAnchor, error) {
+	_bsntlvudfanchor := &BsnTlvUdfAnchor{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvUdfAnchor packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvudfanchor.Value = BsnUdfAnchor(decoder.ReadUint16())
-	return bsntlvudfanchor, nil
+	_bsntlvudfanchor.Value = BsnUdfAnchor(decoder.ReadUint16())
+	return _bsntlvudfanchor, nil
 }
 
 func NewBsnTlvUdfAnchor() *BsnTlvUdfAnchor {
-	return &BsnTlvUdfAnchor{
+	obj := &BsnTlvUdfAnchor{
 		BsnTlv: NewBsnTlv(16),
 	}
+	return obj
 }
 
 type BsnTlvUdfCapability struct {
@@ -6537,19 +6723,20 @@ func (self *BsnTlvUdfCapability) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUdfCapability(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfCapability, error) {
-	bsntlvudfcapability := &BsnTlvUdfCapability{BsnTlv: parent}
+func DecodeBsnTlvUdfCapability(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfCapability, error) {
+	_bsntlvudfcapability := &BsnTlvUdfCapability{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvUdfCapability packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvudfcapability.Value = BsnUdfMode(decoder.ReadByte())
-	return bsntlvudfcapability, nil
+	_bsntlvudfcapability.Value = BsnUdfMode(decoder.ReadByte())
+	return _bsntlvudfcapability, nil
 }
 
 func NewBsnTlvUdfCapability() *BsnTlvUdfCapability {
-	return &BsnTlvUdfCapability{
+	obj := &BsnTlvUdfCapability{
 		BsnTlv: NewBsnTlv(180),
 	}
+	return obj
 }
 
 type BsnTlvUdfId struct {
@@ -6570,19 +6757,20 @@ func (self *BsnTlvUdfId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUdfId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfId, error) {
-	bsntlvudfid := &BsnTlvUdfId{BsnTlv: parent}
+func DecodeBsnTlvUdfId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfId, error) {
+	_bsntlvudfid := &BsnTlvUdfId{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvUdfId packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvudfid.Value = uint16(decoder.ReadUint16())
-	return bsntlvudfid, nil
+	_bsntlvudfid.Value = uint16(decoder.ReadUint16())
+	return _bsntlvudfid, nil
 }
 
 func NewBsnTlvUdfId() *BsnTlvUdfId {
-	return &BsnTlvUdfId{
+	obj := &BsnTlvUdfId{
 		BsnTlv: NewBsnTlv(15),
 	}
+	return obj
 }
 
 type BsnTlvUdfLength struct {
@@ -6603,19 +6791,20 @@ func (self *BsnTlvUdfLength) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUdfLength(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfLength, error) {
-	bsntlvudflength := &BsnTlvUdfLength{BsnTlv: parent}
+func DecodeBsnTlvUdfLength(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfLength, error) {
+	_bsntlvudflength := &BsnTlvUdfLength{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvUdfLength packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvudflength.Value = uint16(decoder.ReadUint16())
-	return bsntlvudflength, nil
+	_bsntlvudflength.Value = uint16(decoder.ReadUint16())
+	return _bsntlvudflength, nil
 }
 
 func NewBsnTlvUdfLength() *BsnTlvUdfLength {
-	return &BsnTlvUdfLength{
+	obj := &BsnTlvUdfLength{
 		BsnTlv: NewBsnTlv(18),
 	}
+	return obj
 }
 
 type BsnTlvUdfOffset struct {
@@ -6636,19 +6825,20 @@ func (self *BsnTlvUdfOffset) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUdfOffset(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfOffset, error) {
-	bsntlvudfoffset := &BsnTlvUdfOffset{BsnTlv: parent}
+func DecodeBsnTlvUdfOffset(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdfOffset, error) {
+	_bsntlvudfoffset := &BsnTlvUdfOffset{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvUdfOffset packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvudfoffset.Value = uint16(decoder.ReadUint16())
-	return bsntlvudfoffset, nil
+	_bsntlvudfoffset.Value = uint16(decoder.ReadUint16())
+	return _bsntlvudfoffset, nil
 }
 
 func NewBsnTlvUdfOffset() *BsnTlvUdfOffset {
-	return &BsnTlvUdfOffset{
+	obj := &BsnTlvUdfOffset{
 		BsnTlv: NewBsnTlv(17),
 	}
+	return obj
 }
 
 type BsnTlvUdpDst struct {
@@ -6669,19 +6859,20 @@ func (self *BsnTlvUdpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUdpDst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdpDst, error) {
-	bsntlvudpdst := &BsnTlvUdpDst{BsnTlv: parent}
+func DecodeBsnTlvUdpDst(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdpDst, error) {
+	_bsntlvudpdst := &BsnTlvUdpDst{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvUdpDst packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvudpdst.Value = uint16(decoder.ReadUint16())
-	return bsntlvudpdst, nil
+	_bsntlvudpdst.Value = uint16(decoder.ReadUint16())
+	return _bsntlvudpdst, nil
 }
 
 func NewBsnTlvUdpDst() *BsnTlvUdpDst {
-	return &BsnTlvUdpDst{
+	obj := &BsnTlvUdpDst{
 		BsnTlv: NewBsnTlv(37),
 	}
+	return obj
 }
 
 type BsnTlvUdpSrc struct {
@@ -6702,19 +6893,20 @@ func (self *BsnTlvUdpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUdpSrc(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdpSrc, error) {
-	bsntlvudpsrc := &BsnTlvUdpSrc{BsnTlv: parent}
+func DecodeBsnTlvUdpSrc(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUdpSrc, error) {
+	_bsntlvudpsrc := &BsnTlvUdpSrc{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvUdpSrc packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvudpsrc.Value = uint16(decoder.ReadUint16())
-	return bsntlvudpsrc, nil
+	_bsntlvudpsrc.Value = uint16(decoder.ReadUint16())
+	return _bsntlvudpsrc, nil
 }
 
 func NewBsnTlvUdpSrc() *BsnTlvUdpSrc {
-	return &BsnTlvUdpSrc{
+	obj := &BsnTlvUdpSrc{
 		BsnTlv: NewBsnTlv(36),
 	}
+	return obj
 }
 
 type BsnTlvUint32 struct {
@@ -6735,19 +6927,20 @@ func (self *BsnTlvUint32) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUint32(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUint32, error) {
-	bsntlvuint32 := &BsnTlvUint32{BsnTlv: parent}
+func DecodeBsnTlvUint32(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUint32, error) {
+	_bsntlvuint32 := &BsnTlvUint32{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvUint32 packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvuint32.Value = uint32(decoder.ReadUint32())
-	return bsntlvuint32, nil
+	_bsntlvuint32.Value = uint32(decoder.ReadUint32())
+	return _bsntlvuint32, nil
 }
 
 func NewBsnTlvUint32() *BsnTlvUint32 {
-	return &BsnTlvUint32{
+	obj := &BsnTlvUint32{
 		BsnTlv: NewBsnTlv(167),
 	}
+	return obj
 }
 
 type BsnTlvUint64List struct {
@@ -6772,23 +6965,24 @@ func (self *BsnTlvUint64List) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUint64List(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUint64List, error) {
-	bsntlvuint64list := &BsnTlvUint64List{BsnTlv: parent}
+func DecodeBsnTlvUint64List(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUint64List, error) {
+	_bsntlvuint64list := &BsnTlvUint64List{BsnTlv: parent}
 
 	for decoder.Length() >= 8 {
-		item, err := decodeUint64(decoder)
+		item, err := DecodeUint64(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsntlvuint64list.Value = append(bsntlvuint64list.Value, item)
+		_bsntlvuint64list.Value = append(_bsntlvuint64list.Value, item)
 	}
-	return bsntlvuint64list, nil
+	return _bsntlvuint64list, nil
 }
 
 func NewBsnTlvUint64List() *BsnTlvUint64List {
-	return &BsnTlvUint64List{
+	obj := &BsnTlvUint64List{
 		BsnTlv: NewBsnTlv(119),
 	}
+	return obj
 }
 
 type BsnTlvUnicastQueryTimeout struct {
@@ -6809,19 +7003,20 @@ func (self *BsnTlvUnicastQueryTimeout) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnTlvUnicastQueryTimeout(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUnicastQueryTimeout, error) {
-	bsntlvunicastquerytimeout := &BsnTlvUnicastQueryTimeout{BsnTlv: parent}
+func DecodeBsnTlvUnicastQueryTimeout(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUnicastQueryTimeout, error) {
+	_bsntlvunicastquerytimeout := &BsnTlvUnicastQueryTimeout{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvUnicastQueryTimeout packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvunicastquerytimeout.Value = uint32(decoder.ReadUint32())
-	return bsntlvunicastquerytimeout, nil
+	_bsntlvunicastquerytimeout.Value = uint32(decoder.ReadUint32())
+	return _bsntlvunicastquerytimeout, nil
 }
 
 func NewBsnTlvUnicastQueryTimeout() *BsnTlvUnicastQueryTimeout {
-	return &BsnTlvUnicastQueryTimeout{
+	obj := &BsnTlvUnicastQueryTimeout{
 		BsnTlv: NewBsnTlv(9),
 	}
+	return obj
 }
 
 type BsnTlvUnicastRate struct {
@@ -6842,19 +7037,20 @@ func (self *BsnTlvUnicastRate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUnicastRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUnicastRate, error) {
-	bsntlvunicastrate := &BsnTlvUnicastRate{BsnTlv: parent}
+func DecodeBsnTlvUnicastRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUnicastRate, error) {
+	_bsntlvunicastrate := &BsnTlvUnicastRate{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvUnicastRate packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvunicastrate.Value = uint32(decoder.ReadUint32())
-	return bsntlvunicastrate, nil
+	_bsntlvunicastrate.Value = uint32(decoder.ReadUint32())
+	return _bsntlvunicastrate, nil
 }
 
 func NewBsnTlvUnicastRate() *BsnTlvUnicastRate {
-	return &BsnTlvUnicastRate{
+	obj := &BsnTlvUnicastRate{
 		BsnTlv: NewBsnTlv(93),
 	}
+	return obj
 }
 
 type BsnTlvUnknownMulticastRate struct {
@@ -6875,19 +7071,20 @@ func (self *BsnTlvUnknownMulticastRate) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnTlvUnknownMulticastRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUnknownMulticastRate, error) {
-	bsntlvunknownmulticastrate := &BsnTlvUnknownMulticastRate{BsnTlv: parent}
+func DecodeBsnTlvUnknownMulticastRate(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUnknownMulticastRate, error) {
+	_bsntlvunknownmulticastrate := &BsnTlvUnknownMulticastRate{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvUnknownMulticastRate packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvunknownmulticastrate.Value = uint32(decoder.ReadUint32())
-	return bsntlvunknownmulticastrate, nil
+	_bsntlvunknownmulticastrate.Value = uint32(decoder.ReadUint32())
+	return _bsntlvunknownmulticastrate, nil
 }
 
 func NewBsnTlvUnknownMulticastRate() *BsnTlvUnknownMulticastRate {
-	return &BsnTlvUnknownMulticastRate{
+	obj := &BsnTlvUnknownMulticastRate{
 		BsnTlv: NewBsnTlv(92),
 	}
+	return obj
 }
 
 type BsnTlvUntagged struct {
@@ -6905,15 +7102,16 @@ func (self *BsnTlvUntagged) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUntagged(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUntagged, error) {
-	bsntlvuntagged := &BsnTlvUntagged{BsnTlv: parent}
-	return bsntlvuntagged, nil
+func DecodeBsnTlvUntagged(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUntagged, error) {
+	_bsntlvuntagged := &BsnTlvUntagged{BsnTlv: parent}
+	return _bsntlvuntagged, nil
 }
 
 func NewBsnTlvUntagged() *BsnTlvUntagged {
-	return &BsnTlvUntagged{
+	obj := &BsnTlvUntagged{
 		BsnTlv: NewBsnTlv(106),
 	}
+	return obj
 }
 
 type BsnTlvUpgrade struct {
@@ -6934,19 +7132,20 @@ func (self *BsnTlvUpgrade) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUpgrade(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUpgrade, error) {
-	bsntlvupgrade := &BsnTlvUpgrade{BsnTlv: parent}
+func DecodeBsnTlvUpgrade(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUpgrade, error) {
+	_bsntlvupgrade := &BsnTlvUpgrade{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvUpgrade packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvupgrade.Value = BsnUpgrade(decoder.ReadUint16())
-	return bsntlvupgrade, nil
+	_bsntlvupgrade.Value = BsnUpgrade(decoder.ReadUint16())
+	return _bsntlvupgrade, nil
 }
 
 func NewBsnTlvUpgrade() *BsnTlvUpgrade {
-	return &BsnTlvUpgrade{
+	obj := &BsnTlvUpgrade{
 		BsnTlv: NewBsnTlv(164),
 	}
+	return obj
 }
 
 type BsnTlvUriScheme struct {
@@ -6967,16 +7166,17 @@ func (self *BsnTlvUriScheme) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUriScheme(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUriScheme, error) {
-	bsntlvurischeme := &BsnTlvUriScheme{BsnTlv: parent}
-	bsntlvurischeme.Value = decoder.Read(decoder.Length())
-	return bsntlvurischeme, nil
+func DecodeBsnTlvUriScheme(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUriScheme, error) {
+	_bsntlvurischeme := &BsnTlvUriScheme{BsnTlv: parent}
+	_bsntlvurischeme.Value = decoder.Read(decoder.Length())
+	return _bsntlvurischeme, nil
 }
 
 func NewBsnTlvUriScheme() *BsnTlvUriScheme {
-	return &BsnTlvUriScheme{
+	obj := &BsnTlvUriScheme{
 		BsnTlv: NewBsnTlv(153),
 	}
+	return obj
 }
 
 type BsnTlvUsePacketState struct {
@@ -6997,19 +7197,20 @@ func (self *BsnTlvUsePacketState) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUsePacketState(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUsePacketState, error) {
-	bsntlvusepacketstate := &BsnTlvUsePacketState{BsnTlv: parent}
+func DecodeBsnTlvUsePacketState(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUsePacketState, error) {
+	_bsntlvusepacketstate := &BsnTlvUsePacketState{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvUsePacketState packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvusepacketstate.Value = uint8(decoder.ReadByte())
-	return bsntlvusepacketstate, nil
+	_bsntlvusepacketstate.Value = uint8(decoder.ReadByte())
+	return _bsntlvusepacketstate, nil
 }
 
 func NewBsnTlvUsePacketState() *BsnTlvUsePacketState {
-	return &BsnTlvUsePacketState{
+	obj := &BsnTlvUsePacketState{
 		BsnTlv: NewBsnTlv(96),
 	}
+	return obj
 }
 
 type BsnTlvUserConfigured struct {
@@ -7027,15 +7228,16 @@ func (self *BsnTlvUserConfigured) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvUserConfigured(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUserConfigured, error) {
-	bsntlvuserconfigured := &BsnTlvUserConfigured{BsnTlv: parent}
-	return bsntlvuserconfigured, nil
+func DecodeBsnTlvUserConfigured(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUserConfigured, error) {
+	_bsntlvuserconfigured := &BsnTlvUserConfigured{BsnTlv: parent}
+	return _bsntlvuserconfigured, nil
 }
 
 func NewBsnTlvUserConfigured() *BsnTlvUserConfigured {
-	return &BsnTlvUserConfigured{
+	obj := &BsnTlvUserConfigured{
 		BsnTlv: NewBsnTlv(166),
 	}
+	return obj
 }
 
 type BsnTlvVfi struct {
@@ -7056,19 +7258,20 @@ func (self *BsnTlvVfi) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVfi(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVfi, error) {
-	bsntlvvfi := &BsnTlvVfi{BsnTlv: parent}
+func DecodeBsnTlvVfi(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVfi, error) {
+	_bsntlvvfi := &BsnTlvVfi{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvVfi packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvvfi.Value = uint16(decoder.ReadUint16())
-	return bsntlvvfi, nil
+	_bsntlvvfi.Value = uint16(decoder.ReadUint16())
+	return _bsntlvvfi, nil
 }
 
 func NewBsnTlvVfi() *BsnTlvVfi {
-	return &BsnTlvVfi{
+	obj := &BsnTlvVfi{
 		BsnTlv: NewBsnTlv(99),
 	}
+	return obj
 }
 
 type BsnTlvVfpClassId struct {
@@ -7089,19 +7292,20 @@ func (self *BsnTlvVfpClassId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVfpClassId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVfpClassId, error) {
-	bsntlvvfpclassid := &BsnTlvVfpClassId{BsnTlv: parent}
+func DecodeBsnTlvVfpClassId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVfpClassId, error) {
+	_bsntlvvfpclassid := &BsnTlvVfpClassId{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvVfpClassId packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvvfpclassid.Value = uint32(decoder.ReadUint32())
-	return bsntlvvfpclassid, nil
+	_bsntlvvfpclassid.Value = uint32(decoder.ReadUint32())
+	return _bsntlvvfpclassid, nil
 }
 
 func NewBsnTlvVfpClassId() *BsnTlvVfpClassId {
-	return &BsnTlvVfpClassId{
+	obj := &BsnTlvVfpClassId{
 		BsnTlv: NewBsnTlv(107),
 	}
+	return obj
 }
 
 type BsnTlvVirtual struct {
@@ -7119,15 +7323,16 @@ func (self *BsnTlvVirtual) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVirtual(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVirtual, error) {
-	bsntlvvirtual := &BsnTlvVirtual{BsnTlv: parent}
-	return bsntlvvirtual, nil
+func DecodeBsnTlvVirtual(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVirtual, error) {
+	_bsntlvvirtual := &BsnTlvVirtual{BsnTlv: parent}
+	return _bsntlvvirtual, nil
 }
 
 func NewBsnTlvVirtual() *BsnTlvVirtual {
-	return &BsnTlvVirtual{
+	obj := &BsnTlvVirtual{
 		BsnTlv: NewBsnTlv(158),
 	}
+	return obj
 }
 
 type BsnTlvVlanMacList struct {
@@ -7152,23 +7357,24 @@ func (self *BsnTlvVlanMacList) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVlanMacList(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVlanMacList, error) {
-	bsntlvvlanmaclist := &BsnTlvVlanMacList{BsnTlv: parent}
+func DecodeBsnTlvVlanMacList(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVlanMacList, error) {
+	_bsntlvvlanmaclist := &BsnTlvVlanMacList{BsnTlv: parent}
 
 	for decoder.Length() >= 8 {
-		item, err := decodeBsnVlanMac(decoder)
+		item, err := DecodeBsnVlanMac(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsntlvvlanmaclist.Key = append(bsntlvvlanmaclist.Key, item)
+		_bsntlvvlanmaclist.Key = append(_bsntlvvlanmaclist.Key, item)
 	}
-	return bsntlvvlanmaclist, nil
+	return _bsntlvvlanmaclist, nil
 }
 
 func NewBsnTlvVlanMacList() *BsnTlvVlanMacList {
-	return &BsnTlvVlanMacList{
+	obj := &BsnTlvVlanMacList{
 		BsnTlv: NewBsnTlv(98),
 	}
+	return obj
 }
 
 type BsnTlvVlanPcp struct {
@@ -7189,19 +7395,20 @@ func (self *BsnTlvVlanPcp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVlanPcp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVlanPcp, error) {
-	bsntlvvlanpcp := &BsnTlvVlanPcp{BsnTlv: parent}
+func DecodeBsnTlvVlanPcp(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVlanPcp, error) {
+	_bsntlvvlanpcp := &BsnTlvVlanPcp{BsnTlv: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnTlvVlanPcp packet too short: %d < 1", decoder.Length())
 	}
-	bsntlvvlanpcp.Value = uint8(decoder.ReadByte())
-	return bsntlvvlanpcp, nil
+	_bsntlvvlanpcp.Value = uint8(decoder.ReadByte())
+	return _bsntlvvlanpcp, nil
 }
 
 func NewBsnTlvVlanPcp() *BsnTlvVlanPcp {
-	return &BsnTlvVlanPcp{
+	obj := &BsnTlvVlanPcp{
 		BsnTlv: NewBsnTlv(72),
 	}
+	return obj
 }
 
 type BsnTlvVlanVid struct {
@@ -7222,19 +7429,20 @@ func (self *BsnTlvVlanVid) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVlanVid(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVlanVid, error) {
-	bsntlvvlanvid := &BsnTlvVlanVid{BsnTlv: parent}
+func DecodeBsnTlvVlanVid(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVlanVid, error) {
+	_bsntlvvlanvid := &BsnTlvVlanVid{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvVlanVid packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvvlanvid.Value = uint16(decoder.ReadUint16())
-	return bsntlvvlanvid, nil
+	_bsntlvvlanvid.Value = uint16(decoder.ReadUint16())
+	return _bsntlvvlanvid, nil
 }
 
 func NewBsnTlvVlanVid() *BsnTlvVlanVid {
-	return &BsnTlvVlanVid{
+	obj := &BsnTlvVlanVid{
 		BsnTlv: NewBsnTlv(6),
 	}
+	return obj
 }
 
 type BsnTlvVlanVidMask struct {
@@ -7255,19 +7463,20 @@ func (self *BsnTlvVlanVidMask) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVlanVidMask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVlanVidMask, error) {
-	bsntlvvlanvidmask := &BsnTlvVlanVidMask{BsnTlv: parent}
+func DecodeBsnTlvVlanVidMask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVlanVidMask, error) {
+	_bsntlvvlanvidmask := &BsnTlvVlanVidMask{BsnTlv: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnTlvVlanVidMask packet too short: %d < 2", decoder.Length())
 	}
-	bsntlvvlanvidmask.Value = uint16(decoder.ReadUint16())
-	return bsntlvvlanvidmask, nil
+	_bsntlvvlanvidmask.Value = uint16(decoder.ReadUint16())
+	return _bsntlvvlanvidmask, nil
 }
 
 func NewBsnTlvVlanVidMask() *BsnTlvVlanVidMask {
-	return &BsnTlvVlanVidMask{
+	obj := &BsnTlvVlanVidMask{
 		BsnTlv: NewBsnTlv(77),
 	}
+	return obj
 }
 
 type BsnTlvVni struct {
@@ -7288,19 +7497,20 @@ func (self *BsnTlvVni) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVni(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVni, error) {
-	bsntlvvni := &BsnTlvVni{BsnTlv: parent}
+func DecodeBsnTlvVni(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVni, error) {
+	_bsntlvvni := &BsnTlvVni{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvVni packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvvni.Value = uint32(decoder.ReadUint32())
-	return bsntlvvni, nil
+	_bsntlvvni.Value = uint32(decoder.ReadUint32())
+	return _bsntlvvni, nil
 }
 
 func NewBsnTlvVni() *BsnTlvVni {
-	return &BsnTlvVni{
+	obj := &BsnTlvVni{
 		BsnTlv: NewBsnTlv(86),
 	}
+	return obj
 }
 
 type BsnTlvVpnKey struct {
@@ -7321,19 +7531,20 @@ func (self *BsnTlvVpnKey) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVpnKey(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVpnKey, error) {
-	bsntlvvpnkey := &BsnTlvVpnKey{BsnTlv: parent}
+func DecodeBsnTlvVpnKey(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVpnKey, error) {
+	_bsntlvvpnkey := &BsnTlvVpnKey{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvVpnKey packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvvpnkey.Value = uint32(decoder.ReadUint32())
-	return bsntlvvpnkey, nil
+	_bsntlvvpnkey.Value = uint32(decoder.ReadUint32())
+	return _bsntlvvpnkey, nil
 }
 
 func NewBsnTlvVpnKey() *BsnTlvVpnKey {
-	return &BsnTlvVpnKey{
+	obj := &BsnTlvVpnKey{
 		BsnTlv: NewBsnTlv(111),
 	}
+	return obj
 }
 
 type BsnTlvVrf struct {
@@ -7354,19 +7565,20 @@ func (self *BsnTlvVrf) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVrf(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVrf, error) {
-	bsntlvvrf := &BsnTlvVrf{BsnTlv: parent}
+func DecodeBsnTlvVrf(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVrf, error) {
+	_bsntlvvrf := &BsnTlvVrf{BsnTlv: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnTlvVrf packet too short: %d < 4", decoder.Length())
 	}
-	bsntlvvrf.Value = uint32(decoder.ReadUint32())
-	return bsntlvvrf, nil
+	_bsntlvvrf.Value = uint32(decoder.ReadUint32())
+	return _bsntlvvrf, nil
 }
 
 func NewBsnTlvVrf() *BsnTlvVrf {
-	return &BsnTlvVrf{
+	obj := &BsnTlvVrf{
 		BsnTlv: NewBsnTlv(19),
 	}
+	return obj
 }
 
 type BsnTlvVxlanEgressLag struct {
@@ -7384,15 +7596,16 @@ func (self *BsnTlvVxlanEgressLag) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTlvVxlanEgressLag(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVxlanEgressLag, error) {
-	bsntlvvxlanegresslag := &BsnTlvVxlanEgressLag{BsnTlv: parent}
-	return bsntlvvxlanegresslag, nil
+func DecodeBsnTlvVxlanEgressLag(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVxlanEgressLag, error) {
+	_bsntlvvxlanegresslag := &BsnTlvVxlanEgressLag{BsnTlv: parent}
+	return _bsntlvvxlanegresslag, nil
 }
 
 func NewBsnTlvVxlanEgressLag() *BsnTlvVxlanEgressLag {
-	return &BsnTlvVxlanEgressLag{
+	obj := &BsnTlvVxlanEgressLag{
 		BsnTlv: NewBsnTlv(117),
 	}
+	return obj
 }
 
 type BsnVport struct {
@@ -7433,9 +7646,9 @@ func (self *BsnVport) Decode(decoder *goloxi.Decoder) error {
 }
 
 func NewBsnVport(_type uint16) *BsnVport {
-	return &BsnVport{
-		Type: _type,
-	}
+	obj := &BsnVport{}
+	obj.Type = _type
+	return obj
 }
 
 type BsnVlanCounterStatsEntry struct {
@@ -7460,28 +7673,29 @@ func (self *BsnVlanCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnVlanCounterStatsEntry(decoder *goloxi.Decoder) (*BsnVlanCounterStatsEntry, error) {
-	bsnvlancounterstatsentry := &BsnVlanCounterStatsEntry{}
+func DecodeBsnVlanCounterStatsEntry(decoder *goloxi.Decoder) (*BsnVlanCounterStatsEntry, error) {
+	_bsnvlancounterstatsentry := &BsnVlanCounterStatsEntry{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnVlanCounterStatsEntry packet too short: %d < 8", decoder.Length())
 	}
-	bsnvlancounterstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bsnvlancounterstatsentry.Length), 2+0)
-	bsnvlancounterstatsentry.VlanVid = uint16(decoder.ReadUint16())
+	_bsnvlancounterstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bsnvlancounterstatsentry.Length), 2+0)
+	_bsnvlancounterstatsentry.VlanVid = uint16(decoder.ReadUint16())
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeUint64(decoder)
+		item, err := DecodeUint64(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnvlancounterstatsentry.Values = append(bsnvlancounterstatsentry.Values, item)
+		_bsnvlancounterstatsentry.Values = append(_bsnvlancounterstatsentry.Values, item)
 	}
-	return bsnvlancounterstatsentry, nil
+	return _bsnvlancounterstatsentry, nil
 }
 
 func NewBsnVlanCounterStatsEntry() *BsnVlanCounterStatsEntry {
-	return &BsnVlanCounterStatsEntry{}
+	obj := &BsnVlanCounterStatsEntry{}
+	return obj
 }
 
 type BsnVlanMac struct {
@@ -7496,18 +7710,19 @@ func (self *BsnVlanMac) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnVlanMac(decoder *goloxi.Decoder) (*BsnVlanMac, error) {
-	bsnvlanmac := &BsnVlanMac{}
+func DecodeBsnVlanMac(decoder *goloxi.Decoder) (*BsnVlanMac, error) {
+	_bsnvlanmac := &BsnVlanMac{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnVlanMac packet too short: %d < 8", decoder.Length())
 	}
-	bsnvlanmac.VlanVid = uint16(decoder.ReadUint16())
-	bsnvlanmac.Mac = net.HardwareAddr(decoder.Read(6))
-	return bsnvlanmac, nil
+	_bsnvlanmac.VlanVid = uint16(decoder.ReadUint16())
+	_bsnvlanmac.Mac = net.HardwareAddr(decoder.Read(6))
+	return _bsnvlanmac, nil
 }
 
 func NewBsnVlanMac() *BsnVlanMac {
-	return &BsnVlanMac{}
+	obj := &BsnVlanMac{}
+	return obj
 }
 
 type BsnVportL2Gre struct {
@@ -7551,31 +7766,32 @@ func (self *BsnVportL2Gre) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnVportL2Gre(parent *BsnVport, decoder *goloxi.Decoder) (*BsnVportL2Gre, error) {
-	bsnvportl2gre := &BsnVportL2Gre{BsnVport: parent}
+func DecodeBsnVportL2Gre(parent *BsnVport, decoder *goloxi.Decoder) (*BsnVportL2Gre, error) {
+	_bsnvportl2gre := &BsnVportL2Gre{BsnVport: parent}
 	if decoder.Length() < 60 {
 		return nil, fmt.Errorf("BsnVportL2Gre packet too short: %d < 60", decoder.Length())
 	}
-	bsnvportl2gre.Flags = BsnVportL2GreFlags(decoder.ReadUint32())
-	bsnvportl2gre.PortNo.Decode(decoder)
-	bsnvportl2gre.LoopbackPortNo.Decode(decoder)
-	bsnvportl2gre.LocalMac = net.HardwareAddr(decoder.Read(6))
-	bsnvportl2gre.NhMac = net.HardwareAddr(decoder.Read(6))
-	bsnvportl2gre.SrcIp = net.IP(decoder.Read(4))
-	bsnvportl2gre.DstIp = net.IP(decoder.Read(4))
-	bsnvportl2gre.Dscp = uint8(decoder.ReadByte())
-	bsnvportl2gre.Ttl = uint8(decoder.ReadByte())
+	_bsnvportl2gre.Flags = BsnVportL2GreFlags(decoder.ReadUint32())
+	_bsnvportl2gre.PortNo.Decode(decoder)
+	_bsnvportl2gre.LoopbackPortNo.Decode(decoder)
+	_bsnvportl2gre.LocalMac = net.HardwareAddr(decoder.Read(6))
+	_bsnvportl2gre.NhMac = net.HardwareAddr(decoder.Read(6))
+	_bsnvportl2gre.SrcIp = net.IP(decoder.Read(4))
+	_bsnvportl2gre.DstIp = net.IP(decoder.Read(4))
+	_bsnvportl2gre.Dscp = uint8(decoder.ReadByte())
+	_bsnvportl2gre.Ttl = uint8(decoder.ReadByte())
 	decoder.Skip(2)
-	bsnvportl2gre.Vpn = uint32(decoder.ReadUint32())
-	bsnvportl2gre.RateLimit = uint32(decoder.ReadUint32())
-	bsnvportl2gre.IfName = string(bytes.Trim(decoder.Read(16), "\x00"))
-	return bsnvportl2gre, nil
+	_bsnvportl2gre.Vpn = uint32(decoder.ReadUint32())
+	_bsnvportl2gre.RateLimit = uint32(decoder.ReadUint32())
+	_bsnvportl2gre.IfName = string(bytes.Trim(decoder.Read(16), "\x00"))
+	return _bsnvportl2gre, nil
 }
 
 func NewBsnVportL2Gre() *BsnVportL2Gre {
-	return &BsnVportL2Gre{
+	obj := &BsnVportL2Gre{
 		BsnVport: NewBsnVport(1),
 	}
+	return obj
 }
 
 type BsnVportQInQ struct {
@@ -7606,24 +7822,25 @@ func (self *BsnVportQInQ) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnVportQInQ(parent *BsnVport, decoder *goloxi.Decoder) (*BsnVportQInQ, error) {
-	bsnvportqinq := &BsnVportQInQ{BsnVport: parent}
+func DecodeBsnVportQInQ(parent *BsnVport, decoder *goloxi.Decoder) (*BsnVportQInQ, error) {
+	_bsnvportqinq := &BsnVportQInQ{BsnVport: parent}
 	if decoder.Length() < 28 {
 		return nil, fmt.Errorf("BsnVportQInQ packet too short: %d < 28", decoder.Length())
 	}
-	bsnvportqinq.PortNo = uint32(decoder.ReadUint32())
-	bsnvportqinq.IngressTpid = uint16(decoder.ReadUint16())
-	bsnvportqinq.IngressVlanId = uint16(decoder.ReadUint16())
-	bsnvportqinq.EgressTpid = uint16(decoder.ReadUint16())
-	bsnvportqinq.EgressVlanId = uint16(decoder.ReadUint16())
-	bsnvportqinq.IfName = string(bytes.Trim(decoder.Read(16), "\x00"))
-	return bsnvportqinq, nil
+	_bsnvportqinq.PortNo = uint32(decoder.ReadUint32())
+	_bsnvportqinq.IngressTpid = uint16(decoder.ReadUint16())
+	_bsnvportqinq.IngressVlanId = uint16(decoder.ReadUint16())
+	_bsnvportqinq.EgressTpid = uint16(decoder.ReadUint16())
+	_bsnvportqinq.EgressVlanId = uint16(decoder.ReadUint16())
+	_bsnvportqinq.IfName = string(bytes.Trim(decoder.Read(16), "\x00"))
+	return _bsnvportqinq, nil
 }
 
 func NewBsnVportQInQ() *BsnVportQInQ {
-	return &BsnVportQInQ{
+	obj := &BsnVportQInQ{
 		BsnVport: NewBsnVport(0),
 	}
+	return obj
 }
 
 type BsnVrfCounterStatsEntry struct {
@@ -7648,28 +7865,29 @@ func (self *BsnVrfCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnVrfCounterStatsEntry(decoder *goloxi.Decoder) (*BsnVrfCounterStatsEntry, error) {
-	bsnvrfcounterstatsentry := &BsnVrfCounterStatsEntry{}
+func DecodeBsnVrfCounterStatsEntry(decoder *goloxi.Decoder) (*BsnVrfCounterStatsEntry, error) {
+	_bsnvrfcounterstatsentry := &BsnVrfCounterStatsEntry{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnVrfCounterStatsEntry packet too short: %d < 8", decoder.Length())
 	}
-	bsnvrfcounterstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bsnvrfcounterstatsentry.Length), 2+0)
+	_bsnvrfcounterstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bsnvrfcounterstatsentry.Length), 2+0)
 	decoder.Skip(2)
-	bsnvrfcounterstatsentry.Vrf = uint32(decoder.ReadUint32())
+	_bsnvrfcounterstatsentry.Vrf = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 8 {
-		item, err := decodeUint64(decoder)
+		item, err := DecodeUint64(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnvrfcounterstatsentry.Values = append(bsnvrfcounterstatsentry.Values, item)
+		_bsnvrfcounterstatsentry.Values = append(_bsnvrfcounterstatsentry.Values, item)
 	}
-	return bsnvrfcounterstatsentry, nil
+	return _bsnvrfcounterstatsentry, nil
 }
 
 func NewBsnVrfCounterStatsEntry() *BsnVrfCounterStatsEntry {
-	return &BsnVrfCounterStatsEntry{}
+	obj := &BsnVrfCounterStatsEntry{}
+	return obj
 }
 
 type Bucket struct {
@@ -7698,30 +7916,31 @@ func (self *Bucket) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBucket(decoder *goloxi.Decoder) (*Bucket, error) {
-	bucket := &Bucket{}
+func DecodeBucket(decoder *goloxi.Decoder) (*Bucket, error) {
+	_bucket := &Bucket{}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("Bucket packet too short: %d < 16", decoder.Length())
 	}
-	bucket.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bucket.Len), 2+0)
-	bucket.Weight = uint16(decoder.ReadUint16())
-	bucket.WatchPort.Decode(decoder)
-	bucket.WatchGroup = uint32(decoder.ReadUint32())
+	_bucket.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bucket.Len), 2+0)
+	_bucket.Weight = uint16(decoder.ReadUint16())
+	_bucket.WatchPort.Decode(decoder)
+	_bucket.WatchGroup = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bucket.Actions = append(bucket.Actions, item)
+		_bucket.Actions = append(_bucket.Actions, item)
 	}
-	return bucket, nil
+	return _bucket, nil
 }
 
 func NewBucket() *Bucket {
-	return &Bucket{}
+	obj := &Bucket{}
+	return obj
 }
 
 type BucketCounter struct {
@@ -7736,18 +7955,19 @@ func (self *BucketCounter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBucketCounter(decoder *goloxi.Decoder) (*BucketCounter, error) {
-	bucketcounter := &BucketCounter{}
+func DecodeBucketCounter(decoder *goloxi.Decoder) (*BucketCounter, error) {
+	_bucketcounter := &BucketCounter{}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("BucketCounter packet too short: %d < 16", decoder.Length())
 	}
-	bucketcounter.PacketCount = uint64(decoder.ReadUint64())
-	bucketcounter.ByteCount = uint64(decoder.ReadUint64())
-	return bucketcounter, nil
+	_bucketcounter.PacketCount = uint64(decoder.ReadUint64())
+	_bucketcounter.ByteCount = uint64(decoder.ReadUint64())
+	return _bucketcounter, nil
 }
 
 func NewBucketCounter() *BucketCounter {
-	return &BucketCounter{}
+	obj := &BucketCounter{}
+	return obj
 }
 
 type BundleProp struct {
@@ -7776,27 +7996,27 @@ func (self *BundleProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBundleProp(decoder *goloxi.Decoder) (IBundleProp, error) {
-	bundleprop := &BundleProp{}
+func DecodeBundleProp(decoder *goloxi.Decoder) (IBundleProp, error) {
+	_bundleprop := &BundleProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BundleProp packet too short: %d < 4", decoder.Length())
 	}
-	bundleprop.Type = uint16(decoder.ReadUint16())
-	bundleprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(bundleprop.Length), 2+2)
+	_bundleprop.Type = uint16(decoder.ReadUint16())
+	_bundleprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_bundleprop.Length), 2+2)
 
-	switch bundleprop.Type {
+	switch _bundleprop.Type {
 	case 65535:
-		return decodeBundlePropExperimenter(bundleprop, decoder)
+		return DecodeBundlePropExperimenter(_bundleprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'BundleProp'", bundleprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'BundleProp'", _bundleprop.Type)
 	}
 }
 
 func NewBundleProp(_type uint16) *BundleProp {
-	return &BundleProp{
-		Type: _type,
-	}
+	obj := &BundleProp{}
+	obj.Type = _type
+	return obj
 }
 
 type BundlePropExperimenter struct {
@@ -7830,21 +8050,125 @@ func (self *BundlePropExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBundlePropExperimenter(parent *BundleProp, decoder *goloxi.Decoder) (IBundlePropExperimenter, error) {
-	bundlepropexperimenter := &BundlePropExperimenter{BundleProp: parent}
+func DecodeBundlePropExperimenter(parent *BundleProp, decoder *goloxi.Decoder) (IBundlePropExperimenter, error) {
+	_bundlepropexperimenter := &BundlePropExperimenter{BundleProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BundlePropExperimenter packet too short: %d < 8", decoder.Length())
 	}
-	bundlepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	bundlepropexperimenter.ExpType = uint32(decoder.ReadUint32())
-	return bundlepropexperimenter, nil
+	_bundlepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_bundlepropexperimenter.ExpType = uint32(decoder.ReadUint32())
+	return _bundlepropexperimenter, nil
 }
 
 func NewBundlePropExperimenter(_experimenter uint32) *BundlePropExperimenter {
-	return &BundlePropExperimenter{
-		Experimenter: _experimenter,
-		BundleProp:   NewBundleProp(65535),
+	obj := &BundlePropExperimenter{
+		BundleProp: NewBundleProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
+}
+
+type FlowMonitorEntry struct {
+	MonitorId uint32
+	OutPort   uint32
+	OutGroup  uint32
+	Flags     FlowMonitorFlags
+	TableId   uint8
+	Command   FlowMonitorCommand
+	Match     Match
+}
+
+func (self *FlowMonitorEntry) Serialize(encoder *goloxi.Encoder) error {
+	encoder.PutUint32(uint32(self.MonitorId))
+	encoder.PutUint32(uint32(self.OutPort))
+	encoder.PutUint32(uint32(self.OutGroup))
+	encoder.PutUint16(uint16(self.Flags))
+	encoder.PutUint8(uint8(self.TableId))
+	encoder.PutUint8(uint8(self.Command))
+	if err := self.Match.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeFlowMonitorEntry(decoder *goloxi.Decoder) (*FlowMonitorEntry, error) {
+	_flowmonitorentry := &FlowMonitorEntry{}
+	if decoder.Length() < 24 {
+		return nil, fmt.Errorf("FlowMonitorEntry packet too short: %d < 24", decoder.Length())
+	}
+	_flowmonitorentry.MonitorId = uint32(decoder.ReadUint32())
+	_flowmonitorentry.OutPort = uint32(decoder.ReadUint32())
+	_flowmonitorentry.OutGroup = uint32(decoder.ReadUint32())
+	_flowmonitorentry.Flags = FlowMonitorFlags(decoder.ReadUint16())
+	_flowmonitorentry.TableId = uint8(decoder.ReadByte())
+	_flowmonitorentry.Command = FlowMonitorCommand(decoder.ReadByte())
+	if err := _flowmonitorentry.Match.Decode(decoder); err != nil {
+		return nil, err
+	}
+
+	decoder.SkipAlign()
+	return _flowmonitorentry, nil
+}
+
+func NewFlowMonitorEntry() *FlowMonitorEntry {
+	obj := &FlowMonitorEntry{}
+	return obj
+}
+
+type FlowMonitorReplyEntry struct {
+	Length uint16
+	Event  FlowUpdateEvent
+}
+
+type IFlowMonitorReplyEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetEvent() FlowUpdateEvent
+}
+
+func (self *FlowMonitorReplyEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *FlowMonitorReplyEntry) GetEvent() FlowUpdateEvent {
+	return self.Event
+}
+
+func (self *FlowMonitorReplyEntry) Serialize(encoder *goloxi.Encoder) error {
+	encoder.PutUint16(uint16(self.Length))
+	encoder.PutUint16(uint16(self.Event))
+
+	return nil
+}
+
+func DecodeFlowMonitorReplyEntry(decoder *goloxi.Decoder) (IFlowMonitorReplyEntry, error) {
+	_flowmonitorreplyentry := &FlowMonitorReplyEntry{}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("FlowMonitorReplyEntry packet too short: %d < 4", decoder.Length())
+	}
+	_flowmonitorreplyentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_flowmonitorreplyentry.Length), 2+0)
+	_flowmonitorreplyentry.Event = FlowUpdateEvent(decoder.ReadUint16())
+
+	switch _flowmonitorreplyentry.Event {
+	case 0:
+		return DecodeFlowUpdateFullInitial(_flowmonitorreplyentry, decoder)
+	case 1:
+		return DecodeFlowUpdateFullAdded(_flowmonitorreplyentry, decoder)
+	case 2:
+		return DecodeFlowUpdateFullRemoved(_flowmonitorreplyentry, decoder)
+	case 3:
+		return DecodeFlowUpdateFullModified(_flowmonitorreplyentry, decoder)
+	default:
+		return nil, fmt.Errorf("Invalid type '%d' for 'FlowMonitorReplyEntry'", _flowmonitorreplyentry.Event)
+	}
+}
+
+func NewFlowMonitorReplyEntry(_event FlowUpdateEvent) *FlowMonitorReplyEntry {
+	obj := &FlowMonitorReplyEntry{}
+	obj.Event = _event
+	return obj
 }
 
 type FlowStatsEntry struct {
@@ -7895,44 +8219,345 @@ func (self *FlowStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeFlowStatsEntry(decoder *goloxi.Decoder) (*FlowStatsEntry, error) {
-	flowstatsentry := &FlowStatsEntry{}
+func DecodeFlowStatsEntry(decoder *goloxi.Decoder) (*FlowStatsEntry, error) {
+	_flowstatsentry := &FlowStatsEntry{}
 	if decoder.Length() < 56 {
 		return nil, fmt.Errorf("FlowStatsEntry packet too short: %d < 56", decoder.Length())
 	}
-	flowstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(flowstatsentry.Length), 2+0)
-	flowstatsentry.TableId = uint8(decoder.ReadByte())
+	_flowstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_flowstatsentry.Length), 2+0)
+	_flowstatsentry.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	flowstatsentry.DurationSec = uint32(decoder.ReadUint32())
-	flowstatsentry.DurationNsec = uint32(decoder.ReadUint32())
-	flowstatsentry.Priority = uint16(decoder.ReadUint16())
-	flowstatsentry.IdleTimeout = uint16(decoder.ReadUint16())
-	flowstatsentry.HardTimeout = uint16(decoder.ReadUint16())
-	flowstatsentry.Flags = FlowModFlags(decoder.ReadUint16())
-	flowstatsentry.Importance = uint16(decoder.ReadUint16())
+	_flowstatsentry.DurationSec = uint32(decoder.ReadUint32())
+	_flowstatsentry.DurationNsec = uint32(decoder.ReadUint32())
+	_flowstatsentry.Priority = uint16(decoder.ReadUint16())
+	_flowstatsentry.IdleTimeout = uint16(decoder.ReadUint16())
+	_flowstatsentry.HardTimeout = uint16(decoder.ReadUint16())
+	_flowstatsentry.Flags = FlowModFlags(decoder.ReadUint16())
+	_flowstatsentry.Importance = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	flowstatsentry.Cookie = uint64(decoder.ReadUint64())
-	flowstatsentry.PacketCount = uint64(decoder.ReadUint64())
-	flowstatsentry.ByteCount = uint64(decoder.ReadUint64())
-	if err := flowstatsentry.Match.Decode(decoder); err != nil {
+	_flowstatsentry.Cookie = uint64(decoder.ReadUint64())
+	_flowstatsentry.PacketCount = uint64(decoder.ReadUint64())
+	_flowstatsentry.ByteCount = uint64(decoder.ReadUint64())
+	if err := _flowstatsentry.Match.Decode(decoder); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
-		item, err := decodeInstruction(decoder)
+		item, err := DecodeInstruction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		flowstatsentry.Instructions = append(flowstatsentry.Instructions, item)
+		_flowstatsentry.Instructions = append(_flowstatsentry.Instructions, item)
 	}
-	return flowstatsentry, nil
+	return _flowstatsentry, nil
 }
 
 func NewFlowStatsEntry() *FlowStatsEntry {
-	return &FlowStatsEntry{}
+	obj := &FlowStatsEntry{}
+	return obj
+}
+
+type FlowUpdateFullAdded struct {
+	*FlowMonitorReplyEntry
+	TableId      uint8
+	Reason       uint8
+	IdleTimeout  uint16
+	HardTimeout  uint16
+	Priority     uint16
+	Cookie       uint64
+	Match        Match
+	Instructions []IInstruction
+}
+
+func (self *FlowUpdateFullAdded) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowMonitorReplyEntry.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.TableId))
+	encoder.PutUint8(uint8(self.Reason))
+	encoder.PutUint16(uint16(self.IdleTimeout))
+	encoder.PutUint16(uint16(self.HardTimeout))
+	encoder.PutUint16(uint16(self.Priority))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+	encoder.PutUint64(uint64(self.Cookie))
+	if err := self.Match.Serialize(encoder); err != nil {
+		return err
+	}
+
+	for _, obj := range self.Instructions {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
+
+	// Overwrite length
+	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeFlowUpdateFullAdded(parent *FlowMonitorReplyEntry, decoder *goloxi.Decoder) (*FlowUpdateFullAdded, error) {
+	_flowupdatefulladded := &FlowUpdateFullAdded{FlowMonitorReplyEntry: parent}
+	if decoder.Length() < 28 {
+		return nil, fmt.Errorf("FlowUpdateFullAdded packet too short: %d < 28", decoder.Length())
+	}
+	_flowupdatefulladded.TableId = uint8(decoder.ReadByte())
+	_flowupdatefulladded.Reason = uint8(decoder.ReadByte())
+	_flowupdatefulladded.IdleTimeout = uint16(decoder.ReadUint16())
+	_flowupdatefulladded.HardTimeout = uint16(decoder.ReadUint16())
+	_flowupdatefulladded.Priority = uint16(decoder.ReadUint16())
+	decoder.Skip(4)
+	_flowupdatefulladded.Cookie = uint64(decoder.ReadUint64())
+	if err := _flowupdatefulladded.Match.Decode(decoder); err != nil {
+		return nil, err
+	}
+
+	decoder.SkipAlign()
+
+	for decoder.Length() >= 4 {
+		item, err := DecodeInstruction(decoder)
+		if err != nil {
+			return nil, err
+		}
+		_flowupdatefulladded.Instructions = append(_flowupdatefulladded.Instructions, item)
+	}
+	return _flowupdatefulladded, nil
+}
+
+func NewFlowUpdateFullAdded() *FlowUpdateFullAdded {
+	obj := &FlowUpdateFullAdded{
+		FlowMonitorReplyEntry: NewFlowMonitorReplyEntry(1),
+	}
+	return obj
+}
+
+type FlowUpdateFullInitial struct {
+	*FlowMonitorReplyEntry
+	TableId      uint8
+	Reason       uint8
+	IdleTimeout  uint16
+	HardTimeout  uint16
+	Priority     uint16
+	Cookie       uint64
+	Match        Match
+	Instructions []IInstruction
+}
+
+func (self *FlowUpdateFullInitial) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowMonitorReplyEntry.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.TableId))
+	encoder.PutUint8(uint8(self.Reason))
+	encoder.PutUint16(uint16(self.IdleTimeout))
+	encoder.PutUint16(uint16(self.HardTimeout))
+	encoder.PutUint16(uint16(self.Priority))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+	encoder.PutUint64(uint64(self.Cookie))
+	if err := self.Match.Serialize(encoder); err != nil {
+		return err
+	}
+
+	for _, obj := range self.Instructions {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
+
+	// Overwrite length
+	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeFlowUpdateFullInitial(parent *FlowMonitorReplyEntry, decoder *goloxi.Decoder) (*FlowUpdateFullInitial, error) {
+	_flowupdatefullinitial := &FlowUpdateFullInitial{FlowMonitorReplyEntry: parent}
+	if decoder.Length() < 28 {
+		return nil, fmt.Errorf("FlowUpdateFullInitial packet too short: %d < 28", decoder.Length())
+	}
+	_flowupdatefullinitial.TableId = uint8(decoder.ReadByte())
+	_flowupdatefullinitial.Reason = uint8(decoder.ReadByte())
+	_flowupdatefullinitial.IdleTimeout = uint16(decoder.ReadUint16())
+	_flowupdatefullinitial.HardTimeout = uint16(decoder.ReadUint16())
+	_flowupdatefullinitial.Priority = uint16(decoder.ReadUint16())
+	decoder.Skip(4)
+	_flowupdatefullinitial.Cookie = uint64(decoder.ReadUint64())
+	if err := _flowupdatefullinitial.Match.Decode(decoder); err != nil {
+		return nil, err
+	}
+
+	decoder.SkipAlign()
+
+	for decoder.Length() >= 4 {
+		item, err := DecodeInstruction(decoder)
+		if err != nil {
+			return nil, err
+		}
+		_flowupdatefullinitial.Instructions = append(_flowupdatefullinitial.Instructions, item)
+	}
+	return _flowupdatefullinitial, nil
+}
+
+func NewFlowUpdateFullInitial() *FlowUpdateFullInitial {
+	obj := &FlowUpdateFullInitial{
+		FlowMonitorReplyEntry: NewFlowMonitorReplyEntry(0),
+	}
+	return obj
+}
+
+type FlowUpdateFullModified struct {
+	*FlowMonitorReplyEntry
+	TableId      uint8
+	Reason       uint8
+	IdleTimeout  uint16
+	HardTimeout  uint16
+	Priority     uint16
+	Cookie       uint64
+	Match        Match
+	Instructions []IInstruction
+}
+
+func (self *FlowUpdateFullModified) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowMonitorReplyEntry.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.TableId))
+	encoder.PutUint8(uint8(self.Reason))
+	encoder.PutUint16(uint16(self.IdleTimeout))
+	encoder.PutUint16(uint16(self.HardTimeout))
+	encoder.PutUint16(uint16(self.Priority))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+	encoder.PutUint64(uint64(self.Cookie))
+	if err := self.Match.Serialize(encoder); err != nil {
+		return err
+	}
+
+	for _, obj := range self.Instructions {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
+
+	// Overwrite length
+	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeFlowUpdateFullModified(parent *FlowMonitorReplyEntry, decoder *goloxi.Decoder) (*FlowUpdateFullModified, error) {
+	_flowupdatefullmodified := &FlowUpdateFullModified{FlowMonitorReplyEntry: parent}
+	if decoder.Length() < 28 {
+		return nil, fmt.Errorf("FlowUpdateFullModified packet too short: %d < 28", decoder.Length())
+	}
+	_flowupdatefullmodified.TableId = uint8(decoder.ReadByte())
+	_flowupdatefullmodified.Reason = uint8(decoder.ReadByte())
+	_flowupdatefullmodified.IdleTimeout = uint16(decoder.ReadUint16())
+	_flowupdatefullmodified.HardTimeout = uint16(decoder.ReadUint16())
+	_flowupdatefullmodified.Priority = uint16(decoder.ReadUint16())
+	decoder.Skip(4)
+	_flowupdatefullmodified.Cookie = uint64(decoder.ReadUint64())
+	if err := _flowupdatefullmodified.Match.Decode(decoder); err != nil {
+		return nil, err
+	}
+
+	decoder.SkipAlign()
+
+	for decoder.Length() >= 4 {
+		item, err := DecodeInstruction(decoder)
+		if err != nil {
+			return nil, err
+		}
+		_flowupdatefullmodified.Instructions = append(_flowupdatefullmodified.Instructions, item)
+	}
+	return _flowupdatefullmodified, nil
+}
+
+func NewFlowUpdateFullModified() *FlowUpdateFullModified {
+	obj := &FlowUpdateFullModified{
+		FlowMonitorReplyEntry: NewFlowMonitorReplyEntry(3),
+	}
+	return obj
+}
+
+type FlowUpdateFullRemoved struct {
+	*FlowMonitorReplyEntry
+	TableId      uint8
+	Reason       uint8
+	IdleTimeout  uint16
+	HardTimeout  uint16
+	Priority     uint16
+	Cookie       uint64
+	Match        Match
+	Instructions []IInstruction
+}
+
+func (self *FlowUpdateFullRemoved) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowMonitorReplyEntry.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.TableId))
+	encoder.PutUint8(uint8(self.Reason))
+	encoder.PutUint16(uint16(self.IdleTimeout))
+	encoder.PutUint16(uint16(self.HardTimeout))
+	encoder.PutUint16(uint16(self.Priority))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+	encoder.PutUint64(uint64(self.Cookie))
+	if err := self.Match.Serialize(encoder); err != nil {
+		return err
+	}
+
+	for _, obj := range self.Instructions {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
+
+	// Overwrite length
+	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeFlowUpdateFullRemoved(parent *FlowMonitorReplyEntry, decoder *goloxi.Decoder) (*FlowUpdateFullRemoved, error) {
+	_flowupdatefullremoved := &FlowUpdateFullRemoved{FlowMonitorReplyEntry: parent}
+	if decoder.Length() < 28 {
+		return nil, fmt.Errorf("FlowUpdateFullRemoved packet too short: %d < 28", decoder.Length())
+	}
+	_flowupdatefullremoved.TableId = uint8(decoder.ReadByte())
+	_flowupdatefullremoved.Reason = uint8(decoder.ReadByte())
+	_flowupdatefullremoved.IdleTimeout = uint16(decoder.ReadUint16())
+	_flowupdatefullremoved.HardTimeout = uint16(decoder.ReadUint16())
+	_flowupdatefullremoved.Priority = uint16(decoder.ReadUint16())
+	decoder.Skip(4)
+	_flowupdatefullremoved.Cookie = uint64(decoder.ReadUint64())
+	if err := _flowupdatefullremoved.Match.Decode(decoder); err != nil {
+		return nil, err
+	}
+
+	decoder.SkipAlign()
+
+	for decoder.Length() >= 4 {
+		item, err := DecodeInstruction(decoder)
+		if err != nil {
+			return nil, err
+		}
+		_flowupdatefullremoved.Instructions = append(_flowupdatefullremoved.Instructions, item)
+	}
+	return _flowupdatefullremoved, nil
+}
+
+func NewFlowUpdateFullRemoved() *FlowUpdateFullRemoved {
+	obj := &FlowUpdateFullRemoved{
+		FlowMonitorReplyEntry: NewFlowMonitorReplyEntry(2),
+	}
+	return obj
 }
 
 type GroupDescStatsEntry struct {
@@ -7959,29 +8584,30 @@ func (self *GroupDescStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupDescStatsEntry(decoder *goloxi.Decoder) (*GroupDescStatsEntry, error) {
-	groupdescstatsentry := &GroupDescStatsEntry{}
+func DecodeGroupDescStatsEntry(decoder *goloxi.Decoder) (*GroupDescStatsEntry, error) {
+	_groupdescstatsentry := &GroupDescStatsEntry{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("GroupDescStatsEntry packet too short: %d < 8", decoder.Length())
 	}
-	groupdescstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(groupdescstatsentry.Length), 2+0)
-	groupdescstatsentry.GroupType = GroupType(decoder.ReadByte())
+	_groupdescstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_groupdescstatsentry.Length), 2+0)
+	_groupdescstatsentry.GroupType = GroupType(decoder.ReadByte())
 	decoder.Skip(1)
-	groupdescstatsentry.GroupId = uint32(decoder.ReadUint32())
+	_groupdescstatsentry.GroupId = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 16 {
-		item, err := decodeBucket(decoder)
+		item, err := DecodeBucket(decoder)
 		if err != nil {
 			return nil, err
 		}
-		groupdescstatsentry.Buckets = append(groupdescstatsentry.Buckets, item)
+		_groupdescstatsentry.Buckets = append(_groupdescstatsentry.Buckets, item)
 	}
-	return groupdescstatsentry, nil
+	return _groupdescstatsentry, nil
 }
 
 func NewGroupDescStatsEntry() *GroupDescStatsEntry {
-	return &GroupDescStatsEntry{}
+	obj := &GroupDescStatsEntry{}
+	return obj
 }
 
 type GroupStatsEntry struct {
@@ -8017,34 +8643,35 @@ func (self *GroupStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupStatsEntry(decoder *goloxi.Decoder) (*GroupStatsEntry, error) {
-	groupstatsentry := &GroupStatsEntry{}
+func DecodeGroupStatsEntry(decoder *goloxi.Decoder) (*GroupStatsEntry, error) {
+	_groupstatsentry := &GroupStatsEntry{}
 	if decoder.Length() < 40 {
 		return nil, fmt.Errorf("GroupStatsEntry packet too short: %d < 40", decoder.Length())
 	}
-	groupstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(groupstatsentry.Length), 2+0)
+	_groupstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_groupstatsentry.Length), 2+0)
 	decoder.Skip(2)
-	groupstatsentry.GroupId = uint32(decoder.ReadUint32())
-	groupstatsentry.RefCount = uint32(decoder.ReadUint32())
+	_groupstatsentry.GroupId = uint32(decoder.ReadUint32())
+	_groupstatsentry.RefCount = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	groupstatsentry.PacketCount = uint64(decoder.ReadUint64())
-	groupstatsentry.ByteCount = uint64(decoder.ReadUint64())
-	groupstatsentry.DurationSec = uint32(decoder.ReadUint32())
-	groupstatsentry.DurationNsec = uint32(decoder.ReadUint32())
+	_groupstatsentry.PacketCount = uint64(decoder.ReadUint64())
+	_groupstatsentry.ByteCount = uint64(decoder.ReadUint64())
+	_groupstatsentry.DurationSec = uint32(decoder.ReadUint32())
+	_groupstatsentry.DurationNsec = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 16 {
-		item, err := decodeBucketCounter(decoder)
+		item, err := DecodeBucketCounter(decoder)
 		if err != nil {
 			return nil, err
 		}
-		groupstatsentry.BucketStats = append(groupstatsentry.BucketStats, item)
+		_groupstatsentry.BucketStats = append(_groupstatsentry.BucketStats, item)
 	}
-	return groupstatsentry, nil
+	return _groupstatsentry, nil
 }
 
 func NewGroupStatsEntry() *GroupStatsEntry {
-	return &GroupStatsEntry{}
+	obj := &GroupStatsEntry{}
+	return obj
 }
 
 type HelloElem struct {
@@ -8073,27 +8700,27 @@ func (self *HelloElem) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeHelloElem(decoder *goloxi.Decoder) (IHelloElem, error) {
-	helloelem := &HelloElem{}
+func DecodeHelloElem(decoder *goloxi.Decoder) (IHelloElem, error) {
+	_helloelem := &HelloElem{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("HelloElem packet too short: %d < 4", decoder.Length())
 	}
-	helloelem.Type = uint16(decoder.ReadUint16())
-	helloelem.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(helloelem.Length), 2+2)
+	_helloelem.Type = uint16(decoder.ReadUint16())
+	_helloelem.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_helloelem.Length), 2+2)
 
-	switch helloelem.Type {
+	switch _helloelem.Type {
 	case 1:
-		return decodeHelloElemVersionbitmap(helloelem, decoder)
+		return DecodeHelloElemVersionbitmap(_helloelem, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'HelloElem'", helloelem.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'HelloElem'", _helloelem.Type)
 	}
 }
 
 func NewHelloElem(_type uint16) *HelloElem {
-	return &HelloElem{
-		Type: _type,
-	}
+	obj := &HelloElem{}
+	obj.Type = _type
+	return obj
 }
 
 type HelloElemVersionbitmap struct {
@@ -8118,23 +8745,24 @@ func (self *HelloElemVersionbitmap) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeHelloElemVersionbitmap(parent *HelloElem, decoder *goloxi.Decoder) (*HelloElemVersionbitmap, error) {
-	helloelemversionbitmap := &HelloElemVersionbitmap{HelloElem: parent}
+func DecodeHelloElemVersionbitmap(parent *HelloElem, decoder *goloxi.Decoder) (*HelloElemVersionbitmap, error) {
+	_helloelemversionbitmap := &HelloElemVersionbitmap{HelloElem: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeUint32(decoder)
+		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		helloelemversionbitmap.Bitmaps = append(helloelemversionbitmap.Bitmaps, item)
+		_helloelemversionbitmap.Bitmaps = append(_helloelemversionbitmap.Bitmaps, item)
 	}
-	return helloelemversionbitmap, nil
+	return _helloelemversionbitmap, nil
 }
 
 func NewHelloElemVersionbitmap() *HelloElemVersionbitmap {
-	return &HelloElemVersionbitmap{
+	obj := &HelloElemVersionbitmap{
 		HelloElem: NewHelloElem(1),
 	}
+	return obj
 }
 
 type InstructionId struct {
@@ -8163,39 +8791,39 @@ func (self *InstructionId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionId(decoder *goloxi.Decoder) (IInstructionId, error) {
-	instructionid := &InstructionId{}
+func DecodeInstructionId(decoder *goloxi.Decoder) (IInstructionId, error) {
+	_instructionid := &InstructionId{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionId packet too short: %d < 4", decoder.Length())
 	}
-	instructionid.Type = uint16(decoder.ReadUint16())
-	instructionid.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(instructionid.Len), 2+2)
+	_instructionid.Type = uint16(decoder.ReadUint16())
+	_instructionid.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_instructionid.Len), 2+2)
 
-	switch instructionid.Type {
+	switch _instructionid.Type {
 	case 1:
-		return decodeInstructionIdGotoTable(instructionid, decoder)
+		return DecodeInstructionIdGotoTable(_instructionid, decoder)
 	case 2:
-		return decodeInstructionIdWriteMetadata(instructionid, decoder)
+		return DecodeInstructionIdWriteMetadata(_instructionid, decoder)
 	case 3:
-		return decodeInstructionIdWriteActions(instructionid, decoder)
+		return DecodeInstructionIdWriteActions(_instructionid, decoder)
 	case 4:
-		return decodeInstructionIdApplyActions(instructionid, decoder)
+		return DecodeInstructionIdApplyActions(_instructionid, decoder)
 	case 5:
-		return decodeInstructionIdClearActions(instructionid, decoder)
+		return DecodeInstructionIdClearActions(_instructionid, decoder)
 	case 6:
-		return decodeInstructionIdMeter(instructionid, decoder)
+		return DecodeInstructionIdMeter(_instructionid, decoder)
 	case 65535:
-		return decodeInstructionIdExperimenter(instructionid, decoder)
+		return DecodeInstructionIdExperimenter(_instructionid, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionId'", instructionid.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionId'", _instructionid.Type)
 	}
 }
 
 func NewInstructionId(_type uint16) *InstructionId {
-	return &InstructionId{
-		Type: _type,
-	}
+	obj := &InstructionId{}
+	obj.Type = _type
+	return obj
 }
 
 type InstructionIdApplyActions struct {
@@ -8213,15 +8841,16 @@ func (self *InstructionIdApplyActions) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeInstructionIdApplyActions(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdApplyActions, error) {
-	instructionidapplyactions := &InstructionIdApplyActions{InstructionId: parent}
-	return instructionidapplyactions, nil
+func DecodeInstructionIdApplyActions(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdApplyActions, error) {
+	_instructionidapplyactions := &InstructionIdApplyActions{InstructionId: parent}
+	return _instructionidapplyactions, nil
 }
 
 func NewInstructionIdApplyActions() *InstructionIdApplyActions {
-	return &InstructionIdApplyActions{
+	obj := &InstructionIdApplyActions{
 		InstructionId: NewInstructionId(4),
 	}
+	return obj
 }
 
 type InstructionIdExperimenter struct {
@@ -8248,26 +8877,27 @@ func (self *InstructionIdExperimenter) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeInstructionIdExperimenter(parent *InstructionId, decoder *goloxi.Decoder) (IInstructionIdExperimenter, error) {
-	instructionidexperimenter := &InstructionIdExperimenter{InstructionId: parent}
+func DecodeInstructionIdExperimenter(parent *InstructionId, decoder *goloxi.Decoder) (IInstructionIdExperimenter, error) {
+	_instructionidexperimenter := &InstructionIdExperimenter{InstructionId: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionIdExperimenter packet too short: %d < 4", decoder.Length())
 	}
-	instructionidexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_instructionidexperimenter.Experimenter = uint32(decoder.ReadUint32())
 
-	switch instructionidexperimenter.Experimenter {
+	switch _instructionidexperimenter.Experimenter {
 	case 6035143:
-		return decodeInstructionIdBsn(instructionidexperimenter, decoder)
+		return DecodeInstructionIdBsn(_instructionidexperimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionIdExperimenter'", instructionidexperimenter.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionIdExperimenter'", _instructionidexperimenter.Experimenter)
 	}
 }
 
 func NewInstructionIdExperimenter(_experimenter uint32) *InstructionIdExperimenter {
-	return &InstructionIdExperimenter{
-		Experimenter:  _experimenter,
+	obj := &InstructionIdExperimenter{
 		InstructionId: NewInstructionId(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type InstructionIdBsn struct {
@@ -8294,56 +8924,57 @@ func (self *InstructionIdBsn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionIdBsn(parent *InstructionIdExperimenter, decoder *goloxi.Decoder) (IInstructionIdBsn, error) {
-	instructionidbsn := &InstructionIdBsn{InstructionIdExperimenter: parent}
+func DecodeInstructionIdBsn(parent *InstructionIdExperimenter, decoder *goloxi.Decoder) (IInstructionIdBsn, error) {
+	_instructionidbsn := &InstructionIdBsn{InstructionIdExperimenter: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionIdBsn packet too short: %d < 4", decoder.Length())
 	}
-	instructionidbsn.Subtype = uint32(decoder.ReadUint32())
+	_instructionidbsn.Subtype = uint32(decoder.ReadUint32())
 
-	switch instructionidbsn.Subtype {
+	switch _instructionidbsn.Subtype {
 	case 0:
-		return decodeInstructionIdBsnDisableSrcMacCheck(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnDisableSrcMacCheck(_instructionidbsn, decoder)
 	case 1:
-		return decodeInstructionIdBsnArpOffload(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnArpOffload(_instructionidbsn, decoder)
 	case 2:
-		return decodeInstructionIdBsnDhcpOffload(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnDhcpOffload(_instructionidbsn, decoder)
 	case 4:
-		return decodeInstructionIdBsnPermit(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnPermit(_instructionidbsn, decoder)
 	case 5:
-		return decodeInstructionIdBsnDeny(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnDeny(_instructionidbsn, decoder)
 	case 6:
-		return decodeInstructionIdBsnPacketOfDeath(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnPacketOfDeath(_instructionidbsn, decoder)
 	case 7:
-		return decodeInstructionIdBsnPrioritizePdus(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnPrioritizePdus(_instructionidbsn, decoder)
 	case 8:
-		return decodeInstructionIdBsnRequireVlanXlate(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnRequireVlanXlate(_instructionidbsn, decoder)
 	case 9:
-		return decodeInstructionIdBsnDisableVlanCounters(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnDisableVlanCounters(_instructionidbsn, decoder)
 	case 10:
-		return decodeInstructionIdBsnSpanDestination(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnSpanDestination(_instructionidbsn, decoder)
 	case 11:
-		return decodeInstructionIdBsnAutoNegotiation(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnAutoNegotiation(_instructionidbsn, decoder)
 	case 12:
-		return decodeInstructionIdBsnInternalPriority(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnInternalPriority(_instructionidbsn, decoder)
 	case 13:
-		return decodeInstructionIdBsnDisableL3(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnDisableL3(_instructionidbsn, decoder)
 	case 14:
-		return decodeInstructionIdBsnNdpOffload(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnNdpOffload(_instructionidbsn, decoder)
 	case 15:
-		return decodeInstructionIdBsnHashSelect(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnHashSelect(_instructionidbsn, decoder)
 	case 16:
-		return decodeInstructionIdBsnDirectedBroadcast(instructionidbsn, decoder)
+		return DecodeInstructionIdBsnDirectedBroadcast(_instructionidbsn, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionIdBsn'", instructionidbsn.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionIdBsn'", _instructionidbsn.Subtype)
 	}
 }
 
 func NewInstructionIdBsn(_subtype uint32) *InstructionIdBsn {
-	return &InstructionIdBsn{
-		Subtype:                   _subtype,
+	obj := &InstructionIdBsn{
 		InstructionIdExperimenter: NewInstructionIdExperimenter(6035143),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type InstructionIdBsnArpOffload struct {
@@ -8361,15 +8992,16 @@ func (self *InstructionIdBsnArpOffload) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeInstructionIdBsnArpOffload(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnArpOffload, error) {
-	instructionidbsnarpoffload := &InstructionIdBsnArpOffload{InstructionIdBsn: parent}
-	return instructionidbsnarpoffload, nil
+func DecodeInstructionIdBsnArpOffload(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnArpOffload, error) {
+	_instructionidbsnarpoffload := &InstructionIdBsnArpOffload{InstructionIdBsn: parent}
+	return _instructionidbsnarpoffload, nil
 }
 
 func NewInstructionIdBsnArpOffload() *InstructionIdBsnArpOffload {
-	return &InstructionIdBsnArpOffload{
+	obj := &InstructionIdBsnArpOffload{
 		InstructionIdBsn: NewInstructionIdBsn(1),
 	}
+	return obj
 }
 
 type InstructionIdBsnAutoNegotiation struct {
@@ -8387,15 +9019,16 @@ func (self *InstructionIdBsnAutoNegotiation) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeInstructionIdBsnAutoNegotiation(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnAutoNegotiation, error) {
-	instructionidbsnautonegotiation := &InstructionIdBsnAutoNegotiation{InstructionIdBsn: parent}
-	return instructionidbsnautonegotiation, nil
+func DecodeInstructionIdBsnAutoNegotiation(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnAutoNegotiation, error) {
+	_instructionidbsnautonegotiation := &InstructionIdBsnAutoNegotiation{InstructionIdBsn: parent}
+	return _instructionidbsnautonegotiation, nil
 }
 
 func NewInstructionIdBsnAutoNegotiation() *InstructionIdBsnAutoNegotiation {
-	return &InstructionIdBsnAutoNegotiation{
+	obj := &InstructionIdBsnAutoNegotiation{
 		InstructionIdBsn: NewInstructionIdBsn(11),
 	}
+	return obj
 }
 
 type InstructionIdBsnDeny struct {
@@ -8413,15 +9046,16 @@ func (self *InstructionIdBsnDeny) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionIdBsnDeny(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDeny, error) {
-	instructionidbsndeny := &InstructionIdBsnDeny{InstructionIdBsn: parent}
-	return instructionidbsndeny, nil
+func DecodeInstructionIdBsnDeny(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDeny, error) {
+	_instructionidbsndeny := &InstructionIdBsnDeny{InstructionIdBsn: parent}
+	return _instructionidbsndeny, nil
 }
 
 func NewInstructionIdBsnDeny() *InstructionIdBsnDeny {
-	return &InstructionIdBsnDeny{
+	obj := &InstructionIdBsnDeny{
 		InstructionIdBsn: NewInstructionIdBsn(5),
 	}
+	return obj
 }
 
 type InstructionIdBsnDhcpOffload struct {
@@ -8439,15 +9073,16 @@ func (self *InstructionIdBsnDhcpOffload) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeInstructionIdBsnDhcpOffload(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDhcpOffload, error) {
-	instructionidbsndhcpoffload := &InstructionIdBsnDhcpOffload{InstructionIdBsn: parent}
-	return instructionidbsndhcpoffload, nil
+func DecodeInstructionIdBsnDhcpOffload(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDhcpOffload, error) {
+	_instructionidbsndhcpoffload := &InstructionIdBsnDhcpOffload{InstructionIdBsn: parent}
+	return _instructionidbsndhcpoffload, nil
 }
 
 func NewInstructionIdBsnDhcpOffload() *InstructionIdBsnDhcpOffload {
-	return &InstructionIdBsnDhcpOffload{
+	obj := &InstructionIdBsnDhcpOffload{
 		InstructionIdBsn: NewInstructionIdBsn(2),
 	}
+	return obj
 }
 
 type InstructionIdBsnDirectedBroadcast struct {
@@ -8465,15 +9100,16 @@ func (self *InstructionIdBsnDirectedBroadcast) Serialize(encoder *goloxi.Encoder
 	return nil
 }
 
-func decodeInstructionIdBsnDirectedBroadcast(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDirectedBroadcast, error) {
-	instructionidbsndirectedbroadcast := &InstructionIdBsnDirectedBroadcast{InstructionIdBsn: parent}
-	return instructionidbsndirectedbroadcast, nil
+func DecodeInstructionIdBsnDirectedBroadcast(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDirectedBroadcast, error) {
+	_instructionidbsndirectedbroadcast := &InstructionIdBsnDirectedBroadcast{InstructionIdBsn: parent}
+	return _instructionidbsndirectedbroadcast, nil
 }
 
 func NewInstructionIdBsnDirectedBroadcast() *InstructionIdBsnDirectedBroadcast {
-	return &InstructionIdBsnDirectedBroadcast{
+	obj := &InstructionIdBsnDirectedBroadcast{
 		InstructionIdBsn: NewInstructionIdBsn(16),
 	}
+	return obj
 }
 
 type InstructionIdBsnDisableL3 struct {
@@ -8491,15 +9127,16 @@ func (self *InstructionIdBsnDisableL3) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeInstructionIdBsnDisableL3(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDisableL3, error) {
-	instructionidbsndisablel3 := &InstructionIdBsnDisableL3{InstructionIdBsn: parent}
-	return instructionidbsndisablel3, nil
+func DecodeInstructionIdBsnDisableL3(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDisableL3, error) {
+	_instructionidbsndisablel3 := &InstructionIdBsnDisableL3{InstructionIdBsn: parent}
+	return _instructionidbsndisablel3, nil
 }
 
 func NewInstructionIdBsnDisableL3() *InstructionIdBsnDisableL3 {
-	return &InstructionIdBsnDisableL3{
+	obj := &InstructionIdBsnDisableL3{
 		InstructionIdBsn: NewInstructionIdBsn(13),
 	}
+	return obj
 }
 
 type InstructionIdBsnDisableSrcMacCheck struct {
@@ -8517,15 +9154,16 @@ func (self *InstructionIdBsnDisableSrcMacCheck) Serialize(encoder *goloxi.Encode
 	return nil
 }
 
-func decodeInstructionIdBsnDisableSrcMacCheck(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDisableSrcMacCheck, error) {
-	instructionidbsndisablesrcmaccheck := &InstructionIdBsnDisableSrcMacCheck{InstructionIdBsn: parent}
-	return instructionidbsndisablesrcmaccheck, nil
+func DecodeInstructionIdBsnDisableSrcMacCheck(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDisableSrcMacCheck, error) {
+	_instructionidbsndisablesrcmaccheck := &InstructionIdBsnDisableSrcMacCheck{InstructionIdBsn: parent}
+	return _instructionidbsndisablesrcmaccheck, nil
 }
 
 func NewInstructionIdBsnDisableSrcMacCheck() *InstructionIdBsnDisableSrcMacCheck {
-	return &InstructionIdBsnDisableSrcMacCheck{
+	obj := &InstructionIdBsnDisableSrcMacCheck{
 		InstructionIdBsn: NewInstructionIdBsn(0),
 	}
+	return obj
 }
 
 type InstructionIdBsnDisableVlanCounters struct {
@@ -8543,15 +9181,16 @@ func (self *InstructionIdBsnDisableVlanCounters) Serialize(encoder *goloxi.Encod
 	return nil
 }
 
-func decodeInstructionIdBsnDisableVlanCounters(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDisableVlanCounters, error) {
-	instructionidbsndisablevlancounters := &InstructionIdBsnDisableVlanCounters{InstructionIdBsn: parent}
-	return instructionidbsndisablevlancounters, nil
+func DecodeInstructionIdBsnDisableVlanCounters(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnDisableVlanCounters, error) {
+	_instructionidbsndisablevlancounters := &InstructionIdBsnDisableVlanCounters{InstructionIdBsn: parent}
+	return _instructionidbsndisablevlancounters, nil
 }
 
 func NewInstructionIdBsnDisableVlanCounters() *InstructionIdBsnDisableVlanCounters {
-	return &InstructionIdBsnDisableVlanCounters{
+	obj := &InstructionIdBsnDisableVlanCounters{
 		InstructionIdBsn: NewInstructionIdBsn(9),
 	}
+	return obj
 }
 
 type InstructionIdBsnHashSelect struct {
@@ -8569,15 +9208,16 @@ func (self *InstructionIdBsnHashSelect) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeInstructionIdBsnHashSelect(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnHashSelect, error) {
-	instructionidbsnhashselect := &InstructionIdBsnHashSelect{InstructionIdBsn: parent}
-	return instructionidbsnhashselect, nil
+func DecodeInstructionIdBsnHashSelect(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnHashSelect, error) {
+	_instructionidbsnhashselect := &InstructionIdBsnHashSelect{InstructionIdBsn: parent}
+	return _instructionidbsnhashselect, nil
 }
 
 func NewInstructionIdBsnHashSelect() *InstructionIdBsnHashSelect {
-	return &InstructionIdBsnHashSelect{
+	obj := &InstructionIdBsnHashSelect{
 		InstructionIdBsn: NewInstructionIdBsn(15),
 	}
+	return obj
 }
 
 type InstructionIdBsnInternalPriority struct {
@@ -8595,15 +9235,16 @@ func (self *InstructionIdBsnInternalPriority) Serialize(encoder *goloxi.Encoder)
 	return nil
 }
 
-func decodeInstructionIdBsnInternalPriority(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnInternalPriority, error) {
-	instructionidbsninternalpriority := &InstructionIdBsnInternalPriority{InstructionIdBsn: parent}
-	return instructionidbsninternalpriority, nil
+func DecodeInstructionIdBsnInternalPriority(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnInternalPriority, error) {
+	_instructionidbsninternalpriority := &InstructionIdBsnInternalPriority{InstructionIdBsn: parent}
+	return _instructionidbsninternalpriority, nil
 }
 
 func NewInstructionIdBsnInternalPriority() *InstructionIdBsnInternalPriority {
-	return &InstructionIdBsnInternalPriority{
+	obj := &InstructionIdBsnInternalPriority{
 		InstructionIdBsn: NewInstructionIdBsn(12),
 	}
+	return obj
 }
 
 type InstructionIdBsnNdpOffload struct {
@@ -8621,15 +9262,16 @@ func (self *InstructionIdBsnNdpOffload) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeInstructionIdBsnNdpOffload(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnNdpOffload, error) {
-	instructionidbsnndpoffload := &InstructionIdBsnNdpOffload{InstructionIdBsn: parent}
-	return instructionidbsnndpoffload, nil
+func DecodeInstructionIdBsnNdpOffload(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnNdpOffload, error) {
+	_instructionidbsnndpoffload := &InstructionIdBsnNdpOffload{InstructionIdBsn: parent}
+	return _instructionidbsnndpoffload, nil
 }
 
 func NewInstructionIdBsnNdpOffload() *InstructionIdBsnNdpOffload {
-	return &InstructionIdBsnNdpOffload{
+	obj := &InstructionIdBsnNdpOffload{
 		InstructionIdBsn: NewInstructionIdBsn(14),
 	}
+	return obj
 }
 
 type InstructionIdBsnPacketOfDeath struct {
@@ -8647,15 +9289,16 @@ func (self *InstructionIdBsnPacketOfDeath) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeInstructionIdBsnPacketOfDeath(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnPacketOfDeath, error) {
-	instructionidbsnpacketofdeath := &InstructionIdBsnPacketOfDeath{InstructionIdBsn: parent}
-	return instructionidbsnpacketofdeath, nil
+func DecodeInstructionIdBsnPacketOfDeath(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnPacketOfDeath, error) {
+	_instructionidbsnpacketofdeath := &InstructionIdBsnPacketOfDeath{InstructionIdBsn: parent}
+	return _instructionidbsnpacketofdeath, nil
 }
 
 func NewInstructionIdBsnPacketOfDeath() *InstructionIdBsnPacketOfDeath {
-	return &InstructionIdBsnPacketOfDeath{
+	obj := &InstructionIdBsnPacketOfDeath{
 		InstructionIdBsn: NewInstructionIdBsn(6),
 	}
+	return obj
 }
 
 type InstructionIdBsnPermit struct {
@@ -8673,15 +9316,16 @@ func (self *InstructionIdBsnPermit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionIdBsnPermit(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnPermit, error) {
-	instructionidbsnpermit := &InstructionIdBsnPermit{InstructionIdBsn: parent}
-	return instructionidbsnpermit, nil
+func DecodeInstructionIdBsnPermit(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnPermit, error) {
+	_instructionidbsnpermit := &InstructionIdBsnPermit{InstructionIdBsn: parent}
+	return _instructionidbsnpermit, nil
 }
 
 func NewInstructionIdBsnPermit() *InstructionIdBsnPermit {
-	return &InstructionIdBsnPermit{
+	obj := &InstructionIdBsnPermit{
 		InstructionIdBsn: NewInstructionIdBsn(4),
 	}
+	return obj
 }
 
 type InstructionIdBsnPrioritizePdus struct {
@@ -8699,15 +9343,16 @@ func (self *InstructionIdBsnPrioritizePdus) Serialize(encoder *goloxi.Encoder) e
 	return nil
 }
 
-func decodeInstructionIdBsnPrioritizePdus(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnPrioritizePdus, error) {
-	instructionidbsnprioritizepdus := &InstructionIdBsnPrioritizePdus{InstructionIdBsn: parent}
-	return instructionidbsnprioritizepdus, nil
+func DecodeInstructionIdBsnPrioritizePdus(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnPrioritizePdus, error) {
+	_instructionidbsnprioritizepdus := &InstructionIdBsnPrioritizePdus{InstructionIdBsn: parent}
+	return _instructionidbsnprioritizepdus, nil
 }
 
 func NewInstructionIdBsnPrioritizePdus() *InstructionIdBsnPrioritizePdus {
-	return &InstructionIdBsnPrioritizePdus{
+	obj := &InstructionIdBsnPrioritizePdus{
 		InstructionIdBsn: NewInstructionIdBsn(7),
 	}
+	return obj
 }
 
 type InstructionIdBsnRequireVlanXlate struct {
@@ -8725,15 +9370,16 @@ func (self *InstructionIdBsnRequireVlanXlate) Serialize(encoder *goloxi.Encoder)
 	return nil
 }
 
-func decodeInstructionIdBsnRequireVlanXlate(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnRequireVlanXlate, error) {
-	instructionidbsnrequirevlanxlate := &InstructionIdBsnRequireVlanXlate{InstructionIdBsn: parent}
-	return instructionidbsnrequirevlanxlate, nil
+func DecodeInstructionIdBsnRequireVlanXlate(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnRequireVlanXlate, error) {
+	_instructionidbsnrequirevlanxlate := &InstructionIdBsnRequireVlanXlate{InstructionIdBsn: parent}
+	return _instructionidbsnrequirevlanxlate, nil
 }
 
 func NewInstructionIdBsnRequireVlanXlate() *InstructionIdBsnRequireVlanXlate {
-	return &InstructionIdBsnRequireVlanXlate{
+	obj := &InstructionIdBsnRequireVlanXlate{
 		InstructionIdBsn: NewInstructionIdBsn(8),
 	}
+	return obj
 }
 
 type InstructionIdBsnSpanDestination struct {
@@ -8751,15 +9397,16 @@ func (self *InstructionIdBsnSpanDestination) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeInstructionIdBsnSpanDestination(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnSpanDestination, error) {
-	instructionidbsnspandestination := &InstructionIdBsnSpanDestination{InstructionIdBsn: parent}
-	return instructionidbsnspandestination, nil
+func DecodeInstructionIdBsnSpanDestination(parent *InstructionIdBsn, decoder *goloxi.Decoder) (*InstructionIdBsnSpanDestination, error) {
+	_instructionidbsnspandestination := &InstructionIdBsnSpanDestination{InstructionIdBsn: parent}
+	return _instructionidbsnspandestination, nil
 }
 
 func NewInstructionIdBsnSpanDestination() *InstructionIdBsnSpanDestination {
-	return &InstructionIdBsnSpanDestination{
+	obj := &InstructionIdBsnSpanDestination{
 		InstructionIdBsn: NewInstructionIdBsn(10),
 	}
+	return obj
 }
 
 type InstructionIdClearActions struct {
@@ -8777,15 +9424,16 @@ func (self *InstructionIdClearActions) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeInstructionIdClearActions(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdClearActions, error) {
-	instructionidclearactions := &InstructionIdClearActions{InstructionId: parent}
-	return instructionidclearactions, nil
+func DecodeInstructionIdClearActions(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdClearActions, error) {
+	_instructionidclearactions := &InstructionIdClearActions{InstructionId: parent}
+	return _instructionidclearactions, nil
 }
 
 func NewInstructionIdClearActions() *InstructionIdClearActions {
-	return &InstructionIdClearActions{
+	obj := &InstructionIdClearActions{
 		InstructionId: NewInstructionId(5),
 	}
+	return obj
 }
 
 type InstructionIdGotoTable struct {
@@ -8803,15 +9451,16 @@ func (self *InstructionIdGotoTable) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionIdGotoTable(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdGotoTable, error) {
-	instructionidgototable := &InstructionIdGotoTable{InstructionId: parent}
-	return instructionidgototable, nil
+func DecodeInstructionIdGotoTable(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdGotoTable, error) {
+	_instructionidgototable := &InstructionIdGotoTable{InstructionId: parent}
+	return _instructionidgototable, nil
 }
 
 func NewInstructionIdGotoTable() *InstructionIdGotoTable {
-	return &InstructionIdGotoTable{
+	obj := &InstructionIdGotoTable{
 		InstructionId: NewInstructionId(1),
 	}
+	return obj
 }
 
 type InstructionIdMeter struct {
@@ -8829,15 +9478,16 @@ func (self *InstructionIdMeter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionIdMeter(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdMeter, error) {
-	instructionidmeter := &InstructionIdMeter{InstructionId: parent}
-	return instructionidmeter, nil
+func DecodeInstructionIdMeter(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdMeter, error) {
+	_instructionidmeter := &InstructionIdMeter{InstructionId: parent}
+	return _instructionidmeter, nil
 }
 
 func NewInstructionIdMeter() *InstructionIdMeter {
-	return &InstructionIdMeter{
+	obj := &InstructionIdMeter{
 		InstructionId: NewInstructionId(6),
 	}
+	return obj
 }
 
 type InstructionIdWriteActions struct {
@@ -8855,15 +9505,16 @@ func (self *InstructionIdWriteActions) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeInstructionIdWriteActions(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdWriteActions, error) {
-	instructionidwriteactions := &InstructionIdWriteActions{InstructionId: parent}
-	return instructionidwriteactions, nil
+func DecodeInstructionIdWriteActions(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdWriteActions, error) {
+	_instructionidwriteactions := &InstructionIdWriteActions{InstructionId: parent}
+	return _instructionidwriteactions, nil
 }
 
 func NewInstructionIdWriteActions() *InstructionIdWriteActions {
-	return &InstructionIdWriteActions{
+	obj := &InstructionIdWriteActions{
 		InstructionId: NewInstructionId(3),
 	}
+	return obj
 }
 
 type InstructionIdWriteMetadata struct {
@@ -8881,15 +9532,16 @@ func (self *InstructionIdWriteMetadata) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeInstructionIdWriteMetadata(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdWriteMetadata, error) {
-	instructionidwritemetadata := &InstructionIdWriteMetadata{InstructionId: parent}
-	return instructionidwritemetadata, nil
+func DecodeInstructionIdWriteMetadata(parent *InstructionId, decoder *goloxi.Decoder) (*InstructionIdWriteMetadata, error) {
+	_instructionidwritemetadata := &InstructionIdWriteMetadata{InstructionId: parent}
+	return _instructionidwritemetadata, nil
 }
 
 func NewInstructionIdWriteMetadata() *InstructionIdWriteMetadata {
-	return &InstructionIdWriteMetadata{
+	obj := &InstructionIdWriteMetadata{
 		InstructionId: NewInstructionId(2),
 	}
+	return obj
 }
 
 type MatchV3 struct {
@@ -8906,6 +9558,8 @@ func (self *MatchV3) Serialize(encoder *goloxi.Encoder) error {
 			return err
 		}
 	}
+
+	encoder.SkipAlign()
 
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
@@ -8925,7 +9579,7 @@ func (self *MatchV3) Decode(decoder *goloxi.Decoder) error {
 	decoder = decoder.SliceDecoder(int(self.Length), 2+2)
 
 	for decoder.Length() >= 4 {
-		item, err := decodeOxm(decoder)
+		item, err := DecodeOxm(decoder)
 		if err != nil {
 			return err
 		}
@@ -8938,7 +9592,8 @@ func (self *MatchV3) Decode(decoder *goloxi.Decoder) error {
 }
 
 func NewMatchV3() *MatchV3 {
-	return &MatchV3{}
+	obj := &MatchV3{}
+	return obj
 }
 
 type MeterBand struct {
@@ -8967,31 +9622,31 @@ func (self *MeterBand) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterBand(decoder *goloxi.Decoder) (IMeterBand, error) {
-	meterband := &MeterBand{}
+func DecodeMeterBand(decoder *goloxi.Decoder) (IMeterBand, error) {
+	_meterband := &MeterBand{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("MeterBand packet too short: %d < 4", decoder.Length())
 	}
-	meterband.Type = uint16(decoder.ReadUint16())
-	meterband.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(meterband.Len), 2+2)
+	_meterband.Type = uint16(decoder.ReadUint16())
+	_meterband.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_meterband.Len), 2+2)
 
-	switch meterband.Type {
+	switch _meterband.Type {
 	case 1:
-		return decodeMeterBandDrop(meterband, decoder)
+		return DecodeMeterBandDrop(_meterband, decoder)
 	case 2:
-		return decodeMeterBandDscpRemark(meterband, decoder)
+		return DecodeMeterBandDscpRemark(_meterband, decoder)
 	case 65535:
-		return decodeMeterBandExperimenter(meterband, decoder)
+		return DecodeMeterBandExperimenter(_meterband, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'MeterBand'", meterband.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'MeterBand'", _meterband.Type)
 	}
 }
 
 func NewMeterBand(_type uint16) *MeterBand {
-	return &MeterBand{
-		Type: _type,
-	}
+	obj := &MeterBand{}
+	obj.Type = _type
+	return obj
 }
 
 type MeterBandDrop struct {
@@ -9015,21 +9670,22 @@ func (self *MeterBandDrop) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterBandDrop(parent *MeterBand, decoder *goloxi.Decoder) (*MeterBandDrop, error) {
-	meterbanddrop := &MeterBandDrop{MeterBand: parent}
+func DecodeMeterBandDrop(parent *MeterBand, decoder *goloxi.Decoder) (*MeterBandDrop, error) {
+	_meterbanddrop := &MeterBandDrop{MeterBand: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("MeterBandDrop packet too short: %d < 12", decoder.Length())
 	}
-	meterbanddrop.Rate = uint32(decoder.ReadUint32())
-	meterbanddrop.BurstSize = uint32(decoder.ReadUint32())
+	_meterbanddrop.Rate = uint32(decoder.ReadUint32())
+	_meterbanddrop.BurstSize = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return meterbanddrop, nil
+	return _meterbanddrop, nil
 }
 
 func NewMeterBandDrop() *MeterBandDrop {
-	return &MeterBandDrop{
+	obj := &MeterBandDrop{
 		MeterBand: NewMeterBand(1),
 	}
+	return obj
 }
 
 type MeterBandDscpRemark struct {
@@ -9055,22 +9711,23 @@ func (self *MeterBandDscpRemark) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterBandDscpRemark(parent *MeterBand, decoder *goloxi.Decoder) (*MeterBandDscpRemark, error) {
-	meterbanddscpremark := &MeterBandDscpRemark{MeterBand: parent}
+func DecodeMeterBandDscpRemark(parent *MeterBand, decoder *goloxi.Decoder) (*MeterBandDscpRemark, error) {
+	_meterbanddscpremark := &MeterBandDscpRemark{MeterBand: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("MeterBandDscpRemark packet too short: %d < 12", decoder.Length())
 	}
-	meterbanddscpremark.Rate = uint32(decoder.ReadUint32())
-	meterbanddscpremark.BurstSize = uint32(decoder.ReadUint32())
-	meterbanddscpremark.PrecLevel = uint8(decoder.ReadByte())
+	_meterbanddscpremark.Rate = uint32(decoder.ReadUint32())
+	_meterbanddscpremark.BurstSize = uint32(decoder.ReadUint32())
+	_meterbanddscpremark.PrecLevel = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return meterbanddscpremark, nil
+	return _meterbanddscpremark, nil
 }
 
 func NewMeterBandDscpRemark() *MeterBandDscpRemark {
-	return &MeterBandDscpRemark{
+	obj := &MeterBandDscpRemark{
 		MeterBand: NewMeterBand(2),
 	}
+	return obj
 }
 
 type MeterBandExperimenter struct {
@@ -9095,21 +9752,22 @@ func (self *MeterBandExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterBandExperimenter(parent *MeterBand, decoder *goloxi.Decoder) (*MeterBandExperimenter, error) {
-	meterbandexperimenter := &MeterBandExperimenter{MeterBand: parent}
+func DecodeMeterBandExperimenter(parent *MeterBand, decoder *goloxi.Decoder) (*MeterBandExperimenter, error) {
+	_meterbandexperimenter := &MeterBandExperimenter{MeterBand: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("MeterBandExperimenter packet too short: %d < 12", decoder.Length())
 	}
-	meterbandexperimenter.Rate = uint32(decoder.ReadUint32())
-	meterbandexperimenter.BurstSize = uint32(decoder.ReadUint32())
-	meterbandexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	return meterbandexperimenter, nil
+	_meterbandexperimenter.Rate = uint32(decoder.ReadUint32())
+	_meterbandexperimenter.BurstSize = uint32(decoder.ReadUint32())
+	_meterbandexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	return _meterbandexperimenter, nil
 }
 
 func NewMeterBandExperimenter() *MeterBandExperimenter {
-	return &MeterBandExperimenter{
+	obj := &MeterBandExperimenter{
 		MeterBand: NewMeterBand(65535),
 	}
+	return obj
 }
 
 type MeterBandStats struct {
@@ -9124,18 +9782,19 @@ func (self *MeterBandStats) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterBandStats(decoder *goloxi.Decoder) (*MeterBandStats, error) {
-	meterbandstats := &MeterBandStats{}
+func DecodeMeterBandStats(decoder *goloxi.Decoder) (*MeterBandStats, error) {
+	_meterbandstats := &MeterBandStats{}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("MeterBandStats packet too short: %d < 16", decoder.Length())
 	}
-	meterbandstats.PacketBandCount = uint64(decoder.ReadUint64())
-	meterbandstats.ByteBandCount = uint64(decoder.ReadUint64())
-	return meterbandstats, nil
+	_meterbandstats.PacketBandCount = uint64(decoder.ReadUint64())
+	_meterbandstats.ByteBandCount = uint64(decoder.ReadUint64())
+	return _meterbandstats, nil
 }
 
 func NewMeterBandStats() *MeterBandStats {
-	return &MeterBandStats{}
+	obj := &MeterBandStats{}
+	return obj
 }
 
 type MeterConfig struct {
@@ -9161,28 +9820,29 @@ func (self *MeterConfig) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterConfig(decoder *goloxi.Decoder) (*MeterConfig, error) {
-	meterconfig := &MeterConfig{}
+func DecodeMeterConfig(decoder *goloxi.Decoder) (*MeterConfig, error) {
+	_meterconfig := &MeterConfig{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("MeterConfig packet too short: %d < 8", decoder.Length())
 	}
-	meterconfig.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(meterconfig.Length), 2+0)
-	meterconfig.Flags = MeterFlags(decoder.ReadUint16())
-	meterconfig.MeterId = uint32(decoder.ReadUint32())
+	_meterconfig.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_meterconfig.Length), 2+0)
+	_meterconfig.Flags = MeterFlags(decoder.ReadUint16())
+	_meterconfig.MeterId = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 4 {
-		item, err := decodeMeterBand(decoder)
+		item, err := DecodeMeterBand(decoder)
 		if err != nil {
 			return nil, err
 		}
-		meterconfig.Entries = append(meterconfig.Entries, item)
+		_meterconfig.Entries = append(_meterconfig.Entries, item)
 	}
-	return meterconfig, nil
+	return _meterconfig, nil
 }
 
 func NewMeterConfig() *MeterConfig {
-	return &MeterConfig{}
+	obj := &MeterConfig{}
+	return obj
 }
 
 type MeterFeatures struct {
@@ -9219,7 +9879,8 @@ func (self *MeterFeatures) Decode(decoder *goloxi.Decoder) error {
 }
 
 func NewMeterFeatures() *MeterFeatures {
-	return &MeterFeatures{}
+	obj := &MeterFeatures{}
+	return obj
 }
 
 type MeterStats struct {
@@ -9254,33 +9915,34 @@ func (self *MeterStats) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterStats(decoder *goloxi.Decoder) (*MeterStats, error) {
-	meterstats := &MeterStats{}
+func DecodeMeterStats(decoder *goloxi.Decoder) (*MeterStats, error) {
+	_meterstats := &MeterStats{}
 	if decoder.Length() < 40 {
 		return nil, fmt.Errorf("MeterStats packet too short: %d < 40", decoder.Length())
 	}
-	meterstats.MeterId = uint32(decoder.ReadUint32())
-	meterstats.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(meterstats.Len), 2+4)
+	_meterstats.MeterId = uint32(decoder.ReadUint32())
+	_meterstats.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_meterstats.Len), 2+4)
 	decoder.Skip(6)
-	meterstats.FlowCount = uint32(decoder.ReadUint32())
-	meterstats.PacketInCount = uint64(decoder.ReadUint64())
-	meterstats.ByteInCount = uint64(decoder.ReadUint64())
-	meterstats.DurationSec = uint32(decoder.ReadUint32())
-	meterstats.DurationNsec = uint32(decoder.ReadUint32())
+	_meterstats.FlowCount = uint32(decoder.ReadUint32())
+	_meterstats.PacketInCount = uint64(decoder.ReadUint64())
+	_meterstats.ByteInCount = uint64(decoder.ReadUint64())
+	_meterstats.DurationSec = uint32(decoder.ReadUint32())
+	_meterstats.DurationNsec = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 16 {
-		item, err := decodeMeterBandStats(decoder)
+		item, err := DecodeMeterBandStats(decoder)
 		if err != nil {
 			return nil, err
 		}
-		meterstats.BandStats = append(meterstats.BandStats, item)
+		_meterstats.BandStats = append(_meterstats.BandStats, item)
 	}
-	return meterstats, nil
+	return _meterstats, nil
 }
 
 func NewMeterStats() *MeterStats {
-	return &MeterStats{}
+	obj := &MeterStats{}
+	return obj
 }
 
 type NiciraMatch struct {
@@ -9294,12 +9956,14 @@ func (self *NiciraMatch) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
+	encoder.SkipAlign()
+
 	return nil
 }
 func (self *NiciraMatch) Decode(decoder *goloxi.Decoder) error {
 
 	for decoder.Length() >= 4 {
-		item, err := decodeOxm(decoder)
+		item, err := DecodeOxm(decoder)
 		if err != nil {
 			return err
 		}
@@ -9312,7 +9976,8 @@ func (self *NiciraMatch) Decode(decoder *goloxi.Decoder) error {
 }
 
 func NewNiciraMatch() *NiciraMatch {
-	return &NiciraMatch{}
+	obj := &NiciraMatch{}
+	return obj
 }
 
 type NiciraFlowStats struct {
@@ -9364,44 +10029,45 @@ func (self *NiciraFlowStats) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraFlowStats(decoder *goloxi.Decoder) (*NiciraFlowStats, error) {
-	niciraflowstats := &NiciraFlowStats{}
+func DecodeNiciraFlowStats(decoder *goloxi.Decoder) (*NiciraFlowStats, error) {
+	_niciraflowstats := &NiciraFlowStats{}
 	if decoder.Length() < 48 {
 		return nil, fmt.Errorf("NiciraFlowStats packet too short: %d < 48", decoder.Length())
 	}
-	niciraflowstats.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(niciraflowstats.Length), 2+0)
-	niciraflowstats.TableId = uint8(decoder.ReadByte())
+	_niciraflowstats.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_niciraflowstats.Length), 2+0)
+	_niciraflowstats.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	niciraflowstats.DurationSec = uint32(decoder.ReadUint32())
-	niciraflowstats.DurationNsec = uint32(decoder.ReadUint32())
-	niciraflowstats.Priority = uint16(decoder.ReadUint16())
-	niciraflowstats.IdleTimeout = uint16(decoder.ReadUint16())
-	niciraflowstats.HardTimeout = uint16(decoder.ReadUint16())
-	niciraflowstats.MatchLen = uint16(decoder.ReadUint16())
-	niciraflowstats.IdleAge = uint16(decoder.ReadUint16())
-	niciraflowstats.HardAge = uint16(decoder.ReadUint16())
-	niciraflowstats.Cookie = uint64(decoder.ReadUint64())
-	niciraflowstats.PacketCount = uint64(decoder.ReadUint64())
-	niciraflowstats.ByteCount = uint64(decoder.ReadUint64())
-	if err := niciraflowstats.Match.Decode(decoder.SliceDecoder(int(niciraflowstats.MatchLen), 0)); err != nil {
+	_niciraflowstats.DurationSec = uint32(decoder.ReadUint32())
+	_niciraflowstats.DurationNsec = uint32(decoder.ReadUint32())
+	_niciraflowstats.Priority = uint16(decoder.ReadUint16())
+	_niciraflowstats.IdleTimeout = uint16(decoder.ReadUint16())
+	_niciraflowstats.HardTimeout = uint16(decoder.ReadUint16())
+	_niciraflowstats.MatchLen = uint16(decoder.ReadUint16())
+	_niciraflowstats.IdleAge = uint16(decoder.ReadUint16())
+	_niciraflowstats.HardAge = uint16(decoder.ReadUint16())
+	_niciraflowstats.Cookie = uint64(decoder.ReadUint64())
+	_niciraflowstats.PacketCount = uint64(decoder.ReadUint64())
+	_niciraflowstats.ByteCount = uint64(decoder.ReadUint64())
+	if err := _niciraflowstats.Match.Decode(decoder.SliceDecoder(int(_niciraflowstats.MatchLen), 0)); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		niciraflowstats.Actions = append(niciraflowstats.Actions, item)
+		_niciraflowstats.Actions = append(_niciraflowstats.Actions, item)
 	}
-	return niciraflowstats, nil
+	return _niciraflowstats, nil
 }
 
 func NewNiciraFlowStats() *NiciraFlowStats {
-	return &NiciraFlowStats{}
+	obj := &NiciraFlowStats{}
+	return obj
 }
 
 type NiciraFlowUpdateEvent struct {
@@ -9430,31 +10096,31 @@ func (self *NiciraFlowUpdateEvent) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraFlowUpdateEvent(decoder *goloxi.Decoder) (INiciraFlowUpdateEvent, error) {
-	niciraflowupdateevent := &NiciraFlowUpdateEvent{}
+func DecodeNiciraFlowUpdateEvent(decoder *goloxi.Decoder) (INiciraFlowUpdateEvent, error) {
+	_niciraflowupdateevent := &NiciraFlowUpdateEvent{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NiciraFlowUpdateEvent packet too short: %d < 4", decoder.Length())
 	}
-	niciraflowupdateevent.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(niciraflowupdateevent.Length), 2+0)
-	niciraflowupdateevent.Event = uint16(decoder.ReadUint16())
+	_niciraflowupdateevent.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_niciraflowupdateevent.Length), 2+0)
+	_niciraflowupdateevent.Event = uint16(decoder.ReadUint16())
 
-	switch niciraflowupdateevent.Event {
+	switch _niciraflowupdateevent.Event {
 	case 0:
-		return decodeNiciraFlowUpdateFullAdd(niciraflowupdateevent, decoder)
+		return DecodeNiciraFlowUpdateFullAdd(_niciraflowupdateevent, decoder)
 	case 1:
-		return decodeNiciraFlowUpdateFullDeleted(niciraflowupdateevent, decoder)
+		return DecodeNiciraFlowUpdateFullDeleted(_niciraflowupdateevent, decoder)
 	case 2:
-		return decodeNiciraFlowUpdateFullModified(niciraflowupdateevent, decoder)
+		return DecodeNiciraFlowUpdateFullModified(_niciraflowupdateevent, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'NiciraFlowUpdateEvent'", niciraflowupdateevent.Event)
+		return nil, fmt.Errorf("Invalid type '%d' for 'NiciraFlowUpdateEvent'", _niciraflowupdateevent.Event)
 	}
 }
 
 func NewNiciraFlowUpdateEvent(_event uint16) *NiciraFlowUpdateEvent {
-	return &NiciraFlowUpdateEvent{
-		Event: _event,
-	}
+	obj := &NiciraFlowUpdateEvent{}
+	obj.Event = _event
+	return obj
 }
 
 type NiciraFlowUpdateFullAdd struct {
@@ -9499,39 +10165,40 @@ func (self *NiciraFlowUpdateFullAdd) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraFlowUpdateFullAdd(parent *NiciraFlowUpdateEvent, decoder *goloxi.Decoder) (*NiciraFlowUpdateFullAdd, error) {
-	niciraflowupdatefulladd := &NiciraFlowUpdateFullAdd{NiciraFlowUpdateEvent: parent}
+func DecodeNiciraFlowUpdateFullAdd(parent *NiciraFlowUpdateEvent, decoder *goloxi.Decoder) (*NiciraFlowUpdateFullAdd, error) {
+	_niciraflowupdatefulladd := &NiciraFlowUpdateFullAdd{NiciraFlowUpdateEvent: parent}
 	if decoder.Length() < 20 {
 		return nil, fmt.Errorf("NiciraFlowUpdateFullAdd packet too short: %d < 20", decoder.Length())
 	}
-	niciraflowupdatefulladd.Reason = uint16(decoder.ReadUint16())
-	niciraflowupdatefulladd.Priority = uint16(decoder.ReadUint16())
-	niciraflowupdatefulladd.IdleTimeout = uint16(decoder.ReadUint16())
-	niciraflowupdatefulladd.HardTimeout = uint16(decoder.ReadUint16())
-	niciraflowupdatefulladd.MatchLen = uint16(decoder.ReadUint16())
-	niciraflowupdatefulladd.TableId = uint8(decoder.ReadByte())
+	_niciraflowupdatefulladd.Reason = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulladd.Priority = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulladd.IdleTimeout = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulladd.HardTimeout = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulladd.MatchLen = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulladd.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	niciraflowupdatefulladd.Cookie = uint64(decoder.ReadUint64())
-	if err := niciraflowupdatefulladd.Match.Decode(decoder.SliceDecoder(int(niciraflowupdatefulladd.MatchLen), 0)); err != nil {
+	_niciraflowupdatefulladd.Cookie = uint64(decoder.ReadUint64())
+	if err := _niciraflowupdatefulladd.Match.Decode(decoder.SliceDecoder(int(_niciraflowupdatefulladd.MatchLen), 0)); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		niciraflowupdatefulladd.Actions = append(niciraflowupdatefulladd.Actions, item)
+		_niciraflowupdatefulladd.Actions = append(_niciraflowupdatefulladd.Actions, item)
 	}
-	return niciraflowupdatefulladd, nil
+	return _niciraflowupdatefulladd, nil
 }
 
 func NewNiciraFlowUpdateFullAdd() *NiciraFlowUpdateFullAdd {
-	return &NiciraFlowUpdateFullAdd{
+	obj := &NiciraFlowUpdateFullAdd{
 		NiciraFlowUpdateEvent: NewNiciraFlowUpdateEvent(0),
 	}
+	return obj
 }
 
 type NiciraFlowUpdateFullDeleted struct {
@@ -9576,39 +10243,40 @@ func (self *NiciraFlowUpdateFullDeleted) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeNiciraFlowUpdateFullDeleted(parent *NiciraFlowUpdateEvent, decoder *goloxi.Decoder) (*NiciraFlowUpdateFullDeleted, error) {
-	niciraflowupdatefulldeleted := &NiciraFlowUpdateFullDeleted{NiciraFlowUpdateEvent: parent}
+func DecodeNiciraFlowUpdateFullDeleted(parent *NiciraFlowUpdateEvent, decoder *goloxi.Decoder) (*NiciraFlowUpdateFullDeleted, error) {
+	_niciraflowupdatefulldeleted := &NiciraFlowUpdateFullDeleted{NiciraFlowUpdateEvent: parent}
 	if decoder.Length() < 20 {
 		return nil, fmt.Errorf("NiciraFlowUpdateFullDeleted packet too short: %d < 20", decoder.Length())
 	}
-	niciraflowupdatefulldeleted.Reason = uint16(decoder.ReadUint16())
-	niciraflowupdatefulldeleted.Priority = uint16(decoder.ReadUint16())
-	niciraflowupdatefulldeleted.IdleTimeout = uint16(decoder.ReadUint16())
-	niciraflowupdatefulldeleted.HardTimeout = uint16(decoder.ReadUint16())
-	niciraflowupdatefulldeleted.MatchLen = uint16(decoder.ReadUint16())
-	niciraflowupdatefulldeleted.TableId = uint8(decoder.ReadByte())
+	_niciraflowupdatefulldeleted.Reason = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulldeleted.Priority = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulldeleted.IdleTimeout = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulldeleted.HardTimeout = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulldeleted.MatchLen = uint16(decoder.ReadUint16())
+	_niciraflowupdatefulldeleted.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	niciraflowupdatefulldeleted.Cookie = uint64(decoder.ReadUint64())
-	if err := niciraflowupdatefulldeleted.Match.Decode(decoder.SliceDecoder(int(niciraflowupdatefulldeleted.MatchLen), 0)); err != nil {
+	_niciraflowupdatefulldeleted.Cookie = uint64(decoder.ReadUint64())
+	if err := _niciraflowupdatefulldeleted.Match.Decode(decoder.SliceDecoder(int(_niciraflowupdatefulldeleted.MatchLen), 0)); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		niciraflowupdatefulldeleted.Actions = append(niciraflowupdatefulldeleted.Actions, item)
+		_niciraflowupdatefulldeleted.Actions = append(_niciraflowupdatefulldeleted.Actions, item)
 	}
-	return niciraflowupdatefulldeleted, nil
+	return _niciraflowupdatefulldeleted, nil
 }
 
 func NewNiciraFlowUpdateFullDeleted() *NiciraFlowUpdateFullDeleted {
-	return &NiciraFlowUpdateFullDeleted{
+	obj := &NiciraFlowUpdateFullDeleted{
 		NiciraFlowUpdateEvent: NewNiciraFlowUpdateEvent(1),
 	}
+	return obj
 }
 
 type NiciraFlowUpdateFullModified struct {
@@ -9653,39 +10321,40 @@ func (self *NiciraFlowUpdateFullModified) Serialize(encoder *goloxi.Encoder) err
 	return nil
 }
 
-func decodeNiciraFlowUpdateFullModified(parent *NiciraFlowUpdateEvent, decoder *goloxi.Decoder) (*NiciraFlowUpdateFullModified, error) {
-	niciraflowupdatefullmodified := &NiciraFlowUpdateFullModified{NiciraFlowUpdateEvent: parent}
+func DecodeNiciraFlowUpdateFullModified(parent *NiciraFlowUpdateEvent, decoder *goloxi.Decoder) (*NiciraFlowUpdateFullModified, error) {
+	_niciraflowupdatefullmodified := &NiciraFlowUpdateFullModified{NiciraFlowUpdateEvent: parent}
 	if decoder.Length() < 20 {
 		return nil, fmt.Errorf("NiciraFlowUpdateFullModified packet too short: %d < 20", decoder.Length())
 	}
-	niciraflowupdatefullmodified.Reason = uint16(decoder.ReadUint16())
-	niciraflowupdatefullmodified.Priority = uint16(decoder.ReadUint16())
-	niciraflowupdatefullmodified.IdleTimeout = uint16(decoder.ReadUint16())
-	niciraflowupdatefullmodified.HardTimeout = uint16(decoder.ReadUint16())
-	niciraflowupdatefullmodified.MatchLen = uint16(decoder.ReadUint16())
-	niciraflowupdatefullmodified.TableId = uint8(decoder.ReadByte())
+	_niciraflowupdatefullmodified.Reason = uint16(decoder.ReadUint16())
+	_niciraflowupdatefullmodified.Priority = uint16(decoder.ReadUint16())
+	_niciraflowupdatefullmodified.IdleTimeout = uint16(decoder.ReadUint16())
+	_niciraflowupdatefullmodified.HardTimeout = uint16(decoder.ReadUint16())
+	_niciraflowupdatefullmodified.MatchLen = uint16(decoder.ReadUint16())
+	_niciraflowupdatefullmodified.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	niciraflowupdatefullmodified.Cookie = uint64(decoder.ReadUint64())
-	if err := niciraflowupdatefullmodified.Match.Decode(decoder.SliceDecoder(int(niciraflowupdatefullmodified.MatchLen), 0)); err != nil {
+	_niciraflowupdatefullmodified.Cookie = uint64(decoder.ReadUint64())
+	if err := _niciraflowupdatefullmodified.Match.Decode(decoder.SliceDecoder(int(_niciraflowupdatefullmodified.MatchLen), 0)); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		niciraflowupdatefullmodified.Actions = append(niciraflowupdatefullmodified.Actions, item)
+		_niciraflowupdatefullmodified.Actions = append(_niciraflowupdatefullmodified.Actions, item)
 	}
-	return niciraflowupdatefullmodified, nil
+	return _niciraflowupdatefullmodified, nil
 }
 
 func NewNiciraFlowUpdateFullModified() *NiciraFlowUpdateFullModified {
-	return &NiciraFlowUpdateFullModified{
+	obj := &NiciraFlowUpdateFullModified{
 		NiciraFlowUpdateEvent: NewNiciraFlowUpdateEvent(2),
 	}
+	return obj
 }
 
 type PacketQueue struct {
@@ -9712,29 +10381,30 @@ func (self *PacketQueue) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePacketQueue(decoder *goloxi.Decoder) (*PacketQueue, error) {
-	packetqueue := &PacketQueue{}
+func DecodePacketQueue(decoder *goloxi.Decoder) (*PacketQueue, error) {
+	_packetqueue := &PacketQueue{}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("PacketQueue packet too short: %d < 16", decoder.Length())
 	}
-	packetqueue.QueueId = uint32(decoder.ReadUint32())
-	packetqueue.Port.Decode(decoder)
-	packetqueue.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(packetqueue.Len), 2+8)
+	_packetqueue.QueueId = uint32(decoder.ReadUint32())
+	_packetqueue.Port.Decode(decoder)
+	_packetqueue.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_packetqueue.Len), 2+8)
 	decoder.Skip(6)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeQueueProp(decoder)
+		item, err := DecodeQueueProp(decoder)
 		if err != nil {
 			return nil, err
 		}
-		packetqueue.Properties = append(packetqueue.Properties, item)
+		_packetqueue.Properties = append(_packetqueue.Properties, item)
 	}
-	return packetqueue, nil
+	return _packetqueue, nil
 }
 
 func NewPacketQueue() *PacketQueue {
-	return &PacketQueue{}
+	obj := &PacketQueue{}
+	return obj
 }
 
 type PortDesc struct {
@@ -9783,7 +10453,7 @@ func (self *PortDesc) Decode(decoder *goloxi.Decoder) error {
 	self.State = PortState(decoder.ReadUint32())
 
 	for decoder.Length() >= 4 {
-		item, err := decodePortDescProp(decoder)
+		item, err := DecodePortDescProp(decoder)
 		if err != nil {
 			return err
 		}
@@ -9794,7 +10464,8 @@ func (self *PortDesc) Decode(decoder *goloxi.Decoder) error {
 }
 
 func NewPortDesc() *PortDesc {
-	return &PortDesc{}
+	obj := &PortDesc{}
+	return obj
 }
 
 type PortDescProp struct {
@@ -9823,45 +10494,51 @@ func (self *PortDescProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortDescProp(decoder *goloxi.Decoder) (IPortDescProp, error) {
-	portdescprop := &PortDescProp{}
+func DecodePortDescProp(decoder *goloxi.Decoder) (IPortDescProp, error) {
+	_portdescprop := &PortDescProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("PortDescProp packet too short: %d < 4", decoder.Length())
 	}
-	portdescprop.Type = uint16(decoder.ReadUint16())
-	portdescprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(portdescprop.Length), 2+2)
+	_portdescprop.Type = uint16(decoder.ReadUint16())
+	_portdescprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_portdescprop.Length), 2+2)
 
-	switch portdescprop.Type {
+	switch _portdescprop.Type {
 	case 0:
-		return decodePortDescPropEthernet(portdescprop, decoder)
+		return DecodePortDescPropEthernet(_portdescprop, decoder)
 	case 1:
-		return decodePortDescPropOptical(portdescprop, decoder)
+		return DecodePortDescPropOptical(_portdescprop, decoder)
 	case 65535:
-		return decodePortDescPropExperimenter(portdescprop, decoder)
+		return DecodePortDescPropExperimenter(_portdescprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'PortDescProp'", portdescprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'PortDescProp'", _portdescprop.Type)
 	}
 }
 
 func NewPortDescProp(_type uint16) *PortDescProp {
-	return &PortDescProp{
-		Type: _type,
-	}
+	obj := &PortDescProp{}
+	obj.Type = _type
+	return obj
 }
 
 type PortDescPropExperimenter struct {
 	*PortDescProp
 	Experimenter uint32
+	ExpType      uint32
 }
 
 type IPortDescPropExperimenter interface {
 	IPortDescProp
 	GetExperimenter() uint32
+	GetExpType() uint32
 }
 
 func (self *PortDescPropExperimenter) GetExperimenter() uint32 {
 	return self.Experimenter
+}
+
+func (self *PortDescPropExperimenter) GetExpType() uint32 {
+	return self.ExpType
 }
 
 func (self *PortDescPropExperimenter) Serialize(encoder *goloxi.Encoder) error {
@@ -9870,44 +10547,41 @@ func (self *PortDescPropExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint32(uint32(self.Experimenter))
+	encoder.PutUint32(uint32(self.ExpType))
 
 	return nil
 }
 
-func decodePortDescPropExperimenter(parent *PortDescProp, decoder *goloxi.Decoder) (IPortDescPropExperimenter, error) {
-	portdescpropexperimenter := &PortDescPropExperimenter{PortDescProp: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("PortDescPropExperimenter packet too short: %d < 4", decoder.Length())
+func DecodePortDescPropExperimenter(parent *PortDescProp, decoder *goloxi.Decoder) (IPortDescPropExperimenter, error) {
+	_portdescpropexperimenter := &PortDescPropExperimenter{PortDescProp: parent}
+	if decoder.Length() < 8 {
+		return nil, fmt.Errorf("PortDescPropExperimenter packet too short: %d < 8", decoder.Length())
 	}
-	portdescpropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_portdescpropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_portdescpropexperimenter.ExpType = uint32(decoder.ReadUint32())
 
-	switch portdescpropexperimenter.Experimenter {
+	switch _portdescpropexperimenter.Experimenter {
 	case 6035143:
-		return decodePortDescPropBsn(portdescpropexperimenter, decoder)
+		return DecodePortDescPropBsn(_portdescpropexperimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'PortDescPropExperimenter'", portdescpropexperimenter.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'PortDescPropExperimenter'", _portdescpropexperimenter.Experimenter)
 	}
 }
 
 func NewPortDescPropExperimenter(_experimenter uint32) *PortDescPropExperimenter {
-	return &PortDescPropExperimenter{
-		Experimenter: _experimenter,
+	obj := &PortDescPropExperimenter{
 		PortDescProp: NewPortDescProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type PortDescPropBsn struct {
 	*PortDescPropExperimenter
-	ExpType uint32
 }
 
 type IPortDescPropBsn interface {
 	IPortDescPropExperimenter
-	GetExpType() uint32
-}
-
-func (self *PortDescPropBsn) GetExpType() uint32 {
-	return self.ExpType
 }
 
 func (self *PortDescPropBsn) Serialize(encoder *goloxi.Encoder) error {
@@ -9915,45 +10589,40 @@ func (self *PortDescPropBsn) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.PutUint32(uint32(self.ExpType))
-
 	return nil
 }
 
-func decodePortDescPropBsn(parent *PortDescPropExperimenter, decoder *goloxi.Decoder) (IPortDescPropBsn, error) {
-	portdescpropbsn := &PortDescPropBsn{PortDescPropExperimenter: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("PortDescPropBsn packet too short: %d < 4", decoder.Length())
-	}
-	portdescpropbsn.ExpType = uint32(decoder.ReadUint32())
+func DecodePortDescPropBsn(parent *PortDescPropExperimenter, decoder *goloxi.Decoder) (IPortDescPropBsn, error) {
+	_portdescpropbsn := &PortDescPropBsn{PortDescPropExperimenter: parent}
 
-	switch portdescpropbsn.ExpType {
+	switch _portdescpropbsn.ExpType {
 	case 0:
-		return decodePortDescPropBsnUplink(portdescpropbsn, decoder)
+		return DecodePortDescPropBsnUplink(_portdescpropbsn, decoder)
 	case 1:
-		return decodePortDescPropBsnGenerationId(portdescpropbsn, decoder)
+		return DecodePortDescPropBsnGenerationId(_portdescpropbsn, decoder)
 	case 2:
-		return decodePortDescPropBsnForwardErrorCorrection(portdescpropbsn, decoder)
+		return DecodePortDescPropBsnForwardErrorCorrection(_portdescpropbsn, decoder)
 	case 3:
-		return decodePortDescPropBsnBreakout(portdescpropbsn, decoder)
+		return DecodePortDescPropBsnBreakout(_portdescpropbsn, decoder)
 	case 4:
-		return decodePortDescPropBsnSpeedCapabilities(portdescpropbsn, decoder)
+		return DecodePortDescPropBsnSpeedCapabilities(_portdescpropbsn, decoder)
 	case 5:
-		return decodePortDescPropBsnMiscCapabilities(portdescpropbsn, decoder)
+		return DecodePortDescPropBsnMiscCapabilities(_portdescpropbsn, decoder)
 	case 6:
-		return decodePortDescPropBsnSffJson(portdescpropbsn, decoder)
+		return DecodePortDescPropBsnSffJson(_portdescpropbsn, decoder)
 	case 7:
-		return decodePortDescPropBsnDriverInfoJson(portdescpropbsn, decoder)
+		return DecodePortDescPropBsnDriverInfoJson(_portdescpropbsn, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'PortDescPropBsn'", portdescpropbsn.ExpType)
+		return nil, fmt.Errorf("Invalid type '%d' for 'PortDescPropBsn'", _portdescpropbsn.ExpType)
 	}
 }
 
 func NewPortDescPropBsn(_exp_type uint32) *PortDescPropBsn {
-	return &PortDescPropBsn{
-		ExpType:                  _exp_type,
+	obj := &PortDescPropBsn{
 		PortDescPropExperimenter: NewPortDescPropExperimenter(6035143),
 	}
+	obj.ExpType = _exp_type
+	return obj
 }
 
 type PortDescPropBsnBreakout struct {
@@ -9976,20 +10645,21 @@ func (self *PortDescPropBsnBreakout) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortDescPropBsnBreakout(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnBreakout, error) {
-	portdescpropbsnbreakout := &PortDescPropBsnBreakout{PortDescPropBsn: parent}
+func DecodePortDescPropBsnBreakout(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnBreakout, error) {
+	_portdescpropbsnbreakout := &PortDescPropBsnBreakout{PortDescPropBsn: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("PortDescPropBsnBreakout packet too short: %d < 4", decoder.Length())
 	}
-	portdescpropbsnbreakout.SubInterfaceCount = uint16(decoder.ReadUint16())
-	portdescpropbsnbreakout.SubInterfaceSpeedGbps = uint16(decoder.ReadUint16())
-	return portdescpropbsnbreakout, nil
+	_portdescpropbsnbreakout.SubInterfaceCount = uint16(decoder.ReadUint16())
+	_portdescpropbsnbreakout.SubInterfaceSpeedGbps = uint16(decoder.ReadUint16())
+	return _portdescpropbsnbreakout, nil
 }
 
 func NewPortDescPropBsnBreakout() *PortDescPropBsnBreakout {
-	return &PortDescPropBsnBreakout{
+	obj := &PortDescPropBsnBreakout{
 		PortDescPropBsn: NewPortDescPropBsn(3),
 	}
+	return obj
 }
 
 type PortDescPropBsnDriverInfoJson struct {
@@ -10010,16 +10680,17 @@ func (self *PortDescPropBsnDriverInfoJson) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodePortDescPropBsnDriverInfoJson(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnDriverInfoJson, error) {
-	portdescpropbsndriverinfojson := &PortDescPropBsnDriverInfoJson{PortDescPropBsn: parent}
-	portdescpropbsndriverinfojson.DriverInfoJson = decoder.Read(decoder.Length())
-	return portdescpropbsndriverinfojson, nil
+func DecodePortDescPropBsnDriverInfoJson(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnDriverInfoJson, error) {
+	_portdescpropbsndriverinfojson := &PortDescPropBsnDriverInfoJson{PortDescPropBsn: parent}
+	_portdescpropbsndriverinfojson.DriverInfoJson = decoder.Read(decoder.Length())
+	return _portdescpropbsndriverinfojson, nil
 }
 
 func NewPortDescPropBsnDriverInfoJson() *PortDescPropBsnDriverInfoJson {
-	return &PortDescPropBsnDriverInfoJson{
+	obj := &PortDescPropBsnDriverInfoJson{
 		PortDescPropBsn: NewPortDescPropBsn(7),
 	}
+	return obj
 }
 
 type PortDescPropBsnForwardErrorCorrection struct {
@@ -10042,20 +10713,21 @@ func (self *PortDescPropBsnForwardErrorCorrection) Serialize(encoder *goloxi.Enc
 	return nil
 }
 
-func decodePortDescPropBsnForwardErrorCorrection(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnForwardErrorCorrection, error) {
-	portdescpropbsnforwarderrorcorrection := &PortDescPropBsnForwardErrorCorrection{PortDescPropBsn: parent}
+func DecodePortDescPropBsnForwardErrorCorrection(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnForwardErrorCorrection, error) {
+	_portdescpropbsnforwarderrorcorrection := &PortDescPropBsnForwardErrorCorrection{PortDescPropBsn: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("PortDescPropBsnForwardErrorCorrection packet too short: %d < 8", decoder.Length())
 	}
-	portdescpropbsnforwarderrorcorrection.Configured = BsnFecConfigState(decoder.ReadUint32())
-	portdescpropbsnforwarderrorcorrection.Enabled = uint32(decoder.ReadUint32())
-	return portdescpropbsnforwarderrorcorrection, nil
+	_portdescpropbsnforwarderrorcorrection.Configured = BsnFecConfigState(decoder.ReadUint32())
+	_portdescpropbsnforwarderrorcorrection.Enabled = uint32(decoder.ReadUint32())
+	return _portdescpropbsnforwarderrorcorrection, nil
 }
 
 func NewPortDescPropBsnForwardErrorCorrection() *PortDescPropBsnForwardErrorCorrection {
-	return &PortDescPropBsnForwardErrorCorrection{
+	obj := &PortDescPropBsnForwardErrorCorrection{
 		PortDescPropBsn: NewPortDescPropBsn(2),
 	}
+	return obj
 }
 
 type PortDescPropBsnGenerationId struct {
@@ -10076,19 +10748,20 @@ func (self *PortDescPropBsnGenerationId) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodePortDescPropBsnGenerationId(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnGenerationId, error) {
-	portdescpropbsngenerationid := &PortDescPropBsnGenerationId{PortDescPropBsn: parent}
+func DecodePortDescPropBsnGenerationId(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnGenerationId, error) {
+	_portdescpropbsngenerationid := &PortDescPropBsnGenerationId{PortDescPropBsn: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("PortDescPropBsnGenerationId packet too short: %d < 8", decoder.Length())
 	}
-	portdescpropbsngenerationid.GenerationId = uint64(decoder.ReadUint64())
-	return portdescpropbsngenerationid, nil
+	_portdescpropbsngenerationid.GenerationId = uint64(decoder.ReadUint64())
+	return _portdescpropbsngenerationid, nil
 }
 
 func NewPortDescPropBsnGenerationId() *PortDescPropBsnGenerationId {
-	return &PortDescPropBsnGenerationId{
+	obj := &PortDescPropBsnGenerationId{
 		PortDescPropBsn: NewPortDescPropBsn(1),
 	}
+	return obj
 }
 
 type PortDescPropBsnMiscCapabilities struct {
@@ -10113,21 +10786,22 @@ func (self *PortDescPropBsnMiscCapabilities) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodePortDescPropBsnMiscCapabilities(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnMiscCapabilities, error) {
-	portdescpropbsnmisccapabilities := &PortDescPropBsnMiscCapabilities{PortDescPropBsn: parent}
+func DecodePortDescPropBsnMiscCapabilities(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnMiscCapabilities, error) {
+	_portdescpropbsnmisccapabilities := &PortDescPropBsnMiscCapabilities{PortDescPropBsn: parent}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("PortDescPropBsnMiscCapabilities packet too short: %d < 24", decoder.Length())
 	}
-	portdescpropbsnmisccapabilities.Current = uint64(decoder.ReadUint64())
-	portdescpropbsnmisccapabilities.Available = uint64(decoder.ReadUint64())
-	portdescpropbsnmisccapabilities.Supported = uint64(decoder.ReadUint64())
-	return portdescpropbsnmisccapabilities, nil
+	_portdescpropbsnmisccapabilities.Current = uint64(decoder.ReadUint64())
+	_portdescpropbsnmisccapabilities.Available = uint64(decoder.ReadUint64())
+	_portdescpropbsnmisccapabilities.Supported = uint64(decoder.ReadUint64())
+	return _portdescpropbsnmisccapabilities, nil
 }
 
 func NewPortDescPropBsnMiscCapabilities() *PortDescPropBsnMiscCapabilities {
-	return &PortDescPropBsnMiscCapabilities{
+	obj := &PortDescPropBsnMiscCapabilities{
 		PortDescPropBsn: NewPortDescPropBsn(5),
 	}
+	return obj
 }
 
 type PortDescPropBsnSffJson struct {
@@ -10148,16 +10822,17 @@ func (self *PortDescPropBsnSffJson) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortDescPropBsnSffJson(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnSffJson, error) {
-	portdescpropbsnsffjson := &PortDescPropBsnSffJson{PortDescPropBsn: parent}
-	portdescpropbsnsffjson.DataJson = decoder.Read(decoder.Length())
-	return portdescpropbsnsffjson, nil
+func DecodePortDescPropBsnSffJson(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnSffJson, error) {
+	_portdescpropbsnsffjson := &PortDescPropBsnSffJson{PortDescPropBsn: parent}
+	_portdescpropbsnsffjson.DataJson = decoder.Read(decoder.Length())
+	return _portdescpropbsnsffjson, nil
 }
 
 func NewPortDescPropBsnSffJson() *PortDescPropBsnSffJson {
-	return &PortDescPropBsnSffJson{
+	obj := &PortDescPropBsnSffJson{
 		PortDescPropBsn: NewPortDescPropBsn(6),
 	}
+	return obj
 }
 
 type PortDescPropBsnSpeedCapabilities struct {
@@ -10182,21 +10857,22 @@ func (self *PortDescPropBsnSpeedCapabilities) Serialize(encoder *goloxi.Encoder)
 	return nil
 }
 
-func decodePortDescPropBsnSpeedCapabilities(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnSpeedCapabilities, error) {
-	portdescpropbsnspeedcapabilities := &PortDescPropBsnSpeedCapabilities{PortDescPropBsn: parent}
+func DecodePortDescPropBsnSpeedCapabilities(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnSpeedCapabilities, error) {
+	_portdescpropbsnspeedcapabilities := &PortDescPropBsnSpeedCapabilities{PortDescPropBsn: parent}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("PortDescPropBsnSpeedCapabilities packet too short: %d < 24", decoder.Length())
 	}
-	portdescpropbsnspeedcapabilities.Current = uint64(decoder.ReadUint64())
-	portdescpropbsnspeedcapabilities.Available = uint64(decoder.ReadUint64())
-	portdescpropbsnspeedcapabilities.Supported = uint64(decoder.ReadUint64())
-	return portdescpropbsnspeedcapabilities, nil
+	_portdescpropbsnspeedcapabilities.Current = uint64(decoder.ReadUint64())
+	_portdescpropbsnspeedcapabilities.Available = uint64(decoder.ReadUint64())
+	_portdescpropbsnspeedcapabilities.Supported = uint64(decoder.ReadUint64())
+	return _portdescpropbsnspeedcapabilities, nil
 }
 
 func NewPortDescPropBsnSpeedCapabilities() *PortDescPropBsnSpeedCapabilities {
-	return &PortDescPropBsnSpeedCapabilities{
+	obj := &PortDescPropBsnSpeedCapabilities{
 		PortDescPropBsn: NewPortDescPropBsn(4),
 	}
+	return obj
 }
 
 type PortDescPropBsnUplink struct {
@@ -10214,15 +10890,16 @@ func (self *PortDescPropBsnUplink) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortDescPropBsnUplink(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnUplink, error) {
-	portdescpropbsnuplink := &PortDescPropBsnUplink{PortDescPropBsn: parent}
-	return portdescpropbsnuplink, nil
+func DecodePortDescPropBsnUplink(parent *PortDescPropBsn, decoder *goloxi.Decoder) (*PortDescPropBsnUplink, error) {
+	_portdescpropbsnuplink := &PortDescPropBsnUplink{PortDescPropBsn: parent}
+	return _portdescpropbsnuplink, nil
 }
 
 func NewPortDescPropBsnUplink() *PortDescPropBsnUplink {
-	return &PortDescPropBsnUplink{
+	obj := &PortDescPropBsnUplink{
 		PortDescPropBsn: NewPortDescPropBsn(0),
 	}
+	return obj
 }
 
 type PortDescPropEthernet struct {
@@ -10254,25 +10931,26 @@ func (self *PortDescPropEthernet) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortDescPropEthernet(parent *PortDescProp, decoder *goloxi.Decoder) (*PortDescPropEthernet, error) {
-	portdescpropethernet := &PortDescPropEthernet{PortDescProp: parent}
+func DecodePortDescPropEthernet(parent *PortDescProp, decoder *goloxi.Decoder) (*PortDescPropEthernet, error) {
+	_portdescpropethernet := &PortDescPropEthernet{PortDescProp: parent}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("PortDescPropEthernet packet too short: %d < 24", decoder.Length())
 	}
 	decoder.Skip(4)
-	portdescpropethernet.Curr = uint32(decoder.ReadUint32())
-	portdescpropethernet.Advertised = uint32(decoder.ReadUint32())
-	portdescpropethernet.Supported = uint32(decoder.ReadUint32())
-	portdescpropethernet.Peer = uint32(decoder.ReadUint32())
-	portdescpropethernet.CurrSpeed = uint32(decoder.ReadUint32())
-	portdescpropethernet.MaxSpeed = uint32(decoder.ReadUint32())
-	return portdescpropethernet, nil
+	_portdescpropethernet.Curr = uint32(decoder.ReadUint32())
+	_portdescpropethernet.Advertised = uint32(decoder.ReadUint32())
+	_portdescpropethernet.Supported = uint32(decoder.ReadUint32())
+	_portdescpropethernet.Peer = uint32(decoder.ReadUint32())
+	_portdescpropethernet.CurrSpeed = uint32(decoder.ReadUint32())
+	_portdescpropethernet.MaxSpeed = uint32(decoder.ReadUint32())
+	return _portdescpropethernet, nil
 }
 
 func NewPortDescPropEthernet() *PortDescPropEthernet {
-	return &PortDescPropEthernet{
+	obj := &PortDescPropEthernet{
 		PortDescProp: NewPortDescProp(0),
 	}
+	return obj
 }
 
 type PortDescPropOptical struct {
@@ -10310,28 +10988,29 @@ func (self *PortDescPropOptical) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortDescPropOptical(parent *PortDescProp, decoder *goloxi.Decoder) (*PortDescPropOptical, error) {
-	portdescpropoptical := &PortDescPropOptical{PortDescProp: parent}
+func DecodePortDescPropOptical(parent *PortDescProp, decoder *goloxi.Decoder) (*PortDescPropOptical, error) {
+	_portdescpropoptical := &PortDescPropOptical{PortDescProp: parent}
 	if decoder.Length() < 36 {
 		return nil, fmt.Errorf("PortDescPropOptical packet too short: %d < 36", decoder.Length())
 	}
 	decoder.Skip(4)
-	portdescpropoptical.Supported = uint32(decoder.ReadUint32())
-	portdescpropoptical.TxMinFreqLmda = uint32(decoder.ReadUint32())
-	portdescpropoptical.TxMaxFreqLmda = uint32(decoder.ReadUint32())
-	portdescpropoptical.TxGridFreqLmda = uint32(decoder.ReadUint32())
-	portdescpropoptical.RxMinFreqLmda = uint32(decoder.ReadUint32())
-	portdescpropoptical.RxMaxFreqLmda = uint32(decoder.ReadUint32())
-	portdescpropoptical.RxGridFreqLmda = uint32(decoder.ReadUint32())
-	portdescpropoptical.TxPwrMin = uint32(decoder.ReadUint32())
-	portdescpropoptical.TxPwrMax = uint32(decoder.ReadUint32())
-	return portdescpropoptical, nil
+	_portdescpropoptical.Supported = uint32(decoder.ReadUint32())
+	_portdescpropoptical.TxMinFreqLmda = uint32(decoder.ReadUint32())
+	_portdescpropoptical.TxMaxFreqLmda = uint32(decoder.ReadUint32())
+	_portdescpropoptical.TxGridFreqLmda = uint32(decoder.ReadUint32())
+	_portdescpropoptical.RxMinFreqLmda = uint32(decoder.ReadUint32())
+	_portdescpropoptical.RxMaxFreqLmda = uint32(decoder.ReadUint32())
+	_portdescpropoptical.RxGridFreqLmda = uint32(decoder.ReadUint32())
+	_portdescpropoptical.TxPwrMin = uint32(decoder.ReadUint32())
+	_portdescpropoptical.TxPwrMax = uint32(decoder.ReadUint32())
+	return _portdescpropoptical, nil
 }
 
 func NewPortDescPropOptical() *PortDescPropOptical {
-	return &PortDescPropOptical{
+	obj := &PortDescPropOptical{
 		PortDescProp: NewPortDescProp(1),
 	}
+	return obj
 }
 
 type PortModProp struct {
@@ -10360,31 +11039,31 @@ func (self *PortModProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortModProp(decoder *goloxi.Decoder) (IPortModProp, error) {
-	portmodprop := &PortModProp{}
+func DecodePortModProp(decoder *goloxi.Decoder) (IPortModProp, error) {
+	_portmodprop := &PortModProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("PortModProp packet too short: %d < 4", decoder.Length())
 	}
-	portmodprop.Type = uint16(decoder.ReadUint16())
-	portmodprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(portmodprop.Length), 2+2)
+	_portmodprop.Type = uint16(decoder.ReadUint16())
+	_portmodprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_portmodprop.Length), 2+2)
 
-	switch portmodprop.Type {
+	switch _portmodprop.Type {
 	case 0:
-		return decodePortModPropEthernet(portmodprop, decoder)
+		return DecodePortModPropEthernet(_portmodprop, decoder)
 	case 1:
-		return decodePortModPropOptical(portmodprop, decoder)
+		return DecodePortModPropOptical(_portmodprop, decoder)
 	case 65535:
-		return decodePortModPropExperimenter(portmodprop, decoder)
+		return DecodePortModPropExperimenter(_portmodprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'PortModProp'", portmodprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'PortModProp'", _portmodprop.Type)
 	}
 }
 
 func NewPortModProp(_type uint16) *PortModProp {
-	return &PortModProp{
-		Type: _type,
-	}
+	obj := &PortModProp{}
+	obj.Type = _type
+	return obj
 }
 
 type PortModPropEthernet struct {
@@ -10405,19 +11084,20 @@ func (self *PortModPropEthernet) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortModPropEthernet(parent *PortModProp, decoder *goloxi.Decoder) (*PortModPropEthernet, error) {
-	portmodpropethernet := &PortModPropEthernet{PortModProp: parent}
+func DecodePortModPropEthernet(parent *PortModProp, decoder *goloxi.Decoder) (*PortModPropEthernet, error) {
+	_portmodpropethernet := &PortModPropEthernet{PortModProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("PortModPropEthernet packet too short: %d < 4", decoder.Length())
 	}
-	portmodpropethernet.Advertise = PortFeatures(decoder.ReadUint32())
-	return portmodpropethernet, nil
+	_portmodpropethernet.Advertise = PortFeatures(decoder.ReadUint32())
+	return _portmodpropethernet, nil
 }
 
 func NewPortModPropEthernet() *PortModPropEthernet {
-	return &PortModPropEthernet{
+	obj := &PortModPropEthernet{
 		PortModProp: NewPortModProp(0),
 	}
+	return obj
 }
 
 type PortModPropExperimenter struct {
@@ -10451,21 +11131,22 @@ func (self *PortModPropExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortModPropExperimenter(parent *PortModProp, decoder *goloxi.Decoder) (IPortModPropExperimenter, error) {
-	portmodpropexperimenter := &PortModPropExperimenter{PortModProp: parent}
+func DecodePortModPropExperimenter(parent *PortModProp, decoder *goloxi.Decoder) (IPortModPropExperimenter, error) {
+	_portmodpropexperimenter := &PortModPropExperimenter{PortModProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("PortModPropExperimenter packet too short: %d < 8", decoder.Length())
 	}
-	portmodpropexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	portmodpropexperimenter.ExpType = uint32(decoder.ReadUint32())
-	return portmodpropexperimenter, nil
+	_portmodpropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_portmodpropexperimenter.ExpType = uint32(decoder.ReadUint32())
+	return _portmodpropexperimenter, nil
 }
 
 func NewPortModPropExperimenter(_experimenter uint32) *PortModPropExperimenter {
-	return &PortModPropExperimenter{
-		Experimenter: _experimenter,
-		PortModProp:  NewPortModProp(65535),
+	obj := &PortModPropExperimenter{
+		PortModProp: NewPortModProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type PortModPropOptical struct {
@@ -10494,23 +11175,24 @@ func (self *PortModPropOptical) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortModPropOptical(parent *PortModProp, decoder *goloxi.Decoder) (*PortModPropOptical, error) {
-	portmodpropoptical := &PortModPropOptical{PortModProp: parent}
+func DecodePortModPropOptical(parent *PortModProp, decoder *goloxi.Decoder) (*PortModPropOptical, error) {
+	_portmodpropoptical := &PortModPropOptical{PortModProp: parent}
 	if decoder.Length() < 20 {
 		return nil, fmt.Errorf("PortModPropOptical packet too short: %d < 20", decoder.Length())
 	}
-	portmodpropoptical.Configure = uint32(decoder.ReadUint32())
-	portmodpropoptical.FreqLdma = uint32(decoder.ReadUint32())
-	portmodpropoptical.FlOffset = uint32(decoder.ReadUint32())
-	portmodpropoptical.GridSpan = uint32(decoder.ReadUint32())
-	portmodpropoptical.TxPwr = uint32(decoder.ReadUint32())
-	return portmodpropoptical, nil
+	_portmodpropoptical.Configure = uint32(decoder.ReadUint32())
+	_portmodpropoptical.FreqLdma = uint32(decoder.ReadUint32())
+	_portmodpropoptical.FlOffset = uint32(decoder.ReadUint32())
+	_portmodpropoptical.GridSpan = uint32(decoder.ReadUint32())
+	_portmodpropoptical.TxPwr = uint32(decoder.ReadUint32())
+	return _portmodpropoptical, nil
 }
 
 func NewPortModPropOptical() *PortModPropOptical {
-	return &PortModPropOptical{
+	obj := &PortModPropOptical{
 		PortModProp: NewPortModProp(1),
 	}
+	return obj
 }
 
 type PortStatsEntry struct {
@@ -10555,38 +11237,39 @@ func (self *PortStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortStatsEntry(decoder *goloxi.Decoder) (*PortStatsEntry, error) {
-	portstatsentry := &PortStatsEntry{}
+func DecodePortStatsEntry(decoder *goloxi.Decoder) (*PortStatsEntry, error) {
+	_portstatsentry := &PortStatsEntry{}
 	if decoder.Length() < 80 {
 		return nil, fmt.Errorf("PortStatsEntry packet too short: %d < 80", decoder.Length())
 	}
-	portstatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(portstatsentry.Length), 2+0)
+	_portstatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_portstatsentry.Length), 2+0)
 	decoder.Skip(2)
-	portstatsentry.PortNo.Decode(decoder)
-	portstatsentry.DurationSec = uint32(decoder.ReadUint32())
-	portstatsentry.DurationNsec = uint32(decoder.ReadUint32())
-	portstatsentry.RxPackets = uint64(decoder.ReadUint64())
-	portstatsentry.TxPackets = uint64(decoder.ReadUint64())
-	portstatsentry.RxBytes = uint64(decoder.ReadUint64())
-	portstatsentry.TxBytes = uint64(decoder.ReadUint64())
-	portstatsentry.RxDropped = uint64(decoder.ReadUint64())
-	portstatsentry.TxDropped = uint64(decoder.ReadUint64())
-	portstatsentry.RxErrors = uint64(decoder.ReadUint64())
-	portstatsentry.TxErrors = uint64(decoder.ReadUint64())
+	_portstatsentry.PortNo.Decode(decoder)
+	_portstatsentry.DurationSec = uint32(decoder.ReadUint32())
+	_portstatsentry.DurationNsec = uint32(decoder.ReadUint32())
+	_portstatsentry.RxPackets = uint64(decoder.ReadUint64())
+	_portstatsentry.TxPackets = uint64(decoder.ReadUint64())
+	_portstatsentry.RxBytes = uint64(decoder.ReadUint64())
+	_portstatsentry.TxBytes = uint64(decoder.ReadUint64())
+	_portstatsentry.RxDropped = uint64(decoder.ReadUint64())
+	_portstatsentry.TxDropped = uint64(decoder.ReadUint64())
+	_portstatsentry.RxErrors = uint64(decoder.ReadUint64())
+	_portstatsentry.TxErrors = uint64(decoder.ReadUint64())
 
 	for decoder.Length() >= 4 {
-		item, err := decodePortStatsProp(decoder)
+		item, err := DecodePortStatsProp(decoder)
 		if err != nil {
 			return nil, err
 		}
-		portstatsentry.Properties = append(portstatsentry.Properties, item)
+		_portstatsentry.Properties = append(_portstatsentry.Properties, item)
 	}
-	return portstatsentry, nil
+	return _portstatsentry, nil
 }
 
 func NewPortStatsEntry() *PortStatsEntry {
-	return &PortStatsEntry{}
+	obj := &PortStatsEntry{}
+	return obj
 }
 
 type PortStatsProp struct {
@@ -10615,31 +11298,31 @@ func (self *PortStatsProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortStatsProp(decoder *goloxi.Decoder) (IPortStatsProp, error) {
-	portstatsprop := &PortStatsProp{}
+func DecodePortStatsProp(decoder *goloxi.Decoder) (IPortStatsProp, error) {
+	_portstatsprop := &PortStatsProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("PortStatsProp packet too short: %d < 4", decoder.Length())
 	}
-	portstatsprop.Type = uint16(decoder.ReadUint16())
-	portstatsprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(portstatsprop.Length), 2+2)
+	_portstatsprop.Type = uint16(decoder.ReadUint16())
+	_portstatsprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_portstatsprop.Length), 2+2)
 
-	switch portstatsprop.Type {
+	switch _portstatsprop.Type {
 	case 0:
-		return decodePortStatsPropEthernet(portstatsprop, decoder)
+		return DecodePortStatsPropEthernet(_portstatsprop, decoder)
 	case 1:
-		return decodePortStatsPropOptical(portstatsprop, decoder)
+		return DecodePortStatsPropOptical(_portstatsprop, decoder)
 	case 65535:
-		return decodePortStatsPropExperimenter(portstatsprop, decoder)
+		return DecodePortStatsPropExperimenter(_portstatsprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'PortStatsProp'", portstatsprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'PortStatsProp'", _portstatsprop.Type)
 	}
 }
 
 func NewPortStatsProp(_type uint16) *PortStatsProp {
-	return &PortStatsProp{
-		Type: _type,
-	}
+	obj := &PortStatsProp{}
+	obj.Type = _type
+	return obj
 }
 
 type PortStatsPropEthernet struct {
@@ -10667,23 +11350,24 @@ func (self *PortStatsPropEthernet) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortStatsPropEthernet(parent *PortStatsProp, decoder *goloxi.Decoder) (*PortStatsPropEthernet, error) {
-	portstatspropethernet := &PortStatsPropEthernet{PortStatsProp: parent}
+func DecodePortStatsPropEthernet(parent *PortStatsProp, decoder *goloxi.Decoder) (*PortStatsPropEthernet, error) {
+	_portstatspropethernet := &PortStatsPropEthernet{PortStatsProp: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("PortStatsPropEthernet packet too short: %d < 32", decoder.Length())
 	}
 	decoder.Skip(4)
-	portstatspropethernet.RxFrameErr = uint64(decoder.ReadUint64())
-	portstatspropethernet.RxOverErr = uint64(decoder.ReadUint64())
-	portstatspropethernet.RxCrcErr = uint64(decoder.ReadUint64())
-	portstatspropethernet.Collisions = uint64(decoder.ReadUint64())
-	return portstatspropethernet, nil
+	_portstatspropethernet.RxFrameErr = uint64(decoder.ReadUint64())
+	_portstatspropethernet.RxOverErr = uint64(decoder.ReadUint64())
+	_portstatspropethernet.RxCrcErr = uint64(decoder.ReadUint64())
+	_portstatspropethernet.Collisions = uint64(decoder.ReadUint64())
+	return _portstatspropethernet, nil
 }
 
 func NewPortStatsPropEthernet() *PortStatsPropEthernet {
-	return &PortStatsPropEthernet{
+	obj := &PortStatsPropEthernet{
 		PortStatsProp: NewPortStatsProp(0),
 	}
+	return obj
 }
 
 type PortStatsPropExperimenter struct {
@@ -10717,27 +11401,28 @@ func (self *PortStatsPropExperimenter) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodePortStatsPropExperimenter(parent *PortStatsProp, decoder *goloxi.Decoder) (IPortStatsPropExperimenter, error) {
-	portstatspropexperimenter := &PortStatsPropExperimenter{PortStatsProp: parent}
+func DecodePortStatsPropExperimenter(parent *PortStatsProp, decoder *goloxi.Decoder) (IPortStatsPropExperimenter, error) {
+	_portstatspropexperimenter := &PortStatsPropExperimenter{PortStatsProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("PortStatsPropExperimenter packet too short: %d < 8", decoder.Length())
 	}
-	portstatspropexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	portstatspropexperimenter.ExpType = uint32(decoder.ReadUint32())
+	_portstatspropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_portstatspropexperimenter.ExpType = uint32(decoder.ReadUint32())
 
-	switch portstatspropexperimenter.Experimenter {
+	switch _portstatspropexperimenter.Experimenter {
 	case 43521:
-		return decodePortStatsPropExperimenterIntel(portstatspropexperimenter, decoder)
+		return DecodePortStatsPropExperimenterIntel(_portstatspropexperimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'PortStatsPropExperimenter'", portstatspropexperimenter.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'PortStatsPropExperimenter'", _portstatspropexperimenter.Experimenter)
 	}
 }
 
 func NewPortStatsPropExperimenter(_experimenter uint32) *PortStatsPropExperimenter {
-	return &PortStatsPropExperimenter{
-		Experimenter:  _experimenter,
+	obj := &PortStatsPropExperimenter{
 		PortStatsProp: NewPortStatsProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type PortStatsPropExperimenterIntel struct {
@@ -10799,40 +11484,41 @@ func (self *PortStatsPropExperimenterIntel) Serialize(encoder *goloxi.Encoder) e
 	return nil
 }
 
-func decodePortStatsPropExperimenterIntel(parent *PortStatsPropExperimenter, decoder *goloxi.Decoder) (*PortStatsPropExperimenterIntel, error) {
-	portstatspropexperimenterintel := &PortStatsPropExperimenterIntel{PortStatsPropExperimenter: parent}
+func DecodePortStatsPropExperimenterIntel(parent *PortStatsPropExperimenter, decoder *goloxi.Decoder) (*PortStatsPropExperimenterIntel, error) {
+	_portstatspropexperimenterintel := &PortStatsPropExperimenterIntel{PortStatsPropExperimenter: parent}
 	if decoder.Length() < 168 {
 		return nil, fmt.Errorf("PortStatsPropExperimenterIntel packet too short: %d < 168", decoder.Length())
 	}
 	decoder.Skip(4)
-	portstatspropexperimenterintel.Rx1To64Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Rx65To127Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Rx128To255Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Rx256To511Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Rx512To1023Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Rx1024To1522Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Rx1523ToMaxPackets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Tx1To64Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Tx65To127Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Tx128To255Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Tx256To511Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Tx512To1023Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Tx1024To1522Packets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.Tx1523ToMaxPackets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.TxMulticastPackets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.RxBroadcastPackets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.TxBroadcastPackets = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.RxUndersizedErrors = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.RxOversizeErrors = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.RxFragmentedErrors = uint64(decoder.ReadUint64())
-	portstatspropexperimenterintel.RxJabberErrors = uint64(decoder.ReadUint64())
-	return portstatspropexperimenterintel, nil
+	_portstatspropexperimenterintel.Rx1To64Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Rx65To127Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Rx128To255Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Rx256To511Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Rx512To1023Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Rx1024To1522Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Rx1523ToMaxPackets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Tx1To64Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Tx65To127Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Tx128To255Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Tx256To511Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Tx512To1023Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Tx1024To1522Packets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.Tx1523ToMaxPackets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.TxMulticastPackets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.RxBroadcastPackets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.TxBroadcastPackets = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.RxUndersizedErrors = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.RxOversizeErrors = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.RxFragmentedErrors = uint64(decoder.ReadUint64())
+	_portstatspropexperimenterintel.RxJabberErrors = uint64(decoder.ReadUint64())
+	return _portstatspropexperimenterintel, nil
 }
 
 func NewPortStatsPropExperimenterIntel() *PortStatsPropExperimenterIntel {
-	return &PortStatsPropExperimenterIntel{
+	obj := &PortStatsPropExperimenterIntel{
 		PortStatsPropExperimenter: NewPortStatsPropExperimenter(43521),
 	}
+	return obj
 }
 
 type PortStatsPropOptical struct {
@@ -10874,30 +11560,31 @@ func (self *PortStatsPropOptical) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortStatsPropOptical(parent *PortStatsProp, decoder *goloxi.Decoder) (*PortStatsPropOptical, error) {
-	portstatspropoptical := &PortStatsPropOptical{PortStatsProp: parent}
+func DecodePortStatsPropOptical(parent *PortStatsProp, decoder *goloxi.Decoder) (*PortStatsPropOptical, error) {
+	_portstatspropoptical := &PortStatsPropOptical{PortStatsProp: parent}
 	if decoder.Length() < 36 {
 		return nil, fmt.Errorf("PortStatsPropOptical packet too short: %d < 36", decoder.Length())
 	}
 	decoder.Skip(4)
-	portstatspropoptical.Flags = uint32(decoder.ReadUint32())
-	portstatspropoptical.TxFreqLmda = uint32(decoder.ReadUint32())
-	portstatspropoptical.TxOffset = uint32(decoder.ReadUint32())
-	portstatspropoptical.TxGridSpan = uint32(decoder.ReadUint32())
-	portstatspropoptical.RxFreqLmda = uint32(decoder.ReadUint32())
-	portstatspropoptical.RxOffset = uint32(decoder.ReadUint32())
-	portstatspropoptical.RxGridSpan = uint32(decoder.ReadUint32())
-	portstatspropoptical.TxPwr = uint16(decoder.ReadUint16())
-	portstatspropoptical.RxPwr = uint16(decoder.ReadUint16())
-	portstatspropoptical.BiasCurrent = uint16(decoder.ReadUint16())
-	portstatspropoptical.Temperature = uint16(decoder.ReadUint16())
-	return portstatspropoptical, nil
+	_portstatspropoptical.Flags = uint32(decoder.ReadUint32())
+	_portstatspropoptical.TxFreqLmda = uint32(decoder.ReadUint32())
+	_portstatspropoptical.TxOffset = uint32(decoder.ReadUint32())
+	_portstatspropoptical.TxGridSpan = uint32(decoder.ReadUint32())
+	_portstatspropoptical.RxFreqLmda = uint32(decoder.ReadUint32())
+	_portstatspropoptical.RxOffset = uint32(decoder.ReadUint32())
+	_portstatspropoptical.RxGridSpan = uint32(decoder.ReadUint32())
+	_portstatspropoptical.TxPwr = uint16(decoder.ReadUint16())
+	_portstatspropoptical.RxPwr = uint16(decoder.ReadUint16())
+	_portstatspropoptical.BiasCurrent = uint16(decoder.ReadUint16())
+	_portstatspropoptical.Temperature = uint16(decoder.ReadUint16())
+	return _portstatspropoptical, nil
 }
 
 func NewPortStatsPropOptical() *PortStatsPropOptical {
-	return &PortStatsPropOptical{
+	obj := &PortStatsPropOptical{
 		PortStatsProp: NewPortStatsProp(1),
 	}
+	return obj
 }
 
 type QueueDesc struct {
@@ -10924,29 +11611,30 @@ func (self *QueueDesc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueDesc(decoder *goloxi.Decoder) (*QueueDesc, error) {
-	queuedesc := &QueueDesc{}
+func DecodeQueueDesc(decoder *goloxi.Decoder) (*QueueDesc, error) {
+	_queuedesc := &QueueDesc{}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("QueueDesc packet too short: %d < 16", decoder.Length())
 	}
-	queuedesc.PortNo = uint32(decoder.ReadUint32())
-	queuedesc.QueueId = uint32(decoder.ReadUint32())
-	queuedesc.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(queuedesc.Length), 2+8)
+	_queuedesc.PortNo = uint32(decoder.ReadUint32())
+	_queuedesc.QueueId = uint32(decoder.ReadUint32())
+	_queuedesc.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_queuedesc.Length), 2+8)
 	decoder.Skip(6)
 
 	for decoder.Length() >= 4 {
-		item, err := decodeQueueDescProp(decoder)
+		item, err := DecodeQueueDescProp(decoder)
 		if err != nil {
 			return nil, err
 		}
-		queuedesc.Properties = append(queuedesc.Properties, item)
+		_queuedesc.Properties = append(_queuedesc.Properties, item)
 	}
-	return queuedesc, nil
+	return _queuedesc, nil
 }
 
 func NewQueueDesc() *QueueDesc {
-	return &QueueDesc{}
+	obj := &QueueDesc{}
+	return obj
 }
 
 type QueueDescProp struct {
@@ -10975,31 +11663,31 @@ func (self *QueueDescProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueDescProp(decoder *goloxi.Decoder) (IQueueDescProp, error) {
-	queuedescprop := &QueueDescProp{}
+func DecodeQueueDescProp(decoder *goloxi.Decoder) (IQueueDescProp, error) {
+	_queuedescprop := &QueueDescProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("QueueDescProp packet too short: %d < 4", decoder.Length())
 	}
-	queuedescprop.Type = uint16(decoder.ReadUint16())
-	queuedescprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(queuedescprop.Length), 2+2)
+	_queuedescprop.Type = uint16(decoder.ReadUint16())
+	_queuedescprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_queuedescprop.Length), 2+2)
 
-	switch queuedescprop.Type {
+	switch _queuedescprop.Type {
 	case 1:
-		return decodeQueueDescPropMinRate(queuedescprop, decoder)
+		return DecodeQueueDescPropMinRate(_queuedescprop, decoder)
 	case 2:
-		return decodeQueueDescPropMaxRate(queuedescprop, decoder)
+		return DecodeQueueDescPropMaxRate(_queuedescprop, decoder)
 	case 65535:
-		return decodeQueueDescPropExperimenter(queuedescprop, decoder)
+		return DecodeQueueDescPropExperimenter(_queuedescprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'QueueDescProp'", queuedescprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'QueueDescProp'", _queuedescprop.Type)
 	}
 }
 
 func NewQueueDescProp(_type uint16) *QueueDescProp {
-	return &QueueDescProp{
-		Type: _type,
-	}
+	obj := &QueueDescProp{}
+	obj.Type = _type
+	return obj
 }
 
 type QueueDescPropExperimenter struct {
@@ -11033,27 +11721,28 @@ func (self *QueueDescPropExperimenter) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeQueueDescPropExperimenter(parent *QueueDescProp, decoder *goloxi.Decoder) (IQueueDescPropExperimenter, error) {
-	queuedescpropexperimenter := &QueueDescPropExperimenter{QueueDescProp: parent}
+func DecodeQueueDescPropExperimenter(parent *QueueDescProp, decoder *goloxi.Decoder) (IQueueDescPropExperimenter, error) {
+	_queuedescpropexperimenter := &QueueDescPropExperimenter{QueueDescProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("QueueDescPropExperimenter packet too short: %d < 8", decoder.Length())
 	}
-	queuedescpropexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	queuedescpropexperimenter.ExpType = uint32(decoder.ReadUint32())
+	_queuedescpropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_queuedescpropexperimenter.ExpType = uint32(decoder.ReadUint32())
 
-	switch queuedescpropexperimenter.Experimenter {
+	switch _queuedescpropexperimenter.Experimenter {
 	case 6035143:
-		return decodeQueueDescPropBsn(queuedescpropexperimenter, decoder)
+		return DecodeQueueDescPropBsn(_queuedescpropexperimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'QueueDescPropExperimenter'", queuedescpropexperimenter.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'QueueDescPropExperimenter'", _queuedescpropexperimenter.Experimenter)
 	}
 }
 
 func NewQueueDescPropExperimenter(_experimenter uint32) *QueueDescPropExperimenter {
-	return &QueueDescPropExperimenter{
-		Experimenter:  _experimenter,
+	obj := &QueueDescPropExperimenter{
 		QueueDescProp: NewQueueDescProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type QueueDescPropBsn struct {
@@ -11072,22 +11761,23 @@ func (self *QueueDescPropBsn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueDescPropBsn(parent *QueueDescPropExperimenter, decoder *goloxi.Decoder) (IQueueDescPropBsn, error) {
-	queuedescpropbsn := &QueueDescPropBsn{QueueDescPropExperimenter: parent}
+func DecodeQueueDescPropBsn(parent *QueueDescPropExperimenter, decoder *goloxi.Decoder) (IQueueDescPropBsn, error) {
+	_queuedescpropbsn := &QueueDescPropBsn{QueueDescPropExperimenter: parent}
 
-	switch queuedescpropbsn.ExpType {
+	switch _queuedescpropbsn.ExpType {
 	case 0:
-		return decodeQueueDescPropBsnQueueName(queuedescpropbsn, decoder)
+		return DecodeQueueDescPropBsnQueueName(_queuedescpropbsn, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'QueueDescPropBsn'", queuedescpropbsn.ExpType)
+		return nil, fmt.Errorf("Invalid type '%d' for 'QueueDescPropBsn'", _queuedescpropbsn.ExpType)
 	}
 }
 
 func NewQueueDescPropBsn(_exp_type uint32) *QueueDescPropBsn {
-	return &QueueDescPropBsn{
-		ExpType:                   _exp_type,
+	obj := &QueueDescPropBsn{
 		QueueDescPropExperimenter: NewQueueDescPropExperimenter(6035143),
 	}
+	obj.ExpType = _exp_type
+	return obj
 }
 
 type QueueDescPropBsnQueueName struct {
@@ -11108,16 +11798,17 @@ func (self *QueueDescPropBsnQueueName) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeQueueDescPropBsnQueueName(parent *QueueDescPropBsn, decoder *goloxi.Decoder) (*QueueDescPropBsnQueueName, error) {
-	queuedescpropbsnqueuename := &QueueDescPropBsnQueueName{QueueDescPropBsn: parent}
-	queuedescpropbsnqueuename.Name = decoder.Read(decoder.Length())
-	return queuedescpropbsnqueuename, nil
+func DecodeQueueDescPropBsnQueueName(parent *QueueDescPropBsn, decoder *goloxi.Decoder) (*QueueDescPropBsnQueueName, error) {
+	_queuedescpropbsnqueuename := &QueueDescPropBsnQueueName{QueueDescPropBsn: parent}
+	_queuedescpropbsnqueuename.Name = decoder.Read(decoder.Length())
+	return _queuedescpropbsnqueuename, nil
 }
 
 func NewQueueDescPropBsnQueueName() *QueueDescPropBsnQueueName {
-	return &QueueDescPropBsnQueueName{
+	obj := &QueueDescPropBsnQueueName{
 		QueueDescPropBsn: NewQueueDescPropBsn(0),
 	}
+	return obj
 }
 
 type QueueDescPropMaxRate struct {
@@ -11139,20 +11830,21 @@ func (self *QueueDescPropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueDescPropMaxRate(parent *QueueDescProp, decoder *goloxi.Decoder) (*QueueDescPropMaxRate, error) {
-	queuedescpropmaxrate := &QueueDescPropMaxRate{QueueDescProp: parent}
+func DecodeQueueDescPropMaxRate(parent *QueueDescProp, decoder *goloxi.Decoder) (*QueueDescPropMaxRate, error) {
+	_queuedescpropmaxrate := &QueueDescPropMaxRate{QueueDescProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("QueueDescPropMaxRate packet too short: %d < 4", decoder.Length())
 	}
-	queuedescpropmaxrate.Rate = uint16(decoder.ReadUint16())
+	_queuedescpropmaxrate.Rate = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return queuedescpropmaxrate, nil
+	return _queuedescpropmaxrate, nil
 }
 
 func NewQueueDescPropMaxRate() *QueueDescPropMaxRate {
-	return &QueueDescPropMaxRate{
+	obj := &QueueDescPropMaxRate{
 		QueueDescProp: NewQueueDescProp(2),
 	}
+	return obj
 }
 
 type QueueDescPropMinRate struct {
@@ -11174,20 +11866,21 @@ func (self *QueueDescPropMinRate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueDescPropMinRate(parent *QueueDescProp, decoder *goloxi.Decoder) (*QueueDescPropMinRate, error) {
-	queuedescpropminrate := &QueueDescPropMinRate{QueueDescProp: parent}
+func DecodeQueueDescPropMinRate(parent *QueueDescProp, decoder *goloxi.Decoder) (*QueueDescPropMinRate, error) {
+	_queuedescpropminrate := &QueueDescPropMinRate{QueueDescProp: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("QueueDescPropMinRate packet too short: %d < 4", decoder.Length())
 	}
-	queuedescpropminrate.Rate = uint16(decoder.ReadUint16())
+	_queuedescpropminrate.Rate = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return queuedescpropminrate, nil
+	return _queuedescpropminrate, nil
 }
 
 func NewQueueDescPropMinRate() *QueueDescPropMinRate {
-	return &QueueDescPropMinRate{
+	obj := &QueueDescPropMinRate{
 		QueueDescProp: NewQueueDescProp(1),
 	}
+	return obj
 }
 
 type QueueProp struct {
@@ -11216,31 +11909,31 @@ func (self *QueueProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueProp(decoder *goloxi.Decoder) (IQueueProp, error) {
-	queueprop := &QueueProp{}
+func DecodeQueueProp(decoder *goloxi.Decoder) (IQueueProp, error) {
+	_queueprop := &QueueProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("QueueProp packet too short: %d < 4", decoder.Length())
 	}
-	queueprop.Type = uint16(decoder.ReadUint16())
-	queueprop.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(queueprop.Len), 2+2)
+	_queueprop.Type = uint16(decoder.ReadUint16())
+	_queueprop.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_queueprop.Len), 2+2)
 
-	switch queueprop.Type {
+	switch _queueprop.Type {
 	case 1:
-		return decodeQueuePropMinRate(queueprop, decoder)
+		return DecodeQueuePropMinRate(_queueprop, decoder)
 	case 2:
-		return decodeQueuePropMaxRate(queueprop, decoder)
+		return DecodeQueuePropMaxRate(_queueprop, decoder)
 	case 65535:
-		return decodeQueuePropExperimenter(queueprop, decoder)
+		return DecodeQueuePropExperimenter(_queueprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'QueueProp'", queueprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'QueueProp'", _queueprop.Type)
 	}
 }
 
 func NewQueueProp(_type uint16) *QueueProp {
-	return &QueueProp{
-		Type: _type,
-	}
+	obj := &QueueProp{}
+	obj.Type = _type
+	return obj
 }
 
 type QueuePropExperimenter struct {
@@ -11269,22 +11962,23 @@ func (self *QueuePropExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueuePropExperimenter(parent *QueueProp, decoder *goloxi.Decoder) (IQueuePropExperimenter, error) {
-	queuepropexperimenter := &QueuePropExperimenter{QueueProp: parent}
+func DecodeQueuePropExperimenter(parent *QueueProp, decoder *goloxi.Decoder) (IQueuePropExperimenter, error) {
+	_queuepropexperimenter := &QueuePropExperimenter{QueueProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("QueuePropExperimenter packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	queuepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_queuepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return queuepropexperimenter, nil
+	return _queuepropexperimenter, nil
 }
 
 func NewQueuePropExperimenter(_experimenter uint32) *QueuePropExperimenter {
-	return &QueuePropExperimenter{
-		Experimenter: _experimenter,
-		QueueProp:    NewQueueProp(65535),
+	obj := &QueuePropExperimenter{
+		QueueProp: NewQueueProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type QueuePropMaxRate struct {
@@ -11307,21 +12001,22 @@ func (self *QueuePropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueuePropMaxRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMaxRate, error) {
-	queuepropmaxrate := &QueuePropMaxRate{QueueProp: parent}
+func DecodeQueuePropMaxRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMaxRate, error) {
+	_queuepropmaxrate := &QueuePropMaxRate{QueueProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("QueuePropMaxRate packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	queuepropmaxrate.Rate = uint16(decoder.ReadUint16())
+	_queuepropmaxrate.Rate = uint16(decoder.ReadUint16())
 	decoder.Skip(6)
-	return queuepropmaxrate, nil
+	return _queuepropmaxrate, nil
 }
 
 func NewQueuePropMaxRate() *QueuePropMaxRate {
-	return &QueuePropMaxRate{
+	obj := &QueuePropMaxRate{
 		QueueProp: NewQueueProp(2),
 	}
+	return obj
 }
 
 type QueuePropMinRate struct {
@@ -11344,21 +12039,22 @@ func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueuePropMinRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMinRate, error) {
-	queuepropminrate := &QueuePropMinRate{QueueProp: parent}
+func DecodeQueuePropMinRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMinRate, error) {
+	_queuepropminrate := &QueuePropMinRate{QueueProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("QueuePropMinRate packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	queuepropminrate.Rate = uint16(decoder.ReadUint16())
+	_queuepropminrate.Rate = uint16(decoder.ReadUint16())
 	decoder.Skip(6)
-	return queuepropminrate, nil
+	return _queuepropminrate, nil
 }
 
 func NewQueuePropMinRate() *QueuePropMinRate {
-	return &QueuePropMinRate{
+	obj := &QueuePropMinRate{
 		QueueProp: NewQueueProp(1),
 	}
+	return obj
 }
 
 type QueueStatsEntry struct {
@@ -11395,34 +12091,35 @@ func (self *QueueStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueStatsEntry(decoder *goloxi.Decoder) (*QueueStatsEntry, error) {
-	queuestatsentry := &QueueStatsEntry{}
+func DecodeQueueStatsEntry(decoder *goloxi.Decoder) (*QueueStatsEntry, error) {
+	_queuestatsentry := &QueueStatsEntry{}
 	if decoder.Length() < 48 {
 		return nil, fmt.Errorf("QueueStatsEntry packet too short: %d < 48", decoder.Length())
 	}
-	queuestatsentry.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(queuestatsentry.Length), 2+0)
+	_queuestatsentry.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_queuestatsentry.Length), 2+0)
 	decoder.Skip(6)
-	queuestatsentry.PortNo.Decode(decoder)
-	queuestatsentry.QueueId = uint32(decoder.ReadUint32())
-	queuestatsentry.TxBytes = uint64(decoder.ReadUint64())
-	queuestatsentry.TxPackets = uint64(decoder.ReadUint64())
-	queuestatsentry.TxErrors = uint64(decoder.ReadUint64())
-	queuestatsentry.DurationSec = uint32(decoder.ReadUint32())
-	queuestatsentry.DurationNsec = uint32(decoder.ReadUint32())
+	_queuestatsentry.PortNo.Decode(decoder)
+	_queuestatsentry.QueueId = uint32(decoder.ReadUint32())
+	_queuestatsentry.TxBytes = uint64(decoder.ReadUint64())
+	_queuestatsentry.TxPackets = uint64(decoder.ReadUint64())
+	_queuestatsentry.TxErrors = uint64(decoder.ReadUint64())
+	_queuestatsentry.DurationSec = uint32(decoder.ReadUint32())
+	_queuestatsentry.DurationNsec = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 4 {
-		item, err := decodeQueueStatsProp(decoder)
+		item, err := DecodeQueueStatsProp(decoder)
 		if err != nil {
 			return nil, err
 		}
-		queuestatsentry.Properties = append(queuestatsentry.Properties, item)
+		_queuestatsentry.Properties = append(_queuestatsentry.Properties, item)
 	}
-	return queuestatsentry, nil
+	return _queuestatsentry, nil
 }
 
 func NewQueueStatsEntry() *QueueStatsEntry {
-	return &QueueStatsEntry{}
+	obj := &QueueStatsEntry{}
+	return obj
 }
 
 type QueueStatsProp struct {
@@ -11451,27 +12148,27 @@ func (self *QueueStatsProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueStatsProp(decoder *goloxi.Decoder) (IQueueStatsProp, error) {
-	queuestatsprop := &QueueStatsProp{}
+func DecodeQueueStatsProp(decoder *goloxi.Decoder) (IQueueStatsProp, error) {
+	_queuestatsprop := &QueueStatsProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("QueueStatsProp packet too short: %d < 4", decoder.Length())
 	}
-	queuestatsprop.Type = uint16(decoder.ReadUint16())
-	queuestatsprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(queuestatsprop.Length), 2+2)
+	_queuestatsprop.Type = uint16(decoder.ReadUint16())
+	_queuestatsprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_queuestatsprop.Length), 2+2)
 
-	switch queuestatsprop.Type {
+	switch _queuestatsprop.Type {
 	case 65535:
-		return decodeQueueStatsPropExperimenter(queuestatsprop, decoder)
+		return DecodeQueueStatsPropExperimenter(_queuestatsprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'QueueStatsProp'", queuestatsprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'QueueStatsProp'", _queuestatsprop.Type)
 	}
 }
 
 func NewQueueStatsProp(_type uint16) *QueueStatsProp {
-	return &QueueStatsProp{
-		Type: _type,
-	}
+	obj := &QueueStatsProp{}
+	obj.Type = _type
+	return obj
 }
 
 type QueueStatsPropExperimenter struct {
@@ -11505,21 +12202,22 @@ func (self *QueueStatsPropExperimenter) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeQueueStatsPropExperimenter(parent *QueueStatsProp, decoder *goloxi.Decoder) (IQueueStatsPropExperimenter, error) {
-	queuestatspropexperimenter := &QueueStatsPropExperimenter{QueueStatsProp: parent}
+func DecodeQueueStatsPropExperimenter(parent *QueueStatsProp, decoder *goloxi.Decoder) (IQueueStatsPropExperimenter, error) {
+	_queuestatspropexperimenter := &QueueStatsPropExperimenter{QueueStatsProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("QueueStatsPropExperimenter packet too short: %d < 8", decoder.Length())
 	}
-	queuestatspropexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	queuestatspropexperimenter.ExpType = uint32(decoder.ReadUint32())
-	return queuestatspropexperimenter, nil
+	_queuestatspropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_queuestatspropexperimenter.ExpType = uint32(decoder.ReadUint32())
+	return _queuestatspropexperimenter, nil
 }
 
 func NewQueueStatsPropExperimenter(_experimenter uint32) *QueueStatsPropExperimenter {
-	return &QueueStatsPropExperimenter{
-		Experimenter:   _experimenter,
+	obj := &QueueStatsPropExperimenter{
 		QueueStatsProp: NewQueueStatsProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type RoleProp struct {
@@ -11548,27 +12246,27 @@ func (self *RoleProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeRoleProp(decoder *goloxi.Decoder) (IRoleProp, error) {
-	roleprop := &RoleProp{}
+func DecodeRoleProp(decoder *goloxi.Decoder) (IRoleProp, error) {
+	_roleprop := &RoleProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("RoleProp packet too short: %d < 4", decoder.Length())
 	}
-	roleprop.Type = uint16(decoder.ReadUint16())
-	roleprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(roleprop.Length), 2+2)
+	_roleprop.Type = uint16(decoder.ReadUint16())
+	_roleprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_roleprop.Length), 2+2)
 
-	switch roleprop.Type {
+	switch _roleprop.Type {
 	case 65535:
-		return decodeRolePropExperimenter(roleprop, decoder)
+		return DecodeRolePropExperimenter(_roleprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'RoleProp'", roleprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'RoleProp'", _roleprop.Type)
 	}
 }
 
 func NewRoleProp(_type uint16) *RoleProp {
-	return &RoleProp{
-		Type: _type,
-	}
+	obj := &RoleProp{}
+	obj.Type = _type
+	return obj
 }
 
 type RolePropExperimenter struct {
@@ -11602,21 +12300,22 @@ func (self *RolePropExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeRolePropExperimenter(parent *RoleProp, decoder *goloxi.Decoder) (IRolePropExperimenter, error) {
-	rolepropexperimenter := &RolePropExperimenter{RoleProp: parent}
+func DecodeRolePropExperimenter(parent *RoleProp, decoder *goloxi.Decoder) (IRolePropExperimenter, error) {
+	_rolepropexperimenter := &RolePropExperimenter{RoleProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("RolePropExperimenter packet too short: %d < 8", decoder.Length())
 	}
-	rolepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	rolepropexperimenter.ExpType = uint32(decoder.ReadUint32())
-	return rolepropexperimenter, nil
+	_rolepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_rolepropexperimenter.ExpType = uint32(decoder.ReadUint32())
+	return _rolepropexperimenter, nil
 }
 
 func NewRolePropExperimenter(_experimenter uint32) *RolePropExperimenter {
-	return &RolePropExperimenter{
-		Experimenter: _experimenter,
-		RoleProp:     NewRoleProp(65535),
+	obj := &RolePropExperimenter{
+		RoleProp: NewRoleProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type TableDesc struct {
@@ -11651,7 +12350,8 @@ func (self *TableDesc) Decode(decoder *goloxi.Decoder) error {
 }
 
 func NewTableDesc() *TableDesc {
-	return &TableDesc{}
+	obj := &TableDesc{}
+	return obj
 }
 
 type TableFeatureProp struct {
@@ -11680,59 +12380,59 @@ func (self *TableFeatureProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableFeatureProp(decoder *goloxi.Decoder) (ITableFeatureProp, error) {
-	tablefeatureprop := &TableFeatureProp{}
+func DecodeTableFeatureProp(decoder *goloxi.Decoder) (ITableFeatureProp, error) {
+	_tablefeatureprop := &TableFeatureProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("TableFeatureProp packet too short: %d < 4", decoder.Length())
 	}
-	tablefeatureprop.Type = uint16(decoder.ReadUint16())
-	tablefeatureprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(tablefeatureprop.Length), 2+2)
+	_tablefeatureprop.Type = uint16(decoder.ReadUint16())
+	_tablefeatureprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_tablefeatureprop.Length), 2+2)
 
-	switch tablefeatureprop.Type {
+	switch _tablefeatureprop.Type {
 	case 0:
-		return decodeTableFeaturePropInstructions(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropInstructions(_tablefeatureprop, decoder)
 	case 1:
-		return decodeTableFeaturePropInstructionsMiss(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropInstructionsMiss(_tablefeatureprop, decoder)
 	case 2:
-		return decodeTableFeaturePropNextTables(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropNextTables(_tablefeatureprop, decoder)
 	case 3:
-		return decodeTableFeaturePropNextTablesMiss(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropNextTablesMiss(_tablefeatureprop, decoder)
 	case 4:
-		return decodeTableFeaturePropWriteActions(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropWriteActions(_tablefeatureprop, decoder)
 	case 5:
-		return decodeTableFeaturePropWriteActionsMiss(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropWriteActionsMiss(_tablefeatureprop, decoder)
 	case 6:
-		return decodeTableFeaturePropApplyActions(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropApplyActions(_tablefeatureprop, decoder)
 	case 7:
-		return decodeTableFeaturePropApplyActionsMiss(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropApplyActionsMiss(_tablefeatureprop, decoder)
 	case 8:
-		return decodeTableFeaturePropMatch(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropMatch(_tablefeatureprop, decoder)
 	case 10:
-		return decodeTableFeaturePropWildcards(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropWildcards(_tablefeatureprop, decoder)
 	case 12:
-		return decodeTableFeaturePropWriteSetfield(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropWriteSetfield(_tablefeatureprop, decoder)
 	case 13:
-		return decodeTableFeaturePropWriteSetfieldMiss(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropWriteSetfieldMiss(_tablefeatureprop, decoder)
 	case 14:
-		return decodeTableFeaturePropApplySetfield(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropApplySetfield(_tablefeatureprop, decoder)
 	case 15:
-		return decodeTableFeaturePropApplySetfieldMiss(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropApplySetfieldMiss(_tablefeatureprop, decoder)
 	case 16:
-		return decodeTableFeaturePropTableSyncFrom(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropTableSyncFrom(_tablefeatureprop, decoder)
 	case 65534:
-		return decodeTableFeaturePropExperimenter(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropExperimenter(_tablefeatureprop, decoder)
 	case 65535:
-		return decodeTableFeaturePropExperimenterMiss(tablefeatureprop, decoder)
+		return DecodeTableFeaturePropExperimenterMiss(_tablefeatureprop, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'TableFeatureProp'", tablefeatureprop.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'TableFeatureProp'", _tablefeatureprop.Type)
 	}
 }
 
 func NewTableFeatureProp(_type uint16) *TableFeatureProp {
-	return &TableFeatureProp{
-		Type: _type,
-	}
+	obj := &TableFeatureProp{}
+	obj.Type = _type
+	return obj
 }
 
 type TableFeaturePropApplyActions struct {
@@ -11751,32 +12451,35 @@ func (self *TableFeaturePropApplyActions) Serialize(encoder *goloxi.Encoder) err
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropApplyActions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplyActions, error) {
-	tablefeaturepropapplyactions := &TableFeaturePropApplyActions{TableFeatureProp: parent}
+func DecodeTableFeaturePropApplyActions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplyActions, error) {
+	_tablefeaturepropapplyactions := &TableFeaturePropApplyActions{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeActionId(decoder)
+		item, err := DecodeActionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropapplyactions.ActionIds = append(tablefeaturepropapplyactions.ActionIds, item)
+		_tablefeaturepropapplyactions.ActionIds = append(_tablefeaturepropapplyactions.ActionIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropapplyactions, nil
+	return _tablefeaturepropapplyactions, nil
 }
 
 func NewTableFeaturePropApplyActions() *TableFeaturePropApplyActions {
-	return &TableFeaturePropApplyActions{
+	obj := &TableFeaturePropApplyActions{
 		TableFeatureProp: NewTableFeatureProp(6),
 	}
+	return obj
 }
 
 type TableFeaturePropApplyActionsMiss struct {
@@ -11795,32 +12498,35 @@ func (self *TableFeaturePropApplyActionsMiss) Serialize(encoder *goloxi.Encoder)
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropApplyActionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplyActionsMiss, error) {
-	tablefeaturepropapplyactionsmiss := &TableFeaturePropApplyActionsMiss{TableFeatureProp: parent}
+func DecodeTableFeaturePropApplyActionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplyActionsMiss, error) {
+	_tablefeaturepropapplyactionsmiss := &TableFeaturePropApplyActionsMiss{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeActionId(decoder)
+		item, err := DecodeActionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropapplyactionsmiss.ActionIds = append(tablefeaturepropapplyactionsmiss.ActionIds, item)
+		_tablefeaturepropapplyactionsmiss.ActionIds = append(_tablefeaturepropapplyactionsmiss.ActionIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropapplyactionsmiss, nil
+	return _tablefeaturepropapplyactionsmiss, nil
 }
 
 func NewTableFeaturePropApplyActionsMiss() *TableFeaturePropApplyActionsMiss {
-	return &TableFeaturePropApplyActionsMiss{
+	obj := &TableFeaturePropApplyActionsMiss{
 		TableFeatureProp: NewTableFeatureProp(7),
 	}
+	return obj
 }
 
 type TableFeaturePropApplySetfield struct {
@@ -11839,32 +12545,35 @@ func (self *TableFeaturePropApplySetfield) Serialize(encoder *goloxi.Encoder) er
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropApplySetfield(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplySetfield, error) {
-	tablefeaturepropapplysetfield := &TableFeaturePropApplySetfield{TableFeatureProp: parent}
+func DecodeTableFeaturePropApplySetfield(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplySetfield, error) {
+	_tablefeaturepropapplysetfield := &TableFeaturePropApplySetfield{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeUint32(decoder)
+		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropapplysetfield.OxmIds = append(tablefeaturepropapplysetfield.OxmIds, item)
+		_tablefeaturepropapplysetfield.OxmIds = append(_tablefeaturepropapplysetfield.OxmIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropapplysetfield, nil
+	return _tablefeaturepropapplysetfield, nil
 }
 
 func NewTableFeaturePropApplySetfield() *TableFeaturePropApplySetfield {
-	return &TableFeaturePropApplySetfield{
+	obj := &TableFeaturePropApplySetfield{
 		TableFeatureProp: NewTableFeatureProp(14),
 	}
+	return obj
 }
 
 type TableFeaturePropApplySetfieldMiss struct {
@@ -11883,32 +12592,35 @@ func (self *TableFeaturePropApplySetfieldMiss) Serialize(encoder *goloxi.Encoder
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropApplySetfieldMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplySetfieldMiss, error) {
-	tablefeaturepropapplysetfieldmiss := &TableFeaturePropApplySetfieldMiss{TableFeatureProp: parent}
+func DecodeTableFeaturePropApplySetfieldMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplySetfieldMiss, error) {
+	_tablefeaturepropapplysetfieldmiss := &TableFeaturePropApplySetfieldMiss{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeUint32(decoder)
+		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropapplysetfieldmiss.OxmIds = append(tablefeaturepropapplysetfieldmiss.OxmIds, item)
+		_tablefeaturepropapplysetfieldmiss.OxmIds = append(_tablefeaturepropapplysetfieldmiss.OxmIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropapplysetfieldmiss, nil
+	return _tablefeaturepropapplysetfieldmiss, nil
 }
 
 func NewTableFeaturePropApplySetfieldMiss() *TableFeaturePropApplySetfieldMiss {
-	return &TableFeaturePropApplySetfieldMiss{
+	obj := &TableFeaturePropApplySetfieldMiss{
 		TableFeatureProp: NewTableFeatureProp(15),
 	}
+	return obj
 }
 
 type TableFeaturePropExperimenter struct {
@@ -11939,27 +12651,30 @@ func (self *TableFeaturePropExperimenter) Serialize(encoder *goloxi.Encoder) err
 	encoder.PutUint32(uint32(self.Experimenter))
 	encoder.PutUint32(uint32(self.Subtype))
 
+	encoder.SkipAlign()
+
 	return nil
 }
 
-func decodeTableFeaturePropExperimenter(parent *TableFeatureProp, decoder *goloxi.Decoder) (ITableFeaturePropExperimenter, error) {
-	tablefeaturepropexperimenter := &TableFeaturePropExperimenter{TableFeatureProp: parent}
+func DecodeTableFeaturePropExperimenter(parent *TableFeatureProp, decoder *goloxi.Decoder) (ITableFeaturePropExperimenter, error) {
+	_tablefeaturepropexperimenter := &TableFeaturePropExperimenter{TableFeatureProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("TableFeaturePropExperimenter packet too short: %d < 8", decoder.Length())
 	}
-	tablefeaturepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	tablefeaturepropexperimenter.Subtype = uint32(decoder.ReadUint32())
+	_tablefeaturepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_tablefeaturepropexperimenter.Subtype = uint32(decoder.ReadUint32())
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropexperimenter, nil
+	return _tablefeaturepropexperimenter, nil
 }
 
 func NewTableFeaturePropExperimenter(_experimenter uint32) *TableFeaturePropExperimenter {
-	return &TableFeaturePropExperimenter{
-		Experimenter:     _experimenter,
+	obj := &TableFeaturePropExperimenter{
 		TableFeatureProp: NewTableFeatureProp(65534),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type TableFeaturePropExperimenterMiss struct {
@@ -11990,27 +12705,30 @@ func (self *TableFeaturePropExperimenterMiss) Serialize(encoder *goloxi.Encoder)
 	encoder.PutUint32(uint32(self.Experimenter))
 	encoder.PutUint32(uint32(self.Subtype))
 
+	encoder.SkipAlign()
+
 	return nil
 }
 
-func decodeTableFeaturePropExperimenterMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (ITableFeaturePropExperimenterMiss, error) {
-	tablefeaturepropexperimentermiss := &TableFeaturePropExperimenterMiss{TableFeatureProp: parent}
+func DecodeTableFeaturePropExperimenterMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (ITableFeaturePropExperimenterMiss, error) {
+	_tablefeaturepropexperimentermiss := &TableFeaturePropExperimenterMiss{TableFeatureProp: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("TableFeaturePropExperimenterMiss packet too short: %d < 8", decoder.Length())
 	}
-	tablefeaturepropexperimentermiss.Experimenter = uint32(decoder.ReadUint32())
-	tablefeaturepropexperimentermiss.Subtype = uint32(decoder.ReadUint32())
+	_tablefeaturepropexperimentermiss.Experimenter = uint32(decoder.ReadUint32())
+	_tablefeaturepropexperimentermiss.Subtype = uint32(decoder.ReadUint32())
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropexperimentermiss, nil
+	return _tablefeaturepropexperimentermiss, nil
 }
 
 func NewTableFeaturePropExperimenterMiss(_experimenter uint32) *TableFeaturePropExperimenterMiss {
-	return &TableFeaturePropExperimenterMiss{
-		Experimenter:     _experimenter,
+	obj := &TableFeaturePropExperimenterMiss{
 		TableFeatureProp: NewTableFeatureProp(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type TableFeaturePropInstructions struct {
@@ -12029,32 +12747,35 @@ func (self *TableFeaturePropInstructions) Serialize(encoder *goloxi.Encoder) err
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropInstructions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropInstructions, error) {
-	tablefeaturepropinstructions := &TableFeaturePropInstructions{TableFeatureProp: parent}
+func DecodeTableFeaturePropInstructions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropInstructions, error) {
+	_tablefeaturepropinstructions := &TableFeaturePropInstructions{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeInstructionId(decoder)
+		item, err := DecodeInstructionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropinstructions.InstructionIds = append(tablefeaturepropinstructions.InstructionIds, item)
+		_tablefeaturepropinstructions.InstructionIds = append(_tablefeaturepropinstructions.InstructionIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropinstructions, nil
+	return _tablefeaturepropinstructions, nil
 }
 
 func NewTableFeaturePropInstructions() *TableFeaturePropInstructions {
-	return &TableFeaturePropInstructions{
+	obj := &TableFeaturePropInstructions{
 		TableFeatureProp: NewTableFeatureProp(0),
 	}
+	return obj
 }
 
 type TableFeaturePropInstructionsMiss struct {
@@ -12073,32 +12794,35 @@ func (self *TableFeaturePropInstructionsMiss) Serialize(encoder *goloxi.Encoder)
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropInstructionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropInstructionsMiss, error) {
-	tablefeaturepropinstructionsmiss := &TableFeaturePropInstructionsMiss{TableFeatureProp: parent}
+func DecodeTableFeaturePropInstructionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropInstructionsMiss, error) {
+	_tablefeaturepropinstructionsmiss := &TableFeaturePropInstructionsMiss{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeInstructionId(decoder)
+		item, err := DecodeInstructionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropinstructionsmiss.InstructionIds = append(tablefeaturepropinstructionsmiss.InstructionIds, item)
+		_tablefeaturepropinstructionsmiss.InstructionIds = append(_tablefeaturepropinstructionsmiss.InstructionIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropinstructionsmiss, nil
+	return _tablefeaturepropinstructionsmiss, nil
 }
 
 func NewTableFeaturePropInstructionsMiss() *TableFeaturePropInstructionsMiss {
-	return &TableFeaturePropInstructionsMiss{
+	obj := &TableFeaturePropInstructionsMiss{
 		TableFeatureProp: NewTableFeatureProp(1),
 	}
+	return obj
 }
 
 type TableFeaturePropMatch struct {
@@ -12117,32 +12841,35 @@ func (self *TableFeaturePropMatch) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropMatch(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropMatch, error) {
-	tablefeaturepropmatch := &TableFeaturePropMatch{TableFeatureProp: parent}
+func DecodeTableFeaturePropMatch(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropMatch, error) {
+	_tablefeaturepropmatch := &TableFeaturePropMatch{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeUint32(decoder)
+		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropmatch.OxmIds = append(tablefeaturepropmatch.OxmIds, item)
+		_tablefeaturepropmatch.OxmIds = append(_tablefeaturepropmatch.OxmIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropmatch, nil
+	return _tablefeaturepropmatch, nil
 }
 
 func NewTableFeaturePropMatch() *TableFeaturePropMatch {
-	return &TableFeaturePropMatch{
+	obj := &TableFeaturePropMatch{
 		TableFeatureProp: NewTableFeatureProp(8),
 	}
+	return obj
 }
 
 type TableFeaturePropNextTables struct {
@@ -12161,32 +12888,35 @@ func (self *TableFeaturePropNextTables) Serialize(encoder *goloxi.Encoder) error
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropNextTables(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropNextTables, error) {
-	tablefeaturepropnexttables := &TableFeaturePropNextTables{TableFeatureProp: parent}
+func DecodeTableFeaturePropNextTables(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropNextTables, error) {
+	_tablefeaturepropnexttables := &TableFeaturePropNextTables{TableFeatureProp: parent}
 
 	for decoder.Length() >= 1 {
-		item, err := decodeUint8(decoder)
+		item, err := DecodeUint8(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropnexttables.NextTableIds = append(tablefeaturepropnexttables.NextTableIds, item)
+		_tablefeaturepropnexttables.NextTableIds = append(_tablefeaturepropnexttables.NextTableIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropnexttables, nil
+	return _tablefeaturepropnexttables, nil
 }
 
 func NewTableFeaturePropNextTables() *TableFeaturePropNextTables {
-	return &TableFeaturePropNextTables{
+	obj := &TableFeaturePropNextTables{
 		TableFeatureProp: NewTableFeatureProp(2),
 	}
+	return obj
 }
 
 type TableFeaturePropNextTablesMiss struct {
@@ -12205,32 +12935,35 @@ func (self *TableFeaturePropNextTablesMiss) Serialize(encoder *goloxi.Encoder) e
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropNextTablesMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropNextTablesMiss, error) {
-	tablefeaturepropnexttablesmiss := &TableFeaturePropNextTablesMiss{TableFeatureProp: parent}
+func DecodeTableFeaturePropNextTablesMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropNextTablesMiss, error) {
+	_tablefeaturepropnexttablesmiss := &TableFeaturePropNextTablesMiss{TableFeatureProp: parent}
 
 	for decoder.Length() >= 1 {
-		item, err := decodeUint8(decoder)
+		item, err := DecodeUint8(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropnexttablesmiss.NextTableIds = append(tablefeaturepropnexttablesmiss.NextTableIds, item)
+		_tablefeaturepropnexttablesmiss.NextTableIds = append(_tablefeaturepropnexttablesmiss.NextTableIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropnexttablesmiss, nil
+	return _tablefeaturepropnexttablesmiss, nil
 }
 
 func NewTableFeaturePropNextTablesMiss() *TableFeaturePropNextTablesMiss {
-	return &TableFeaturePropNextTablesMiss{
+	obj := &TableFeaturePropNextTablesMiss{
 		TableFeatureProp: NewTableFeatureProp(3),
 	}
+	return obj
 }
 
 type TableFeaturePropTableSyncFrom struct {
@@ -12249,32 +12982,35 @@ func (self *TableFeaturePropTableSyncFrom) Serialize(encoder *goloxi.Encoder) er
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropTableSyncFrom(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropTableSyncFrom, error) {
-	tablefeatureproptablesyncfrom := &TableFeaturePropTableSyncFrom{TableFeatureProp: parent}
+func DecodeTableFeaturePropTableSyncFrom(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropTableSyncFrom, error) {
+	_tablefeatureproptablesyncfrom := &TableFeaturePropTableSyncFrom{TableFeatureProp: parent}
 
 	for decoder.Length() >= 1 {
-		item, err := decodeUint8(decoder)
+		item, err := DecodeUint8(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeatureproptablesyncfrom.TableIds = append(tablefeatureproptablesyncfrom.TableIds, item)
+		_tablefeatureproptablesyncfrom.TableIds = append(_tablefeatureproptablesyncfrom.TableIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeatureproptablesyncfrom, nil
+	return _tablefeatureproptablesyncfrom, nil
 }
 
 func NewTableFeaturePropTableSyncFrom() *TableFeaturePropTableSyncFrom {
-	return &TableFeaturePropTableSyncFrom{
+	obj := &TableFeaturePropTableSyncFrom{
 		TableFeatureProp: NewTableFeatureProp(16),
 	}
+	return obj
 }
 
 type TableFeaturePropWildcards struct {
@@ -12293,32 +13029,35 @@ func (self *TableFeaturePropWildcards) Serialize(encoder *goloxi.Encoder) error 
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropWildcards(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWildcards, error) {
-	tablefeaturepropwildcards := &TableFeaturePropWildcards{TableFeatureProp: parent}
+func DecodeTableFeaturePropWildcards(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWildcards, error) {
+	_tablefeaturepropwildcards := &TableFeaturePropWildcards{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeUint32(decoder)
+		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropwildcards.OxmIds = append(tablefeaturepropwildcards.OxmIds, item)
+		_tablefeaturepropwildcards.OxmIds = append(_tablefeaturepropwildcards.OxmIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropwildcards, nil
+	return _tablefeaturepropwildcards, nil
 }
 
 func NewTableFeaturePropWildcards() *TableFeaturePropWildcards {
-	return &TableFeaturePropWildcards{
+	obj := &TableFeaturePropWildcards{
 		TableFeatureProp: NewTableFeatureProp(10),
 	}
+	return obj
 }
 
 type TableFeaturePropWriteActions struct {
@@ -12337,32 +13076,35 @@ func (self *TableFeaturePropWriteActions) Serialize(encoder *goloxi.Encoder) err
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropWriteActions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteActions, error) {
-	tablefeaturepropwriteactions := &TableFeaturePropWriteActions{TableFeatureProp: parent}
+func DecodeTableFeaturePropWriteActions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteActions, error) {
+	_tablefeaturepropwriteactions := &TableFeaturePropWriteActions{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeActionId(decoder)
+		item, err := DecodeActionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropwriteactions.ActionIds = append(tablefeaturepropwriteactions.ActionIds, item)
+		_tablefeaturepropwriteactions.ActionIds = append(_tablefeaturepropwriteactions.ActionIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropwriteactions, nil
+	return _tablefeaturepropwriteactions, nil
 }
 
 func NewTableFeaturePropWriteActions() *TableFeaturePropWriteActions {
-	return &TableFeaturePropWriteActions{
+	obj := &TableFeaturePropWriteActions{
 		TableFeatureProp: NewTableFeatureProp(4),
 	}
+	return obj
 }
 
 type TableFeaturePropWriteActionsMiss struct {
@@ -12381,32 +13123,35 @@ func (self *TableFeaturePropWriteActionsMiss) Serialize(encoder *goloxi.Encoder)
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropWriteActionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteActionsMiss, error) {
-	tablefeaturepropwriteactionsmiss := &TableFeaturePropWriteActionsMiss{TableFeatureProp: parent}
+func DecodeTableFeaturePropWriteActionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteActionsMiss, error) {
+	_tablefeaturepropwriteactionsmiss := &TableFeaturePropWriteActionsMiss{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeActionId(decoder)
+		item, err := DecodeActionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropwriteactionsmiss.ActionIds = append(tablefeaturepropwriteactionsmiss.ActionIds, item)
+		_tablefeaturepropwriteactionsmiss.ActionIds = append(_tablefeaturepropwriteactionsmiss.ActionIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropwriteactionsmiss, nil
+	return _tablefeaturepropwriteactionsmiss, nil
 }
 
 func NewTableFeaturePropWriteActionsMiss() *TableFeaturePropWriteActionsMiss {
-	return &TableFeaturePropWriteActionsMiss{
+	obj := &TableFeaturePropWriteActionsMiss{
 		TableFeatureProp: NewTableFeatureProp(5),
 	}
+	return obj
 }
 
 type TableFeaturePropWriteSetfield struct {
@@ -12425,32 +13170,35 @@ func (self *TableFeaturePropWriteSetfield) Serialize(encoder *goloxi.Encoder) er
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropWriteSetfield(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteSetfield, error) {
-	tablefeaturepropwritesetfield := &TableFeaturePropWriteSetfield{TableFeatureProp: parent}
+func DecodeTableFeaturePropWriteSetfield(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteSetfield, error) {
+	_tablefeaturepropwritesetfield := &TableFeaturePropWriteSetfield{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeUint32(decoder)
+		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropwritesetfield.OxmIds = append(tablefeaturepropwritesetfield.OxmIds, item)
+		_tablefeaturepropwritesetfield.OxmIds = append(_tablefeaturepropwritesetfield.OxmIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropwritesetfield, nil
+	return _tablefeaturepropwritesetfield, nil
 }
 
 func NewTableFeaturePropWriteSetfield() *TableFeaturePropWriteSetfield {
-	return &TableFeaturePropWriteSetfield{
+	obj := &TableFeaturePropWriteSetfield{
 		TableFeatureProp: NewTableFeatureProp(12),
 	}
+	return obj
 }
 
 type TableFeaturePropWriteSetfieldMiss struct {
@@ -12469,32 +13217,35 @@ func (self *TableFeaturePropWriteSetfieldMiss) Serialize(encoder *goloxi.Encoder
 		}
 	}
 
+	encoder.SkipAlign()
+
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeTableFeaturePropWriteSetfieldMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteSetfieldMiss, error) {
-	tablefeaturepropwritesetfieldmiss := &TableFeaturePropWriteSetfieldMiss{TableFeatureProp: parent}
+func DecodeTableFeaturePropWriteSetfieldMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteSetfieldMiss, error) {
+	_tablefeaturepropwritesetfieldmiss := &TableFeaturePropWriteSetfieldMiss{TableFeatureProp: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeUint32(decoder)
+		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturepropwritesetfieldmiss.OxmIds = append(tablefeaturepropwritesetfieldmiss.OxmIds, item)
+		_tablefeaturepropwritesetfieldmiss.OxmIds = append(_tablefeaturepropwritesetfieldmiss.OxmIds, item)
 	}
 
 	decoder.SkipAlign()
 
-	return tablefeaturepropwritesetfieldmiss, nil
+	return _tablefeaturepropwritesetfieldmiss, nil
 }
 
 func NewTableFeaturePropWriteSetfieldMiss() *TableFeaturePropWriteSetfieldMiss {
-	return &TableFeaturePropWriteSetfieldMiss{
+	obj := &TableFeaturePropWriteSetfieldMiss{
 		TableFeatureProp: NewTableFeatureProp(13),
 	}
+	return obj
 }
 
 type TableFeatures struct {
@@ -12529,33 +13280,34 @@ func (self *TableFeatures) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableFeatures(decoder *goloxi.Decoder) (*TableFeatures, error) {
-	tablefeatures := &TableFeatures{}
+func DecodeTableFeatures(decoder *goloxi.Decoder) (*TableFeatures, error) {
+	_tablefeatures := &TableFeatures{}
 	if decoder.Length() < 64 {
 		return nil, fmt.Errorf("TableFeatures packet too short: %d < 64", decoder.Length())
 	}
-	tablefeatures.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(tablefeatures.Length), 2+0)
-	tablefeatures.TableId = uint8(decoder.ReadByte())
+	_tablefeatures.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_tablefeatures.Length), 2+0)
+	_tablefeatures.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(5)
-	tablefeatures.Name = string(bytes.Trim(decoder.Read(32), "\x00"))
-	tablefeatures.MetadataMatch = uint64(decoder.ReadUint64())
-	tablefeatures.MetadataWrite = uint64(decoder.ReadUint64())
-	tablefeatures.Config = uint32(decoder.ReadUint32())
-	tablefeatures.MaxEntries = uint32(decoder.ReadUint32())
+	_tablefeatures.Name = string(bytes.Trim(decoder.Read(32), "\x00"))
+	_tablefeatures.MetadataMatch = uint64(decoder.ReadUint64())
+	_tablefeatures.MetadataWrite = uint64(decoder.ReadUint64())
+	_tablefeatures.Config = uint32(decoder.ReadUint32())
+	_tablefeatures.MaxEntries = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 4 {
-		item, err := decodeTableFeatureProp(decoder)
+		item, err := DecodeTableFeatureProp(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeatures.Properties = append(tablefeatures.Properties, item)
+		_tablefeatures.Properties = append(_tablefeatures.Properties, item)
 	}
-	return tablefeatures, nil
+	return _tablefeatures, nil
 }
 
 func NewTableFeatures() *TableFeatures {
-	return &TableFeatures{}
+	obj := &TableFeatures{}
+	return obj
 }
 
 type TableModProp struct {
@@ -12584,21 +13336,21 @@ func (self *TableModProp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableModProp(decoder *goloxi.Decoder) (ITableModProp, error) {
-	tablemodprop := &TableModProp{}
+func DecodeTableModProp(decoder *goloxi.Decoder) (ITableModProp, error) {
+	_tablemodprop := &TableModProp{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("TableModProp packet too short: %d < 4", decoder.Length())
 	}
-	tablemodprop.Type = uint16(decoder.ReadUint16())
-	tablemodprop.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(tablemodprop.Length), 2+2)
-	return tablemodprop, nil
+	_tablemodprop.Type = uint16(decoder.ReadUint16())
+	_tablemodprop.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_tablemodprop.Length), 2+2)
+	return _tablemodprop, nil
 }
 
 func NewTableModProp(_type uint16) *TableModProp {
-	return &TableModProp{
-		Type: _type,
-	}
+	obj := &TableModProp{}
+	obj.Type = _type
+	return obj
 }
 
 type TableModPropEviction struct {
@@ -12618,23 +13370,24 @@ func (self *TableModPropEviction) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableModPropEviction(decoder *goloxi.Decoder) (*TableModPropEviction, error) {
-	tablemodpropeviction := &TableModPropEviction{}
+func DecodeTableModPropEviction(decoder *goloxi.Decoder) (*TableModPropEviction, error) {
+	_tablemodpropeviction := &TableModPropEviction{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("TableModPropEviction packet too short: %d < 8", decoder.Length())
 	}
-	tablemodpropeviction.Type = uint16(decoder.ReadUint16())
-	// if tablemodpropeviction.Type != 2 {
-	// 	return fmt.Errorf("Wrong value '%d' for type, expected '2'.", tablemodpropeviction.Type)
+	_tablemodpropeviction.Type = uint16(decoder.ReadUint16())
+	// if _tablemodpropeviction.Type != 2 {
+	// 	return fmt.Errorf("Wrong value '%d' for type, expected '2'.", _tablemodpropeviction.Type)
 	// }
-	tablemodpropeviction.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(tablemodpropeviction.Length), 2+2)
-	tablemodpropeviction.Flags = TableModPropEvictionFlag(decoder.ReadUint32())
-	return tablemodpropeviction, nil
+	_tablemodpropeviction.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_tablemodpropeviction.Length), 2+2)
+	_tablemodpropeviction.Flags = TableModPropEvictionFlag(decoder.ReadUint32())
+	return _tablemodpropeviction, nil
 }
 
 func NewTableModPropEviction() *TableModPropEviction {
-	return &TableModPropEviction{}
+	obj := &TableModPropEviction{}
+	return obj
 }
 
 type TableModPropExperimenter struct {
@@ -12677,26 +13430,26 @@ func (self *TableModPropExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableModPropExperimenter(decoder *goloxi.Decoder) (ITableModPropExperimenter, error) {
-	tablemodpropexperimenter := &TableModPropExperimenter{}
+func DecodeTableModPropExperimenter(decoder *goloxi.Decoder) (ITableModPropExperimenter, error) {
+	_tablemodpropexperimenter := &TableModPropExperimenter{}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("TableModPropExperimenter packet too short: %d < 12", decoder.Length())
 	}
-	tablemodpropexperimenter.Type = uint16(decoder.ReadUint16())
-	// if tablemodpropexperimenter.Type != 65535 {
-	// 	return fmt.Errorf("Wrong value '%d' for type, expected '65535'.", tablemodpropexperimenter.Type)
+	_tablemodpropexperimenter.Type = uint16(decoder.ReadUint16())
+	// if _tablemodpropexperimenter.Type != 65535 {
+	// 	return fmt.Errorf("Wrong value '%d' for type, expected '65535'.", _tablemodpropexperimenter.Type)
 	// }
-	tablemodpropexperimenter.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(tablemodpropexperimenter.Length), 2+2)
-	tablemodpropexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	tablemodpropexperimenter.ExpType = uint32(decoder.ReadUint32())
-	return tablemodpropexperimenter, nil
+	_tablemodpropexperimenter.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_tablemodpropexperimenter.Length), 2+2)
+	_tablemodpropexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_tablemodpropexperimenter.ExpType = uint32(decoder.ReadUint32())
+	return _tablemodpropexperimenter, nil
 }
 
 func NewTableModPropExperimenter(_experimenter uint32) *TableModPropExperimenter {
-	return &TableModPropExperimenter{
-		Experimenter: _experimenter,
-	}
+	obj := &TableModPropExperimenter{}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type TableModPropVacancy struct {
@@ -12721,26 +13474,27 @@ func (self *TableModPropVacancy) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableModPropVacancy(decoder *goloxi.Decoder) (*TableModPropVacancy, error) {
-	tablemodpropvacancy := &TableModPropVacancy{}
+func DecodeTableModPropVacancy(decoder *goloxi.Decoder) (*TableModPropVacancy, error) {
+	_tablemodpropvacancy := &TableModPropVacancy{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("TableModPropVacancy packet too short: %d < 8", decoder.Length())
 	}
-	tablemodpropvacancy.Type = uint16(decoder.ReadUint16())
-	// if tablemodpropvacancy.Type != 3 {
-	// 	return fmt.Errorf("Wrong value '%d' for type, expected '3'.", tablemodpropvacancy.Type)
+	_tablemodpropvacancy.Type = uint16(decoder.ReadUint16())
+	// if _tablemodpropvacancy.Type != 3 {
+	// 	return fmt.Errorf("Wrong value '%d' for type, expected '3'.", _tablemodpropvacancy.Type)
 	// }
-	tablemodpropvacancy.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(tablemodpropvacancy.Length), 2+2)
-	tablemodpropvacancy.VacancyDown = uint8(decoder.ReadByte())
-	tablemodpropvacancy.VacancyUp = uint8(decoder.ReadByte())
-	tablemodpropvacancy.Vacancy = uint8(decoder.ReadByte())
+	_tablemodpropvacancy.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_tablemodpropvacancy.Length), 2+2)
+	_tablemodpropvacancy.VacancyDown = uint8(decoder.ReadByte())
+	_tablemodpropvacancy.VacancyUp = uint8(decoder.ReadByte())
+	_tablemodpropvacancy.Vacancy = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	return tablemodpropvacancy, nil
+	return _tablemodpropvacancy, nil
 }
 
 func NewTableModPropVacancy() *TableModPropVacancy {
-	return &TableModPropVacancy{}
+	obj := &TableModPropVacancy{}
+	return obj
 }
 
 type TableStatsEntry struct {
@@ -12760,21 +13514,22 @@ func (self *TableStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableStatsEntry(decoder *goloxi.Decoder) (*TableStatsEntry, error) {
-	tablestatsentry := &TableStatsEntry{}
+func DecodeTableStatsEntry(decoder *goloxi.Decoder) (*TableStatsEntry, error) {
+	_tablestatsentry := &TableStatsEntry{}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("TableStatsEntry packet too short: %d < 24", decoder.Length())
 	}
-	tablestatsentry.TableId = uint8(decoder.ReadByte())
+	_tablestatsentry.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	tablestatsentry.ActiveCount = uint32(decoder.ReadUint32())
-	tablestatsentry.LookupCount = uint64(decoder.ReadUint64())
-	tablestatsentry.MatchedCount = uint64(decoder.ReadUint64())
-	return tablestatsentry, nil
+	_tablestatsentry.ActiveCount = uint32(decoder.ReadUint32())
+	_tablestatsentry.LookupCount = uint64(decoder.ReadUint64())
+	_tablestatsentry.MatchedCount = uint64(decoder.ReadUint64())
+	return _tablestatsentry, nil
 }
 
 func NewTableStatsEntry() *TableStatsEntry {
-	return &TableStatsEntry{}
+	obj := &TableStatsEntry{}
+	return obj
 }
 
 type Uint32 struct {
@@ -12787,17 +13542,18 @@ func (self *Uint32) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeUint32(decoder *goloxi.Decoder) (*Uint32, error) {
-	uint32 := &Uint32{}
+func DecodeUint32(decoder *goloxi.Decoder) (*Uint32, error) {
+	_uint32 := &Uint32{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("Uint32 packet too short: %d < 4", decoder.Length())
 	}
-	uint32.Value = uint32(decoder.ReadUint32())
-	return uint32, nil
+	_uint32.Value = uint32(decoder.ReadUint32())
+	return _uint32, nil
 }
 
 func NewUint32() *Uint32 {
-	return &Uint32{}
+	obj := &Uint32{}
+	return obj
 }
 
 type Uint64 struct {
@@ -12810,17 +13566,18 @@ func (self *Uint64) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeUint64(decoder *goloxi.Decoder) (*Uint64, error) {
-	uint64 := &Uint64{}
+func DecodeUint64(decoder *goloxi.Decoder) (*Uint64, error) {
+	_uint64 := &Uint64{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("Uint64 packet too short: %d < 8", decoder.Length())
 	}
-	uint64.Value = uint64(decoder.ReadUint64())
-	return uint64, nil
+	_uint64.Value = uint64(decoder.ReadUint64())
+	return _uint64, nil
 }
 
 func NewUint64() *Uint64 {
-	return &Uint64{}
+	obj := &Uint64{}
+	return obj
 }
 
 type Uint8 struct {
@@ -12833,17 +13590,18 @@ func (self *Uint8) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeUint8(decoder *goloxi.Decoder) (*Uint8, error) {
-	uint8 := &Uint8{}
+func DecodeUint8(decoder *goloxi.Decoder) (*Uint8, error) {
+	_uint8 := &Uint8{}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("Uint8 packet too short: %d < 1", decoder.Length())
 	}
-	uint8.Value = uint8(decoder.ReadByte())
-	return uint8, nil
+	_uint8.Value = uint8(decoder.ReadByte())
+	return _uint8, nil
 }
 
 func NewUint8() *Uint8 {
-	return &Uint8{}
+	obj := &Uint8{}
+	return obj
 }
 
 type EdPropHeader struct {
@@ -12875,9 +13633,9 @@ func (self *EdPropHeader) Decode(decoder *goloxi.Decoder) error {
 }
 
 func NewEdPropHeader(_prop_class uint16) *EdPropHeader {
-	return &EdPropHeader{
-		PropClass: _prop_class,
-	}
+	obj := &EdPropHeader{}
+	obj.PropClass = _prop_class
+	return obj
 }
 
 type EdPropNsh struct {
@@ -12911,30 +13669,31 @@ func (self *EdPropNsh) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeEdPropNsh(parent *EdPropHeader, decoder *goloxi.Decoder) (IEdPropNsh, error) {
-	edpropnsh := &EdPropNsh{EdPropHeader: parent}
+func DecodeEdPropNsh(parent *EdPropHeader, decoder *goloxi.Decoder) (IEdPropNsh, error) {
+	_edpropnsh := &EdPropNsh{EdPropHeader: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("EdPropNsh packet too short: %d < 2", decoder.Length())
 	}
-	edpropnsh.Type = uint8(decoder.ReadByte())
-	edpropnsh.Len = uint8(decoder.ReadByte())
-	decoder = decoder.SliceDecoder(int(edpropnsh.Len), 1+3)
+	_edpropnsh.Type = uint8(decoder.ReadByte())
+	_edpropnsh.Len = uint8(decoder.ReadByte())
+	decoder = decoder.SliceDecoder(int(_edpropnsh.Len), 1+3)
 
-	switch edpropnsh.Type {
+	switch _edpropnsh.Type {
 	case 1:
-		return decodeEdPropNshMdType(edpropnsh, decoder)
+		return DecodeEdPropNshMdType(_edpropnsh, decoder)
 	case 2:
-		return decodeEdPropNshTlv(edpropnsh, decoder)
+		return DecodeEdPropNshTlv(_edpropnsh, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'EdPropNsh'", edpropnsh.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'EdPropNsh'", _edpropnsh.Type)
 	}
 }
 
 func NewEdPropNsh(_type uint8) *EdPropNsh {
-	return &EdPropNsh{
-		Type:         _type,
+	obj := &EdPropNsh{
 		EdPropHeader: NewEdPropHeader(4),
 	}
+	obj.Type = _type
+	return obj
 }
 
 type EdPropNshMdType struct {
@@ -12956,20 +13715,21 @@ func (self *EdPropNshMdType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeEdPropNshMdType(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropNshMdType, error) {
-	edpropnshmdtype := &EdPropNshMdType{EdPropNsh: parent}
+func DecodeEdPropNshMdType(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropNshMdType, error) {
+	_edpropnshmdtype := &EdPropNshMdType{EdPropNsh: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("EdPropNshMdType packet too short: %d < 4", decoder.Length())
 	}
-	edpropnshmdtype.MdType = uint8(decoder.ReadByte())
+	_edpropnshmdtype.MdType = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return edpropnshmdtype, nil
+	return _edpropnshmdtype, nil
 }
 
 func NewEdPropNshMdType() *EdPropNshMdType {
-	return &EdPropNshMdType{
+	obj := &EdPropNshMdType{
 		EdPropNsh: NewEdPropNsh(1),
 	}
+	return obj
 }
 
 type EdPropNshTlv struct {
@@ -12994,19 +13754,20 @@ func (self *EdPropNshTlv) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeEdPropNshTlv(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropNshTlv, error) {
-	edpropnshtlv := &EdPropNshTlv{EdPropNsh: parent}
+func DecodeEdPropNshTlv(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropNshTlv, error) {
+	_edpropnshtlv := &EdPropNshTlv{EdPropNsh: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("EdPropNshTlv packet too short: %d < 4", decoder.Length())
 	}
-	edpropnshtlv.TlvClass = uint16(decoder.ReadUint16())
-	edpropnshtlv.TlvType = uint8(decoder.ReadByte())
-	edpropnshtlv.TlvLen = uint8(decoder.ReadByte())
-	return edpropnshtlv, nil
+	_edpropnshtlv.TlvClass = uint16(decoder.ReadUint16())
+	_edpropnshtlv.TlvType = uint8(decoder.ReadByte())
+	_edpropnshtlv.TlvLen = uint8(decoder.ReadByte())
+	return _edpropnshtlv, nil
 }
 
 func NewEdPropNshTlv() *EdPropNshTlv {
-	return &EdPropNshTlv{
+	obj := &EdPropNshTlv{
 		EdPropNsh: NewEdPropNsh(2),
 	}
+	return obj
 }

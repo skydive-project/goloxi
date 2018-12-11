@@ -55,3 +55,8 @@ func (e *Encoder) Write(b []byte) {
 func (e *Encoder) Bytes() []byte {
 	return e.buffer.Bytes()
 }
+
+func (e *Encoder) SkipAlign() {
+	length := len(e.buffer.Bytes())
+	e.Write(bytes.Repeat([]byte{0}, (length+7)/8*8-length))
+}

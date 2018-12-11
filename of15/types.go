@@ -107,7 +107,7 @@ func (self *PortNo) Decode(decoder *goloxi.Decoder) error {
 }
 
 func DecodeMessage(data []byte) (goloxi.Message, error) {
-	header, err := decodeHeader(goloxi.NewDecoder(data))
+	header, err := DecodeHeader(goloxi.NewDecoder(data))
 	if err != nil {
 		return nil, err
 	}

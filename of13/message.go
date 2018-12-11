@@ -73,90 +73,90 @@ func (self *Header) Decode(decoder *goloxi.Decoder) error {
 
 	return nil
 }
-func decodeHeader(decoder *goloxi.Decoder) (IHeader, error) {
-	header := &Header{}
+func DecodeHeader(decoder *goloxi.Decoder) (IHeader, error) {
+	_header := &Header{}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("Header packet too short: %d < 8", decoder.Length())
 	}
-	header.Version = uint8(decoder.ReadByte())
-	// if header.Version != 4 {
-	// 	return fmt.Errorf("Wrong value '%d' for type, expected '4'.", header.Version)
+	_header.Version = uint8(decoder.ReadByte())
+	// if _header.Version != 4 {
+	// 	return fmt.Errorf("Wrong value '%d' for type, expected '4'.", _header.Version)
 	// }
-	header.Type = uint8(decoder.ReadByte())
-	header.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(header.Length), 2+2)
-	header.Xid = uint32(decoder.ReadUint32())
+	_header.Type = uint8(decoder.ReadByte())
+	_header.Length = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_header.Length), 2+2)
+	_header.Xid = uint32(decoder.ReadUint32())
 
-	switch header.Type {
+	switch _header.Type {
 	case 0:
-		return decodeHello(header, decoder)
+		return DecodeHello(_header, decoder)
 	case 1:
-		return decodeErrorMsg(header, decoder)
+		return DecodeErrorMsg(_header, decoder)
 	case 2:
-		return decodeEchoRequest(header, decoder)
+		return DecodeEchoRequest(_header, decoder)
 	case 3:
-		return decodeEchoReply(header, decoder)
+		return DecodeEchoReply(_header, decoder)
 	case 4:
-		return decodeExperimenter(header, decoder)
+		return DecodeExperimenter(_header, decoder)
 	case 5:
-		return decodeFeaturesRequest(header, decoder)
+		return DecodeFeaturesRequest(_header, decoder)
 	case 6:
-		return decodeFeaturesReply(header, decoder)
+		return DecodeFeaturesReply(_header, decoder)
 	case 7:
-		return decodeGetConfigRequest(header, decoder)
+		return DecodeGetConfigRequest(_header, decoder)
 	case 8:
-		return decodeGetConfigReply(header, decoder)
+		return DecodeGetConfigReply(_header, decoder)
 	case 9:
-		return decodeSetConfig(header, decoder)
+		return DecodeSetConfig(_header, decoder)
 	case 10:
-		return decodePacketIn(header, decoder)
+		return DecodePacketIn(_header, decoder)
 	case 11:
-		return decodeFlowRemoved(header, decoder)
+		return DecodeFlowRemoved(_header, decoder)
 	case 12:
-		return decodePortStatus(header, decoder)
+		return DecodePortStatus(_header, decoder)
 	case 13:
-		return decodePacketOut(header, decoder)
+		return DecodePacketOut(_header, decoder)
 	case 14:
-		return decodeFlowMod(header, decoder)
+		return DecodeFlowMod(_header, decoder)
 	case 15:
-		return decodeGroupMod(header, decoder)
+		return DecodeGroupMod(_header, decoder)
 	case 16:
-		return decodePortMod(header, decoder)
+		return DecodePortMod(_header, decoder)
 	case 17:
-		return decodeTableMod(header, decoder)
+		return DecodeTableMod(_header, decoder)
 	case 18:
-		return decodeStatsRequest(header, decoder)
+		return DecodeStatsRequest(_header, decoder)
 	case 19:
-		return decodeStatsReply(header, decoder)
+		return DecodeStatsReply(_header, decoder)
 	case 20:
-		return decodeBarrierRequest(header, decoder)
+		return DecodeBarrierRequest(_header, decoder)
 	case 21:
-		return decodeBarrierReply(header, decoder)
+		return DecodeBarrierReply(_header, decoder)
 	case 22:
-		return decodeQueueGetConfigRequest(header, decoder)
+		return DecodeQueueGetConfigRequest(_header, decoder)
 	case 23:
-		return decodeQueueGetConfigReply(header, decoder)
+		return DecodeQueueGetConfigReply(_header, decoder)
 	case 24:
-		return decodeRoleRequest(header, decoder)
+		return DecodeRoleRequest(_header, decoder)
 	case 25:
-		return decodeRoleReply(header, decoder)
+		return DecodeRoleReply(_header, decoder)
 	case 26:
-		return decodeAsyncGetRequest(header, decoder)
+		return DecodeAsyncGetRequest(_header, decoder)
 	case 27:
-		return decodeAsyncGetReply(header, decoder)
+		return DecodeAsyncGetReply(_header, decoder)
 	case 28:
-		return decodeAsyncSet(header, decoder)
+		return DecodeAsyncSet(_header, decoder)
 	case 29:
-		return decodeMeterMod(header, decoder)
+		return DecodeMeterMod(_header, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'Header'", header.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'Header'", _header.Type)
 	}
 }
 
 func NewHeader(_type uint8) *Header {
-	return &Header{
-		Type: _type,
-	}
+	obj := &Header{}
+	obj.Type = _type
+	return obj
 }
 
 type StatsReply struct {
@@ -190,55 +190,56 @@ func (self *StatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeStatsReply(parent *Header, decoder *goloxi.Decoder) (IStatsReply, error) {
-	statsreply := &StatsReply{Header: parent}
+func DecodeStatsReply(parent *Header, decoder *goloxi.Decoder) (IStatsReply, error) {
+	_statsreply := &StatsReply{Header: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("StatsReply packet too short: %d < 4", decoder.Length())
 	}
-	statsreply.StatsType = uint16(decoder.ReadUint16())
-	statsreply.Flags = StatsReplyFlags(decoder.ReadUint16())
+	_statsreply.StatsType = uint16(decoder.ReadUint16())
+	_statsreply.Flags = StatsReplyFlags(decoder.ReadUint16())
 
-	switch statsreply.StatsType {
+	switch _statsreply.StatsType {
 	case 0:
-		return decodeDescStatsReply(statsreply, decoder)
+		return DecodeDescStatsReply(_statsreply, decoder)
 	case 1:
-		return decodeFlowStatsReply(statsreply, decoder)
+		return DecodeFlowStatsReply(_statsreply, decoder)
 	case 2:
-		return decodeAggregateStatsReply(statsreply, decoder)
+		return DecodeAggregateStatsReply(_statsreply, decoder)
 	case 3:
-		return decodeTableStatsReply(statsreply, decoder)
+		return DecodeTableStatsReply(_statsreply, decoder)
 	case 4:
-		return decodePortStatsReply(statsreply, decoder)
+		return DecodePortStatsReply(_statsreply, decoder)
 	case 5:
-		return decodeQueueStatsReply(statsreply, decoder)
+		return DecodeQueueStatsReply(_statsreply, decoder)
 	case 6:
-		return decodeGroupStatsReply(statsreply, decoder)
+		return DecodeGroupStatsReply(_statsreply, decoder)
 	case 7:
-		return decodeGroupDescStatsReply(statsreply, decoder)
+		return DecodeGroupDescStatsReply(_statsreply, decoder)
 	case 8:
-		return decodeGroupFeaturesStatsReply(statsreply, decoder)
+		return DecodeGroupFeaturesStatsReply(_statsreply, decoder)
 	case 9:
-		return decodeMeterStatsReply(statsreply, decoder)
+		return DecodeMeterStatsReply(_statsreply, decoder)
 	case 10:
-		return decodeMeterConfigStatsReply(statsreply, decoder)
+		return DecodeMeterConfigStatsReply(_statsreply, decoder)
 	case 11:
-		return decodeMeterFeaturesStatsReply(statsreply, decoder)
+		return DecodeMeterFeaturesStatsReply(_statsreply, decoder)
 	case 12:
-		return decodeTableFeaturesStatsReply(statsreply, decoder)
+		return DecodeTableFeaturesStatsReply(_statsreply, decoder)
 	case 13:
-		return decodePortDescStatsReply(statsreply, decoder)
+		return DecodePortDescStatsReply(_statsreply, decoder)
 	case 65535:
-		return decodeExperimenterStatsReply(statsreply, decoder)
+		return DecodeExperimenterStatsReply(_statsreply, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'StatsReply'", statsreply.StatsType)
+		return nil, fmt.Errorf("Invalid type '%d' for 'StatsReply'", _statsreply.StatsType)
 	}
 }
 
 func NewStatsReply(_stats_type uint16) *StatsReply {
-	return &StatsReply{
-		StatsType: _stats_type,
-		Header:    NewHeader(19),
+	obj := &StatsReply{
+		Header: NewHeader(19),
 	}
+	obj.StatsType = _stats_type
+	return obj
 }
 
 type AggregateStatsReply struct {
@@ -265,23 +266,24 @@ func (self *AggregateStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeAggregateStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*AggregateStatsReply, error) {
-	aggregatestatsreply := &AggregateStatsReply{StatsReply: parent}
+func DecodeAggregateStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*AggregateStatsReply, error) {
+	_aggregatestatsreply := &AggregateStatsReply{StatsReply: parent}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("AggregateStatsReply packet too short: %d < 24", decoder.Length())
 	}
 	decoder.Skip(4)
-	aggregatestatsreply.PacketCount = uint64(decoder.ReadUint64())
-	aggregatestatsreply.ByteCount = uint64(decoder.ReadUint64())
-	aggregatestatsreply.FlowCount = uint32(decoder.ReadUint32())
+	_aggregatestatsreply.PacketCount = uint64(decoder.ReadUint64())
+	_aggregatestatsreply.ByteCount = uint64(decoder.ReadUint64())
+	_aggregatestatsreply.FlowCount = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return aggregatestatsreply, nil
+	return _aggregatestatsreply, nil
 }
 
 func NewAggregateStatsReply() *AggregateStatsReply {
-	return &AggregateStatsReply{
+	obj := &AggregateStatsReply{
 		StatsReply: NewStatsReply(2),
 	}
+	return obj
 }
 
 type StatsRequest struct {
@@ -315,55 +317,56 @@ func (self *StatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeStatsRequest(parent *Header, decoder *goloxi.Decoder) (IStatsRequest, error) {
-	statsrequest := &StatsRequest{Header: parent}
+func DecodeStatsRequest(parent *Header, decoder *goloxi.Decoder) (IStatsRequest, error) {
+	_statsrequest := &StatsRequest{Header: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("StatsRequest packet too short: %d < 4", decoder.Length())
 	}
-	statsrequest.StatsType = uint16(decoder.ReadUint16())
-	statsrequest.Flags = StatsRequestFlags(decoder.ReadUint16())
+	_statsrequest.StatsType = uint16(decoder.ReadUint16())
+	_statsrequest.Flags = StatsRequestFlags(decoder.ReadUint16())
 
-	switch statsrequest.StatsType {
+	switch _statsrequest.StatsType {
 	case 0:
-		return decodeDescStatsRequest(statsrequest, decoder)
+		return DecodeDescStatsRequest(_statsrequest, decoder)
 	case 1:
-		return decodeFlowStatsRequest(statsrequest, decoder)
+		return DecodeFlowStatsRequest(_statsrequest, decoder)
 	case 2:
-		return decodeAggregateStatsRequest(statsrequest, decoder)
+		return DecodeAggregateStatsRequest(_statsrequest, decoder)
 	case 3:
-		return decodeTableStatsRequest(statsrequest, decoder)
+		return DecodeTableStatsRequest(_statsrequest, decoder)
 	case 4:
-		return decodePortStatsRequest(statsrequest, decoder)
+		return DecodePortStatsRequest(_statsrequest, decoder)
 	case 5:
-		return decodeQueueStatsRequest(statsrequest, decoder)
+		return DecodeQueueStatsRequest(_statsrequest, decoder)
 	case 6:
-		return decodeGroupStatsRequest(statsrequest, decoder)
+		return DecodeGroupStatsRequest(_statsrequest, decoder)
 	case 7:
-		return decodeGroupDescStatsRequest(statsrequest, decoder)
+		return DecodeGroupDescStatsRequest(_statsrequest, decoder)
 	case 8:
-		return decodeGroupFeaturesStatsRequest(statsrequest, decoder)
+		return DecodeGroupFeaturesStatsRequest(_statsrequest, decoder)
 	case 9:
-		return decodeMeterStatsRequest(statsrequest, decoder)
+		return DecodeMeterStatsRequest(_statsrequest, decoder)
 	case 10:
-		return decodeMeterConfigStatsRequest(statsrequest, decoder)
+		return DecodeMeterConfigStatsRequest(_statsrequest, decoder)
 	case 11:
-		return decodeMeterFeaturesStatsRequest(statsrequest, decoder)
+		return DecodeMeterFeaturesStatsRequest(_statsrequest, decoder)
 	case 12:
-		return decodeTableFeaturesStatsRequest(statsrequest, decoder)
+		return DecodeTableFeaturesStatsRequest(_statsrequest, decoder)
 	case 13:
-		return decodePortDescStatsRequest(statsrequest, decoder)
+		return DecodePortDescStatsRequest(_statsrequest, decoder)
 	case 65535:
-		return decodeExperimenterStatsRequest(statsrequest, decoder)
+		return DecodeExperimenterStatsRequest(_statsrequest, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'StatsRequest'", statsrequest.StatsType)
+		return nil, fmt.Errorf("Invalid type '%d' for 'StatsRequest'", _statsrequest.StatsType)
 	}
 }
 
 func NewStatsRequest(_stats_type uint16) *StatsRequest {
-	return &StatsRequest{
-		StatsType: _stats_type,
-		Header:    NewHeader(18),
+	obj := &StatsRequest{
+		Header: NewHeader(18),
 	}
+	obj.StatsType = _stats_type
+	return obj
 }
 
 type AggregateStatsRequest struct {
@@ -399,31 +402,32 @@ func (self *AggregateStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeAggregateStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*AggregateStatsRequest, error) {
-	aggregatestatsrequest := &AggregateStatsRequest{StatsRequest: parent}
+func DecodeAggregateStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*AggregateStatsRequest, error) {
+	_aggregatestatsrequest := &AggregateStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 40 {
 		return nil, fmt.Errorf("AggregateStatsRequest packet too short: %d < 40", decoder.Length())
 	}
 	decoder.Skip(4)
-	aggregatestatsrequest.TableId = uint8(decoder.ReadByte())
+	_aggregatestatsrequest.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	aggregatestatsrequest.OutPort.Decode(decoder)
-	aggregatestatsrequest.OutGroup = uint32(decoder.ReadUint32())
+	_aggregatestatsrequest.OutPort.Decode(decoder)
+	_aggregatestatsrequest.OutGroup = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	aggregatestatsrequest.Cookie = uint64(decoder.ReadUint64())
-	aggregatestatsrequest.CookieMask = uint64(decoder.ReadUint64())
-	if err := aggregatestatsrequest.Match.Decode(decoder); err != nil {
+	_aggregatestatsrequest.Cookie = uint64(decoder.ReadUint64())
+	_aggregatestatsrequest.CookieMask = uint64(decoder.ReadUint64())
+	if err := _aggregatestatsrequest.Match.Decode(decoder); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
-	return aggregatestatsrequest, nil
+	return _aggregatestatsrequest, nil
 }
 
 func NewAggregateStatsRequest() *AggregateStatsRequest {
-	return &AggregateStatsRequest{
+	obj := &AggregateStatsRequest{
 		StatsRequest: NewStatsRequest(2),
 	}
+	return obj
 }
 
 type AsyncGetReply struct {
@@ -454,24 +458,25 @@ func (self *AsyncGetReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeAsyncGetReply(parent *Header, decoder *goloxi.Decoder) (*AsyncGetReply, error) {
-	asyncgetreply := &AsyncGetReply{Header: parent}
+func DecodeAsyncGetReply(parent *Header, decoder *goloxi.Decoder) (*AsyncGetReply, error) {
+	_asyncgetreply := &AsyncGetReply{Header: parent}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("AsyncGetReply packet too short: %d < 24", decoder.Length())
 	}
-	asyncgetreply.PacketInMaskEqualMaster = uint32(decoder.ReadUint32())
-	asyncgetreply.PacketInMaskSlave = uint32(decoder.ReadUint32())
-	asyncgetreply.PortStatusMaskEqualMaster = uint32(decoder.ReadUint32())
-	asyncgetreply.PortStatusMaskSlave = uint32(decoder.ReadUint32())
-	asyncgetreply.FlowRemovedMaskEqualMaster = uint32(decoder.ReadUint32())
-	asyncgetreply.FlowRemovedMaskSlave = uint32(decoder.ReadUint32())
-	return asyncgetreply, nil
+	_asyncgetreply.PacketInMaskEqualMaster = uint32(decoder.ReadUint32())
+	_asyncgetreply.PacketInMaskSlave = uint32(decoder.ReadUint32())
+	_asyncgetreply.PortStatusMaskEqualMaster = uint32(decoder.ReadUint32())
+	_asyncgetreply.PortStatusMaskSlave = uint32(decoder.ReadUint32())
+	_asyncgetreply.FlowRemovedMaskEqualMaster = uint32(decoder.ReadUint32())
+	_asyncgetreply.FlowRemovedMaskSlave = uint32(decoder.ReadUint32())
+	return _asyncgetreply, nil
 }
 
 func NewAsyncGetReply() *AsyncGetReply {
-	return &AsyncGetReply{
+	obj := &AsyncGetReply{
 		Header: NewHeader(27),
 	}
+	return obj
 }
 
 type AsyncGetRequest struct {
@@ -489,15 +494,16 @@ func (self *AsyncGetRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeAsyncGetRequest(parent *Header, decoder *goloxi.Decoder) (*AsyncGetRequest, error) {
-	asyncgetrequest := &AsyncGetRequest{Header: parent}
-	return asyncgetrequest, nil
+func DecodeAsyncGetRequest(parent *Header, decoder *goloxi.Decoder) (*AsyncGetRequest, error) {
+	_asyncgetrequest := &AsyncGetRequest{Header: parent}
+	return _asyncgetrequest, nil
 }
 
 func NewAsyncGetRequest() *AsyncGetRequest {
-	return &AsyncGetRequest{
+	obj := &AsyncGetRequest{
 		Header: NewHeader(26),
 	}
+	return obj
 }
 
 type AsyncSet struct {
@@ -528,24 +534,25 @@ func (self *AsyncSet) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeAsyncSet(parent *Header, decoder *goloxi.Decoder) (*AsyncSet, error) {
-	asyncset := &AsyncSet{Header: parent}
+func DecodeAsyncSet(parent *Header, decoder *goloxi.Decoder) (*AsyncSet, error) {
+	_asyncset := &AsyncSet{Header: parent}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("AsyncSet packet too short: %d < 24", decoder.Length())
 	}
-	asyncset.PacketInMaskEqualMaster = uint32(decoder.ReadUint32())
-	asyncset.PacketInMaskSlave = uint32(decoder.ReadUint32())
-	asyncset.PortStatusMaskEqualMaster = uint32(decoder.ReadUint32())
-	asyncset.PortStatusMaskSlave = uint32(decoder.ReadUint32())
-	asyncset.FlowRemovedMaskEqualMaster = uint32(decoder.ReadUint32())
-	asyncset.FlowRemovedMaskSlave = uint32(decoder.ReadUint32())
-	return asyncset, nil
+	_asyncset.PacketInMaskEqualMaster = uint32(decoder.ReadUint32())
+	_asyncset.PacketInMaskSlave = uint32(decoder.ReadUint32())
+	_asyncset.PortStatusMaskEqualMaster = uint32(decoder.ReadUint32())
+	_asyncset.PortStatusMaskSlave = uint32(decoder.ReadUint32())
+	_asyncset.FlowRemovedMaskEqualMaster = uint32(decoder.ReadUint32())
+	_asyncset.FlowRemovedMaskSlave = uint32(decoder.ReadUint32())
+	return _asyncset, nil
 }
 
 func NewAsyncSet() *AsyncSet {
-	return &AsyncSet{
+	obj := &AsyncSet{
 		Header: NewHeader(28),
 	}
+	return obj
 }
 
 type ErrorMsg struct {
@@ -572,54 +579,55 @@ func (self *ErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeErrorMsg(parent *Header, decoder *goloxi.Decoder) (IErrorMsg, error) {
-	errormsg := &ErrorMsg{Header: parent}
+func DecodeErrorMsg(parent *Header, decoder *goloxi.Decoder) (IErrorMsg, error) {
+	_errormsg := &ErrorMsg{Header: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("ErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	errormsg.ErrType = uint16(decoder.ReadUint16())
+	_errormsg.ErrType = uint16(decoder.ReadUint16())
 
-	switch errormsg.ErrType {
+	switch _errormsg.ErrType {
 	case 0:
-		return decodeHelloFailedErrorMsg(errormsg, decoder)
+		return DecodeHelloFailedErrorMsg(_errormsg, decoder)
 	case 1:
-		return decodeBadRequestErrorMsg(errormsg, decoder)
+		return DecodeBadRequestErrorMsg(_errormsg, decoder)
 	case 2:
-		return decodeBadActionErrorMsg(errormsg, decoder)
+		return DecodeBadActionErrorMsg(_errormsg, decoder)
 	case 3:
-		return decodeBadInstructionErrorMsg(errormsg, decoder)
+		return DecodeBadInstructionErrorMsg(_errormsg, decoder)
 	case 4:
-		return decodeBadMatchErrorMsg(errormsg, decoder)
+		return DecodeBadMatchErrorMsg(_errormsg, decoder)
 	case 5:
-		return decodeFlowModFailedErrorMsg(errormsg, decoder)
+		return DecodeFlowModFailedErrorMsg(_errormsg, decoder)
 	case 6:
-		return decodeGroupModFailedErrorMsg(errormsg, decoder)
+		return DecodeGroupModFailedErrorMsg(_errormsg, decoder)
 	case 7:
-		return decodePortModFailedErrorMsg(errormsg, decoder)
+		return DecodePortModFailedErrorMsg(_errormsg, decoder)
 	case 8:
-		return decodeTableModFailedErrorMsg(errormsg, decoder)
+		return DecodeTableModFailedErrorMsg(_errormsg, decoder)
 	case 9:
-		return decodeQueueOpFailedErrorMsg(errormsg, decoder)
+		return DecodeQueueOpFailedErrorMsg(_errormsg, decoder)
 	case 10:
-		return decodeSwitchConfigFailedErrorMsg(errormsg, decoder)
+		return DecodeSwitchConfigFailedErrorMsg(_errormsg, decoder)
 	case 11:
-		return decodeRoleRequestFailedErrorMsg(errormsg, decoder)
+		return DecodeRoleRequestFailedErrorMsg(_errormsg, decoder)
 	case 12:
-		return decodeMeterModFailedErrorMsg(errormsg, decoder)
+		return DecodeMeterModFailedErrorMsg(_errormsg, decoder)
 	case 13:
-		return decodeTableFeaturesFailedErrorMsg(errormsg, decoder)
+		return DecodeTableFeaturesFailedErrorMsg(_errormsg, decoder)
 	case 65535:
-		return decodeExperimenterErrorMsg(errormsg, decoder)
+		return DecodeExperimenterErrorMsg(_errormsg, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ErrorMsg'", errormsg.ErrType)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ErrorMsg'", _errormsg.ErrType)
 	}
 }
 
 func NewErrorMsg(_err_type uint16) *ErrorMsg {
-	return &ErrorMsg{
-		ErrType: _err_type,
-		Header:  NewHeader(1),
+	obj := &ErrorMsg{
+		Header: NewHeader(1),
 	}
+	obj.ErrType = _err_type
+	return obj
 }
 
 type BadActionErrorMsg struct {
@@ -642,20 +650,21 @@ func (self *BadActionErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBadActionErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadActionErrorMsg, error) {
-	badactionerrormsg := &BadActionErrorMsg{ErrorMsg: parent}
+func DecodeBadActionErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadActionErrorMsg, error) {
+	_badactionerrormsg := &BadActionErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BadActionErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	badactionerrormsg.Code = BadActionCode(decoder.ReadUint16())
-	badactionerrormsg.Data = decoder.Read(decoder.Length())
-	return badactionerrormsg, nil
+	_badactionerrormsg.Code = BadActionCode(decoder.ReadUint16())
+	_badactionerrormsg.Data = decoder.Read(decoder.Length())
+	return _badactionerrormsg, nil
 }
 
 func NewBadActionErrorMsg() *BadActionErrorMsg {
-	return &BadActionErrorMsg{
+	obj := &BadActionErrorMsg{
 		ErrorMsg: NewErrorMsg(2),
 	}
+	return obj
 }
 
 type BadInstructionErrorMsg struct {
@@ -678,20 +687,21 @@ func (self *BadInstructionErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBadInstructionErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadInstructionErrorMsg, error) {
-	badinstructionerrormsg := &BadInstructionErrorMsg{ErrorMsg: parent}
+func DecodeBadInstructionErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadInstructionErrorMsg, error) {
+	_badinstructionerrormsg := &BadInstructionErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BadInstructionErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	badinstructionerrormsg.Code = BadInstructionCode(decoder.ReadUint16())
-	badinstructionerrormsg.Data = decoder.Read(decoder.Length())
-	return badinstructionerrormsg, nil
+	_badinstructionerrormsg.Code = BadInstructionCode(decoder.ReadUint16())
+	_badinstructionerrormsg.Data = decoder.Read(decoder.Length())
+	return _badinstructionerrormsg, nil
 }
 
 func NewBadInstructionErrorMsg() *BadInstructionErrorMsg {
-	return &BadInstructionErrorMsg{
+	obj := &BadInstructionErrorMsg{
 		ErrorMsg: NewErrorMsg(3),
 	}
+	return obj
 }
 
 type BadMatchErrorMsg struct {
@@ -714,20 +724,21 @@ func (self *BadMatchErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBadMatchErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadMatchErrorMsg, error) {
-	badmatcherrormsg := &BadMatchErrorMsg{ErrorMsg: parent}
+func DecodeBadMatchErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadMatchErrorMsg, error) {
+	_badmatcherrormsg := &BadMatchErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BadMatchErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	badmatcherrormsg.Code = BadMatchCode(decoder.ReadUint16())
-	badmatcherrormsg.Data = decoder.Read(decoder.Length())
-	return badmatcherrormsg, nil
+	_badmatcherrormsg.Code = BadMatchCode(decoder.ReadUint16())
+	_badmatcherrormsg.Data = decoder.Read(decoder.Length())
+	return _badmatcherrormsg, nil
 }
 
 func NewBadMatchErrorMsg() *BadMatchErrorMsg {
-	return &BadMatchErrorMsg{
+	obj := &BadMatchErrorMsg{
 		ErrorMsg: NewErrorMsg(4),
 	}
+	return obj
 }
 
 type BadRequestErrorMsg struct {
@@ -750,20 +761,21 @@ func (self *BadRequestErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBadRequestErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadRequestErrorMsg, error) {
-	badrequesterrormsg := &BadRequestErrorMsg{ErrorMsg: parent}
+func DecodeBadRequestErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadRequestErrorMsg, error) {
+	_badrequesterrormsg := &BadRequestErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BadRequestErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	badrequesterrormsg.Code = BadRequestCode(decoder.ReadUint16())
-	badrequesterrormsg.Data = decoder.Read(decoder.Length())
-	return badrequesterrormsg, nil
+	_badrequesterrormsg.Code = BadRequestCode(decoder.ReadUint16())
+	_badrequesterrormsg.Data = decoder.Read(decoder.Length())
+	return _badrequesterrormsg, nil
 }
 
 func NewBadRequestErrorMsg() *BadRequestErrorMsg {
-	return &BadRequestErrorMsg{
+	obj := &BadRequestErrorMsg{
 		ErrorMsg: NewErrorMsg(1),
 	}
+	return obj
 }
 
 type BarrierReply struct {
@@ -781,15 +793,16 @@ func (self *BarrierReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBarrierReply(parent *Header, decoder *goloxi.Decoder) (*BarrierReply, error) {
-	barrierreply := &BarrierReply{Header: parent}
-	return barrierreply, nil
+func DecodeBarrierReply(parent *Header, decoder *goloxi.Decoder) (*BarrierReply, error) {
+	_barrierreply := &BarrierReply{Header: parent}
+	return _barrierreply, nil
 }
 
 func NewBarrierReply() *BarrierReply {
-	return &BarrierReply{
+	obj := &BarrierReply{
 		Header: NewHeader(21),
 	}
+	return obj
 }
 
 type BarrierRequest struct {
@@ -807,15 +820,16 @@ func (self *BarrierRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBarrierRequest(parent *Header, decoder *goloxi.Decoder) (*BarrierRequest, error) {
-	barrierrequest := &BarrierRequest{Header: parent}
-	return barrierrequest, nil
+func DecodeBarrierRequest(parent *Header, decoder *goloxi.Decoder) (*BarrierRequest, error) {
+	_barrierrequest := &BarrierRequest{Header: parent}
+	return _barrierrequest, nil
 }
 
 func NewBarrierRequest() *BarrierRequest {
-	return &BarrierRequest{
+	obj := &BarrierRequest{
 		Header: NewHeader(20),
 	}
+	return obj
 }
 
 type Experimenter struct {
@@ -849,29 +863,30 @@ func (self *Experimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeExperimenter(parent *Header, decoder *goloxi.Decoder) (IExperimenter, error) {
-	experimenter := &Experimenter{Header: parent}
+func DecodeExperimenter(parent *Header, decoder *goloxi.Decoder) (IExperimenter, error) {
+	_experimenter := &Experimenter{Header: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("Experimenter packet too short: %d < 8", decoder.Length())
 	}
-	experimenter.Experimenter = uint32(decoder.ReadUint32())
-	experimenter.Subtype = uint32(decoder.ReadUint32())
+	_experimenter.Experimenter = uint32(decoder.ReadUint32())
+	_experimenter.Subtype = uint32(decoder.ReadUint32())
 
-	switch experimenter.Experimenter {
+	switch _experimenter.Experimenter {
 	case 8992:
-		return decodeNiciraHeader(experimenter, decoder)
+		return DecodeNiciraHeader(_experimenter, decoder)
 	case 6035143:
-		return decodeBsnHeader(experimenter, decoder)
+		return DecodeBsnHeader(_experimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'Experimenter'", experimenter.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'Experimenter'", _experimenter.Experimenter)
 	}
 }
 
 func NewExperimenter(_experimenter uint32) *Experimenter {
-	return &Experimenter{
-		Experimenter: _experimenter,
-		Header:       NewHeader(4),
+	obj := &Experimenter{
+		Header: NewHeader(4),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type BsnHeader struct {
@@ -890,128 +905,129 @@ func (self *BsnHeader) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnHeader(parent *Experimenter, decoder *goloxi.Decoder) (IBsnHeader, error) {
-	bsnheader := &BsnHeader{Experimenter: parent}
+func DecodeBsnHeader(parent *Experimenter, decoder *goloxi.Decoder) (IBsnHeader, error) {
+	_bsnheader := &BsnHeader{Experimenter: parent}
 
-	switch bsnheader.Subtype {
+	switch _bsnheader.Subtype {
 	case 3:
-		return decodeBsnSetMirroring(bsnheader, decoder)
+		return DecodeBsnSetMirroring(_bsnheader, decoder)
 	case 4:
-		return decodeBsnGetMirroringRequest(bsnheader, decoder)
+		return DecodeBsnGetMirroringRequest(_bsnheader, decoder)
 	case 5:
-		return decodeBsnGetMirroringReply(bsnheader, decoder)
+		return DecodeBsnGetMirroringReply(_bsnheader, decoder)
 	case 9:
-		return decodeBsnGetInterfacesRequest(bsnheader, decoder)
+		return DecodeBsnGetInterfacesRequest(_bsnheader, decoder)
 	case 10:
-		return decodeBsnGetInterfacesReply(bsnheader, decoder)
+		return DecodeBsnGetInterfacesReply(_bsnheader, decoder)
 	case 11:
-		return decodeBsnSetPktinSuppressionRequest(bsnheader, decoder)
+		return DecodeBsnSetPktinSuppressionRequest(_bsnheader, decoder)
 	case 15:
-		return decodeBsnVirtualPortCreateRequest(bsnheader, decoder)
+		return DecodeBsnVirtualPortCreateRequest(_bsnheader, decoder)
 	case 16:
-		return decodeBsnVirtualPortCreateReply(bsnheader, decoder)
+		return DecodeBsnVirtualPortCreateReply(_bsnheader, decoder)
 	case 17:
-		return decodeBsnVirtualPortRemoveRequest(bsnheader, decoder)
+		return DecodeBsnVirtualPortRemoveRequest(_bsnheader, decoder)
 	case 18:
-		return decodeBsnBwEnableSetRequest(bsnheader, decoder)
+		return DecodeBsnBwEnableSetRequest(_bsnheader, decoder)
 	case 19:
-		return decodeBsnBwEnableGetRequest(bsnheader, decoder)
+		return DecodeBsnBwEnableGetRequest(_bsnheader, decoder)
 	case 20:
-		return decodeBsnBwEnableGetReply(bsnheader, decoder)
+		return DecodeBsnBwEnableGetReply(_bsnheader, decoder)
 	case 21:
-		return decodeBsnBwClearDataRequest(bsnheader, decoder)
+		return DecodeBsnBwClearDataRequest(_bsnheader, decoder)
 	case 22:
-		return decodeBsnBwClearDataReply(bsnheader, decoder)
+		return DecodeBsnBwClearDataReply(_bsnheader, decoder)
 	case 23:
-		return decodeBsnBwEnableSetReply(bsnheader, decoder)
+		return DecodeBsnBwEnableSetReply(_bsnheader, decoder)
 	case 25:
-		return decodeBsnSetPktinSuppressionReply(bsnheader, decoder)
+		return DecodeBsnSetPktinSuppressionReply(_bsnheader, decoder)
 	case 26:
-		return decodeBsnVirtualPortRemoveReply(bsnheader, decoder)
+		return DecodeBsnVirtualPortRemoveReply(_bsnheader, decoder)
 	case 31:
-		return decodeBsnPduTxRequest(bsnheader, decoder)
+		return DecodeBsnPduTxRequest(_bsnheader, decoder)
 	case 32:
-		return decodeBsnPduTxReply(bsnheader, decoder)
+		return DecodeBsnPduTxReply(_bsnheader, decoder)
 	case 33:
-		return decodeBsnPduRxRequest(bsnheader, decoder)
+		return DecodeBsnPduRxRequest(_bsnheader, decoder)
 	case 34:
-		return decodeBsnPduRxReply(bsnheader, decoder)
+		return DecodeBsnPduRxReply(_bsnheader, decoder)
 	case 35:
-		return decodeBsnPduRxTimeout(bsnheader, decoder)
+		return DecodeBsnPduRxTimeout(_bsnheader, decoder)
 	case 36:
-		return decodeBsnFlowIdleEnableSetRequest(bsnheader, decoder)
+		return DecodeBsnFlowIdleEnableSetRequest(_bsnheader, decoder)
 	case 37:
-		return decodeBsnFlowIdleEnableSetReply(bsnheader, decoder)
+		return DecodeBsnFlowIdleEnableSetReply(_bsnheader, decoder)
 	case 38:
-		return decodeBsnFlowIdleEnableGetRequest(bsnheader, decoder)
+		return DecodeBsnFlowIdleEnableGetRequest(_bsnheader, decoder)
 	case 39:
-		return decodeBsnFlowIdleEnableGetReply(bsnheader, decoder)
+		return DecodeBsnFlowIdleEnableGetReply(_bsnheader, decoder)
 	case 40:
-		return decodeBsnFlowIdle(bsnheader, decoder)
+		return DecodeBsnFlowIdle(_bsnheader, decoder)
 	case 41:
-		return decodeBsnSetLacpRequest(bsnheader, decoder)
+		return DecodeBsnSetLacpRequest(_bsnheader, decoder)
 	case 42:
-		return decodeBsnSetLacpReply(bsnheader, decoder)
+		return DecodeBsnSetLacpReply(_bsnheader, decoder)
 	case 43:
-		return decodeBsnLacpConvergenceNotif(bsnheader, decoder)
+		return DecodeBsnLacpConvergenceNotif(_bsnheader, decoder)
 	case 44:
-		return decodeBsnTimeRequest(bsnheader, decoder)
+		return DecodeBsnTimeRequest(_bsnheader, decoder)
 	case 45:
-		return decodeBsnTimeReply(bsnheader, decoder)
+		return DecodeBsnTimeReply(_bsnheader, decoder)
 	case 46:
-		return decodeBsnGentableEntryAdd(bsnheader, decoder)
+		return DecodeBsnGentableEntryAdd(_bsnheader, decoder)
 	case 47:
-		return decodeBsnGentableEntryDelete(bsnheader, decoder)
+		return DecodeBsnGentableEntryDelete(_bsnheader, decoder)
 	case 48:
-		return decodeBsnGentableClearRequest(bsnheader, decoder)
+		return DecodeBsnGentableClearRequest(_bsnheader, decoder)
 	case 49:
-		return decodeBsnGentableClearReply(bsnheader, decoder)
+		return DecodeBsnGentableClearReply(_bsnheader, decoder)
 	case 50:
-		return decodeBsnGentableSetBucketsSize(bsnheader, decoder)
+		return DecodeBsnGentableSetBucketsSize(_bsnheader, decoder)
 	case 51:
-		return decodeBsnGetSwitchPipelineRequest(bsnheader, decoder)
+		return DecodeBsnGetSwitchPipelineRequest(_bsnheader, decoder)
 	case 52:
-		return decodeBsnGetSwitchPipelineReply(bsnheader, decoder)
+		return DecodeBsnGetSwitchPipelineReply(_bsnheader, decoder)
 	case 53:
-		return decodeBsnSetSwitchPipelineRequest(bsnheader, decoder)
+		return DecodeBsnSetSwitchPipelineRequest(_bsnheader, decoder)
 	case 54:
-		return decodeBsnSetSwitchPipelineReply(bsnheader, decoder)
+		return DecodeBsnSetSwitchPipelineReply(_bsnheader, decoder)
 	case 55:
-		return decodeBsnRoleStatus(bsnheader, decoder)
+		return DecodeBsnRoleStatus(_bsnheader, decoder)
 	case 56:
-		return decodeBsnControllerConnectionsRequest(bsnheader, decoder)
+		return DecodeBsnControllerConnectionsRequest(_bsnheader, decoder)
 	case 57:
-		return decodeBsnControllerConnectionsReply(bsnheader, decoder)
+		return DecodeBsnControllerConnectionsReply(_bsnheader, decoder)
 	case 58:
-		return decodeBsnSetAuxCxnsRequest(bsnheader, decoder)
+		return DecodeBsnSetAuxCxnsRequest(_bsnheader, decoder)
 	case 59:
-		return decodeBsnSetAuxCxnsReply(bsnheader, decoder)
+		return DecodeBsnSetAuxCxnsReply(_bsnheader, decoder)
 	case 60:
-		return decodeBsnArpIdle(bsnheader, decoder)
+		return DecodeBsnArpIdle(_bsnheader, decoder)
 	case 61:
-		return decodeBsnTableSetBucketsSize(bsnheader, decoder)
+		return DecodeBsnTableSetBucketsSize(_bsnheader, decoder)
 	case 63:
-		return decodeBsnLog(bsnheader, decoder)
+		return DecodeBsnLog(_bsnheader, decoder)
 	case 64:
-		return decodeBsnLuaUpload(bsnheader, decoder)
+		return DecodeBsnLuaUpload(_bsnheader, decoder)
 	case 65:
-		return decodeBsnLuaCommandRequest(bsnheader, decoder)
+		return DecodeBsnLuaCommandRequest(_bsnheader, decoder)
 	case 66:
-		return decodeBsnLuaCommandReply(bsnheader, decoder)
+		return DecodeBsnLuaCommandReply(_bsnheader, decoder)
 	case 67:
-		return decodeBsnLuaNotification(bsnheader, decoder)
+		return DecodeBsnLuaNotification(_bsnheader, decoder)
 	case 70:
-		return decodeBsnVlanCounterClear(bsnheader, decoder)
+		return DecodeBsnVlanCounterClear(_bsnheader, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'BsnHeader'", bsnheader.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'BsnHeader'", _bsnheader.Subtype)
 	}
 }
 
 func NewBsnHeader(_subtype uint32) *BsnHeader {
-	return &BsnHeader{
-		Subtype:      _subtype,
+	obj := &BsnHeader{
 		Experimenter: NewExperimenter(6035143),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type BsnArpIdle struct {
@@ -1035,21 +1051,22 @@ func (self *BsnArpIdle) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnArpIdle(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnArpIdle, error) {
-	bsnarpidle := &BsnArpIdle{BsnHeader: parent}
+func DecodeBsnArpIdle(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnArpIdle, error) {
+	_bsnarpidle := &BsnArpIdle{BsnHeader: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnArpIdle packet too short: %d < 8", decoder.Length())
 	}
-	bsnarpidle.VlanVid = uint16(decoder.ReadUint16())
+	_bsnarpidle.VlanVid = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	bsnarpidle.Ipv4Addr = net.IP(decoder.Read(4))
-	return bsnarpidle, nil
+	_bsnarpidle.Ipv4Addr = net.IP(decoder.Read(4))
+	return _bsnarpidle, nil
 }
 
 func NewBsnArpIdle() *BsnArpIdle {
-	return &BsnArpIdle{
+	obj := &BsnArpIdle{
 		BsnHeader: NewBsnHeader(60),
 	}
+	return obj
 }
 
 type ExperimenterErrorMsg struct {
@@ -1083,27 +1100,28 @@ func (self *ExperimenterErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeExperimenterErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (IExperimenterErrorMsg, error) {
-	experimentererrormsg := &ExperimenterErrorMsg{ErrorMsg: parent}
+func DecodeExperimenterErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (IExperimenterErrorMsg, error) {
+	_experimentererrormsg := &ExperimenterErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ExperimenterErrorMsg packet too short: %d < 6", decoder.Length())
 	}
-	experimentererrormsg.Subtype = uint16(decoder.ReadUint16())
-	experimentererrormsg.Experimenter = uint32(decoder.ReadUint32())
+	_experimentererrormsg.Subtype = uint16(decoder.ReadUint16())
+	_experimentererrormsg.Experimenter = uint32(decoder.ReadUint32())
 
-	switch experimentererrormsg.Experimenter {
+	switch _experimentererrormsg.Experimenter {
 	case 6035143:
-		return decodeBsnBaseError(experimentererrormsg, decoder)
+		return DecodeBsnBaseError(_experimentererrormsg, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ExperimenterErrorMsg'", experimentererrormsg.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ExperimenterErrorMsg'", _experimentererrormsg.Experimenter)
 	}
 }
 
 func NewExperimenterErrorMsg(_experimenter uint32) *ExperimenterErrorMsg {
-	return &ExperimenterErrorMsg{
-		Experimenter: _experimenter,
-		ErrorMsg:     NewErrorMsg(65535),
+	obj := &ExperimenterErrorMsg{
+		ErrorMsg: NewErrorMsg(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type BsnBaseError struct {
@@ -1130,28 +1148,29 @@ func (self *BsnBaseError) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnBaseError(parent *ExperimenterErrorMsg, decoder *goloxi.Decoder) (IBsnBaseError, error) {
-	bsnbaseerror := &BsnBaseError{ExperimenterErrorMsg: parent}
+func DecodeBsnBaseError(parent *ExperimenterErrorMsg, decoder *goloxi.Decoder) (IBsnBaseError, error) {
+	_bsnbaseerror := &BsnBaseError{ExperimenterErrorMsg: parent}
 	if decoder.Length() < 256 {
 		return nil, fmt.Errorf("BsnBaseError packet too short: %d < 256", decoder.Length())
 	}
-	bsnbaseerror.ErrMsg = string(bytes.Trim(decoder.Read(256), "\x00"))
+	_bsnbaseerror.ErrMsg = string(bytes.Trim(decoder.Read(256), "\x00"))
 
-	switch bsnbaseerror.Subtype {
+	switch _bsnbaseerror.Subtype {
 	case 1:
-		return decodeBsnError(bsnbaseerror, decoder)
+		return DecodeBsnError(_bsnbaseerror, decoder)
 	case 2:
-		return decodeBsnGentableError(bsnbaseerror, decoder)
+		return DecodeBsnGentableError(_bsnbaseerror, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'BsnBaseError'", bsnbaseerror.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'BsnBaseError'", _bsnbaseerror.Subtype)
 	}
 }
 
 func NewBsnBaseError(_subtype uint16) *BsnBaseError {
-	return &BsnBaseError{
-		Subtype:              _subtype,
+	obj := &BsnBaseError{
 		ExperimenterErrorMsg: NewExperimenterErrorMsg(6035143),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type BsnBwClearDataReply struct {
@@ -1172,19 +1191,20 @@ func (self *BsnBwClearDataReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnBwClearDataReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwClearDataReply, error) {
-	bsnbwcleardatareply := &BsnBwClearDataReply{BsnHeader: parent}
+func DecodeBsnBwClearDataReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwClearDataReply, error) {
+	_bsnbwcleardatareply := &BsnBwClearDataReply{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnBwClearDataReply packet too short: %d < 4", decoder.Length())
 	}
-	bsnbwcleardatareply.Status = uint32(decoder.ReadUint32())
-	return bsnbwcleardatareply, nil
+	_bsnbwcleardatareply.Status = uint32(decoder.ReadUint32())
+	return _bsnbwcleardatareply, nil
 }
 
 func NewBsnBwClearDataReply() *BsnBwClearDataReply {
-	return &BsnBwClearDataReply{
+	obj := &BsnBwClearDataReply{
 		BsnHeader: NewBsnHeader(22),
 	}
+	return obj
 }
 
 type BsnBwClearDataRequest struct {
@@ -1202,15 +1222,16 @@ func (self *BsnBwClearDataRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnBwClearDataRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwClearDataRequest, error) {
-	bsnbwcleardatarequest := &BsnBwClearDataRequest{BsnHeader: parent}
-	return bsnbwcleardatarequest, nil
+func DecodeBsnBwClearDataRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwClearDataRequest, error) {
+	_bsnbwcleardatarequest := &BsnBwClearDataRequest{BsnHeader: parent}
+	return _bsnbwcleardatarequest, nil
 }
 
 func NewBsnBwClearDataRequest() *BsnBwClearDataRequest {
-	return &BsnBwClearDataRequest{
+	obj := &BsnBwClearDataRequest{
 		BsnHeader: NewBsnHeader(21),
 	}
+	return obj
 }
 
 type BsnBwEnableGetReply struct {
@@ -1231,19 +1252,20 @@ func (self *BsnBwEnableGetReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnBwEnableGetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwEnableGetReply, error) {
-	bsnbwenablegetreply := &BsnBwEnableGetReply{BsnHeader: parent}
+func DecodeBsnBwEnableGetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwEnableGetReply, error) {
+	_bsnbwenablegetreply := &BsnBwEnableGetReply{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnBwEnableGetReply packet too short: %d < 4", decoder.Length())
 	}
-	bsnbwenablegetreply.Enabled = uint32(decoder.ReadUint32())
-	return bsnbwenablegetreply, nil
+	_bsnbwenablegetreply.Enabled = uint32(decoder.ReadUint32())
+	return _bsnbwenablegetreply, nil
 }
 
 func NewBsnBwEnableGetReply() *BsnBwEnableGetReply {
-	return &BsnBwEnableGetReply{
+	obj := &BsnBwEnableGetReply{
 		BsnHeader: NewBsnHeader(20),
 	}
+	return obj
 }
 
 type BsnBwEnableGetRequest struct {
@@ -1261,15 +1283,16 @@ func (self *BsnBwEnableGetRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnBwEnableGetRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwEnableGetRequest, error) {
-	bsnbwenablegetrequest := &BsnBwEnableGetRequest{BsnHeader: parent}
-	return bsnbwenablegetrequest, nil
+func DecodeBsnBwEnableGetRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwEnableGetRequest, error) {
+	_bsnbwenablegetrequest := &BsnBwEnableGetRequest{BsnHeader: parent}
+	return _bsnbwenablegetrequest, nil
 }
 
 func NewBsnBwEnableGetRequest() *BsnBwEnableGetRequest {
-	return &BsnBwEnableGetRequest{
+	obj := &BsnBwEnableGetRequest{
 		BsnHeader: NewBsnHeader(19),
 	}
+	return obj
 }
 
 type BsnBwEnableSetReply struct {
@@ -1292,20 +1315,21 @@ func (self *BsnBwEnableSetReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnBwEnableSetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwEnableSetReply, error) {
-	bsnbwenablesetreply := &BsnBwEnableSetReply{BsnHeader: parent}
+func DecodeBsnBwEnableSetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwEnableSetReply, error) {
+	_bsnbwenablesetreply := &BsnBwEnableSetReply{BsnHeader: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnBwEnableSetReply packet too short: %d < 8", decoder.Length())
 	}
-	bsnbwenablesetreply.Enable = uint32(decoder.ReadUint32())
-	bsnbwenablesetreply.Status = uint32(decoder.ReadUint32())
-	return bsnbwenablesetreply, nil
+	_bsnbwenablesetreply.Enable = uint32(decoder.ReadUint32())
+	_bsnbwenablesetreply.Status = uint32(decoder.ReadUint32())
+	return _bsnbwenablesetreply, nil
 }
 
 func NewBsnBwEnableSetReply() *BsnBwEnableSetReply {
-	return &BsnBwEnableSetReply{
+	obj := &BsnBwEnableSetReply{
 		BsnHeader: NewBsnHeader(23),
 	}
+	return obj
 }
 
 type BsnBwEnableSetRequest struct {
@@ -1326,19 +1350,20 @@ func (self *BsnBwEnableSetRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnBwEnableSetRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwEnableSetRequest, error) {
-	bsnbwenablesetrequest := &BsnBwEnableSetRequest{BsnHeader: parent}
+func DecodeBsnBwEnableSetRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnBwEnableSetRequest, error) {
+	_bsnbwenablesetrequest := &BsnBwEnableSetRequest{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnBwEnableSetRequest packet too short: %d < 4", decoder.Length())
 	}
-	bsnbwenablesetrequest.Enable = uint32(decoder.ReadUint32())
-	return bsnbwenablesetrequest, nil
+	_bsnbwenablesetrequest.Enable = uint32(decoder.ReadUint32())
+	return _bsnbwenablesetrequest, nil
 }
 
 func NewBsnBwEnableSetRequest() *BsnBwEnableSetRequest {
-	return &BsnBwEnableSetRequest{
+	obj := &BsnBwEnableSetRequest{
 		BsnHeader: NewBsnHeader(18),
 	}
+	return obj
 }
 
 type BsnControllerConnectionsReply struct {
@@ -1363,23 +1388,24 @@ func (self *BsnControllerConnectionsReply) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeBsnControllerConnectionsReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnControllerConnectionsReply, error) {
-	bsncontrollerconnectionsreply := &BsnControllerConnectionsReply{BsnHeader: parent}
+func DecodeBsnControllerConnectionsReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnControllerConnectionsReply, error) {
+	_bsncontrollerconnectionsreply := &BsnControllerConnectionsReply{BsnHeader: parent}
 
 	for decoder.Length() >= 264 {
-		item, err := decodeBsnControllerConnection(decoder)
+		item, err := DecodeBsnControllerConnection(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsncontrollerconnectionsreply.Connections = append(bsncontrollerconnectionsreply.Connections, item)
+		_bsncontrollerconnectionsreply.Connections = append(_bsncontrollerconnectionsreply.Connections, item)
 	}
-	return bsncontrollerconnectionsreply, nil
+	return _bsncontrollerconnectionsreply, nil
 }
 
 func NewBsnControllerConnectionsReply() *BsnControllerConnectionsReply {
-	return &BsnControllerConnectionsReply{
+	obj := &BsnControllerConnectionsReply{
 		BsnHeader: NewBsnHeader(57),
 	}
+	return obj
 }
 
 type BsnControllerConnectionsRequest struct {
@@ -1397,15 +1423,16 @@ func (self *BsnControllerConnectionsRequest) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeBsnControllerConnectionsRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnControllerConnectionsRequest, error) {
-	bsncontrollerconnectionsrequest := &BsnControllerConnectionsRequest{BsnHeader: parent}
-	return bsncontrollerconnectionsrequest, nil
+func DecodeBsnControllerConnectionsRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnControllerConnectionsRequest, error) {
+	_bsncontrollerconnectionsrequest := &BsnControllerConnectionsRequest{BsnHeader: parent}
+	return _bsncontrollerconnectionsrequest, nil
 }
 
 func NewBsnControllerConnectionsRequest() *BsnControllerConnectionsRequest {
-	return &BsnControllerConnectionsRequest{
+	obj := &BsnControllerConnectionsRequest{
 		BsnHeader: NewBsnHeader(56),
 	}
+	return obj
 }
 
 type ExperimenterStatsReply struct {
@@ -1440,30 +1467,31 @@ func (self *ExperimenterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeExperimenterStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (IExperimenterStatsReply, error) {
-	experimenterstatsreply := &ExperimenterStatsReply{StatsReply: parent}
+func DecodeExperimenterStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (IExperimenterStatsReply, error) {
+	_experimenterstatsreply := &ExperimenterStatsReply{StatsReply: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("ExperimenterStatsReply packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	experimenterstatsreply.Experimenter = uint32(decoder.ReadUint32())
-	experimenterstatsreply.Subtype = uint32(decoder.ReadUint32())
+	_experimenterstatsreply.Experimenter = uint32(decoder.ReadUint32())
+	_experimenterstatsreply.Subtype = uint32(decoder.ReadUint32())
 
-	switch experimenterstatsreply.Experimenter {
+	switch _experimenterstatsreply.Experimenter {
 	case 8992:
-		return decodeNiciraStatsReply(experimenterstatsreply, decoder)
+		return DecodeNiciraStatsReply(_experimenterstatsreply, decoder)
 	case 6035143:
-		return decodeBsnStatsReply(experimenterstatsreply, decoder)
+		return DecodeBsnStatsReply(_experimenterstatsreply, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ExperimenterStatsReply'", experimenterstatsreply.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ExperimenterStatsReply'", _experimenterstatsreply.Experimenter)
 	}
 }
 
 func NewExperimenterStatsReply(_experimenter uint32) *ExperimenterStatsReply {
-	return &ExperimenterStatsReply{
-		Experimenter: _experimenter,
-		StatsReply:   NewStatsReply(65535),
+	obj := &ExperimenterStatsReply{
+		StatsReply: NewStatsReply(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type BsnStatsReply struct {
@@ -1479,61 +1507,56 @@ func (self *BsnStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	return nil
 }
 
-func decodeBsnStatsReply(parent *ExperimenterStatsReply, decoder *goloxi.Decoder) (IBsnStatsReply, error) {
-	bsnstatsreply := &BsnStatsReply{ExperimenterStatsReply: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnStatsReply packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
+func DecodeBsnStatsReply(parent *ExperimenterStatsReply, decoder *goloxi.Decoder) (IBsnStatsReply, error) {
+	_bsnstatsreply := &BsnStatsReply{ExperimenterStatsReply: parent}
 
-	switch bsnstatsreply.Subtype {
+	switch _bsnstatsreply.Subtype {
 	case 1:
-		return decodeBsnLacpStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnLacpStatsReply(_bsnstatsreply, decoder)
 	case 2:
-		return decodeBsnGentableEntryDescStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnGentableEntryDescStatsReply(_bsnstatsreply, decoder)
 	case 3:
-		return decodeBsnGentableEntryStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnGentableEntryStatsReply(_bsnstatsreply, decoder)
 	case 4:
-		return decodeBsnGentableDescStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnGentableDescStatsReply(_bsnstatsreply, decoder)
 	case 5:
-		return decodeBsnGentableBucketStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnGentableBucketStatsReply(_bsnstatsreply, decoder)
 	case 6:
-		return decodeBsnSwitchPipelineStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnSwitchPipelineStatsReply(_bsnstatsreply, decoder)
 	case 7:
-		return decodeBsnGentableStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnGentableStatsReply(_bsnstatsreply, decoder)
 	case 8:
-		return decodeBsnPortCounterStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnPortCounterStatsReply(_bsnstatsreply, decoder)
 	case 9:
-		return decodeBsnVlanCounterStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnVlanCounterStatsReply(_bsnstatsreply, decoder)
 	case 10:
-		return decodeBsnFlowChecksumBucketStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnFlowChecksumBucketStatsReply(_bsnstatsreply, decoder)
 	case 11:
-		return decodeBsnTableChecksumStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnTableChecksumStatsReply(_bsnstatsreply, decoder)
 	case 12:
-		return decodeBsnDebugCounterStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnDebugCounterStatsReply(_bsnstatsreply, decoder)
 	case 13:
-		return decodeBsnDebugCounterDescStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnDebugCounterDescStatsReply(_bsnstatsreply, decoder)
 	case 14:
-		return decodeBsnImageDescStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnImageDescStatsReply(_bsnstatsreply, decoder)
 	case 15:
-		return decodeBsnVrfCounterStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnVrfCounterStatsReply(_bsnstatsreply, decoder)
 	case 16:
-		return decodeBsnGenericStatsReply(bsnstatsreply, decoder)
+		return DecodeBsnGenericStatsReply(_bsnstatsreply, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'BsnStatsReply'", bsnstatsreply.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'BsnStatsReply'", _bsnstatsreply.Subtype)
 	}
 }
 
 func NewBsnStatsReply(_subtype uint32) *BsnStatsReply {
-	return &BsnStatsReply{
-		Subtype:                _subtype,
+	obj := &BsnStatsReply{
 		ExperimenterStatsReply: NewExperimenterStatsReply(6035143),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type BsnDebugCounterDescStatsReply struct {
@@ -1546,7 +1569,6 @@ func (self *BsnDebugCounterDescStatsReply) Serialize(encoder *goloxi.Encoder) er
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -1559,24 +1581,24 @@ func (self *BsnDebugCounterDescStatsReply) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeBsnDebugCounterDescStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnDebugCounterDescStatsReply, error) {
-	bsndebugcounterdescstatsreply := &BsnDebugCounterDescStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnDebugCounterDescStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnDebugCounterDescStatsReply, error) {
+	_bsndebugcounterdescstatsreply := &BsnDebugCounterDescStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 328 {
-		item, err := decodeBsnDebugCounterDescStatsEntry(decoder)
+		item, err := DecodeBsnDebugCounterDescStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsndebugcounterdescstatsreply.Entries = append(bsndebugcounterdescstatsreply.Entries, item)
+		_bsndebugcounterdescstatsreply.Entries = append(_bsndebugcounterdescstatsreply.Entries, item)
 	}
-	return bsndebugcounterdescstatsreply, nil
+	return _bsndebugcounterdescstatsreply, nil
 }
 
 func NewBsnDebugCounterDescStatsReply() *BsnDebugCounterDescStatsReply {
-	return &BsnDebugCounterDescStatsReply{
+	obj := &BsnDebugCounterDescStatsReply{
 		BsnStatsReply: NewBsnStatsReply(13),
 	}
+	return obj
 }
 
 type ExperimenterStatsRequest struct {
@@ -1611,30 +1633,31 @@ func (self *ExperimenterStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeExperimenterStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (IExperimenterStatsRequest, error) {
-	experimenterstatsrequest := &ExperimenterStatsRequest{StatsRequest: parent}
+func DecodeExperimenterStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (IExperimenterStatsRequest, error) {
+	_experimenterstatsrequest := &ExperimenterStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("ExperimenterStatsRequest packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	experimenterstatsrequest.Experimenter = uint32(decoder.ReadUint32())
-	experimenterstatsrequest.Subtype = uint32(decoder.ReadUint32())
+	_experimenterstatsrequest.Experimenter = uint32(decoder.ReadUint32())
+	_experimenterstatsrequest.Subtype = uint32(decoder.ReadUint32())
 
-	switch experimenterstatsrequest.Experimenter {
+	switch _experimenterstatsrequest.Experimenter {
 	case 8992:
-		return decodeNiciraFlowStatsRequest(experimenterstatsrequest, decoder)
+		return DecodeNiciraFlowStatsRequest(_experimenterstatsrequest, decoder)
 	case 6035143:
-		return decodeBsnStatsRequest(experimenterstatsrequest, decoder)
+		return DecodeBsnStatsRequest(_experimenterstatsrequest, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ExperimenterStatsRequest'", experimenterstatsrequest.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ExperimenterStatsRequest'", _experimenterstatsrequest.Experimenter)
 	}
 }
 
 func NewExperimenterStatsRequest(_experimenter uint32) *ExperimenterStatsRequest {
-	return &ExperimenterStatsRequest{
-		Experimenter: _experimenter,
+	obj := &ExperimenterStatsRequest{
 		StatsRequest: NewStatsRequest(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type BsnStatsRequest struct {
@@ -1650,61 +1673,56 @@ func (self *BsnStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	return nil
 }
 
-func decodeBsnStatsRequest(parent *ExperimenterStatsRequest, decoder *goloxi.Decoder) (IBsnStatsRequest, error) {
-	bsnstatsrequest := &BsnStatsRequest{ExperimenterStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
+func DecodeBsnStatsRequest(parent *ExperimenterStatsRequest, decoder *goloxi.Decoder) (IBsnStatsRequest, error) {
+	_bsnstatsrequest := &BsnStatsRequest{ExperimenterStatsRequest: parent}
 
-	switch bsnstatsrequest.Subtype {
+	switch _bsnstatsrequest.Subtype {
 	case 1:
-		return decodeBsnLacpStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnLacpStatsRequest(_bsnstatsrequest, decoder)
 	case 2:
-		return decodeBsnGentableEntryDescStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnGentableEntryDescStatsRequest(_bsnstatsrequest, decoder)
 	case 3:
-		return decodeBsnGentableEntryStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnGentableEntryStatsRequest(_bsnstatsrequest, decoder)
 	case 4:
-		return decodeBsnGentableDescStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnGentableDescStatsRequest(_bsnstatsrequest, decoder)
 	case 5:
-		return decodeBsnGentableBucketStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnGentableBucketStatsRequest(_bsnstatsrequest, decoder)
 	case 6:
-		return decodeBsnSwitchPipelineStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnSwitchPipelineStatsRequest(_bsnstatsrequest, decoder)
 	case 7:
-		return decodeBsnGentableStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnGentableStatsRequest(_bsnstatsrequest, decoder)
 	case 8:
-		return decodeBsnPortCounterStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnPortCounterStatsRequest(_bsnstatsrequest, decoder)
 	case 9:
-		return decodeBsnVlanCounterStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnVlanCounterStatsRequest(_bsnstatsrequest, decoder)
 	case 10:
-		return decodeBsnFlowChecksumBucketStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnFlowChecksumBucketStatsRequest(_bsnstatsrequest, decoder)
 	case 11:
-		return decodeBsnTableChecksumStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnTableChecksumStatsRequest(_bsnstatsrequest, decoder)
 	case 12:
-		return decodeBsnDebugCounterStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnDebugCounterStatsRequest(_bsnstatsrequest, decoder)
 	case 13:
-		return decodeBsnDebugCounterDescStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnDebugCounterDescStatsRequest(_bsnstatsrequest, decoder)
 	case 14:
-		return decodeBsnImageDescStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnImageDescStatsRequest(_bsnstatsrequest, decoder)
 	case 15:
-		return decodeBsnVrfCounterStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnVrfCounterStatsRequest(_bsnstatsrequest, decoder)
 	case 16:
-		return decodeBsnGenericStatsRequest(bsnstatsrequest, decoder)
+		return DecodeBsnGenericStatsRequest(_bsnstatsrequest, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'BsnStatsRequest'", bsnstatsrequest.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'BsnStatsRequest'", _bsnstatsrequest.Subtype)
 	}
 }
 
 func NewBsnStatsRequest(_subtype uint32) *BsnStatsRequest {
-	return &BsnStatsRequest{
-		Subtype:                  _subtype,
+	obj := &BsnStatsRequest{
 		ExperimenterStatsRequest: NewExperimenterStatsRequest(6035143),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type BsnDebugCounterDescStatsRequest struct {
@@ -1716,27 +1734,22 @@ func (self *BsnDebugCounterDescStatsRequest) Serialize(encoder *goloxi.Encoder) 
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeBsnDebugCounterDescStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnDebugCounterDescStatsRequest, error) {
-	bsndebugcounterdescstatsrequest := &BsnDebugCounterDescStatsRequest{BsnStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnDebugCounterDescStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
-	return bsndebugcounterdescstatsrequest, nil
+func DecodeBsnDebugCounterDescStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnDebugCounterDescStatsRequest, error) {
+	_bsndebugcounterdescstatsrequest := &BsnDebugCounterDescStatsRequest{BsnStatsRequest: parent}
+	return _bsndebugcounterdescstatsrequest, nil
 }
 
 func NewBsnDebugCounterDescStatsRequest() *BsnDebugCounterDescStatsRequest {
-	return &BsnDebugCounterDescStatsRequest{
+	obj := &BsnDebugCounterDescStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(13),
 	}
+	return obj
 }
 
 type BsnDebugCounterStatsReply struct {
@@ -1749,7 +1762,6 @@ func (self *BsnDebugCounterStatsReply) Serialize(encoder *goloxi.Encoder) error 
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -1762,24 +1774,24 @@ func (self *BsnDebugCounterStatsReply) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnDebugCounterStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnDebugCounterStatsReply, error) {
-	bsndebugcounterstatsreply := &BsnDebugCounterStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnDebugCounterStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnDebugCounterStatsReply, error) {
+	_bsndebugcounterstatsreply := &BsnDebugCounterStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 16 {
-		item, err := decodeBsnDebugCounterStatsEntry(decoder)
+		item, err := DecodeBsnDebugCounterStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsndebugcounterstatsreply.Entries = append(bsndebugcounterstatsreply.Entries, item)
+		_bsndebugcounterstatsreply.Entries = append(_bsndebugcounterstatsreply.Entries, item)
 	}
-	return bsndebugcounterstatsreply, nil
+	return _bsndebugcounterstatsreply, nil
 }
 
 func NewBsnDebugCounterStatsReply() *BsnDebugCounterStatsReply {
-	return &BsnDebugCounterStatsReply{
+	obj := &BsnDebugCounterStatsReply{
 		BsnStatsReply: NewBsnStatsReply(12),
 	}
+	return obj
 }
 
 type BsnDebugCounterStatsRequest struct {
@@ -1791,27 +1803,22 @@ func (self *BsnDebugCounterStatsRequest) Serialize(encoder *goloxi.Encoder) erro
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeBsnDebugCounterStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnDebugCounterStatsRequest, error) {
-	bsndebugcounterstatsrequest := &BsnDebugCounterStatsRequest{BsnStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnDebugCounterStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
-	return bsndebugcounterstatsrequest, nil
+func DecodeBsnDebugCounterStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnDebugCounterStatsRequest, error) {
+	_bsndebugcounterstatsrequest := &BsnDebugCounterStatsRequest{BsnStatsRequest: parent}
+	return _bsndebugcounterstatsrequest, nil
 }
 
 func NewBsnDebugCounterStatsRequest() *BsnDebugCounterStatsRequest {
-	return &BsnDebugCounterStatsRequest{
+	obj := &BsnDebugCounterStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(12),
 	}
+	return obj
 }
 
 type BsnError struct {
@@ -1829,15 +1836,16 @@ func (self *BsnError) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnError(parent *BsnBaseError, decoder *goloxi.Decoder) (*BsnError, error) {
-	bsnerror := &BsnError{BsnBaseError: parent}
-	return bsnerror, nil
+func DecodeBsnError(parent *BsnBaseError, decoder *goloxi.Decoder) (*BsnError, error) {
+	_bsnerror := &BsnError{BsnBaseError: parent}
+	return _bsnerror, nil
 }
 
 func NewBsnError() *BsnError {
-	return &BsnError{
+	obj := &BsnError{
 		BsnBaseError: NewBsnBaseError(1),
 	}
+	return obj
 }
 
 type BsnFlowChecksumBucketStatsReply struct {
@@ -1850,7 +1858,6 @@ func (self *BsnFlowChecksumBucketStatsReply) Serialize(encoder *goloxi.Encoder) 
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -1863,24 +1870,24 @@ func (self *BsnFlowChecksumBucketStatsReply) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeBsnFlowChecksumBucketStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnFlowChecksumBucketStatsReply, error) {
-	bsnflowchecksumbucketstatsreply := &BsnFlowChecksumBucketStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnFlowChecksumBucketStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnFlowChecksumBucketStatsReply, error) {
+	_bsnflowchecksumbucketstatsreply := &BsnFlowChecksumBucketStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 8 {
-		item, err := decodeBsnFlowChecksumBucketStatsEntry(decoder)
+		item, err := DecodeBsnFlowChecksumBucketStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnflowchecksumbucketstatsreply.Entries = append(bsnflowchecksumbucketstatsreply.Entries, item)
+		_bsnflowchecksumbucketstatsreply.Entries = append(_bsnflowchecksumbucketstatsreply.Entries, item)
 	}
-	return bsnflowchecksumbucketstatsreply, nil
+	return _bsnflowchecksumbucketstatsreply, nil
 }
 
 func NewBsnFlowChecksumBucketStatsReply() *BsnFlowChecksumBucketStatsReply {
-	return &BsnFlowChecksumBucketStatsReply{
+	obj := &BsnFlowChecksumBucketStatsReply{
 		BsnStatsReply: NewBsnStatsReply(10),
 	}
+	return obj
 }
 
 type BsnFlowChecksumBucketStatsRequest struct {
@@ -1893,7 +1900,6 @@ func (self *BsnFlowChecksumBucketStatsRequest) Serialize(encoder *goloxi.Encoder
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint8(uint8(self.TableId))
 
 	// Overwrite length
@@ -1902,20 +1908,20 @@ func (self *BsnFlowChecksumBucketStatsRequest) Serialize(encoder *goloxi.Encoder
 	return nil
 }
 
-func decodeBsnFlowChecksumBucketStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnFlowChecksumBucketStatsRequest, error) {
-	bsnflowchecksumbucketstatsrequest := &BsnFlowChecksumBucketStatsRequest{BsnStatsRequest: parent}
+func DecodeBsnFlowChecksumBucketStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnFlowChecksumBucketStatsRequest, error) {
+	_bsnflowchecksumbucketstatsrequest := &BsnFlowChecksumBucketStatsRequest{BsnStatsRequest: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnFlowChecksumBucketStatsRequest packet too short: %d < 1", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsnflowchecksumbucketstatsrequest.TableId = uint8(decoder.ReadByte())
-	return bsnflowchecksumbucketstatsrequest, nil
+	_bsnflowchecksumbucketstatsrequest.TableId = uint8(decoder.ReadByte())
+	return _bsnflowchecksumbucketstatsrequest, nil
 }
 
 func NewBsnFlowChecksumBucketStatsRequest() *BsnFlowChecksumBucketStatsRequest {
-	return &BsnFlowChecksumBucketStatsRequest{
+	obj := &BsnFlowChecksumBucketStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(10),
 	}
+	return obj
 }
 
 type BsnFlowIdle struct {
@@ -1945,27 +1951,28 @@ func (self *BsnFlowIdle) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnFlowIdle(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdle, error) {
-	bsnflowidle := &BsnFlowIdle{BsnHeader: parent}
+func DecodeBsnFlowIdle(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdle, error) {
+	_bsnflowidle := &BsnFlowIdle{BsnHeader: parent}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("BsnFlowIdle packet too short: %d < 24", decoder.Length())
 	}
-	bsnflowidle.Cookie = uint64(decoder.ReadUint64())
-	bsnflowidle.Priority = uint16(decoder.ReadUint16())
-	bsnflowidle.TableId = uint8(decoder.ReadByte())
+	_bsnflowidle.Cookie = uint64(decoder.ReadUint64())
+	_bsnflowidle.Priority = uint16(decoder.ReadUint16())
+	_bsnflowidle.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(5)
-	if err := bsnflowidle.Match.Decode(decoder); err != nil {
+	if err := _bsnflowidle.Match.Decode(decoder); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
-	return bsnflowidle, nil
+	return _bsnflowidle, nil
 }
 
 func NewBsnFlowIdle() *BsnFlowIdle {
-	return &BsnFlowIdle{
+	obj := &BsnFlowIdle{
 		BsnHeader: NewBsnHeader(40),
 	}
+	return obj
 }
 
 type BsnFlowIdleEnableGetReply struct {
@@ -1986,19 +1993,20 @@ func (self *BsnFlowIdleEnableGetReply) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnFlowIdleEnableGetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdleEnableGetReply, error) {
-	bsnflowidleenablegetreply := &BsnFlowIdleEnableGetReply{BsnHeader: parent}
+func DecodeBsnFlowIdleEnableGetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdleEnableGetReply, error) {
+	_bsnflowidleenablegetreply := &BsnFlowIdleEnableGetReply{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnFlowIdleEnableGetReply packet too short: %d < 4", decoder.Length())
 	}
-	bsnflowidleenablegetreply.Enabled = uint32(decoder.ReadUint32())
-	return bsnflowidleenablegetreply, nil
+	_bsnflowidleenablegetreply.Enabled = uint32(decoder.ReadUint32())
+	return _bsnflowidleenablegetreply, nil
 }
 
 func NewBsnFlowIdleEnableGetReply() *BsnFlowIdleEnableGetReply {
-	return &BsnFlowIdleEnableGetReply{
+	obj := &BsnFlowIdleEnableGetReply{
 		BsnHeader: NewBsnHeader(39),
 	}
+	return obj
 }
 
 type BsnFlowIdleEnableGetRequest struct {
@@ -2016,15 +2024,16 @@ func (self *BsnFlowIdleEnableGetRequest) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnFlowIdleEnableGetRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdleEnableGetRequest, error) {
-	bsnflowidleenablegetrequest := &BsnFlowIdleEnableGetRequest{BsnHeader: parent}
-	return bsnflowidleenablegetrequest, nil
+func DecodeBsnFlowIdleEnableGetRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdleEnableGetRequest, error) {
+	_bsnflowidleenablegetrequest := &BsnFlowIdleEnableGetRequest{BsnHeader: parent}
+	return _bsnflowidleenablegetrequest, nil
 }
 
 func NewBsnFlowIdleEnableGetRequest() *BsnFlowIdleEnableGetRequest {
-	return &BsnFlowIdleEnableGetRequest{
+	obj := &BsnFlowIdleEnableGetRequest{
 		BsnHeader: NewBsnHeader(38),
 	}
+	return obj
 }
 
 type BsnFlowIdleEnableSetReply struct {
@@ -2047,20 +2056,21 @@ func (self *BsnFlowIdleEnableSetReply) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnFlowIdleEnableSetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdleEnableSetReply, error) {
-	bsnflowidleenablesetreply := &BsnFlowIdleEnableSetReply{BsnHeader: parent}
+func DecodeBsnFlowIdleEnableSetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdleEnableSetReply, error) {
+	_bsnflowidleenablesetreply := &BsnFlowIdleEnableSetReply{BsnHeader: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnFlowIdleEnableSetReply packet too short: %d < 8", decoder.Length())
 	}
-	bsnflowidleenablesetreply.Enable = uint32(decoder.ReadUint32())
-	bsnflowidleenablesetreply.Status = uint32(decoder.ReadUint32())
-	return bsnflowidleenablesetreply, nil
+	_bsnflowidleenablesetreply.Enable = uint32(decoder.ReadUint32())
+	_bsnflowidleenablesetreply.Status = uint32(decoder.ReadUint32())
+	return _bsnflowidleenablesetreply, nil
 }
 
 func NewBsnFlowIdleEnableSetReply() *BsnFlowIdleEnableSetReply {
-	return &BsnFlowIdleEnableSetReply{
+	obj := &BsnFlowIdleEnableSetReply{
 		BsnHeader: NewBsnHeader(37),
 	}
+	return obj
 }
 
 type BsnFlowIdleEnableSetRequest struct {
@@ -2081,19 +2091,20 @@ func (self *BsnFlowIdleEnableSetRequest) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnFlowIdleEnableSetRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdleEnableSetRequest, error) {
-	bsnflowidleenablesetrequest := &BsnFlowIdleEnableSetRequest{BsnHeader: parent}
+func DecodeBsnFlowIdleEnableSetRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnFlowIdleEnableSetRequest, error) {
+	_bsnflowidleenablesetrequest := &BsnFlowIdleEnableSetRequest{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnFlowIdleEnableSetRequest packet too short: %d < 4", decoder.Length())
 	}
-	bsnflowidleenablesetrequest.Enable = uint32(decoder.ReadUint32())
-	return bsnflowidleenablesetrequest, nil
+	_bsnflowidleenablesetrequest.Enable = uint32(decoder.ReadUint32())
+	return _bsnflowidleenablesetrequest, nil
 }
 
 func NewBsnFlowIdleEnableSetRequest() *BsnFlowIdleEnableSetRequest {
-	return &BsnFlowIdleEnableSetRequest{
+	obj := &BsnFlowIdleEnableSetRequest{
 		BsnHeader: NewBsnHeader(36),
 	}
+	return obj
 }
 
 type BsnGenericStatsReply struct {
@@ -2106,7 +2117,6 @@ func (self *BsnGenericStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -2119,24 +2129,24 @@ func (self *BsnGenericStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGenericStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGenericStatsReply, error) {
-	bsngenericstatsreply := &BsnGenericStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnGenericStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGenericStatsReply, error) {
+	_bsngenericstatsreply := &BsnGenericStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 2 {
-		item, err := decodeBsnGenericStatsEntry(decoder)
+		item, err := DecodeBsnGenericStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngenericstatsreply.Entries = append(bsngenericstatsreply.Entries, item)
+		_bsngenericstatsreply.Entries = append(_bsngenericstatsreply.Entries, item)
 	}
-	return bsngenericstatsreply, nil
+	return _bsngenericstatsreply, nil
 }
 
 func NewBsnGenericStatsReply() *BsnGenericStatsReply {
-	return &BsnGenericStatsReply{
+	obj := &BsnGenericStatsReply{
 		BsnStatsReply: NewBsnStatsReply(16),
 	}
+	return obj
 }
 
 type BsnGenericStatsRequest struct {
@@ -2150,7 +2160,6 @@ func (self *BsnGenericStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.Write([]byte(self.Name))
 	for _, obj := range self.Tlvs {
 		if err := obj.Serialize(encoder); err != nil {
@@ -2164,28 +2173,28 @@ func (self *BsnGenericStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGenericStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGenericStatsRequest, error) {
-	bsngenericstatsrequest := &BsnGenericStatsRequest{BsnStatsRequest: parent}
+func DecodeBsnGenericStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGenericStatsRequest, error) {
+	_bsngenericstatsrequest := &BsnGenericStatsRequest{BsnStatsRequest: parent}
 	if decoder.Length() < 64 {
 		return nil, fmt.Errorf("BsnGenericStatsRequest packet too short: %d < 64", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsngenericstatsrequest.Name = string(bytes.Trim(decoder.Read(64), "\x00"))
+	_bsngenericstatsrequest.Name = string(bytes.Trim(decoder.Read(64), "\x00"))
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngenericstatsrequest.Tlvs = append(bsngenericstatsrequest.Tlvs, item)
+		_bsngenericstatsrequest.Tlvs = append(_bsngenericstatsrequest.Tlvs, item)
 	}
-	return bsngenericstatsrequest, nil
+	return _bsngenericstatsrequest, nil
 }
 
 func NewBsnGenericStatsRequest() *BsnGenericStatsRequest {
-	return &BsnGenericStatsRequest{
+	obj := &BsnGenericStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(16),
 	}
+	return obj
 }
 
 type BsnGentableBucketStatsReply struct {
@@ -2198,7 +2207,6 @@ func (self *BsnGentableBucketStatsReply) Serialize(encoder *goloxi.Encoder) erro
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -2211,24 +2219,24 @@ func (self *BsnGentableBucketStatsReply) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnGentableBucketStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableBucketStatsReply, error) {
-	bsngentablebucketstatsreply := &BsnGentableBucketStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnGentableBucketStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableBucketStatsReply, error) {
+	_bsngentablebucketstatsreply := &BsnGentableBucketStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 16 {
-		item, err := decodeBsnGentableBucketStatsEntry(decoder)
+		item, err := DecodeBsnGentableBucketStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentablebucketstatsreply.Entries = append(bsngentablebucketstatsreply.Entries, item)
+		_bsngentablebucketstatsreply.Entries = append(_bsngentablebucketstatsreply.Entries, item)
 	}
-	return bsngentablebucketstatsreply, nil
+	return _bsngentablebucketstatsreply, nil
 }
 
 func NewBsnGentableBucketStatsReply() *BsnGentableBucketStatsReply {
-	return &BsnGentableBucketStatsReply{
+	obj := &BsnGentableBucketStatsReply{
 		BsnStatsReply: NewBsnStatsReply(5),
 	}
+	return obj
 }
 
 type BsnGentableBucketStatsRequest struct {
@@ -2241,7 +2249,6 @@ func (self *BsnGentableBucketStatsRequest) Serialize(encoder *goloxi.Encoder) er
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.TableId))
 
 	// Overwrite length
@@ -2250,20 +2257,20 @@ func (self *BsnGentableBucketStatsRequest) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeBsnGentableBucketStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableBucketStatsRequest, error) {
-	bsngentablebucketstatsrequest := &BsnGentableBucketStatsRequest{BsnStatsRequest: parent}
+func DecodeBsnGentableBucketStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableBucketStatsRequest, error) {
+	_bsngentablebucketstatsrequest := &BsnGentableBucketStatsRequest{BsnStatsRequest: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnGentableBucketStatsRequest packet too short: %d < 2", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsngentablebucketstatsrequest.TableId = uint16(decoder.ReadUint16())
-	return bsngentablebucketstatsrequest, nil
+	_bsngentablebucketstatsrequest.TableId = uint16(decoder.ReadUint16())
+	return _bsngentablebucketstatsrequest, nil
 }
 
 func NewBsnGentableBucketStatsRequest() *BsnGentableBucketStatsRequest {
-	return &BsnGentableBucketStatsRequest{
+	obj := &BsnGentableBucketStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(5),
 	}
+	return obj
 }
 
 type BsnGentableClearReply struct {
@@ -2289,22 +2296,23 @@ func (self *BsnGentableClearReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGentableClearReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableClearReply, error) {
-	bsngentableclearreply := &BsnGentableClearReply{BsnHeader: parent}
+func DecodeBsnGentableClearReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableClearReply, error) {
+	_bsngentableclearreply := &BsnGentableClearReply{BsnHeader: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("BsnGentableClearReply packet too short: %d < 12", decoder.Length())
 	}
-	bsngentableclearreply.TableId = uint16(decoder.ReadUint16())
+	_bsngentableclearreply.TableId = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	bsngentableclearreply.DeletedCount = uint32(decoder.ReadUint32())
-	bsngentableclearreply.ErrorCount = uint32(decoder.ReadUint32())
-	return bsngentableclearreply, nil
+	_bsngentableclearreply.DeletedCount = uint32(decoder.ReadUint32())
+	_bsngentableclearreply.ErrorCount = uint32(decoder.ReadUint32())
+	return _bsngentableclearreply, nil
 }
 
 func NewBsnGentableClearReply() *BsnGentableClearReply {
-	return &BsnGentableClearReply{
+	obj := &BsnGentableClearReply{
 		BsnHeader: NewBsnHeader(49),
 	}
+	return obj
 }
 
 type BsnGentableClearRequest struct {
@@ -2330,22 +2338,23 @@ func (self *BsnGentableClearRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGentableClearRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableClearRequest, error) {
-	bsngentableclearrequest := &BsnGentableClearRequest{BsnHeader: parent}
+func DecodeBsnGentableClearRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableClearRequest, error) {
+	_bsngentableclearrequest := &BsnGentableClearRequest{BsnHeader: parent}
 	if decoder.Length() < 36 {
 		return nil, fmt.Errorf("BsnGentableClearRequest packet too short: %d < 36", decoder.Length())
 	}
-	bsngentableclearrequest.TableId = uint16(decoder.ReadUint16())
+	_bsngentableclearrequest.TableId = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	bsngentableclearrequest.Checksum.Decode(decoder)
-	bsngentableclearrequest.ChecksumMask.Decode(decoder)
-	return bsngentableclearrequest, nil
+	_bsngentableclearrequest.Checksum.Decode(decoder)
+	_bsngentableclearrequest.ChecksumMask.Decode(decoder)
+	return _bsngentableclearrequest, nil
 }
 
 func NewBsnGentableClearRequest() *BsnGentableClearRequest {
-	return &BsnGentableClearRequest{
+	obj := &BsnGentableClearRequest{
 		BsnHeader: NewBsnHeader(48),
 	}
+	return obj
 }
 
 type BsnGentableDescStatsReply struct {
@@ -2358,7 +2367,6 @@ func (self *BsnGentableDescStatsReply) Serialize(encoder *goloxi.Encoder) error 
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -2371,24 +2379,24 @@ func (self *BsnGentableDescStatsReply) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnGentableDescStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableDescStatsReply, error) {
-	bsngentabledescstatsreply := &BsnGentableDescStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnGentableDescStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableDescStatsReply, error) {
+	_bsngentabledescstatsreply := &BsnGentableDescStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 48 {
-		item, err := decodeBsnGentableDescStatsEntry(decoder)
+		item, err := DecodeBsnGentableDescStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentabledescstatsreply.Entries = append(bsngentabledescstatsreply.Entries, item)
+		_bsngentabledescstatsreply.Entries = append(_bsngentabledescstatsreply.Entries, item)
 	}
-	return bsngentabledescstatsreply, nil
+	return _bsngentabledescstatsreply, nil
 }
 
 func NewBsnGentableDescStatsReply() *BsnGentableDescStatsReply {
-	return &BsnGentableDescStatsReply{
+	obj := &BsnGentableDescStatsReply{
 		BsnStatsReply: NewBsnStatsReply(4),
 	}
+	return obj
 }
 
 type BsnGentableDescStatsRequest struct {
@@ -2400,27 +2408,22 @@ func (self *BsnGentableDescStatsRequest) Serialize(encoder *goloxi.Encoder) erro
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeBsnGentableDescStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableDescStatsRequest, error) {
-	bsngentabledescstatsrequest := &BsnGentableDescStatsRequest{BsnStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnGentableDescStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
-	return bsngentabledescstatsrequest, nil
+func DecodeBsnGentableDescStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableDescStatsRequest, error) {
+	_bsngentabledescstatsrequest := &BsnGentableDescStatsRequest{BsnStatsRequest: parent}
+	return _bsngentabledescstatsrequest, nil
 }
 
 func NewBsnGentableDescStatsRequest() *BsnGentableDescStatsRequest {
-	return &BsnGentableDescStatsRequest{
+	obj := &BsnGentableDescStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(4),
 	}
+	return obj
 }
 
 type BsnGentableEntryAdd struct {
@@ -2457,37 +2460,38 @@ func (self *BsnGentableEntryAdd) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGentableEntryAdd(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableEntryAdd, error) {
-	bsngentableentryadd := &BsnGentableEntryAdd{BsnHeader: parent}
+func DecodeBsnGentableEntryAdd(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableEntryAdd, error) {
+	_bsngentableentryadd := &BsnGentableEntryAdd{BsnHeader: parent}
 	if decoder.Length() < 20 {
 		return nil, fmt.Errorf("BsnGentableEntryAdd packet too short: %d < 20", decoder.Length())
 	}
-	bsngentableentryadd.TableId = uint16(decoder.ReadUint16())
-	bsngentableentryadd.KeyLength = uint16(decoder.ReadUint16())
-	bsngentableentryadd.Checksum.Decode(decoder)
+	_bsngentableentryadd.TableId = uint16(decoder.ReadUint16())
+	_bsngentableentryadd.KeyLength = uint16(decoder.ReadUint16())
+	_bsngentableentryadd.Checksum.Decode(decoder)
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentryadd.Key = append(bsngentableentryadd.Key, item)
+		_bsngentableentryadd.Key = append(_bsngentableentryadd.Key, item)
 	}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentryadd.Value = append(bsngentableentryadd.Value, item)
+		_bsngentableentryadd.Value = append(_bsngentableentryadd.Value, item)
 	}
-	return bsngentableentryadd, nil
+	return _bsngentableentryadd, nil
 }
 
 func NewBsnGentableEntryAdd() *BsnGentableEntryAdd {
-	return &BsnGentableEntryAdd{
+	obj := &BsnGentableEntryAdd{
 		BsnHeader: NewBsnHeader(46),
 	}
+	return obj
 }
 
 type BsnGentableEntryDelete struct {
@@ -2514,27 +2518,28 @@ func (self *BsnGentableEntryDelete) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGentableEntryDelete(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableEntryDelete, error) {
-	bsngentableentrydelete := &BsnGentableEntryDelete{BsnHeader: parent}
+func DecodeBsnGentableEntryDelete(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableEntryDelete, error) {
+	_bsngentableentrydelete := &BsnGentableEntryDelete{BsnHeader: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnGentableEntryDelete packet too short: %d < 2", decoder.Length())
 	}
-	bsngentableentrydelete.TableId = uint16(decoder.ReadUint16())
+	_bsngentableentrydelete.TableId = uint16(decoder.ReadUint16())
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnTlv(decoder)
+		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentrydelete.Key = append(bsngentableentrydelete.Key, item)
+		_bsngentableentrydelete.Key = append(_bsngentableentrydelete.Key, item)
 	}
-	return bsngentableentrydelete, nil
+	return _bsngentableentrydelete, nil
 }
 
 func NewBsnGentableEntryDelete() *BsnGentableEntryDelete {
-	return &BsnGentableEntryDelete{
+	obj := &BsnGentableEntryDelete{
 		BsnHeader: NewBsnHeader(47),
 	}
+	return obj
 }
 
 type BsnGentableEntryDescStatsReply struct {
@@ -2547,7 +2552,6 @@ func (self *BsnGentableEntryDescStatsReply) Serialize(encoder *goloxi.Encoder) e
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -2560,24 +2564,24 @@ func (self *BsnGentableEntryDescStatsReply) Serialize(encoder *goloxi.Encoder) e
 	return nil
 }
 
-func decodeBsnGentableEntryDescStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableEntryDescStatsReply, error) {
-	bsngentableentrydescstatsreply := &BsnGentableEntryDescStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnGentableEntryDescStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableEntryDescStatsReply, error) {
+	_bsngentableentrydescstatsreply := &BsnGentableEntryDescStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 20 {
-		item, err := decodeBsnGentableEntryDescStatsEntry(decoder)
+		item, err := DecodeBsnGentableEntryDescStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentrydescstatsreply.Entries = append(bsngentableentrydescstatsreply.Entries, item)
+		_bsngentableentrydescstatsreply.Entries = append(_bsngentableentrydescstatsreply.Entries, item)
 	}
-	return bsngentableentrydescstatsreply, nil
+	return _bsngentableentrydescstatsreply, nil
 }
 
 func NewBsnGentableEntryDescStatsReply() *BsnGentableEntryDescStatsReply {
-	return &BsnGentableEntryDescStatsReply{
+	obj := &BsnGentableEntryDescStatsReply{
 		BsnStatsReply: NewBsnStatsReply(2),
 	}
+	return obj
 }
 
 type BsnGentableEntryDescStatsRequest struct {
@@ -2592,7 +2596,6 @@ func (self *BsnGentableEntryDescStatsRequest) Serialize(encoder *goloxi.Encoder)
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	self.Checksum.Serialize(encoder)
@@ -2604,23 +2607,23 @@ func (self *BsnGentableEntryDescStatsRequest) Serialize(encoder *goloxi.Encoder)
 	return nil
 }
 
-func decodeBsnGentableEntryDescStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableEntryDescStatsRequest, error) {
-	bsngentableentrydescstatsrequest := &BsnGentableEntryDescStatsRequest{BsnStatsRequest: parent}
+func DecodeBsnGentableEntryDescStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableEntryDescStatsRequest, error) {
+	_bsngentableentrydescstatsrequest := &BsnGentableEntryDescStatsRequest{BsnStatsRequest: parent}
 	if decoder.Length() < 36 {
 		return nil, fmt.Errorf("BsnGentableEntryDescStatsRequest packet too short: %d < 36", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsngentableentrydescstatsrequest.TableId = uint16(decoder.ReadUint16())
+	_bsngentableentrydescstatsrequest.TableId = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	bsngentableentrydescstatsrequest.Checksum.Decode(decoder)
-	bsngentableentrydescstatsrequest.ChecksumMask.Decode(decoder)
-	return bsngentableentrydescstatsrequest, nil
+	_bsngentableentrydescstatsrequest.Checksum.Decode(decoder)
+	_bsngentableentrydescstatsrequest.ChecksumMask.Decode(decoder)
+	return _bsngentableentrydescstatsrequest, nil
 }
 
 func NewBsnGentableEntryDescStatsRequest() *BsnGentableEntryDescStatsRequest {
-	return &BsnGentableEntryDescStatsRequest{
+	obj := &BsnGentableEntryDescStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(2),
 	}
+	return obj
 }
 
 type BsnGentableEntryStatsReply struct {
@@ -2633,7 +2636,6 @@ func (self *BsnGentableEntryStatsReply) Serialize(encoder *goloxi.Encoder) error
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -2646,24 +2648,24 @@ func (self *BsnGentableEntryStatsReply) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnGentableEntryStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableEntryStatsReply, error) {
-	bsngentableentrystatsreply := &BsnGentableEntryStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnGentableEntryStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableEntryStatsReply, error) {
+	_bsngentableentrystatsreply := &BsnGentableEntryStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeBsnGentableEntryStatsEntry(decoder)
+		item, err := DecodeBsnGentableEntryStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentableentrystatsreply.Entries = append(bsngentableentrystatsreply.Entries, item)
+		_bsngentableentrystatsreply.Entries = append(_bsngentableentrystatsreply.Entries, item)
 	}
-	return bsngentableentrystatsreply, nil
+	return _bsngentableentrystatsreply, nil
 }
 
 func NewBsnGentableEntryStatsReply() *BsnGentableEntryStatsReply {
-	return &BsnGentableEntryStatsReply{
+	obj := &BsnGentableEntryStatsReply{
 		BsnStatsReply: NewBsnStatsReply(3),
 	}
+	return obj
 }
 
 type BsnGentableEntryStatsRequest struct {
@@ -2678,7 +2680,6 @@ func (self *BsnGentableEntryStatsRequest) Serialize(encoder *goloxi.Encoder) err
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	self.Checksum.Serialize(encoder)
@@ -2690,23 +2691,23 @@ func (self *BsnGentableEntryStatsRequest) Serialize(encoder *goloxi.Encoder) err
 	return nil
 }
 
-func decodeBsnGentableEntryStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableEntryStatsRequest, error) {
-	bsngentableentrystatsrequest := &BsnGentableEntryStatsRequest{BsnStatsRequest: parent}
+func DecodeBsnGentableEntryStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableEntryStatsRequest, error) {
+	_bsngentableentrystatsrequest := &BsnGentableEntryStatsRequest{BsnStatsRequest: parent}
 	if decoder.Length() < 36 {
 		return nil, fmt.Errorf("BsnGentableEntryStatsRequest packet too short: %d < 36", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsngentableentrystatsrequest.TableId = uint16(decoder.ReadUint16())
+	_bsngentableentrystatsrequest.TableId = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	bsngentableentrystatsrequest.Checksum.Decode(decoder)
-	bsngentableentrystatsrequest.ChecksumMask.Decode(decoder)
-	return bsngentableentrystatsrequest, nil
+	_bsngentableentrystatsrequest.Checksum.Decode(decoder)
+	_bsngentableentrystatsrequest.ChecksumMask.Decode(decoder)
+	return _bsngentableentrystatsrequest, nil
 }
 
 func NewBsnGentableEntryStatsRequest() *BsnGentableEntryStatsRequest {
-	return &BsnGentableEntryStatsRequest{
+	obj := &BsnGentableEntryStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(3),
 	}
+	return obj
 }
 
 type BsnGentableError struct {
@@ -2729,20 +2730,21 @@ func (self *BsnGentableError) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGentableError(parent *BsnBaseError, decoder *goloxi.Decoder) (*BsnGentableError, error) {
-	bsngentableerror := &BsnGentableError{BsnBaseError: parent}
+func DecodeBsnGentableError(parent *BsnBaseError, decoder *goloxi.Decoder) (*BsnGentableError, error) {
+	_bsngentableerror := &BsnGentableError{BsnBaseError: parent}
 	if decoder.Length() < 260 {
 		return nil, fmt.Errorf("BsnGentableError packet too short: %d < 260", decoder.Length())
 	}
-	bsngentableerror.ErrorCode = BsnGentableErrorCode(decoder.ReadUint16())
-	bsngentableerror.TableId = uint16(decoder.ReadUint16())
-	return bsngentableerror, nil
+	_bsngentableerror.ErrorCode = BsnGentableErrorCode(decoder.ReadUint16())
+	_bsngentableerror.TableId = uint16(decoder.ReadUint16())
+	return _bsngentableerror, nil
 }
 
 func NewBsnGentableError() *BsnGentableError {
-	return &BsnGentableError{
+	obj := &BsnGentableError{
 		BsnBaseError: NewBsnBaseError(2),
 	}
+	return obj
 }
 
 type BsnGentableSetBucketsSize struct {
@@ -2766,21 +2768,22 @@ func (self *BsnGentableSetBucketsSize) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnGentableSetBucketsSize(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableSetBucketsSize, error) {
-	bsngentablesetbucketssize := &BsnGentableSetBucketsSize{BsnHeader: parent}
+func DecodeBsnGentableSetBucketsSize(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGentableSetBucketsSize, error) {
+	_bsngentablesetbucketssize := &BsnGentableSetBucketsSize{BsnHeader: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnGentableSetBucketsSize packet too short: %d < 8", decoder.Length())
 	}
-	bsngentablesetbucketssize.TableId = uint16(decoder.ReadUint16())
+	_bsngentablesetbucketssize.TableId = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	bsngentablesetbucketssize.BucketsSize = uint32(decoder.ReadUint32())
-	return bsngentablesetbucketssize, nil
+	_bsngentablesetbucketssize.BucketsSize = uint32(decoder.ReadUint32())
+	return _bsngentablesetbucketssize, nil
 }
 
 func NewBsnGentableSetBucketsSize() *BsnGentableSetBucketsSize {
-	return &BsnGentableSetBucketsSize{
+	obj := &BsnGentableSetBucketsSize{
 		BsnHeader: NewBsnHeader(50),
 	}
+	return obj
 }
 
 type BsnGentableStatsReply struct {
@@ -2793,7 +2796,6 @@ func (self *BsnGentableStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -2806,24 +2808,24 @@ func (self *BsnGentableStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGentableStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableStatsReply, error) {
-	bsngentablestatsreply := &BsnGentableStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnGentableStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnGentableStatsReply, error) {
+	_bsngentablestatsreply := &BsnGentableStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 24 {
-		item, err := decodeBsnGentableStatsEntry(decoder)
+		item, err := DecodeBsnGentableStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngentablestatsreply.Entries = append(bsngentablestatsreply.Entries, item)
+		_bsngentablestatsreply.Entries = append(_bsngentablestatsreply.Entries, item)
 	}
-	return bsngentablestatsreply, nil
+	return _bsngentablestatsreply, nil
 }
 
 func NewBsnGentableStatsReply() *BsnGentableStatsReply {
-	return &BsnGentableStatsReply{
+	obj := &BsnGentableStatsReply{
 		BsnStatsReply: NewBsnStatsReply(7),
 	}
+	return obj
 }
 
 type BsnGentableStatsRequest struct {
@@ -2835,27 +2837,22 @@ func (self *BsnGentableStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeBsnGentableStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableStatsRequest, error) {
-	bsngentablestatsrequest := &BsnGentableStatsRequest{BsnStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnGentableStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
-	return bsngentablestatsrequest, nil
+func DecodeBsnGentableStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnGentableStatsRequest, error) {
+	_bsngentablestatsrequest := &BsnGentableStatsRequest{BsnStatsRequest: parent}
+	return _bsngentablestatsrequest, nil
 }
 
 func NewBsnGentableStatsRequest() *BsnGentableStatsRequest {
-	return &BsnGentableStatsRequest{
+	obj := &BsnGentableStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(7),
 	}
+	return obj
 }
 
 type BsnGetInterfacesReply struct {
@@ -2880,23 +2877,24 @@ func (self *BsnGetInterfacesReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGetInterfacesReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetInterfacesReply, error) {
-	bsngetinterfacesreply := &BsnGetInterfacesReply{BsnHeader: parent}
+func DecodeBsnGetInterfacesReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetInterfacesReply, error) {
+	_bsngetinterfacesreply := &BsnGetInterfacesReply{BsnHeader: parent}
 
 	for decoder.Length() >= 32 {
-		item, err := decodeBsnInterface(decoder)
+		item, err := DecodeBsnInterface(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsngetinterfacesreply.Interfaces = append(bsngetinterfacesreply.Interfaces, item)
+		_bsngetinterfacesreply.Interfaces = append(_bsngetinterfacesreply.Interfaces, item)
 	}
-	return bsngetinterfacesreply, nil
+	return _bsngetinterfacesreply, nil
 }
 
 func NewBsnGetInterfacesReply() *BsnGetInterfacesReply {
-	return &BsnGetInterfacesReply{
+	obj := &BsnGetInterfacesReply{
 		BsnHeader: NewBsnHeader(10),
 	}
+	return obj
 }
 
 type BsnGetInterfacesRequest struct {
@@ -2914,15 +2912,16 @@ func (self *BsnGetInterfacesRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGetInterfacesRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetInterfacesRequest, error) {
-	bsngetinterfacesrequest := &BsnGetInterfacesRequest{BsnHeader: parent}
-	return bsngetinterfacesrequest, nil
+func DecodeBsnGetInterfacesRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetInterfacesRequest, error) {
+	_bsngetinterfacesrequest := &BsnGetInterfacesRequest{BsnHeader: parent}
+	return _bsngetinterfacesrequest, nil
 }
 
 func NewBsnGetInterfacesRequest() *BsnGetInterfacesRequest {
-	return &BsnGetInterfacesRequest{
+	obj := &BsnGetInterfacesRequest{
 		BsnHeader: NewBsnHeader(9),
 	}
+	return obj
 }
 
 type BsnGetMirroringReply struct {
@@ -2944,20 +2943,21 @@ func (self *BsnGetMirroringReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGetMirroringReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetMirroringReply, error) {
-	bsngetmirroringreply := &BsnGetMirroringReply{BsnHeader: parent}
+func DecodeBsnGetMirroringReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetMirroringReply, error) {
+	_bsngetmirroringreply := &BsnGetMirroringReply{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnGetMirroringReply packet too short: %d < 4", decoder.Length())
 	}
-	bsngetmirroringreply.ReportMirrorPorts = uint8(decoder.ReadByte())
+	_bsngetmirroringreply.ReportMirrorPorts = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return bsngetmirroringreply, nil
+	return _bsngetmirroringreply, nil
 }
 
 func NewBsnGetMirroringReply() *BsnGetMirroringReply {
-	return &BsnGetMirroringReply{
+	obj := &BsnGetMirroringReply{
 		BsnHeader: NewBsnHeader(5),
 	}
+	return obj
 }
 
 type BsnGetMirroringRequest struct {
@@ -2979,20 +2979,21 @@ func (self *BsnGetMirroringRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnGetMirroringRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetMirroringRequest, error) {
-	bsngetmirroringrequest := &BsnGetMirroringRequest{BsnHeader: parent}
+func DecodeBsnGetMirroringRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetMirroringRequest, error) {
+	_bsngetmirroringrequest := &BsnGetMirroringRequest{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnGetMirroringRequest packet too short: %d < 4", decoder.Length())
 	}
-	bsngetmirroringrequest.ReportMirrorPorts = uint8(decoder.ReadByte())
+	_bsngetmirroringrequest.ReportMirrorPorts = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return bsngetmirroringrequest, nil
+	return _bsngetmirroringrequest, nil
 }
 
 func NewBsnGetMirroringRequest() *BsnGetMirroringRequest {
-	return &BsnGetMirroringRequest{
+	obj := &BsnGetMirroringRequest{
 		BsnHeader: NewBsnHeader(4),
 	}
+	return obj
 }
 
 type BsnGetSwitchPipelineReply struct {
@@ -3013,19 +3014,20 @@ func (self *BsnGetSwitchPipelineReply) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnGetSwitchPipelineReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetSwitchPipelineReply, error) {
-	bsngetswitchpipelinereply := &BsnGetSwitchPipelineReply{BsnHeader: parent}
+func DecodeBsnGetSwitchPipelineReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetSwitchPipelineReply, error) {
+	_bsngetswitchpipelinereply := &BsnGetSwitchPipelineReply{BsnHeader: parent}
 	if decoder.Length() < 256 {
 		return nil, fmt.Errorf("BsnGetSwitchPipelineReply packet too short: %d < 256", decoder.Length())
 	}
-	bsngetswitchpipelinereply.Pipeline = string(bytes.Trim(decoder.Read(256), "\x00"))
-	return bsngetswitchpipelinereply, nil
+	_bsngetswitchpipelinereply.Pipeline = string(bytes.Trim(decoder.Read(256), "\x00"))
+	return _bsngetswitchpipelinereply, nil
 }
 
 func NewBsnGetSwitchPipelineReply() *BsnGetSwitchPipelineReply {
-	return &BsnGetSwitchPipelineReply{
+	obj := &BsnGetSwitchPipelineReply{
 		BsnHeader: NewBsnHeader(52),
 	}
+	return obj
 }
 
 type BsnGetSwitchPipelineRequest struct {
@@ -3043,15 +3045,16 @@ func (self *BsnGetSwitchPipelineRequest) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnGetSwitchPipelineRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetSwitchPipelineRequest, error) {
-	bsngetswitchpipelinerequest := &BsnGetSwitchPipelineRequest{BsnHeader: parent}
-	return bsngetswitchpipelinerequest, nil
+func DecodeBsnGetSwitchPipelineRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnGetSwitchPipelineRequest, error) {
+	_bsngetswitchpipelinerequest := &BsnGetSwitchPipelineRequest{BsnHeader: parent}
+	return _bsngetswitchpipelinerequest, nil
 }
 
 func NewBsnGetSwitchPipelineRequest() *BsnGetSwitchPipelineRequest {
-	return &BsnGetSwitchPipelineRequest{
+	obj := &BsnGetSwitchPipelineRequest{
 		BsnHeader: NewBsnHeader(51),
 	}
+	return obj
 }
 
 type BsnImageDescStatsReply struct {
@@ -3065,7 +3068,6 @@ func (self *BsnImageDescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.Write([]byte(self.ImageChecksum))
 	encoder.Write([]byte(self.StartupConfigChecksum))
 
@@ -3075,21 +3077,21 @@ func (self *BsnImageDescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnImageDescStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnImageDescStatsReply, error) {
-	bsnimagedescstatsreply := &BsnImageDescStatsReply{BsnStatsReply: parent}
+func DecodeBsnImageDescStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnImageDescStatsReply, error) {
+	_bsnimagedescstatsreply := &BsnImageDescStatsReply{BsnStatsReply: parent}
 	if decoder.Length() < 512 {
 		return nil, fmt.Errorf("BsnImageDescStatsReply packet too short: %d < 512", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsnimagedescstatsreply.ImageChecksum = string(bytes.Trim(decoder.Read(256), "\x00"))
-	bsnimagedescstatsreply.StartupConfigChecksum = string(bytes.Trim(decoder.Read(256), "\x00"))
-	return bsnimagedescstatsreply, nil
+	_bsnimagedescstatsreply.ImageChecksum = string(bytes.Trim(decoder.Read(256), "\x00"))
+	_bsnimagedescstatsreply.StartupConfigChecksum = string(bytes.Trim(decoder.Read(256), "\x00"))
+	return _bsnimagedescstatsreply, nil
 }
 
 func NewBsnImageDescStatsReply() *BsnImageDescStatsReply {
-	return &BsnImageDescStatsReply{
+	obj := &BsnImageDescStatsReply{
 		BsnStatsReply: NewBsnStatsReply(14),
 	}
+	return obj
 }
 
 type BsnImageDescStatsRequest struct {
@@ -3101,27 +3103,22 @@ func (self *BsnImageDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeBsnImageDescStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnImageDescStatsRequest, error) {
-	bsnimagedescstatsrequest := &BsnImageDescStatsRequest{BsnStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnImageDescStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
-	return bsnimagedescstatsrequest, nil
+func DecodeBsnImageDescStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnImageDescStatsRequest, error) {
+	_bsnimagedescstatsrequest := &BsnImageDescStatsRequest{BsnStatsRequest: parent}
+	return _bsnimagedescstatsrequest, nil
 }
 
 func NewBsnImageDescStatsRequest() *BsnImageDescStatsRequest {
-	return &BsnImageDescStatsRequest{
+	obj := &BsnImageDescStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(14),
 	}
+	return obj
 }
 
 type BsnLacpConvergenceNotif struct {
@@ -3165,31 +3162,32 @@ func (self *BsnLacpConvergenceNotif) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnLacpConvergenceNotif(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLacpConvergenceNotif, error) {
-	bsnlacpconvergencenotif := &BsnLacpConvergenceNotif{BsnHeader: parent}
+func DecodeBsnLacpConvergenceNotif(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLacpConvergenceNotif, error) {
+	_bsnlacpconvergencenotif := &BsnLacpConvergenceNotif{BsnHeader: parent}
 	if decoder.Length() < 36 {
 		return nil, fmt.Errorf("BsnLacpConvergenceNotif packet too short: %d < 36", decoder.Length())
 	}
-	bsnlacpconvergencenotif.ConvergenceStatus = uint8(decoder.ReadByte())
+	_bsnlacpconvergencenotif.ConvergenceStatus = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	bsnlacpconvergencenotif.PortNo.Decode(decoder)
-	bsnlacpconvergencenotif.ActorSysPriority = uint16(decoder.ReadUint16())
-	bsnlacpconvergencenotif.ActorSysMac = net.HardwareAddr(decoder.Read(6))
-	bsnlacpconvergencenotif.ActorPortPriority = uint16(decoder.ReadUint16())
-	bsnlacpconvergencenotif.ActorPortNum = uint16(decoder.ReadUint16())
-	bsnlacpconvergencenotif.ActorKey = uint16(decoder.ReadUint16())
-	bsnlacpconvergencenotif.PartnerSysPriority = uint16(decoder.ReadUint16())
-	bsnlacpconvergencenotif.PartnerSysMac = net.HardwareAddr(decoder.Read(6))
-	bsnlacpconvergencenotif.PartnerPortPriority = uint16(decoder.ReadUint16())
-	bsnlacpconvergencenotif.PartnerPortNum = uint16(decoder.ReadUint16())
-	bsnlacpconvergencenotif.PartnerKey = uint16(decoder.ReadUint16())
-	return bsnlacpconvergencenotif, nil
+	_bsnlacpconvergencenotif.PortNo.Decode(decoder)
+	_bsnlacpconvergencenotif.ActorSysPriority = uint16(decoder.ReadUint16())
+	_bsnlacpconvergencenotif.ActorSysMac = net.HardwareAddr(decoder.Read(6))
+	_bsnlacpconvergencenotif.ActorPortPriority = uint16(decoder.ReadUint16())
+	_bsnlacpconvergencenotif.ActorPortNum = uint16(decoder.ReadUint16())
+	_bsnlacpconvergencenotif.ActorKey = uint16(decoder.ReadUint16())
+	_bsnlacpconvergencenotif.PartnerSysPriority = uint16(decoder.ReadUint16())
+	_bsnlacpconvergencenotif.PartnerSysMac = net.HardwareAddr(decoder.Read(6))
+	_bsnlacpconvergencenotif.PartnerPortPriority = uint16(decoder.ReadUint16())
+	_bsnlacpconvergencenotif.PartnerPortNum = uint16(decoder.ReadUint16())
+	_bsnlacpconvergencenotif.PartnerKey = uint16(decoder.ReadUint16())
+	return _bsnlacpconvergencenotif, nil
 }
 
 func NewBsnLacpConvergenceNotif() *BsnLacpConvergenceNotif {
-	return &BsnLacpConvergenceNotif{
+	obj := &BsnLacpConvergenceNotif{
 		BsnHeader: NewBsnHeader(43),
 	}
+	return obj
 }
 
 type BsnLacpStatsReply struct {
@@ -3202,7 +3200,6 @@ func (self *BsnLacpStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -3215,24 +3212,24 @@ func (self *BsnLacpStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnLacpStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnLacpStatsReply, error) {
-	bsnlacpstatsreply := &BsnLacpStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnLacpStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnLacpStatsReply, error) {
+	_bsnlacpstatsreply := &BsnLacpStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 36 {
-		item, err := decodeBsnLacpStatsEntry(decoder)
+		item, err := DecodeBsnLacpStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnlacpstatsreply.Entries = append(bsnlacpstatsreply.Entries, item)
+		_bsnlacpstatsreply.Entries = append(_bsnlacpstatsreply.Entries, item)
 	}
-	return bsnlacpstatsreply, nil
+	return _bsnlacpstatsreply, nil
 }
 
 func NewBsnLacpStatsReply() *BsnLacpStatsReply {
-	return &BsnLacpStatsReply{
+	obj := &BsnLacpStatsReply{
 		BsnStatsReply: NewBsnStatsReply(1),
 	}
+	return obj
 }
 
 type BsnLacpStatsRequest struct {
@@ -3244,27 +3241,22 @@ func (self *BsnLacpStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeBsnLacpStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnLacpStatsRequest, error) {
-	bsnlacpstatsrequest := &BsnLacpStatsRequest{BsnStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnLacpStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
-	return bsnlacpstatsrequest, nil
+func DecodeBsnLacpStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnLacpStatsRequest, error) {
+	_bsnlacpstatsrequest := &BsnLacpStatsRequest{BsnStatsRequest: parent}
+	return _bsnlacpstatsrequest, nil
 }
 
 func NewBsnLacpStatsRequest() *BsnLacpStatsRequest {
-	return &BsnLacpStatsRequest{
+	obj := &BsnLacpStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(1),
 	}
+	return obj
 }
 
 type BsnLog struct {
@@ -3287,20 +3279,21 @@ func (self *BsnLog) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnLog(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLog, error) {
-	bsnlog := &BsnLog{BsnHeader: parent}
+func DecodeBsnLog(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLog, error) {
+	_bsnlog := &BsnLog{BsnHeader: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("BsnLog packet too short: %d < 1", decoder.Length())
 	}
-	bsnlog.Loglevel = BsnLoglevel(decoder.ReadByte())
-	bsnlog.Data = decoder.Read(decoder.Length())
-	return bsnlog, nil
+	_bsnlog.Loglevel = BsnLoglevel(decoder.ReadByte())
+	_bsnlog.Data = decoder.Read(decoder.Length())
+	return _bsnlog, nil
 }
 
 func NewBsnLog() *BsnLog {
-	return &BsnLog{
+	obj := &BsnLog{
 		BsnHeader: NewBsnHeader(63),
 	}
+	return obj
 }
 
 type BsnLuaCommandReply struct {
@@ -3321,16 +3314,17 @@ func (self *BsnLuaCommandReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnLuaCommandReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLuaCommandReply, error) {
-	bsnluacommandreply := &BsnLuaCommandReply{BsnHeader: parent}
-	bsnluacommandreply.Data = decoder.Read(decoder.Length())
-	return bsnluacommandreply, nil
+func DecodeBsnLuaCommandReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLuaCommandReply, error) {
+	_bsnluacommandreply := &BsnLuaCommandReply{BsnHeader: parent}
+	_bsnluacommandreply.Data = decoder.Read(decoder.Length())
+	return _bsnluacommandreply, nil
 }
 
 func NewBsnLuaCommandReply() *BsnLuaCommandReply {
-	return &BsnLuaCommandReply{
+	obj := &BsnLuaCommandReply{
 		BsnHeader: NewBsnHeader(66),
 	}
+	return obj
 }
 
 type BsnLuaCommandRequest struct {
@@ -3351,16 +3345,17 @@ func (self *BsnLuaCommandRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnLuaCommandRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLuaCommandRequest, error) {
-	bsnluacommandrequest := &BsnLuaCommandRequest{BsnHeader: parent}
-	bsnluacommandrequest.Data = decoder.Read(decoder.Length())
-	return bsnluacommandrequest, nil
+func DecodeBsnLuaCommandRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLuaCommandRequest, error) {
+	_bsnluacommandrequest := &BsnLuaCommandRequest{BsnHeader: parent}
+	_bsnluacommandrequest.Data = decoder.Read(decoder.Length())
+	return _bsnluacommandrequest, nil
 }
 
 func NewBsnLuaCommandRequest() *BsnLuaCommandRequest {
-	return &BsnLuaCommandRequest{
+	obj := &BsnLuaCommandRequest{
 		BsnHeader: NewBsnHeader(65),
 	}
+	return obj
 }
 
 type BsnLuaNotification struct {
@@ -3381,16 +3376,17 @@ func (self *BsnLuaNotification) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnLuaNotification(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLuaNotification, error) {
-	bsnluanotification := &BsnLuaNotification{BsnHeader: parent}
-	bsnluanotification.Data = decoder.Read(decoder.Length())
-	return bsnluanotification, nil
+func DecodeBsnLuaNotification(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLuaNotification, error) {
+	_bsnluanotification := &BsnLuaNotification{BsnHeader: parent}
+	_bsnluanotification.Data = decoder.Read(decoder.Length())
+	return _bsnluanotification, nil
 }
 
 func NewBsnLuaNotification() *BsnLuaNotification {
-	return &BsnLuaNotification{
+	obj := &BsnLuaNotification{
 		BsnHeader: NewBsnHeader(67),
 	}
+	return obj
 }
 
 type BsnLuaUpload struct {
@@ -3415,21 +3411,22 @@ func (self *BsnLuaUpload) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnLuaUpload(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLuaUpload, error) {
-	bsnluaupload := &BsnLuaUpload{BsnHeader: parent}
+func DecodeBsnLuaUpload(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnLuaUpload, error) {
+	_bsnluaupload := &BsnLuaUpload{BsnHeader: parent}
 	if decoder.Length() < 66 {
 		return nil, fmt.Errorf("BsnLuaUpload packet too short: %d < 66", decoder.Length())
 	}
-	bsnluaupload.Flags = BsnLuaUploadFlags(decoder.ReadUint16())
-	bsnluaupload.Filename = string(bytes.Trim(decoder.Read(64), "\x00"))
-	bsnluaupload.Data = decoder.Read(decoder.Length())
-	return bsnluaupload, nil
+	_bsnluaupload.Flags = BsnLuaUploadFlags(decoder.ReadUint16())
+	_bsnluaupload.Filename = string(bytes.Trim(decoder.Read(64), "\x00"))
+	_bsnluaupload.Data = decoder.Read(decoder.Length())
+	return _bsnluaupload, nil
 }
 
 func NewBsnLuaUpload() *BsnLuaUpload {
-	return &BsnLuaUpload{
+	obj := &BsnLuaUpload{
 		BsnHeader: NewBsnHeader(64),
 	}
+	return obj
 }
 
 type BsnPduRxReply struct {
@@ -3454,21 +3451,22 @@ func (self *BsnPduRxReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnPduRxReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduRxReply, error) {
-	bsnpdurxreply := &BsnPduRxReply{BsnHeader: parent}
+func DecodeBsnPduRxReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduRxReply, error) {
+	_bsnpdurxreply := &BsnPduRxReply{BsnHeader: parent}
 	if decoder.Length() < 9 {
 		return nil, fmt.Errorf("BsnPduRxReply packet too short: %d < 9", decoder.Length())
 	}
-	bsnpdurxreply.Status = uint32(decoder.ReadUint32())
-	bsnpdurxreply.PortNo.Decode(decoder)
-	bsnpdurxreply.SlotNum = uint8(decoder.ReadByte())
-	return bsnpdurxreply, nil
+	_bsnpdurxreply.Status = uint32(decoder.ReadUint32())
+	_bsnpdurxreply.PortNo.Decode(decoder)
+	_bsnpdurxreply.SlotNum = uint8(decoder.ReadByte())
+	return _bsnpdurxreply, nil
 }
 
 func NewBsnPduRxReply() *BsnPduRxReply {
-	return &BsnPduRxReply{
+	obj := &BsnPduRxReply{
 		BsnHeader: NewBsnHeader(34),
 	}
+	return obj
 }
 
 type BsnPduRxRequest struct {
@@ -3496,23 +3494,24 @@ func (self *BsnPduRxRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnPduRxRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduRxRequest, error) {
-	bsnpdurxrequest := &BsnPduRxRequest{BsnHeader: parent}
+func DecodeBsnPduRxRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduRxRequest, error) {
+	_bsnpdurxrequest := &BsnPduRxRequest{BsnHeader: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("BsnPduRxRequest packet too short: %d < 12", decoder.Length())
 	}
-	bsnpdurxrequest.TimeoutMs = uint32(decoder.ReadUint32())
-	bsnpdurxrequest.PortNo.Decode(decoder)
-	bsnpdurxrequest.SlotNum = uint8(decoder.ReadByte())
+	_bsnpdurxrequest.TimeoutMs = uint32(decoder.ReadUint32())
+	_bsnpdurxrequest.PortNo.Decode(decoder)
+	_bsnpdurxrequest.SlotNum = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	bsnpdurxrequest.Data = decoder.Read(decoder.Length())
-	return bsnpdurxrequest, nil
+	_bsnpdurxrequest.Data = decoder.Read(decoder.Length())
+	return _bsnpdurxrequest, nil
 }
 
 func NewBsnPduRxRequest() *BsnPduRxRequest {
-	return &BsnPduRxRequest{
+	obj := &BsnPduRxRequest{
 		BsnHeader: NewBsnHeader(33),
 	}
+	return obj
 }
 
 type BsnPduRxTimeout struct {
@@ -3535,20 +3534,21 @@ func (self *BsnPduRxTimeout) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnPduRxTimeout(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduRxTimeout, error) {
-	bsnpdurxtimeout := &BsnPduRxTimeout{BsnHeader: parent}
+func DecodeBsnPduRxTimeout(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduRxTimeout, error) {
+	_bsnpdurxtimeout := &BsnPduRxTimeout{BsnHeader: parent}
 	if decoder.Length() < 5 {
 		return nil, fmt.Errorf("BsnPduRxTimeout packet too short: %d < 5", decoder.Length())
 	}
-	bsnpdurxtimeout.PortNo.Decode(decoder)
-	bsnpdurxtimeout.SlotNum = uint8(decoder.ReadByte())
-	return bsnpdurxtimeout, nil
+	_bsnpdurxtimeout.PortNo.Decode(decoder)
+	_bsnpdurxtimeout.SlotNum = uint8(decoder.ReadByte())
+	return _bsnpdurxtimeout, nil
 }
 
 func NewBsnPduRxTimeout() *BsnPduRxTimeout {
-	return &BsnPduRxTimeout{
+	obj := &BsnPduRxTimeout{
 		BsnHeader: NewBsnHeader(35),
 	}
+	return obj
 }
 
 type BsnPduTxReply struct {
@@ -3573,21 +3573,22 @@ func (self *BsnPduTxReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnPduTxReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduTxReply, error) {
-	bsnpdutxreply := &BsnPduTxReply{BsnHeader: parent}
+func DecodeBsnPduTxReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduTxReply, error) {
+	_bsnpdutxreply := &BsnPduTxReply{BsnHeader: parent}
 	if decoder.Length() < 9 {
 		return nil, fmt.Errorf("BsnPduTxReply packet too short: %d < 9", decoder.Length())
 	}
-	bsnpdutxreply.Status = uint32(decoder.ReadUint32())
-	bsnpdutxreply.PortNo.Decode(decoder)
-	bsnpdutxreply.SlotNum = uint8(decoder.ReadByte())
-	return bsnpdutxreply, nil
+	_bsnpdutxreply.Status = uint32(decoder.ReadUint32())
+	_bsnpdutxreply.PortNo.Decode(decoder)
+	_bsnpdutxreply.SlotNum = uint8(decoder.ReadByte())
+	return _bsnpdutxreply, nil
 }
 
 func NewBsnPduTxReply() *BsnPduTxReply {
-	return &BsnPduTxReply{
+	obj := &BsnPduTxReply{
 		BsnHeader: NewBsnHeader(32),
 	}
+	return obj
 }
 
 type BsnPduTxRequest struct {
@@ -3615,23 +3616,24 @@ func (self *BsnPduTxRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnPduTxRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduTxRequest, error) {
-	bsnpdutxrequest := &BsnPduTxRequest{BsnHeader: parent}
+func DecodeBsnPduTxRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduTxRequest, error) {
+	_bsnpdutxrequest := &BsnPduTxRequest{BsnHeader: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("BsnPduTxRequest packet too short: %d < 12", decoder.Length())
 	}
-	bsnpdutxrequest.TxIntervalMs = uint32(decoder.ReadUint32())
-	bsnpdutxrequest.PortNo.Decode(decoder)
-	bsnpdutxrequest.SlotNum = uint8(decoder.ReadByte())
+	_bsnpdutxrequest.TxIntervalMs = uint32(decoder.ReadUint32())
+	_bsnpdutxrequest.PortNo.Decode(decoder)
+	_bsnpdutxrequest.SlotNum = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	bsnpdutxrequest.Data = decoder.Read(decoder.Length())
-	return bsnpdutxrequest, nil
+	_bsnpdutxrequest.Data = decoder.Read(decoder.Length())
+	return _bsnpdutxrequest, nil
 }
 
 func NewBsnPduTxRequest() *BsnPduTxRequest {
-	return &BsnPduTxRequest{
+	obj := &BsnPduTxRequest{
 		BsnHeader: NewBsnHeader(31),
 	}
+	return obj
 }
 
 type BsnPortCounterStatsReply struct {
@@ -3644,7 +3646,6 @@ func (self *BsnPortCounterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -3657,24 +3658,24 @@ func (self *BsnPortCounterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnPortCounterStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnPortCounterStatsReply, error) {
-	bsnportcounterstatsreply := &BsnPortCounterStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnPortCounterStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnPortCounterStatsReply, error) {
+	_bsnportcounterstatsreply := &BsnPortCounterStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 8 {
-		item, err := decodeBsnPortCounterStatsEntry(decoder)
+		item, err := DecodeBsnPortCounterStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnportcounterstatsreply.Entries = append(bsnportcounterstatsreply.Entries, item)
+		_bsnportcounterstatsreply.Entries = append(_bsnportcounterstatsreply.Entries, item)
 	}
-	return bsnportcounterstatsreply, nil
+	return _bsnportcounterstatsreply, nil
 }
 
 func NewBsnPortCounterStatsReply() *BsnPortCounterStatsReply {
-	return &BsnPortCounterStatsReply{
+	obj := &BsnPortCounterStatsReply{
 		BsnStatsReply: NewBsnStatsReply(8),
 	}
+	return obj
 }
 
 type BsnPortCounterStatsRequest struct {
@@ -3687,7 +3688,6 @@ func (self *BsnPortCounterStatsRequest) Serialize(encoder *goloxi.Encoder) error
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	self.PortNo.Serialize(encoder)
 
 	// Overwrite length
@@ -3696,20 +3696,20 @@ func (self *BsnPortCounterStatsRequest) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnPortCounterStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnPortCounterStatsRequest, error) {
-	bsnportcounterstatsrequest := &BsnPortCounterStatsRequest{BsnStatsRequest: parent}
+func DecodeBsnPortCounterStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnPortCounterStatsRequest, error) {
+	_bsnportcounterstatsrequest := &BsnPortCounterStatsRequest{BsnStatsRequest: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnPortCounterStatsRequest packet too short: %d < 4", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsnportcounterstatsrequest.PortNo.Decode(decoder)
-	return bsnportcounterstatsrequest, nil
+	_bsnportcounterstatsrequest.PortNo.Decode(decoder)
+	return _bsnportcounterstatsrequest, nil
 }
 
 func NewBsnPortCounterStatsRequest() *BsnPortCounterStatsRequest {
-	return &BsnPortCounterStatsRequest{
+	obj := &BsnPortCounterStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(8),
 	}
+	return obj
 }
 
 type BsnRoleStatus struct {
@@ -3735,22 +3735,23 @@ func (self *BsnRoleStatus) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnRoleStatus(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnRoleStatus, error) {
-	bsnrolestatus := &BsnRoleStatus{BsnHeader: parent}
+func DecodeBsnRoleStatus(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnRoleStatus, error) {
+	_bsnrolestatus := &BsnRoleStatus{BsnHeader: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("BsnRoleStatus packet too short: %d < 16", decoder.Length())
 	}
-	bsnrolestatus.Role = ControllerRole(decoder.ReadUint32())
-	bsnrolestatus.Reason = BsnControllerRoleReason(decoder.ReadByte())
+	_bsnrolestatus.Role = ControllerRole(decoder.ReadUint32())
+	_bsnrolestatus.Reason = BsnControllerRoleReason(decoder.ReadByte())
 	decoder.Skip(3)
-	bsnrolestatus.GenerationId = uint64(decoder.ReadUint64())
-	return bsnrolestatus, nil
+	_bsnrolestatus.GenerationId = uint64(decoder.ReadUint64())
+	return _bsnrolestatus, nil
 }
 
 func NewBsnRoleStatus() *BsnRoleStatus {
-	return &BsnRoleStatus{
+	obj := &BsnRoleStatus{
 		BsnHeader: NewBsnHeader(55),
 	}
+	return obj
 }
 
 type BsnSetAuxCxnsReply struct {
@@ -3773,20 +3774,21 @@ func (self *BsnSetAuxCxnsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnSetAuxCxnsReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetAuxCxnsReply, error) {
-	bsnsetauxcxnsreply := &BsnSetAuxCxnsReply{BsnHeader: parent}
+func DecodeBsnSetAuxCxnsReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetAuxCxnsReply, error) {
+	_bsnsetauxcxnsreply := &BsnSetAuxCxnsReply{BsnHeader: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnSetAuxCxnsReply packet too short: %d < 8", decoder.Length())
 	}
-	bsnsetauxcxnsreply.NumAux = uint32(decoder.ReadUint32())
-	bsnsetauxcxnsreply.Status = uint32(decoder.ReadUint32())
-	return bsnsetauxcxnsreply, nil
+	_bsnsetauxcxnsreply.NumAux = uint32(decoder.ReadUint32())
+	_bsnsetauxcxnsreply.Status = uint32(decoder.ReadUint32())
+	return _bsnsetauxcxnsreply, nil
 }
 
 func NewBsnSetAuxCxnsReply() *BsnSetAuxCxnsReply {
-	return &BsnSetAuxCxnsReply{
+	obj := &BsnSetAuxCxnsReply{
 		BsnHeader: NewBsnHeader(59),
 	}
+	return obj
 }
 
 type BsnSetAuxCxnsRequest struct {
@@ -3807,19 +3809,20 @@ func (self *BsnSetAuxCxnsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnSetAuxCxnsRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetAuxCxnsRequest, error) {
-	bsnsetauxcxnsrequest := &BsnSetAuxCxnsRequest{BsnHeader: parent}
+func DecodeBsnSetAuxCxnsRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetAuxCxnsRequest, error) {
+	_bsnsetauxcxnsrequest := &BsnSetAuxCxnsRequest{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnSetAuxCxnsRequest packet too short: %d < 4", decoder.Length())
 	}
-	bsnsetauxcxnsrequest.NumAux = uint32(decoder.ReadUint32())
-	return bsnsetauxcxnsrequest, nil
+	_bsnsetauxcxnsrequest.NumAux = uint32(decoder.ReadUint32())
+	return _bsnsetauxcxnsrequest, nil
 }
 
 func NewBsnSetAuxCxnsRequest() *BsnSetAuxCxnsRequest {
-	return &BsnSetAuxCxnsRequest{
+	obj := &BsnSetAuxCxnsRequest{
 		BsnHeader: NewBsnHeader(58),
 	}
+	return obj
 }
 
 type BsnSetLacpReply struct {
@@ -3842,20 +3845,21 @@ func (self *BsnSetLacpReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnSetLacpReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetLacpReply, error) {
-	bsnsetlacpreply := &BsnSetLacpReply{BsnHeader: parent}
+func DecodeBsnSetLacpReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetLacpReply, error) {
+	_bsnsetlacpreply := &BsnSetLacpReply{BsnHeader: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnSetLacpReply packet too short: %d < 8", decoder.Length())
 	}
-	bsnsetlacpreply.Status = uint32(decoder.ReadUint32())
-	bsnsetlacpreply.PortNo.Decode(decoder)
-	return bsnsetlacpreply, nil
+	_bsnsetlacpreply.Status = uint32(decoder.ReadUint32())
+	_bsnsetlacpreply.PortNo.Decode(decoder)
+	return _bsnsetlacpreply, nil
 }
 
 func NewBsnSetLacpReply() *BsnSetLacpReply {
-	return &BsnSetLacpReply{
+	obj := &BsnSetLacpReply{
 		BsnHeader: NewBsnHeader(42),
 	}
+	return obj
 }
 
 type BsnSetLacpRequest struct {
@@ -3889,26 +3893,27 @@ func (self *BsnSetLacpRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnSetLacpRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetLacpRequest, error) {
-	bsnsetlacprequest := &BsnSetLacpRequest{BsnHeader: parent}
+func DecodeBsnSetLacpRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetLacpRequest, error) {
+	_bsnsetlacprequest := &BsnSetLacpRequest{BsnHeader: parent}
 	if decoder.Length() < 22 {
 		return nil, fmt.Errorf("BsnSetLacpRequest packet too short: %d < 22", decoder.Length())
 	}
-	bsnsetlacprequest.Enabled = uint8(decoder.ReadByte())
+	_bsnsetlacprequest.Enabled = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	bsnsetlacprequest.PortNo.Decode(decoder)
-	bsnsetlacprequest.ActorSysPriority = uint16(decoder.ReadUint16())
-	bsnsetlacprequest.ActorSysMac = net.HardwareAddr(decoder.Read(6))
-	bsnsetlacprequest.ActorPortPriority = uint16(decoder.ReadUint16())
-	bsnsetlacprequest.ActorPortNum = uint16(decoder.ReadUint16())
-	bsnsetlacprequest.ActorKey = uint16(decoder.ReadUint16())
-	return bsnsetlacprequest, nil
+	_bsnsetlacprequest.PortNo.Decode(decoder)
+	_bsnsetlacprequest.ActorSysPriority = uint16(decoder.ReadUint16())
+	_bsnsetlacprequest.ActorSysMac = net.HardwareAddr(decoder.Read(6))
+	_bsnsetlacprequest.ActorPortPriority = uint16(decoder.ReadUint16())
+	_bsnsetlacprequest.ActorPortNum = uint16(decoder.ReadUint16())
+	_bsnsetlacprequest.ActorKey = uint16(decoder.ReadUint16())
+	return _bsnsetlacprequest, nil
 }
 
 func NewBsnSetLacpRequest() *BsnSetLacpRequest {
-	return &BsnSetLacpRequest{
+	obj := &BsnSetLacpRequest{
 		BsnHeader: NewBsnHeader(41),
 	}
+	return obj
 }
 
 type BsnSetMirroring struct {
@@ -3930,20 +3935,21 @@ func (self *BsnSetMirroring) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnSetMirroring(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetMirroring, error) {
-	bsnsetmirroring := &BsnSetMirroring{BsnHeader: parent}
+func DecodeBsnSetMirroring(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetMirroring, error) {
+	_bsnsetmirroring := &BsnSetMirroring{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnSetMirroring packet too short: %d < 4", decoder.Length())
 	}
-	bsnsetmirroring.ReportMirrorPorts = uint8(decoder.ReadByte())
+	_bsnsetmirroring.ReportMirrorPorts = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return bsnsetmirroring, nil
+	return _bsnsetmirroring, nil
 }
 
 func NewBsnSetMirroring() *BsnSetMirroring {
-	return &BsnSetMirroring{
+	obj := &BsnSetMirroring{
 		BsnHeader: NewBsnHeader(3),
 	}
+	return obj
 }
 
 type BsnSetPktinSuppressionReply struct {
@@ -3964,19 +3970,20 @@ func (self *BsnSetPktinSuppressionReply) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnSetPktinSuppressionReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetPktinSuppressionReply, error) {
-	bsnsetpktinsuppressionreply := &BsnSetPktinSuppressionReply{BsnHeader: parent}
+func DecodeBsnSetPktinSuppressionReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetPktinSuppressionReply, error) {
+	_bsnsetpktinsuppressionreply := &BsnSetPktinSuppressionReply{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnSetPktinSuppressionReply packet too short: %d < 4", decoder.Length())
 	}
-	bsnsetpktinsuppressionreply.Status = uint32(decoder.ReadUint32())
-	return bsnsetpktinsuppressionreply, nil
+	_bsnsetpktinsuppressionreply.Status = uint32(decoder.ReadUint32())
+	return _bsnsetpktinsuppressionreply, nil
 }
 
 func NewBsnSetPktinSuppressionReply() *BsnSetPktinSuppressionReply {
-	return &BsnSetPktinSuppressionReply{
+	obj := &BsnSetPktinSuppressionReply{
 		BsnHeader: NewBsnHeader(25),
 	}
+	return obj
 }
 
 type BsnSetPktinSuppressionRequest struct {
@@ -4006,24 +4013,25 @@ func (self *BsnSetPktinSuppressionRequest) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeBsnSetPktinSuppressionRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetPktinSuppressionRequest, error) {
-	bsnsetpktinsuppressionrequest := &BsnSetPktinSuppressionRequest{BsnHeader: parent}
+func DecodeBsnSetPktinSuppressionRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetPktinSuppressionRequest, error) {
+	_bsnsetpktinsuppressionrequest := &BsnSetPktinSuppressionRequest{BsnHeader: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("BsnSetPktinSuppressionRequest packet too short: %d < 16", decoder.Length())
 	}
-	bsnsetpktinsuppressionrequest.Enabled = uint8(decoder.ReadByte())
+	_bsnsetpktinsuppressionrequest.Enabled = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	bsnsetpktinsuppressionrequest.IdleTimeout = uint16(decoder.ReadUint16())
-	bsnsetpktinsuppressionrequest.HardTimeout = uint16(decoder.ReadUint16())
-	bsnsetpktinsuppressionrequest.Priority = uint16(decoder.ReadUint16())
-	bsnsetpktinsuppressionrequest.Cookie = uint64(decoder.ReadUint64())
-	return bsnsetpktinsuppressionrequest, nil
+	_bsnsetpktinsuppressionrequest.IdleTimeout = uint16(decoder.ReadUint16())
+	_bsnsetpktinsuppressionrequest.HardTimeout = uint16(decoder.ReadUint16())
+	_bsnsetpktinsuppressionrequest.Priority = uint16(decoder.ReadUint16())
+	_bsnsetpktinsuppressionrequest.Cookie = uint64(decoder.ReadUint64())
+	return _bsnsetpktinsuppressionrequest, nil
 }
 
 func NewBsnSetPktinSuppressionRequest() *BsnSetPktinSuppressionRequest {
-	return &BsnSetPktinSuppressionRequest{
+	obj := &BsnSetPktinSuppressionRequest{
 		BsnHeader: NewBsnHeader(11),
 	}
+	return obj
 }
 
 type BsnSetSwitchPipelineReply struct {
@@ -4044,19 +4052,20 @@ func (self *BsnSetSwitchPipelineReply) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnSetSwitchPipelineReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetSwitchPipelineReply, error) {
-	bsnsetswitchpipelinereply := &BsnSetSwitchPipelineReply{BsnHeader: parent}
+func DecodeBsnSetSwitchPipelineReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetSwitchPipelineReply, error) {
+	_bsnsetswitchpipelinereply := &BsnSetSwitchPipelineReply{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnSetSwitchPipelineReply packet too short: %d < 4", decoder.Length())
 	}
-	bsnsetswitchpipelinereply.Status = uint32(decoder.ReadUint32())
-	return bsnsetswitchpipelinereply, nil
+	_bsnsetswitchpipelinereply.Status = uint32(decoder.ReadUint32())
+	return _bsnsetswitchpipelinereply, nil
 }
 
 func NewBsnSetSwitchPipelineReply() *BsnSetSwitchPipelineReply {
-	return &BsnSetSwitchPipelineReply{
+	obj := &BsnSetSwitchPipelineReply{
 		BsnHeader: NewBsnHeader(54),
 	}
+	return obj
 }
 
 type BsnSetSwitchPipelineRequest struct {
@@ -4077,19 +4086,20 @@ func (self *BsnSetSwitchPipelineRequest) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnSetSwitchPipelineRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetSwitchPipelineRequest, error) {
-	bsnsetswitchpipelinerequest := &BsnSetSwitchPipelineRequest{BsnHeader: parent}
+func DecodeBsnSetSwitchPipelineRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetSwitchPipelineRequest, error) {
+	_bsnsetswitchpipelinerequest := &BsnSetSwitchPipelineRequest{BsnHeader: parent}
 	if decoder.Length() < 256 {
 		return nil, fmt.Errorf("BsnSetSwitchPipelineRequest packet too short: %d < 256", decoder.Length())
 	}
-	bsnsetswitchpipelinerequest.Pipeline = string(bytes.Trim(decoder.Read(256), "\x00"))
-	return bsnsetswitchpipelinerequest, nil
+	_bsnsetswitchpipelinerequest.Pipeline = string(bytes.Trim(decoder.Read(256), "\x00"))
+	return _bsnsetswitchpipelinerequest, nil
 }
 
 func NewBsnSetSwitchPipelineRequest() *BsnSetSwitchPipelineRequest {
-	return &BsnSetSwitchPipelineRequest{
+	obj := &BsnSetSwitchPipelineRequest{
 		BsnHeader: NewBsnHeader(53),
 	}
+	return obj
 }
 
 type BsnSwitchPipelineStatsReply struct {
@@ -4102,7 +4112,6 @@ func (self *BsnSwitchPipelineStatsReply) Serialize(encoder *goloxi.Encoder) erro
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -4115,24 +4124,24 @@ func (self *BsnSwitchPipelineStatsReply) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnSwitchPipelineStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnSwitchPipelineStatsReply, error) {
-	bsnswitchpipelinestatsreply := &BsnSwitchPipelineStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnSwitchPipelineStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnSwitchPipelineStatsReply, error) {
+	_bsnswitchpipelinestatsreply := &BsnSwitchPipelineStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 256 {
-		item, err := decodeBsnSwitchPipelineStatsEntry(decoder)
+		item, err := DecodeBsnSwitchPipelineStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnswitchpipelinestatsreply.Entries = append(bsnswitchpipelinestatsreply.Entries, item)
+		_bsnswitchpipelinestatsreply.Entries = append(_bsnswitchpipelinestatsreply.Entries, item)
 	}
-	return bsnswitchpipelinestatsreply, nil
+	return _bsnswitchpipelinestatsreply, nil
 }
 
 func NewBsnSwitchPipelineStatsReply() *BsnSwitchPipelineStatsReply {
-	return &BsnSwitchPipelineStatsReply{
+	obj := &BsnSwitchPipelineStatsReply{
 		BsnStatsReply: NewBsnStatsReply(6),
 	}
+	return obj
 }
 
 type BsnSwitchPipelineStatsRequest struct {
@@ -4144,27 +4153,22 @@ func (self *BsnSwitchPipelineStatsRequest) Serialize(encoder *goloxi.Encoder) er
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeBsnSwitchPipelineStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnSwitchPipelineStatsRequest, error) {
-	bsnswitchpipelinestatsrequest := &BsnSwitchPipelineStatsRequest{BsnStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnSwitchPipelineStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
-	return bsnswitchpipelinestatsrequest, nil
+func DecodeBsnSwitchPipelineStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnSwitchPipelineStatsRequest, error) {
+	_bsnswitchpipelinestatsrequest := &BsnSwitchPipelineStatsRequest{BsnStatsRequest: parent}
+	return _bsnswitchpipelinestatsrequest, nil
 }
 
 func NewBsnSwitchPipelineStatsRequest() *BsnSwitchPipelineStatsRequest {
-	return &BsnSwitchPipelineStatsRequest{
+	obj := &BsnSwitchPipelineStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(6),
 	}
+	return obj
 }
 
 type BsnTableChecksumStatsReply struct {
@@ -4177,7 +4181,6 @@ func (self *BsnTableChecksumStatsReply) Serialize(encoder *goloxi.Encoder) error
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -4190,24 +4193,24 @@ func (self *BsnTableChecksumStatsReply) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnTableChecksumStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnTableChecksumStatsReply, error) {
-	bsntablechecksumstatsreply := &BsnTableChecksumStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnTableChecksumStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnTableChecksumStatsReply, error) {
+	_bsntablechecksumstatsreply := &BsnTableChecksumStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 9 {
-		item, err := decodeBsnTableChecksumStatsEntry(decoder)
+		item, err := DecodeBsnTableChecksumStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsntablechecksumstatsreply.Entries = append(bsntablechecksumstatsreply.Entries, item)
+		_bsntablechecksumstatsreply.Entries = append(_bsntablechecksumstatsreply.Entries, item)
 	}
-	return bsntablechecksumstatsreply, nil
+	return _bsntablechecksumstatsreply, nil
 }
 
 func NewBsnTableChecksumStatsReply() *BsnTableChecksumStatsReply {
-	return &BsnTableChecksumStatsReply{
+	obj := &BsnTableChecksumStatsReply{
 		BsnStatsReply: NewBsnStatsReply(11),
 	}
+	return obj
 }
 
 type BsnTableChecksumStatsRequest struct {
@@ -4219,27 +4222,22 @@ func (self *BsnTableChecksumStatsRequest) Serialize(encoder *goloxi.Encoder) err
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeBsnTableChecksumStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnTableChecksumStatsRequest, error) {
-	bsntablechecksumstatsrequest := &BsnTableChecksumStatsRequest{BsnStatsRequest: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("BsnTableChecksumStatsRequest packet too short: %d < 24", decoder.Length())
-	}
-	decoder.Skip(4)
-	return bsntablechecksumstatsrequest, nil
+func DecodeBsnTableChecksumStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnTableChecksumStatsRequest, error) {
+	_bsntablechecksumstatsrequest := &BsnTableChecksumStatsRequest{BsnStatsRequest: parent}
+	return _bsntablechecksumstatsrequest, nil
 }
 
 func NewBsnTableChecksumStatsRequest() *BsnTableChecksumStatsRequest {
-	return &BsnTableChecksumStatsRequest{
+	obj := &BsnTableChecksumStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(11),
 	}
+	return obj
 }
 
 type BsnTableSetBucketsSize struct {
@@ -4264,22 +4262,23 @@ func (self *BsnTableSetBucketsSize) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTableSetBucketsSize(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnTableSetBucketsSize, error) {
-	bsntablesetbucketssize := &BsnTableSetBucketsSize{BsnHeader: parent}
+func DecodeBsnTableSetBucketsSize(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnTableSetBucketsSize, error) {
+	_bsntablesetbucketssize := &BsnTableSetBucketsSize{BsnHeader: parent}
 	if decoder.Length() < 7 {
 		return nil, fmt.Errorf("BsnTableSetBucketsSize packet too short: %d < 7", decoder.Length())
 	}
 	decoder.Skip(1)
-	bsntablesetbucketssize.TableId = uint8(decoder.ReadByte())
+	_bsntablesetbucketssize.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(2)
-	bsntablesetbucketssize.BucketsSize = uint32(decoder.ReadUint32())
-	return bsntablesetbucketssize, nil
+	_bsntablesetbucketssize.BucketsSize = uint32(decoder.ReadUint32())
+	return _bsntablesetbucketssize, nil
 }
 
 func NewBsnTableSetBucketsSize() *BsnTableSetBucketsSize {
-	return &BsnTableSetBucketsSize{
+	obj := &BsnTableSetBucketsSize{
 		BsnHeader: NewBsnHeader(61),
 	}
+	return obj
 }
 
 type BsnTimeReply struct {
@@ -4300,19 +4299,20 @@ func (self *BsnTimeReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTimeReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnTimeReply, error) {
-	bsntimereply := &BsnTimeReply{BsnHeader: parent}
+func DecodeBsnTimeReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnTimeReply, error) {
+	_bsntimereply := &BsnTimeReply{BsnHeader: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnTimeReply packet too short: %d < 8", decoder.Length())
 	}
-	bsntimereply.TimeMs = uint64(decoder.ReadUint64())
-	return bsntimereply, nil
+	_bsntimereply.TimeMs = uint64(decoder.ReadUint64())
+	return _bsntimereply, nil
 }
 
 func NewBsnTimeReply() *BsnTimeReply {
-	return &BsnTimeReply{
+	obj := &BsnTimeReply{
 		BsnHeader: NewBsnHeader(45),
 	}
+	return obj
 }
 
 type BsnTimeRequest struct {
@@ -4330,15 +4330,16 @@ func (self *BsnTimeRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnTimeRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnTimeRequest, error) {
-	bsntimerequest := &BsnTimeRequest{BsnHeader: parent}
-	return bsntimerequest, nil
+func DecodeBsnTimeRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnTimeRequest, error) {
+	_bsntimerequest := &BsnTimeRequest{BsnHeader: parent}
+	return _bsntimerequest, nil
 }
 
 func NewBsnTimeRequest() *BsnTimeRequest {
-	return &BsnTimeRequest{
+	obj := &BsnTimeRequest{
 		BsnHeader: NewBsnHeader(44),
 	}
+	return obj
 }
 
 type BsnVirtualPortCreateReply struct {
@@ -4361,20 +4362,21 @@ func (self *BsnVirtualPortCreateReply) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnVirtualPortCreateReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVirtualPortCreateReply, error) {
-	bsnvirtualportcreatereply := &BsnVirtualPortCreateReply{BsnHeader: parent}
+func DecodeBsnVirtualPortCreateReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVirtualPortCreateReply, error) {
+	_bsnvirtualportcreatereply := &BsnVirtualPortCreateReply{BsnHeader: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("BsnVirtualPortCreateReply packet too short: %d < 8", decoder.Length())
 	}
-	bsnvirtualportcreatereply.Status = uint32(decoder.ReadUint32())
-	bsnvirtualportcreatereply.VportNo = uint32(decoder.ReadUint32())
-	return bsnvirtualportcreatereply, nil
+	_bsnvirtualportcreatereply.Status = uint32(decoder.ReadUint32())
+	_bsnvirtualportcreatereply.VportNo = uint32(decoder.ReadUint32())
+	return _bsnvirtualportcreatereply, nil
 }
 
 func NewBsnVirtualPortCreateReply() *BsnVirtualPortCreateReply {
-	return &BsnVirtualPortCreateReply{
+	obj := &BsnVirtualPortCreateReply{
 		BsnHeader: NewBsnHeader(16),
 	}
+	return obj
 }
 
 type BsnVirtualPortCreateRequest struct {
@@ -4397,22 +4399,23 @@ func (self *BsnVirtualPortCreateRequest) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnVirtualPortCreateRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVirtualPortCreateRequest, error) {
-	bsnvirtualportcreaterequest := &BsnVirtualPortCreateRequest{BsnHeader: parent}
+func DecodeBsnVirtualPortCreateRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVirtualPortCreateRequest, error) {
+	_bsnvirtualportcreaterequest := &BsnVirtualPortCreateRequest{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnVirtualPortCreateRequest packet too short: %d < 4", decoder.Length())
 	}
-	if err := bsnvirtualportcreaterequest.Vport.Decode(decoder); err != nil {
+	if err := _bsnvirtualportcreaterequest.Vport.Decode(decoder); err != nil {
 		return nil, err
 	}
 
-	return bsnvirtualportcreaterequest, nil
+	return _bsnvirtualportcreaterequest, nil
 }
 
 func NewBsnVirtualPortCreateRequest() *BsnVirtualPortCreateRequest {
-	return &BsnVirtualPortCreateRequest{
+	obj := &BsnVirtualPortCreateRequest{
 		BsnHeader: NewBsnHeader(15),
 	}
+	return obj
 }
 
 type BsnVirtualPortRemoveReply struct {
@@ -4433,19 +4436,20 @@ func (self *BsnVirtualPortRemoveReply) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnVirtualPortRemoveReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVirtualPortRemoveReply, error) {
-	bsnvirtualportremovereply := &BsnVirtualPortRemoveReply{BsnHeader: parent}
+func DecodeBsnVirtualPortRemoveReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVirtualPortRemoveReply, error) {
+	_bsnvirtualportremovereply := &BsnVirtualPortRemoveReply{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnVirtualPortRemoveReply packet too short: %d < 4", decoder.Length())
 	}
-	bsnvirtualportremovereply.Status = uint32(decoder.ReadUint32())
-	return bsnvirtualportremovereply, nil
+	_bsnvirtualportremovereply.Status = uint32(decoder.ReadUint32())
+	return _bsnvirtualportremovereply, nil
 }
 
 func NewBsnVirtualPortRemoveReply() *BsnVirtualPortRemoveReply {
-	return &BsnVirtualPortRemoveReply{
+	obj := &BsnVirtualPortRemoveReply{
 		BsnHeader: NewBsnHeader(26),
 	}
+	return obj
 }
 
 type BsnVirtualPortRemoveRequest struct {
@@ -4466,19 +4470,20 @@ func (self *BsnVirtualPortRemoveRequest) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeBsnVirtualPortRemoveRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVirtualPortRemoveRequest, error) {
-	bsnvirtualportremoverequest := &BsnVirtualPortRemoveRequest{BsnHeader: parent}
+func DecodeBsnVirtualPortRemoveRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVirtualPortRemoveRequest, error) {
+	_bsnvirtualportremoverequest := &BsnVirtualPortRemoveRequest{BsnHeader: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnVirtualPortRemoveRequest packet too short: %d < 4", decoder.Length())
 	}
-	bsnvirtualportremoverequest.VportNo = uint32(decoder.ReadUint32())
-	return bsnvirtualportremoverequest, nil
+	_bsnvirtualportremoverequest.VportNo = uint32(decoder.ReadUint32())
+	return _bsnvirtualportremoverequest, nil
 }
 
 func NewBsnVirtualPortRemoveRequest() *BsnVirtualPortRemoveRequest {
-	return &BsnVirtualPortRemoveRequest{
+	obj := &BsnVirtualPortRemoveRequest{
 		BsnHeader: NewBsnHeader(17),
 	}
+	return obj
 }
 
 type BsnVlanCounterClear struct {
@@ -4499,19 +4504,20 @@ func (self *BsnVlanCounterClear) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnVlanCounterClear(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVlanCounterClear, error) {
-	bsnvlancounterclear := &BsnVlanCounterClear{BsnHeader: parent}
+func DecodeBsnVlanCounterClear(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnVlanCounterClear, error) {
+	_bsnvlancounterclear := &BsnVlanCounterClear{BsnHeader: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnVlanCounterClear packet too short: %d < 2", decoder.Length())
 	}
-	bsnvlancounterclear.VlanVid = uint16(decoder.ReadUint16())
-	return bsnvlancounterclear, nil
+	_bsnvlancounterclear.VlanVid = uint16(decoder.ReadUint16())
+	return _bsnvlancounterclear, nil
 }
 
 func NewBsnVlanCounterClear() *BsnVlanCounterClear {
-	return &BsnVlanCounterClear{
+	obj := &BsnVlanCounterClear{
 		BsnHeader: NewBsnHeader(70),
 	}
+	return obj
 }
 
 type BsnVlanCounterStatsReply struct {
@@ -4524,7 +4530,6 @@ func (self *BsnVlanCounterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -4537,24 +4542,24 @@ func (self *BsnVlanCounterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnVlanCounterStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnVlanCounterStatsReply, error) {
-	bsnvlancounterstatsreply := &BsnVlanCounterStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnVlanCounterStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnVlanCounterStatsReply, error) {
+	_bsnvlancounterstatsreply := &BsnVlanCounterStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 8 {
-		item, err := decodeBsnVlanCounterStatsEntry(decoder)
+		item, err := DecodeBsnVlanCounterStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnvlancounterstatsreply.Entries = append(bsnvlancounterstatsreply.Entries, item)
+		_bsnvlancounterstatsreply.Entries = append(_bsnvlancounterstatsreply.Entries, item)
 	}
-	return bsnvlancounterstatsreply, nil
+	return _bsnvlancounterstatsreply, nil
 }
 
 func NewBsnVlanCounterStatsReply() *BsnVlanCounterStatsReply {
-	return &BsnVlanCounterStatsReply{
+	obj := &BsnVlanCounterStatsReply{
 		BsnStatsReply: NewBsnStatsReply(9),
 	}
+	return obj
 }
 
 type BsnVlanCounterStatsRequest struct {
@@ -4567,7 +4572,6 @@ func (self *BsnVlanCounterStatsRequest) Serialize(encoder *goloxi.Encoder) error
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.VlanVid))
 
 	// Overwrite length
@@ -4576,20 +4580,20 @@ func (self *BsnVlanCounterStatsRequest) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeBsnVlanCounterStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnVlanCounterStatsRequest, error) {
-	bsnvlancounterstatsrequest := &BsnVlanCounterStatsRequest{BsnStatsRequest: parent}
+func DecodeBsnVlanCounterStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnVlanCounterStatsRequest, error) {
+	_bsnvlancounterstatsrequest := &BsnVlanCounterStatsRequest{BsnStatsRequest: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("BsnVlanCounterStatsRequest packet too short: %d < 2", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsnvlancounterstatsrequest.VlanVid = uint16(decoder.ReadUint16())
-	return bsnvlancounterstatsrequest, nil
+	_bsnvlancounterstatsrequest.VlanVid = uint16(decoder.ReadUint16())
+	return _bsnvlancounterstatsrequest, nil
 }
 
 func NewBsnVlanCounterStatsRequest() *BsnVlanCounterStatsRequest {
-	return &BsnVlanCounterStatsRequest{
+	obj := &BsnVlanCounterStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(9),
 	}
+	return obj
 }
 
 type BsnVrfCounterStatsReply struct {
@@ -4602,7 +4606,6 @@ func (self *BsnVrfCounterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	for _, obj := range self.Entries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -4615,24 +4618,24 @@ func (self *BsnVrfCounterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeBsnVrfCounterStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnVrfCounterStatsReply, error) {
-	bsnvrfcounterstatsreply := &BsnVrfCounterStatsReply{BsnStatsReply: parent}
-	decoder.Skip(4)
+func DecodeBsnVrfCounterStatsReply(parent *BsnStatsReply, decoder *goloxi.Decoder) (*BsnVrfCounterStatsReply, error) {
+	_bsnvrfcounterstatsreply := &BsnVrfCounterStatsReply{BsnStatsReply: parent}
 
 	for decoder.Length() >= 8 {
-		item, err := decodeBsnVrfCounterStatsEntry(decoder)
+		item, err := DecodeBsnVrfCounterStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		bsnvrfcounterstatsreply.Entries = append(bsnvrfcounterstatsreply.Entries, item)
+		_bsnvrfcounterstatsreply.Entries = append(_bsnvrfcounterstatsreply.Entries, item)
 	}
-	return bsnvrfcounterstatsreply, nil
+	return _bsnvrfcounterstatsreply, nil
 }
 
 func NewBsnVrfCounterStatsReply() *BsnVrfCounterStatsReply {
-	return &BsnVrfCounterStatsReply{
+	obj := &BsnVrfCounterStatsReply{
 		BsnStatsReply: NewBsnStatsReply(15),
 	}
+	return obj
 }
 
 type BsnVrfCounterStatsRequest struct {
@@ -4645,7 +4648,6 @@ func (self *BsnVrfCounterStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint32(uint32(self.Vrf))
 
 	// Overwrite length
@@ -4654,20 +4656,20 @@ func (self *BsnVrfCounterStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeBsnVrfCounterStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnVrfCounterStatsRequest, error) {
-	bsnvrfcounterstatsrequest := &BsnVrfCounterStatsRequest{BsnStatsRequest: parent}
+func DecodeBsnVrfCounterStatsRequest(parent *BsnStatsRequest, decoder *goloxi.Decoder) (*BsnVrfCounterStatsRequest, error) {
+	_bsnvrfcounterstatsrequest := &BsnVrfCounterStatsRequest{BsnStatsRequest: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("BsnVrfCounterStatsRequest packet too short: %d < 4", decoder.Length())
 	}
-	decoder.Skip(4)
-	bsnvrfcounterstatsrequest.Vrf = uint32(decoder.ReadUint32())
-	return bsnvrfcounterstatsrequest, nil
+	_bsnvrfcounterstatsrequest.Vrf = uint32(decoder.ReadUint32())
+	return _bsnvrfcounterstatsrequest, nil
 }
 
 func NewBsnVrfCounterStatsRequest() *BsnVrfCounterStatsRequest {
-	return &BsnVrfCounterStatsRequest{
+	obj := &BsnVrfCounterStatsRequest{
 		BsnStatsRequest: NewBsnStatsRequest(15),
 	}
+	return obj
 }
 
 type DescStatsReply struct {
@@ -4697,24 +4699,25 @@ func (self *DescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*DescStatsReply, error) {
-	descstatsreply := &DescStatsReply{StatsReply: parent}
+func DecodeDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*DescStatsReply, error) {
+	_descstatsreply := &DescStatsReply{StatsReply: parent}
 	if decoder.Length() < 1056 {
 		return nil, fmt.Errorf("DescStatsReply packet too short: %d < 1056", decoder.Length())
 	}
 	decoder.Skip(4)
-	descstatsreply.MfrDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
-	descstatsreply.HwDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
-	descstatsreply.SwDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
-	descstatsreply.SerialNum = string(bytes.Trim(decoder.Read(32), "\x00"))
-	descstatsreply.DpDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
-	return descstatsreply, nil
+	_descstatsreply.MfrDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
+	_descstatsreply.HwDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
+	_descstatsreply.SwDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
+	_descstatsreply.SerialNum = string(bytes.Trim(decoder.Read(32), "\x00"))
+	_descstatsreply.DpDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
+	return _descstatsreply, nil
 }
 
 func NewDescStatsReply() *DescStatsReply {
-	return &DescStatsReply{
+	obj := &DescStatsReply{
 		StatsReply: NewStatsReply(0),
 	}
+	return obj
 }
 
 type DescStatsRequest struct {
@@ -4734,19 +4737,20 @@ func (self *DescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*DescStatsRequest, error) {
-	descstatsrequest := &DescStatsRequest{StatsRequest: parent}
+func DecodeDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*DescStatsRequest, error) {
+	_descstatsrequest := &DescStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("DescStatsRequest packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return descstatsrequest, nil
+	return _descstatsrequest, nil
 }
 
 func NewDescStatsRequest() *DescStatsRequest {
-	return &DescStatsRequest{
+	obj := &DescStatsRequest{
 		StatsRequest: NewStatsRequest(0),
 	}
+	return obj
 }
 
 type EchoReply struct {
@@ -4767,16 +4771,17 @@ func (self *EchoReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeEchoReply(parent *Header, decoder *goloxi.Decoder) (*EchoReply, error) {
-	echoreply := &EchoReply{Header: parent}
-	echoreply.Data = decoder.Read(decoder.Length())
-	return echoreply, nil
+func DecodeEchoReply(parent *Header, decoder *goloxi.Decoder) (*EchoReply, error) {
+	_echoreply := &EchoReply{Header: parent}
+	_echoreply.Data = decoder.Read(decoder.Length())
+	return _echoreply, nil
 }
 
 func NewEchoReply() *EchoReply {
-	return &EchoReply{
+	obj := &EchoReply{
 		Header: NewHeader(3),
 	}
+	return obj
 }
 
 type EchoRequest struct {
@@ -4797,16 +4802,17 @@ func (self *EchoRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeEchoRequest(parent *Header, decoder *goloxi.Decoder) (*EchoRequest, error) {
-	echorequest := &EchoRequest{Header: parent}
-	echorequest.Data = decoder.Read(decoder.Length())
-	return echorequest, nil
+func DecodeEchoRequest(parent *Header, decoder *goloxi.Decoder) (*EchoRequest, error) {
+	_echorequest := &EchoRequest{Header: parent}
+	_echorequest.Data = decoder.Read(decoder.Length())
+	return _echorequest, nil
 }
 
 func NewEchoRequest() *EchoRequest {
-	return &EchoRequest{
+	obj := &EchoRequest{
 		Header: NewHeader(2),
 	}
+	return obj
 }
 
 type FeaturesReply struct {
@@ -4838,25 +4844,26 @@ func (self *FeaturesReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeFeaturesReply(parent *Header, decoder *goloxi.Decoder) (*FeaturesReply, error) {
-	featuresreply := &FeaturesReply{Header: parent}
+func DecodeFeaturesReply(parent *Header, decoder *goloxi.Decoder) (*FeaturesReply, error) {
+	_featuresreply := &FeaturesReply{Header: parent}
 	if decoder.Length() < 24 {
 		return nil, fmt.Errorf("FeaturesReply packet too short: %d < 24", decoder.Length())
 	}
-	featuresreply.DatapathId = uint64(decoder.ReadUint64())
-	featuresreply.NBuffers = uint32(decoder.ReadUint32())
-	featuresreply.NTables = uint8(decoder.ReadByte())
-	featuresreply.AuxiliaryId = uint8(decoder.ReadByte())
+	_featuresreply.DatapathId = uint64(decoder.ReadUint64())
+	_featuresreply.NBuffers = uint32(decoder.ReadUint32())
+	_featuresreply.NTables = uint8(decoder.ReadByte())
+	_featuresreply.AuxiliaryId = uint8(decoder.ReadByte())
 	decoder.Skip(2)
-	featuresreply.Capabilities = Capabilities(decoder.ReadUint32())
-	featuresreply.Reserved = uint32(decoder.ReadUint32())
-	return featuresreply, nil
+	_featuresreply.Capabilities = Capabilities(decoder.ReadUint32())
+	_featuresreply.Reserved = uint32(decoder.ReadUint32())
+	return _featuresreply, nil
 }
 
 func NewFeaturesReply() *FeaturesReply {
-	return &FeaturesReply{
+	obj := &FeaturesReply{
 		Header: NewHeader(6),
 	}
+	return obj
 }
 
 type FeaturesRequest struct {
@@ -4874,15 +4881,16 @@ func (self *FeaturesRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeFeaturesRequest(parent *Header, decoder *goloxi.Decoder) (*FeaturesRequest, error) {
-	featuresrequest := &FeaturesRequest{Header: parent}
-	return featuresrequest, nil
+func DecodeFeaturesRequest(parent *Header, decoder *goloxi.Decoder) (*FeaturesRequest, error) {
+	_featuresrequest := &FeaturesRequest{Header: parent}
+	return _featuresrequest, nil
 }
 
 func NewFeaturesRequest() *FeaturesRequest {
-	return &FeaturesRequest{
+	obj := &FeaturesRequest{
 		Header: NewHeader(5),
 	}
+	return obj
 }
 
 type FlowMod struct {
@@ -5001,58 +5009,59 @@ func (self *FlowMod) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeFlowMod(parent *Header, decoder *goloxi.Decoder) (IFlowMod, error) {
-	flowmod := &FlowMod{Header: parent}
+func DecodeFlowMod(parent *Header, decoder *goloxi.Decoder) (IFlowMod, error) {
+	_flowmod := &FlowMod{Header: parent}
 	if decoder.Length() < 48 {
 		return nil, fmt.Errorf("FlowMod packet too short: %d < 48", decoder.Length())
 	}
-	flowmod.Cookie = uint64(decoder.ReadUint64())
-	flowmod.CookieMask = uint64(decoder.ReadUint64())
-	flowmod.TableId = uint8(decoder.ReadByte())
-	flowmod.Command.Decode(decoder)
-	flowmod.IdleTimeout = uint16(decoder.ReadUint16())
-	flowmod.HardTimeout = uint16(decoder.ReadUint16())
-	flowmod.Priority = uint16(decoder.ReadUint16())
-	flowmod.BufferId = uint32(decoder.ReadUint32())
-	flowmod.OutPort.Decode(decoder)
-	flowmod.OutGroup = uint32(decoder.ReadUint32())
-	flowmod.Flags = FlowModFlags(decoder.ReadUint16())
+	_flowmod.Cookie = uint64(decoder.ReadUint64())
+	_flowmod.CookieMask = uint64(decoder.ReadUint64())
+	_flowmod.TableId = uint8(decoder.ReadByte())
+	_flowmod.Command.Decode(decoder)
+	_flowmod.IdleTimeout = uint16(decoder.ReadUint16())
+	_flowmod.HardTimeout = uint16(decoder.ReadUint16())
+	_flowmod.Priority = uint16(decoder.ReadUint16())
+	_flowmod.BufferId = uint32(decoder.ReadUint32())
+	_flowmod.OutPort.Decode(decoder)
+	_flowmod.OutGroup = uint32(decoder.ReadUint32())
+	_flowmod.Flags = FlowModFlags(decoder.ReadUint16())
 	decoder.Skip(2)
-	if err := flowmod.Match.Decode(decoder); err != nil {
+	if err := _flowmod.Match.Decode(decoder); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
-		item, err := decodeInstruction(decoder)
+		item, err := DecodeInstruction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		flowmod.Instructions = append(flowmod.Instructions, item)
+		_flowmod.Instructions = append(_flowmod.Instructions, item)
 	}
 
-	switch flowmod.Command {
+	switch _flowmod.Command {
 	case 0:
-		return decodeFlowAdd(flowmod, decoder)
+		return DecodeFlowAdd(_flowmod, decoder)
 	case 1:
-		return decodeFlowModify(flowmod, decoder)
+		return DecodeFlowModify(_flowmod, decoder)
 	case 2:
-		return decodeFlowModifyStrict(flowmod, decoder)
+		return DecodeFlowModifyStrict(_flowmod, decoder)
 	case 3:
-		return decodeFlowDelete(flowmod, decoder)
+		return DecodeFlowDelete(_flowmod, decoder)
 	case 4:
-		return decodeFlowDeleteStrict(flowmod, decoder)
+		return DecodeFlowDeleteStrict(_flowmod, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'FlowMod'", flowmod.Command)
+		return nil, fmt.Errorf("Invalid type '%d' for 'FlowMod'", _flowmod.Command)
 	}
 }
 
 func NewFlowMod(__command FmCmd) *FlowMod {
-	return &FlowMod{
-		Command: __command,
-		Header:  NewHeader(14),
+	obj := &FlowMod{
+		Header: NewHeader(14),
 	}
+	obj.Command = __command
+	return obj
 }
 
 type FlowAdd struct {
@@ -5064,27 +5073,22 @@ func (self *FlowAdd) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeFlowAdd(parent *FlowMod, decoder *goloxi.Decoder) (*FlowAdd, error) {
-	flowadd := &FlowAdd{FlowMod: parent}
-	if decoder.Length() < 56 {
-		return nil, fmt.Errorf("FlowAdd packet too short: %d < 56", decoder.Length())
-	}
-	decoder.Skip(2)
-	return flowadd, nil
+func DecodeFlowAdd(parent *FlowMod, decoder *goloxi.Decoder) (*FlowAdd, error) {
+	_flowadd := &FlowAdd{FlowMod: parent}
+	return _flowadd, nil
 }
 
 func NewFlowAdd() *FlowAdd {
-	return &FlowAdd{
+	obj := &FlowAdd{
 		FlowMod: NewFlowMod(0),
 	}
+	return obj
 }
 
 type FlowDelete struct {
@@ -5096,27 +5100,22 @@ func (self *FlowDelete) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeFlowDelete(parent *FlowMod, decoder *goloxi.Decoder) (*FlowDelete, error) {
-	flowdelete := &FlowDelete{FlowMod: parent}
-	if decoder.Length() < 56 {
-		return nil, fmt.Errorf("FlowDelete packet too short: %d < 56", decoder.Length())
-	}
-	decoder.Skip(2)
-	return flowdelete, nil
+func DecodeFlowDelete(parent *FlowMod, decoder *goloxi.Decoder) (*FlowDelete, error) {
+	_flowdelete := &FlowDelete{FlowMod: parent}
+	return _flowdelete, nil
 }
 
 func NewFlowDelete() *FlowDelete {
-	return &FlowDelete{
+	obj := &FlowDelete{
 		FlowMod: NewFlowMod(3),
 	}
+	return obj
 }
 
 type FlowDeleteStrict struct {
@@ -5128,27 +5127,22 @@ func (self *FlowDeleteStrict) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeFlowDeleteStrict(parent *FlowMod, decoder *goloxi.Decoder) (*FlowDeleteStrict, error) {
-	flowdeletestrict := &FlowDeleteStrict{FlowMod: parent}
-	if decoder.Length() < 56 {
-		return nil, fmt.Errorf("FlowDeleteStrict packet too short: %d < 56", decoder.Length())
-	}
-	decoder.Skip(2)
-	return flowdeletestrict, nil
+func DecodeFlowDeleteStrict(parent *FlowMod, decoder *goloxi.Decoder) (*FlowDeleteStrict, error) {
+	_flowdeletestrict := &FlowDeleteStrict{FlowMod: parent}
+	return _flowdeletestrict, nil
 }
 
 func NewFlowDeleteStrict() *FlowDeleteStrict {
-	return &FlowDeleteStrict{
+	obj := &FlowDeleteStrict{
 		FlowMod: NewFlowMod(4),
 	}
+	return obj
 }
 
 type FlowModFailedErrorMsg struct {
@@ -5171,20 +5165,21 @@ func (self *FlowModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeFlowModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*FlowModFailedErrorMsg, error) {
-	flowmodfailederrormsg := &FlowModFailedErrorMsg{ErrorMsg: parent}
+func DecodeFlowModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*FlowModFailedErrorMsg, error) {
+	_flowmodfailederrormsg := &FlowModFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("FlowModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	flowmodfailederrormsg.Code = FlowModFailedCode(decoder.ReadUint16())
-	flowmodfailederrormsg.Data = decoder.Read(decoder.Length())
-	return flowmodfailederrormsg, nil
+	_flowmodfailederrormsg.Code = FlowModFailedCode(decoder.ReadUint16())
+	_flowmodfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _flowmodfailederrormsg, nil
 }
 
 func NewFlowModFailedErrorMsg() *FlowModFailedErrorMsg {
-	return &FlowModFailedErrorMsg{
+	obj := &FlowModFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(5),
 	}
+	return obj
 }
 
 type FlowModify struct {
@@ -5196,27 +5191,22 @@ func (self *FlowModify) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeFlowModify(parent *FlowMod, decoder *goloxi.Decoder) (*FlowModify, error) {
-	flowmodify := &FlowModify{FlowMod: parent}
-	if decoder.Length() < 56 {
-		return nil, fmt.Errorf("FlowModify packet too short: %d < 56", decoder.Length())
-	}
-	decoder.Skip(2)
-	return flowmodify, nil
+func DecodeFlowModify(parent *FlowMod, decoder *goloxi.Decoder) (*FlowModify, error) {
+	_flowmodify := &FlowModify{FlowMod: parent}
+	return _flowmodify, nil
 }
 
 func NewFlowModify() *FlowModify {
-	return &FlowModify{
+	obj := &FlowModify{
 		FlowMod: NewFlowMod(1),
 	}
+	return obj
 }
 
 type FlowModifyStrict struct {
@@ -5228,27 +5218,22 @@ func (self *FlowModifyStrict) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeFlowModifyStrict(parent *FlowMod, decoder *goloxi.Decoder) (*FlowModifyStrict, error) {
-	flowmodifystrict := &FlowModifyStrict{FlowMod: parent}
-	if decoder.Length() < 56 {
-		return nil, fmt.Errorf("FlowModifyStrict packet too short: %d < 56", decoder.Length())
-	}
-	decoder.Skip(2)
-	return flowmodifystrict, nil
+func DecodeFlowModifyStrict(parent *FlowMod, decoder *goloxi.Decoder) (*FlowModifyStrict, error) {
+	_flowmodifystrict := &FlowModifyStrict{FlowMod: parent}
+	return _flowmodifystrict, nil
 }
 
 func NewFlowModifyStrict() *FlowModifyStrict {
-	return &FlowModifyStrict{
+	obj := &FlowModifyStrict{
 		FlowMod: NewFlowMod(2),
 	}
+	return obj
 }
 
 type FlowRemoved struct {
@@ -5291,33 +5276,34 @@ func (self *FlowRemoved) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeFlowRemoved(parent *Header, decoder *goloxi.Decoder) (*FlowRemoved, error) {
-	flowremoved := &FlowRemoved{Header: parent}
+func DecodeFlowRemoved(parent *Header, decoder *goloxi.Decoder) (*FlowRemoved, error) {
+	_flowremoved := &FlowRemoved{Header: parent}
 	if decoder.Length() < 48 {
 		return nil, fmt.Errorf("FlowRemoved packet too short: %d < 48", decoder.Length())
 	}
-	flowremoved.Cookie = uint64(decoder.ReadUint64())
-	flowremoved.Priority = uint16(decoder.ReadUint16())
-	flowremoved.Reason = FlowRemovedReason(decoder.ReadByte())
-	flowremoved.TableId = uint8(decoder.ReadByte())
-	flowremoved.DurationSec = uint32(decoder.ReadUint32())
-	flowremoved.DurationNsec = uint32(decoder.ReadUint32())
-	flowremoved.IdleTimeout = uint16(decoder.ReadUint16())
-	flowremoved.HardTimeout = uint16(decoder.ReadUint16())
-	flowremoved.PacketCount = uint64(decoder.ReadUint64())
-	flowremoved.ByteCount = uint64(decoder.ReadUint64())
-	if err := flowremoved.Match.Decode(decoder); err != nil {
+	_flowremoved.Cookie = uint64(decoder.ReadUint64())
+	_flowremoved.Priority = uint16(decoder.ReadUint16())
+	_flowremoved.Reason = FlowRemovedReason(decoder.ReadByte())
+	_flowremoved.TableId = uint8(decoder.ReadByte())
+	_flowremoved.DurationSec = uint32(decoder.ReadUint32())
+	_flowremoved.DurationNsec = uint32(decoder.ReadUint32())
+	_flowremoved.IdleTimeout = uint16(decoder.ReadUint16())
+	_flowremoved.HardTimeout = uint16(decoder.ReadUint16())
+	_flowremoved.PacketCount = uint64(decoder.ReadUint64())
+	_flowremoved.ByteCount = uint64(decoder.ReadUint64())
+	if err := _flowremoved.Match.Decode(decoder); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
-	return flowremoved, nil
+	return _flowremoved, nil
 }
 
 func NewFlowRemoved() *FlowRemoved {
-	return &FlowRemoved{
+	obj := &FlowRemoved{
 		Header: NewHeader(11),
 	}
+	return obj
 }
 
 type FlowStatsReply struct {
@@ -5343,24 +5329,25 @@ func (self *FlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeFlowStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*FlowStatsReply, error) {
-	flowstatsreply := &FlowStatsReply{StatsReply: parent}
+func DecodeFlowStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*FlowStatsReply, error) {
+	_flowstatsreply := &FlowStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 56 {
-		item, err := decodeFlowStatsEntry(decoder)
+		item, err := DecodeFlowStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		flowstatsreply.Entries = append(flowstatsreply.Entries, item)
+		_flowstatsreply.Entries = append(_flowstatsreply.Entries, item)
 	}
-	return flowstatsreply, nil
+	return _flowstatsreply, nil
 }
 
 func NewFlowStatsReply() *FlowStatsReply {
-	return &FlowStatsReply{
+	obj := &FlowStatsReply{
 		StatsReply: NewStatsReply(1),
 	}
+	return obj
 }
 
 type FlowStatsRequest struct {
@@ -5396,31 +5383,32 @@ func (self *FlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeFlowStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*FlowStatsRequest, error) {
-	flowstatsrequest := &FlowStatsRequest{StatsRequest: parent}
+func DecodeFlowStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*FlowStatsRequest, error) {
+	_flowstatsrequest := &FlowStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 40 {
 		return nil, fmt.Errorf("FlowStatsRequest packet too short: %d < 40", decoder.Length())
 	}
 	decoder.Skip(4)
-	flowstatsrequest.TableId = uint8(decoder.ReadByte())
+	_flowstatsrequest.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	flowstatsrequest.OutPort.Decode(decoder)
-	flowstatsrequest.OutGroup = uint32(decoder.ReadUint32())
+	_flowstatsrequest.OutPort.Decode(decoder)
+	_flowstatsrequest.OutGroup = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	flowstatsrequest.Cookie = uint64(decoder.ReadUint64())
-	flowstatsrequest.CookieMask = uint64(decoder.ReadUint64())
-	if err := flowstatsrequest.Match.Decode(decoder); err != nil {
+	_flowstatsrequest.Cookie = uint64(decoder.ReadUint64())
+	_flowstatsrequest.CookieMask = uint64(decoder.ReadUint64())
+	if err := _flowstatsrequest.Match.Decode(decoder); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
-	return flowstatsrequest, nil
+	return _flowstatsrequest, nil
 }
 
 func NewFlowStatsRequest() *FlowStatsRequest {
-	return &FlowStatsRequest{
+	obj := &FlowStatsRequest{
 		StatsRequest: NewStatsRequest(1),
 	}
+	return obj
 }
 
 type GetConfigReply struct {
@@ -5443,20 +5431,21 @@ func (self *GetConfigReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGetConfigReply(parent *Header, decoder *goloxi.Decoder) (*GetConfigReply, error) {
-	getconfigreply := &GetConfigReply{Header: parent}
+func DecodeGetConfigReply(parent *Header, decoder *goloxi.Decoder) (*GetConfigReply, error) {
+	_getconfigreply := &GetConfigReply{Header: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("GetConfigReply packet too short: %d < 4", decoder.Length())
 	}
-	getconfigreply.Flags = ConfigFlags(decoder.ReadUint16())
-	getconfigreply.MissSendLen = uint16(decoder.ReadUint16())
-	return getconfigreply, nil
+	_getconfigreply.Flags = ConfigFlags(decoder.ReadUint16())
+	_getconfigreply.MissSendLen = uint16(decoder.ReadUint16())
+	return _getconfigreply, nil
 }
 
 func NewGetConfigReply() *GetConfigReply {
-	return &GetConfigReply{
+	obj := &GetConfigReply{
 		Header: NewHeader(8),
 	}
+	return obj
 }
 
 type GetConfigRequest struct {
@@ -5474,15 +5463,16 @@ func (self *GetConfigRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGetConfigRequest(parent *Header, decoder *goloxi.Decoder) (*GetConfigRequest, error) {
-	getconfigrequest := &GetConfigRequest{Header: parent}
-	return getconfigrequest, nil
+func DecodeGetConfigRequest(parent *Header, decoder *goloxi.Decoder) (*GetConfigRequest, error) {
+	_getconfigrequest := &GetConfigRequest{Header: parent}
+	return _getconfigrequest, nil
 }
 
 func NewGetConfigRequest() *GetConfigRequest {
-	return &GetConfigRequest{
+	obj := &GetConfigRequest{
 		Header: NewHeader(7),
 	}
+	return obj
 }
 
 type GroupMod struct {
@@ -5535,41 +5525,42 @@ func (self *GroupMod) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupMod(parent *Header, decoder *goloxi.Decoder) (IGroupMod, error) {
-	groupmod := &GroupMod{Header: parent}
+func DecodeGroupMod(parent *Header, decoder *goloxi.Decoder) (IGroupMod, error) {
+	_groupmod := &GroupMod{Header: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("GroupMod packet too short: %d < 8", decoder.Length())
 	}
-	groupmod.Command = GroupModCommand(decoder.ReadUint16())
-	groupmod.GroupType = GroupType(decoder.ReadByte())
+	_groupmod.Command = GroupModCommand(decoder.ReadUint16())
+	_groupmod.GroupType = GroupType(decoder.ReadByte())
 	decoder.Skip(1)
-	groupmod.GroupId = uint32(decoder.ReadUint32())
+	_groupmod.GroupId = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 16 {
-		item, err := decodeBucket(decoder)
+		item, err := DecodeBucket(decoder)
 		if err != nil {
 			return nil, err
 		}
-		groupmod.Buckets = append(groupmod.Buckets, item)
+		_groupmod.Buckets = append(_groupmod.Buckets, item)
 	}
 
-	switch groupmod.Command {
+	switch _groupmod.Command {
 	case 0:
-		return decodeGroupAdd(groupmod, decoder)
+		return DecodeGroupAdd(_groupmod, decoder)
 	case 1:
-		return decodeGroupModify(groupmod, decoder)
+		return DecodeGroupModify(_groupmod, decoder)
 	case 2:
-		return decodeGroupDelete(groupmod, decoder)
+		return DecodeGroupDelete(_groupmod, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'GroupMod'", groupmod.Command)
+		return nil, fmt.Errorf("Invalid type '%d' for 'GroupMod'", _groupmod.Command)
 	}
 }
 
-func NewGroupMod(_command ofp_group_mod_comma) *GroupMod {
-	return &GroupMod{
-		Command: _command,
-		Header:  NewHeader(15),
+func NewGroupMod(_command GroupModCommand) *GroupMod {
+	obj := &GroupMod{
+		Header: NewHeader(15),
 	}
+	obj.Command = _command
+	return obj
 }
 
 type GroupAdd struct {
@@ -5581,27 +5572,22 @@ func (self *GroupAdd) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 1))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeGroupAdd(parent *GroupMod, decoder *goloxi.Decoder) (*GroupAdd, error) {
-	groupadd := &GroupAdd{GroupMod: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("GroupAdd packet too short: %d < 16", decoder.Length())
-	}
-	decoder.Skip(1)
-	return groupadd, nil
+func DecodeGroupAdd(parent *GroupMod, decoder *goloxi.Decoder) (*GroupAdd, error) {
+	_groupadd := &GroupAdd{GroupMod: parent}
+	return _groupadd, nil
 }
 
 func NewGroupAdd() *GroupAdd {
-	return &GroupAdd{
+	obj := &GroupAdd{
 		GroupMod: NewGroupMod(0),
 	}
+	return obj
 }
 
 type GroupDelete struct {
@@ -5613,27 +5599,22 @@ func (self *GroupDelete) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 1))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeGroupDelete(parent *GroupMod, decoder *goloxi.Decoder) (*GroupDelete, error) {
-	groupdelete := &GroupDelete{GroupMod: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("GroupDelete packet too short: %d < 16", decoder.Length())
-	}
-	decoder.Skip(1)
-	return groupdelete, nil
+func DecodeGroupDelete(parent *GroupMod, decoder *goloxi.Decoder) (*GroupDelete, error) {
+	_groupdelete := &GroupDelete{GroupMod: parent}
+	return _groupdelete, nil
 }
 
 func NewGroupDelete() *GroupDelete {
-	return &GroupDelete{
+	obj := &GroupDelete{
 		GroupMod: NewGroupMod(2),
 	}
+	return obj
 }
 
 type GroupDescStatsReply struct {
@@ -5659,24 +5640,25 @@ func (self *GroupDescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupDescStatsReply, error) {
-	groupdescstatsreply := &GroupDescStatsReply{StatsReply: parent}
+func DecodeGroupDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupDescStatsReply, error) {
+	_groupdescstatsreply := &GroupDescStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeGroupDescStatsEntry(decoder)
+		item, err := DecodeGroupDescStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		groupdescstatsreply.Entries = append(groupdescstatsreply.Entries, item)
+		_groupdescstatsreply.Entries = append(_groupdescstatsreply.Entries, item)
 	}
-	return groupdescstatsreply, nil
+	return _groupdescstatsreply, nil
 }
 
 func NewGroupDescStatsReply() *GroupDescStatsReply {
-	return &GroupDescStatsReply{
+	obj := &GroupDescStatsReply{
 		StatsReply: NewStatsReply(7),
 	}
+	return obj
 }
 
 type GroupDescStatsRequest struct {
@@ -5696,19 +5678,20 @@ func (self *GroupDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupDescStatsRequest, error) {
-	groupdescstatsrequest := &GroupDescStatsRequest{StatsRequest: parent}
+func DecodeGroupDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupDescStatsRequest, error) {
+	_groupdescstatsrequest := &GroupDescStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("GroupDescStatsRequest packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return groupdescstatsrequest, nil
+	return _groupdescstatsrequest, nil
 }
 
 func NewGroupDescStatsRequest() *GroupDescStatsRequest {
-	return &GroupDescStatsRequest{
+	obj := &GroupDescStatsRequest{
 		StatsRequest: NewStatsRequest(7),
 	}
+	return obj
 }
 
 type GroupFeaturesStatsReply struct {
@@ -5748,29 +5731,30 @@ func (self *GroupFeaturesStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupFeaturesStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupFeaturesStatsReply, error) {
-	groupfeaturesstatsreply := &GroupFeaturesStatsReply{StatsReply: parent}
+func DecodeGroupFeaturesStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupFeaturesStatsReply, error) {
+	_groupfeaturesstatsreply := &GroupFeaturesStatsReply{StatsReply: parent}
 	if decoder.Length() < 40 {
 		return nil, fmt.Errorf("GroupFeaturesStatsReply packet too short: %d < 40", decoder.Length())
 	}
 	decoder.Skip(4)
-	groupfeaturesstatsreply.Types = uint32(decoder.ReadUint32())
-	groupfeaturesstatsreply.Capabilities = GroupCapabilities(decoder.ReadUint32())
-	groupfeaturesstatsreply.MaxGroupsAll = uint32(decoder.ReadUint32())
-	groupfeaturesstatsreply.MaxGroupsSelect = uint32(decoder.ReadUint32())
-	groupfeaturesstatsreply.MaxGroupsIndirect = uint32(decoder.ReadUint32())
-	groupfeaturesstatsreply.MaxGroupsFf = uint32(decoder.ReadUint32())
-	groupfeaturesstatsreply.ActionsAll = uint32(decoder.ReadUint32())
-	groupfeaturesstatsreply.ActionsSelect = uint32(decoder.ReadUint32())
-	groupfeaturesstatsreply.ActionsIndirect = uint32(decoder.ReadUint32())
-	groupfeaturesstatsreply.ActionsFf = uint32(decoder.ReadUint32())
-	return groupfeaturesstatsreply, nil
+	_groupfeaturesstatsreply.Types = uint32(decoder.ReadUint32())
+	_groupfeaturesstatsreply.Capabilities = GroupCapabilities(decoder.ReadUint32())
+	_groupfeaturesstatsreply.MaxGroupsAll = uint32(decoder.ReadUint32())
+	_groupfeaturesstatsreply.MaxGroupsSelect = uint32(decoder.ReadUint32())
+	_groupfeaturesstatsreply.MaxGroupsIndirect = uint32(decoder.ReadUint32())
+	_groupfeaturesstatsreply.MaxGroupsFf = uint32(decoder.ReadUint32())
+	_groupfeaturesstatsreply.ActionsAll = uint32(decoder.ReadUint32())
+	_groupfeaturesstatsreply.ActionsSelect = uint32(decoder.ReadUint32())
+	_groupfeaturesstatsreply.ActionsIndirect = uint32(decoder.ReadUint32())
+	_groupfeaturesstatsreply.ActionsFf = uint32(decoder.ReadUint32())
+	return _groupfeaturesstatsreply, nil
 }
 
 func NewGroupFeaturesStatsReply() *GroupFeaturesStatsReply {
-	return &GroupFeaturesStatsReply{
+	obj := &GroupFeaturesStatsReply{
 		StatsReply: NewStatsReply(8),
 	}
+	return obj
 }
 
 type GroupFeaturesStatsRequest struct {
@@ -5790,19 +5774,20 @@ func (self *GroupFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeGroupFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupFeaturesStatsRequest, error) {
-	groupfeaturesstatsrequest := &GroupFeaturesStatsRequest{StatsRequest: parent}
+func DecodeGroupFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupFeaturesStatsRequest, error) {
+	_groupfeaturesstatsrequest := &GroupFeaturesStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("GroupFeaturesStatsRequest packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return groupfeaturesstatsrequest, nil
+	return _groupfeaturesstatsrequest, nil
 }
 
 func NewGroupFeaturesStatsRequest() *GroupFeaturesStatsRequest {
-	return &GroupFeaturesStatsRequest{
+	obj := &GroupFeaturesStatsRequest{
 		StatsRequest: NewStatsRequest(8),
 	}
+	return obj
 }
 
 type GroupModFailedErrorMsg struct {
@@ -5825,20 +5810,21 @@ func (self *GroupModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*GroupModFailedErrorMsg, error) {
-	groupmodfailederrormsg := &GroupModFailedErrorMsg{ErrorMsg: parent}
+func DecodeGroupModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*GroupModFailedErrorMsg, error) {
+	_groupmodfailederrormsg := &GroupModFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("GroupModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	groupmodfailederrormsg.Code = GroupModFailedCode(decoder.ReadUint16())
-	groupmodfailederrormsg.Data = decoder.Read(decoder.Length())
-	return groupmodfailederrormsg, nil
+	_groupmodfailederrormsg.Code = GroupModFailedCode(decoder.ReadUint16())
+	_groupmodfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _groupmodfailederrormsg, nil
 }
 
 func NewGroupModFailedErrorMsg() *GroupModFailedErrorMsg {
-	return &GroupModFailedErrorMsg{
+	obj := &GroupModFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(6),
 	}
+	return obj
 }
 
 type GroupModify struct {
@@ -5850,27 +5836,22 @@ func (self *GroupModify) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 1))
-
 	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func decodeGroupModify(parent *GroupMod, decoder *goloxi.Decoder) (*GroupModify, error) {
-	groupmodify := &GroupModify{GroupMod: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("GroupModify packet too short: %d < 16", decoder.Length())
-	}
-	decoder.Skip(1)
-	return groupmodify, nil
+func DecodeGroupModify(parent *GroupMod, decoder *goloxi.Decoder) (*GroupModify, error) {
+	_groupmodify := &GroupModify{GroupMod: parent}
+	return _groupmodify, nil
 }
 
 func NewGroupModify() *GroupModify {
-	return &GroupModify{
+	obj := &GroupModify{
 		GroupMod: NewGroupMod(1),
 	}
+	return obj
 }
 
 type GroupStatsReply struct {
@@ -5896,24 +5877,25 @@ func (self *GroupStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupStatsReply, error) {
-	groupstatsreply := &GroupStatsReply{StatsReply: parent}
+func DecodeGroupStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupStatsReply, error) {
+	_groupstatsreply := &GroupStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 40 {
-		item, err := decodeGroupStatsEntry(decoder)
+		item, err := DecodeGroupStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		groupstatsreply.Entries = append(groupstatsreply.Entries, item)
+		_groupstatsreply.Entries = append(_groupstatsreply.Entries, item)
 	}
-	return groupstatsreply, nil
+	return _groupstatsreply, nil
 }
 
 func NewGroupStatsReply() *GroupStatsReply {
-	return &GroupStatsReply{
+	obj := &GroupStatsReply{
 		StatsReply: NewStatsReply(6),
 	}
+	return obj
 }
 
 type GroupStatsRequest struct {
@@ -5936,21 +5918,22 @@ func (self *GroupStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeGroupStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupStatsRequest, error) {
-	groupstatsrequest := &GroupStatsRequest{StatsRequest: parent}
+func DecodeGroupStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupStatsRequest, error) {
+	_groupstatsrequest := &GroupStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("GroupStatsRequest packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	groupstatsrequest.GroupId = uint32(decoder.ReadUint32())
+	_groupstatsrequest.GroupId = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return groupstatsrequest, nil
+	return _groupstatsrequest, nil
 }
 
 func NewGroupStatsRequest() *GroupStatsRequest {
-	return &GroupStatsRequest{
+	obj := &GroupStatsRequest{
 		StatsRequest: NewStatsRequest(6),
 	}
+	return obj
 }
 
 type Hello struct {
@@ -5975,23 +5958,24 @@ func (self *Hello) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeHello(parent *Header, decoder *goloxi.Decoder) (*Hello, error) {
-	hello := &Hello{Header: parent}
+func DecodeHello(parent *Header, decoder *goloxi.Decoder) (*Hello, error) {
+	_hello := &Hello{Header: parent}
 
 	for decoder.Length() >= 4 {
-		item, err := decodeHelloElem(decoder)
+		item, err := DecodeHelloElem(decoder)
 		if err != nil {
 			return nil, err
 		}
-		hello.Elements = append(hello.Elements, item)
+		_hello.Elements = append(_hello.Elements, item)
 	}
-	return hello, nil
+	return _hello, nil
 }
 
 func NewHello() *Hello {
-	return &Hello{
+	obj := &Hello{
 		Header: NewHeader(0),
 	}
+	return obj
 }
 
 type HelloFailedErrorMsg struct {
@@ -6014,20 +5998,21 @@ func (self *HelloFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeHelloFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*HelloFailedErrorMsg, error) {
-	hellofailederrormsg := &HelloFailedErrorMsg{ErrorMsg: parent}
+func DecodeHelloFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*HelloFailedErrorMsg, error) {
+	_hellofailederrormsg := &HelloFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("HelloFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	hellofailederrormsg.Code = HelloFailedCode(decoder.ReadUint16())
-	hellofailederrormsg.Data = decoder.Read(decoder.Length())
-	return hellofailederrormsg, nil
+	_hellofailederrormsg.Code = HelloFailedCode(decoder.ReadUint16())
+	_hellofailederrormsg.Data = decoder.Read(decoder.Length())
+	return _hellofailederrormsg, nil
 }
 
 func NewHelloFailedErrorMsg() *HelloFailedErrorMsg {
-	return &HelloFailedErrorMsg{
+	obj := &HelloFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(0),
 	}
+	return obj
 }
 
 type MeterConfigStatsReply struct {
@@ -6053,24 +6038,25 @@ func (self *MeterConfigStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterConfigStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*MeterConfigStatsReply, error) {
-	meterconfigstatsreply := &MeterConfigStatsReply{StatsReply: parent}
+func DecodeMeterConfigStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*MeterConfigStatsReply, error) {
+	_meterconfigstatsreply := &MeterConfigStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeMeterConfig(decoder)
+		item, err := DecodeMeterConfig(decoder)
 		if err != nil {
 			return nil, err
 		}
-		meterconfigstatsreply.Entries = append(meterconfigstatsreply.Entries, item)
+		_meterconfigstatsreply.Entries = append(_meterconfigstatsreply.Entries, item)
 	}
-	return meterconfigstatsreply, nil
+	return _meterconfigstatsreply, nil
 }
 
 func NewMeterConfigStatsReply() *MeterConfigStatsReply {
-	return &MeterConfigStatsReply{
+	obj := &MeterConfigStatsReply{
 		StatsReply: NewStatsReply(10),
 	}
+	return obj
 }
 
 type MeterConfigStatsRequest struct {
@@ -6093,21 +6079,22 @@ func (self *MeterConfigStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterConfigStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*MeterConfigStatsRequest, error) {
-	meterconfigstatsrequest := &MeterConfigStatsRequest{StatsRequest: parent}
+func DecodeMeterConfigStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*MeterConfigStatsRequest, error) {
+	_meterconfigstatsrequest := &MeterConfigStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("MeterConfigStatsRequest packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	meterconfigstatsrequest.MeterId = uint32(decoder.ReadUint32())
+	_meterconfigstatsrequest.MeterId = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return meterconfigstatsrequest, nil
+	return _meterconfigstatsrequest, nil
 }
 
 func NewMeterConfigStatsRequest() *MeterConfigStatsRequest {
-	return &MeterConfigStatsRequest{
+	obj := &MeterConfigStatsRequest{
 		StatsRequest: NewStatsRequest(10),
 	}
+	return obj
 }
 
 type MeterFeaturesStatsReply struct {
@@ -6131,23 +6118,24 @@ func (self *MeterFeaturesStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterFeaturesStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*MeterFeaturesStatsReply, error) {
-	meterfeaturesstatsreply := &MeterFeaturesStatsReply{StatsReply: parent}
+func DecodeMeterFeaturesStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*MeterFeaturesStatsReply, error) {
+	_meterfeaturesstatsreply := &MeterFeaturesStatsReply{StatsReply: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("MeterFeaturesStatsReply packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	if err := meterfeaturesstatsreply.Features.Decode(decoder); err != nil {
+	if err := _meterfeaturesstatsreply.Features.Decode(decoder); err != nil {
 		return nil, err
 	}
 
-	return meterfeaturesstatsreply, nil
+	return _meterfeaturesstatsreply, nil
 }
 
 func NewMeterFeaturesStatsReply() *MeterFeaturesStatsReply {
-	return &MeterFeaturesStatsReply{
+	obj := &MeterFeaturesStatsReply{
 		StatsReply: NewStatsReply(11),
 	}
+	return obj
 }
 
 type MeterFeaturesStatsRequest struct {
@@ -6167,19 +6155,20 @@ func (self *MeterFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeMeterFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*MeterFeaturesStatsRequest, error) {
-	meterfeaturesstatsrequest := &MeterFeaturesStatsRequest{StatsRequest: parent}
+func DecodeMeterFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*MeterFeaturesStatsRequest, error) {
+	_meterfeaturesstatsrequest := &MeterFeaturesStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("MeterFeaturesStatsRequest packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return meterfeaturesstatsrequest, nil
+	return _meterfeaturesstatsrequest, nil
 }
 
 func NewMeterFeaturesStatsRequest() *MeterFeaturesStatsRequest {
-	return &MeterFeaturesStatsRequest{
+	obj := &MeterFeaturesStatsRequest{
 		StatsRequest: NewStatsRequest(11),
 	}
+	return obj
 }
 
 type MeterMod struct {
@@ -6210,29 +6199,30 @@ func (self *MeterMod) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterMod(parent *Header, decoder *goloxi.Decoder) (*MeterMod, error) {
-	metermod := &MeterMod{Header: parent}
+func DecodeMeterMod(parent *Header, decoder *goloxi.Decoder) (*MeterMod, error) {
+	_metermod := &MeterMod{Header: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("MeterMod packet too short: %d < 8", decoder.Length())
 	}
-	metermod.Command = MeterModCommand(decoder.ReadUint16())
-	metermod.Flags = MeterFlags(decoder.ReadUint16())
-	metermod.MeterId = uint32(decoder.ReadUint32())
+	_metermod.Command = MeterModCommand(decoder.ReadUint16())
+	_metermod.Flags = MeterFlags(decoder.ReadUint16())
+	_metermod.MeterId = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 4 {
-		item, err := decodeMeterBand(decoder)
+		item, err := DecodeMeterBand(decoder)
 		if err != nil {
 			return nil, err
 		}
-		metermod.Meters = append(metermod.Meters, item)
+		_metermod.Meters = append(_metermod.Meters, item)
 	}
-	return metermod, nil
+	return _metermod, nil
 }
 
 func NewMeterMod() *MeterMod {
-	return &MeterMod{
+	obj := &MeterMod{
 		Header: NewHeader(29),
 	}
+	return obj
 }
 
 type MeterModFailedErrorMsg struct {
@@ -6255,20 +6245,21 @@ func (self *MeterModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*MeterModFailedErrorMsg, error) {
-	metermodfailederrormsg := &MeterModFailedErrorMsg{ErrorMsg: parent}
+func DecodeMeterModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*MeterModFailedErrorMsg, error) {
+	_metermodfailederrormsg := &MeterModFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("MeterModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	metermodfailederrormsg.Code = MeterModFailedCode(decoder.ReadUint16())
-	metermodfailederrormsg.Data = decoder.Read(decoder.Length())
-	return metermodfailederrormsg, nil
+	_metermodfailederrormsg.Code = MeterModFailedCode(decoder.ReadUint16())
+	_metermodfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _metermodfailederrormsg, nil
 }
 
 func NewMeterModFailedErrorMsg() *MeterModFailedErrorMsg {
-	return &MeterModFailedErrorMsg{
+	obj := &MeterModFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(12),
 	}
+	return obj
 }
 
 type MeterStatsReply struct {
@@ -6294,24 +6285,25 @@ func (self *MeterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*MeterStatsReply, error) {
-	meterstatsreply := &MeterStatsReply{StatsReply: parent}
+func DecodeMeterStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*MeterStatsReply, error) {
+	_meterstatsreply := &MeterStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 40 {
-		item, err := decodeMeterStats(decoder)
+		item, err := DecodeMeterStats(decoder)
 		if err != nil {
 			return nil, err
 		}
-		meterstatsreply.Entries = append(meterstatsreply.Entries, item)
+		_meterstatsreply.Entries = append(_meterstatsreply.Entries, item)
 	}
-	return meterstatsreply, nil
+	return _meterstatsreply, nil
 }
 
 func NewMeterStatsReply() *MeterStatsReply {
-	return &MeterStatsReply{
+	obj := &MeterStatsReply{
 		StatsReply: NewStatsReply(9),
 	}
+	return obj
 }
 
 type MeterStatsRequest struct {
@@ -6334,21 +6326,22 @@ func (self *MeterStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeMeterStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*MeterStatsRequest, error) {
-	meterstatsrequest := &MeterStatsRequest{StatsRequest: parent}
+func DecodeMeterStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*MeterStatsRequest, error) {
+	_meterstatsrequest := &MeterStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("MeterStatsRequest packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	meterstatsrequest.MeterId = uint32(decoder.ReadUint32())
+	_meterstatsrequest.MeterId = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return meterstatsrequest, nil
+	return _meterstatsrequest, nil
 }
 
 func NewMeterStatsRequest() *MeterStatsRequest {
-	return &MeterStatsRequest{
+	obj := &MeterStatsRequest{
 		StatsRequest: NewStatsRequest(9),
 	}
+	return obj
 }
 
 type NiciraStatsReply struct {
@@ -6367,27 +6360,28 @@ func (self *NiciraStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraStatsReply(parent *ExperimenterStatsReply, decoder *goloxi.Decoder) (INiciraStatsReply, error) {
-	nicirastatsreply := &NiciraStatsReply{ExperimenterStatsReply: parent}
+func DecodeNiciraStatsReply(parent *ExperimenterStatsReply, decoder *goloxi.Decoder) (INiciraStatsReply, error) {
+	_nicirastatsreply := &NiciraStatsReply{ExperimenterStatsReply: parent}
 	if decoder.Length() < -4 {
 		return nil, fmt.Errorf("NiciraStatsReply packet too short: %d < -4", decoder.Length())
 	}
 
-	switch nicirastatsreply.Subtype {
+	switch _nicirastatsreply.Subtype {
 	case 0:
-		return decodeNiciraFlowStatsReply(nicirastatsreply, decoder)
+		return DecodeNiciraFlowStatsReply(_nicirastatsreply, decoder)
 	case 2:
-		return decodeNiciraFlowMonitorReply(nicirastatsreply, decoder)
+		return DecodeNiciraFlowMonitorReply(_nicirastatsreply, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'NiciraStatsReply'", nicirastatsreply.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'NiciraStatsReply'", _nicirastatsreply.Subtype)
 	}
 }
 
 func NewNiciraStatsReply(_subtype uint32) *NiciraStatsReply {
-	return &NiciraStatsReply{
-		Subtype:                _subtype,
+	obj := &NiciraStatsReply{
 		ExperimenterStatsReply: NewExperimenterStatsReply(8992),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type NiciraFlowMonitorReply struct {
@@ -6413,24 +6407,25 @@ func (self *NiciraFlowMonitorReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraFlowMonitorReply(parent *NiciraStatsReply, decoder *goloxi.Decoder) (*NiciraFlowMonitorReply, error) {
-	niciraflowmonitorreply := &NiciraFlowMonitorReply{NiciraStatsReply: parent}
+func DecodeNiciraFlowMonitorReply(parent *NiciraStatsReply, decoder *goloxi.Decoder) (*NiciraFlowMonitorReply, error) {
+	_niciraflowmonitorreply := &NiciraFlowMonitorReply{NiciraStatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 4 {
-		item, err := decodeNiciraFlowUpdateEvent(decoder)
+		item, err := DecodeNiciraFlowUpdateEvent(decoder)
 		if err != nil {
 			return nil, err
 		}
-		niciraflowmonitorreply.Updates = append(niciraflowmonitorreply.Updates, item)
+		_niciraflowmonitorreply.Updates = append(_niciraflowmonitorreply.Updates, item)
 	}
-	return niciraflowmonitorreply, nil
+	return _niciraflowmonitorreply, nil
 }
 
 func NewNiciraFlowMonitorReply() *NiciraFlowMonitorReply {
-	return &NiciraFlowMonitorReply{
+	obj := &NiciraFlowMonitorReply{
 		NiciraStatsReply: NewNiciraStatsReply(2),
 	}
+	return obj
 }
 
 type NiciraFlowMonitorRequest struct {
@@ -6465,30 +6460,31 @@ func (self *NiciraFlowMonitorRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraFlowMonitorRequest(parent *ExperimenterStatsRequest, decoder *goloxi.Decoder) (*NiciraFlowMonitorRequest, error) {
-	niciraflowmonitorrequest := &NiciraFlowMonitorRequest{ExperimenterStatsRequest: parent}
+func DecodeNiciraFlowMonitorRequest(parent *ExperimenterStatsRequest, decoder *goloxi.Decoder) (*NiciraFlowMonitorRequest, error) {
+	_niciraflowmonitorrequest := &NiciraFlowMonitorRequest{ExperimenterStatsRequest: parent}
 	if decoder.Length() < 18 {
 		return nil, fmt.Errorf("NiciraFlowMonitorRequest packet too short: %d < 18", decoder.Length())
 	}
 	decoder.Skip(4)
-	niciraflowmonitorrequest.MonitorId = uint32(decoder.ReadUint32())
-	niciraflowmonitorrequest.MonitorFlags = NxFlowMonitorFlags(decoder.ReadUint16())
-	niciraflowmonitorrequest.OutPort.Decode(decoder)
-	niciraflowmonitorrequest.MatchLen = uint16(decoder.ReadUint16())
-	niciraflowmonitorrequest.TableId = uint8(decoder.ReadByte())
+	_niciraflowmonitorrequest.MonitorId = uint32(decoder.ReadUint32())
+	_niciraflowmonitorrequest.MonitorFlags = NxFlowMonitorFlags(decoder.ReadUint16())
+	_niciraflowmonitorrequest.OutPort.Decode(decoder)
+	_niciraflowmonitorrequest.MatchLen = uint16(decoder.ReadUint16())
+	_niciraflowmonitorrequest.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(5)
-	if err := niciraflowmonitorrequest.Match.Decode(decoder); err != nil {
+	if err := _niciraflowmonitorrequest.Match.Decode(decoder); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
-	return niciraflowmonitorrequest, nil
+	return _niciraflowmonitorrequest, nil
 }
 
 func NewNiciraFlowMonitorRequest() *NiciraFlowMonitorRequest {
-	return &NiciraFlowMonitorRequest{
+	obj := &NiciraFlowMonitorRequest{
 		ExperimenterStatsRequest: NewExperimenterStatsRequest(8992),
 	}
+	return obj
 }
 
 type NiciraFlowStatsReply struct {
@@ -6514,24 +6510,25 @@ func (self *NiciraFlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraFlowStatsReply(parent *NiciraStatsReply, decoder *goloxi.Decoder) (*NiciraFlowStatsReply, error) {
-	niciraflowstatsreply := &NiciraFlowStatsReply{NiciraStatsReply: parent}
+func DecodeNiciraFlowStatsReply(parent *NiciraStatsReply, decoder *goloxi.Decoder) (*NiciraFlowStatsReply, error) {
+	_niciraflowstatsreply := &NiciraFlowStatsReply{NiciraStatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 48 {
-		item, err := decodeNiciraFlowStats(decoder)
+		item, err := DecodeNiciraFlowStats(decoder)
 		if err != nil {
 			return nil, err
 		}
-		niciraflowstatsreply.Stats = append(niciraflowstatsreply.Stats, item)
+		_niciraflowstatsreply.Stats = append(_niciraflowstatsreply.Stats, item)
 	}
-	return niciraflowstatsreply, nil
+	return _niciraflowstatsreply, nil
 }
 
 func NewNiciraFlowStatsReply() *NiciraFlowStatsReply {
-	return &NiciraFlowStatsReply{
+	obj := &NiciraFlowStatsReply{
 		NiciraStatsReply: NewNiciraStatsReply(0),
 	}
+	return obj
 }
 
 type NiciraFlowStatsRequest struct {
@@ -6558,23 +6555,24 @@ func (self *NiciraFlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraFlowStatsRequest(parent *ExperimenterStatsRequest, decoder *goloxi.Decoder) (*NiciraFlowStatsRequest, error) {
-	niciraflowstatsrequest := &NiciraFlowStatsRequest{ExperimenterStatsRequest: parent}
+func DecodeNiciraFlowStatsRequest(parent *ExperimenterStatsRequest, decoder *goloxi.Decoder) (*NiciraFlowStatsRequest, error) {
+	_niciraflowstatsrequest := &NiciraFlowStatsRequest{ExperimenterStatsRequest: parent}
 	if decoder.Length() < 10 {
 		return nil, fmt.Errorf("NiciraFlowStatsRequest packet too short: %d < 10", decoder.Length())
 	}
 	decoder.Skip(4)
-	niciraflowstatsrequest.OutPort.Decode(decoder)
-	niciraflowstatsrequest.MatchLen = uint16(decoder.ReadUint16())
-	niciraflowstatsrequest.TableId = uint8(decoder.ReadByte())
+	_niciraflowstatsrequest.OutPort.Decode(decoder)
+	_niciraflowstatsrequest.MatchLen = uint16(decoder.ReadUint16())
+	_niciraflowstatsrequest.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return niciraflowstatsrequest, nil
+	return _niciraflowstatsrequest, nil
 }
 
 func NewNiciraFlowStatsRequest() *NiciraFlowStatsRequest {
-	return &NiciraFlowStatsRequest{
+	obj := &NiciraFlowStatsRequest{
 		ExperimenterStatsRequest: NewExperimenterStatsRequest(8992),
 	}
+	return obj
 }
 
 type NiciraHeader struct {
@@ -6593,16 +6591,17 @@ func (self *NiciraHeader) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNiciraHeader(parent *Experimenter, decoder *goloxi.Decoder) (INiciraHeader, error) {
-	niciraheader := &NiciraHeader{Experimenter: parent}
-	return niciraheader, nil
+func DecodeNiciraHeader(parent *Experimenter, decoder *goloxi.Decoder) (INiciraHeader, error) {
+	_niciraheader := &NiciraHeader{Experimenter: parent}
+	return _niciraheader, nil
 }
 
 func NewNiciraHeader(_subtype uint32) *NiciraHeader {
-	return &NiciraHeader{
-		Subtype:      _subtype,
+	obj := &NiciraHeader{
 		Experimenter: NewExperimenter(8992),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type PacketIn struct {
@@ -6639,30 +6638,31 @@ func (self *PacketIn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePacketIn(parent *Header, decoder *goloxi.Decoder) (*PacketIn, error) {
-	packetin := &PacketIn{Header: parent}
+func DecodePacketIn(parent *Header, decoder *goloxi.Decoder) (*PacketIn, error) {
+	_packetin := &PacketIn{Header: parent}
 	if decoder.Length() < 26 {
 		return nil, fmt.Errorf("PacketIn packet too short: %d < 26", decoder.Length())
 	}
-	packetin.BufferId = uint32(decoder.ReadUint32())
-	packetin.TotalLen = uint16(decoder.ReadUint16())
-	packetin.Reason = uint8(decoder.ReadByte())
-	packetin.TableId = uint8(decoder.ReadByte())
-	packetin.Cookie = uint64(decoder.ReadUint64())
-	if err := packetin.Match.Decode(decoder); err != nil {
+	_packetin.BufferId = uint32(decoder.ReadUint32())
+	_packetin.TotalLen = uint16(decoder.ReadUint16())
+	_packetin.Reason = uint8(decoder.ReadByte())
+	_packetin.TableId = uint8(decoder.ReadByte())
+	_packetin.Cookie = uint64(decoder.ReadUint64())
+	if err := _packetin.Match.Decode(decoder); err != nil {
 		return nil, err
 	}
 
 	decoder.SkipAlign()
 	decoder.Skip(2)
-	packetin.Data = decoder.Read(decoder.Length())
-	return packetin, nil
+	_packetin.Data = decoder.Read(decoder.Length())
+	return _packetin, nil
 }
 
 func NewPacketIn() *PacketIn {
-	return &PacketIn{
+	obj := &PacketIn{
 		Header: NewHeader(10),
 	}
+	return obj
 }
 
 type PacketOut struct {
@@ -6696,31 +6696,32 @@ func (self *PacketOut) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePacketOut(parent *Header, decoder *goloxi.Decoder) (*PacketOut, error) {
-	packetout := &PacketOut{Header: parent}
+func DecodePacketOut(parent *Header, decoder *goloxi.Decoder) (*PacketOut, error) {
+	_packetout := &PacketOut{Header: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("PacketOut packet too short: %d < 16", decoder.Length())
 	}
-	packetout.BufferId = uint32(decoder.ReadUint32())
-	packetout.InPort.Decode(decoder)
-	packetout.ActionsLen = uint16(decoder.ReadUint16())
+	_packetout.BufferId = uint32(decoder.ReadUint32())
+	_packetout.InPort.Decode(decoder)
+	_packetout.ActionsLen = uint16(decoder.ReadUint16())
 	decoder.Skip(6)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		packetout.Actions = append(packetout.Actions, item)
+		_packetout.Actions = append(_packetout.Actions, item)
 	}
-	packetout.Data = decoder.Read(decoder.Length())
-	return packetout, nil
+	_packetout.Data = decoder.Read(decoder.Length())
+	return _packetout, nil
 }
 
 func NewPacketOut() *PacketOut {
-	return &PacketOut{
+	obj := &PacketOut{
 		Header: NewHeader(13),
 	}
+	return obj
 }
 
 type PortDescStatsReply struct {
@@ -6746,8 +6747,8 @@ func (self *PortDescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*PortDescStatsReply, error) {
-	portdescstatsreply := &PortDescStatsReply{StatsReply: parent}
+func DecodePortDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*PortDescStatsReply, error) {
+	_portdescstatsreply := &PortDescStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 64 {
@@ -6755,15 +6756,16 @@ func decodePortDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*Por
 		if err := item.Decode(decoder); err != nil {
 			return nil, err
 		}
-		portdescstatsreply.Entries = append(portdescstatsreply.Entries, item)
+		_portdescstatsreply.Entries = append(_portdescstatsreply.Entries, item)
 	}
-	return portdescstatsreply, nil
+	return _portdescstatsreply, nil
 }
 
 func NewPortDescStatsReply() *PortDescStatsReply {
-	return &PortDescStatsReply{
+	obj := &PortDescStatsReply{
 		StatsReply: NewStatsReply(13),
 	}
+	return obj
 }
 
 type PortDescStatsRequest struct {
@@ -6783,19 +6785,20 @@ func (self *PortDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*PortDescStatsRequest, error) {
-	portdescstatsrequest := &PortDescStatsRequest{StatsRequest: parent}
+func DecodePortDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*PortDescStatsRequest, error) {
+	_portdescstatsrequest := &PortDescStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("PortDescStatsRequest packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return portdescstatsrequest, nil
+	return _portdescstatsrequest, nil
 }
 
 func NewPortDescStatsRequest() *PortDescStatsRequest {
-	return &PortDescStatsRequest{
+	obj := &PortDescStatsRequest{
 		StatsRequest: NewStatsRequest(13),
 	}
+	return obj
 }
 
 type PortMod struct {
@@ -6827,26 +6830,27 @@ func (self *PortMod) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortMod(parent *Header, decoder *goloxi.Decoder) (*PortMod, error) {
-	portmod := &PortMod{Header: parent}
+func DecodePortMod(parent *Header, decoder *goloxi.Decoder) (*PortMod, error) {
+	_portmod := &PortMod{Header: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("PortMod packet too short: %d < 32", decoder.Length())
 	}
-	portmod.PortNo.Decode(decoder)
+	_portmod.PortNo.Decode(decoder)
 	decoder.Skip(4)
-	portmod.HwAddr = net.HardwareAddr(decoder.Read(6))
+	_portmod.HwAddr = net.HardwareAddr(decoder.Read(6))
 	decoder.Skip(2)
-	portmod.Config = PortConfig(decoder.ReadUint32())
-	portmod.Mask = PortConfig(decoder.ReadUint32())
-	portmod.Advertise = uint32(decoder.ReadUint32())
+	_portmod.Config = PortConfig(decoder.ReadUint32())
+	_portmod.Mask = PortConfig(decoder.ReadUint32())
+	_portmod.Advertise = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return portmod, nil
+	return _portmod, nil
 }
 
 func NewPortMod() *PortMod {
-	return &PortMod{
+	obj := &PortMod{
 		Header: NewHeader(16),
 	}
+	return obj
 }
 
 type PortModFailedErrorMsg struct {
@@ -6869,20 +6873,21 @@ func (self *PortModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*PortModFailedErrorMsg, error) {
-	portmodfailederrormsg := &PortModFailedErrorMsg{ErrorMsg: parent}
+func DecodePortModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*PortModFailedErrorMsg, error) {
+	_portmodfailederrormsg := &PortModFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("PortModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	portmodfailederrormsg.Code = PortModFailedCode(decoder.ReadUint16())
-	portmodfailederrormsg.Data = decoder.Read(decoder.Length())
-	return portmodfailederrormsg, nil
+	_portmodfailederrormsg.Code = PortModFailedCode(decoder.ReadUint16())
+	_portmodfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _portmodfailederrormsg, nil
 }
 
 func NewPortModFailedErrorMsg() *PortModFailedErrorMsg {
-	return &PortModFailedErrorMsg{
+	obj := &PortModFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(7),
 	}
+	return obj
 }
 
 type PortStatsReply struct {
@@ -6908,24 +6913,25 @@ func (self *PortStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*PortStatsReply, error) {
-	portstatsreply := &PortStatsReply{StatsReply: parent}
+func DecodePortStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*PortStatsReply, error) {
+	_portstatsreply := &PortStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 112 {
-		item, err := decodePortStatsEntry(decoder)
+		item, err := DecodePortStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		portstatsreply.Entries = append(portstatsreply.Entries, item)
+		_portstatsreply.Entries = append(_portstatsreply.Entries, item)
 	}
-	return portstatsreply, nil
+	return _portstatsreply, nil
 }
 
 func NewPortStatsReply() *PortStatsReply {
-	return &PortStatsReply{
+	obj := &PortStatsReply{
 		StatsReply: NewStatsReply(4),
 	}
+	return obj
 }
 
 type PortStatsRequest struct {
@@ -6948,21 +6954,22 @@ func (self *PortStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*PortStatsRequest, error) {
-	portstatsrequest := &PortStatsRequest{StatsRequest: parent}
+func DecodePortStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*PortStatsRequest, error) {
+	_portstatsrequest := &PortStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("PortStatsRequest packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	portstatsrequest.PortNo.Decode(decoder)
+	_portstatsrequest.PortNo.Decode(decoder)
 	decoder.Skip(4)
-	return portstatsrequest, nil
+	return _portstatsrequest, nil
 }
 
 func NewPortStatsRequest() *PortStatsRequest {
-	return &PortStatsRequest{
+	obj := &PortStatsRequest{
 		StatsRequest: NewStatsRequest(4),
 	}
+	return obj
 }
 
 type PortStatus struct {
@@ -6988,24 +6995,25 @@ func (self *PortStatus) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodePortStatus(parent *Header, decoder *goloxi.Decoder) (*PortStatus, error) {
-	portstatus := &PortStatus{Header: parent}
+func DecodePortStatus(parent *Header, decoder *goloxi.Decoder) (*PortStatus, error) {
+	_portstatus := &PortStatus{Header: parent}
 	if decoder.Length() < 72 {
 		return nil, fmt.Errorf("PortStatus packet too short: %d < 72", decoder.Length())
 	}
-	portstatus.Reason = PortReason(decoder.ReadByte())
+	_portstatus.Reason = PortReason(decoder.ReadByte())
 	decoder.Skip(7)
-	if err := portstatus.Desc.Decode(decoder); err != nil {
+	if err := _portstatus.Desc.Decode(decoder); err != nil {
 		return nil, err
 	}
 
-	return portstatus, nil
+	return _portstatus, nil
 }
 
 func NewPortStatus() *PortStatus {
-	return &PortStatus{
+	obj := &PortStatus{
 		Header: NewHeader(12),
 	}
+	return obj
 }
 
 type QueueGetConfigReply struct {
@@ -7033,28 +7041,29 @@ func (self *QueueGetConfigReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueGetConfigReply(parent *Header, decoder *goloxi.Decoder) (*QueueGetConfigReply, error) {
-	queuegetconfigreply := &QueueGetConfigReply{Header: parent}
+func DecodeQueueGetConfigReply(parent *Header, decoder *goloxi.Decoder) (*QueueGetConfigReply, error) {
+	_queuegetconfigreply := &QueueGetConfigReply{Header: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("QueueGetConfigReply packet too short: %d < 8", decoder.Length())
 	}
-	queuegetconfigreply.Port.Decode(decoder)
+	_queuegetconfigreply.Port.Decode(decoder)
 	decoder.Skip(4)
 
 	for decoder.Length() >= 16 {
-		item, err := decodePacketQueue(decoder)
+		item, err := DecodePacketQueue(decoder)
 		if err != nil {
 			return nil, err
 		}
-		queuegetconfigreply.Queues = append(queuegetconfigreply.Queues, item)
+		_queuegetconfigreply.Queues = append(_queuegetconfigreply.Queues, item)
 	}
-	return queuegetconfigreply, nil
+	return _queuegetconfigreply, nil
 }
 
 func NewQueueGetConfigReply() *QueueGetConfigReply {
-	return &QueueGetConfigReply{
+	obj := &QueueGetConfigReply{
 		Header: NewHeader(23),
 	}
+	return obj
 }
 
 type QueueGetConfigRequest struct {
@@ -7076,20 +7085,21 @@ func (self *QueueGetConfigRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueGetConfigRequest(parent *Header, decoder *goloxi.Decoder) (*QueueGetConfigRequest, error) {
-	queuegetconfigrequest := &QueueGetConfigRequest{Header: parent}
+func DecodeQueueGetConfigRequest(parent *Header, decoder *goloxi.Decoder) (*QueueGetConfigRequest, error) {
+	_queuegetconfigrequest := &QueueGetConfigRequest{Header: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("QueueGetConfigRequest packet too short: %d < 8", decoder.Length())
 	}
-	queuegetconfigrequest.Port.Decode(decoder)
+	_queuegetconfigrequest.Port.Decode(decoder)
 	decoder.Skip(4)
-	return queuegetconfigrequest, nil
+	return _queuegetconfigrequest, nil
 }
 
 func NewQueueGetConfigRequest() *QueueGetConfigRequest {
-	return &QueueGetConfigRequest{
+	obj := &QueueGetConfigRequest{
 		Header: NewHeader(22),
 	}
+	return obj
 }
 
 type QueueOpFailedErrorMsg struct {
@@ -7112,20 +7122,21 @@ func (self *QueueOpFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueOpFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*QueueOpFailedErrorMsg, error) {
-	queueopfailederrormsg := &QueueOpFailedErrorMsg{ErrorMsg: parent}
+func DecodeQueueOpFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*QueueOpFailedErrorMsg, error) {
+	_queueopfailederrormsg := &QueueOpFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("QueueOpFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	queueopfailederrormsg.Code = QueueOpFailedCode(decoder.ReadUint16())
-	queueopfailederrormsg.Data = decoder.Read(decoder.Length())
-	return queueopfailederrormsg, nil
+	_queueopfailederrormsg.Code = QueueOpFailedCode(decoder.ReadUint16())
+	_queueopfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _queueopfailederrormsg, nil
 }
 
 func NewQueueOpFailedErrorMsg() *QueueOpFailedErrorMsg {
-	return &QueueOpFailedErrorMsg{
+	obj := &QueueOpFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(9),
 	}
+	return obj
 }
 
 type QueueStatsReply struct {
@@ -7151,24 +7162,25 @@ func (self *QueueStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*QueueStatsReply, error) {
-	queuestatsreply := &QueueStatsReply{StatsReply: parent}
+func DecodeQueueStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*QueueStatsReply, error) {
+	_queuestatsreply := &QueueStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 40 {
-		item, err := decodeQueueStatsEntry(decoder)
+		item, err := DecodeQueueStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		queuestatsreply.Entries = append(queuestatsreply.Entries, item)
+		_queuestatsreply.Entries = append(_queuestatsreply.Entries, item)
 	}
-	return queuestatsreply, nil
+	return _queuestatsreply, nil
 }
 
 func NewQueueStatsReply() *QueueStatsReply {
-	return &QueueStatsReply{
+	obj := &QueueStatsReply{
 		StatsReply: NewStatsReply(5),
 	}
+	return obj
 }
 
 type QueueStatsRequest struct {
@@ -7192,21 +7204,22 @@ func (self *QueueStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeQueueStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*QueueStatsRequest, error) {
-	queuestatsrequest := &QueueStatsRequest{StatsRequest: parent}
+func DecodeQueueStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*QueueStatsRequest, error) {
+	_queuestatsrequest := &QueueStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("QueueStatsRequest packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	queuestatsrequest.PortNo.Decode(decoder)
-	queuestatsrequest.QueueId = uint32(decoder.ReadUint32())
-	return queuestatsrequest, nil
+	_queuestatsrequest.PortNo.Decode(decoder)
+	_queuestatsrequest.QueueId = uint32(decoder.ReadUint32())
+	return _queuestatsrequest, nil
 }
 
 func NewQueueStatsRequest() *QueueStatsRequest {
-	return &QueueStatsRequest{
+	obj := &QueueStatsRequest{
 		StatsRequest: NewStatsRequest(5),
 	}
+	return obj
 }
 
 type RoleReply struct {
@@ -7230,21 +7243,22 @@ func (self *RoleReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeRoleReply(parent *Header, decoder *goloxi.Decoder) (*RoleReply, error) {
-	rolereply := &RoleReply{Header: parent}
+func DecodeRoleReply(parent *Header, decoder *goloxi.Decoder) (*RoleReply, error) {
+	_rolereply := &RoleReply{Header: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("RoleReply packet too short: %d < 16", decoder.Length())
 	}
-	rolereply.Role = ControllerRole(decoder.ReadUint32())
+	_rolereply.Role = ControllerRole(decoder.ReadUint32())
 	decoder.Skip(4)
-	rolereply.GenerationId = uint64(decoder.ReadUint64())
-	return rolereply, nil
+	_rolereply.GenerationId = uint64(decoder.ReadUint64())
+	return _rolereply, nil
 }
 
 func NewRoleReply() *RoleReply {
-	return &RoleReply{
+	obj := &RoleReply{
 		Header: NewHeader(25),
 	}
+	return obj
 }
 
 type RoleRequest struct {
@@ -7268,21 +7282,22 @@ func (self *RoleRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeRoleRequest(parent *Header, decoder *goloxi.Decoder) (*RoleRequest, error) {
-	rolerequest := &RoleRequest{Header: parent}
+func DecodeRoleRequest(parent *Header, decoder *goloxi.Decoder) (*RoleRequest, error) {
+	_rolerequest := &RoleRequest{Header: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("RoleRequest packet too short: %d < 16", decoder.Length())
 	}
-	rolerequest.Role = ControllerRole(decoder.ReadUint32())
+	_rolerequest.Role = ControllerRole(decoder.ReadUint32())
 	decoder.Skip(4)
-	rolerequest.GenerationId = uint64(decoder.ReadUint64())
-	return rolerequest, nil
+	_rolerequest.GenerationId = uint64(decoder.ReadUint64())
+	return _rolerequest, nil
 }
 
 func NewRoleRequest() *RoleRequest {
-	return &RoleRequest{
+	obj := &RoleRequest{
 		Header: NewHeader(24),
 	}
+	return obj
 }
 
 type RoleRequestFailedErrorMsg struct {
@@ -7305,20 +7320,21 @@ func (self *RoleRequestFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeRoleRequestFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*RoleRequestFailedErrorMsg, error) {
-	rolerequestfailederrormsg := &RoleRequestFailedErrorMsg{ErrorMsg: parent}
+func DecodeRoleRequestFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*RoleRequestFailedErrorMsg, error) {
+	_rolerequestfailederrormsg := &RoleRequestFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("RoleRequestFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	rolerequestfailederrormsg.Code = RoleRequestFailedCode(decoder.ReadUint16())
-	rolerequestfailederrormsg.Data = decoder.Read(decoder.Length())
-	return rolerequestfailederrormsg, nil
+	_rolerequestfailederrormsg.Code = RoleRequestFailedCode(decoder.ReadUint16())
+	_rolerequestfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _rolerequestfailederrormsg, nil
 }
 
 func NewRoleRequestFailedErrorMsg() *RoleRequestFailedErrorMsg {
-	return &RoleRequestFailedErrorMsg{
+	obj := &RoleRequestFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(11),
 	}
+	return obj
 }
 
 type SetConfig struct {
@@ -7341,20 +7357,21 @@ func (self *SetConfig) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeSetConfig(parent *Header, decoder *goloxi.Decoder) (*SetConfig, error) {
-	setconfig := &SetConfig{Header: parent}
+func DecodeSetConfig(parent *Header, decoder *goloxi.Decoder) (*SetConfig, error) {
+	_setconfig := &SetConfig{Header: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("SetConfig packet too short: %d < 4", decoder.Length())
 	}
-	setconfig.Flags = ConfigFlags(decoder.ReadUint16())
-	setconfig.MissSendLen = uint16(decoder.ReadUint16())
-	return setconfig, nil
+	_setconfig.Flags = ConfigFlags(decoder.ReadUint16())
+	_setconfig.MissSendLen = uint16(decoder.ReadUint16())
+	return _setconfig, nil
 }
 
 func NewSetConfig() *SetConfig {
-	return &SetConfig{
+	obj := &SetConfig{
 		Header: NewHeader(9),
 	}
+	return obj
 }
 
 type SwitchConfigFailedErrorMsg struct {
@@ -7377,20 +7394,21 @@ func (self *SwitchConfigFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error
 	return nil
 }
 
-func decodeSwitchConfigFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*SwitchConfigFailedErrorMsg, error) {
-	switchconfigfailederrormsg := &SwitchConfigFailedErrorMsg{ErrorMsg: parent}
+func DecodeSwitchConfigFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*SwitchConfigFailedErrorMsg, error) {
+	_switchconfigfailederrormsg := &SwitchConfigFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("SwitchConfigFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	switchconfigfailederrormsg.Code = SwitchConfigFailedCode(decoder.ReadUint16())
-	switchconfigfailederrormsg.Data = decoder.Read(decoder.Length())
-	return switchconfigfailederrormsg, nil
+	_switchconfigfailederrormsg.Code = SwitchConfigFailedCode(decoder.ReadUint16())
+	_switchconfigfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _switchconfigfailederrormsg, nil
 }
 
 func NewSwitchConfigFailedErrorMsg() *SwitchConfigFailedErrorMsg {
-	return &SwitchConfigFailedErrorMsg{
+	obj := &SwitchConfigFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(10),
 	}
+	return obj
 }
 
 type TableFeaturesFailedErrorMsg struct {
@@ -7413,20 +7431,21 @@ func (self *TableFeaturesFailedErrorMsg) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeTableFeaturesFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*TableFeaturesFailedErrorMsg, error) {
-	tablefeaturesfailederrormsg := &TableFeaturesFailedErrorMsg{ErrorMsg: parent}
+func DecodeTableFeaturesFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*TableFeaturesFailedErrorMsg, error) {
+	_tablefeaturesfailederrormsg := &TableFeaturesFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("TableFeaturesFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	tablefeaturesfailederrormsg.Code = TableFeaturesFailedCode(decoder.ReadUint16())
-	tablefeaturesfailederrormsg.Data = decoder.Read(decoder.Length())
-	return tablefeaturesfailederrormsg, nil
+	_tablefeaturesfailederrormsg.Code = TableFeaturesFailedCode(decoder.ReadUint16())
+	_tablefeaturesfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _tablefeaturesfailederrormsg, nil
 }
 
 func NewTableFeaturesFailedErrorMsg() *TableFeaturesFailedErrorMsg {
-	return &TableFeaturesFailedErrorMsg{
+	obj := &TableFeaturesFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(13),
 	}
+	return obj
 }
 
 type TableFeaturesStatsReply struct {
@@ -7452,24 +7471,25 @@ func (self *TableFeaturesStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableFeaturesStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*TableFeaturesStatsReply, error) {
-	tablefeaturesstatsreply := &TableFeaturesStatsReply{StatsReply: parent}
+func DecodeTableFeaturesStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*TableFeaturesStatsReply, error) {
+	_tablefeaturesstatsreply := &TableFeaturesStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 64 {
-		item, err := decodeTableFeatures(decoder)
+		item, err := DecodeTableFeatures(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturesstatsreply.Entries = append(tablefeaturesstatsreply.Entries, item)
+		_tablefeaturesstatsreply.Entries = append(_tablefeaturesstatsreply.Entries, item)
 	}
-	return tablefeaturesstatsreply, nil
+	return _tablefeaturesstatsreply, nil
 }
 
 func NewTableFeaturesStatsReply() *TableFeaturesStatsReply {
-	return &TableFeaturesStatsReply{
+	obj := &TableFeaturesStatsReply{
 		StatsReply: NewStatsReply(12),
 	}
+	return obj
 }
 
 type TableFeaturesStatsRequest struct {
@@ -7495,24 +7515,25 @@ func (self *TableFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeTableFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*TableFeaturesStatsRequest, error) {
-	tablefeaturesstatsrequest := &TableFeaturesStatsRequest{StatsRequest: parent}
+func DecodeTableFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*TableFeaturesStatsRequest, error) {
+	_tablefeaturesstatsrequest := &TableFeaturesStatsRequest{StatsRequest: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 64 {
-		item, err := decodeTableFeatures(decoder)
+		item, err := DecodeTableFeatures(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablefeaturesstatsrequest.Entries = append(tablefeaturesstatsrequest.Entries, item)
+		_tablefeaturesstatsrequest.Entries = append(_tablefeaturesstatsrequest.Entries, item)
 	}
-	return tablefeaturesstatsrequest, nil
+	return _tablefeaturesstatsrequest, nil
 }
 
 func NewTableFeaturesStatsRequest() *TableFeaturesStatsRequest {
-	return &TableFeaturesStatsRequest{
+	obj := &TableFeaturesStatsRequest{
 		StatsRequest: NewStatsRequest(12),
 	}
+	return obj
 }
 
 type TableMod struct {
@@ -7536,21 +7557,22 @@ func (self *TableMod) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableMod(parent *Header, decoder *goloxi.Decoder) (*TableMod, error) {
-	tablemod := &TableMod{Header: parent}
+func DecodeTableMod(parent *Header, decoder *goloxi.Decoder) (*TableMod, error) {
+	_tablemod := &TableMod{Header: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("TableMod packet too short: %d < 8", decoder.Length())
 	}
-	tablemod.TableId = uint8(decoder.ReadByte())
+	_tablemod.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	tablemod.Config = uint32(decoder.ReadUint32())
-	return tablemod, nil
+	_tablemod.Config = uint32(decoder.ReadUint32())
+	return _tablemod, nil
 }
 
 func NewTableMod() *TableMod {
-	return &TableMod{
+	obj := &TableMod{
 		Header: NewHeader(17),
 	}
+	return obj
 }
 
 type TableModFailedErrorMsg struct {
@@ -7573,20 +7595,21 @@ func (self *TableModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*TableModFailedErrorMsg, error) {
-	tablemodfailederrormsg := &TableModFailedErrorMsg{ErrorMsg: parent}
+func DecodeTableModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*TableModFailedErrorMsg, error) {
+	_tablemodfailederrormsg := &TableModFailedErrorMsg{ErrorMsg: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("TableModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
-	tablemodfailederrormsg.Code = TableModFailedCode(decoder.ReadUint16())
-	tablemodfailederrormsg.Data = decoder.Read(decoder.Length())
-	return tablemodfailederrormsg, nil
+	_tablemodfailederrormsg.Code = TableModFailedCode(decoder.ReadUint16())
+	_tablemodfailederrormsg.Data = decoder.Read(decoder.Length())
+	return _tablemodfailederrormsg, nil
 }
 
 func NewTableModFailedErrorMsg() *TableModFailedErrorMsg {
-	return &TableModFailedErrorMsg{
+	obj := &TableModFailedErrorMsg{
 		ErrorMsg: NewErrorMsg(8),
 	}
+	return obj
 }
 
 type TableStatsReply struct {
@@ -7612,24 +7635,25 @@ func (self *TableStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*TableStatsReply, error) {
-	tablestatsreply := &TableStatsReply{StatsReply: parent}
+func DecodeTableStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*TableStatsReply, error) {
+	_tablestatsreply := &TableStatsReply{StatsReply: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 24 {
-		item, err := decodeTableStatsEntry(decoder)
+		item, err := DecodeTableStatsEntry(decoder)
 		if err != nil {
 			return nil, err
 		}
-		tablestatsreply.Entries = append(tablestatsreply.Entries, item)
+		_tablestatsreply.Entries = append(_tablestatsreply.Entries, item)
 	}
-	return tablestatsreply, nil
+	return _tablestatsreply, nil
 }
 
 func NewTableStatsReply() *TableStatsReply {
-	return &TableStatsReply{
+	obj := &TableStatsReply{
 		StatsReply: NewStatsReply(3),
 	}
+	return obj
 }
 
 type TableStatsRequest struct {
@@ -7649,17 +7673,18 @@ func (self *TableStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeTableStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*TableStatsRequest, error) {
-	tablestatsrequest := &TableStatsRequest{StatsRequest: parent}
+func DecodeTableStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*TableStatsRequest, error) {
+	_tablestatsrequest := &TableStatsRequest{StatsRequest: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("TableStatsRequest packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return tablestatsrequest, nil
+	return _tablestatsrequest, nil
 }
 
 func NewTableStatsRequest() *TableStatsRequest {
-	return &TableStatsRequest{
+	obj := &TableStatsRequest{
 		StatsRequest: NewStatsRequest(3),
 	}
+	return obj
 }

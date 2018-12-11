@@ -2487,6 +2487,28 @@ func (self FlowModFlags) MarshalJSON() ([]byte, error) {
 }
 
 const (
+	// Identifiers from group ofp_flow_monitor_command
+	OFPFMCAdd    = 0 // OFPFMC_ADD
+	OFPFMCModify = 1 // OFPFMC_MODIFY
+	OFPFMCDelete = 2 // OFPFMC_DELETE
+)
+
+type FlowMonitorCommand uint8
+
+func (self FlowMonitorCommand) MarshalJSON() ([]byte, error) {
+	switch self {
+	case OFPFMCAdd:
+		return []byte("\"OFPFMCAdd\""), nil
+	case OFPFMCModify:
+		return []byte("\"OFPFMCModify\""), nil
+	case OFPFMCDelete:
+		return []byte("\"OFPFMCDelete\""), nil
+	default:
+		return nil, fmt.Errorf("Invalid value '%d' for FlowMonitorCommand", self)
+	}
+}
+
+const (
 	// Identifiers from group ofp_flow_monitor_failed_code
 	OFPMOFCUnknown        = 0 // OFPMOFC_UNKNOWN
 	OFPMOFCMonitorExists  = 1 // OFPMOFC_MONITOR_EXISTS
@@ -2524,6 +2546,45 @@ func (self FlowMonitorFailedCode) MarshalJSON() ([]byte, error) {
 }
 
 const (
+	// Identifiers from group ofp_flow_monitor_flags
+	OFPFMFInitial      = 1  // OFPFMF_INITIAL
+	OFPFMFAdd          = 2  // OFPFMF_ADD
+	OFPFMFRemoved      = 4  // OFPFMF_REMOVED
+	OFPFMFModify       = 8  // OFPFMF_MODIFY
+	OFPFMFInstructions = 16 // OFPFMF_INSTRUCTIONS
+	OFPFMFNoAbbrev     = 32 // OFPFMF_NO_ABBREV
+	OFPFMFOnlyOwn      = 64 // OFPFMF_ONLY_OWN
+)
+
+type FlowMonitorFlags uint16
+
+func (self FlowMonitorFlags) MarshalJSON() ([]byte, error) {
+	var flags []string
+	if self&OFPFMFInitial == OFPFMFInitial {
+		flags = append(flags, "\"OFPFMFInitial\": true")
+	}
+	if self&OFPFMFAdd == OFPFMFAdd {
+		flags = append(flags, "\"OFPFMFAdd\": true")
+	}
+	if self&OFPFMFRemoved == OFPFMFRemoved {
+		flags = append(flags, "\"OFPFMFRemoved\": true")
+	}
+	if self&OFPFMFModify == OFPFMFModify {
+		flags = append(flags, "\"OFPFMFModify\": true")
+	}
+	if self&OFPFMFInstructions == OFPFMFInstructions {
+		flags = append(flags, "\"OFPFMFInstructions\": true")
+	}
+	if self&OFPFMFNoAbbrev == OFPFMFNoAbbrev {
+		flags = append(flags, "\"OFPFMFNoAbbrev\": true")
+	}
+	if self&OFPFMFOnlyOwn == OFPFMFOnlyOwn {
+		flags = append(flags, "\"OFPFMFOnlyOwn\": true")
+	}
+	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
+}
+
+const (
 	// Identifiers from group ofp_flow_removed_reason
 	OFPRRIdleTimeout = 0 // OFPRR_IDLE_TIMEOUT
 	OFPRRHardTimeout = 1 // OFPRR_HARD_TIMEOUT
@@ -2551,6 +2612,40 @@ func (self FlowRemovedReason) MarshalJSON() ([]byte, error) {
 		return []byte("\"OFPRREviction\""), nil
 	default:
 		return nil, fmt.Errorf("Invalid value '%d' for FlowRemovedReason", self)
+	}
+}
+
+const (
+	// Identifiers from group ofp_flow_update_event
+	OFPFMEInitial  = 0 // OFPFME_INITIAL
+	OFPFMEAdded    = 1 // OFPFME_ADDED
+	OFPFMERemoved  = 2 // OFPFME_REMOVED
+	OFPFMEModified = 3 // OFPFME_MODIFIED
+	OFPFMEAbbrev   = 4 // OFPFME_ABBREV
+	OFPFMEPaused   = 5 // OFPFME_PAUSED
+	OFPFMEResumed  = 6 // OFPFME_RESUMED
+)
+
+type FlowUpdateEvent uint16
+
+func (self FlowUpdateEvent) MarshalJSON() ([]byte, error) {
+	switch self {
+	case OFPFMEInitial:
+		return []byte("\"OFPFMEInitial\""), nil
+	case OFPFMEAdded:
+		return []byte("\"OFPFMEAdded\""), nil
+	case OFPFMERemoved:
+		return []byte("\"OFPFMERemoved\""), nil
+	case OFPFMEModified:
+		return []byte("\"OFPFMEModified\""), nil
+	case OFPFMEAbbrev:
+		return []byte("\"OFPFMEAbbrev\""), nil
+	case OFPFMEPaused:
+		return []byte("\"OFPFMEPaused\""), nil
+	case OFPFMEResumed:
+		return []byte("\"OFPFMEResumed\""), nil
+	default:
+		return nil, fmt.Errorf("Invalid value '%d' for FlowUpdateEvent", self)
 	}
 }
 

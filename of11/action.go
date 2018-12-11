@@ -46,77 +46,77 @@ func (self *Action) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeAction(decoder *goloxi.Decoder) (IAction, error) {
-	action := &Action{}
+func DecodeAction(decoder *goloxi.Decoder) (IAction, error) {
+	_action := &Action{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("Action packet too short: %d < 4", decoder.Length())
 	}
-	action.Type = uint16(decoder.ReadUint16())
-	action.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(action.Len), 2+2)
+	_action.Type = uint16(decoder.ReadUint16())
+	_action.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_action.Len), 2+2)
 
-	switch action.Type {
+	switch _action.Type {
 	case 0:
-		return decodeActionOutput(action, decoder)
+		return DecodeActionOutput(_action, decoder)
 	case 1:
-		return decodeActionSetVlanVid(action, decoder)
+		return DecodeActionSetVlanVid(_action, decoder)
 	case 2:
-		return decodeActionSetVlanPcp(action, decoder)
+		return DecodeActionSetVlanPcp(_action, decoder)
 	case 3:
-		return decodeActionSetDlSrc(action, decoder)
+		return DecodeActionSetDlSrc(_action, decoder)
 	case 4:
-		return decodeActionSetDlDst(action, decoder)
+		return DecodeActionSetDlDst(_action, decoder)
 	case 5:
-		return decodeActionSetNwSrc(action, decoder)
+		return DecodeActionSetNwSrc(_action, decoder)
 	case 6:
-		return decodeActionSetNwDst(action, decoder)
+		return DecodeActionSetNwDst(_action, decoder)
 	case 7:
-		return decodeActionSetNwTos(action, decoder)
+		return DecodeActionSetNwTos(_action, decoder)
 	case 8:
-		return decodeActionSetNwEcn(action, decoder)
+		return DecodeActionSetNwEcn(_action, decoder)
 	case 9:
-		return decodeActionSetTpSrc(action, decoder)
+		return DecodeActionSetTpSrc(_action, decoder)
 	case 10:
-		return decodeActionSetTpDst(action, decoder)
+		return DecodeActionSetTpDst(_action, decoder)
 	case 11:
-		return decodeActionCopyTtlOut(action, decoder)
+		return DecodeActionCopyTtlOut(_action, decoder)
 	case 12:
-		return decodeActionCopyTtlIn(action, decoder)
+		return DecodeActionCopyTtlIn(_action, decoder)
 	case 13:
-		return decodeActionSetMplsLabel(action, decoder)
+		return DecodeActionSetMplsLabel(_action, decoder)
 	case 14:
-		return decodeActionSetMplsTc(action, decoder)
+		return DecodeActionSetMplsTc(_action, decoder)
 	case 15:
-		return decodeActionSetMplsTtl(action, decoder)
+		return DecodeActionSetMplsTtl(_action, decoder)
 	case 16:
-		return decodeActionDecMplsTtl(action, decoder)
+		return DecodeActionDecMplsTtl(_action, decoder)
 	case 17:
-		return decodeActionPushVlan(action, decoder)
+		return DecodeActionPushVlan(_action, decoder)
 	case 18:
-		return decodeActionPopVlan(action, decoder)
+		return DecodeActionPopVlan(_action, decoder)
 	case 19:
-		return decodeActionPushMpls(action, decoder)
+		return DecodeActionPushMpls(_action, decoder)
 	case 20:
-		return decodeActionPopMpls(action, decoder)
+		return DecodeActionPopMpls(_action, decoder)
 	case 21:
-		return decodeActionSetQueue(action, decoder)
+		return DecodeActionSetQueue(_action, decoder)
 	case 22:
-		return decodeActionGroup(action, decoder)
+		return DecodeActionGroup(_action, decoder)
 	case 23:
-		return decodeActionSetNwTtl(action, decoder)
+		return DecodeActionSetNwTtl(_action, decoder)
 	case 24:
-		return decodeActionDecNwTtl(action, decoder)
+		return DecodeActionDecNwTtl(_action, decoder)
 	case 65535:
-		return decodeActionExperimenter(action, decoder)
+		return DecodeActionExperimenter(_action, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'Action'", action.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'Action'", _action.Type)
 	}
 }
 
 func NewAction(_type uint16) *Action {
-	return &Action{
-		Type: _type,
-	}
+	obj := &Action{}
+	obj.Type = _type
+	return obj
 }
 
 type ActionExperimenter struct {
@@ -143,28 +143,29 @@ func (self *ActionExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionExperimenter(parent *Action, decoder *goloxi.Decoder) (IActionExperimenter, error) {
-	actionexperimenter := &ActionExperimenter{Action: parent}
+func DecodeActionExperimenter(parent *Action, decoder *goloxi.Decoder) (IActionExperimenter, error) {
+	_actionexperimenter := &ActionExperimenter{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionExperimenter packet too short: %d < 4", decoder.Length())
 	}
-	actionexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_actionexperimenter.Experimenter = uint32(decoder.ReadUint32())
 
-	switch actionexperimenter.Experimenter {
+	switch _actionexperimenter.Experimenter {
 	case 8992:
-		return decodeActionNicira(actionexperimenter, decoder)
+		return DecodeActionNicira(_actionexperimenter, decoder)
 	case 6035143:
-		return decodeActionBsn(actionexperimenter, decoder)
+		return DecodeActionBsn(_actionexperimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionExperimenter'", actionexperimenter.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ActionExperimenter'", _actionexperimenter.Experimenter)
 	}
 }
 
 func NewActionExperimenter(_experimenter uint32) *ActionExperimenter {
-	return &ActionExperimenter{
-		Experimenter: _experimenter,
-		Action:       NewAction(65535),
+	obj := &ActionExperimenter{
+		Action: NewAction(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 func (self *ActionExperimenter) GetName() string {
 	return "experimenter"
@@ -200,30 +201,31 @@ func (self *ActionBsn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionBsn(parent *ActionExperimenter, decoder *goloxi.Decoder) (IActionBsn, error) {
-	actionbsn := &ActionBsn{ActionExperimenter: parent}
+func DecodeActionBsn(parent *ActionExperimenter, decoder *goloxi.Decoder) (IActionBsn, error) {
+	_actionbsn := &ActionBsn{ActionExperimenter: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionBsn packet too short: %d < 4", decoder.Length())
 	}
-	actionbsn.Subtype = uint32(decoder.ReadUint32())
+	_actionbsn.Subtype = uint32(decoder.ReadUint32())
 
-	switch actionbsn.Subtype {
+	switch _actionbsn.Subtype {
 	case 1:
-		return decodeActionBsnMirror(actionbsn, decoder)
+		return DecodeActionBsnMirror(_actionbsn, decoder)
 	case 2:
-		return decodeActionBsnSetTunnelDst(actionbsn, decoder)
+		return DecodeActionBsnSetTunnelDst(_actionbsn, decoder)
 	case 4:
-		return decodeActionBsnChecksum(actionbsn, decoder)
+		return DecodeActionBsnChecksum(_actionbsn, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionBsn'", actionbsn.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ActionBsn'", _actionbsn.Subtype)
 	}
 }
 
 func NewActionBsn(_subtype uint32) *ActionBsn {
-	return &ActionBsn{
-		Subtype:            _subtype,
+	obj := &ActionBsn{
 		ActionExperimenter: NewActionExperimenter(6035143),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 func (self *ActionBsn) GetName() string {
 	return "bsn"
@@ -253,19 +255,20 @@ func (self *ActionBsnChecksum) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionBsnChecksum(parent *ActionBsn, decoder *goloxi.Decoder) (*ActionBsnChecksum, error) {
-	actionbsnchecksum := &ActionBsnChecksum{ActionBsn: parent}
+func DecodeActionBsnChecksum(parent *ActionBsn, decoder *goloxi.Decoder) (*ActionBsnChecksum, error) {
+	_actionbsnchecksum := &ActionBsnChecksum{ActionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("ActionBsnChecksum packet too short: %d < 16", decoder.Length())
 	}
-	actionbsnchecksum.Checksum.Decode(decoder)
-	return actionbsnchecksum, nil
+	_actionbsnchecksum.Checksum.Decode(decoder)
+	return _actionbsnchecksum, nil
 }
 
 func NewActionBsnChecksum() *ActionBsnChecksum {
-	return &ActionBsnChecksum{
+	obj := &ActionBsnChecksum{
 		ActionBsn: NewActionBsn(4),
 	}
+	return obj
 }
 func (self *ActionBsnChecksum) GetName() string {
 	return "bsn_checksum"
@@ -300,22 +303,23 @@ func (self *ActionBsnMirror) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionBsnMirror(parent *ActionBsn, decoder *goloxi.Decoder) (*ActionBsnMirror, error) {
-	actionbsnmirror := &ActionBsnMirror{ActionBsn: parent}
+func DecodeActionBsnMirror(parent *ActionBsn, decoder *goloxi.Decoder) (*ActionBsnMirror, error) {
+	_actionbsnmirror := &ActionBsnMirror{ActionBsn: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("ActionBsnMirror packet too short: %d < 12", decoder.Length())
 	}
-	actionbsnmirror.DestPort = uint32(decoder.ReadUint32())
-	actionbsnmirror.VlanTag = uint32(decoder.ReadUint32())
-	actionbsnmirror.CopyStage = uint8(decoder.ReadByte())
+	_actionbsnmirror.DestPort = uint32(decoder.ReadUint32())
+	_actionbsnmirror.VlanTag = uint32(decoder.ReadUint32())
+	_actionbsnmirror.CopyStage = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionbsnmirror, nil
+	return _actionbsnmirror, nil
 }
 
 func NewActionBsnMirror() *ActionBsnMirror {
-	return &ActionBsnMirror{
+	obj := &ActionBsnMirror{
 		ActionBsn: NewActionBsn(1),
 	}
+	return obj
 }
 func (self *ActionBsnMirror) GetName() string {
 	return "bsn_mirror"
@@ -347,19 +351,20 @@ func (self *ActionBsnSetTunnelDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionBsnSetTunnelDst(parent *ActionBsn, decoder *goloxi.Decoder) (*ActionBsnSetTunnelDst, error) {
-	actionbsnsettunneldst := &ActionBsnSetTunnelDst{ActionBsn: parent}
+func DecodeActionBsnSetTunnelDst(parent *ActionBsn, decoder *goloxi.Decoder) (*ActionBsnSetTunnelDst, error) {
+	_actionbsnsettunneldst := &ActionBsnSetTunnelDst{ActionBsn: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionBsnSetTunnelDst packet too short: %d < 4", decoder.Length())
 	}
-	actionbsnsettunneldst.Dst = uint32(decoder.ReadUint32())
-	return actionbsnsettunneldst, nil
+	_actionbsnsettunneldst.Dst = uint32(decoder.ReadUint32())
+	return _actionbsnsettunneldst, nil
 }
 
 func NewActionBsnSetTunnelDst() *ActionBsnSetTunnelDst {
-	return &ActionBsnSetTunnelDst{
+	obj := &ActionBsnSetTunnelDst{
 		ActionBsn: NewActionBsn(2),
 	}
+	return obj
 }
 func (self *ActionBsnSetTunnelDst) GetName() string {
 	return "bsn_set_tunnel_dst"
@@ -388,19 +393,20 @@ func (self *ActionCopyTtlIn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionCopyTtlIn(parent *Action, decoder *goloxi.Decoder) (*ActionCopyTtlIn, error) {
-	actioncopyttlin := &ActionCopyTtlIn{Action: parent}
+func DecodeActionCopyTtlIn(parent *Action, decoder *goloxi.Decoder) (*ActionCopyTtlIn, error) {
+	_actioncopyttlin := &ActionCopyTtlIn{Action: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("ActionCopyTtlIn packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	return actioncopyttlin, nil
+	return _actioncopyttlin, nil
 }
 
 func NewActionCopyTtlIn() *ActionCopyTtlIn {
-	return &ActionCopyTtlIn{
+	obj := &ActionCopyTtlIn{
 		Action: NewAction(12),
 	}
+	return obj
 }
 func (self *ActionCopyTtlIn) GetName() string {
 	return "copy_ttl_in"
@@ -427,19 +433,20 @@ func (self *ActionCopyTtlOut) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionCopyTtlOut(parent *Action, decoder *goloxi.Decoder) (*ActionCopyTtlOut, error) {
-	actioncopyttlout := &ActionCopyTtlOut{Action: parent}
+func DecodeActionCopyTtlOut(parent *Action, decoder *goloxi.Decoder) (*ActionCopyTtlOut, error) {
+	_actioncopyttlout := &ActionCopyTtlOut{Action: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("ActionCopyTtlOut packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	return actioncopyttlout, nil
+	return _actioncopyttlout, nil
 }
 
 func NewActionCopyTtlOut() *ActionCopyTtlOut {
-	return &ActionCopyTtlOut{
+	obj := &ActionCopyTtlOut{
 		Action: NewAction(11),
 	}
+	return obj
 }
 func (self *ActionCopyTtlOut) GetName() string {
 	return "copy_ttl_out"
@@ -466,19 +473,20 @@ func (self *ActionDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionDecMplsTtl(parent *Action, decoder *goloxi.Decoder) (*ActionDecMplsTtl, error) {
-	actiondecmplsttl := &ActionDecMplsTtl{Action: parent}
+func DecodeActionDecMplsTtl(parent *Action, decoder *goloxi.Decoder) (*ActionDecMplsTtl, error) {
+	_actiondecmplsttl := &ActionDecMplsTtl{Action: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("ActionDecMplsTtl packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	return actiondecmplsttl, nil
+	return _actiondecmplsttl, nil
 }
 
 func NewActionDecMplsTtl() *ActionDecMplsTtl {
-	return &ActionDecMplsTtl{
+	obj := &ActionDecMplsTtl{
 		Action: NewAction(16),
 	}
+	return obj
 }
 func (self *ActionDecMplsTtl) GetName() string {
 	return "dec_mpls_ttl"
@@ -505,19 +513,20 @@ func (self *ActionDecNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionDecNwTtl(parent *Action, decoder *goloxi.Decoder) (*ActionDecNwTtl, error) {
-	actiondecnwttl := &ActionDecNwTtl{Action: parent}
+func DecodeActionDecNwTtl(parent *Action, decoder *goloxi.Decoder) (*ActionDecNwTtl, error) {
+	_actiondecnwttl := &ActionDecNwTtl{Action: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("ActionDecNwTtl packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	return actiondecnwttl, nil
+	return _actiondecnwttl, nil
 }
 
 func NewActionDecNwTtl() *ActionDecNwTtl {
-	return &ActionDecNwTtl{
+	obj := &ActionDecNwTtl{
 		Action: NewAction(24),
 	}
+	return obj
 }
 func (self *ActionDecNwTtl) GetName() string {
 	return "dec_nw_ttl"
@@ -545,19 +554,20 @@ func (self *ActionGroup) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionGroup(parent *Action, decoder *goloxi.Decoder) (*ActionGroup, error) {
-	actiongroup := &ActionGroup{Action: parent}
+func DecodeActionGroup(parent *Action, decoder *goloxi.Decoder) (*ActionGroup, error) {
+	_actiongroup := &ActionGroup{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionGroup packet too short: %d < 4", decoder.Length())
 	}
-	actiongroup.GroupId = uint32(decoder.ReadUint32())
-	return actiongroup, nil
+	_actiongroup.GroupId = uint32(decoder.ReadUint32())
+	return _actiongroup, nil
 }
 
 func NewActionGroup() *ActionGroup {
-	return &ActionGroup{
+	obj := &ActionGroup{
 		Action: NewAction(22),
 	}
+	return obj
 }
 func (self *ActionGroup) GetName() string {
 	return "group"
@@ -593,100 +603,101 @@ func (self *ActionNicira) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNicira(parent *ActionExperimenter, decoder *goloxi.Decoder) (IActionNicira, error) {
-	actionnicira := &ActionNicira{ActionExperimenter: parent}
+func DecodeActionNicira(parent *ActionExperimenter, decoder *goloxi.Decoder) (IActionNicira, error) {
+	_actionnicira := &ActionNicira{ActionExperimenter: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("ActionNicira packet too short: %d < 2", decoder.Length())
 	}
-	actionnicira.Subtype = uint16(decoder.ReadUint16())
+	_actionnicira.Subtype = uint16(decoder.ReadUint16())
 
-	switch actionnicira.Subtype {
+	switch _actionnicira.Subtype {
 	case 1:
-		return decodeActionNxResubmit(actionnicira, decoder)
+		return DecodeActionNxResubmit(_actionnicira, decoder)
 	case 2:
-		return decodeActionNxSetTunnel(actionnicira, decoder)
+		return DecodeActionNxSetTunnel(_actionnicira, decoder)
 	case 5:
-		return decodeActionNxPopQueue(actionnicira, decoder)
+		return DecodeActionNxPopQueue(_actionnicira, decoder)
 	case 6:
-		return decodeActionNxRegMove(actionnicira, decoder)
+		return DecodeActionNxRegMove(_actionnicira, decoder)
 	case 7:
-		return decodeActionNxRegLoad(actionnicira, decoder)
+		return DecodeActionNxRegLoad(_actionnicira, decoder)
 	case 8:
-		return decodeActionNxNote(actionnicira, decoder)
+		return DecodeActionNxNote(_actionnicira, decoder)
 	case 9:
-		return decodeActionNxSetTunnel64(actionnicira, decoder)
+		return DecodeActionNxSetTunnel64(_actionnicira, decoder)
 	case 10:
-		return decodeActionNxMultipath(actionnicira, decoder)
+		return DecodeActionNxMultipath(_actionnicira, decoder)
 	case 12:
-		return decodeActionNxBundle(actionnicira, decoder)
+		return DecodeActionNxBundle(_actionnicira, decoder)
 	case 13:
-		return decodeActionNxBundleLoad(actionnicira, decoder)
+		return DecodeActionNxBundleLoad(_actionnicira, decoder)
 	case 14:
-		return decodeActionResubmit(actionnicira, decoder)
+		return DecodeActionResubmit(_actionnicira, decoder)
 	case 15:
-		return decodeActionNxOutputReg(actionnicira, decoder)
+		return DecodeActionNxOutputReg(_actionnicira, decoder)
 	case 16:
-		return decodeActionNxLearn(actionnicira, decoder)
+		return DecodeActionNxLearn(_actionnicira, decoder)
 	case 17:
-		return decodeActionNxExit(actionnicira, decoder)
+		return DecodeActionNxExit(_actionnicira, decoder)
 	case 18:
-		return decodeActionNiciraDecTtl(actionnicira, decoder)
+		return DecodeActionNiciraDecTtl(_actionnicira, decoder)
 	case 19:
-		return decodeActionNxFinTimeout(actionnicira, decoder)
+		return DecodeActionNxFinTimeout(_actionnicira, decoder)
 	case 20:
-		return decodeActionNxController(actionnicira, decoder)
+		return DecodeActionNxController(_actionnicira, decoder)
 	case 21:
-		return decodeActionNxDecTtlCntIds(actionnicira, decoder)
+		return DecodeActionNxDecTtlCntIds(_actionnicira, decoder)
 	case 22:
-		return decodeActionNxWriteMetadata(actionnicira, decoder)
+		return DecodeActionNxWriteMetadata(_actionnicira, decoder)
 	case 27:
-		return decodeActionNxStackPush(actionnicira, decoder)
+		return DecodeActionNxStackPush(_actionnicira, decoder)
 	case 28:
-		return decodeActionNxStackPop(actionnicira, decoder)
+		return DecodeActionNxStackPop(_actionnicira, decoder)
 	case 29:
-		return decodeActionNxSample(actionnicira, decoder)
+		return DecodeActionNxSample(_actionnicira, decoder)
 	case 32:
-		return decodeActionNxOutputReg2(actionnicira, decoder)
+		return DecodeActionNxOutputReg2(_actionnicira, decoder)
 	case 33:
-		return decodeActionNxRegLoad2(actionnicira, decoder)
+		return DecodeActionNxRegLoad2(_actionnicira, decoder)
 	case 34:
-		return decodeActionNxConjunction(actionnicira, decoder)
+		return DecodeActionNxConjunction(_actionnicira, decoder)
 	case 35:
-		return decodeActionNxCt(actionnicira, decoder)
+		return DecodeActionNxCt(_actionnicira, decoder)
 	case 36:
-		return decodeActionNxNat(actionnicira, decoder)
+		return DecodeActionNxNat(_actionnicira, decoder)
 	case 37:
-		return decodeActionNxController2(actionnicira, decoder)
+		return DecodeActionNxController2(_actionnicira, decoder)
 	case 38:
-		return decodeActionNxSample2(actionnicira, decoder)
+		return DecodeActionNxSample2(_actionnicira, decoder)
 	case 39:
-		return decodeActionNxOutputTrunc(actionnicira, decoder)
+		return DecodeActionNxOutputTrunc(_actionnicira, decoder)
 	case 41:
-		return decodeActionNxSample3(actionnicira, decoder)
+		return DecodeActionNxSample3(_actionnicira, decoder)
 	case 42:
-		return decodeActionNxClone(actionnicira, decoder)
+		return DecodeActionNxClone(_actionnicira, decoder)
 	case 43:
-		return decodeActionNxCtClear(actionnicira, decoder)
+		return DecodeActionNxCtClear(_actionnicira, decoder)
 	case 44:
-		return decodeActionNxResubmitTableCt(actionnicira, decoder)
+		return DecodeActionNxResubmitTableCt(_actionnicira, decoder)
 	case 45:
-		return decodeActionNxLearn2(actionnicira, decoder)
+		return DecodeActionNxLearn2(_actionnicira, decoder)
 	case 46:
-		return decodeActionNxEncap(actionnicira, decoder)
+		return DecodeActionNxEncap(_actionnicira, decoder)
 	case 47:
-		return decodeActionNxDecap(actionnicira, decoder)
+		return DecodeActionNxDecap(_actionnicira, decoder)
 	case 255:
-		return decodeActionNxDebugRecirc(actionnicira, decoder)
+		return DecodeActionNxDebugRecirc(_actionnicira, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionNicira'", actionnicira.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ActionNicira'", _actionnicira.Subtype)
 	}
 }
 
 func NewActionNicira(_subtype uint16) *ActionNicira {
-	return &ActionNicira{
-		Subtype:            _subtype,
+	obj := &ActionNicira{
 		ActionExperimenter: NewActionExperimenter(8992),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 func (self *ActionNicira) GetName() string {
 	return "nicira"
@@ -716,20 +727,21 @@ func (self *ActionNiciraDecTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNiciraDecTtl(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNiciraDecTtl, error) {
-	actionniciradecttl := &ActionNiciraDecTtl{ActionNicira: parent}
+func DecodeActionNiciraDecTtl(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNiciraDecTtl, error) {
+	_actionniciradecttl := &ActionNiciraDecTtl{ActionNicira: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("ActionNiciraDecTtl packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(2)
 	decoder.Skip(4)
-	return actionniciradecttl, nil
+	return _actionniciradecttl, nil
 }
 
 func NewActionNiciraDecTtl() *ActionNiciraDecTtl {
-	return &ActionNiciraDecTtl{
+	obj := &ActionNiciraDecTtl{
 		ActionNicira: NewActionNicira(18),
 	}
+	return obj
 }
 func (self *ActionNiciraDecTtl) GetName() string {
 	return "nicira_dec_ttl"
@@ -770,26 +782,27 @@ func (self *ActionNxBundle) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxBundle(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxBundle, error) {
-	actionnxbundle := &ActionNxBundle{ActionNicira: parent}
+func DecodeActionNxBundle(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxBundle, error) {
+	_actionnxbundle := &ActionNxBundle{ActionNicira: parent}
 	if decoder.Length() < 22 {
 		return nil, fmt.Errorf("ActionNxBundle packet too short: %d < 22", decoder.Length())
 	}
-	actionnxbundle.Algorithm = uint16(decoder.ReadUint16())
-	actionnxbundle.Fields = uint16(decoder.ReadUint16())
-	actionnxbundle.Basis = uint16(decoder.ReadUint16())
-	actionnxbundle.SlaveType = uint32(decoder.ReadUint32())
-	actionnxbundle.NSlaves = uint16(decoder.ReadUint16())
-	actionnxbundle.OfsNbits = uint16(decoder.ReadUint16())
-	actionnxbundle.Dst = uint32(decoder.ReadUint32())
+	_actionnxbundle.Algorithm = uint16(decoder.ReadUint16())
+	_actionnxbundle.Fields = uint16(decoder.ReadUint16())
+	_actionnxbundle.Basis = uint16(decoder.ReadUint16())
+	_actionnxbundle.SlaveType = uint32(decoder.ReadUint32())
+	_actionnxbundle.NSlaves = uint16(decoder.ReadUint16())
+	_actionnxbundle.OfsNbits = uint16(decoder.ReadUint16())
+	_actionnxbundle.Dst = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return actionnxbundle, nil
+	return _actionnxbundle, nil
 }
 
 func NewActionNxBundle() *ActionNxBundle {
-	return &ActionNxBundle{
+	obj := &ActionNxBundle{
 		ActionNicira: NewActionNicira(12),
 	}
+	return obj
 }
 func (self *ActionNxBundle) GetName() string {
 	return "nx_bundle"
@@ -838,26 +851,27 @@ func (self *ActionNxBundleLoad) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxBundleLoad(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxBundleLoad, error) {
-	actionnxbundleload := &ActionNxBundleLoad{ActionNicira: parent}
+func DecodeActionNxBundleLoad(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxBundleLoad, error) {
+	_actionnxbundleload := &ActionNxBundleLoad{ActionNicira: parent}
 	if decoder.Length() < 22 {
 		return nil, fmt.Errorf("ActionNxBundleLoad packet too short: %d < 22", decoder.Length())
 	}
-	actionnxbundleload.Algorithm = uint16(decoder.ReadUint16())
-	actionnxbundleload.Fields = uint16(decoder.ReadUint16())
-	actionnxbundleload.Basis = uint16(decoder.ReadUint16())
-	actionnxbundleload.SlaveType = uint32(decoder.ReadUint32())
-	actionnxbundleload.NSlaves = uint16(decoder.ReadUint16())
-	actionnxbundleload.OfsNbits = uint16(decoder.ReadUint16())
-	actionnxbundleload.Dst = uint32(decoder.ReadUint32())
+	_actionnxbundleload.Algorithm = uint16(decoder.ReadUint16())
+	_actionnxbundleload.Fields = uint16(decoder.ReadUint16())
+	_actionnxbundleload.Basis = uint16(decoder.ReadUint16())
+	_actionnxbundleload.SlaveType = uint32(decoder.ReadUint32())
+	_actionnxbundleload.NSlaves = uint16(decoder.ReadUint16())
+	_actionnxbundleload.OfsNbits = uint16(decoder.ReadUint16())
+	_actionnxbundleload.Dst = uint32(decoder.ReadUint32())
 	decoder.Skip(4)
-	return actionnxbundleload, nil
+	return _actionnxbundleload, nil
 }
 
 func NewActionNxBundleLoad() *ActionNxBundleLoad {
-	return &ActionNxBundleLoad{
+	obj := &ActionNxBundleLoad{
 		ActionNicira: NewActionNicira(13),
 	}
+	return obj
 }
 func (self *ActionNxBundleLoad) GetName() string {
 	return "nx_bundle_load"
@@ -892,19 +906,20 @@ func (self *ActionNxClone) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxClone(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxClone, error) {
-	actionnxclone := &ActionNxClone{ActionNicira: parent}
+func DecodeActionNxClone(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxClone, error) {
+	_actionnxclone := &ActionNxClone{ActionNicira: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("ActionNxClone packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(6)
-	return actionnxclone, nil
+	return _actionnxclone, nil
 }
 
 func NewActionNxClone() *ActionNxClone {
-	return &ActionNxClone{
+	obj := &ActionNxClone{
 		ActionNicira: NewActionNicira(42),
 	}
+	return obj
 }
 func (self *ActionNxClone) GetName() string {
 	return "nx_clone"
@@ -936,21 +951,22 @@ func (self *ActionNxConjunction) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxConjunction(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxConjunction, error) {
-	actionnxconjunction := &ActionNxConjunction{ActionNicira: parent}
+func DecodeActionNxConjunction(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxConjunction, error) {
+	_actionnxconjunction := &ActionNxConjunction{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxConjunction packet too short: %d < 6", decoder.Length())
 	}
-	actionnxconjunction.Clause = uint8(decoder.ReadByte())
-	actionnxconjunction.NClauses = uint8(decoder.ReadByte())
-	actionnxconjunction.Id = uint32(decoder.ReadUint32())
-	return actionnxconjunction, nil
+	_actionnxconjunction.Clause = uint8(decoder.ReadByte())
+	_actionnxconjunction.NClauses = uint8(decoder.ReadByte())
+	_actionnxconjunction.Id = uint32(decoder.ReadUint32())
+	return _actionnxconjunction, nil
 }
 
 func NewActionNxConjunction() *ActionNxConjunction {
-	return &ActionNxConjunction{
+	obj := &ActionNxConjunction{
 		ActionNicira: NewActionNicira(34),
 	}
+	return obj
 }
 func (self *ActionNxConjunction) GetName() string {
 	return "nx_conjunction"
@@ -987,22 +1003,23 @@ func (self *ActionNxController) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxController(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxController, error) {
-	actionnxcontroller := &ActionNxController{ActionNicira: parent}
+func DecodeActionNxController(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxController, error) {
+	_actionnxcontroller := &ActionNxController{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxController packet too short: %d < 6", decoder.Length())
 	}
-	actionnxcontroller.MaxLen = uint16(decoder.ReadUint16())
-	actionnxcontroller.ControllerId = uint16(decoder.ReadUint16())
-	actionnxcontroller.Reason = uint8(decoder.ReadByte())
+	_actionnxcontroller.MaxLen = uint16(decoder.ReadUint16())
+	_actionnxcontroller.ControllerId = uint16(decoder.ReadUint16())
+	_actionnxcontroller.Reason = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	return actionnxcontroller, nil
+	return _actionnxcontroller, nil
 }
 
 func NewActionNxController() *ActionNxController {
-	return &ActionNxController{
+	obj := &ActionNxController{
 		ActionNicira: NewActionNicira(20),
 	}
+	return obj
 }
 func (self *ActionNxController) GetName() string {
 	return "nx_controller"
@@ -1033,19 +1050,20 @@ func (self *ActionNxController2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxController2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxController2, error) {
-	actionnxcontroller2 := &ActionNxController2{ActionNicira: parent}
+func DecodeActionNxController2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxController2, error) {
+	_actionnxcontroller2 := &ActionNxController2{ActionNicira: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("ActionNxController2 packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(6)
-	return actionnxcontroller2, nil
+	return _actionnxcontroller2, nil
 }
 
 func NewActionNxController2() *ActionNxController2 {
-	return &ActionNxController2{
+	obj := &ActionNxController2{
 		ActionNicira: NewActionNicira(37),
 	}
+	return obj
 }
 func (self *ActionNxController2) GetName() string {
 	return "nx_controller2"
@@ -1082,24 +1100,25 @@ func (self *ActionNxCt) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxCt(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxCt, error) {
-	actionnxct := &ActionNxCt{ActionNicira: parent}
+func DecodeActionNxCt(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxCt, error) {
+	_actionnxct := &ActionNxCt{ActionNicira: parent}
 	if decoder.Length() < 14 {
 		return nil, fmt.Errorf("ActionNxCt packet too short: %d < 14", decoder.Length())
 	}
-	actionnxct.Flags = uint16(decoder.ReadUint16())
-	actionnxct.ZoneSrc = uint32(decoder.ReadUint32())
-	actionnxct.Value = uint16(decoder.ReadUint16())
-	actionnxct.RecircTable = uint8(decoder.ReadByte())
+	_actionnxct.Flags = uint16(decoder.ReadUint16())
+	_actionnxct.ZoneSrc = uint32(decoder.ReadUint32())
+	_actionnxct.Value = uint16(decoder.ReadUint16())
+	_actionnxct.RecircTable = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	actionnxct.Alg = uint16(decoder.ReadUint16())
-	return actionnxct, nil
+	_actionnxct.Alg = uint16(decoder.ReadUint16())
+	return _actionnxct, nil
 }
 
 func NewActionNxCt() *ActionNxCt {
-	return &ActionNxCt{
+	obj := &ActionNxCt{
 		ActionNicira: NewActionNicira(35),
 	}
+	return obj
 }
 func (self *ActionNxCt) GetName() string {
 	return "nx_ct"
@@ -1130,15 +1149,16 @@ func (self *ActionNxCtClear) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxCtClear(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxCtClear, error) {
-	actionnxctclear := &ActionNxCtClear{ActionNicira: parent}
-	return actionnxctclear, nil
+func DecodeActionNxCtClear(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxCtClear, error) {
+	_actionnxctclear := &ActionNxCtClear{ActionNicira: parent}
+	return _actionnxctclear, nil
 }
 
 func NewActionNxCtClear() *ActionNxCtClear {
-	return &ActionNxCtClear{
+	obj := &ActionNxCtClear{
 		ActionNicira: NewActionNicira(43),
 	}
+	return obj
 }
 func (self *ActionNxCtClear) GetName() string {
 	return "nx_ct_clear"
@@ -1163,15 +1183,16 @@ func (self *ActionNxDebugRecirc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxDebugRecirc(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDebugRecirc, error) {
-	actionnxdebugrecirc := &ActionNxDebugRecirc{ActionNicira: parent}
-	return actionnxdebugrecirc, nil
+func DecodeActionNxDebugRecirc(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDebugRecirc, error) {
+	_actionnxdebugrecirc := &ActionNxDebugRecirc{ActionNicira: parent}
+	return _actionnxdebugrecirc, nil
 }
 
 func NewActionNxDebugRecirc() *ActionNxDebugRecirc {
-	return &ActionNxDebugRecirc{
+	obj := &ActionNxDebugRecirc{
 		ActionNicira: NewActionNicira(255),
 	}
+	return obj
 }
 func (self *ActionNxDebugRecirc) GetName() string {
 	return "nx_debug_recirc"
@@ -1200,20 +1221,21 @@ func (self *ActionNxDecTtlCntIds) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxDecTtlCntIds(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDecTtlCntIds, error) {
-	actionnxdecttlcntids := &ActionNxDecTtlCntIds{ActionNicira: parent}
+func DecodeActionNxDecTtlCntIds(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDecTtlCntIds, error) {
+	_actionnxdecttlcntids := &ActionNxDecTtlCntIds{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxDecTtlCntIds packet too short: %d < 6", decoder.Length())
 	}
-	actionnxdecttlcntids.NControllers = uint16(decoder.ReadUint16())
+	_actionnxdecttlcntids.NControllers = uint16(decoder.ReadUint16())
 	decoder.Skip(4)
-	return actionnxdecttlcntids, nil
+	return _actionnxdecttlcntids, nil
 }
 
 func NewActionNxDecTtlCntIds() *ActionNxDecTtlCntIds {
-	return &ActionNxDecTtlCntIds{
+	obj := &ActionNxDecTtlCntIds{
 		ActionNicira: NewActionNicira(21),
 	}
+	return obj
 }
 func (self *ActionNxDecTtlCntIds) GetName() string {
 	return "nx_dec_ttl_cnt_ids"
@@ -1244,20 +1266,21 @@ func (self *ActionNxDecap) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxDecap(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDecap, error) {
-	actionnxdecap := &ActionNxDecap{ActionNicira: parent}
+func DecodeActionNxDecap(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDecap, error) {
+	_actionnxdecap := &ActionNxDecap{ActionNicira: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionNxDecap packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(2)
-	actionnxdecap.NewPktType = uint32(decoder.ReadUint32())
-	return actionnxdecap, nil
+	_actionnxdecap.NewPktType = uint32(decoder.ReadUint32())
+	return _actionnxdecap, nil
 }
 
 func NewActionNxDecap() *ActionNxDecap {
-	return &ActionNxDecap{
+	obj := &ActionNxDecap{
 		ActionNicira: NewActionNicira(47),
 	}
+	return obj
 }
 func (self *ActionNxDecap) GetName() string {
 	return "nx_decap"
@@ -1295,28 +1318,29 @@ func (self *ActionNxEncap) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxEncap(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxEncap, error) {
-	actionnxencap := &ActionNxEncap{ActionNicira: parent}
+func DecodeActionNxEncap(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxEncap, error) {
+	_actionnxencap := &ActionNxEncap{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxEncap packet too short: %d < 6", decoder.Length())
 	}
-	actionnxencap.HdrSize = uint16(decoder.ReadUint16())
-	actionnxencap.NewPktType = uint32(decoder.ReadUint32())
+	_actionnxencap.HdrSize = uint16(decoder.ReadUint16())
+	_actionnxencap.NewPktType = uint32(decoder.ReadUint32())
 
 	for decoder.Length() >= 4 {
 		item := &EdPropHeader{}
 		if err := item.Decode(decoder); err != nil {
 			return nil, err
 		}
-		actionnxencap.Props = append(actionnxencap.Props, item)
+		_actionnxencap.Props = append(_actionnxencap.Props, item)
 	}
-	return actionnxencap, nil
+	return _actionnxencap, nil
 }
 
 func NewActionNxEncap() *ActionNxEncap {
-	return &ActionNxEncap{
+	obj := &ActionNxEncap{
 		ActionNicira: NewActionNicira(46),
 	}
+	return obj
 }
 func (self *ActionNxEncap) GetName() string {
 	return "nx_encap"
@@ -1345,15 +1369,16 @@ func (self *ActionNxExit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxExit(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxExit, error) {
-	actionnxexit := &ActionNxExit{ActionNicira: parent}
-	return actionnxexit, nil
+func DecodeActionNxExit(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxExit, error) {
+	_actionnxexit := &ActionNxExit{ActionNicira: parent}
+	return _actionnxexit, nil
 }
 
 func NewActionNxExit() *ActionNxExit {
-	return &ActionNxExit{
+	obj := &ActionNxExit{
 		ActionNicira: NewActionNicira(17),
 	}
+	return obj
 }
 func (self *ActionNxExit) GetName() string {
 	return "nx_exit"
@@ -1384,21 +1409,22 @@ func (self *ActionNxFinTimeout) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxFinTimeout(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxFinTimeout, error) {
-	actionnxfintimeout := &ActionNxFinTimeout{ActionNicira: parent}
+func DecodeActionNxFinTimeout(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxFinTimeout, error) {
+	_actionnxfintimeout := &ActionNxFinTimeout{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxFinTimeout packet too short: %d < 6", decoder.Length())
 	}
-	actionnxfintimeout.FinIdleTimeout = uint16(decoder.ReadUint16())
-	actionnxfintimeout.FinHardTimeout = uint16(decoder.ReadUint16())
+	_actionnxfintimeout.FinIdleTimeout = uint16(decoder.ReadUint16())
+	_actionnxfintimeout.FinHardTimeout = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return actionnxfintimeout, nil
+	return _actionnxfintimeout, nil
 }
 
 func NewActionNxFinTimeout() *ActionNxFinTimeout {
-	return &ActionNxFinTimeout{
+	obj := &ActionNxFinTimeout{
 		ActionNicira: NewActionNicira(19),
 	}
+	return obj
 }
 func (self *ActionNxFinTimeout) GetName() string {
 	return "nx_fin_timeout"
@@ -1444,27 +1470,28 @@ func (self *ActionNxLearn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxLearn(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxLearn, error) {
-	actionnxlearn := &ActionNxLearn{ActionNicira: parent}
+func DecodeActionNxLearn(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxLearn, error) {
+	_actionnxlearn := &ActionNxLearn{ActionNicira: parent}
 	if decoder.Length() < 22 {
 		return nil, fmt.Errorf("ActionNxLearn packet too short: %d < 22", decoder.Length())
 	}
-	actionnxlearn.IdleTimeout = uint16(decoder.ReadUint16())
-	actionnxlearn.HardTimeout = uint16(decoder.ReadUint16())
-	actionnxlearn.Priority = uint16(decoder.ReadUint16())
-	actionnxlearn.Cookie = uint64(decoder.ReadUint64())
-	actionnxlearn.Flags = uint16(decoder.ReadUint16())
-	actionnxlearn.TableId = uint8(decoder.ReadByte())
+	_actionnxlearn.IdleTimeout = uint16(decoder.ReadUint16())
+	_actionnxlearn.HardTimeout = uint16(decoder.ReadUint16())
+	_actionnxlearn.Priority = uint16(decoder.ReadUint16())
+	_actionnxlearn.Cookie = uint64(decoder.ReadUint64())
+	_actionnxlearn.Flags = uint16(decoder.ReadUint16())
+	_actionnxlearn.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(1)
-	actionnxlearn.FinIdleTimeout = uint16(decoder.ReadUint16())
-	actionnxlearn.FinHardTimeout = uint16(decoder.ReadUint16())
-	return actionnxlearn, nil
+	_actionnxlearn.FinIdleTimeout = uint16(decoder.ReadUint16())
+	_actionnxlearn.FinHardTimeout = uint16(decoder.ReadUint16())
+	return _actionnxlearn, nil
 }
 
 func NewActionNxLearn() *ActionNxLearn {
-	return &ActionNxLearn{
+	obj := &ActionNxLearn{
 		ActionNicira: NewActionNicira(16),
 	}
+	return obj
 }
 func (self *ActionNxLearn) GetName() string {
 	return "nx_learn"
@@ -1498,15 +1525,16 @@ func (self *ActionNxLearn2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxLearn2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxLearn2, error) {
-	actionnxlearn2 := &ActionNxLearn2{ActionNicira: parent}
-	return actionnxlearn2, nil
+func DecodeActionNxLearn2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxLearn2, error) {
+	_actionnxlearn2 := &ActionNxLearn2{ActionNicira: parent}
+	return _actionnxlearn2, nil
 }
 
 func NewActionNxLearn2() *ActionNxLearn2 {
-	return &ActionNxLearn2{
+	obj := &ActionNxLearn2{
 		ActionNicira: NewActionNicira(45),
 	}
+	return obj
 }
 func (self *ActionNxLearn2) GetName() string {
 	return "nx_learn2"
@@ -1548,27 +1576,28 @@ func (self *ActionNxMultipath) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxMultipath(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxMultipath, error) {
-	actionnxmultipath := &ActionNxMultipath{ActionNicira: parent}
+func DecodeActionNxMultipath(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxMultipath, error) {
+	_actionnxmultipath := &ActionNxMultipath{ActionNicira: parent}
 	if decoder.Length() < 22 {
 		return nil, fmt.Errorf("ActionNxMultipath packet too short: %d < 22", decoder.Length())
 	}
-	actionnxmultipath.Fields = uint16(decoder.ReadUint16())
-	actionnxmultipath.Basis = uint16(decoder.ReadUint16())
+	_actionnxmultipath.Fields = uint16(decoder.ReadUint16())
+	_actionnxmultipath.Basis = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	actionnxmultipath.Algorithm = uint16(decoder.ReadUint16())
-	actionnxmultipath.MaxLink = uint16(decoder.ReadUint16())
-	actionnxmultipath.Arg = uint32(decoder.ReadUint32())
+	_actionnxmultipath.Algorithm = uint16(decoder.ReadUint16())
+	_actionnxmultipath.MaxLink = uint16(decoder.ReadUint16())
+	_actionnxmultipath.Arg = uint32(decoder.ReadUint32())
 	decoder.Skip(2)
-	actionnxmultipath.OfsNbits = uint16(decoder.ReadUint16())
-	actionnxmultipath.Dst = uint32(decoder.ReadUint32())
-	return actionnxmultipath, nil
+	_actionnxmultipath.OfsNbits = uint16(decoder.ReadUint16())
+	_actionnxmultipath.Dst = uint32(decoder.ReadUint32())
+	return _actionnxmultipath, nil
 }
 
 func NewActionNxMultipath() *ActionNxMultipath {
-	return &ActionNxMultipath{
+	obj := &ActionNxMultipath{
 		ActionNicira: NewActionNicira(10),
 	}
+	return obj
 }
 func (self *ActionNxMultipath) GetName() string {
 	return "nx_multipath"
@@ -1607,21 +1636,22 @@ func (self *ActionNxNat) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxNat(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxNat, error) {
-	actionnxnat := &ActionNxNat{ActionNicira: parent}
+func DecodeActionNxNat(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxNat, error) {
+	_actionnxnat := &ActionNxNat{ActionNicira: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionNxNat packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(2)
-	actionnxnat.Flags = uint16(decoder.ReadUint16())
-	actionnxnat.RangePresent = uint16(decoder.ReadUint16())
-	return actionnxnat, nil
+	_actionnxnat.Flags = uint16(decoder.ReadUint16())
+	_actionnxnat.RangePresent = uint16(decoder.ReadUint16())
+	return _actionnxnat, nil
 }
 
 func NewActionNxNat() *ActionNxNat {
-	return &ActionNxNat{
+	obj := &ActionNxNat{
 		ActionNicira: NewActionNicira(36),
 	}
+	return obj
 }
 func (self *ActionNxNat) GetName() string {
 	return "nx_nat"
@@ -1652,16 +1682,17 @@ func (self *ActionNxNote) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxNote(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxNote, error) {
-	actionnxnote := &ActionNxNote{ActionNicira: parent}
-	actionnxnote.Note = decoder.Read(decoder.Length())
-	return actionnxnote, nil
+func DecodeActionNxNote(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxNote, error) {
+	_actionnxnote := &ActionNxNote{ActionNicira: parent}
+	_actionnxnote.Note = decoder.Read(decoder.Length())
+	return _actionnxnote, nil
 }
 
 func NewActionNxNote() *ActionNxNote {
-	return &ActionNxNote{
+	obj := &ActionNxNote{
 		ActionNicira: NewActionNicira(8),
 	}
+	return obj
 }
 func (self *ActionNxNote) GetName() string {
 	return "nx_note"
@@ -1696,22 +1727,23 @@ func (self *ActionNxOutputReg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxOutputReg(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxOutputReg, error) {
-	actionnxoutputreg := &ActionNxOutputReg{ActionNicira: parent}
+func DecodeActionNxOutputReg(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxOutputReg, error) {
+	_actionnxoutputreg := &ActionNxOutputReg{ActionNicira: parent}
 	if decoder.Length() < 14 {
 		return nil, fmt.Errorf("ActionNxOutputReg packet too short: %d < 14", decoder.Length())
 	}
-	actionnxoutputreg.OfsNbits = uint16(decoder.ReadUint16())
-	actionnxoutputreg.Src = uint32(decoder.ReadUint32())
-	actionnxoutputreg.MaxLen = uint16(decoder.ReadUint16())
+	_actionnxoutputreg.OfsNbits = uint16(decoder.ReadUint16())
+	_actionnxoutputreg.Src = uint32(decoder.ReadUint32())
+	_actionnxoutputreg.MaxLen = uint16(decoder.ReadUint16())
 	decoder.Skip(6)
-	return actionnxoutputreg, nil
+	return _actionnxoutputreg, nil
 }
 
 func NewActionNxOutputReg() *ActionNxOutputReg {
-	return &ActionNxOutputReg{
+	obj := &ActionNxOutputReg{
 		ActionNicira: NewActionNicira(15),
 	}
+	return obj
 }
 func (self *ActionNxOutputReg) GetName() string {
 	return "nx_output_reg"
@@ -1746,21 +1778,22 @@ func (self *ActionNxOutputReg2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxOutputReg2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxOutputReg2, error) {
-	actionnxoutputreg2 := &ActionNxOutputReg2{ActionNicira: parent}
+func DecodeActionNxOutputReg2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxOutputReg2, error) {
+	_actionnxoutputreg2 := &ActionNxOutputReg2{ActionNicira: parent}
 	if decoder.Length() < 14 {
 		return nil, fmt.Errorf("ActionNxOutputReg2 packet too short: %d < 14", decoder.Length())
 	}
-	actionnxoutputreg2.OfsNbits = uint16(decoder.ReadUint16())
-	actionnxoutputreg2.MaxLen = uint16(decoder.ReadUint16())
+	_actionnxoutputreg2.OfsNbits = uint16(decoder.ReadUint16())
+	_actionnxoutputreg2.MaxLen = uint16(decoder.ReadUint16())
 	decoder.Skip(10)
-	return actionnxoutputreg2, nil
+	return _actionnxoutputreg2, nil
 }
 
 func NewActionNxOutputReg2() *ActionNxOutputReg2 {
-	return &ActionNxOutputReg2{
+	obj := &ActionNxOutputReg2{
 		ActionNicira: NewActionNicira(32),
 	}
+	return obj
 }
 func (self *ActionNxOutputReg2) GetName() string {
 	return "nx_output_reg2"
@@ -1793,20 +1826,21 @@ func (self *ActionNxOutputTrunc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxOutputTrunc(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxOutputTrunc, error) {
-	actionnxoutputtrunc := &ActionNxOutputTrunc{ActionNicira: parent}
+func DecodeActionNxOutputTrunc(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxOutputTrunc, error) {
+	_actionnxoutputtrunc := &ActionNxOutputTrunc{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxOutputTrunc packet too short: %d < 6", decoder.Length())
 	}
-	actionnxoutputtrunc.Port = uint16(decoder.ReadUint16())
-	actionnxoutputtrunc.MaxLen = uint32(decoder.ReadUint32())
-	return actionnxoutputtrunc, nil
+	_actionnxoutputtrunc.Port = uint16(decoder.ReadUint16())
+	_actionnxoutputtrunc.MaxLen = uint32(decoder.ReadUint32())
+	return _actionnxoutputtrunc, nil
 }
 
 func NewActionNxOutputTrunc() *ActionNxOutputTrunc {
-	return &ActionNxOutputTrunc{
+	obj := &ActionNxOutputTrunc{
 		ActionNicira: NewActionNicira(39),
 	}
+	return obj
 }
 func (self *ActionNxOutputTrunc) GetName() string {
 	return "nx_output_trunc"
@@ -1834,15 +1868,16 @@ func (self *ActionNxPopQueue) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxPopQueue(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxPopQueue, error) {
-	actionnxpopqueue := &ActionNxPopQueue{ActionNicira: parent}
-	return actionnxpopqueue, nil
+func DecodeActionNxPopQueue(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxPopQueue, error) {
+	_actionnxpopqueue := &ActionNxPopQueue{ActionNicira: parent}
+	return _actionnxpopqueue, nil
 }
 
 func NewActionNxPopQueue() *ActionNxPopQueue {
-	return &ActionNxPopQueue{
+	obj := &ActionNxPopQueue{
 		ActionNicira: NewActionNicira(5),
 	}
+	return obj
 }
 func (self *ActionNxPopQueue) GetName() string {
 	return "nx_pop_queue"
@@ -1874,21 +1909,22 @@ func (self *ActionNxRegLoad) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxRegLoad(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegLoad, error) {
-	actionnxregload := &ActionNxRegLoad{ActionNicira: parent}
+func DecodeActionNxRegLoad(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegLoad, error) {
+	_actionnxregload := &ActionNxRegLoad{ActionNicira: parent}
 	if decoder.Length() < 14 {
 		return nil, fmt.Errorf("ActionNxRegLoad packet too short: %d < 14", decoder.Length())
 	}
-	actionnxregload.OfsNbits = uint16(decoder.ReadUint16())
-	actionnxregload.Dst = uint32(decoder.ReadUint32())
-	actionnxregload.Value = uint64(decoder.ReadUint64())
-	return actionnxregload, nil
+	_actionnxregload.OfsNbits = uint16(decoder.ReadUint16())
+	_actionnxregload.Dst = uint32(decoder.ReadUint32())
+	_actionnxregload.Value = uint64(decoder.ReadUint64())
+	return _actionnxregload, nil
 }
 
 func NewActionNxRegLoad() *ActionNxRegLoad {
-	return &ActionNxRegLoad{
+	obj := &ActionNxRegLoad{
 		ActionNicira: NewActionNicira(7),
 	}
+	return obj
 }
 func (self *ActionNxRegLoad) GetName() string {
 	return "nx_reg_load"
@@ -1919,19 +1955,20 @@ func (self *ActionNxRegLoad2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxRegLoad2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegLoad2, error) {
-	actionnxregload2 := &ActionNxRegLoad2{ActionNicira: parent}
+func DecodeActionNxRegLoad2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegLoad2, error) {
+	_actionnxregload2 := &ActionNxRegLoad2{ActionNicira: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("ActionNxRegLoad2 packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(6)
-	return actionnxregload2, nil
+	return _actionnxregload2, nil
 }
 
 func NewActionNxRegLoad2() *ActionNxRegLoad2 {
-	return &ActionNxRegLoad2{
+	obj := &ActionNxRegLoad2{
 		ActionNicira: NewActionNicira(33),
 	}
+	return obj
 }
 func (self *ActionNxRegLoad2) GetName() string {
 	return "nx_reg_load2"
@@ -1963,21 +2000,22 @@ func (self *ActionNxRegMove) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxRegMove(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegMove, error) {
-	actionnxregmove := &ActionNxRegMove{ActionNicira: parent}
+func DecodeActionNxRegMove(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegMove, error) {
+	_actionnxregmove := &ActionNxRegMove{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxRegMove packet too short: %d < 6", decoder.Length())
 	}
-	actionnxregmove.NBits = uint16(decoder.ReadUint16())
-	actionnxregmove.SrcOfs = uint16(decoder.ReadUint16())
-	actionnxregmove.DstOfs = uint16(decoder.ReadUint16())
-	return actionnxregmove, nil
+	_actionnxregmove.NBits = uint16(decoder.ReadUint16())
+	_actionnxregmove.SrcOfs = uint16(decoder.ReadUint16())
+	_actionnxregmove.DstOfs = uint16(decoder.ReadUint16())
+	return _actionnxregmove, nil
 }
 
 func NewActionNxRegMove() *ActionNxRegMove {
-	return &ActionNxRegMove{
+	obj := &ActionNxRegMove{
 		ActionNicira: NewActionNicira(6),
 	}
+	return obj
 }
 func (self *ActionNxRegMove) GetName() string {
 	return "nx_reg_move"
@@ -2009,19 +2047,20 @@ func (self *ActionNxResubmit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxResubmit(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxResubmit, error) {
-	actionnxresubmit := &ActionNxResubmit{ActionNicira: parent}
+func DecodeActionNxResubmit(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxResubmit, error) {
+	_actionnxresubmit := &ActionNxResubmit{ActionNicira: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("ActionNxResubmit packet too short: %d < 2", decoder.Length())
 	}
-	actionnxresubmit.Value = uint16(decoder.ReadUint16())
-	return actionnxresubmit, nil
+	_actionnxresubmit.Value = uint16(decoder.ReadUint16())
+	return _actionnxresubmit, nil
 }
 
 func NewActionNxResubmit() *ActionNxResubmit {
-	return &ActionNxResubmit{
+	obj := &ActionNxResubmit{
 		ActionNicira: NewActionNicira(1),
 	}
+	return obj
 }
 func (self *ActionNxResubmit) GetName() string {
 	return "nx_resubmit"
@@ -2054,21 +2093,22 @@ func (self *ActionNxResubmitTable) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxResubmitTable(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxResubmitTable, error) {
-	actionnxresubmittable := &ActionNxResubmitTable{ActionNicira: parent}
+func DecodeActionNxResubmitTable(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxResubmitTable, error) {
+	_actionnxresubmittable := &ActionNxResubmitTable{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxResubmitTable packet too short: %d < 6", decoder.Length())
 	}
-	actionnxresubmittable.InPort = uint16(decoder.ReadUint16())
-	actionnxresubmittable.Table = uint8(decoder.ReadByte())
+	_actionnxresubmittable.InPort = uint16(decoder.ReadUint16())
+	_actionnxresubmittable.Table = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionnxresubmittable, nil
+	return _actionnxresubmittable, nil
 }
 
 func NewActionNxResubmitTable() *ActionNxResubmitTable {
-	return &ActionNxResubmitTable{
+	obj := &ActionNxResubmitTable{
 		ActionNicira: NewActionNicira(14),
 	}
+	return obj
 }
 func (self *ActionNxResubmitTable) GetName() string {
 	return "nx_resubmit_table"
@@ -2102,21 +2142,22 @@ func (self *ActionNxResubmitTableCt) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxResubmitTableCt(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxResubmitTableCt, error) {
-	actionnxresubmittablect := &ActionNxResubmitTableCt{ActionNicira: parent}
+func DecodeActionNxResubmitTableCt(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxResubmitTableCt, error) {
+	_actionnxresubmittablect := &ActionNxResubmitTableCt{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionNxResubmitTableCt packet too short: %d < 6", decoder.Length())
 	}
-	actionnxresubmittablect.InPort = uint16(decoder.ReadUint16())
-	actionnxresubmittablect.Table = uint8(decoder.ReadByte())
+	_actionnxresubmittablect.InPort = uint16(decoder.ReadUint16())
+	_actionnxresubmittablect.Table = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionnxresubmittablect, nil
+	return _actionnxresubmittablect, nil
 }
 
 func NewActionNxResubmitTableCt() *ActionNxResubmitTableCt {
-	return &ActionNxResubmitTableCt{
+	obj := &ActionNxResubmitTableCt{
 		ActionNicira: NewActionNicira(44),
 	}
+	return obj
 }
 func (self *ActionNxResubmitTableCt) GetName() string {
 	return "nx_resubmit_table_ct"
@@ -2153,22 +2194,23 @@ func (self *ActionNxSample) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxSample(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSample, error) {
-	actionnxsample := &ActionNxSample{ActionNicira: parent}
+func DecodeActionNxSample(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSample, error) {
+	_actionnxsample := &ActionNxSample{ActionNicira: parent}
 	if decoder.Length() < 14 {
 		return nil, fmt.Errorf("ActionNxSample packet too short: %d < 14", decoder.Length())
 	}
-	actionnxsample.Probability = uint16(decoder.ReadUint16())
-	actionnxsample.CollectorSetId = uint32(decoder.ReadUint32())
-	actionnxsample.ObsDomainId = uint32(decoder.ReadUint32())
-	actionnxsample.ObsPointId = uint32(decoder.ReadUint32())
-	return actionnxsample, nil
+	_actionnxsample.Probability = uint16(decoder.ReadUint16())
+	_actionnxsample.CollectorSetId = uint32(decoder.ReadUint32())
+	_actionnxsample.ObsDomainId = uint32(decoder.ReadUint32())
+	_actionnxsample.ObsPointId = uint32(decoder.ReadUint32())
+	return _actionnxsample, nil
 }
 
 func NewActionNxSample() *ActionNxSample {
-	return &ActionNxSample{
+	obj := &ActionNxSample{
 		ActionNicira: NewActionNicira(29),
 	}
+	return obj
 }
 func (self *ActionNxSample) GetName() string {
 	return "nx_sample"
@@ -2212,25 +2254,26 @@ func (self *ActionNxSample2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxSample2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSample2, error) {
-	actionnxsample2 := &ActionNxSample2{ActionNicira: parent}
+func DecodeActionNxSample2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSample2, error) {
+	_actionnxsample2 := &ActionNxSample2{ActionNicira: parent}
 	if decoder.Length() < 22 {
 		return nil, fmt.Errorf("ActionNxSample2 packet too short: %d < 22", decoder.Length())
 	}
-	actionnxsample2.Probability = uint16(decoder.ReadUint16())
-	actionnxsample2.CollectorSetId = uint32(decoder.ReadUint32())
-	actionnxsample2.ObsDomainId = uint32(decoder.ReadUint32())
-	actionnxsample2.ObsPointId = uint32(decoder.ReadUint32())
-	actionnxsample2.SamplingPort = uint16(decoder.ReadUint16())
-	actionnxsample2.Direction = uint8(decoder.ReadByte())
+	_actionnxsample2.Probability = uint16(decoder.ReadUint16())
+	_actionnxsample2.CollectorSetId = uint32(decoder.ReadUint32())
+	_actionnxsample2.ObsDomainId = uint32(decoder.ReadUint32())
+	_actionnxsample2.ObsPointId = uint32(decoder.ReadUint32())
+	_actionnxsample2.SamplingPort = uint16(decoder.ReadUint16())
+	_actionnxsample2.Direction = uint8(decoder.ReadByte())
 	decoder.Skip(5)
-	return actionnxsample2, nil
+	return _actionnxsample2, nil
 }
 
 func NewActionNxSample2() *ActionNxSample2 {
-	return &ActionNxSample2{
+	obj := &ActionNxSample2{
 		ActionNicira: NewActionNicira(38),
 	}
+	return obj
 }
 func (self *ActionNxSample2) GetName() string {
 	return "nx_sample2"
@@ -2276,25 +2319,26 @@ func (self *ActionNxSample3) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxSample3(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSample3, error) {
-	actionnxsample3 := &ActionNxSample3{ActionNicira: parent}
+func DecodeActionNxSample3(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSample3, error) {
+	_actionnxsample3 := &ActionNxSample3{ActionNicira: parent}
 	if decoder.Length() < 22 {
 		return nil, fmt.Errorf("ActionNxSample3 packet too short: %d < 22", decoder.Length())
 	}
-	actionnxsample3.Probability = uint16(decoder.ReadUint16())
-	actionnxsample3.CollectorSetId = uint32(decoder.ReadUint32())
-	actionnxsample3.ObsDomainId = uint32(decoder.ReadUint32())
-	actionnxsample3.ObsPointId = uint32(decoder.ReadUint32())
-	actionnxsample3.SamplingPort = uint16(decoder.ReadUint16())
-	actionnxsample3.Direction = uint8(decoder.ReadByte())
+	_actionnxsample3.Probability = uint16(decoder.ReadUint16())
+	_actionnxsample3.CollectorSetId = uint32(decoder.ReadUint32())
+	_actionnxsample3.ObsDomainId = uint32(decoder.ReadUint32())
+	_actionnxsample3.ObsPointId = uint32(decoder.ReadUint32())
+	_actionnxsample3.SamplingPort = uint16(decoder.ReadUint16())
+	_actionnxsample3.Direction = uint8(decoder.ReadByte())
 	decoder.Skip(5)
-	return actionnxsample3, nil
+	return _actionnxsample3, nil
 }
 
 func NewActionNxSample3() *ActionNxSample3 {
-	return &ActionNxSample3{
+	obj := &ActionNxSample3{
 		ActionNicira: NewActionNicira(41),
 	}
+	return obj
 }
 func (self *ActionNxSample3) GetName() string {
 	return "nx_sample3"
@@ -2329,19 +2373,20 @@ func (self *ActionNxSetTunnel) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxSetTunnel(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSetTunnel, error) {
-	actionnxsettunnel := &ActionNxSetTunnel{ActionNicira: parent}
+func DecodeActionNxSetTunnel(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSetTunnel, error) {
+	_actionnxsettunnel := &ActionNxSetTunnel{ActionNicira: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionNxSetTunnel packet too short: %d < 4", decoder.Length())
 	}
-	actionnxsettunnel.Value = uint32(decoder.ReadUint32())
-	return actionnxsettunnel, nil
+	_actionnxsettunnel.Value = uint32(decoder.ReadUint32())
+	return _actionnxsettunnel, nil
 }
 
 func NewActionNxSetTunnel() *ActionNxSetTunnel {
-	return &ActionNxSetTunnel{
+	obj := &ActionNxSetTunnel{
 		ActionNicira: NewActionNicira(2),
 	}
+	return obj
 }
 func (self *ActionNxSetTunnel) GetName() string {
 	return "nx_set_tunnel"
@@ -2371,19 +2416,20 @@ func (self *ActionNxSetTunnel64) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxSetTunnel64(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSetTunnel64, error) {
-	actionnxsettunnel64 := &ActionNxSetTunnel64{ActionNicira: parent}
+func DecodeActionNxSetTunnel64(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSetTunnel64, error) {
+	_actionnxsettunnel64 := &ActionNxSetTunnel64{ActionNicira: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("ActionNxSetTunnel64 packet too short: %d < 8", decoder.Length())
 	}
-	actionnxsettunnel64.Value = uint64(decoder.ReadUint64())
-	return actionnxsettunnel64, nil
+	_actionnxsettunnel64.Value = uint64(decoder.ReadUint64())
+	return _actionnxsettunnel64, nil
 }
 
 func NewActionNxSetTunnel64() *ActionNxSetTunnel64 {
-	return &ActionNxSetTunnel64{
+	obj := &ActionNxSetTunnel64{
 		ActionNicira: NewActionNicira(9),
 	}
+	return obj
 }
 func (self *ActionNxSetTunnel64) GetName() string {
 	return "nx_set_tunnel64"
@@ -2414,20 +2460,21 @@ func (self *ActionNxStackPop) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxStackPop(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxStackPop, error) {
-	actionnxstackpop := &ActionNxStackPop{ActionNicira: parent}
+func DecodeActionNxStackPop(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxStackPop, error) {
+	_actionnxstackpop := &ActionNxStackPop{ActionNicira: parent}
 	if decoder.Length() < 14 {
 		return nil, fmt.Errorf("ActionNxStackPop packet too short: %d < 14", decoder.Length())
 	}
-	actionnxstackpop.Offset = uint16(decoder.ReadUint16())
+	_actionnxstackpop.Offset = uint16(decoder.ReadUint16())
 	decoder.Skip(12)
-	return actionnxstackpop, nil
+	return _actionnxstackpop, nil
 }
 
 func NewActionNxStackPop() *ActionNxStackPop {
-	return &ActionNxStackPop{
+	obj := &ActionNxStackPop{
 		ActionNicira: NewActionNicira(28),
 	}
+	return obj
 }
 func (self *ActionNxStackPop) GetName() string {
 	return "nx_stack_pop"
@@ -2458,20 +2505,21 @@ func (self *ActionNxStackPush) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxStackPush(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxStackPush, error) {
-	actionnxstackpush := &ActionNxStackPush{ActionNicira: parent}
+func DecodeActionNxStackPush(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxStackPush, error) {
+	_actionnxstackpush := &ActionNxStackPush{ActionNicira: parent}
 	if decoder.Length() < 14 {
 		return nil, fmt.Errorf("ActionNxStackPush packet too short: %d < 14", decoder.Length())
 	}
-	actionnxstackpush.Offset = uint16(decoder.ReadUint16())
+	_actionnxstackpush.Offset = uint16(decoder.ReadUint16())
 	decoder.Skip(12)
-	return actionnxstackpush, nil
+	return _actionnxstackpush, nil
 }
 
 func NewActionNxStackPush() *ActionNxStackPush {
-	return &ActionNxStackPush{
+	obj := &ActionNxStackPush{
 		ActionNicira: NewActionNicira(27),
 	}
+	return obj
 }
 func (self *ActionNxStackPush) GetName() string {
 	return "nx_stack_push"
@@ -2504,21 +2552,22 @@ func (self *ActionNxWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionNxWriteMetadata(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxWriteMetadata, error) {
-	actionnxwritemetadata := &ActionNxWriteMetadata{ActionNicira: parent}
+func DecodeActionNxWriteMetadata(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxWriteMetadata, error) {
+	_actionnxwritemetadata := &ActionNxWriteMetadata{ActionNicira: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("ActionNxWriteMetadata packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(6)
-	actionnxwritemetadata.Metadata = uint64(decoder.ReadUint64())
-	actionnxwritemetadata.Mask = uint64(decoder.ReadUint64())
-	return actionnxwritemetadata, nil
+	_actionnxwritemetadata.Metadata = uint64(decoder.ReadUint64())
+	_actionnxwritemetadata.Mask = uint64(decoder.ReadUint64())
+	return _actionnxwritemetadata, nil
 }
 
 func NewActionNxWriteMetadata() *ActionNxWriteMetadata {
-	return &ActionNxWriteMetadata{
+	obj := &ActionNxWriteMetadata{
 		ActionNicira: NewActionNicira(22),
 	}
+	return obj
 }
 func (self *ActionNxWriteMetadata) GetName() string {
 	return "nx_write_metadata"
@@ -2552,21 +2601,22 @@ func (self *ActionOutput) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionOutput(parent *Action, decoder *goloxi.Decoder) (*ActionOutput, error) {
-	actionoutput := &ActionOutput{Action: parent}
+func DecodeActionOutput(parent *Action, decoder *goloxi.Decoder) (*ActionOutput, error) {
+	_actionoutput := &ActionOutput{Action: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("ActionOutput packet too short: %d < 12", decoder.Length())
 	}
-	actionoutput.Port.Decode(decoder)
-	actionoutput.MaxLen = uint16(decoder.ReadUint16())
+	_actionoutput.Port.Decode(decoder)
+	_actionoutput.MaxLen = uint16(decoder.ReadUint16())
 	decoder.Skip(6)
-	return actionoutput, nil
+	return _actionoutput, nil
 }
 
 func NewActionOutput() *ActionOutput {
-	return &ActionOutput{
+	obj := &ActionOutput{
 		Action: NewAction(0),
 	}
+	return obj
 }
 func (self *ActionOutput) GetName() string {
 	return "output"
@@ -2598,20 +2648,21 @@ func (self *ActionPopMpls) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionPopMpls(parent *Action, decoder *goloxi.Decoder) (*ActionPopMpls, error) {
-	actionpopmpls := &ActionPopMpls{Action: parent}
+func DecodeActionPopMpls(parent *Action, decoder *goloxi.Decoder) (*ActionPopMpls, error) {
+	_actionpopmpls := &ActionPopMpls{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionPopMpls packet too short: %d < 4", decoder.Length())
 	}
-	actionpopmpls.Ethertype = uint16(decoder.ReadUint16())
+	_actionpopmpls.Ethertype = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return actionpopmpls, nil
+	return _actionpopmpls, nil
 }
 
 func NewActionPopMpls() *ActionPopMpls {
-	return &ActionPopMpls{
+	obj := &ActionPopMpls{
 		Action: NewAction(20),
 	}
+	return obj
 }
 func (self *ActionPopMpls) GetName() string {
 	return "pop_mpls"
@@ -2640,19 +2691,20 @@ func (self *ActionPopVlan) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionPopVlan(parent *Action, decoder *goloxi.Decoder) (*ActionPopVlan, error) {
-	actionpopvlan := &ActionPopVlan{Action: parent}
+func DecodeActionPopVlan(parent *Action, decoder *goloxi.Decoder) (*ActionPopVlan, error) {
+	_actionpopvlan := &ActionPopVlan{Action: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("ActionPopVlan packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	return actionpopvlan, nil
+	return _actionpopvlan, nil
 }
 
 func NewActionPopVlan() *ActionPopVlan {
-	return &ActionPopVlan{
+	obj := &ActionPopVlan{
 		Action: NewAction(18),
 	}
+	return obj
 }
 func (self *ActionPopVlan) GetName() string {
 	return "pop_vlan"
@@ -2681,20 +2733,21 @@ func (self *ActionPushMpls) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionPushMpls(parent *Action, decoder *goloxi.Decoder) (*ActionPushMpls, error) {
-	actionpushmpls := &ActionPushMpls{Action: parent}
+func DecodeActionPushMpls(parent *Action, decoder *goloxi.Decoder) (*ActionPushMpls, error) {
+	_actionpushmpls := &ActionPushMpls{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionPushMpls packet too short: %d < 4", decoder.Length())
 	}
-	actionpushmpls.Ethertype = uint16(decoder.ReadUint16())
+	_actionpushmpls.Ethertype = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return actionpushmpls, nil
+	return _actionpushmpls, nil
 }
 
 func NewActionPushMpls() *ActionPushMpls {
-	return &ActionPushMpls{
+	obj := &ActionPushMpls{
 		Action: NewAction(19),
 	}
+	return obj
 }
 func (self *ActionPushMpls) GetName() string {
 	return "push_mpls"
@@ -2725,20 +2778,21 @@ func (self *ActionPushVlan) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionPushVlan(parent *Action, decoder *goloxi.Decoder) (*ActionPushVlan, error) {
-	actionpushvlan := &ActionPushVlan{Action: parent}
+func DecodeActionPushVlan(parent *Action, decoder *goloxi.Decoder) (*ActionPushVlan, error) {
+	_actionpushvlan := &ActionPushVlan{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionPushVlan packet too short: %d < 4", decoder.Length())
 	}
-	actionpushvlan.Ethertype = uint16(decoder.ReadUint16())
+	_actionpushvlan.Ethertype = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return actionpushvlan, nil
+	return _actionpushvlan, nil
 }
 
 func NewActionPushVlan() *ActionPushVlan {
-	return &ActionPushVlan{
+	obj := &ActionPushVlan{
 		Action: NewAction(17),
 	}
+	return obj
 }
 func (self *ActionPushVlan) GetName() string {
 	return "push_vlan"
@@ -2771,21 +2825,22 @@ func (self *ActionResubmit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionResubmit(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionResubmit, error) {
-	actionresubmit := &ActionResubmit{ActionNicira: parent}
+func DecodeActionResubmit(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionResubmit, error) {
+	_actionresubmit := &ActionResubmit{ActionNicira: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("ActionResubmit packet too short: %d < 6", decoder.Length())
 	}
-	actionresubmit.InPort = uint16(decoder.ReadUint16())
-	actionresubmit.Table = uint8(decoder.ReadByte())
+	_actionresubmit.InPort = uint16(decoder.ReadUint16())
+	_actionresubmit.Table = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionresubmit, nil
+	return _actionresubmit, nil
 }
 
 func NewActionResubmit() *ActionResubmit {
-	return &ActionResubmit{
+	obj := &ActionResubmit{
 		ActionNicira: NewActionNicira(14),
 	}
+	return obj
 }
 func (self *ActionResubmit) GetName() string {
 	return "resubmit"
@@ -2817,20 +2872,21 @@ func (self *ActionSetDlDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetDlDst(parent *Action, decoder *goloxi.Decoder) (*ActionSetDlDst, error) {
-	actionsetdldst := &ActionSetDlDst{Action: parent}
+func DecodeActionSetDlDst(parent *Action, decoder *goloxi.Decoder) (*ActionSetDlDst, error) {
+	_actionsetdldst := &ActionSetDlDst{Action: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("ActionSetDlDst packet too short: %d < 12", decoder.Length())
 	}
-	actionsetdldst.DlAddr = net.HardwareAddr(decoder.Read(6))
+	_actionsetdldst.DlAddr = net.HardwareAddr(decoder.Read(6))
 	decoder.Skip(6)
-	return actionsetdldst, nil
+	return _actionsetdldst, nil
 }
 
 func NewActionSetDlDst() *ActionSetDlDst {
-	return &ActionSetDlDst{
+	obj := &ActionSetDlDst{
 		Action: NewAction(4),
 	}
+	return obj
 }
 func (self *ActionSetDlDst) GetName() string {
 	return "set_dl_dst"
@@ -2861,20 +2917,21 @@ func (self *ActionSetDlSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetDlSrc(parent *Action, decoder *goloxi.Decoder) (*ActionSetDlSrc, error) {
-	actionsetdlsrc := &ActionSetDlSrc{Action: parent}
+func DecodeActionSetDlSrc(parent *Action, decoder *goloxi.Decoder) (*ActionSetDlSrc, error) {
+	_actionsetdlsrc := &ActionSetDlSrc{Action: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("ActionSetDlSrc packet too short: %d < 12", decoder.Length())
 	}
-	actionsetdlsrc.DlAddr = net.HardwareAddr(decoder.Read(6))
+	_actionsetdlsrc.DlAddr = net.HardwareAddr(decoder.Read(6))
 	decoder.Skip(6)
-	return actionsetdlsrc, nil
+	return _actionsetdlsrc, nil
 }
 
 func NewActionSetDlSrc() *ActionSetDlSrc {
-	return &ActionSetDlSrc{
+	obj := &ActionSetDlSrc{
 		Action: NewAction(3),
 	}
+	return obj
 }
 func (self *ActionSetDlSrc) GetName() string {
 	return "set_dl_src"
@@ -2904,19 +2961,20 @@ func (self *ActionSetMplsLabel) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetMplsLabel(parent *Action, decoder *goloxi.Decoder) (*ActionSetMplsLabel, error) {
-	actionsetmplslabel := &ActionSetMplsLabel{Action: parent}
+func DecodeActionSetMplsLabel(parent *Action, decoder *goloxi.Decoder) (*ActionSetMplsLabel, error) {
+	_actionsetmplslabel := &ActionSetMplsLabel{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetMplsLabel packet too short: %d < 4", decoder.Length())
 	}
-	actionsetmplslabel.MplsLabel = uint32(decoder.ReadUint32())
-	return actionsetmplslabel, nil
+	_actionsetmplslabel.MplsLabel = uint32(decoder.ReadUint32())
+	return _actionsetmplslabel, nil
 }
 
 func NewActionSetMplsLabel() *ActionSetMplsLabel {
-	return &ActionSetMplsLabel{
+	obj := &ActionSetMplsLabel{
 		Action: NewAction(13),
 	}
+	return obj
 }
 func (self *ActionSetMplsLabel) GetName() string {
 	return "set_mpls_label"
@@ -2947,20 +3005,21 @@ func (self *ActionSetMplsTc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetMplsTc(parent *Action, decoder *goloxi.Decoder) (*ActionSetMplsTc, error) {
-	actionsetmplstc := &ActionSetMplsTc{Action: parent}
+func DecodeActionSetMplsTc(parent *Action, decoder *goloxi.Decoder) (*ActionSetMplsTc, error) {
+	_actionsetmplstc := &ActionSetMplsTc{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetMplsTc packet too short: %d < 4", decoder.Length())
 	}
-	actionsetmplstc.MplsTc = uint8(decoder.ReadByte())
+	_actionsetmplstc.MplsTc = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionsetmplstc, nil
+	return _actionsetmplstc, nil
 }
 
 func NewActionSetMplsTc() *ActionSetMplsTc {
-	return &ActionSetMplsTc{
+	obj := &ActionSetMplsTc{
 		Action: NewAction(14),
 	}
+	return obj
 }
 func (self *ActionSetMplsTc) GetName() string {
 	return "set_mpls_tc"
@@ -2991,20 +3050,21 @@ func (self *ActionSetMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetMplsTtl(parent *Action, decoder *goloxi.Decoder) (*ActionSetMplsTtl, error) {
-	actionsetmplsttl := &ActionSetMplsTtl{Action: parent}
+func DecodeActionSetMplsTtl(parent *Action, decoder *goloxi.Decoder) (*ActionSetMplsTtl, error) {
+	_actionsetmplsttl := &ActionSetMplsTtl{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetMplsTtl packet too short: %d < 4", decoder.Length())
 	}
-	actionsetmplsttl.MplsTtl = uint8(decoder.ReadByte())
+	_actionsetmplsttl.MplsTtl = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionsetmplsttl, nil
+	return _actionsetmplsttl, nil
 }
 
 func NewActionSetMplsTtl() *ActionSetMplsTtl {
-	return &ActionSetMplsTtl{
+	obj := &ActionSetMplsTtl{
 		Action: NewAction(15),
 	}
+	return obj
 }
 func (self *ActionSetMplsTtl) GetName() string {
 	return "set_mpls_ttl"
@@ -3034,19 +3094,20 @@ func (self *ActionSetNwDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetNwDst(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwDst, error) {
-	actionsetnwdst := &ActionSetNwDst{Action: parent}
+func DecodeActionSetNwDst(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwDst, error) {
+	_actionsetnwdst := &ActionSetNwDst{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetNwDst packet too short: %d < 4", decoder.Length())
 	}
-	actionsetnwdst.NwAddr = uint32(decoder.ReadUint32())
-	return actionsetnwdst, nil
+	_actionsetnwdst.NwAddr = uint32(decoder.ReadUint32())
+	return _actionsetnwdst, nil
 }
 
 func NewActionSetNwDst() *ActionSetNwDst {
-	return &ActionSetNwDst{
+	obj := &ActionSetNwDst{
 		Action: NewAction(6),
 	}
+	return obj
 }
 func (self *ActionSetNwDst) GetName() string {
 	return "set_nw_dst"
@@ -3077,20 +3138,21 @@ func (self *ActionSetNwEcn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetNwEcn(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwEcn, error) {
-	actionsetnwecn := &ActionSetNwEcn{Action: parent}
+func DecodeActionSetNwEcn(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwEcn, error) {
+	_actionsetnwecn := &ActionSetNwEcn{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetNwEcn packet too short: %d < 4", decoder.Length())
 	}
-	actionsetnwecn.NwEcn = uint8(decoder.ReadByte())
+	_actionsetnwecn.NwEcn = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionsetnwecn, nil
+	return _actionsetnwecn, nil
 }
 
 func NewActionSetNwEcn() *ActionSetNwEcn {
-	return &ActionSetNwEcn{
+	obj := &ActionSetNwEcn{
 		Action: NewAction(8),
 	}
+	return obj
 }
 func (self *ActionSetNwEcn) GetName() string {
 	return "set_nw_ecn"
@@ -3120,19 +3182,20 @@ func (self *ActionSetNwSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetNwSrc(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwSrc, error) {
-	actionsetnwsrc := &ActionSetNwSrc{Action: parent}
+func DecodeActionSetNwSrc(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwSrc, error) {
+	_actionsetnwsrc := &ActionSetNwSrc{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetNwSrc packet too short: %d < 4", decoder.Length())
 	}
-	actionsetnwsrc.NwAddr = uint32(decoder.ReadUint32())
-	return actionsetnwsrc, nil
+	_actionsetnwsrc.NwAddr = uint32(decoder.ReadUint32())
+	return _actionsetnwsrc, nil
 }
 
 func NewActionSetNwSrc() *ActionSetNwSrc {
-	return &ActionSetNwSrc{
+	obj := &ActionSetNwSrc{
 		Action: NewAction(5),
 	}
+	return obj
 }
 func (self *ActionSetNwSrc) GetName() string {
 	return "set_nw_src"
@@ -3163,20 +3226,21 @@ func (self *ActionSetNwTos) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetNwTos(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwTos, error) {
-	actionsetnwtos := &ActionSetNwTos{Action: parent}
+func DecodeActionSetNwTos(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwTos, error) {
+	_actionsetnwtos := &ActionSetNwTos{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetNwTos packet too short: %d < 4", decoder.Length())
 	}
-	actionsetnwtos.NwTos = uint8(decoder.ReadByte())
+	_actionsetnwtos.NwTos = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionsetnwtos, nil
+	return _actionsetnwtos, nil
 }
 
 func NewActionSetNwTos() *ActionSetNwTos {
-	return &ActionSetNwTos{
+	obj := &ActionSetNwTos{
 		Action: NewAction(7),
 	}
+	return obj
 }
 func (self *ActionSetNwTos) GetName() string {
 	return "set_nw_tos"
@@ -3207,20 +3271,21 @@ func (self *ActionSetNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetNwTtl(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwTtl, error) {
-	actionsetnwttl := &ActionSetNwTtl{Action: parent}
+func DecodeActionSetNwTtl(parent *Action, decoder *goloxi.Decoder) (*ActionSetNwTtl, error) {
+	_actionsetnwttl := &ActionSetNwTtl{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetNwTtl packet too short: %d < 4", decoder.Length())
 	}
-	actionsetnwttl.NwTtl = uint8(decoder.ReadByte())
+	_actionsetnwttl.NwTtl = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionsetnwttl, nil
+	return _actionsetnwttl, nil
 }
 
 func NewActionSetNwTtl() *ActionSetNwTtl {
-	return &ActionSetNwTtl{
+	obj := &ActionSetNwTtl{
 		Action: NewAction(23),
 	}
+	return obj
 }
 func (self *ActionSetNwTtl) GetName() string {
 	return "set_nw_ttl"
@@ -3250,19 +3315,20 @@ func (self *ActionSetQueue) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetQueue(parent *Action, decoder *goloxi.Decoder) (*ActionSetQueue, error) {
-	actionsetqueue := &ActionSetQueue{Action: parent}
+func DecodeActionSetQueue(parent *Action, decoder *goloxi.Decoder) (*ActionSetQueue, error) {
+	_actionsetqueue := &ActionSetQueue{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetQueue packet too short: %d < 4", decoder.Length())
 	}
-	actionsetqueue.QueueId = uint32(decoder.ReadUint32())
-	return actionsetqueue, nil
+	_actionsetqueue.QueueId = uint32(decoder.ReadUint32())
+	return _actionsetqueue, nil
 }
 
 func NewActionSetQueue() *ActionSetQueue {
-	return &ActionSetQueue{
+	obj := &ActionSetQueue{
 		Action: NewAction(21),
 	}
+	return obj
 }
 func (self *ActionSetQueue) GetName() string {
 	return "set_queue"
@@ -3293,20 +3359,21 @@ func (self *ActionSetTpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetTpDst(parent *Action, decoder *goloxi.Decoder) (*ActionSetTpDst, error) {
-	actionsettpdst := &ActionSetTpDst{Action: parent}
+func DecodeActionSetTpDst(parent *Action, decoder *goloxi.Decoder) (*ActionSetTpDst, error) {
+	_actionsettpdst := &ActionSetTpDst{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetTpDst packet too short: %d < 4", decoder.Length())
 	}
-	actionsettpdst.TpPort = uint16(decoder.ReadUint16())
+	_actionsettpdst.TpPort = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return actionsettpdst, nil
+	return _actionsettpdst, nil
 }
 
 func NewActionSetTpDst() *ActionSetTpDst {
-	return &ActionSetTpDst{
+	obj := &ActionSetTpDst{
 		Action: NewAction(10),
 	}
+	return obj
 }
 func (self *ActionSetTpDst) GetName() string {
 	return "set_tp_dst"
@@ -3337,20 +3404,21 @@ func (self *ActionSetTpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetTpSrc(parent *Action, decoder *goloxi.Decoder) (*ActionSetTpSrc, error) {
-	actionsettpsrc := &ActionSetTpSrc{Action: parent}
+func DecodeActionSetTpSrc(parent *Action, decoder *goloxi.Decoder) (*ActionSetTpSrc, error) {
+	_actionsettpsrc := &ActionSetTpSrc{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetTpSrc packet too short: %d < 4", decoder.Length())
 	}
-	actionsettpsrc.TpPort = uint16(decoder.ReadUint16())
+	_actionsettpsrc.TpPort = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return actionsettpsrc, nil
+	return _actionsettpsrc, nil
 }
 
 func NewActionSetTpSrc() *ActionSetTpSrc {
-	return &ActionSetTpSrc{
+	obj := &ActionSetTpSrc{
 		Action: NewAction(9),
 	}
+	return obj
 }
 func (self *ActionSetTpSrc) GetName() string {
 	return "set_tp_src"
@@ -3381,20 +3449,21 @@ func (self *ActionSetVlanPcp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetVlanPcp(parent *Action, decoder *goloxi.Decoder) (*ActionSetVlanPcp, error) {
-	actionsetvlanpcp := &ActionSetVlanPcp{Action: parent}
+func DecodeActionSetVlanPcp(parent *Action, decoder *goloxi.Decoder) (*ActionSetVlanPcp, error) {
+	_actionsetvlanpcp := &ActionSetVlanPcp{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetVlanPcp packet too short: %d < 4", decoder.Length())
 	}
-	actionsetvlanpcp.VlanPcp = uint8(decoder.ReadByte())
+	_actionsetvlanpcp.VlanPcp = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return actionsetvlanpcp, nil
+	return _actionsetvlanpcp, nil
 }
 
 func NewActionSetVlanPcp() *ActionSetVlanPcp {
-	return &ActionSetVlanPcp{
+	obj := &ActionSetVlanPcp{
 		Action: NewAction(2),
 	}
+	return obj
 }
 func (self *ActionSetVlanPcp) GetName() string {
 	return "set_vlan_pcp"
@@ -3425,20 +3494,21 @@ func (self *ActionSetVlanVid) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionSetVlanVid(parent *Action, decoder *goloxi.Decoder) (*ActionSetVlanVid, error) {
-	actionsetvlanvid := &ActionSetVlanVid{Action: parent}
+func DecodeActionSetVlanVid(parent *Action, decoder *goloxi.Decoder) (*ActionSetVlanVid, error) {
+	_actionsetvlanvid := &ActionSetVlanVid{Action: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetVlanVid packet too short: %d < 4", decoder.Length())
 	}
-	actionsetvlanvid.VlanVid = uint16(decoder.ReadUint16())
+	_actionsetvlanvid.VlanVid = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	return actionsetvlanvid, nil
+	return _actionsetvlanvid, nil
 }
 
 func NewActionSetVlanVid() *ActionSetVlanVid {
-	return &ActionSetVlanVid{
+	obj := &ActionSetVlanVid{
 		Action: NewAction(1),
 	}
+	return obj
 }
 func (self *ActionSetVlanVid) GetName() string {
 	return "set_vlan_vid"

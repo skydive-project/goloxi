@@ -37,695 +37,695 @@ func (self *Oxm) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxm(decoder *goloxi.Decoder) (IOxm, error) {
-	oxm := &Oxm{}
+func DecodeOxm(decoder *goloxi.Decoder) (IOxm, error) {
+	_oxm := &Oxm{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("Oxm packet too short: %d < 4", decoder.Length())
 	}
-	oxm.TypeLen = uint32(decoder.ReadUint32())
+	_oxm.TypeLen = uint32(decoder.ReadUint32())
 
-	switch oxm.TypeLen {
+	switch _oxm.TypeLen {
 	case 126465:
-		return decodeNxmCtNwProto(oxm, decoder)
+		return DecodeNxmCtNwProto(_oxm, decoder)
 	case 7682:
-		return decodeNxmArpOp(oxm, decoder)
+		return DecodeNxmArpOp(_oxm, decoder)
 	case 2147500550:
-		return decodeOxmIpv6NdTll(oxm, decoder)
+		return DecodeOxmIpv6NdTll(_oxm, decoder)
 	case 84484:
-		return decodeNxmConjId(oxm, decoder)
+		return DecodeNxmConjId(_oxm, decoder)
 	case 121360:
-		return decodeNxmTunIpv6Src(oxm, decoder)
+		return DecodeNxmTunIpv6Src(_oxm, decoder)
 	case 127236:
-		return decodeNxmCtNwSrcMasked(oxm, decoder)
+		return DecodeNxmCtNwSrcMasked(_oxm, decoder)
 	case 7169:
-		return decodeNxmIcmpCode(oxm, decoder)
+		return DecodeNxmIcmpCode(_oxm, decoder)
 	case 73736:
-		return decodeNxmTunId(oxm, decoder)
+		return DecodeNxmTunId(_oxm, decoder)
 	case 94076:
-		return decodeNxmTunMetadata15Masked(oxm, decoder)
+		return DecodeNxmTunMetadata15Masked(_oxm, decoder)
 	case 122640:
-		return decodeNxmXxreg0Masked(oxm, decoder)
+		return DecodeNxmXxreg0Masked(_oxm, decoder)
 	case 114300:
-		return decodeNxmTunMetadata55(oxm, decoder)
+		return DecodeNxmTunMetadata55(_oxm, decoder)
 	case 129026:
-		return decodeNxmCtTpSrc(oxm, decoder)
+		return DecodeNxmCtTpSrc(_oxm, decoder)
 	case 127492:
-		return decodeNxmCtNwDst(oxm, decoder)
+		return DecodeNxmCtNwDst(_oxm, decoder)
 	case 109948:
-		return decodeNxmTunMetadata46Masked(oxm, decoder)
+		return DecodeNxmTunMetadata46Masked(_oxm, decoder)
 	case 128016:
-		return decodeNxmCtIpv6Src(oxm, decoder)
+		return DecodeNxmCtIpv6Src(_oxm, decoder)
 	case 94332:
-		return decodeNxmTunMetadata16(oxm, decoder)
+		return DecodeNxmTunMetadata16(_oxm, decoder)
 	case 129538:
-		return decodeNxmCtTpDst(oxm, decoder)
+		return DecodeNxmCtTpDst(_oxm, decoder)
 	case 127748:
-		return decodeNxmCtNwDstMasked(oxm, decoder)
+		return DecodeNxmCtNwDstMasked(_oxm, decoder)
 	case 70916:
-		return decodeNxmReg10Masked(oxm, decoder)
+		return DecodeNxmReg10Masked(_oxm, decoder)
 	case 112764:
-		return decodeNxmTunMetadata52(oxm, decoder)
+		return DecodeNxmTunMetadata52(_oxm, decoder)
 	case 8452:
-		return decodeNxmArpSpaMasked(oxm, decoder)
+		return DecodeNxmArpSpaMasked(_oxm, decoder)
 	case 129794:
-		return decodeNxmCtTpDstMasked(oxm, decoder)
+		return DecodeNxmCtTpDstMasked(_oxm, decoder)
 	case 89980:
-		return decodeNxmTunMetadata7Masked(oxm, decoder)
+		return DecodeNxmTunMetadata7Masked(_oxm, decoder)
 	case 2147497248:
-		return decodeOxmIpv6SrcMasked(oxm, decoder)
+		return DecodeOxmIpv6SrcMasked(_oxm, decoder)
 	case 94844:
-		return decodeNxmTunMetadata17(oxm, decoder)
+		return DecodeNxmTunMetadata17(_oxm, decoder)
 	case 118652:
-		return decodeNxmTunMetadata63Masked(oxm, decoder)
+		return DecodeNxmTunMetadata63Masked(_oxm, decoder)
 	case 78086:
-		return decodeNxmNdSllMasked(oxm, decoder)
+		return DecodeNxmNdSllMasked(_oxm, decoder)
 	case 95100:
-		return decodeNxmTunMetadata17Masked(oxm, decoder)
+		return DecodeNxmTunMetadata17Masked(_oxm, decoder)
 	case 2147499266:
-		return decodeOxmIcmpv6CodeMasked(oxm, decoder)
+		return DecodeOxmIcmpv6CodeMasked(_oxm, decoder)
 	case 113020:
-		return decodeNxmTunMetadata52Masked(oxm, decoder)
+		return DecodeNxmTunMetadata52Masked(_oxm, decoder)
 	case 121616:
-		return decodeNxmTunIpv6SrcMasked(oxm, decoder)
+		return DecodeNxmTunIpv6SrcMasked(_oxm, decoder)
 	case 79364:
-		return decodeNxmIpv6Label(oxm, decoder)
+		return DecodeNxmIpv6Label(_oxm, decoder)
 	case 2147498754:
-		return decodeOxmIcmpv6TypeMasked(oxm, decoder)
+		return DecodeOxmIcmpv6TypeMasked(_oxm, decoder)
 	case 76048:
-		return decodeNxmIpv6DstMasked(oxm, decoder)
+		return DecodeNxmIpv6DstMasked(_oxm, decoder)
 	case 103292:
-		return decodeNxmTunMetadata33Masked(oxm, decoder)
+		return DecodeNxmTunMetadata33Masked(_oxm, decoder)
 	case 122896:
-		return decodeNxmXxreg1(oxm, decoder)
+		return DecodeNxmXxreg1(_oxm, decoder)
 	case 79620:
-		return decodeNxmIpv6LabelMasked(oxm, decoder)
+		return DecodeNxmIpv6LabelMasked(_oxm, decoder)
 	case 116348:
-		return decodeNxmTunMetadata59(oxm, decoder)
+		return DecodeNxmTunMetadata59(_oxm, decoder)
 	case 93564:
-		return decodeNxmTunMetadata14Masked(oxm, decoder)
+		return DecodeNxmTunMetadata14Masked(_oxm, decoder)
 	case 77830:
-		return decodeNxmNdSll(oxm, decoder)
+		return DecodeNxmNdSll(_oxm, decoder)
 	case 2147489796:
-		return decodeOxmIpv4Dst(oxm, decoder)
+		return DecodeOxmIpv4Dst(_oxm, decoder)
 	case 2147497988:
-		return decodeOxmIpv6Flabel(oxm, decoder)
+		return DecodeOxmIpv6Flabel(_oxm, decoder)
 	case 2147487490:
-		return decodeOxmVlanPcpMasked(oxm, decoder)
+		return DecodeOxmVlanPcpMasked(_oxm, decoder)
 	case 95868:
-		return decodeNxmTunMetadata19(oxm, decoder)
+		return DecodeNxmTunMetadata19(_oxm, decoder)
 	case 2:
-		return decodeNxmInPort(oxm, decoder)
+		return DecodeNxmInPort(_oxm, decoder)
 	case 128272:
-		return decodeNxmCtIpv6SrcMasked(oxm, decoder)
+		return DecodeNxmCtIpv6SrcMasked(_oxm, decoder)
 	case 94588:
-		return decodeNxmTunMetadata16Masked(oxm, decoder)
+		return DecodeNxmTunMetadata16Masked(_oxm, decoder)
 	case 91004:
-		return decodeNxmTunMetadata9Masked(oxm, decoder)
+		return DecodeNxmTunMetadata9Masked(_oxm, decoder)
 	case 4866:
-		return decodeNxmTcpSrcMasked(oxm, decoder)
+		return DecodeNxmTcpSrcMasked(_oxm, decoder)
 	case 2147484944:
-		return decodeOxmMetadataMasked(oxm, decoder)
+		return DecodeOxmMetadataMasked(_oxm, decoder)
 	case 96124:
-		return decodeNxmTunMetadata19Masked(oxm, decoder)
+		return DecodeNxmTunMetadata19Masked(_oxm, decoder)
 	case 78342:
-		return decodeNxmNdTll(oxm, decoder)
+		return DecodeNxmNdTll(_oxm, decoder)
 	case 108924:
-		return decodeNxmTunMetadata44Masked(oxm, decoder)
+		return DecodeNxmTunMetadata44Masked(_oxm, decoder)
 	case 2147491076:
-		return decodeOxmTcpDstMasked(oxm, decoder)
+		return DecodeOxmTcpDstMasked(_oxm, decoder)
 	case 116092:
-		return decodeNxmTunMetadata58Masked(oxm, decoder)
+		return DecodeNxmTunMetadata58Masked(_oxm, decoder)
 	case 96380:
-		return decodeNxmTunMetadata20(oxm, decoder)
+		return DecodeNxmTunMetadata20(_oxm, decoder)
 	case 78598:
-		return decodeNxmNdTllMasked(oxm, decoder)
+		return DecodeNxmNdTllMasked(_oxm, decoder)
 	case 2147491842:
-		return decodeOxmUdpDst(oxm, decoder)
+		return DecodeOxmUdpDst(_oxm, decoder)
 	case 71428:
-		return decodeNxmReg11Masked(oxm, decoder)
+		return DecodeNxmReg11Masked(_oxm, decoder)
 	case 121872:
-		return decodeNxmTunIpv6Dst(oxm, decoder)
+		return DecodeNxmTunIpv6Dst(_oxm, decoder)
 	case 96636:
-		return decodeNxmTunMetadata20Masked(oxm, decoder)
+		return DecodeNxmTunMetadata20Masked(_oxm, decoder)
 	case 103548:
-		return decodeNxmTunMetadata34(oxm, decoder)
+		return DecodeNxmTunMetadata34(_oxm, decoder)
 	case 120324:
-		return decodeNxmCtMark(oxm, decoder)
+		return DecodeNxmCtMark(_oxm, decoder)
 	case 90748:
-		return decodeNxmTunMetadata9(oxm, decoder)
+		return DecodeNxmTunMetadata9(_oxm, decoder)
 	case 116604:
-		return decodeNxmTunMetadata59Masked(oxm, decoder)
+		return DecodeNxmTunMetadata59Masked(_oxm, decoder)
 	case 75536:
-		return decodeNxmIpv6SrcMasked(oxm, decoder)
+		return DecodeNxmIpv6SrcMasked(_oxm, decoder)
 	case 82946:
-		return decodeNxmTcpFlags(oxm, decoder)
+		return DecodeNxmTcpFlags(_oxm, decoder)
 	case 2147485702:
-		return decodeOxmEthSrc(oxm, decoder)
+		return DecodeOxmEthSrc(_oxm, decoder)
 	case 80897:
-		return decodeNxmMplsTtl(oxm, decoder)
+		return DecodeNxmMplsTtl(_oxm, decoder)
 	case 119042:
-		return decodeNxmTunFlagsMasked(oxm, decoder)
+		return DecodeNxmTunFlagsMasked(_oxm, decoder)
 	case 97148:
-		return decodeNxmTunMetadata21Masked(oxm, decoder)
+		return DecodeNxmTunMetadata21Masked(_oxm, decoder)
 	case 83202:
-		return decodeNxmTcpFlagsMasked(oxm, decoder)
+		return DecodeNxmTcpFlagsMasked(_oxm, decoder)
 	case 1286:
-		return decodeNxmEthSrcMasked(oxm, decoder)
+		return DecodeNxmEthSrcMasked(_oxm, decoder)
 	case 81412:
-		return decodeNxmTunSrc(oxm, decoder)
+		return DecodeNxmTunSrc(_oxm, decoder)
 	case 5122:
-		return decodeNxmTcpDst(oxm, decoder)
+		return DecodeNxmTcpDst(_oxm, decoder)
 	case 97404:
-		return decodeNxmTunMetadata22(oxm, decoder)
+		return DecodeNxmTunMetadata22(_oxm, decoder)
 	case 1538:
-		return decodeNxmEthType(oxm, decoder)
+		return DecodeNxmEthType(_oxm, decoder)
 	case 2561:
-		return decodeNxmNwTos(oxm, decoder)
+		return DecodeNxmNwTos(_oxm, decoder)
 	case 90492:
-		return decodeNxmTunMetadata8Masked(oxm, decoder)
+		return DecodeNxmTunMetadata8Masked(_oxm, decoder)
 	case 2147483652:
-		return decodeOxmInPort(oxm, decoder)
+		return DecodeOxmInPort(_oxm, decoder)
 	case 97660:
-		return decodeNxmTunMetadata22Masked(oxm, decoder)
+		return DecodeNxmTunMetadata22Masked(_oxm, decoder)
 	case 122128:
-		return decodeNxmTunIpv6DstMasked(oxm, decoder)
+		return DecodeNxmTunIpv6DstMasked(_oxm, decoder)
 	case 86140:
-		return decodeNxmTunMetadata0(oxm, decoder)
+		return DecodeNxmTunMetadata0(_oxm, decoder)
 	case 65540:
-		return decodeNxmReg0(oxm, decoder)
+		return DecodeNxmReg0(_oxm, decoder)
 	case 118396:
-		return decodeNxmTunMetadata63(oxm, decoder)
+		return DecodeNxmTunMetadata63(_oxm, decoder)
 	case 97916:
-		return decodeNxmTunMetadata23(oxm, decoder)
+		return DecodeNxmTunMetadata23(_oxm, decoder)
 	case 2050:
-		return decodeNxmVlanTci(oxm, decoder)
+		return DecodeNxmVlanTci(_oxm, decoder)
 	case 103804:
-		return decodeNxmTunMetadata34Masked(oxm, decoder)
+		return DecodeNxmTunMetadata34Masked(_oxm, decoder)
 	case 3073:
-		return decodeNxmNwProto(oxm, decoder)
+		return DecodeNxmNwProto(_oxm, decoder)
 	case 65796:
-		return decodeNxmReg0Masked(oxm, decoder)
+		return DecodeNxmReg0Masked(_oxm, decoder)
 	case 109692:
-		return decodeNxmTunMetadata46(oxm, decoder)
+		return DecodeNxmTunMetadata46(_oxm, decoder)
 	case 116860:
-		return decodeNxmTunMetadata60(oxm, decoder)
+		return DecodeNxmTunMetadata60(_oxm, decoder)
 	case 98172:
-		return decodeNxmTunMetadata23Masked(oxm, decoder)
+		return DecodeNxmTunMetadata23Masked(_oxm, decoder)
 	case 2306:
-		return decodeNxmVlanTciMasked(oxm, decoder)
+		return DecodeNxmVlanTciMasked(_oxm, decoder)
 	case 2147486980:
-		return decodeOxmVlanVidMasked(oxm, decoder)
+		return DecodeOxmVlanVidMasked(_oxm, decoder)
 	case 66052:
-		return decodeNxmReg1(oxm, decoder)
+		return DecodeNxmReg1(_oxm, decoder)
 	case 2147501569:
-		return decodeOxmMplsTc(oxm, decoder)
+		return DecodeOxmMplsTc(_oxm, decoder)
 	case 112252:
-		return decodeNxmTunMetadata51(oxm, decoder)
+		return DecodeNxmTunMetadata51(_oxm, decoder)
 	case 98428:
-		return decodeNxmTunMetadata24(oxm, decoder)
+		return DecodeNxmTunMetadata24(_oxm, decoder)
 	case 2147486210:
-		return decodeOxmEthType(oxm, decoder)
+		return DecodeOxmEthType(_oxm, decoder)
 	case 85505:
-		return decodeNxmTunGbpFlags(oxm, decoder)
+		return DecodeNxmTunGbpFlags(_oxm, decoder)
 	case 66308:
-		return decodeNxmReg1Masked(oxm, decoder)
+		return DecodeNxmReg1Masked(_oxm, decoder)
 	case 2147489026:
-		return decodeOxmIpProtoMasked(oxm, decoder)
+		return DecodeOxmIpProtoMasked(_oxm, decoder)
 	case 5378:
-		return decodeNxmTcpDstMasked(oxm, decoder)
+		return DecodeNxmTcpDstMasked(_oxm, decoder)
 	case 98684:
-		return decodeNxmTunMetadata24Masked(oxm, decoder)
+		return DecodeNxmTunMetadata24Masked(_oxm, decoder)
 	case 2147489284:
-		return decodeOxmIpv4Src(oxm, decoder)
+		return DecodeOxmIpv4Src(_oxm, decoder)
 	case 85761:
-		return decodeNxmTunGbpFlagsMasked(oxm, decoder)
+		return DecodeNxmTunGbpFlagsMasked(_oxm, decoder)
 	case 66564:
-		return decodeNxmReg2(oxm, decoder)
+		return DecodeNxmReg2(_oxm, decoder)
 	case 98940:
-		return decodeNxmTunMetadata25(oxm, decoder)
+		return DecodeNxmTunMetadata25(_oxm, decoder)
 	case 84994:
-		return decodeNxmTunGbpId(oxm, decoder)
+		return DecodeNxmTunGbpId(_oxm, decoder)
 	case 2147487745:
-		return decodeOxmIpDscp(oxm, decoder)
+		return DecodeOxmIpDscp(_oxm, decoder)
 	case 113788:
-		return decodeNxmTunMetadata54(oxm, decoder)
+		return DecodeNxmTunMetadata54(_oxm, decoder)
 	case 120848:
-		return decodeNxmCtLabel(oxm, decoder)
+		return DecodeNxmCtLabel(_oxm, decoder)
 	case 99196:
-		return decodeNxmTunMetadata25Masked(oxm, decoder)
+		return DecodeNxmTunMetadata25Masked(_oxm, decoder)
 	case 85250:
-		return decodeNxmTunGbpIdMasked(oxm, decoder)
+		return DecodeNxmTunGbpIdMasked(_oxm, decoder)
 	case 104060:
-		return decodeNxmTunMetadata35(oxm, decoder)
+		return DecodeNxmTunMetadata35(_oxm, decoder)
 	case 110972:
-		return decodeNxmTunMetadata48Masked(oxm, decoder)
+		return DecodeNxmTunMetadata48Masked(_oxm, decoder)
 	case 83460:
-		return decodeNxmDpHash(oxm, decoder)
+		return DecodeNxmDpHash(_oxm, decoder)
 	case 6146:
-		return decodeNxmUdpDst(oxm, decoder)
+		return DecodeNxmUdpDst(_oxm, decoder)
 	case 117116:
-		return decodeNxmTunMetadata60Masked(oxm, decoder)
+		return DecodeNxmTunMetadata60Masked(_oxm, decoder)
 	case 99452:
-		return decodeNxmTunMetadata26(oxm, decoder)
+		return DecodeNxmTunMetadata26(_oxm, decoder)
 	case 2147484164:
-		return decodeOxmInPhyPort(oxm, decoder)
+		return DecodeOxmInPhyPort(_oxm, decoder)
 	case 2147488257:
-		return decodeOxmIpEcn(oxm, decoder)
+		return DecodeOxmIpEcn(_oxm, decoder)
 	case 2147499009:
-		return decodeOxmIcmpv6Code(oxm, decoder)
+		return DecodeOxmIcmpv6Code(_oxm, decoder)
 	case 83716:
-		return decodeNxmDpHashMasked(oxm, decoder)
+		return DecodeNxmDpHashMasked(_oxm, decoder)
 	case 108412:
-		return decodeNxmTunMetadata43Masked(oxm, decoder)
+		return DecodeNxmTunMetadata43Masked(_oxm, decoder)
 	case 99708:
-		return decodeNxmTunMetadata26Masked(oxm, decoder)
+		return DecodeNxmTunMetadata26Masked(_oxm, decoder)
 	case 2147500038:
-		return decodeOxmIpv6NdSll(oxm, decoder)
+		return DecodeOxmIpv6NdSll(_oxm, decoder)
 	case 2147490306:
-		return decodeOxmTcpSrc(oxm, decoder)
+		return DecodeOxmTcpSrc(_oxm, decoder)
 	case 2147490056:
-		return decodeOxmIpv4DstMasked(oxm, decoder)
+		return DecodeOxmIpv4DstMasked(_oxm, decoder)
 	case 83972:
-		return decodeNxmRecircId(oxm, decoder)
+		return DecodeNxmRecircId(_oxm, decoder)
 	case 2147490564:
-		return decodeOxmTcpSrcMasked(oxm, decoder)
+		return DecodeOxmTcpSrcMasked(_oxm, decoder)
 	case 99964:
-		return decodeNxmTunMetadata27(oxm, decoder)
+		return DecodeNxmTunMetadata27(_oxm, decoder)
 	case 118786:
-		return decodeNxmTunFlags(oxm, decoder)
+		return DecodeNxmTunFlags(_oxm, decoder)
 	case 87932:
-		return decodeNxmTunMetadata3Masked(oxm, decoder)
+		return DecodeNxmTunMetadata3Masked(_oxm, decoder)
 	case 2147488769:
-		return decodeOxmIpProto(oxm, decoder)
+		return DecodeOxmIpProto(_oxm, decoder)
 	case 67844:
-		return decodeNxmReg4Masked(oxm, decoder)
+		return DecodeNxmReg4Masked(_oxm, decoder)
 	case 81924:
-		return decodeNxmTunDst(oxm, decoder)
+		return DecodeNxmTunDst(_oxm, decoder)
 	case 100220:
-		return decodeNxmTunMetadata27Masked(oxm, decoder)
+		return DecodeNxmTunMetadata27Masked(_oxm, decoder)
 	case 518:
-		return decodeNxmEthDst(oxm, decoder)
+		return DecodeNxmEthDst(_oxm, decoder)
 	case 114044:
-		return decodeNxmTunMetadata54Masked(oxm, decoder)
+		return DecodeNxmTunMetadata54Masked(_oxm, decoder)
 	case 68100:
-		return decodeNxmReg5(oxm, decoder)
+		return DecodeNxmReg5(_oxm, decoder)
 	case 113532:
-		return decodeNxmTunMetadata53Masked(oxm, decoder)
+		return DecodeNxmTunMetadata53Masked(_oxm, decoder)
 	case 100476:
-		return decodeNxmTunMetadata28(oxm, decoder)
+		return DecodeNxmTunMetadata28(_oxm, decoder)
 	case 4610:
-		return decodeNxmTcpSrc(oxm, decoder)
+		return DecodeNxmTcpSrc(_oxm, decoder)
 	case 2147483912:
-		return decodeOxmInPortMasked(oxm, decoder)
+		return DecodeOxmInPortMasked(_oxm, decoder)
 	case 68356:
-		return decodeNxmReg5Masked(oxm, decoder)
+		return DecodeNxmReg5Masked(_oxm, decoder)
 	case 111228:
-		return decodeNxmTunMetadata49(oxm, decoder)
+		return DecodeNxmTunMetadata49(_oxm, decoder)
 	case 117372:
-		return decodeNxmTunMetadata61(oxm, decoder)
+		return DecodeNxmTunMetadata61(_oxm, decoder)
 	case 100732:
-		return decodeNxmTunMetadata28Masked(oxm, decoder)
+		return DecodeNxmTunMetadata28Masked(_oxm, decoder)
 	case 1030:
-		return decodeNxmEthSrc(oxm, decoder)
+		return DecodeNxmEthSrc(_oxm, decoder)
 	case 68612:
-		return decodeNxmReg6(oxm, decoder)
+		return DecodeNxmReg6(_oxm, decoder)
 	case 107644:
-		return decodeNxmTunMetadata42(oxm, decoder)
+		return DecodeNxmTunMetadata42(_oxm, decoder)
 	case 100988:
-		return decodeNxmTunMetadata29(oxm, decoder)
+		return DecodeNxmTunMetadata29(_oxm, decoder)
 	case 119810:
-		return decodeNxmCtZone(oxm, decoder)
+		return DecodeNxmCtZone(_oxm, decoder)
 	case 2147485190:
-		return decodeOxmEthDst(oxm, decoder)
+		return DecodeOxmEthDst(_oxm, decoder)
 	case 68868:
-		return decodeNxmReg6Masked(oxm, decoder)
+		return DecodeNxmReg6Masked(_oxm, decoder)
 	case 2147487233:
-		return decodeOxmVlanPcp(oxm, decoder)
+		return DecodeOxmVlanPcp(_oxm, decoder)
 	case 86652:
-		return decodeNxmTunMetadata1(oxm, decoder)
+		return DecodeNxmTunMetadata1(_oxm, decoder)
 	case 69124:
-		return decodeNxmReg7(oxm, decoder)
+		return DecodeNxmReg7(_oxm, decoder)
 	case 88188:
-		return decodeNxmTunMetadata4(oxm, decoder)
+		return DecodeNxmTunMetadata4(_oxm, decoder)
 	case 3588:
-		return decodeNxmIpSrc(oxm, decoder)
+		return DecodeNxmIpSrc(_oxm, decoder)
 	case 82180:
-		return decodeNxmTunDstMasked(oxm, decoder)
+		return DecodeNxmTunDstMasked(_oxm, decoder)
 	case 101244:
-		return decodeNxmTunMetadata29Masked(oxm, decoder)
+		return DecodeNxmTunMetadata29Masked(_oxm, decoder)
 	case 101500:
-		return decodeNxmTunMetadata30(oxm, decoder)
+		return DecodeNxmTunMetadata30(_oxm, decoder)
 	case 5634:
-		return decodeNxmUdpSrc(oxm, decoder)
+		return DecodeNxmUdpSrc(_oxm, decoder)
 	case 111740:
-		return decodeNxmTunMetadata50(oxm, decoder)
+		return DecodeNxmTunMetadata50(_oxm, decoder)
 	case 6657:
-		return decodeNxmIcmpType(oxm, decoder)
+		return DecodeNxmIcmpType(_oxm, decoder)
 	case 72452:
-		return decodeNxmReg13Masked(oxm, decoder)
+		return DecodeNxmReg13Masked(_oxm, decoder)
 	case 3844:
-		return decodeNxmIpSrcMasked(oxm, decoder)
+		return DecodeNxmIpSrcMasked(_oxm, decoder)
 	case 118140:
-		return decodeNxmTunMetadata62Masked(oxm, decoder)
+		return DecodeNxmTunMetadata62Masked(_oxm, decoder)
 	case 101756:
-		return decodeNxmTunMetadata30Masked(oxm, decoder)
+		return DecodeNxmTunMetadata30Masked(_oxm, decoder)
 	case 5890:
-		return decodeNxmUdpSrcMasked(oxm, decoder)
+		return DecodeNxmUdpSrcMasked(_oxm, decoder)
 	case 2147495688:
-		return decodeOxmArpTpaMasked(oxm, decoder)
+		return DecodeOxmArpTpaMasked(_oxm, decoder)
 	case 4100:
-		return decodeNxmIpDst(oxm, decoder)
+		return DecodeNxmIpDst(_oxm, decoder)
 	case 2147493889:
-		return decodeOxmIcmpv4Code(oxm, decoder)
+		return DecodeOxmIcmpv4Code(_oxm, decoder)
 	case 117628:
-		return decodeNxmTunMetadata61Masked(oxm, decoder)
+		return DecodeNxmTunMetadata61Masked(_oxm, decoder)
 	case 79105:
-		return decodeNxmIpFragMasked(oxm, decoder)
+		return DecodeNxmIpFragMasked(_oxm, decoder)
 	case 129282:
-		return decodeNxmCtTpSrcMasked(oxm, decoder)
+		return DecodeNxmCtTpSrcMasked(_oxm, decoder)
 	case 66820:
-		return decodeNxmReg2Masked(oxm, decoder)
+		return DecodeNxmReg2Masked(_oxm, decoder)
 	case 774:
-		return decodeNxmEthDstMasked(oxm, decoder)
+		return DecodeNxmEthDstMasked(_oxm, decoder)
 	case 107900:
-		return decodeNxmTunMetadata42Masked(oxm, decoder)
+		return DecodeNxmTunMetadata42Masked(_oxm, decoder)
 	case 73992:
-		return decodeNxmTunIdMasked(oxm, decoder)
+		return DecodeNxmTunIdMasked(_oxm, decoder)
 	case 102268:
-		return decodeNxmTunMetadata31Masked(oxm, decoder)
+		return DecodeNxmTunMetadata31Masked(_oxm, decoder)
 	case 6402:
-		return decodeNxmUdpDstMasked(oxm, decoder)
+		return DecodeNxmUdpDstMasked(_oxm, decoder)
 	case 2147496204:
-		return decodeOxmArpShaMasked(oxm, decoder)
+		return DecodeOxmArpShaMasked(_oxm, decoder)
 	case 119300:
-		return decodeNxmCtState(oxm, decoder)
+		return DecodeNxmCtState(_oxm, decoder)
 	case 128784:
-		return decodeNxmCtIpv6DstMasked(oxm, decoder)
+		return DecodeNxmCtIpv6DstMasked(_oxm, decoder)
 	case 102524:
-		return decodeNxmTunMetadata32(oxm, decoder)
+		return DecodeNxmTunMetadata32(_oxm, decoder)
 	case 69380:
-		return decodeNxmReg7Masked(oxm, decoder)
+		return DecodeNxmReg7Masked(_oxm, decoder)
 	case 109180:
-		return decodeNxmTunMetadata45(oxm, decoder)
+		return DecodeNxmTunMetadata45(_oxm, decoder)
 	case 75280:
-		return decodeNxmIpv6Src(oxm, decoder)
+		return DecodeNxmIpv6Src(_oxm, decoder)
 	case 82436:
-		return decodeNxmPktMark(oxm, decoder)
+		return DecodeNxmPktMark(_oxm, decoder)
 	case 102780:
-		return decodeNxmTunMetadata32Masked(oxm, decoder)
+		return DecodeNxmTunMetadata32Masked(_oxm, decoder)
 	case 114556:
-		return decodeNxmTunMetadata55Masked(oxm, decoder)
+		return DecodeNxmTunMetadata55Masked(_oxm, decoder)
 	case 70660:
-		return decodeNxmReg10(oxm, decoder)
+		return DecodeNxmReg10(_oxm, decoder)
 	case 110460:
-		return decodeNxmTunMetadata47Masked(oxm, decoder)
+		return DecodeNxmTunMetadata47Masked(_oxm, decoder)
 	case 2147497760:
-		return decodeOxmIpv6DstMasked(oxm, decoder)
+		return DecodeOxmIpv6DstMasked(_oxm, decoder)
 	case 103036:
-		return decodeNxmTunMetadata33(oxm, decoder)
+		return DecodeNxmTunMetadata33(_oxm, decoder)
 	case 77584:
-		return decodeNxmNdTargetMasked(oxm, decoder)
+		return DecodeNxmNdTargetMasked(_oxm, decoder)
 	case 4356:
-		return decodeNxmIpDstMasked(oxm, decoder)
+		return DecodeNxmIpDstMasked(_oxm, decoder)
 	case 2147492612:
-		return decodeOxmSctpSrcMasked(oxm, decoder)
+		return DecodeOxmSctpSrcMasked(_oxm, decoder)
 	case 75792:
-		return decodeNxmIpv6Dst(oxm, decoder)
+		return DecodeNxmIpv6Dst(_oxm, decoder)
 	case 113276:
-		return decodeNxmTunMetadata53(oxm, decoder)
+		return DecodeNxmTunMetadata53(_oxm, decoder)
 	case 2147501060:
-		return decodeOxmMplsLabel(oxm, decoder)
+		return DecodeOxmMplsLabel(_oxm, decoder)
 	case 86908:
-		return decodeNxmTunMetadata1Masked(oxm, decoder)
+		return DecodeNxmTunMetadata1Masked(_oxm, decoder)
 	case 115068:
-		return decodeNxmTunMetadata56Masked(oxm, decoder)
+		return DecodeNxmTunMetadata56Masked(_oxm, decoder)
 	case 2147496716:
-		return decodeOxmArpThaMasked(oxm, decoder)
+		return DecodeOxmArpThaMasked(_oxm, decoder)
 	case 71172:
-		return decodeNxmReg11(oxm, decoder)
+		return DecodeNxmReg11(_oxm, decoder)
 	case 108156:
-		return decodeNxmTunMetadata43(oxm, decoder)
+		return DecodeNxmTunMetadata43(_oxm, decoder)
 	case 87164:
-		return decodeNxmTunMetadata2(oxm, decoder)
+		return DecodeNxmTunMetadata2(_oxm, decoder)
 	case 2147491330:
-		return decodeOxmUdpSrc(oxm, decoder)
+		return DecodeOxmUdpSrc(_oxm, decoder)
 	case 2147488514:
-		return decodeOxmIpEcnMasked(oxm, decoder)
+		return DecodeOxmIpEcnMasked(_oxm, decoder)
 	case 120580:
-		return decodeNxmCtMarkMasked(oxm, decoder)
+		return DecodeNxmCtMarkMasked(_oxm, decoder)
 	case 87420:
-		return decodeNxmTunMetadata2Masked(oxm, decoder)
+		return DecodeNxmTunMetadata2Masked(_oxm, decoder)
 	case 111484:
-		return decodeNxmTunMetadata49Masked(oxm, decoder)
+		return DecodeNxmTunMetadata49Masked(_oxm, decoder)
 	case 69636:
-		return decodeNxmReg8(oxm, decoder)
+		return DecodeNxmReg8(_oxm, decoder)
 	case 88700:
-		return decodeNxmTunMetadata5(oxm, decoder)
+		return DecodeNxmTunMetadata5(_oxm, decoder)
 	case 71684:
-		return decodeNxmReg12(oxm, decoder)
+		return DecodeNxmReg12(_oxm, decoder)
 	case 82692:
-		return decodeNxmPktMarkMasked(oxm, decoder)
+		return DecodeNxmPktMarkMasked(_oxm, decoder)
 	case 87676:
-		return decodeNxmTunMetadata3(oxm, decoder)
+		return DecodeNxmTunMetadata3(_oxm, decoder)
 	case 122384:
-		return decodeNxmXxreg0(oxm, decoder)
+		return DecodeNxmXxreg0(_oxm, decoder)
 	case 71940:
-		return decodeNxmReg12Masked(oxm, decoder)
+		return DecodeNxmReg12Masked(_oxm, decoder)
 	case 123408:
-		return decodeNxmXxreg2(oxm, decoder)
+		return DecodeNxmXxreg2(_oxm, decoder)
 	case 105340:
-		return decodeNxmTunMetadata37Masked(oxm, decoder)
+		return DecodeNxmTunMetadata37Masked(_oxm, decoder)
 	case 104316:
-		return decodeNxmTunMetadata35Masked(oxm, decoder)
+		return DecodeNxmTunMetadata35Masked(_oxm, decoder)
 	case 72196:
-		return decodeNxmReg13(oxm, decoder)
+		return DecodeNxmReg13(_oxm, decoder)
 	case 104572:
-		return decodeNxmTunMetadata36(oxm, decoder)
+		return DecodeNxmTunMetadata36(_oxm, decoder)
 	case 2147492354:
-		return decodeOxmSctpSrc(oxm, decoder)
+		return DecodeOxmSctpSrc(_oxm, decoder)
 	case 95356:
-		return decodeNxmTunMetadata18(oxm, decoder)
+		return DecodeNxmTunMetadata18(_oxm, decoder)
 	case 89724:
-		return decodeNxmTunMetadata7(oxm, decoder)
+		return DecodeNxmTunMetadata7(_oxm, decoder)
 	case 2147493377:
-		return decodeOxmIcmpv4Type(oxm, decoder)
+		return DecodeOxmIcmpv4Type(_oxm, decoder)
 	case 77328:
-		return decodeNxmNdTarget(oxm, decoder)
+		return DecodeNxmNdTarget(_oxm, decoder)
 	case 96892:
-		return decodeNxmTunMetadata21(oxm, decoder)
+		return DecodeNxmTunMetadata21(_oxm, decoder)
 	case 104828:
-		return decodeNxmTunMetadata36Masked(oxm, decoder)
+		return DecodeNxmTunMetadata36Masked(_oxm, decoder)
 	case 2147501826:
-		return decodeOxmMplsTcMasked(oxm, decoder)
+		return DecodeOxmMplsTcMasked(_oxm, decoder)
 	case 72708:
-		return decodeNxmReg14(oxm, decoder)
+		return DecodeNxmReg14(_oxm, decoder)
 	case 2147500300:
-		return decodeOxmIpv6NdSllMasked(oxm, decoder)
+		return DecodeOxmIpv6NdSllMasked(_oxm, decoder)
 	case 105084:
-		return decodeNxmTunMetadata37(oxm, decoder)
+		return DecodeNxmTunMetadata37(_oxm, decoder)
 	case 2147492866:
-		return decodeOxmSctpDst(oxm, decoder)
+		return DecodeOxmSctpDst(_oxm, decoder)
 	case 69892:
-		return decodeNxmReg8Masked(oxm, decoder)
+		return DecodeNxmReg8Masked(_oxm, decoder)
 	case 88956:
-		return decodeNxmTunMetadata5Masked(oxm, decoder)
+		return DecodeNxmTunMetadata5Masked(_oxm, decoder)
 	case 72964:
-		return decodeNxmReg14Masked(oxm, decoder)
+		return DecodeNxmReg14Masked(_oxm, decoder)
 	case 88444:
-		return decodeNxmTunMetadata4Masked(oxm, decoder)
+		return DecodeNxmTunMetadata4Masked(_oxm, decoder)
 	case 102012:
-		return decodeNxmTunMetadata31(oxm, decoder)
+		return DecodeNxmTunMetadata31(_oxm, decoder)
 	case 2147495176:
-		return decodeOxmArpSpaMasked(oxm, decoder)
+		return DecodeOxmArpSpaMasked(_oxm, decoder)
 	case 2147491588:
-		return decodeOxmUdpSrcMasked(oxm, decoder)
+		return DecodeOxmUdpSrcMasked(_oxm, decoder)
 	case 2147486468:
-		return decodeOxmEthTypeMasked(oxm, decoder)
+		return DecodeOxmEthTypeMasked(_oxm, decoder)
 	case 73220:
-		return decodeNxmReg15(oxm, decoder)
+		return DecodeNxmReg15(_oxm, decoder)
 	case 117884:
-		return decodeNxmTunMetadata62(oxm, decoder)
+		return DecodeNxmTunMetadata62(_oxm, decoder)
 	case 2147484680:
-		return decodeOxmMetadata(oxm, decoder)
+		return DecodeOxmMetadata(_oxm, decoder)
 	case 105596:
-		return decodeNxmTunMetadata38(oxm, decoder)
+		return DecodeNxmTunMetadata38(_oxm, decoder)
 	case 76289:
-		return decodeNxmIcmpv6Type(oxm, decoder)
+		return DecodeNxmIcmpv6Type(_oxm, decoder)
 	case 90236:
-		return decodeNxmTunMetadata8(oxm, decoder)
+		return DecodeNxmTunMetadata8(_oxm, decoder)
 	case 73476:
-		return decodeNxmReg15Masked(oxm, decoder)
+		return DecodeNxmReg15Masked(_oxm, decoder)
 	case 81668:
-		return decodeNxmTunSrcMasked(oxm, decoder)
+		return DecodeNxmTunSrcMasked(_oxm, decoder)
 	case 105852:
-		return decodeNxmTunMetadata38Masked(oxm, decoder)
+		return DecodeNxmTunMetadata38Masked(_oxm, decoder)
 	case 2147493634:
-		return decodeOxmIcmpv4TypeMasked(oxm, decoder)
+		return DecodeOxmIcmpv4TypeMasked(_oxm, decoder)
 	case 95612:
-		return decodeNxmTunMetadata18Masked(oxm, decoder)
+		return DecodeNxmTunMetadata18Masked(_oxm, decoder)
 	case 86396:
-		return decodeNxmTunMetadata0Masked(oxm, decoder)
+		return DecodeNxmTunMetadata0Masked(_oxm, decoder)
 	case 8196:
-		return decodeNxmArpSpa(oxm, decoder)
+		return DecodeNxmArpSpa(_oxm, decoder)
 	case 2147496454:
-		return decodeOxmArpTha(oxm, decoder)
+		return DecodeOxmArpTha(_oxm, decoder)
 	case 108668:
-		return decodeNxmTunMetadata44(oxm, decoder)
+		return DecodeNxmTunMetadata44(_oxm, decoder)
 	case 106108:
-		return decodeNxmTunMetadata39(oxm, decoder)
+		return DecodeNxmTunMetadata39(_oxm, decoder)
 	case 76801:
-		return decodeNxmIcmpv6Code(oxm, decoder)
+		return DecodeNxmIcmpv6Code(_oxm, decoder)
 	case 2147500812:
-		return decodeOxmIpv6NdTllMasked(oxm, decoder)
+		return DecodeOxmIpv6NdTllMasked(_oxm, decoder)
 	case 2147493124:
-		return decodeOxmSctpDstMasked(oxm, decoder)
+		return DecodeOxmSctpDstMasked(_oxm, decoder)
 	case 106364:
-		return decodeNxmTunMetadata39Masked(oxm, decoder)
+		return DecodeNxmTunMetadata39Masked(_oxm, decoder)
 	case 2147494146:
-		return decodeOxmIcmpv4CodeMasked(oxm, decoder)
+		return DecodeOxmIcmpv4CodeMasked(_oxm, decoder)
 	case 70148:
-		return decodeNxmReg9(oxm, decoder)
+		return DecodeNxmReg9(_oxm, decoder)
 	case 89212:
-		return decodeNxmTunMetadata6(oxm, decoder)
+		return DecodeNxmTunMetadata6(_oxm, decoder)
 	case 8708:
-		return decodeNxmArpTpa(oxm, decoder)
+		return DecodeNxmArpTpa(_oxm, decoder)
 	case 106620:
-		return decodeNxmTunMetadata40(oxm, decoder)
+		return DecodeNxmTunMetadata40(_oxm, decoder)
 	case 2147494402:
-		return decodeOxmArpOp(oxm, decoder)
+		return DecodeOxmArpOp(_oxm, decoder)
 	case 128528:
-		return decodeNxmCtIpv6Dst(oxm, decoder)
+		return DecodeNxmCtIpv6Dst(_oxm, decoder)
 	case 110204:
-		return decodeNxmTunMetadata47(oxm, decoder)
+		return DecodeNxmTunMetadata47(_oxm, decoder)
 	case 123920:
-		return decodeNxmXxreg3(oxm, decoder)
+		return DecodeNxmXxreg3(_oxm, decoder)
 	case 106876:
-		return decodeNxmTunMetadata40Masked(oxm, decoder)
+		return DecodeNxmTunMetadata40Masked(_oxm, decoder)
 	case 2147501320:
-		return decodeOxmMplsLabelMasked(oxm, decoder)
+		return DecodeOxmMplsLabelMasked(_oxm, decoder)
 	case 2147495942:
-		return decodeOxmArpSha(oxm, decoder)
+		return DecodeOxmArpSha(_oxm, decoder)
 	case 123152:
-		return decodeNxmXxreg1Masked(oxm, decoder)
+		return DecodeNxmXxreg1Masked(_oxm, decoder)
 	case 107132:
-		return decodeNxmTunMetadata41(oxm, decoder)
+		return DecodeNxmTunMetadata41(_oxm, decoder)
 	case 2147499536:
-		return decodeOxmIpv6NdTarget(oxm, decoder)
+		return DecodeOxmIpv6NdTarget(_oxm, decoder)
 	case 2147485452:
-		return decodeOxmEthDstMasked(oxm, decoder)
+		return DecodeOxmEthDstMasked(_oxm, decoder)
 	case 2147492100:
-		return decodeOxmUdpDstMasked(oxm, decoder)
+		return DecodeOxmUdpDstMasked(_oxm, decoder)
 	case 67076:
-		return decodeNxmReg3(oxm, decoder)
+		return DecodeNxmReg3(_oxm, decoder)
 	case 107388:
-		return decodeNxmTunMetadata41Masked(oxm, decoder)
+		return DecodeNxmTunMetadata41Masked(_oxm, decoder)
 	case 2147496976:
-		return decodeOxmIpv6Src(oxm, decoder)
+		return DecodeOxmIpv6Src(_oxm, decoder)
 	case 2147489544:
-		return decodeOxmIpv4SrcMasked(oxm, decoder)
+		return DecodeOxmIpv4SrcMasked(_oxm, decoder)
 	case 91260:
-		return decodeNxmTunMetadata10(oxm, decoder)
+		return DecodeNxmTunMetadata10(_oxm, decoder)
 	case 2147490818:
-		return decodeOxmTcpDst(oxm, decoder)
+		return DecodeOxmTcpDst(_oxm, decoder)
 	case 70404:
-		return decodeNxmReg9Masked(oxm, decoder)
+		return DecodeNxmReg9Masked(_oxm, decoder)
 	case 89468:
-		return decodeNxmTunMetadata6Masked(oxm, decoder)
+		return DecodeNxmTunMetadata6Masked(_oxm, decoder)
 	case 2147485964:
-		return decodeOxmEthSrcMasked(oxm, decoder)
+		return DecodeOxmEthSrcMasked(_oxm, decoder)
 	case 91516:
-		return decodeNxmTunMetadata10Masked(oxm, decoder)
+		return DecodeNxmTunMetadata10Masked(_oxm, decoder)
 	case 111996:
-		return decodeNxmTunMetadata50Masked(oxm, decoder)
+		return DecodeNxmTunMetadata50Masked(_oxm, decoder)
 	case 115580:
-		return decodeNxmTunMetadata57Masked(oxm, decoder)
+		return DecodeNxmTunMetadata57Masked(_oxm, decoder)
 	case 2147499808:
-		return decodeOxmIpv6NdTargetMasked(oxm, decoder)
+		return DecodeOxmIpv6NdTargetMasked(_oxm, decoder)
 	case 124176:
-		return decodeNxmXxreg3Masked(oxm, decoder)
+		return DecodeNxmXxreg3Masked(_oxm, decoder)
 	case 91772:
-		return decodeNxmTunMetadata11(oxm, decoder)
+		return DecodeNxmTunMetadata11(_oxm, decoder)
 	case 78849:
-		return decodeNxmIpFrag(oxm, decoder)
+		return DecodeNxmIpFrag(_oxm, decoder)
 	case 2147498248:
-		return decodeOxmIpv6FlabelMasked(oxm, decoder)
+		return DecodeOxmIpv6FlabelMasked(_oxm, decoder)
 	case 92028:
-		return decodeNxmTunMetadata11Masked(oxm, decoder)
+		return DecodeNxmTunMetadata11Masked(_oxm, decoder)
 	case 74246:
-		return decodeNxmArpSha(oxm, decoder)
+		return DecodeNxmArpSha(_oxm, decoder)
 	case 110716:
-		return decodeNxmTunMetadata48(oxm, decoder)
+		return DecodeNxmTunMetadata48(_oxm, decoder)
 	case 67332:
-		return decodeNxmReg3Masked(oxm, decoder)
+		return DecodeNxmReg3Masked(_oxm, decoder)
 	case 92284:
-		return decodeNxmTunMetadata12(oxm, decoder)
+		return DecodeNxmTunMetadata12(_oxm, decoder)
 	case 74502:
-		return decodeNxmArpShaMasked(oxm, decoder)
+		return DecodeNxmArpShaMasked(_oxm, decoder)
 	case 2147498497:
-		return decodeOxmIcmpv6Type(oxm, decoder)
+		return DecodeOxmIcmpv6Type(_oxm, decoder)
 	case 2147488002:
-		return decodeOxmIpDscpMasked(oxm, decoder)
+		return DecodeOxmIpDscpMasked(_oxm, decoder)
 	case 2147486722:
-		return decodeOxmVlanVid(oxm, decoder)
+		return DecodeOxmVlanVid(_oxm, decoder)
 	case 2147494660:
-		return decodeOxmArpOpMasked(oxm, decoder)
+		return DecodeOxmArpOpMasked(_oxm, decoder)
 	case 92540:
-		return decodeNxmTunMetadata12Masked(oxm, decoder)
+		return DecodeNxmTunMetadata12Masked(_oxm, decoder)
 	case 74758:
-		return decodeNxmArpTha(oxm, decoder)
+		return DecodeNxmArpTha(_oxm, decoder)
 	case 112508:
-		return decodeNxmTunMetadata51Masked(oxm, decoder)
+		return DecodeNxmTunMetadata51Masked(_oxm, decoder)
 	case 121104:
-		return decodeNxmCtLabelMasked(oxm, decoder)
+		return DecodeNxmCtLabelMasked(_oxm, decoder)
 	case 2147494916:
-		return decodeOxmArpSpa(oxm, decoder)
+		return DecodeOxmArpSpa(_oxm, decoder)
 	case 92796:
-		return decodeNxmTunMetadata13(oxm, decoder)
+		return DecodeNxmTunMetadata13(_oxm, decoder)
 	case 75014:
-		return decodeNxmArpThaMasked(oxm, decoder)
+		return DecodeNxmArpThaMasked(_oxm, decoder)
 	case 119556:
-		return decodeNxmCtStateMasked(oxm, decoder)
+		return DecodeNxmCtStateMasked(_oxm, decoder)
 	case 79873:
-		return decodeNxmNwEcn(oxm, decoder)
+		return DecodeNxmNwEcn(_oxm, decoder)
 	case 115836:
-		return decodeNxmTunMetadata58(oxm, decoder)
+		return DecodeNxmTunMetadata58(_oxm, decoder)
 	case 93820:
-		return decodeNxmTunMetadata15(oxm, decoder)
+		return DecodeNxmTunMetadata15(_oxm, decoder)
 	case 93052:
-		return decodeNxmTunMetadata13Masked(oxm, decoder)
+		return DecodeNxmTunMetadata13Masked(_oxm, decoder)
 	case 114812:
-		return decodeNxmTunMetadata56(oxm, decoder)
+		return DecodeNxmTunMetadata56(_oxm, decoder)
 	case 123664:
-		return decodeNxmXxreg2Masked(oxm, decoder)
+		return DecodeNxmXxreg2Masked(_oxm, decoder)
 	case 2147495428:
-		return decodeOxmArpTpa(oxm, decoder)
+		return DecodeOxmArpTpa(_oxm, decoder)
 	case 93308:
-		return decodeNxmTunMetadata14(oxm, decoder)
+		return DecodeNxmTunMetadata14(_oxm, decoder)
 	case 115324:
-		return decodeNxmTunMetadata57(oxm, decoder)
+		return DecodeNxmTunMetadata57(_oxm, decoder)
 	case 80385:
-		return decodeNxmNwTtl(oxm, decoder)
+		return DecodeNxmNwTtl(_oxm, decoder)
 	case 2147484424:
-		return decodeOxmInPhyPortMasked(oxm, decoder)
+		return DecodeOxmInPhyPortMasked(_oxm, decoder)
 	case 8964:
-		return decodeNxmArpTpaMasked(oxm, decoder)
+		return DecodeNxmArpTpaMasked(_oxm, decoder)
 	case 109436:
-		return decodeNxmTunMetadata45Masked(oxm, decoder)
+		return DecodeNxmTunMetadata45Masked(_oxm, decoder)
 	case 67588:
-		return decodeNxmReg4(oxm, decoder)
+		return DecodeNxmReg4(_oxm, decoder)
 	case 2147497488:
-		return decodeOxmIpv6Dst(oxm, decoder)
+		return DecodeOxmIpv6Dst(_oxm, decoder)
 	case 126980:
-		return decodeNxmCtNwSrc(oxm, decoder)
+		return DecodeNxmCtNwSrc(_oxm, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'Oxm'", oxm.TypeLen)
+		return nil, fmt.Errorf("Invalid type '%d' for 'Oxm'", _oxm.TypeLen)
 	}
 }
 
 func NewOxm(_type_len uint32) *Oxm {
-	return &Oxm{
-		TypeLen: _type_len,
-	}
+	obj := &Oxm{}
+	obj.TypeLen = _type_len
+	return obj
 }
 
 type NxmArpOp struct {
@@ -743,26 +743,27 @@ func (self *NxmArpOp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpOp(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpOp, error) {
-	nxmarpop := &NxmArpOp{Oxm: parent}
+func DecodeNxmArpOp(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpOp, error) {
+	_nxmarpop := &NxmArpOp{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmArpOp packet too short: %d < 2", decoder.Length())
 	}
-	nxmarpop.Value = uint16(decoder.ReadUint16())
-	return nxmarpop, nil
+	_nxmarpop.Value = uint16(decoder.ReadUint16())
+	return _nxmarpop, nil
 }
 
 func NewNxmArpOp() *NxmArpOp {
-	return &NxmArpOp{
+	obj := &NxmArpOp{
 		Oxm: NewOxm(7682),
 	}
+	return obj
 }
 func (self *NxmArpOp) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpOp) GetName() string {
-	return "nxm_arp_op"
+	return "arp_op"
 }
 
 type NxmArpSha struct {
@@ -780,26 +781,27 @@ func (self *NxmArpSha) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpSha(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpSha, error) {
-	nxmarpsha := &NxmArpSha{Oxm: parent}
+func DecodeNxmArpSha(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpSha, error) {
+	_nxmarpsha := &NxmArpSha{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("NxmArpSha packet too short: %d < 6", decoder.Length())
 	}
-	nxmarpsha.Value = net.HardwareAddr(decoder.Read(6))
-	return nxmarpsha, nil
+	_nxmarpsha.Value = net.HardwareAddr(decoder.Read(6))
+	return _nxmarpsha, nil
 }
 
 func NewNxmArpSha() *NxmArpSha {
-	return &NxmArpSha{
+	obj := &NxmArpSha{
 		Oxm: NewOxm(74246),
 	}
+	return obj
 }
 func (self *NxmArpSha) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpSha) GetName() string {
-	return "nxm_arp_sha"
+	return "arp_sha"
 }
 
 type NxmArpShaMasked struct {
@@ -819,27 +821,28 @@ func (self *NxmArpShaMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpShaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpShaMasked, error) {
-	nxmarpshamasked := &NxmArpShaMasked{Oxm: parent}
+func DecodeNxmArpShaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpShaMasked, error) {
+	_nxmarpshamasked := &NxmArpShaMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("NxmArpShaMasked packet too short: %d < 12", decoder.Length())
 	}
-	nxmarpshamasked.Value = net.HardwareAddr(decoder.Read(6))
-	nxmarpshamasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return nxmarpshamasked, nil
+	_nxmarpshamasked.Value = net.HardwareAddr(decoder.Read(6))
+	_nxmarpshamasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _nxmarpshamasked, nil
 }
 
 func NewNxmArpShaMasked() *NxmArpShaMasked {
-	return &NxmArpShaMasked{
+	obj := &NxmArpShaMasked{
 		Oxm: NewOxm(74502),
 	}
+	return obj
 }
 func (self *NxmArpShaMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpShaMasked) GetName() string {
-	return "nxm_arp_sha_masked"
+	return "arp_sha_masked"
 }
 
 type NxmArpSpa struct {
@@ -857,26 +860,27 @@ func (self *NxmArpSpa) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpSpa(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpSpa, error) {
-	nxmarpspa := &NxmArpSpa{Oxm: parent}
+func DecodeNxmArpSpa(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpSpa, error) {
+	_nxmarpspa := &NxmArpSpa{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmArpSpa packet too short: %d < 4", decoder.Length())
 	}
-	nxmarpspa.Value = net.IP(decoder.Read(4))
-	return nxmarpspa, nil
+	_nxmarpspa.Value = net.IP(decoder.Read(4))
+	return _nxmarpspa, nil
 }
 
 func NewNxmArpSpa() *NxmArpSpa {
-	return &NxmArpSpa{
+	obj := &NxmArpSpa{
 		Oxm: NewOxm(8196),
 	}
+	return obj
 }
 func (self *NxmArpSpa) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpSpa) GetName() string {
-	return "nxm_arp_spa"
+	return "arp_spa"
 }
 
 type NxmArpSpaMasked struct {
@@ -896,27 +900,28 @@ func (self *NxmArpSpaMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpSpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpSpaMasked, error) {
-	nxmarpspamasked := &NxmArpSpaMasked{Oxm: parent}
+func DecodeNxmArpSpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpSpaMasked, error) {
+	_nxmarpspamasked := &NxmArpSpaMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmArpSpaMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmarpspamasked.Value = net.IP(decoder.Read(4))
-	nxmarpspamasked.ValueMask = net.IP(decoder.Read(4))
-	return nxmarpspamasked, nil
+	_nxmarpspamasked.Value = net.IP(decoder.Read(4))
+	_nxmarpspamasked.ValueMask = net.IP(decoder.Read(4))
+	return _nxmarpspamasked, nil
 }
 
 func NewNxmArpSpaMasked() *NxmArpSpaMasked {
-	return &NxmArpSpaMasked{
+	obj := &NxmArpSpaMasked{
 		Oxm: NewOxm(8452),
 	}
+	return obj
 }
 func (self *NxmArpSpaMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpSpaMasked) GetName() string {
-	return "nxm_arp_spa_masked"
+	return "arp_spa_masked"
 }
 
 type NxmArpTha struct {
@@ -934,26 +939,27 @@ func (self *NxmArpTha) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpTha(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpTha, error) {
-	nxmarptha := &NxmArpTha{Oxm: parent}
+func DecodeNxmArpTha(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpTha, error) {
+	_nxmarptha := &NxmArpTha{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("NxmArpTha packet too short: %d < 6", decoder.Length())
 	}
-	nxmarptha.Value = net.HardwareAddr(decoder.Read(6))
-	return nxmarptha, nil
+	_nxmarptha.Value = net.HardwareAddr(decoder.Read(6))
+	return _nxmarptha, nil
 }
 
 func NewNxmArpTha() *NxmArpTha {
-	return &NxmArpTha{
+	obj := &NxmArpTha{
 		Oxm: NewOxm(74758),
 	}
+	return obj
 }
 func (self *NxmArpTha) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpTha) GetName() string {
-	return "nxm_arp_tha"
+	return "arp_tha"
 }
 
 type NxmArpThaMasked struct {
@@ -973,27 +979,28 @@ func (self *NxmArpThaMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpThaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpThaMasked, error) {
-	nxmarpthamasked := &NxmArpThaMasked{Oxm: parent}
+func DecodeNxmArpThaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpThaMasked, error) {
+	_nxmarpthamasked := &NxmArpThaMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("NxmArpThaMasked packet too short: %d < 12", decoder.Length())
 	}
-	nxmarpthamasked.Value = net.HardwareAddr(decoder.Read(6))
-	nxmarpthamasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return nxmarpthamasked, nil
+	_nxmarpthamasked.Value = net.HardwareAddr(decoder.Read(6))
+	_nxmarpthamasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _nxmarpthamasked, nil
 }
 
 func NewNxmArpThaMasked() *NxmArpThaMasked {
-	return &NxmArpThaMasked{
+	obj := &NxmArpThaMasked{
 		Oxm: NewOxm(75014),
 	}
+	return obj
 }
 func (self *NxmArpThaMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpThaMasked) GetName() string {
-	return "nxm_arp_tha_masked"
+	return "arp_tha_masked"
 }
 
 type NxmArpTpa struct {
@@ -1011,26 +1018,27 @@ func (self *NxmArpTpa) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpTpa(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpTpa, error) {
-	nxmarptpa := &NxmArpTpa{Oxm: parent}
+func DecodeNxmArpTpa(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpTpa, error) {
+	_nxmarptpa := &NxmArpTpa{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmArpTpa packet too short: %d < 4", decoder.Length())
 	}
-	nxmarptpa.Value = net.IP(decoder.Read(4))
-	return nxmarptpa, nil
+	_nxmarptpa.Value = net.IP(decoder.Read(4))
+	return _nxmarptpa, nil
 }
 
 func NewNxmArpTpa() *NxmArpTpa {
-	return &NxmArpTpa{
+	obj := &NxmArpTpa{
 		Oxm: NewOxm(8708),
 	}
+	return obj
 }
 func (self *NxmArpTpa) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpTpa) GetName() string {
-	return "nxm_arp_tpa"
+	return "arp_tpa"
 }
 
 type NxmArpTpaMasked struct {
@@ -1050,27 +1058,28 @@ func (self *NxmArpTpaMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmArpTpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpTpaMasked, error) {
-	nxmarptpamasked := &NxmArpTpaMasked{Oxm: parent}
+func DecodeNxmArpTpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpTpaMasked, error) {
+	_nxmarptpamasked := &NxmArpTpaMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmArpTpaMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmarptpamasked.Value = net.IP(decoder.Read(4))
-	nxmarptpamasked.ValueMask = net.IP(decoder.Read(4))
-	return nxmarptpamasked, nil
+	_nxmarptpamasked.Value = net.IP(decoder.Read(4))
+	_nxmarptpamasked.ValueMask = net.IP(decoder.Read(4))
+	return _nxmarptpamasked, nil
 }
 
 func NewNxmArpTpaMasked() *NxmArpTpaMasked {
-	return &NxmArpTpaMasked{
+	obj := &NxmArpTpaMasked{
 		Oxm: NewOxm(8964),
 	}
+	return obj
 }
 func (self *NxmArpTpaMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmArpTpaMasked) GetName() string {
-	return "nxm_arp_tpa_masked"
+	return "arp_tpa_masked"
 }
 
 type NxmConjId struct {
@@ -1088,26 +1097,27 @@ func (self *NxmConjId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmConjId(parent *Oxm, decoder *goloxi.Decoder) (*NxmConjId, error) {
-	nxmconjid := &NxmConjId{Oxm: parent}
+func DecodeNxmConjId(parent *Oxm, decoder *goloxi.Decoder) (*NxmConjId, error) {
+	_nxmconjid := &NxmConjId{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmConjId packet too short: %d < 4", decoder.Length())
 	}
-	nxmconjid.Value = uint32(decoder.ReadUint32())
-	return nxmconjid, nil
+	_nxmconjid.Value = uint32(decoder.ReadUint32())
+	return _nxmconjid, nil
 }
 
 func NewNxmConjId() *NxmConjId {
-	return &NxmConjId{
+	obj := &NxmConjId{
 		Oxm: NewOxm(84484),
 	}
+	return obj
 }
 func (self *NxmConjId) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmConjId) GetName() string {
-	return "nxm_conj_id"
+	return "conj_id"
 }
 
 type NxmCtIpv6Dst struct {
@@ -1125,26 +1135,27 @@ func (self *NxmCtIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtIpv6Dst(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6Dst, error) {
-	nxmctipv6dst := &NxmCtIpv6Dst{Oxm: parent}
+func DecodeNxmCtIpv6Dst(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6Dst, error) {
+	_nxmctipv6dst := &NxmCtIpv6Dst{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmCtIpv6Dst packet too short: %d < 16", decoder.Length())
 	}
-	nxmctipv6dst.Value = net.IP(decoder.Read(16))
-	return nxmctipv6dst, nil
+	_nxmctipv6dst.Value = net.IP(decoder.Read(16))
+	return _nxmctipv6dst, nil
 }
 
 func NewNxmCtIpv6Dst() *NxmCtIpv6Dst {
-	return &NxmCtIpv6Dst{
+	obj := &NxmCtIpv6Dst{
 		Oxm: NewOxm(128528),
 	}
+	return obj
 }
 func (self *NxmCtIpv6Dst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtIpv6Dst) GetName() string {
-	return "nxm_ct_ipv6_dst"
+	return "ct_ipv6_dst"
 }
 
 type NxmCtIpv6DstMasked struct {
@@ -1164,27 +1175,28 @@ func (self *NxmCtIpv6DstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6DstMasked, error) {
-	nxmctipv6dstmasked := &NxmCtIpv6DstMasked{Oxm: parent}
+func DecodeNxmCtIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6DstMasked, error) {
+	_nxmctipv6dstmasked := &NxmCtIpv6DstMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmCtIpv6DstMasked packet too short: %d < 32", decoder.Length())
 	}
-	nxmctipv6dstmasked.Value = net.IP(decoder.Read(16))
-	nxmctipv6dstmasked.ValueMask = net.IP(decoder.Read(16))
-	return nxmctipv6dstmasked, nil
+	_nxmctipv6dstmasked.Value = net.IP(decoder.Read(16))
+	_nxmctipv6dstmasked.ValueMask = net.IP(decoder.Read(16))
+	return _nxmctipv6dstmasked, nil
 }
 
 func NewNxmCtIpv6DstMasked() *NxmCtIpv6DstMasked {
-	return &NxmCtIpv6DstMasked{
+	obj := &NxmCtIpv6DstMasked{
 		Oxm: NewOxm(128784),
 	}
+	return obj
 }
 func (self *NxmCtIpv6DstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtIpv6DstMasked) GetName() string {
-	return "nxm_ct_ipv6_dst_masked"
+	return "ct_ipv6_dst_masked"
 }
 
 type NxmCtIpv6Src struct {
@@ -1202,26 +1214,27 @@ func (self *NxmCtIpv6Src) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtIpv6Src(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6Src, error) {
-	nxmctipv6src := &NxmCtIpv6Src{Oxm: parent}
+func DecodeNxmCtIpv6Src(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6Src, error) {
+	_nxmctipv6src := &NxmCtIpv6Src{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmCtIpv6Src packet too short: %d < 16", decoder.Length())
 	}
-	nxmctipv6src.Value = net.IP(decoder.Read(16))
-	return nxmctipv6src, nil
+	_nxmctipv6src.Value = net.IP(decoder.Read(16))
+	return _nxmctipv6src, nil
 }
 
 func NewNxmCtIpv6Src() *NxmCtIpv6Src {
-	return &NxmCtIpv6Src{
+	obj := &NxmCtIpv6Src{
 		Oxm: NewOxm(128016),
 	}
+	return obj
 }
 func (self *NxmCtIpv6Src) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtIpv6Src) GetName() string {
-	return "nxm_ct_ipv6_src"
+	return "ct_ipv6_src"
 }
 
 type NxmCtIpv6SrcMasked struct {
@@ -1241,27 +1254,28 @@ func (self *NxmCtIpv6SrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6SrcMasked, error) {
-	nxmctipv6srcmasked := &NxmCtIpv6SrcMasked{Oxm: parent}
+func DecodeNxmCtIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6SrcMasked, error) {
+	_nxmctipv6srcmasked := &NxmCtIpv6SrcMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmCtIpv6SrcMasked packet too short: %d < 32", decoder.Length())
 	}
-	nxmctipv6srcmasked.Value = net.IP(decoder.Read(16))
-	nxmctipv6srcmasked.ValueMask = net.IP(decoder.Read(16))
-	return nxmctipv6srcmasked, nil
+	_nxmctipv6srcmasked.Value = net.IP(decoder.Read(16))
+	_nxmctipv6srcmasked.ValueMask = net.IP(decoder.Read(16))
+	return _nxmctipv6srcmasked, nil
 }
 
 func NewNxmCtIpv6SrcMasked() *NxmCtIpv6SrcMasked {
-	return &NxmCtIpv6SrcMasked{
+	obj := &NxmCtIpv6SrcMasked{
 		Oxm: NewOxm(128272),
 	}
+	return obj
 }
 func (self *NxmCtIpv6SrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtIpv6SrcMasked) GetName() string {
-	return "nxm_ct_ipv6_src_masked"
+	return "ct_ipv6_src_masked"
 }
 
 type NxmCtLabel struct {
@@ -1279,26 +1293,27 @@ func (self *NxmCtLabel) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtLabel(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtLabel, error) {
-	nxmctlabel := &NxmCtLabel{Oxm: parent}
+func DecodeNxmCtLabel(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtLabel, error) {
+	_nxmctlabel := &NxmCtLabel{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmCtLabel packet too short: %d < 16", decoder.Length())
 	}
-	nxmctlabel.Value = uint128(decoder.ReadUint128())
-	return nxmctlabel, nil
+	_nxmctlabel.Value = uint128(decoder.ReadUint128())
+	return _nxmctlabel, nil
 }
 
 func NewNxmCtLabel() *NxmCtLabel {
-	return &NxmCtLabel{
+	obj := &NxmCtLabel{
 		Oxm: NewOxm(120848),
 	}
+	return obj
 }
 func (self *NxmCtLabel) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtLabel) GetName() string {
-	return "nxm_ct_label"
+	return "ct_label"
 }
 
 type NxmCtLabelMasked struct {
@@ -1318,27 +1333,28 @@ func (self *NxmCtLabelMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtLabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtLabelMasked, error) {
-	nxmctlabelmasked := &NxmCtLabelMasked{Oxm: parent}
+func DecodeNxmCtLabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtLabelMasked, error) {
+	_nxmctlabelmasked := &NxmCtLabelMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmCtLabelMasked packet too short: %d < 32", decoder.Length())
 	}
-	nxmctlabelmasked.Value = uint128(decoder.ReadUint128())
-	nxmctlabelmasked.ValueMask = uint128(decoder.ReadUint128())
-	return nxmctlabelmasked, nil
+	_nxmctlabelmasked.Value = uint128(decoder.ReadUint128())
+	_nxmctlabelmasked.ValueMask = uint128(decoder.ReadUint128())
+	return _nxmctlabelmasked, nil
 }
 
 func NewNxmCtLabelMasked() *NxmCtLabelMasked {
-	return &NxmCtLabelMasked{
+	obj := &NxmCtLabelMasked{
 		Oxm: NewOxm(121104),
 	}
+	return obj
 }
 func (self *NxmCtLabelMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtLabelMasked) GetName() string {
-	return "nxm_ct_label_masked"
+	return "ct_label_masked"
 }
 
 type NxmCtMark struct {
@@ -1356,26 +1372,27 @@ func (self *NxmCtMark) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtMark(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtMark, error) {
-	nxmctmark := &NxmCtMark{Oxm: parent}
+func DecodeNxmCtMark(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtMark, error) {
+	_nxmctmark := &NxmCtMark{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmCtMark packet too short: %d < 4", decoder.Length())
 	}
-	nxmctmark.Value = uint32(decoder.ReadUint32())
-	return nxmctmark, nil
+	_nxmctmark.Value = uint32(decoder.ReadUint32())
+	return _nxmctmark, nil
 }
 
 func NewNxmCtMark() *NxmCtMark {
-	return &NxmCtMark{
+	obj := &NxmCtMark{
 		Oxm: NewOxm(120324),
 	}
+	return obj
 }
 func (self *NxmCtMark) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtMark) GetName() string {
-	return "nxm_ct_mark"
+	return "ct_mark"
 }
 
 type NxmCtMarkMasked struct {
@@ -1395,27 +1412,28 @@ func (self *NxmCtMarkMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtMarkMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtMarkMasked, error) {
-	nxmctmarkmasked := &NxmCtMarkMasked{Oxm: parent}
+func DecodeNxmCtMarkMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtMarkMasked, error) {
+	_nxmctmarkmasked := &NxmCtMarkMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmCtMarkMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmctmarkmasked.Value = uint32(decoder.ReadUint32())
-	nxmctmarkmasked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmctmarkmasked, nil
+	_nxmctmarkmasked.Value = uint32(decoder.ReadUint32())
+	_nxmctmarkmasked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmctmarkmasked, nil
 }
 
 func NewNxmCtMarkMasked() *NxmCtMarkMasked {
-	return &NxmCtMarkMasked{
+	obj := &NxmCtMarkMasked{
 		Oxm: NewOxm(120580),
 	}
+	return obj
 }
 func (self *NxmCtMarkMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtMarkMasked) GetName() string {
-	return "nxm_ct_mark_masked"
+	return "ct_mark_masked"
 }
 
 type NxmCtNwDst struct {
@@ -1433,26 +1451,27 @@ func (self *NxmCtNwDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtNwDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwDst, error) {
-	nxmctnwdst := &NxmCtNwDst{Oxm: parent}
+func DecodeNxmCtNwDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwDst, error) {
+	_nxmctnwdst := &NxmCtNwDst{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmCtNwDst packet too short: %d < 4", decoder.Length())
 	}
-	nxmctnwdst.Value = net.IP(decoder.Read(4))
-	return nxmctnwdst, nil
+	_nxmctnwdst.Value = net.IP(decoder.Read(4))
+	return _nxmctnwdst, nil
 }
 
 func NewNxmCtNwDst() *NxmCtNwDst {
-	return &NxmCtNwDst{
+	obj := &NxmCtNwDst{
 		Oxm: NewOxm(127492),
 	}
+	return obj
 }
 func (self *NxmCtNwDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtNwDst) GetName() string {
-	return "nxm_ct_nw_dst"
+	return "ct_nw_dst"
 }
 
 type NxmCtNwDstMasked struct {
@@ -1472,27 +1491,28 @@ func (self *NxmCtNwDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtNwDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwDstMasked, error) {
-	nxmctnwdstmasked := &NxmCtNwDstMasked{Oxm: parent}
+func DecodeNxmCtNwDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwDstMasked, error) {
+	_nxmctnwdstmasked := &NxmCtNwDstMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmCtNwDstMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmctnwdstmasked.Value = net.IP(decoder.Read(4))
-	nxmctnwdstmasked.ValueMask = net.IP(decoder.Read(4))
-	return nxmctnwdstmasked, nil
+	_nxmctnwdstmasked.Value = net.IP(decoder.Read(4))
+	_nxmctnwdstmasked.ValueMask = net.IP(decoder.Read(4))
+	return _nxmctnwdstmasked, nil
 }
 
 func NewNxmCtNwDstMasked() *NxmCtNwDstMasked {
-	return &NxmCtNwDstMasked{
+	obj := &NxmCtNwDstMasked{
 		Oxm: NewOxm(127748),
 	}
+	return obj
 }
 func (self *NxmCtNwDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtNwDstMasked) GetName() string {
-	return "nxm_ct_nw_dst_masked"
+	return "ct_nw_dst_masked"
 }
 
 type NxmCtNwProto struct {
@@ -1510,26 +1530,27 @@ func (self *NxmCtNwProto) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtNwProto(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwProto, error) {
-	nxmctnwproto := &NxmCtNwProto{Oxm: parent}
+func DecodeNxmCtNwProto(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwProto, error) {
+	_nxmctnwproto := &NxmCtNwProto{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmCtNwProto packet too short: %d < 1", decoder.Length())
 	}
-	nxmctnwproto.Value = uint8(decoder.ReadByte())
-	return nxmctnwproto, nil
+	_nxmctnwproto.Value = uint8(decoder.ReadByte())
+	return _nxmctnwproto, nil
 }
 
 func NewNxmCtNwProto() *NxmCtNwProto {
-	return &NxmCtNwProto{
+	obj := &NxmCtNwProto{
 		Oxm: NewOxm(126465),
 	}
+	return obj
 }
 func (self *NxmCtNwProto) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtNwProto) GetName() string {
-	return "nxm_ct_nw_proto"
+	return "ct_nw_proto"
 }
 
 type NxmCtNwSrc struct {
@@ -1547,26 +1568,27 @@ func (self *NxmCtNwSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtNwSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwSrc, error) {
-	nxmctnwsrc := &NxmCtNwSrc{Oxm: parent}
+func DecodeNxmCtNwSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwSrc, error) {
+	_nxmctnwsrc := &NxmCtNwSrc{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmCtNwSrc packet too short: %d < 4", decoder.Length())
 	}
-	nxmctnwsrc.Value = net.IP(decoder.Read(4))
-	return nxmctnwsrc, nil
+	_nxmctnwsrc.Value = net.IP(decoder.Read(4))
+	return _nxmctnwsrc, nil
 }
 
 func NewNxmCtNwSrc() *NxmCtNwSrc {
-	return &NxmCtNwSrc{
+	obj := &NxmCtNwSrc{
 		Oxm: NewOxm(126980),
 	}
+	return obj
 }
 func (self *NxmCtNwSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtNwSrc) GetName() string {
-	return "nxm_ct_nw_src"
+	return "ct_nw_src"
 }
 
 type NxmCtNwSrcMasked struct {
@@ -1586,27 +1608,28 @@ func (self *NxmCtNwSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtNwSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwSrcMasked, error) {
-	nxmctnwsrcmasked := &NxmCtNwSrcMasked{Oxm: parent}
+func DecodeNxmCtNwSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwSrcMasked, error) {
+	_nxmctnwsrcmasked := &NxmCtNwSrcMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmCtNwSrcMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmctnwsrcmasked.Value = net.IP(decoder.Read(4))
-	nxmctnwsrcmasked.ValueMask = net.IP(decoder.Read(4))
-	return nxmctnwsrcmasked, nil
+	_nxmctnwsrcmasked.Value = net.IP(decoder.Read(4))
+	_nxmctnwsrcmasked.ValueMask = net.IP(decoder.Read(4))
+	return _nxmctnwsrcmasked, nil
 }
 
 func NewNxmCtNwSrcMasked() *NxmCtNwSrcMasked {
-	return &NxmCtNwSrcMasked{
+	obj := &NxmCtNwSrcMasked{
 		Oxm: NewOxm(127236),
 	}
+	return obj
 }
 func (self *NxmCtNwSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtNwSrcMasked) GetName() string {
-	return "nxm_ct_nw_src_masked"
+	return "ct_nw_src_masked"
 }
 
 type NxmCtState struct {
@@ -1624,23 +1647,24 @@ func (self *NxmCtState) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtState(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtState, error) {
-	nxmctstate := &NxmCtState{Oxm: parent}
-	nxmctstate.Value = decoder.Read(decoder.Length())
-	return nxmctstate, nil
+func DecodeNxmCtState(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtState, error) {
+	_nxmctstate := &NxmCtState{Oxm: parent}
+	_nxmctstate.Value = decoder.Read(decoder.Length())
+	return _nxmctstate, nil
 }
 
 func NewNxmCtState() *NxmCtState {
-	return &NxmCtState{
+	obj := &NxmCtState{
 		Oxm: NewOxm(119300),
 	}
+	return obj
 }
 func (self *NxmCtState) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtState) GetName() string {
-	return "nxm_ct_state"
+	return "ct_state"
 }
 
 type NxmCtStateMasked struct {
@@ -1660,24 +1684,25 @@ func (self *NxmCtStateMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtStateMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtStateMasked, error) {
-	nxmctstatemasked := &NxmCtStateMasked{Oxm: parent}
-	nxmctstatemasked.Value = decoder.Read(decoder.Length())
-	nxmctstatemasked.ValueMask = decoder.Read(decoder.Length())
-	return nxmctstatemasked, nil
+func DecodeNxmCtStateMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtStateMasked, error) {
+	_nxmctstatemasked := &NxmCtStateMasked{Oxm: parent}
+	_nxmctstatemasked.Value = decoder.Read(decoder.Length())
+	_nxmctstatemasked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmctstatemasked, nil
 }
 
 func NewNxmCtStateMasked() *NxmCtStateMasked {
-	return &NxmCtStateMasked{
+	obj := &NxmCtStateMasked{
 		Oxm: NewOxm(119556),
 	}
+	return obj
 }
 func (self *NxmCtStateMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtStateMasked) GetName() string {
-	return "nxm_ct_state_masked"
+	return "ct_state_masked"
 }
 
 type NxmCtTpDst struct {
@@ -1695,26 +1720,27 @@ func (self *NxmCtTpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtTpDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpDst, error) {
-	nxmcttpdst := &NxmCtTpDst{Oxm: parent}
+func DecodeNxmCtTpDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpDst, error) {
+	_nxmcttpdst := &NxmCtTpDst{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmCtTpDst packet too short: %d < 2", decoder.Length())
 	}
-	nxmcttpdst.Value = uint16(decoder.ReadUint16())
-	return nxmcttpdst, nil
+	_nxmcttpdst.Value = uint16(decoder.ReadUint16())
+	return _nxmcttpdst, nil
 }
 
 func NewNxmCtTpDst() *NxmCtTpDst {
-	return &NxmCtTpDst{
+	obj := &NxmCtTpDst{
 		Oxm: NewOxm(129538),
 	}
+	return obj
 }
 func (self *NxmCtTpDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtTpDst) GetName() string {
-	return "nxm_ct_tp_dst"
+	return "ct_tp_dst"
 }
 
 type NxmCtTpDstMasked struct {
@@ -1734,27 +1760,28 @@ func (self *NxmCtTpDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtTpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpDstMasked, error) {
-	nxmcttpdstmasked := &NxmCtTpDstMasked{Oxm: parent}
+func DecodeNxmCtTpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpDstMasked, error) {
+	_nxmcttpdstmasked := &NxmCtTpDstMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmCtTpDstMasked packet too short: %d < 4", decoder.Length())
 	}
-	nxmcttpdstmasked.Value = uint16(decoder.ReadUint16())
-	nxmcttpdstmasked.ValueMask = uint16(decoder.ReadUint16())
-	return nxmcttpdstmasked, nil
+	_nxmcttpdstmasked.Value = uint16(decoder.ReadUint16())
+	_nxmcttpdstmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _nxmcttpdstmasked, nil
 }
 
 func NewNxmCtTpDstMasked() *NxmCtTpDstMasked {
-	return &NxmCtTpDstMasked{
+	obj := &NxmCtTpDstMasked{
 		Oxm: NewOxm(129794),
 	}
+	return obj
 }
 func (self *NxmCtTpDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtTpDstMasked) GetName() string {
-	return "nxm_ct_tp_dst_masked"
+	return "ct_tp_dst_masked"
 }
 
 type NxmCtTpSrc struct {
@@ -1772,26 +1799,27 @@ func (self *NxmCtTpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtTpSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpSrc, error) {
-	nxmcttpsrc := &NxmCtTpSrc{Oxm: parent}
+func DecodeNxmCtTpSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpSrc, error) {
+	_nxmcttpsrc := &NxmCtTpSrc{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmCtTpSrc packet too short: %d < 2", decoder.Length())
 	}
-	nxmcttpsrc.Value = uint16(decoder.ReadUint16())
-	return nxmcttpsrc, nil
+	_nxmcttpsrc.Value = uint16(decoder.ReadUint16())
+	return _nxmcttpsrc, nil
 }
 
 func NewNxmCtTpSrc() *NxmCtTpSrc {
-	return &NxmCtTpSrc{
+	obj := &NxmCtTpSrc{
 		Oxm: NewOxm(129026),
 	}
+	return obj
 }
 func (self *NxmCtTpSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtTpSrc) GetName() string {
-	return "nxm_ct_tp_src"
+	return "ct_tp_src"
 }
 
 type NxmCtTpSrcMasked struct {
@@ -1811,27 +1839,28 @@ func (self *NxmCtTpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtTpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpSrcMasked, error) {
-	nxmcttpsrcmasked := &NxmCtTpSrcMasked{Oxm: parent}
+func DecodeNxmCtTpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpSrcMasked, error) {
+	_nxmcttpsrcmasked := &NxmCtTpSrcMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmCtTpSrcMasked packet too short: %d < 4", decoder.Length())
 	}
-	nxmcttpsrcmasked.Value = uint16(decoder.ReadUint16())
-	nxmcttpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
-	return nxmcttpsrcmasked, nil
+	_nxmcttpsrcmasked.Value = uint16(decoder.ReadUint16())
+	_nxmcttpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _nxmcttpsrcmasked, nil
 }
 
 func NewNxmCtTpSrcMasked() *NxmCtTpSrcMasked {
-	return &NxmCtTpSrcMasked{
+	obj := &NxmCtTpSrcMasked{
 		Oxm: NewOxm(129282),
 	}
+	return obj
 }
 func (self *NxmCtTpSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtTpSrcMasked) GetName() string {
-	return "nxm_ct_tp_src_masked"
+	return "ct_tp_src_masked"
 }
 
 type NxmCtZone struct {
@@ -1849,26 +1878,27 @@ func (self *NxmCtZone) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmCtZone(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtZone, error) {
-	nxmctzone := &NxmCtZone{Oxm: parent}
+func DecodeNxmCtZone(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtZone, error) {
+	_nxmctzone := &NxmCtZone{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmCtZone packet too short: %d < 2", decoder.Length())
 	}
-	nxmctzone.Value = uint16(decoder.ReadUint16())
-	return nxmctzone, nil
+	_nxmctzone.Value = uint16(decoder.ReadUint16())
+	return _nxmctzone, nil
 }
 
 func NewNxmCtZone() *NxmCtZone {
-	return &NxmCtZone{
+	obj := &NxmCtZone{
 		Oxm: NewOxm(119810),
 	}
+	return obj
 }
 func (self *NxmCtZone) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmCtZone) GetName() string {
-	return "nxm_ct_zone"
+	return "ct_zone"
 }
 
 type NxmDpHash struct {
@@ -1886,26 +1916,27 @@ func (self *NxmDpHash) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmDpHash(parent *Oxm, decoder *goloxi.Decoder) (*NxmDpHash, error) {
-	nxmdphash := &NxmDpHash{Oxm: parent}
+func DecodeNxmDpHash(parent *Oxm, decoder *goloxi.Decoder) (*NxmDpHash, error) {
+	_nxmdphash := &NxmDpHash{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmDpHash packet too short: %d < 4", decoder.Length())
 	}
-	nxmdphash.Value = uint32(decoder.ReadUint32())
-	return nxmdphash, nil
+	_nxmdphash.Value = uint32(decoder.ReadUint32())
+	return _nxmdphash, nil
 }
 
 func NewNxmDpHash() *NxmDpHash {
-	return &NxmDpHash{
+	obj := &NxmDpHash{
 		Oxm: NewOxm(83460),
 	}
+	return obj
 }
 func (self *NxmDpHash) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmDpHash) GetName() string {
-	return "nxm_dp_hash"
+	return "dp_hash"
 }
 
 type NxmDpHashMasked struct {
@@ -1925,27 +1956,28 @@ func (self *NxmDpHashMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmDpHashMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmDpHashMasked, error) {
-	nxmdphashmasked := &NxmDpHashMasked{Oxm: parent}
+func DecodeNxmDpHashMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmDpHashMasked, error) {
+	_nxmdphashmasked := &NxmDpHashMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmDpHashMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmdphashmasked.Value = uint32(decoder.ReadUint32())
-	nxmdphashmasked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmdphashmasked, nil
+	_nxmdphashmasked.Value = uint32(decoder.ReadUint32())
+	_nxmdphashmasked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmdphashmasked, nil
 }
 
 func NewNxmDpHashMasked() *NxmDpHashMasked {
-	return &NxmDpHashMasked{
+	obj := &NxmDpHashMasked{
 		Oxm: NewOxm(83716),
 	}
+	return obj
 }
 func (self *NxmDpHashMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmDpHashMasked) GetName() string {
-	return "nxm_dp_hash_masked"
+	return "dp_hash_masked"
 }
 
 type NxmEthDst struct {
@@ -1963,26 +1995,27 @@ func (self *NxmEthDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmEthDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthDst, error) {
-	nxmethdst := &NxmEthDst{Oxm: parent}
+func DecodeNxmEthDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthDst, error) {
+	_nxmethdst := &NxmEthDst{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("NxmEthDst packet too short: %d < 6", decoder.Length())
 	}
-	nxmethdst.Value = net.HardwareAddr(decoder.Read(6))
-	return nxmethdst, nil
+	_nxmethdst.Value = net.HardwareAddr(decoder.Read(6))
+	return _nxmethdst, nil
 }
 
 func NewNxmEthDst() *NxmEthDst {
-	return &NxmEthDst{
+	obj := &NxmEthDst{
 		Oxm: NewOxm(518),
 	}
+	return obj
 }
 func (self *NxmEthDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmEthDst) GetName() string {
-	return "nxm_eth_dst"
+	return "eth_dst"
 }
 
 type NxmEthDstMasked struct {
@@ -2002,27 +2035,28 @@ func (self *NxmEthDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmEthDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthDstMasked, error) {
-	nxmethdstmasked := &NxmEthDstMasked{Oxm: parent}
+func DecodeNxmEthDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthDstMasked, error) {
+	_nxmethdstmasked := &NxmEthDstMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("NxmEthDstMasked packet too short: %d < 12", decoder.Length())
 	}
-	nxmethdstmasked.Value = net.HardwareAddr(decoder.Read(6))
-	nxmethdstmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return nxmethdstmasked, nil
+	_nxmethdstmasked.Value = net.HardwareAddr(decoder.Read(6))
+	_nxmethdstmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _nxmethdstmasked, nil
 }
 
 func NewNxmEthDstMasked() *NxmEthDstMasked {
-	return &NxmEthDstMasked{
+	obj := &NxmEthDstMasked{
 		Oxm: NewOxm(774),
 	}
+	return obj
 }
 func (self *NxmEthDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmEthDstMasked) GetName() string {
-	return "nxm_eth_dst_masked"
+	return "eth_dst_masked"
 }
 
 type NxmEthSrc struct {
@@ -2040,26 +2074,27 @@ func (self *NxmEthSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmEthSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthSrc, error) {
-	nxmethsrc := &NxmEthSrc{Oxm: parent}
+func DecodeNxmEthSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthSrc, error) {
+	_nxmethsrc := &NxmEthSrc{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("NxmEthSrc packet too short: %d < 6", decoder.Length())
 	}
-	nxmethsrc.Value = net.HardwareAddr(decoder.Read(6))
-	return nxmethsrc, nil
+	_nxmethsrc.Value = net.HardwareAddr(decoder.Read(6))
+	return _nxmethsrc, nil
 }
 
 func NewNxmEthSrc() *NxmEthSrc {
-	return &NxmEthSrc{
+	obj := &NxmEthSrc{
 		Oxm: NewOxm(1030),
 	}
+	return obj
 }
 func (self *NxmEthSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmEthSrc) GetName() string {
-	return "nxm_eth_src"
+	return "eth_src"
 }
 
 type NxmEthSrcMasked struct {
@@ -2079,27 +2114,28 @@ func (self *NxmEthSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmEthSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthSrcMasked, error) {
-	nxmethsrcmasked := &NxmEthSrcMasked{Oxm: parent}
+func DecodeNxmEthSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthSrcMasked, error) {
+	_nxmethsrcmasked := &NxmEthSrcMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("NxmEthSrcMasked packet too short: %d < 12", decoder.Length())
 	}
-	nxmethsrcmasked.Value = net.HardwareAddr(decoder.Read(6))
-	nxmethsrcmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return nxmethsrcmasked, nil
+	_nxmethsrcmasked.Value = net.HardwareAddr(decoder.Read(6))
+	_nxmethsrcmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _nxmethsrcmasked, nil
 }
 
 func NewNxmEthSrcMasked() *NxmEthSrcMasked {
-	return &NxmEthSrcMasked{
+	obj := &NxmEthSrcMasked{
 		Oxm: NewOxm(1286),
 	}
+	return obj
 }
 func (self *NxmEthSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmEthSrcMasked) GetName() string {
-	return "nxm_eth_src_masked"
+	return "eth_src_masked"
 }
 
 type NxmEthType struct {
@@ -2117,26 +2153,27 @@ func (self *NxmEthType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmEthType(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthType, error) {
-	nxmethtype := &NxmEthType{Oxm: parent}
+func DecodeNxmEthType(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthType, error) {
+	_nxmethtype := &NxmEthType{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmEthType packet too short: %d < 2", decoder.Length())
 	}
-	nxmethtype.Value = uint16(decoder.ReadUint16())
-	return nxmethtype, nil
+	_nxmethtype.Value = uint16(decoder.ReadUint16())
+	return _nxmethtype, nil
 }
 
 func NewNxmEthType() *NxmEthType {
-	return &NxmEthType{
+	obj := &NxmEthType{
 		Oxm: NewOxm(1538),
 	}
+	return obj
 }
 func (self *NxmEthType) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmEthType) GetName() string {
-	return "nxm_eth_type"
+	return "eth_type"
 }
 
 type NxmIcmpCode struct {
@@ -2154,26 +2191,27 @@ func (self *NxmIcmpCode) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIcmpCode(parent *Oxm, decoder *goloxi.Decoder) (*NxmIcmpCode, error) {
-	nxmicmpcode := &NxmIcmpCode{Oxm: parent}
+func DecodeNxmIcmpCode(parent *Oxm, decoder *goloxi.Decoder) (*NxmIcmpCode, error) {
+	_nxmicmpcode := &NxmIcmpCode{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmIcmpCode packet too short: %d < 1", decoder.Length())
 	}
-	nxmicmpcode.Value = uint8(decoder.ReadByte())
-	return nxmicmpcode, nil
+	_nxmicmpcode.Value = uint8(decoder.ReadByte())
+	return _nxmicmpcode, nil
 }
 
 func NewNxmIcmpCode() *NxmIcmpCode {
-	return &NxmIcmpCode{
+	obj := &NxmIcmpCode{
 		Oxm: NewOxm(7169),
 	}
+	return obj
 }
 func (self *NxmIcmpCode) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIcmpCode) GetName() string {
-	return "nxm_icmp_code"
+	return "icmp_code"
 }
 
 type NxmIcmpType struct {
@@ -2191,26 +2229,27 @@ func (self *NxmIcmpType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIcmpType(parent *Oxm, decoder *goloxi.Decoder) (*NxmIcmpType, error) {
-	nxmicmptype := &NxmIcmpType{Oxm: parent}
+func DecodeNxmIcmpType(parent *Oxm, decoder *goloxi.Decoder) (*NxmIcmpType, error) {
+	_nxmicmptype := &NxmIcmpType{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmIcmpType packet too short: %d < 1", decoder.Length())
 	}
-	nxmicmptype.Value = uint8(decoder.ReadByte())
-	return nxmicmptype, nil
+	_nxmicmptype.Value = uint8(decoder.ReadByte())
+	return _nxmicmptype, nil
 }
 
 func NewNxmIcmpType() *NxmIcmpType {
-	return &NxmIcmpType{
+	obj := &NxmIcmpType{
 		Oxm: NewOxm(6657),
 	}
+	return obj
 }
 func (self *NxmIcmpType) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIcmpType) GetName() string {
-	return "nxm_icmp_type"
+	return "icmp_type"
 }
 
 type NxmIcmpv6Code struct {
@@ -2228,26 +2267,27 @@ func (self *NxmIcmpv6Code) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIcmpv6Code(parent *Oxm, decoder *goloxi.Decoder) (*NxmIcmpv6Code, error) {
-	nxmicmpv6code := &NxmIcmpv6Code{Oxm: parent}
+func DecodeNxmIcmpv6Code(parent *Oxm, decoder *goloxi.Decoder) (*NxmIcmpv6Code, error) {
+	_nxmicmpv6code := &NxmIcmpv6Code{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmIcmpv6Code packet too short: %d < 1", decoder.Length())
 	}
-	nxmicmpv6code.Value = uint8(decoder.ReadByte())
-	return nxmicmpv6code, nil
+	_nxmicmpv6code.Value = uint8(decoder.ReadByte())
+	return _nxmicmpv6code, nil
 }
 
 func NewNxmIcmpv6Code() *NxmIcmpv6Code {
-	return &NxmIcmpv6Code{
+	obj := &NxmIcmpv6Code{
 		Oxm: NewOxm(76801),
 	}
+	return obj
 }
 func (self *NxmIcmpv6Code) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIcmpv6Code) GetName() string {
-	return "nxm_icmpv6_code"
+	return "icmpv6_code"
 }
 
 type NxmIcmpv6Type struct {
@@ -2265,26 +2305,27 @@ func (self *NxmIcmpv6Type) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIcmpv6Type(parent *Oxm, decoder *goloxi.Decoder) (*NxmIcmpv6Type, error) {
-	nxmicmpv6type := &NxmIcmpv6Type{Oxm: parent}
+func DecodeNxmIcmpv6Type(parent *Oxm, decoder *goloxi.Decoder) (*NxmIcmpv6Type, error) {
+	_nxmicmpv6type := &NxmIcmpv6Type{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmIcmpv6Type packet too short: %d < 1", decoder.Length())
 	}
-	nxmicmpv6type.Value = uint8(decoder.ReadByte())
-	return nxmicmpv6type, nil
+	_nxmicmpv6type.Value = uint8(decoder.ReadByte())
+	return _nxmicmpv6type, nil
 }
 
 func NewNxmIcmpv6Type() *NxmIcmpv6Type {
-	return &NxmIcmpv6Type{
+	obj := &NxmIcmpv6Type{
 		Oxm: NewOxm(76289),
 	}
+	return obj
 }
 func (self *NxmIcmpv6Type) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIcmpv6Type) GetName() string {
-	return "nxm_icmpv6_type"
+	return "icmpv6_type"
 }
 
 type NxmInPort struct {
@@ -2302,23 +2343,24 @@ func (self *NxmInPort) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmInPort(parent *Oxm, decoder *goloxi.Decoder) (*NxmInPort, error) {
-	nxminport := &NxmInPort{Oxm: parent}
-	nxminport.Value = decoder.Read(decoder.Length())
-	return nxminport, nil
+func DecodeNxmInPort(parent *Oxm, decoder *goloxi.Decoder) (*NxmInPort, error) {
+	_nxminport := &NxmInPort{Oxm: parent}
+	_nxminport.Value = decoder.Read(decoder.Length())
+	return _nxminport, nil
 }
 
 func NewNxmInPort() *NxmInPort {
-	return &NxmInPort{
+	obj := &NxmInPort{
 		Oxm: NewOxm(2),
 	}
+	return obj
 }
 func (self *NxmInPort) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmInPort) GetName() string {
-	return "nxm_in_port"
+	return "in_port"
 }
 
 type NxmIpDst struct {
@@ -2336,26 +2378,27 @@ func (self *NxmIpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpDst, error) {
-	nxmipdst := &NxmIpDst{Oxm: parent}
+func DecodeNxmIpDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpDst, error) {
+	_nxmipdst := &NxmIpDst{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmIpDst packet too short: %d < 4", decoder.Length())
 	}
-	nxmipdst.Value = net.IP(decoder.Read(4))
-	return nxmipdst, nil
+	_nxmipdst.Value = net.IP(decoder.Read(4))
+	return _nxmipdst, nil
 }
 
 func NewNxmIpDst() *NxmIpDst {
-	return &NxmIpDst{
+	obj := &NxmIpDst{
 		Oxm: NewOxm(4100),
 	}
+	return obj
 }
 func (self *NxmIpDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpDst) GetName() string {
-	return "nxm_ip_dst"
+	return "ip_dst"
 }
 
 type NxmIpDstMasked struct {
@@ -2375,27 +2418,28 @@ func (self *NxmIpDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpDstMasked, error) {
-	nxmipdstmasked := &NxmIpDstMasked{Oxm: parent}
+func DecodeNxmIpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpDstMasked, error) {
+	_nxmipdstmasked := &NxmIpDstMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmIpDstMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmipdstmasked.Value = net.IP(decoder.Read(4))
-	nxmipdstmasked.ValueMask = net.IP(decoder.Read(4))
-	return nxmipdstmasked, nil
+	_nxmipdstmasked.Value = net.IP(decoder.Read(4))
+	_nxmipdstmasked.ValueMask = net.IP(decoder.Read(4))
+	return _nxmipdstmasked, nil
 }
 
 func NewNxmIpDstMasked() *NxmIpDstMasked {
-	return &NxmIpDstMasked{
+	obj := &NxmIpDstMasked{
 		Oxm: NewOxm(4356),
 	}
+	return obj
 }
 func (self *NxmIpDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpDstMasked) GetName() string {
-	return "nxm_ip_dst_masked"
+	return "ip_dst_masked"
 }
 
 type NxmIpFrag struct {
@@ -2413,23 +2457,24 @@ func (self *NxmIpFrag) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpFrag(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpFrag, error) {
-	nxmipfrag := &NxmIpFrag{Oxm: parent}
-	nxmipfrag.Value = decoder.Read(decoder.Length())
-	return nxmipfrag, nil
+func DecodeNxmIpFrag(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpFrag, error) {
+	_nxmipfrag := &NxmIpFrag{Oxm: parent}
+	_nxmipfrag.Value = decoder.Read(decoder.Length())
+	return _nxmipfrag, nil
 }
 
 func NewNxmIpFrag() *NxmIpFrag {
-	return &NxmIpFrag{
+	obj := &NxmIpFrag{
 		Oxm: NewOxm(78849),
 	}
+	return obj
 }
 func (self *NxmIpFrag) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpFrag) GetName() string {
-	return "nxm_ip_frag"
+	return "ip_frag"
 }
 
 type NxmIpFragMasked struct {
@@ -2449,24 +2494,25 @@ func (self *NxmIpFragMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpFragMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpFragMasked, error) {
-	nxmipfragmasked := &NxmIpFragMasked{Oxm: parent}
-	nxmipfragmasked.Value = decoder.Read(decoder.Length())
-	nxmipfragmasked.ValueMask = decoder.Read(decoder.Length())
-	return nxmipfragmasked, nil
+func DecodeNxmIpFragMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpFragMasked, error) {
+	_nxmipfragmasked := &NxmIpFragMasked{Oxm: parent}
+	_nxmipfragmasked.Value = decoder.Read(decoder.Length())
+	_nxmipfragmasked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmipfragmasked, nil
 }
 
 func NewNxmIpFragMasked() *NxmIpFragMasked {
-	return &NxmIpFragMasked{
+	obj := &NxmIpFragMasked{
 		Oxm: NewOxm(79105),
 	}
+	return obj
 }
 func (self *NxmIpFragMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpFragMasked) GetName() string {
-	return "nxm_ip_frag_masked"
+	return "ip_frag_masked"
 }
 
 type NxmIpSrc struct {
@@ -2484,26 +2530,27 @@ func (self *NxmIpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpSrc, error) {
-	nxmipsrc := &NxmIpSrc{Oxm: parent}
+func DecodeNxmIpSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpSrc, error) {
+	_nxmipsrc := &NxmIpSrc{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmIpSrc packet too short: %d < 4", decoder.Length())
 	}
-	nxmipsrc.Value = net.IP(decoder.Read(4))
-	return nxmipsrc, nil
+	_nxmipsrc.Value = net.IP(decoder.Read(4))
+	return _nxmipsrc, nil
 }
 
 func NewNxmIpSrc() *NxmIpSrc {
-	return &NxmIpSrc{
+	obj := &NxmIpSrc{
 		Oxm: NewOxm(3588),
 	}
+	return obj
 }
 func (self *NxmIpSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpSrc) GetName() string {
-	return "nxm_ip_src"
+	return "ip_src"
 }
 
 type NxmIpSrcMasked struct {
@@ -2523,27 +2570,28 @@ func (self *NxmIpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpSrcMasked, error) {
-	nxmipsrcmasked := &NxmIpSrcMasked{Oxm: parent}
+func DecodeNxmIpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpSrcMasked, error) {
+	_nxmipsrcmasked := &NxmIpSrcMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmIpSrcMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmipsrcmasked.Value = net.IP(decoder.Read(4))
-	nxmipsrcmasked.ValueMask = net.IP(decoder.Read(4))
-	return nxmipsrcmasked, nil
+	_nxmipsrcmasked.Value = net.IP(decoder.Read(4))
+	_nxmipsrcmasked.ValueMask = net.IP(decoder.Read(4))
+	return _nxmipsrcmasked, nil
 }
 
 func NewNxmIpSrcMasked() *NxmIpSrcMasked {
-	return &NxmIpSrcMasked{
+	obj := &NxmIpSrcMasked{
 		Oxm: NewOxm(3844),
 	}
+	return obj
 }
 func (self *NxmIpSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpSrcMasked) GetName() string {
-	return "nxm_ip_src_masked"
+	return "ip_src_masked"
 }
 
 type NxmIpv6Dst struct {
@@ -2561,26 +2609,27 @@ func (self *NxmIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpv6Dst(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6Dst, error) {
-	nxmipv6dst := &NxmIpv6Dst{Oxm: parent}
+func DecodeNxmIpv6Dst(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6Dst, error) {
+	_nxmipv6dst := &NxmIpv6Dst{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmIpv6Dst packet too short: %d < 16", decoder.Length())
 	}
-	nxmipv6dst.Value = net.IP(decoder.Read(16))
-	return nxmipv6dst, nil
+	_nxmipv6dst.Value = net.IP(decoder.Read(16))
+	return _nxmipv6dst, nil
 }
 
 func NewNxmIpv6Dst() *NxmIpv6Dst {
-	return &NxmIpv6Dst{
+	obj := &NxmIpv6Dst{
 		Oxm: NewOxm(75792),
 	}
+	return obj
 }
 func (self *NxmIpv6Dst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpv6Dst) GetName() string {
-	return "nxm_ipv6_dst"
+	return "ipv6_dst"
 }
 
 type NxmIpv6DstMasked struct {
@@ -2600,27 +2649,28 @@ func (self *NxmIpv6DstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6DstMasked, error) {
-	nxmipv6dstmasked := &NxmIpv6DstMasked{Oxm: parent}
+func DecodeNxmIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6DstMasked, error) {
+	_nxmipv6dstmasked := &NxmIpv6DstMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmIpv6DstMasked packet too short: %d < 32", decoder.Length())
 	}
-	nxmipv6dstmasked.Value = net.IP(decoder.Read(16))
-	nxmipv6dstmasked.ValueMask = net.IP(decoder.Read(16))
-	return nxmipv6dstmasked, nil
+	_nxmipv6dstmasked.Value = net.IP(decoder.Read(16))
+	_nxmipv6dstmasked.ValueMask = net.IP(decoder.Read(16))
+	return _nxmipv6dstmasked, nil
 }
 
 func NewNxmIpv6DstMasked() *NxmIpv6DstMasked {
-	return &NxmIpv6DstMasked{
+	obj := &NxmIpv6DstMasked{
 		Oxm: NewOxm(76048),
 	}
+	return obj
 }
 func (self *NxmIpv6DstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpv6DstMasked) GetName() string {
-	return "nxm_ipv6_dst_masked"
+	return "ipv6_dst_masked"
 }
 
 type NxmIpv6Label struct {
@@ -2638,26 +2688,27 @@ func (self *NxmIpv6Label) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpv6Label(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6Label, error) {
-	nxmipv6label := &NxmIpv6Label{Oxm: parent}
+func DecodeNxmIpv6Label(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6Label, error) {
+	_nxmipv6label := &NxmIpv6Label{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmIpv6Label packet too short: %d < 4", decoder.Length())
 	}
-	nxmipv6label.Value = uint32(decoder.ReadUint32())
-	return nxmipv6label, nil
+	_nxmipv6label.Value = uint32(decoder.ReadUint32())
+	return _nxmipv6label, nil
 }
 
 func NewNxmIpv6Label() *NxmIpv6Label {
-	return &NxmIpv6Label{
+	obj := &NxmIpv6Label{
 		Oxm: NewOxm(79364),
 	}
+	return obj
 }
 func (self *NxmIpv6Label) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpv6Label) GetName() string {
-	return "nxm_ipv6_label"
+	return "ipv6_label"
 }
 
 type NxmIpv6LabelMasked struct {
@@ -2677,27 +2728,28 @@ func (self *NxmIpv6LabelMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpv6LabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6LabelMasked, error) {
-	nxmipv6labelmasked := &NxmIpv6LabelMasked{Oxm: parent}
+func DecodeNxmIpv6LabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6LabelMasked, error) {
+	_nxmipv6labelmasked := &NxmIpv6LabelMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmIpv6LabelMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmipv6labelmasked.Value = uint32(decoder.ReadUint32())
-	nxmipv6labelmasked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmipv6labelmasked, nil
+	_nxmipv6labelmasked.Value = uint32(decoder.ReadUint32())
+	_nxmipv6labelmasked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmipv6labelmasked, nil
 }
 
 func NewNxmIpv6LabelMasked() *NxmIpv6LabelMasked {
-	return &NxmIpv6LabelMasked{
+	obj := &NxmIpv6LabelMasked{
 		Oxm: NewOxm(79620),
 	}
+	return obj
 }
 func (self *NxmIpv6LabelMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpv6LabelMasked) GetName() string {
-	return "nxm_ipv6_label_masked"
+	return "ipv6_label_masked"
 }
 
 type NxmIpv6Src struct {
@@ -2715,26 +2767,27 @@ func (self *NxmIpv6Src) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpv6Src(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6Src, error) {
-	nxmipv6src := &NxmIpv6Src{Oxm: parent}
+func DecodeNxmIpv6Src(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6Src, error) {
+	_nxmipv6src := &NxmIpv6Src{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmIpv6Src packet too short: %d < 16", decoder.Length())
 	}
-	nxmipv6src.Value = net.IP(decoder.Read(16))
-	return nxmipv6src, nil
+	_nxmipv6src.Value = net.IP(decoder.Read(16))
+	return _nxmipv6src, nil
 }
 
 func NewNxmIpv6Src() *NxmIpv6Src {
-	return &NxmIpv6Src{
+	obj := &NxmIpv6Src{
 		Oxm: NewOxm(75280),
 	}
+	return obj
 }
 func (self *NxmIpv6Src) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpv6Src) GetName() string {
-	return "nxm_ipv6_src"
+	return "ipv6_src"
 }
 
 type NxmIpv6SrcMasked struct {
@@ -2754,27 +2807,28 @@ func (self *NxmIpv6SrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6SrcMasked, error) {
-	nxmipv6srcmasked := &NxmIpv6SrcMasked{Oxm: parent}
+func DecodeNxmIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6SrcMasked, error) {
+	_nxmipv6srcmasked := &NxmIpv6SrcMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmIpv6SrcMasked packet too short: %d < 32", decoder.Length())
 	}
-	nxmipv6srcmasked.Value = net.IP(decoder.Read(16))
-	nxmipv6srcmasked.ValueMask = net.IP(decoder.Read(16))
-	return nxmipv6srcmasked, nil
+	_nxmipv6srcmasked.Value = net.IP(decoder.Read(16))
+	_nxmipv6srcmasked.ValueMask = net.IP(decoder.Read(16))
+	return _nxmipv6srcmasked, nil
 }
 
 func NewNxmIpv6SrcMasked() *NxmIpv6SrcMasked {
-	return &NxmIpv6SrcMasked{
+	obj := &NxmIpv6SrcMasked{
 		Oxm: NewOxm(75536),
 	}
+	return obj
 }
 func (self *NxmIpv6SrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmIpv6SrcMasked) GetName() string {
-	return "nxm_ipv6_src_masked"
+	return "ipv6_src_masked"
 }
 
 type NxmMplsTtl struct {
@@ -2792,26 +2846,27 @@ func (self *NxmMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmMplsTtl(parent *Oxm, decoder *goloxi.Decoder) (*NxmMplsTtl, error) {
-	nxmmplsttl := &NxmMplsTtl{Oxm: parent}
+func DecodeNxmMplsTtl(parent *Oxm, decoder *goloxi.Decoder) (*NxmMplsTtl, error) {
+	_nxmmplsttl := &NxmMplsTtl{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmMplsTtl packet too short: %d < 1", decoder.Length())
 	}
-	nxmmplsttl.Value = uint8(decoder.ReadByte())
-	return nxmmplsttl, nil
+	_nxmmplsttl.Value = uint8(decoder.ReadByte())
+	return _nxmmplsttl, nil
 }
 
 func NewNxmMplsTtl() *NxmMplsTtl {
-	return &NxmMplsTtl{
+	obj := &NxmMplsTtl{
 		Oxm: NewOxm(80897),
 	}
+	return obj
 }
 func (self *NxmMplsTtl) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmMplsTtl) GetName() string {
-	return "nxm_mpls_ttl"
+	return "mpls_ttl"
 }
 
 type NxmNdSll struct {
@@ -2829,26 +2884,27 @@ func (self *NxmNdSll) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNdSll(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdSll, error) {
-	nxmndsll := &NxmNdSll{Oxm: parent}
+func DecodeNxmNdSll(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdSll, error) {
+	_nxmndsll := &NxmNdSll{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("NxmNdSll packet too short: %d < 6", decoder.Length())
 	}
-	nxmndsll.Value = net.HardwareAddr(decoder.Read(6))
-	return nxmndsll, nil
+	_nxmndsll.Value = net.HardwareAddr(decoder.Read(6))
+	return _nxmndsll, nil
 }
 
 func NewNxmNdSll() *NxmNdSll {
-	return &NxmNdSll{
+	obj := &NxmNdSll{
 		Oxm: NewOxm(77830),
 	}
+	return obj
 }
 func (self *NxmNdSll) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNdSll) GetName() string {
-	return "nxm_nd_sll"
+	return "nd_sll"
 }
 
 type NxmNdSllMasked struct {
@@ -2868,27 +2924,28 @@ func (self *NxmNdSllMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNdSllMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdSllMasked, error) {
-	nxmndsllmasked := &NxmNdSllMasked{Oxm: parent}
+func DecodeNxmNdSllMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdSllMasked, error) {
+	_nxmndsllmasked := &NxmNdSllMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("NxmNdSllMasked packet too short: %d < 12", decoder.Length())
 	}
-	nxmndsllmasked.Value = net.HardwareAddr(decoder.Read(6))
-	nxmndsllmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return nxmndsllmasked, nil
+	_nxmndsllmasked.Value = net.HardwareAddr(decoder.Read(6))
+	_nxmndsllmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _nxmndsllmasked, nil
 }
 
 func NewNxmNdSllMasked() *NxmNdSllMasked {
-	return &NxmNdSllMasked{
+	obj := &NxmNdSllMasked{
 		Oxm: NewOxm(78086),
 	}
+	return obj
 }
 func (self *NxmNdSllMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNdSllMasked) GetName() string {
-	return "nxm_nd_sll_masked"
+	return "nd_sll_masked"
 }
 
 type NxmNdTarget struct {
@@ -2906,26 +2963,27 @@ func (self *NxmNdTarget) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNdTarget(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTarget, error) {
-	nxmndtarget := &NxmNdTarget{Oxm: parent}
+func DecodeNxmNdTarget(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTarget, error) {
+	_nxmndtarget := &NxmNdTarget{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmNdTarget packet too short: %d < 16", decoder.Length())
 	}
-	nxmndtarget.Value = net.IP(decoder.Read(16))
-	return nxmndtarget, nil
+	_nxmndtarget.Value = net.IP(decoder.Read(16))
+	return _nxmndtarget, nil
 }
 
 func NewNxmNdTarget() *NxmNdTarget {
-	return &NxmNdTarget{
+	obj := &NxmNdTarget{
 		Oxm: NewOxm(77328),
 	}
+	return obj
 }
 func (self *NxmNdTarget) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNdTarget) GetName() string {
-	return "nxm_nd_target"
+	return "nd_target"
 }
 
 type NxmNdTargetMasked struct {
@@ -2945,27 +3003,28 @@ func (self *NxmNdTargetMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNdTargetMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTargetMasked, error) {
-	nxmndtargetmasked := &NxmNdTargetMasked{Oxm: parent}
+func DecodeNxmNdTargetMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTargetMasked, error) {
+	_nxmndtargetmasked := &NxmNdTargetMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmNdTargetMasked packet too short: %d < 32", decoder.Length())
 	}
-	nxmndtargetmasked.Value = net.IP(decoder.Read(16))
-	nxmndtargetmasked.ValueMask = net.IP(decoder.Read(16))
-	return nxmndtargetmasked, nil
+	_nxmndtargetmasked.Value = net.IP(decoder.Read(16))
+	_nxmndtargetmasked.ValueMask = net.IP(decoder.Read(16))
+	return _nxmndtargetmasked, nil
 }
 
 func NewNxmNdTargetMasked() *NxmNdTargetMasked {
-	return &NxmNdTargetMasked{
+	obj := &NxmNdTargetMasked{
 		Oxm: NewOxm(77584),
 	}
+	return obj
 }
 func (self *NxmNdTargetMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNdTargetMasked) GetName() string {
-	return "nxm_nd_target_masked"
+	return "nd_target_masked"
 }
 
 type NxmNdTll struct {
@@ -2983,26 +3042,27 @@ func (self *NxmNdTll) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNdTll(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTll, error) {
-	nxmndtll := &NxmNdTll{Oxm: parent}
+func DecodeNxmNdTll(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTll, error) {
+	_nxmndtll := &NxmNdTll{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("NxmNdTll packet too short: %d < 6", decoder.Length())
 	}
-	nxmndtll.Value = net.HardwareAddr(decoder.Read(6))
-	return nxmndtll, nil
+	_nxmndtll.Value = net.HardwareAddr(decoder.Read(6))
+	return _nxmndtll, nil
 }
 
 func NewNxmNdTll() *NxmNdTll {
-	return &NxmNdTll{
+	obj := &NxmNdTll{
 		Oxm: NewOxm(78342),
 	}
+	return obj
 }
 func (self *NxmNdTll) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNdTll) GetName() string {
-	return "nxm_nd_tll"
+	return "nd_tll"
 }
 
 type NxmNdTllMasked struct {
@@ -3022,27 +3082,28 @@ func (self *NxmNdTllMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNdTllMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTllMasked, error) {
-	nxmndtllmasked := &NxmNdTllMasked{Oxm: parent}
+func DecodeNxmNdTllMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTllMasked, error) {
+	_nxmndtllmasked := &NxmNdTllMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("NxmNdTllMasked packet too short: %d < 12", decoder.Length())
 	}
-	nxmndtllmasked.Value = net.HardwareAddr(decoder.Read(6))
-	nxmndtllmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return nxmndtllmasked, nil
+	_nxmndtllmasked.Value = net.HardwareAddr(decoder.Read(6))
+	_nxmndtllmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _nxmndtllmasked, nil
 }
 
 func NewNxmNdTllMasked() *NxmNdTllMasked {
-	return &NxmNdTllMasked{
+	obj := &NxmNdTllMasked{
 		Oxm: NewOxm(78598),
 	}
+	return obj
 }
 func (self *NxmNdTllMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNdTllMasked) GetName() string {
-	return "nxm_nd_tll_masked"
+	return "nd_tll_masked"
 }
 
 type NxmNwEcn struct {
@@ -3060,26 +3121,27 @@ func (self *NxmNwEcn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNwEcn(parent *Oxm, decoder *goloxi.Decoder) (*NxmNwEcn, error) {
-	nxmnwecn := &NxmNwEcn{Oxm: parent}
+func DecodeNxmNwEcn(parent *Oxm, decoder *goloxi.Decoder) (*NxmNwEcn, error) {
+	_nxmnwecn := &NxmNwEcn{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmNwEcn packet too short: %d < 1", decoder.Length())
 	}
-	nxmnwecn.Value = uint8(decoder.ReadByte())
-	return nxmnwecn, nil
+	_nxmnwecn.Value = uint8(decoder.ReadByte())
+	return _nxmnwecn, nil
 }
 
 func NewNxmNwEcn() *NxmNwEcn {
-	return &NxmNwEcn{
+	obj := &NxmNwEcn{
 		Oxm: NewOxm(79873),
 	}
+	return obj
 }
 func (self *NxmNwEcn) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNwEcn) GetName() string {
-	return "nxm_nw_ecn"
+	return "nw_ecn"
 }
 
 type NxmNwProto struct {
@@ -3097,26 +3159,27 @@ func (self *NxmNwProto) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNwProto(parent *Oxm, decoder *goloxi.Decoder) (*NxmNwProto, error) {
-	nxmnwproto := &NxmNwProto{Oxm: parent}
+func DecodeNxmNwProto(parent *Oxm, decoder *goloxi.Decoder) (*NxmNwProto, error) {
+	_nxmnwproto := &NxmNwProto{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmNwProto packet too short: %d < 1", decoder.Length())
 	}
-	nxmnwproto.Value = uint8(decoder.ReadByte())
-	return nxmnwproto, nil
+	_nxmnwproto.Value = uint8(decoder.ReadByte())
+	return _nxmnwproto, nil
 }
 
 func NewNxmNwProto() *NxmNwProto {
-	return &NxmNwProto{
+	obj := &NxmNwProto{
 		Oxm: NewOxm(3073),
 	}
+	return obj
 }
 func (self *NxmNwProto) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNwProto) GetName() string {
-	return "nxm_nw_proto"
+	return "nw_proto"
 }
 
 type NxmNwTos struct {
@@ -3134,26 +3197,27 @@ func (self *NxmNwTos) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNwTos(parent *Oxm, decoder *goloxi.Decoder) (*NxmNwTos, error) {
-	nxmnwtos := &NxmNwTos{Oxm: parent}
+func DecodeNxmNwTos(parent *Oxm, decoder *goloxi.Decoder) (*NxmNwTos, error) {
+	_nxmnwtos := &NxmNwTos{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmNwTos packet too short: %d < 1", decoder.Length())
 	}
-	nxmnwtos.Value = uint8(decoder.ReadByte())
-	return nxmnwtos, nil
+	_nxmnwtos.Value = uint8(decoder.ReadByte())
+	return _nxmnwtos, nil
 }
 
 func NewNxmNwTos() *NxmNwTos {
-	return &NxmNwTos{
+	obj := &NxmNwTos{
 		Oxm: NewOxm(2561),
 	}
+	return obj
 }
 func (self *NxmNwTos) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNwTos) GetName() string {
-	return "nxm_nw_tos"
+	return "nw_tos"
 }
 
 type NxmNwTtl struct {
@@ -3171,26 +3235,27 @@ func (self *NxmNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmNwTtl(parent *Oxm, decoder *goloxi.Decoder) (*NxmNwTtl, error) {
-	nxmnwttl := &NxmNwTtl{Oxm: parent}
+func DecodeNxmNwTtl(parent *Oxm, decoder *goloxi.Decoder) (*NxmNwTtl, error) {
+	_nxmnwttl := &NxmNwTtl{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmNwTtl packet too short: %d < 1", decoder.Length())
 	}
-	nxmnwttl.Value = uint8(decoder.ReadByte())
-	return nxmnwttl, nil
+	_nxmnwttl.Value = uint8(decoder.ReadByte())
+	return _nxmnwttl, nil
 }
 
 func NewNxmNwTtl() *NxmNwTtl {
-	return &NxmNwTtl{
+	obj := &NxmNwTtl{
 		Oxm: NewOxm(80385),
 	}
+	return obj
 }
 func (self *NxmNwTtl) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmNwTtl) GetName() string {
-	return "nxm_nw_ttl"
+	return "nw_ttl"
 }
 
 type NxmPktMark struct {
@@ -3208,26 +3273,27 @@ func (self *NxmPktMark) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmPktMark(parent *Oxm, decoder *goloxi.Decoder) (*NxmPktMark, error) {
-	nxmpktmark := &NxmPktMark{Oxm: parent}
+func DecodeNxmPktMark(parent *Oxm, decoder *goloxi.Decoder) (*NxmPktMark, error) {
+	_nxmpktmark := &NxmPktMark{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmPktMark packet too short: %d < 4", decoder.Length())
 	}
-	nxmpktmark.Value = uint32(decoder.ReadUint32())
-	return nxmpktmark, nil
+	_nxmpktmark.Value = uint32(decoder.ReadUint32())
+	return _nxmpktmark, nil
 }
 
 func NewNxmPktMark() *NxmPktMark {
-	return &NxmPktMark{
+	obj := &NxmPktMark{
 		Oxm: NewOxm(82436),
 	}
+	return obj
 }
 func (self *NxmPktMark) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmPktMark) GetName() string {
-	return "nxm_pkt_mark"
+	return "pkt_mark"
 }
 
 type NxmPktMarkMasked struct {
@@ -3247,27 +3313,28 @@ func (self *NxmPktMarkMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmPktMarkMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmPktMarkMasked, error) {
-	nxmpktmarkmasked := &NxmPktMarkMasked{Oxm: parent}
+func DecodeNxmPktMarkMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmPktMarkMasked, error) {
+	_nxmpktmarkmasked := &NxmPktMarkMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmPktMarkMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmpktmarkmasked.Value = uint32(decoder.ReadUint32())
-	nxmpktmarkmasked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmpktmarkmasked, nil
+	_nxmpktmarkmasked.Value = uint32(decoder.ReadUint32())
+	_nxmpktmarkmasked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmpktmarkmasked, nil
 }
 
 func NewNxmPktMarkMasked() *NxmPktMarkMasked {
-	return &NxmPktMarkMasked{
+	obj := &NxmPktMarkMasked{
 		Oxm: NewOxm(82692),
 	}
+	return obj
 }
 func (self *NxmPktMarkMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmPktMarkMasked) GetName() string {
-	return "nxm_pkt_mark_masked"
+	return "pkt_mark_masked"
 }
 
 type NxmRecircId struct {
@@ -3285,26 +3352,27 @@ func (self *NxmRecircId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmRecircId(parent *Oxm, decoder *goloxi.Decoder) (*NxmRecircId, error) {
-	nxmrecircid := &NxmRecircId{Oxm: parent}
+func DecodeNxmRecircId(parent *Oxm, decoder *goloxi.Decoder) (*NxmRecircId, error) {
+	_nxmrecircid := &NxmRecircId{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmRecircId packet too short: %d < 4", decoder.Length())
 	}
-	nxmrecircid.Value = uint32(decoder.ReadUint32())
-	return nxmrecircid, nil
+	_nxmrecircid.Value = uint32(decoder.ReadUint32())
+	return _nxmrecircid, nil
 }
 
 func NewNxmRecircId() *NxmRecircId {
-	return &NxmRecircId{
+	obj := &NxmRecircId{
 		Oxm: NewOxm(83972),
 	}
+	return obj
 }
 func (self *NxmRecircId) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmRecircId) GetName() string {
-	return "nxm_recirc_id"
+	return "recirc_id"
 }
 
 type NxmReg0 struct {
@@ -3322,26 +3390,27 @@ func (self *NxmReg0) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg0(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg0, error) {
-	nxmreg0 := &NxmReg0{Oxm: parent}
+func DecodeNxmReg0(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg0, error) {
+	_nxmreg0 := &NxmReg0{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg0 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg0.Value = uint32(decoder.ReadUint32())
-	return nxmreg0, nil
+	_nxmreg0.Value = uint32(decoder.ReadUint32())
+	return _nxmreg0, nil
 }
 
 func NewNxmReg0() *NxmReg0 {
-	return &NxmReg0{
+	obj := &NxmReg0{
 		Oxm: NewOxm(65540),
 	}
+	return obj
 }
 func (self *NxmReg0) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg0) GetName() string {
-	return "nxm_reg0"
+	return "reg0"
 }
 
 type NxmReg0Masked struct {
@@ -3361,27 +3430,28 @@ func (self *NxmReg0Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg0Masked, error) {
-	nxmreg0masked := &NxmReg0Masked{Oxm: parent}
+func DecodeNxmReg0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg0Masked, error) {
+	_nxmreg0masked := &NxmReg0Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg0Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg0masked.Value = uint32(decoder.ReadUint32())
-	nxmreg0masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg0masked, nil
+	_nxmreg0masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg0masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg0masked, nil
 }
 
 func NewNxmReg0Masked() *NxmReg0Masked {
-	return &NxmReg0Masked{
+	obj := &NxmReg0Masked{
 		Oxm: NewOxm(65796),
 	}
+	return obj
 }
 func (self *NxmReg0Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg0Masked) GetName() string {
-	return "nxm_reg0_masked"
+	return "reg0_masked"
 }
 
 type NxmReg1 struct {
@@ -3399,26 +3469,27 @@ func (self *NxmReg1) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg1(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg1, error) {
-	nxmreg1 := &NxmReg1{Oxm: parent}
+func DecodeNxmReg1(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg1, error) {
+	_nxmreg1 := &NxmReg1{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg1 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg1.Value = uint32(decoder.ReadUint32())
-	return nxmreg1, nil
+	_nxmreg1.Value = uint32(decoder.ReadUint32())
+	return _nxmreg1, nil
 }
 
 func NewNxmReg1() *NxmReg1 {
-	return &NxmReg1{
+	obj := &NxmReg1{
 		Oxm: NewOxm(66052),
 	}
+	return obj
 }
 func (self *NxmReg1) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg1) GetName() string {
-	return "nxm_reg1"
+	return "reg1"
 }
 
 type NxmReg10 struct {
@@ -3436,26 +3507,27 @@ func (self *NxmReg10) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg10(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg10, error) {
-	nxmreg10 := &NxmReg10{Oxm: parent}
+func DecodeNxmReg10(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg10, error) {
+	_nxmreg10 := &NxmReg10{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg10 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg10.Value = uint32(decoder.ReadUint32())
-	return nxmreg10, nil
+	_nxmreg10.Value = uint32(decoder.ReadUint32())
+	return _nxmreg10, nil
 }
 
 func NewNxmReg10() *NxmReg10 {
-	return &NxmReg10{
+	obj := &NxmReg10{
 		Oxm: NewOxm(70660),
 	}
+	return obj
 }
 func (self *NxmReg10) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg10) GetName() string {
-	return "nxm_reg10"
+	return "reg10"
 }
 
 type NxmReg10Masked struct {
@@ -3475,27 +3547,28 @@ func (self *NxmReg10Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg10Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg10Masked, error) {
-	nxmreg10masked := &NxmReg10Masked{Oxm: parent}
+func DecodeNxmReg10Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg10Masked, error) {
+	_nxmreg10masked := &NxmReg10Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg10Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg10masked.Value = uint32(decoder.ReadUint32())
-	nxmreg10masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg10masked, nil
+	_nxmreg10masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg10masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg10masked, nil
 }
 
 func NewNxmReg10Masked() *NxmReg10Masked {
-	return &NxmReg10Masked{
+	obj := &NxmReg10Masked{
 		Oxm: NewOxm(70916),
 	}
+	return obj
 }
 func (self *NxmReg10Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg10Masked) GetName() string {
-	return "nxm_reg10_masked"
+	return "reg10_masked"
 }
 
 type NxmReg11 struct {
@@ -3513,26 +3586,27 @@ func (self *NxmReg11) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg11(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg11, error) {
-	nxmreg11 := &NxmReg11{Oxm: parent}
+func DecodeNxmReg11(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg11, error) {
+	_nxmreg11 := &NxmReg11{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg11 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg11.Value = uint32(decoder.ReadUint32())
-	return nxmreg11, nil
+	_nxmreg11.Value = uint32(decoder.ReadUint32())
+	return _nxmreg11, nil
 }
 
 func NewNxmReg11() *NxmReg11 {
-	return &NxmReg11{
+	obj := &NxmReg11{
 		Oxm: NewOxm(71172),
 	}
+	return obj
 }
 func (self *NxmReg11) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg11) GetName() string {
-	return "nxm_reg11"
+	return "reg11"
 }
 
 type NxmReg11Masked struct {
@@ -3552,27 +3626,28 @@ func (self *NxmReg11Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg11Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg11Masked, error) {
-	nxmreg11masked := &NxmReg11Masked{Oxm: parent}
+func DecodeNxmReg11Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg11Masked, error) {
+	_nxmreg11masked := &NxmReg11Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg11Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg11masked.Value = uint32(decoder.ReadUint32())
-	nxmreg11masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg11masked, nil
+	_nxmreg11masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg11masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg11masked, nil
 }
 
 func NewNxmReg11Masked() *NxmReg11Masked {
-	return &NxmReg11Masked{
+	obj := &NxmReg11Masked{
 		Oxm: NewOxm(71428),
 	}
+	return obj
 }
 func (self *NxmReg11Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg11Masked) GetName() string {
-	return "nxm_reg11_masked"
+	return "reg11_masked"
 }
 
 type NxmReg12 struct {
@@ -3590,26 +3665,27 @@ func (self *NxmReg12) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg12(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg12, error) {
-	nxmreg12 := &NxmReg12{Oxm: parent}
+func DecodeNxmReg12(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg12, error) {
+	_nxmreg12 := &NxmReg12{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg12 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg12.Value = uint32(decoder.ReadUint32())
-	return nxmreg12, nil
+	_nxmreg12.Value = uint32(decoder.ReadUint32())
+	return _nxmreg12, nil
 }
 
 func NewNxmReg12() *NxmReg12 {
-	return &NxmReg12{
+	obj := &NxmReg12{
 		Oxm: NewOxm(71684),
 	}
+	return obj
 }
 func (self *NxmReg12) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg12) GetName() string {
-	return "nxm_reg12"
+	return "reg12"
 }
 
 type NxmReg12Masked struct {
@@ -3629,27 +3705,28 @@ func (self *NxmReg12Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg12Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg12Masked, error) {
-	nxmreg12masked := &NxmReg12Masked{Oxm: parent}
+func DecodeNxmReg12Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg12Masked, error) {
+	_nxmreg12masked := &NxmReg12Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg12Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg12masked.Value = uint32(decoder.ReadUint32())
-	nxmreg12masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg12masked, nil
+	_nxmreg12masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg12masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg12masked, nil
 }
 
 func NewNxmReg12Masked() *NxmReg12Masked {
-	return &NxmReg12Masked{
+	obj := &NxmReg12Masked{
 		Oxm: NewOxm(71940),
 	}
+	return obj
 }
 func (self *NxmReg12Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg12Masked) GetName() string {
-	return "nxm_reg12_masked"
+	return "reg12_masked"
 }
 
 type NxmReg13 struct {
@@ -3667,26 +3744,27 @@ func (self *NxmReg13) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg13(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg13, error) {
-	nxmreg13 := &NxmReg13{Oxm: parent}
+func DecodeNxmReg13(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg13, error) {
+	_nxmreg13 := &NxmReg13{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg13 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg13.Value = uint32(decoder.ReadUint32())
-	return nxmreg13, nil
+	_nxmreg13.Value = uint32(decoder.ReadUint32())
+	return _nxmreg13, nil
 }
 
 func NewNxmReg13() *NxmReg13 {
-	return &NxmReg13{
+	obj := &NxmReg13{
 		Oxm: NewOxm(72196),
 	}
+	return obj
 }
 func (self *NxmReg13) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg13) GetName() string {
-	return "nxm_reg13"
+	return "reg13"
 }
 
 type NxmReg13Masked struct {
@@ -3706,27 +3784,28 @@ func (self *NxmReg13Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg13Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg13Masked, error) {
-	nxmreg13masked := &NxmReg13Masked{Oxm: parent}
+func DecodeNxmReg13Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg13Masked, error) {
+	_nxmreg13masked := &NxmReg13Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg13Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg13masked.Value = uint32(decoder.ReadUint32())
-	nxmreg13masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg13masked, nil
+	_nxmreg13masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg13masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg13masked, nil
 }
 
 func NewNxmReg13Masked() *NxmReg13Masked {
-	return &NxmReg13Masked{
+	obj := &NxmReg13Masked{
 		Oxm: NewOxm(72452),
 	}
+	return obj
 }
 func (self *NxmReg13Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg13Masked) GetName() string {
-	return "nxm_reg13_masked"
+	return "reg13_masked"
 }
 
 type NxmReg14 struct {
@@ -3744,26 +3823,27 @@ func (self *NxmReg14) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg14(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg14, error) {
-	nxmreg14 := &NxmReg14{Oxm: parent}
+func DecodeNxmReg14(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg14, error) {
+	_nxmreg14 := &NxmReg14{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg14 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg14.Value = uint32(decoder.ReadUint32())
-	return nxmreg14, nil
+	_nxmreg14.Value = uint32(decoder.ReadUint32())
+	return _nxmreg14, nil
 }
 
 func NewNxmReg14() *NxmReg14 {
-	return &NxmReg14{
+	obj := &NxmReg14{
 		Oxm: NewOxm(72708),
 	}
+	return obj
 }
 func (self *NxmReg14) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg14) GetName() string {
-	return "nxm_reg14"
+	return "reg14"
 }
 
 type NxmReg14Masked struct {
@@ -3783,27 +3863,28 @@ func (self *NxmReg14Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg14Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg14Masked, error) {
-	nxmreg14masked := &NxmReg14Masked{Oxm: parent}
+func DecodeNxmReg14Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg14Masked, error) {
+	_nxmreg14masked := &NxmReg14Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg14Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg14masked.Value = uint32(decoder.ReadUint32())
-	nxmreg14masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg14masked, nil
+	_nxmreg14masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg14masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg14masked, nil
 }
 
 func NewNxmReg14Masked() *NxmReg14Masked {
-	return &NxmReg14Masked{
+	obj := &NxmReg14Masked{
 		Oxm: NewOxm(72964),
 	}
+	return obj
 }
 func (self *NxmReg14Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg14Masked) GetName() string {
-	return "nxm_reg14_masked"
+	return "reg14_masked"
 }
 
 type NxmReg15 struct {
@@ -3821,26 +3902,27 @@ func (self *NxmReg15) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg15(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg15, error) {
-	nxmreg15 := &NxmReg15{Oxm: parent}
+func DecodeNxmReg15(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg15, error) {
+	_nxmreg15 := &NxmReg15{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg15 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg15.Value = uint32(decoder.ReadUint32())
-	return nxmreg15, nil
+	_nxmreg15.Value = uint32(decoder.ReadUint32())
+	return _nxmreg15, nil
 }
 
 func NewNxmReg15() *NxmReg15 {
-	return &NxmReg15{
+	obj := &NxmReg15{
 		Oxm: NewOxm(73220),
 	}
+	return obj
 }
 func (self *NxmReg15) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg15) GetName() string {
-	return "nxm_reg15"
+	return "reg15"
 }
 
 type NxmReg15Masked struct {
@@ -3860,27 +3942,28 @@ func (self *NxmReg15Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg15Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg15Masked, error) {
-	nxmreg15masked := &NxmReg15Masked{Oxm: parent}
+func DecodeNxmReg15Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg15Masked, error) {
+	_nxmreg15masked := &NxmReg15Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg15Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg15masked.Value = uint32(decoder.ReadUint32())
-	nxmreg15masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg15masked, nil
+	_nxmreg15masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg15masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg15masked, nil
 }
 
 func NewNxmReg15Masked() *NxmReg15Masked {
-	return &NxmReg15Masked{
+	obj := &NxmReg15Masked{
 		Oxm: NewOxm(73476),
 	}
+	return obj
 }
 func (self *NxmReg15Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg15Masked) GetName() string {
-	return "nxm_reg15_masked"
+	return "reg15_masked"
 }
 
 type NxmReg1Masked struct {
@@ -3900,27 +3983,28 @@ func (self *NxmReg1Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg1Masked, error) {
-	nxmreg1masked := &NxmReg1Masked{Oxm: parent}
+func DecodeNxmReg1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg1Masked, error) {
+	_nxmreg1masked := &NxmReg1Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg1Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg1masked.Value = uint32(decoder.ReadUint32())
-	nxmreg1masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg1masked, nil
+	_nxmreg1masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg1masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg1masked, nil
 }
 
 func NewNxmReg1Masked() *NxmReg1Masked {
-	return &NxmReg1Masked{
+	obj := &NxmReg1Masked{
 		Oxm: NewOxm(66308),
 	}
+	return obj
 }
 func (self *NxmReg1Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg1Masked) GetName() string {
-	return "nxm_reg1_masked"
+	return "reg1_masked"
 }
 
 type NxmReg2 struct {
@@ -3938,26 +4022,27 @@ func (self *NxmReg2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg2(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg2, error) {
-	nxmreg2 := &NxmReg2{Oxm: parent}
+func DecodeNxmReg2(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg2, error) {
+	_nxmreg2 := &NxmReg2{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg2 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg2.Value = uint32(decoder.ReadUint32())
-	return nxmreg2, nil
+	_nxmreg2.Value = uint32(decoder.ReadUint32())
+	return _nxmreg2, nil
 }
 
 func NewNxmReg2() *NxmReg2 {
-	return &NxmReg2{
+	obj := &NxmReg2{
 		Oxm: NewOxm(66564),
 	}
+	return obj
 }
 func (self *NxmReg2) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg2) GetName() string {
-	return "nxm_reg2"
+	return "reg2"
 }
 
 type NxmReg2Masked struct {
@@ -3977,27 +4062,28 @@ func (self *NxmReg2Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg2Masked, error) {
-	nxmreg2masked := &NxmReg2Masked{Oxm: parent}
+func DecodeNxmReg2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg2Masked, error) {
+	_nxmreg2masked := &NxmReg2Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg2Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg2masked.Value = uint32(decoder.ReadUint32())
-	nxmreg2masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg2masked, nil
+	_nxmreg2masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg2masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg2masked, nil
 }
 
 func NewNxmReg2Masked() *NxmReg2Masked {
-	return &NxmReg2Masked{
+	obj := &NxmReg2Masked{
 		Oxm: NewOxm(66820),
 	}
+	return obj
 }
 func (self *NxmReg2Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg2Masked) GetName() string {
-	return "nxm_reg2_masked"
+	return "reg2_masked"
 }
 
 type NxmReg3 struct {
@@ -4015,26 +4101,27 @@ func (self *NxmReg3) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg3(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg3, error) {
-	nxmreg3 := &NxmReg3{Oxm: parent}
+func DecodeNxmReg3(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg3, error) {
+	_nxmreg3 := &NxmReg3{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg3 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg3.Value = uint32(decoder.ReadUint32())
-	return nxmreg3, nil
+	_nxmreg3.Value = uint32(decoder.ReadUint32())
+	return _nxmreg3, nil
 }
 
 func NewNxmReg3() *NxmReg3 {
-	return &NxmReg3{
+	obj := &NxmReg3{
 		Oxm: NewOxm(67076),
 	}
+	return obj
 }
 func (self *NxmReg3) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg3) GetName() string {
-	return "nxm_reg3"
+	return "reg3"
 }
 
 type NxmReg3Masked struct {
@@ -4054,27 +4141,28 @@ func (self *NxmReg3Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg3Masked, error) {
-	nxmreg3masked := &NxmReg3Masked{Oxm: parent}
+func DecodeNxmReg3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg3Masked, error) {
+	_nxmreg3masked := &NxmReg3Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg3Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg3masked.Value = uint32(decoder.ReadUint32())
-	nxmreg3masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg3masked, nil
+	_nxmreg3masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg3masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg3masked, nil
 }
 
 func NewNxmReg3Masked() *NxmReg3Masked {
-	return &NxmReg3Masked{
+	obj := &NxmReg3Masked{
 		Oxm: NewOxm(67332),
 	}
+	return obj
 }
 func (self *NxmReg3Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg3Masked) GetName() string {
-	return "nxm_reg3_masked"
+	return "reg3_masked"
 }
 
 type NxmReg4 struct {
@@ -4092,26 +4180,27 @@ func (self *NxmReg4) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg4(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg4, error) {
-	nxmreg4 := &NxmReg4{Oxm: parent}
+func DecodeNxmReg4(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg4, error) {
+	_nxmreg4 := &NxmReg4{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg4 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg4.Value = uint32(decoder.ReadUint32())
-	return nxmreg4, nil
+	_nxmreg4.Value = uint32(decoder.ReadUint32())
+	return _nxmreg4, nil
 }
 
 func NewNxmReg4() *NxmReg4 {
-	return &NxmReg4{
+	obj := &NxmReg4{
 		Oxm: NewOxm(67588),
 	}
+	return obj
 }
 func (self *NxmReg4) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg4) GetName() string {
-	return "nxm_reg4"
+	return "reg4"
 }
 
 type NxmReg4Masked struct {
@@ -4131,27 +4220,28 @@ func (self *NxmReg4Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg4Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg4Masked, error) {
-	nxmreg4masked := &NxmReg4Masked{Oxm: parent}
+func DecodeNxmReg4Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg4Masked, error) {
+	_nxmreg4masked := &NxmReg4Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg4Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg4masked.Value = uint32(decoder.ReadUint32())
-	nxmreg4masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg4masked, nil
+	_nxmreg4masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg4masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg4masked, nil
 }
 
 func NewNxmReg4Masked() *NxmReg4Masked {
-	return &NxmReg4Masked{
+	obj := &NxmReg4Masked{
 		Oxm: NewOxm(67844),
 	}
+	return obj
 }
 func (self *NxmReg4Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg4Masked) GetName() string {
-	return "nxm_reg4_masked"
+	return "reg4_masked"
 }
 
 type NxmReg5 struct {
@@ -4169,26 +4259,27 @@ func (self *NxmReg5) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg5(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg5, error) {
-	nxmreg5 := &NxmReg5{Oxm: parent}
+func DecodeNxmReg5(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg5, error) {
+	_nxmreg5 := &NxmReg5{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg5 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg5.Value = uint32(decoder.ReadUint32())
-	return nxmreg5, nil
+	_nxmreg5.Value = uint32(decoder.ReadUint32())
+	return _nxmreg5, nil
 }
 
 func NewNxmReg5() *NxmReg5 {
-	return &NxmReg5{
+	obj := &NxmReg5{
 		Oxm: NewOxm(68100),
 	}
+	return obj
 }
 func (self *NxmReg5) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg5) GetName() string {
-	return "nxm_reg5"
+	return "reg5"
 }
 
 type NxmReg5Masked struct {
@@ -4208,27 +4299,28 @@ func (self *NxmReg5Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg5Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg5Masked, error) {
-	nxmreg5masked := &NxmReg5Masked{Oxm: parent}
+func DecodeNxmReg5Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg5Masked, error) {
+	_nxmreg5masked := &NxmReg5Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg5Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg5masked.Value = uint32(decoder.ReadUint32())
-	nxmreg5masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg5masked, nil
+	_nxmreg5masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg5masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg5masked, nil
 }
 
 func NewNxmReg5Masked() *NxmReg5Masked {
-	return &NxmReg5Masked{
+	obj := &NxmReg5Masked{
 		Oxm: NewOxm(68356),
 	}
+	return obj
 }
 func (self *NxmReg5Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg5Masked) GetName() string {
-	return "nxm_reg5_masked"
+	return "reg5_masked"
 }
 
 type NxmReg6 struct {
@@ -4246,26 +4338,27 @@ func (self *NxmReg6) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg6(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg6, error) {
-	nxmreg6 := &NxmReg6{Oxm: parent}
+func DecodeNxmReg6(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg6, error) {
+	_nxmreg6 := &NxmReg6{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg6 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg6.Value = uint32(decoder.ReadUint32())
-	return nxmreg6, nil
+	_nxmreg6.Value = uint32(decoder.ReadUint32())
+	return _nxmreg6, nil
 }
 
 func NewNxmReg6() *NxmReg6 {
-	return &NxmReg6{
+	obj := &NxmReg6{
 		Oxm: NewOxm(68612),
 	}
+	return obj
 }
 func (self *NxmReg6) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg6) GetName() string {
-	return "nxm_reg6"
+	return "reg6"
 }
 
 type NxmReg6Masked struct {
@@ -4285,27 +4378,28 @@ func (self *NxmReg6Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg6Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg6Masked, error) {
-	nxmreg6masked := &NxmReg6Masked{Oxm: parent}
+func DecodeNxmReg6Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg6Masked, error) {
+	_nxmreg6masked := &NxmReg6Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg6Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg6masked.Value = uint32(decoder.ReadUint32())
-	nxmreg6masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg6masked, nil
+	_nxmreg6masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg6masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg6masked, nil
 }
 
 func NewNxmReg6Masked() *NxmReg6Masked {
-	return &NxmReg6Masked{
+	obj := &NxmReg6Masked{
 		Oxm: NewOxm(68868),
 	}
+	return obj
 }
 func (self *NxmReg6Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg6Masked) GetName() string {
-	return "nxm_reg6_masked"
+	return "reg6_masked"
 }
 
 type NxmReg7 struct {
@@ -4323,26 +4417,27 @@ func (self *NxmReg7) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg7(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg7, error) {
-	nxmreg7 := &NxmReg7{Oxm: parent}
+func DecodeNxmReg7(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg7, error) {
+	_nxmreg7 := &NxmReg7{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg7 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg7.Value = uint32(decoder.ReadUint32())
-	return nxmreg7, nil
+	_nxmreg7.Value = uint32(decoder.ReadUint32())
+	return _nxmreg7, nil
 }
 
 func NewNxmReg7() *NxmReg7 {
-	return &NxmReg7{
+	obj := &NxmReg7{
 		Oxm: NewOxm(69124),
 	}
+	return obj
 }
 func (self *NxmReg7) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg7) GetName() string {
-	return "nxm_reg7"
+	return "reg7"
 }
 
 type NxmReg7Masked struct {
@@ -4362,27 +4457,28 @@ func (self *NxmReg7Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg7Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg7Masked, error) {
-	nxmreg7masked := &NxmReg7Masked{Oxm: parent}
+func DecodeNxmReg7Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg7Masked, error) {
+	_nxmreg7masked := &NxmReg7Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg7Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg7masked.Value = uint32(decoder.ReadUint32())
-	nxmreg7masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg7masked, nil
+	_nxmreg7masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg7masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg7masked, nil
 }
 
 func NewNxmReg7Masked() *NxmReg7Masked {
-	return &NxmReg7Masked{
+	obj := &NxmReg7Masked{
 		Oxm: NewOxm(69380),
 	}
+	return obj
 }
 func (self *NxmReg7Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg7Masked) GetName() string {
-	return "nxm_reg7_masked"
+	return "reg7_masked"
 }
 
 type NxmReg8 struct {
@@ -4400,26 +4496,27 @@ func (self *NxmReg8) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg8(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg8, error) {
-	nxmreg8 := &NxmReg8{Oxm: parent}
+func DecodeNxmReg8(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg8, error) {
+	_nxmreg8 := &NxmReg8{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg8 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg8.Value = uint32(decoder.ReadUint32())
-	return nxmreg8, nil
+	_nxmreg8.Value = uint32(decoder.ReadUint32())
+	return _nxmreg8, nil
 }
 
 func NewNxmReg8() *NxmReg8 {
-	return &NxmReg8{
+	obj := &NxmReg8{
 		Oxm: NewOxm(69636),
 	}
+	return obj
 }
 func (self *NxmReg8) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg8) GetName() string {
-	return "nxm_reg8"
+	return "reg8"
 }
 
 type NxmReg8Masked struct {
@@ -4439,27 +4536,28 @@ func (self *NxmReg8Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg8Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg8Masked, error) {
-	nxmreg8masked := &NxmReg8Masked{Oxm: parent}
+func DecodeNxmReg8Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg8Masked, error) {
+	_nxmreg8masked := &NxmReg8Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg8Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg8masked.Value = uint32(decoder.ReadUint32())
-	nxmreg8masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg8masked, nil
+	_nxmreg8masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg8masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg8masked, nil
 }
 
 func NewNxmReg8Masked() *NxmReg8Masked {
-	return &NxmReg8Masked{
+	obj := &NxmReg8Masked{
 		Oxm: NewOxm(69892),
 	}
+	return obj
 }
 func (self *NxmReg8Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg8Masked) GetName() string {
-	return "nxm_reg8_masked"
+	return "reg8_masked"
 }
 
 type NxmReg9 struct {
@@ -4477,26 +4575,27 @@ func (self *NxmReg9) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg9(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg9, error) {
-	nxmreg9 := &NxmReg9{Oxm: parent}
+func DecodeNxmReg9(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg9, error) {
+	_nxmreg9 := &NxmReg9{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmReg9 packet too short: %d < 4", decoder.Length())
 	}
-	nxmreg9.Value = uint32(decoder.ReadUint32())
-	return nxmreg9, nil
+	_nxmreg9.Value = uint32(decoder.ReadUint32())
+	return _nxmreg9, nil
 }
 
 func NewNxmReg9() *NxmReg9 {
-	return &NxmReg9{
+	obj := &NxmReg9{
 		Oxm: NewOxm(70148),
 	}
+	return obj
 }
 func (self *NxmReg9) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg9) GetName() string {
-	return "nxm_reg9"
+	return "reg9"
 }
 
 type NxmReg9Masked struct {
@@ -4516,27 +4615,28 @@ func (self *NxmReg9Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmReg9Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg9Masked, error) {
-	nxmreg9masked := &NxmReg9Masked{Oxm: parent}
+func DecodeNxmReg9Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg9Masked, error) {
+	_nxmreg9masked := &NxmReg9Masked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmReg9Masked packet too short: %d < 8", decoder.Length())
 	}
-	nxmreg9masked.Value = uint32(decoder.ReadUint32())
-	nxmreg9masked.ValueMask = uint32(decoder.ReadUint32())
-	return nxmreg9masked, nil
+	_nxmreg9masked.Value = uint32(decoder.ReadUint32())
+	_nxmreg9masked.ValueMask = uint32(decoder.ReadUint32())
+	return _nxmreg9masked, nil
 }
 
 func NewNxmReg9Masked() *NxmReg9Masked {
-	return &NxmReg9Masked{
+	obj := &NxmReg9Masked{
 		Oxm: NewOxm(70404),
 	}
+	return obj
 }
 func (self *NxmReg9Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmReg9Masked) GetName() string {
-	return "nxm_reg9_masked"
+	return "reg9_masked"
 }
 
 type NxmTcpDst struct {
@@ -4554,26 +4654,27 @@ func (self *NxmTcpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTcpDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpDst, error) {
-	nxmtcpdst := &NxmTcpDst{Oxm: parent}
+func DecodeNxmTcpDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpDst, error) {
+	_nxmtcpdst := &NxmTcpDst{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmTcpDst packet too short: %d < 2", decoder.Length())
 	}
-	nxmtcpdst.Value = uint16(decoder.ReadUint16())
-	return nxmtcpdst, nil
+	_nxmtcpdst.Value = uint16(decoder.ReadUint16())
+	return _nxmtcpdst, nil
 }
 
 func NewNxmTcpDst() *NxmTcpDst {
-	return &NxmTcpDst{
+	obj := &NxmTcpDst{
 		Oxm: NewOxm(5122),
 	}
+	return obj
 }
 func (self *NxmTcpDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTcpDst) GetName() string {
-	return "nxm_tcp_dst"
+	return "tcp_dst"
 }
 
 type NxmTcpDstMasked struct {
@@ -4593,27 +4694,28 @@ func (self *NxmTcpDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTcpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpDstMasked, error) {
-	nxmtcpdstmasked := &NxmTcpDstMasked{Oxm: parent}
+func DecodeNxmTcpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpDstMasked, error) {
+	_nxmtcpdstmasked := &NxmTcpDstMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmTcpDstMasked packet too short: %d < 4", decoder.Length())
 	}
-	nxmtcpdstmasked.Value = uint16(decoder.ReadUint16())
-	nxmtcpdstmasked.ValueMask = uint16(decoder.ReadUint16())
-	return nxmtcpdstmasked, nil
+	_nxmtcpdstmasked.Value = uint16(decoder.ReadUint16())
+	_nxmtcpdstmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _nxmtcpdstmasked, nil
 }
 
 func NewNxmTcpDstMasked() *NxmTcpDstMasked {
-	return &NxmTcpDstMasked{
+	obj := &NxmTcpDstMasked{
 		Oxm: NewOxm(5378),
 	}
+	return obj
 }
 func (self *NxmTcpDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTcpDstMasked) GetName() string {
-	return "nxm_tcp_dst_masked"
+	return "tcp_dst_masked"
 }
 
 type NxmTcpFlags struct {
@@ -4631,23 +4733,24 @@ func (self *NxmTcpFlags) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTcpFlags(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpFlags, error) {
-	nxmtcpflags := &NxmTcpFlags{Oxm: parent}
-	nxmtcpflags.Value = decoder.Read(decoder.Length())
-	return nxmtcpflags, nil
+func DecodeNxmTcpFlags(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpFlags, error) {
+	_nxmtcpflags := &NxmTcpFlags{Oxm: parent}
+	_nxmtcpflags.Value = decoder.Read(decoder.Length())
+	return _nxmtcpflags, nil
 }
 
 func NewNxmTcpFlags() *NxmTcpFlags {
-	return &NxmTcpFlags{
+	obj := &NxmTcpFlags{
 		Oxm: NewOxm(82946),
 	}
+	return obj
 }
 func (self *NxmTcpFlags) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTcpFlags) GetName() string {
-	return "nxm_tcp_flags"
+	return "tcp_flags"
 }
 
 type NxmTcpFlagsMasked struct {
@@ -4667,24 +4770,25 @@ func (self *NxmTcpFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTcpFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpFlagsMasked, error) {
-	nxmtcpflagsmasked := &NxmTcpFlagsMasked{Oxm: parent}
-	nxmtcpflagsmasked.Value = decoder.Read(decoder.Length())
-	nxmtcpflagsmasked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtcpflagsmasked, nil
+func DecodeNxmTcpFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpFlagsMasked, error) {
+	_nxmtcpflagsmasked := &NxmTcpFlagsMasked{Oxm: parent}
+	_nxmtcpflagsmasked.Value = decoder.Read(decoder.Length())
+	_nxmtcpflagsmasked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtcpflagsmasked, nil
 }
 
 func NewNxmTcpFlagsMasked() *NxmTcpFlagsMasked {
-	return &NxmTcpFlagsMasked{
+	obj := &NxmTcpFlagsMasked{
 		Oxm: NewOxm(83202),
 	}
+	return obj
 }
 func (self *NxmTcpFlagsMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTcpFlagsMasked) GetName() string {
-	return "nxm_tcp_flags_masked"
+	return "tcp_flags_masked"
 }
 
 type NxmTcpSrc struct {
@@ -4702,26 +4806,27 @@ func (self *NxmTcpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTcpSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpSrc, error) {
-	nxmtcpsrc := &NxmTcpSrc{Oxm: parent}
+func DecodeNxmTcpSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpSrc, error) {
+	_nxmtcpsrc := &NxmTcpSrc{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmTcpSrc packet too short: %d < 2", decoder.Length())
 	}
-	nxmtcpsrc.Value = uint16(decoder.ReadUint16())
-	return nxmtcpsrc, nil
+	_nxmtcpsrc.Value = uint16(decoder.ReadUint16())
+	return _nxmtcpsrc, nil
 }
 
 func NewNxmTcpSrc() *NxmTcpSrc {
-	return &NxmTcpSrc{
+	obj := &NxmTcpSrc{
 		Oxm: NewOxm(4610),
 	}
+	return obj
 }
 func (self *NxmTcpSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTcpSrc) GetName() string {
-	return "nxm_tcp_src"
+	return "tcp_src"
 }
 
 type NxmTcpSrcMasked struct {
@@ -4741,27 +4846,28 @@ func (self *NxmTcpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTcpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpSrcMasked, error) {
-	nxmtcpsrcmasked := &NxmTcpSrcMasked{Oxm: parent}
+func DecodeNxmTcpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpSrcMasked, error) {
+	_nxmtcpsrcmasked := &NxmTcpSrcMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmTcpSrcMasked packet too short: %d < 4", decoder.Length())
 	}
-	nxmtcpsrcmasked.Value = uint16(decoder.ReadUint16())
-	nxmtcpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
-	return nxmtcpsrcmasked, nil
+	_nxmtcpsrcmasked.Value = uint16(decoder.ReadUint16())
+	_nxmtcpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _nxmtcpsrcmasked, nil
 }
 
 func NewNxmTcpSrcMasked() *NxmTcpSrcMasked {
-	return &NxmTcpSrcMasked{
+	obj := &NxmTcpSrcMasked{
 		Oxm: NewOxm(4866),
 	}
+	return obj
 }
 func (self *NxmTcpSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTcpSrcMasked) GetName() string {
-	return "nxm_tcp_src_masked"
+	return "tcp_src_masked"
 }
 
 type NxmTunDst struct {
@@ -4779,26 +4885,27 @@ func (self *NxmTunDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunDst, error) {
-	nxmtundst := &NxmTunDst{Oxm: parent}
+func DecodeNxmTunDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunDst, error) {
+	_nxmtundst := &NxmTunDst{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmTunDst packet too short: %d < 4", decoder.Length())
 	}
-	nxmtundst.Value = net.IP(decoder.Read(4))
-	return nxmtundst, nil
+	_nxmtundst.Value = net.IP(decoder.Read(4))
+	return _nxmtundst, nil
 }
 
 func NewNxmTunDst() *NxmTunDst {
-	return &NxmTunDst{
+	obj := &NxmTunDst{
 		Oxm: NewOxm(81924),
 	}
+	return obj
 }
 func (self *NxmTunDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunDst) GetName() string {
-	return "nxm_tun_dst"
+	return "tun_dst"
 }
 
 type NxmTunDstMasked struct {
@@ -4818,27 +4925,28 @@ func (self *NxmTunDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunDstMasked, error) {
-	nxmtundstmasked := &NxmTunDstMasked{Oxm: parent}
+func DecodeNxmTunDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunDstMasked, error) {
+	_nxmtundstmasked := &NxmTunDstMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmTunDstMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmtundstmasked.Value = net.IP(decoder.Read(4))
-	nxmtundstmasked.ValueMask = net.IP(decoder.Read(4))
-	return nxmtundstmasked, nil
+	_nxmtundstmasked.Value = net.IP(decoder.Read(4))
+	_nxmtundstmasked.ValueMask = net.IP(decoder.Read(4))
+	return _nxmtundstmasked, nil
 }
 
 func NewNxmTunDstMasked() *NxmTunDstMasked {
-	return &NxmTunDstMasked{
+	obj := &NxmTunDstMasked{
 		Oxm: NewOxm(82180),
 	}
+	return obj
 }
 func (self *NxmTunDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunDstMasked) GetName() string {
-	return "nxm_tun_dst_masked"
+	return "tun_dst_masked"
 }
 
 type NxmTunFlags struct {
@@ -4856,23 +4964,24 @@ func (self *NxmTunFlags) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunFlags(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunFlags, error) {
-	nxmtunflags := &NxmTunFlags{Oxm: parent}
-	nxmtunflags.Value = decoder.Read(decoder.Length())
-	return nxmtunflags, nil
+func DecodeNxmTunFlags(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunFlags, error) {
+	_nxmtunflags := &NxmTunFlags{Oxm: parent}
+	_nxmtunflags.Value = decoder.Read(decoder.Length())
+	return _nxmtunflags, nil
 }
 
 func NewNxmTunFlags() *NxmTunFlags {
-	return &NxmTunFlags{
+	obj := &NxmTunFlags{
 		Oxm: NewOxm(118786),
 	}
+	return obj
 }
 func (self *NxmTunFlags) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunFlags) GetName() string {
-	return "nxm_tun_flags"
+	return "tun_flags"
 }
 
 type NxmTunFlagsMasked struct {
@@ -4892,24 +5001,25 @@ func (self *NxmTunFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunFlagsMasked, error) {
-	nxmtunflagsmasked := &NxmTunFlagsMasked{Oxm: parent}
-	nxmtunflagsmasked.Value = decoder.Read(decoder.Length())
-	nxmtunflagsmasked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunflagsmasked, nil
+func DecodeNxmTunFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunFlagsMasked, error) {
+	_nxmtunflagsmasked := &NxmTunFlagsMasked{Oxm: parent}
+	_nxmtunflagsmasked.Value = decoder.Read(decoder.Length())
+	_nxmtunflagsmasked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunflagsmasked, nil
 }
 
 func NewNxmTunFlagsMasked() *NxmTunFlagsMasked {
-	return &NxmTunFlagsMasked{
+	obj := &NxmTunFlagsMasked{
 		Oxm: NewOxm(119042),
 	}
+	return obj
 }
 func (self *NxmTunFlagsMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunFlagsMasked) GetName() string {
-	return "nxm_tun_flags_masked"
+	return "tun_flags_masked"
 }
 
 type NxmTunGbpFlags struct {
@@ -4927,26 +5037,27 @@ func (self *NxmTunGbpFlags) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunGbpFlags(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpFlags, error) {
-	nxmtungbpflags := &NxmTunGbpFlags{Oxm: parent}
+func DecodeNxmTunGbpFlags(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpFlags, error) {
+	_nxmtungbpflags := &NxmTunGbpFlags{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("NxmTunGbpFlags packet too short: %d < 1", decoder.Length())
 	}
-	nxmtungbpflags.Value = uint8(decoder.ReadByte())
-	return nxmtungbpflags, nil
+	_nxmtungbpflags.Value = uint8(decoder.ReadByte())
+	return _nxmtungbpflags, nil
 }
 
 func NewNxmTunGbpFlags() *NxmTunGbpFlags {
-	return &NxmTunGbpFlags{
+	obj := &NxmTunGbpFlags{
 		Oxm: NewOxm(85505),
 	}
+	return obj
 }
 func (self *NxmTunGbpFlags) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunGbpFlags) GetName() string {
-	return "nxm_tun_gbp_flags"
+	return "tun_gbp_flags"
 }
 
 type NxmTunGbpFlagsMasked struct {
@@ -4966,27 +5077,28 @@ func (self *NxmTunGbpFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunGbpFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpFlagsMasked, error) {
-	nxmtungbpflagsmasked := &NxmTunGbpFlagsMasked{Oxm: parent}
+func DecodeNxmTunGbpFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpFlagsMasked, error) {
+	_nxmtungbpflagsmasked := &NxmTunGbpFlagsMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmTunGbpFlagsMasked packet too short: %d < 2", decoder.Length())
 	}
-	nxmtungbpflagsmasked.Value = uint8(decoder.ReadByte())
-	nxmtungbpflagsmasked.ValueMask = uint8(decoder.ReadByte())
-	return nxmtungbpflagsmasked, nil
+	_nxmtungbpflagsmasked.Value = uint8(decoder.ReadByte())
+	_nxmtungbpflagsmasked.ValueMask = uint8(decoder.ReadByte())
+	return _nxmtungbpflagsmasked, nil
 }
 
 func NewNxmTunGbpFlagsMasked() *NxmTunGbpFlagsMasked {
-	return &NxmTunGbpFlagsMasked{
+	obj := &NxmTunGbpFlagsMasked{
 		Oxm: NewOxm(85761),
 	}
+	return obj
 }
 func (self *NxmTunGbpFlagsMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunGbpFlagsMasked) GetName() string {
-	return "nxm_tun_gbp_flags_masked"
+	return "tun_gbp_flags_masked"
 }
 
 type NxmTunGbpId struct {
@@ -5004,26 +5116,27 @@ func (self *NxmTunGbpId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunGbpId(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpId, error) {
-	nxmtungbpid := &NxmTunGbpId{Oxm: parent}
+func DecodeNxmTunGbpId(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpId, error) {
+	_nxmtungbpid := &NxmTunGbpId{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmTunGbpId packet too short: %d < 2", decoder.Length())
 	}
-	nxmtungbpid.Value = uint16(decoder.ReadUint16())
-	return nxmtungbpid, nil
+	_nxmtungbpid.Value = uint16(decoder.ReadUint16())
+	return _nxmtungbpid, nil
 }
 
 func NewNxmTunGbpId() *NxmTunGbpId {
-	return &NxmTunGbpId{
+	obj := &NxmTunGbpId{
 		Oxm: NewOxm(84994),
 	}
+	return obj
 }
 func (self *NxmTunGbpId) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunGbpId) GetName() string {
-	return "nxm_tun_gbp_id"
+	return "tun_gbp_id"
 }
 
 type NxmTunGbpIdMasked struct {
@@ -5043,27 +5156,28 @@ func (self *NxmTunGbpIdMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunGbpIdMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpIdMasked, error) {
-	nxmtungbpidmasked := &NxmTunGbpIdMasked{Oxm: parent}
+func DecodeNxmTunGbpIdMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpIdMasked, error) {
+	_nxmtungbpidmasked := &NxmTunGbpIdMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmTunGbpIdMasked packet too short: %d < 4", decoder.Length())
 	}
-	nxmtungbpidmasked.Value = uint16(decoder.ReadUint16())
-	nxmtungbpidmasked.ValueMask = uint16(decoder.ReadUint16())
-	return nxmtungbpidmasked, nil
+	_nxmtungbpidmasked.Value = uint16(decoder.ReadUint16())
+	_nxmtungbpidmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _nxmtungbpidmasked, nil
 }
 
 func NewNxmTunGbpIdMasked() *NxmTunGbpIdMasked {
-	return &NxmTunGbpIdMasked{
+	obj := &NxmTunGbpIdMasked{
 		Oxm: NewOxm(85250),
 	}
+	return obj
 }
 func (self *NxmTunGbpIdMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunGbpIdMasked) GetName() string {
-	return "nxm_tun_gbp_id_masked"
+	return "tun_gbp_id_masked"
 }
 
 type NxmTunId struct {
@@ -5081,26 +5195,27 @@ func (self *NxmTunId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunId(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunId, error) {
-	nxmtunid := &NxmTunId{Oxm: parent}
+func DecodeNxmTunId(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunId, error) {
+	_nxmtunid := &NxmTunId{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmTunId packet too short: %d < 8", decoder.Length())
 	}
-	nxmtunid.Value = uint64(decoder.ReadUint64())
-	return nxmtunid, nil
+	_nxmtunid.Value = uint64(decoder.ReadUint64())
+	return _nxmtunid, nil
 }
 
 func NewNxmTunId() *NxmTunId {
-	return &NxmTunId{
+	obj := &NxmTunId{
 		Oxm: NewOxm(73736),
 	}
+	return obj
 }
 func (self *NxmTunId) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunId) GetName() string {
-	return "nxm_tun_id"
+	return "tun_id"
 }
 
 type NxmTunIdMasked struct {
@@ -5120,27 +5235,28 @@ func (self *NxmTunIdMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunIdMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIdMasked, error) {
-	nxmtunidmasked := &NxmTunIdMasked{Oxm: parent}
+func DecodeNxmTunIdMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIdMasked, error) {
+	_nxmtunidmasked := &NxmTunIdMasked{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmTunIdMasked packet too short: %d < 16", decoder.Length())
 	}
-	nxmtunidmasked.Value = uint64(decoder.ReadUint64())
-	nxmtunidmasked.ValueMask = uint64(decoder.ReadUint64())
-	return nxmtunidmasked, nil
+	_nxmtunidmasked.Value = uint64(decoder.ReadUint64())
+	_nxmtunidmasked.ValueMask = uint64(decoder.ReadUint64())
+	return _nxmtunidmasked, nil
 }
 
 func NewNxmTunIdMasked() *NxmTunIdMasked {
-	return &NxmTunIdMasked{
+	obj := &NxmTunIdMasked{
 		Oxm: NewOxm(73992),
 	}
+	return obj
 }
 func (self *NxmTunIdMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunIdMasked) GetName() string {
-	return "nxm_tun_id_masked"
+	return "tun_id_masked"
 }
 
 type NxmTunIpv6Dst struct {
@@ -5158,26 +5274,27 @@ func (self *NxmTunIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunIpv6Dst(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv6Dst, error) {
-	nxmtunipv6dst := &NxmTunIpv6Dst{Oxm: parent}
+func DecodeNxmTunIpv6Dst(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv6Dst, error) {
+	_nxmtunipv6dst := &NxmTunIpv6Dst{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmTunIpv6Dst packet too short: %d < 16", decoder.Length())
 	}
-	nxmtunipv6dst.Value = net.IP(decoder.Read(16))
-	return nxmtunipv6dst, nil
+	_nxmtunipv6dst.Value = net.IP(decoder.Read(16))
+	return _nxmtunipv6dst, nil
 }
 
 func NewNxmTunIpv6Dst() *NxmTunIpv6Dst {
-	return &NxmTunIpv6Dst{
+	obj := &NxmTunIpv6Dst{
 		Oxm: NewOxm(121872),
 	}
+	return obj
 }
 func (self *NxmTunIpv6Dst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunIpv6Dst) GetName() string {
-	return "nxm_tun_ipv6_dst"
+	return "tun_ipv6_dst"
 }
 
 type NxmTunIpv6DstMasked struct {
@@ -5197,27 +5314,28 @@ func (self *NxmTunIpv6DstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv6DstMasked, error) {
-	nxmtunipv6dstmasked := &NxmTunIpv6DstMasked{Oxm: parent}
+func DecodeNxmTunIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv6DstMasked, error) {
+	_nxmtunipv6dstmasked := &NxmTunIpv6DstMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmTunIpv6DstMasked packet too short: %d < 32", decoder.Length())
 	}
-	nxmtunipv6dstmasked.Value = net.IP(decoder.Read(16))
-	nxmtunipv6dstmasked.ValueMask = net.IP(decoder.Read(16))
-	return nxmtunipv6dstmasked, nil
+	_nxmtunipv6dstmasked.Value = net.IP(decoder.Read(16))
+	_nxmtunipv6dstmasked.ValueMask = net.IP(decoder.Read(16))
+	return _nxmtunipv6dstmasked, nil
 }
 
 func NewNxmTunIpv6DstMasked() *NxmTunIpv6DstMasked {
-	return &NxmTunIpv6DstMasked{
+	obj := &NxmTunIpv6DstMasked{
 		Oxm: NewOxm(122128),
 	}
+	return obj
 }
 func (self *NxmTunIpv6DstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunIpv6DstMasked) GetName() string {
-	return "nxm_tun_ipv6_dst_masked"
+	return "tun_ipv6_dst_masked"
 }
 
 type NxmTunIpv6Src struct {
@@ -5235,26 +5353,27 @@ func (self *NxmTunIpv6Src) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunIpv6Src(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv6Src, error) {
-	nxmtunipv6src := &NxmTunIpv6Src{Oxm: parent}
+func DecodeNxmTunIpv6Src(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv6Src, error) {
+	_nxmtunipv6src := &NxmTunIpv6Src{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmTunIpv6Src packet too short: %d < 16", decoder.Length())
 	}
-	nxmtunipv6src.Value = net.IP(decoder.Read(16))
-	return nxmtunipv6src, nil
+	_nxmtunipv6src.Value = net.IP(decoder.Read(16))
+	return _nxmtunipv6src, nil
 }
 
 func NewNxmTunIpv6Src() *NxmTunIpv6Src {
-	return &NxmTunIpv6Src{
+	obj := &NxmTunIpv6Src{
 		Oxm: NewOxm(121360),
 	}
+	return obj
 }
 func (self *NxmTunIpv6Src) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunIpv6Src) GetName() string {
-	return "nxm_tun_ipv6_src"
+	return "tun_ipv6_src"
 }
 
 type NxmTunIpv6SrcMasked struct {
@@ -5274,27 +5393,28 @@ func (self *NxmTunIpv6SrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv6SrcMasked, error) {
-	nxmtunipv6srcmasked := &NxmTunIpv6SrcMasked{Oxm: parent}
+func DecodeNxmTunIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv6SrcMasked, error) {
+	_nxmtunipv6srcmasked := &NxmTunIpv6SrcMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmTunIpv6SrcMasked packet too short: %d < 32", decoder.Length())
 	}
-	nxmtunipv6srcmasked.Value = net.IP(decoder.Read(16))
-	nxmtunipv6srcmasked.ValueMask = net.IP(decoder.Read(16))
-	return nxmtunipv6srcmasked, nil
+	_nxmtunipv6srcmasked.Value = net.IP(decoder.Read(16))
+	_nxmtunipv6srcmasked.ValueMask = net.IP(decoder.Read(16))
+	return _nxmtunipv6srcmasked, nil
 }
 
 func NewNxmTunIpv6SrcMasked() *NxmTunIpv6SrcMasked {
-	return &NxmTunIpv6SrcMasked{
+	obj := &NxmTunIpv6SrcMasked{
 		Oxm: NewOxm(121616),
 	}
+	return obj
 }
 func (self *NxmTunIpv6SrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunIpv6SrcMasked) GetName() string {
-	return "nxm_tun_ipv6_src_masked"
+	return "tun_ipv6_src_masked"
 }
 
 type NxmTunMetadata0 struct {
@@ -5312,23 +5432,24 @@ func (self *NxmTunMetadata0) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata0(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata0, error) {
-	nxmtunmetadata0 := &NxmTunMetadata0{Oxm: parent}
-	nxmtunmetadata0.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata0, nil
+func DecodeNxmTunMetadata0(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata0, error) {
+	_nxmtunmetadata0 := &NxmTunMetadata0{Oxm: parent}
+	_nxmtunmetadata0.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata0, nil
 }
 
 func NewNxmTunMetadata0() *NxmTunMetadata0 {
-	return &NxmTunMetadata0{
+	obj := &NxmTunMetadata0{
 		Oxm: NewOxm(86140),
 	}
+	return obj
 }
 func (self *NxmTunMetadata0) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata0) GetName() string {
-	return "nxm_tun_metadata0"
+	return "tun_metadata0"
 }
 
 type NxmTunMetadata0Masked struct {
@@ -5348,24 +5469,25 @@ func (self *NxmTunMetadata0Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata0Masked, error) {
-	nxmtunmetadata0masked := &NxmTunMetadata0Masked{Oxm: parent}
-	nxmtunmetadata0masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata0masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata0masked, nil
+func DecodeNxmTunMetadata0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata0Masked, error) {
+	_nxmtunmetadata0masked := &NxmTunMetadata0Masked{Oxm: parent}
+	_nxmtunmetadata0masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata0masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata0masked, nil
 }
 
 func NewNxmTunMetadata0Masked() *NxmTunMetadata0Masked {
-	return &NxmTunMetadata0Masked{
+	obj := &NxmTunMetadata0Masked{
 		Oxm: NewOxm(86396),
 	}
+	return obj
 }
 func (self *NxmTunMetadata0Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata0Masked) GetName() string {
-	return "nxm_tun_metadata0_masked"
+	return "tun_metadata0_masked"
 }
 
 type NxmTunMetadata1 struct {
@@ -5383,23 +5505,24 @@ func (self *NxmTunMetadata1) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata1(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata1, error) {
-	nxmtunmetadata1 := &NxmTunMetadata1{Oxm: parent}
-	nxmtunmetadata1.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata1, nil
+func DecodeNxmTunMetadata1(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata1, error) {
+	_nxmtunmetadata1 := &NxmTunMetadata1{Oxm: parent}
+	_nxmtunmetadata1.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata1, nil
 }
 
 func NewNxmTunMetadata1() *NxmTunMetadata1 {
-	return &NxmTunMetadata1{
+	obj := &NxmTunMetadata1{
 		Oxm: NewOxm(86652),
 	}
+	return obj
 }
 func (self *NxmTunMetadata1) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata1) GetName() string {
-	return "nxm_tun_metadata1"
+	return "tun_metadata1"
 }
 
 type NxmTunMetadata10 struct {
@@ -5417,23 +5540,24 @@ func (self *NxmTunMetadata10) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata10(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata10, error) {
-	nxmtunmetadata10 := &NxmTunMetadata10{Oxm: parent}
-	nxmtunmetadata10.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata10, nil
+func DecodeNxmTunMetadata10(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata10, error) {
+	_nxmtunmetadata10 := &NxmTunMetadata10{Oxm: parent}
+	_nxmtunmetadata10.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata10, nil
 }
 
 func NewNxmTunMetadata10() *NxmTunMetadata10 {
-	return &NxmTunMetadata10{
+	obj := &NxmTunMetadata10{
 		Oxm: NewOxm(91260),
 	}
+	return obj
 }
 func (self *NxmTunMetadata10) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata10) GetName() string {
-	return "nxm_tun_metadata10"
+	return "tun_metadata10"
 }
 
 type NxmTunMetadata10Masked struct {
@@ -5453,24 +5577,25 @@ func (self *NxmTunMetadata10Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata10Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata10Masked, error) {
-	nxmtunmetadata10masked := &NxmTunMetadata10Masked{Oxm: parent}
-	nxmtunmetadata10masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata10masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata10masked, nil
+func DecodeNxmTunMetadata10Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata10Masked, error) {
+	_nxmtunmetadata10masked := &NxmTunMetadata10Masked{Oxm: parent}
+	_nxmtunmetadata10masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata10masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata10masked, nil
 }
 
 func NewNxmTunMetadata10Masked() *NxmTunMetadata10Masked {
-	return &NxmTunMetadata10Masked{
+	obj := &NxmTunMetadata10Masked{
 		Oxm: NewOxm(91516),
 	}
+	return obj
 }
 func (self *NxmTunMetadata10Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata10Masked) GetName() string {
-	return "nxm_tun_metadata10_masked"
+	return "tun_metadata10_masked"
 }
 
 type NxmTunMetadata11 struct {
@@ -5488,23 +5613,24 @@ func (self *NxmTunMetadata11) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata11(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata11, error) {
-	nxmtunmetadata11 := &NxmTunMetadata11{Oxm: parent}
-	nxmtunmetadata11.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata11, nil
+func DecodeNxmTunMetadata11(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata11, error) {
+	_nxmtunmetadata11 := &NxmTunMetadata11{Oxm: parent}
+	_nxmtunmetadata11.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata11, nil
 }
 
 func NewNxmTunMetadata11() *NxmTunMetadata11 {
-	return &NxmTunMetadata11{
+	obj := &NxmTunMetadata11{
 		Oxm: NewOxm(91772),
 	}
+	return obj
 }
 func (self *NxmTunMetadata11) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata11) GetName() string {
-	return "nxm_tun_metadata11"
+	return "tun_metadata11"
 }
 
 type NxmTunMetadata11Masked struct {
@@ -5524,24 +5650,25 @@ func (self *NxmTunMetadata11Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata11Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata11Masked, error) {
-	nxmtunmetadata11masked := &NxmTunMetadata11Masked{Oxm: parent}
-	nxmtunmetadata11masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata11masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata11masked, nil
+func DecodeNxmTunMetadata11Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata11Masked, error) {
+	_nxmtunmetadata11masked := &NxmTunMetadata11Masked{Oxm: parent}
+	_nxmtunmetadata11masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata11masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata11masked, nil
 }
 
 func NewNxmTunMetadata11Masked() *NxmTunMetadata11Masked {
-	return &NxmTunMetadata11Masked{
+	obj := &NxmTunMetadata11Masked{
 		Oxm: NewOxm(92028),
 	}
+	return obj
 }
 func (self *NxmTunMetadata11Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata11Masked) GetName() string {
-	return "nxm_tun_metadata11_masked"
+	return "tun_metadata11_masked"
 }
 
 type NxmTunMetadata12 struct {
@@ -5559,23 +5686,24 @@ func (self *NxmTunMetadata12) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata12(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata12, error) {
-	nxmtunmetadata12 := &NxmTunMetadata12{Oxm: parent}
-	nxmtunmetadata12.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata12, nil
+func DecodeNxmTunMetadata12(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata12, error) {
+	_nxmtunmetadata12 := &NxmTunMetadata12{Oxm: parent}
+	_nxmtunmetadata12.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata12, nil
 }
 
 func NewNxmTunMetadata12() *NxmTunMetadata12 {
-	return &NxmTunMetadata12{
+	obj := &NxmTunMetadata12{
 		Oxm: NewOxm(92284),
 	}
+	return obj
 }
 func (self *NxmTunMetadata12) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata12) GetName() string {
-	return "nxm_tun_metadata12"
+	return "tun_metadata12"
 }
 
 type NxmTunMetadata12Masked struct {
@@ -5595,24 +5723,25 @@ func (self *NxmTunMetadata12Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata12Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata12Masked, error) {
-	nxmtunmetadata12masked := &NxmTunMetadata12Masked{Oxm: parent}
-	nxmtunmetadata12masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata12masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata12masked, nil
+func DecodeNxmTunMetadata12Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata12Masked, error) {
+	_nxmtunmetadata12masked := &NxmTunMetadata12Masked{Oxm: parent}
+	_nxmtunmetadata12masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata12masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata12masked, nil
 }
 
 func NewNxmTunMetadata12Masked() *NxmTunMetadata12Masked {
-	return &NxmTunMetadata12Masked{
+	obj := &NxmTunMetadata12Masked{
 		Oxm: NewOxm(92540),
 	}
+	return obj
 }
 func (self *NxmTunMetadata12Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata12Masked) GetName() string {
-	return "nxm_tun_metadata12_masked"
+	return "tun_metadata12_masked"
 }
 
 type NxmTunMetadata13 struct {
@@ -5630,23 +5759,24 @@ func (self *NxmTunMetadata13) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata13(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata13, error) {
-	nxmtunmetadata13 := &NxmTunMetadata13{Oxm: parent}
-	nxmtunmetadata13.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata13, nil
+func DecodeNxmTunMetadata13(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata13, error) {
+	_nxmtunmetadata13 := &NxmTunMetadata13{Oxm: parent}
+	_nxmtunmetadata13.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata13, nil
 }
 
 func NewNxmTunMetadata13() *NxmTunMetadata13 {
-	return &NxmTunMetadata13{
+	obj := &NxmTunMetadata13{
 		Oxm: NewOxm(92796),
 	}
+	return obj
 }
 func (self *NxmTunMetadata13) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata13) GetName() string {
-	return "nxm_tun_metadata13"
+	return "tun_metadata13"
 }
 
 type NxmTunMetadata13Masked struct {
@@ -5666,24 +5796,25 @@ func (self *NxmTunMetadata13Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata13Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata13Masked, error) {
-	nxmtunmetadata13masked := &NxmTunMetadata13Masked{Oxm: parent}
-	nxmtunmetadata13masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata13masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata13masked, nil
+func DecodeNxmTunMetadata13Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata13Masked, error) {
+	_nxmtunmetadata13masked := &NxmTunMetadata13Masked{Oxm: parent}
+	_nxmtunmetadata13masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata13masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata13masked, nil
 }
 
 func NewNxmTunMetadata13Masked() *NxmTunMetadata13Masked {
-	return &NxmTunMetadata13Masked{
+	obj := &NxmTunMetadata13Masked{
 		Oxm: NewOxm(93052),
 	}
+	return obj
 }
 func (self *NxmTunMetadata13Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata13Masked) GetName() string {
-	return "nxm_tun_metadata13_masked"
+	return "tun_metadata13_masked"
 }
 
 type NxmTunMetadata14 struct {
@@ -5701,23 +5832,24 @@ func (self *NxmTunMetadata14) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata14(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata14, error) {
-	nxmtunmetadata14 := &NxmTunMetadata14{Oxm: parent}
-	nxmtunmetadata14.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata14, nil
+func DecodeNxmTunMetadata14(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata14, error) {
+	_nxmtunmetadata14 := &NxmTunMetadata14{Oxm: parent}
+	_nxmtunmetadata14.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata14, nil
 }
 
 func NewNxmTunMetadata14() *NxmTunMetadata14 {
-	return &NxmTunMetadata14{
+	obj := &NxmTunMetadata14{
 		Oxm: NewOxm(93308),
 	}
+	return obj
 }
 func (self *NxmTunMetadata14) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata14) GetName() string {
-	return "nxm_tun_metadata14"
+	return "tun_metadata14"
 }
 
 type NxmTunMetadata14Masked struct {
@@ -5737,24 +5869,25 @@ func (self *NxmTunMetadata14Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata14Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata14Masked, error) {
-	nxmtunmetadata14masked := &NxmTunMetadata14Masked{Oxm: parent}
-	nxmtunmetadata14masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata14masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata14masked, nil
+func DecodeNxmTunMetadata14Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata14Masked, error) {
+	_nxmtunmetadata14masked := &NxmTunMetadata14Masked{Oxm: parent}
+	_nxmtunmetadata14masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata14masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata14masked, nil
 }
 
 func NewNxmTunMetadata14Masked() *NxmTunMetadata14Masked {
-	return &NxmTunMetadata14Masked{
+	obj := &NxmTunMetadata14Masked{
 		Oxm: NewOxm(93564),
 	}
+	return obj
 }
 func (self *NxmTunMetadata14Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata14Masked) GetName() string {
-	return "nxm_tun_metadata14_masked"
+	return "tun_metadata14_masked"
 }
 
 type NxmTunMetadata15 struct {
@@ -5772,23 +5905,24 @@ func (self *NxmTunMetadata15) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata15(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata15, error) {
-	nxmtunmetadata15 := &NxmTunMetadata15{Oxm: parent}
-	nxmtunmetadata15.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata15, nil
+func DecodeNxmTunMetadata15(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata15, error) {
+	_nxmtunmetadata15 := &NxmTunMetadata15{Oxm: parent}
+	_nxmtunmetadata15.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata15, nil
 }
 
 func NewNxmTunMetadata15() *NxmTunMetadata15 {
-	return &NxmTunMetadata15{
+	obj := &NxmTunMetadata15{
 		Oxm: NewOxm(93820),
 	}
+	return obj
 }
 func (self *NxmTunMetadata15) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata15) GetName() string {
-	return "nxm_tun_metadata15"
+	return "tun_metadata15"
 }
 
 type NxmTunMetadata15Masked struct {
@@ -5808,24 +5942,25 @@ func (self *NxmTunMetadata15Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata15Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata15Masked, error) {
-	nxmtunmetadata15masked := &NxmTunMetadata15Masked{Oxm: parent}
-	nxmtunmetadata15masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata15masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata15masked, nil
+func DecodeNxmTunMetadata15Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata15Masked, error) {
+	_nxmtunmetadata15masked := &NxmTunMetadata15Masked{Oxm: parent}
+	_nxmtunmetadata15masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata15masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata15masked, nil
 }
 
 func NewNxmTunMetadata15Masked() *NxmTunMetadata15Masked {
-	return &NxmTunMetadata15Masked{
+	obj := &NxmTunMetadata15Masked{
 		Oxm: NewOxm(94076),
 	}
+	return obj
 }
 func (self *NxmTunMetadata15Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata15Masked) GetName() string {
-	return "nxm_tun_metadata15_masked"
+	return "tun_metadata15_masked"
 }
 
 type NxmTunMetadata16 struct {
@@ -5843,23 +5978,24 @@ func (self *NxmTunMetadata16) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata16(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata16, error) {
-	nxmtunmetadata16 := &NxmTunMetadata16{Oxm: parent}
-	nxmtunmetadata16.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata16, nil
+func DecodeNxmTunMetadata16(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata16, error) {
+	_nxmtunmetadata16 := &NxmTunMetadata16{Oxm: parent}
+	_nxmtunmetadata16.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata16, nil
 }
 
 func NewNxmTunMetadata16() *NxmTunMetadata16 {
-	return &NxmTunMetadata16{
+	obj := &NxmTunMetadata16{
 		Oxm: NewOxm(94332),
 	}
+	return obj
 }
 func (self *NxmTunMetadata16) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata16) GetName() string {
-	return "nxm_tun_metadata16"
+	return "tun_metadata16"
 }
 
 type NxmTunMetadata16Masked struct {
@@ -5879,24 +6015,25 @@ func (self *NxmTunMetadata16Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata16Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata16Masked, error) {
-	nxmtunmetadata16masked := &NxmTunMetadata16Masked{Oxm: parent}
-	nxmtunmetadata16masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata16masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata16masked, nil
+func DecodeNxmTunMetadata16Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata16Masked, error) {
+	_nxmtunmetadata16masked := &NxmTunMetadata16Masked{Oxm: parent}
+	_nxmtunmetadata16masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata16masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata16masked, nil
 }
 
 func NewNxmTunMetadata16Masked() *NxmTunMetadata16Masked {
-	return &NxmTunMetadata16Masked{
+	obj := &NxmTunMetadata16Masked{
 		Oxm: NewOxm(94588),
 	}
+	return obj
 }
 func (self *NxmTunMetadata16Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata16Masked) GetName() string {
-	return "nxm_tun_metadata16_masked"
+	return "tun_metadata16_masked"
 }
 
 type NxmTunMetadata17 struct {
@@ -5914,23 +6051,24 @@ func (self *NxmTunMetadata17) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata17(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata17, error) {
-	nxmtunmetadata17 := &NxmTunMetadata17{Oxm: parent}
-	nxmtunmetadata17.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata17, nil
+func DecodeNxmTunMetadata17(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata17, error) {
+	_nxmtunmetadata17 := &NxmTunMetadata17{Oxm: parent}
+	_nxmtunmetadata17.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata17, nil
 }
 
 func NewNxmTunMetadata17() *NxmTunMetadata17 {
-	return &NxmTunMetadata17{
+	obj := &NxmTunMetadata17{
 		Oxm: NewOxm(94844),
 	}
+	return obj
 }
 func (self *NxmTunMetadata17) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata17) GetName() string {
-	return "nxm_tun_metadata17"
+	return "tun_metadata17"
 }
 
 type NxmTunMetadata17Masked struct {
@@ -5950,24 +6088,25 @@ func (self *NxmTunMetadata17Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata17Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata17Masked, error) {
-	nxmtunmetadata17masked := &NxmTunMetadata17Masked{Oxm: parent}
-	nxmtunmetadata17masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata17masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata17masked, nil
+func DecodeNxmTunMetadata17Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata17Masked, error) {
+	_nxmtunmetadata17masked := &NxmTunMetadata17Masked{Oxm: parent}
+	_nxmtunmetadata17masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata17masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata17masked, nil
 }
 
 func NewNxmTunMetadata17Masked() *NxmTunMetadata17Masked {
-	return &NxmTunMetadata17Masked{
+	obj := &NxmTunMetadata17Masked{
 		Oxm: NewOxm(95100),
 	}
+	return obj
 }
 func (self *NxmTunMetadata17Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata17Masked) GetName() string {
-	return "nxm_tun_metadata17_masked"
+	return "tun_metadata17_masked"
 }
 
 type NxmTunMetadata18 struct {
@@ -5985,23 +6124,24 @@ func (self *NxmTunMetadata18) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata18(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata18, error) {
-	nxmtunmetadata18 := &NxmTunMetadata18{Oxm: parent}
-	nxmtunmetadata18.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata18, nil
+func DecodeNxmTunMetadata18(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata18, error) {
+	_nxmtunmetadata18 := &NxmTunMetadata18{Oxm: parent}
+	_nxmtunmetadata18.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata18, nil
 }
 
 func NewNxmTunMetadata18() *NxmTunMetadata18 {
-	return &NxmTunMetadata18{
+	obj := &NxmTunMetadata18{
 		Oxm: NewOxm(95356),
 	}
+	return obj
 }
 func (self *NxmTunMetadata18) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata18) GetName() string {
-	return "nxm_tun_metadata18"
+	return "tun_metadata18"
 }
 
 type NxmTunMetadata18Masked struct {
@@ -6021,24 +6161,25 @@ func (self *NxmTunMetadata18Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata18Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata18Masked, error) {
-	nxmtunmetadata18masked := &NxmTunMetadata18Masked{Oxm: parent}
-	nxmtunmetadata18masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata18masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata18masked, nil
+func DecodeNxmTunMetadata18Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata18Masked, error) {
+	_nxmtunmetadata18masked := &NxmTunMetadata18Masked{Oxm: parent}
+	_nxmtunmetadata18masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata18masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata18masked, nil
 }
 
 func NewNxmTunMetadata18Masked() *NxmTunMetadata18Masked {
-	return &NxmTunMetadata18Masked{
+	obj := &NxmTunMetadata18Masked{
 		Oxm: NewOxm(95612),
 	}
+	return obj
 }
 func (self *NxmTunMetadata18Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata18Masked) GetName() string {
-	return "nxm_tun_metadata18_masked"
+	return "tun_metadata18_masked"
 }
 
 type NxmTunMetadata19 struct {
@@ -6056,23 +6197,24 @@ func (self *NxmTunMetadata19) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata19(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata19, error) {
-	nxmtunmetadata19 := &NxmTunMetadata19{Oxm: parent}
-	nxmtunmetadata19.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata19, nil
+func DecodeNxmTunMetadata19(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata19, error) {
+	_nxmtunmetadata19 := &NxmTunMetadata19{Oxm: parent}
+	_nxmtunmetadata19.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata19, nil
 }
 
 func NewNxmTunMetadata19() *NxmTunMetadata19 {
-	return &NxmTunMetadata19{
+	obj := &NxmTunMetadata19{
 		Oxm: NewOxm(95868),
 	}
+	return obj
 }
 func (self *NxmTunMetadata19) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata19) GetName() string {
-	return "nxm_tun_metadata19"
+	return "tun_metadata19"
 }
 
 type NxmTunMetadata19Masked struct {
@@ -6092,24 +6234,25 @@ func (self *NxmTunMetadata19Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata19Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata19Masked, error) {
-	nxmtunmetadata19masked := &NxmTunMetadata19Masked{Oxm: parent}
-	nxmtunmetadata19masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata19masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata19masked, nil
+func DecodeNxmTunMetadata19Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata19Masked, error) {
+	_nxmtunmetadata19masked := &NxmTunMetadata19Masked{Oxm: parent}
+	_nxmtunmetadata19masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata19masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata19masked, nil
 }
 
 func NewNxmTunMetadata19Masked() *NxmTunMetadata19Masked {
-	return &NxmTunMetadata19Masked{
+	obj := &NxmTunMetadata19Masked{
 		Oxm: NewOxm(96124),
 	}
+	return obj
 }
 func (self *NxmTunMetadata19Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata19Masked) GetName() string {
-	return "nxm_tun_metadata19_masked"
+	return "tun_metadata19_masked"
 }
 
 type NxmTunMetadata1Masked struct {
@@ -6129,24 +6272,25 @@ func (self *NxmTunMetadata1Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata1Masked, error) {
-	nxmtunmetadata1masked := &NxmTunMetadata1Masked{Oxm: parent}
-	nxmtunmetadata1masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata1masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata1masked, nil
+func DecodeNxmTunMetadata1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata1Masked, error) {
+	_nxmtunmetadata1masked := &NxmTunMetadata1Masked{Oxm: parent}
+	_nxmtunmetadata1masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata1masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata1masked, nil
 }
 
 func NewNxmTunMetadata1Masked() *NxmTunMetadata1Masked {
-	return &NxmTunMetadata1Masked{
+	obj := &NxmTunMetadata1Masked{
 		Oxm: NewOxm(86908),
 	}
+	return obj
 }
 func (self *NxmTunMetadata1Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata1Masked) GetName() string {
-	return "nxm_tun_metadata1_masked"
+	return "tun_metadata1_masked"
 }
 
 type NxmTunMetadata2 struct {
@@ -6164,23 +6308,24 @@ func (self *NxmTunMetadata2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata2(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata2, error) {
-	nxmtunmetadata2 := &NxmTunMetadata2{Oxm: parent}
-	nxmtunmetadata2.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata2, nil
+func DecodeNxmTunMetadata2(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata2, error) {
+	_nxmtunmetadata2 := &NxmTunMetadata2{Oxm: parent}
+	_nxmtunmetadata2.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata2, nil
 }
 
 func NewNxmTunMetadata2() *NxmTunMetadata2 {
-	return &NxmTunMetadata2{
+	obj := &NxmTunMetadata2{
 		Oxm: NewOxm(87164),
 	}
+	return obj
 }
 func (self *NxmTunMetadata2) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata2) GetName() string {
-	return "nxm_tun_metadata2"
+	return "tun_metadata2"
 }
 
 type NxmTunMetadata20 struct {
@@ -6198,23 +6343,24 @@ func (self *NxmTunMetadata20) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata20(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata20, error) {
-	nxmtunmetadata20 := &NxmTunMetadata20{Oxm: parent}
-	nxmtunmetadata20.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata20, nil
+func DecodeNxmTunMetadata20(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata20, error) {
+	_nxmtunmetadata20 := &NxmTunMetadata20{Oxm: parent}
+	_nxmtunmetadata20.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata20, nil
 }
 
 func NewNxmTunMetadata20() *NxmTunMetadata20 {
-	return &NxmTunMetadata20{
+	obj := &NxmTunMetadata20{
 		Oxm: NewOxm(96380),
 	}
+	return obj
 }
 func (self *NxmTunMetadata20) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata20) GetName() string {
-	return "nxm_tun_metadata20"
+	return "tun_metadata20"
 }
 
 type NxmTunMetadata20Masked struct {
@@ -6234,24 +6380,25 @@ func (self *NxmTunMetadata20Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata20Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata20Masked, error) {
-	nxmtunmetadata20masked := &NxmTunMetadata20Masked{Oxm: parent}
-	nxmtunmetadata20masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata20masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata20masked, nil
+func DecodeNxmTunMetadata20Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata20Masked, error) {
+	_nxmtunmetadata20masked := &NxmTunMetadata20Masked{Oxm: parent}
+	_nxmtunmetadata20masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata20masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata20masked, nil
 }
 
 func NewNxmTunMetadata20Masked() *NxmTunMetadata20Masked {
-	return &NxmTunMetadata20Masked{
+	obj := &NxmTunMetadata20Masked{
 		Oxm: NewOxm(96636),
 	}
+	return obj
 }
 func (self *NxmTunMetadata20Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata20Masked) GetName() string {
-	return "nxm_tun_metadata20_masked"
+	return "tun_metadata20_masked"
 }
 
 type NxmTunMetadata21 struct {
@@ -6269,23 +6416,24 @@ func (self *NxmTunMetadata21) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata21(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata21, error) {
-	nxmtunmetadata21 := &NxmTunMetadata21{Oxm: parent}
-	nxmtunmetadata21.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata21, nil
+func DecodeNxmTunMetadata21(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata21, error) {
+	_nxmtunmetadata21 := &NxmTunMetadata21{Oxm: parent}
+	_nxmtunmetadata21.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata21, nil
 }
 
 func NewNxmTunMetadata21() *NxmTunMetadata21 {
-	return &NxmTunMetadata21{
+	obj := &NxmTunMetadata21{
 		Oxm: NewOxm(96892),
 	}
+	return obj
 }
 func (self *NxmTunMetadata21) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata21) GetName() string {
-	return "nxm_tun_metadata21"
+	return "tun_metadata21"
 }
 
 type NxmTunMetadata21Masked struct {
@@ -6305,24 +6453,25 @@ func (self *NxmTunMetadata21Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata21Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata21Masked, error) {
-	nxmtunmetadata21masked := &NxmTunMetadata21Masked{Oxm: parent}
-	nxmtunmetadata21masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata21masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata21masked, nil
+func DecodeNxmTunMetadata21Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata21Masked, error) {
+	_nxmtunmetadata21masked := &NxmTunMetadata21Masked{Oxm: parent}
+	_nxmtunmetadata21masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata21masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata21masked, nil
 }
 
 func NewNxmTunMetadata21Masked() *NxmTunMetadata21Masked {
-	return &NxmTunMetadata21Masked{
+	obj := &NxmTunMetadata21Masked{
 		Oxm: NewOxm(97148),
 	}
+	return obj
 }
 func (self *NxmTunMetadata21Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata21Masked) GetName() string {
-	return "nxm_tun_metadata21_masked"
+	return "tun_metadata21_masked"
 }
 
 type NxmTunMetadata22 struct {
@@ -6340,23 +6489,24 @@ func (self *NxmTunMetadata22) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata22(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata22, error) {
-	nxmtunmetadata22 := &NxmTunMetadata22{Oxm: parent}
-	nxmtunmetadata22.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata22, nil
+func DecodeNxmTunMetadata22(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata22, error) {
+	_nxmtunmetadata22 := &NxmTunMetadata22{Oxm: parent}
+	_nxmtunmetadata22.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata22, nil
 }
 
 func NewNxmTunMetadata22() *NxmTunMetadata22 {
-	return &NxmTunMetadata22{
+	obj := &NxmTunMetadata22{
 		Oxm: NewOxm(97404),
 	}
+	return obj
 }
 func (self *NxmTunMetadata22) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata22) GetName() string {
-	return "nxm_tun_metadata22"
+	return "tun_metadata22"
 }
 
 type NxmTunMetadata22Masked struct {
@@ -6376,24 +6526,25 @@ func (self *NxmTunMetadata22Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata22Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata22Masked, error) {
-	nxmtunmetadata22masked := &NxmTunMetadata22Masked{Oxm: parent}
-	nxmtunmetadata22masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata22masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata22masked, nil
+func DecodeNxmTunMetadata22Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata22Masked, error) {
+	_nxmtunmetadata22masked := &NxmTunMetadata22Masked{Oxm: parent}
+	_nxmtunmetadata22masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata22masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata22masked, nil
 }
 
 func NewNxmTunMetadata22Masked() *NxmTunMetadata22Masked {
-	return &NxmTunMetadata22Masked{
+	obj := &NxmTunMetadata22Masked{
 		Oxm: NewOxm(97660),
 	}
+	return obj
 }
 func (self *NxmTunMetadata22Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata22Masked) GetName() string {
-	return "nxm_tun_metadata22_masked"
+	return "tun_metadata22_masked"
 }
 
 type NxmTunMetadata23 struct {
@@ -6411,23 +6562,24 @@ func (self *NxmTunMetadata23) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata23(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata23, error) {
-	nxmtunmetadata23 := &NxmTunMetadata23{Oxm: parent}
-	nxmtunmetadata23.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata23, nil
+func DecodeNxmTunMetadata23(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata23, error) {
+	_nxmtunmetadata23 := &NxmTunMetadata23{Oxm: parent}
+	_nxmtunmetadata23.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata23, nil
 }
 
 func NewNxmTunMetadata23() *NxmTunMetadata23 {
-	return &NxmTunMetadata23{
+	obj := &NxmTunMetadata23{
 		Oxm: NewOxm(97916),
 	}
+	return obj
 }
 func (self *NxmTunMetadata23) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata23) GetName() string {
-	return "nxm_tun_metadata23"
+	return "tun_metadata23"
 }
 
 type NxmTunMetadata23Masked struct {
@@ -6447,24 +6599,25 @@ func (self *NxmTunMetadata23Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata23Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata23Masked, error) {
-	nxmtunmetadata23masked := &NxmTunMetadata23Masked{Oxm: parent}
-	nxmtunmetadata23masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata23masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata23masked, nil
+func DecodeNxmTunMetadata23Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata23Masked, error) {
+	_nxmtunmetadata23masked := &NxmTunMetadata23Masked{Oxm: parent}
+	_nxmtunmetadata23masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata23masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata23masked, nil
 }
 
 func NewNxmTunMetadata23Masked() *NxmTunMetadata23Masked {
-	return &NxmTunMetadata23Masked{
+	obj := &NxmTunMetadata23Masked{
 		Oxm: NewOxm(98172),
 	}
+	return obj
 }
 func (self *NxmTunMetadata23Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata23Masked) GetName() string {
-	return "nxm_tun_metadata23_masked"
+	return "tun_metadata23_masked"
 }
 
 type NxmTunMetadata24 struct {
@@ -6482,23 +6635,24 @@ func (self *NxmTunMetadata24) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata24(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata24, error) {
-	nxmtunmetadata24 := &NxmTunMetadata24{Oxm: parent}
-	nxmtunmetadata24.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata24, nil
+func DecodeNxmTunMetadata24(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata24, error) {
+	_nxmtunmetadata24 := &NxmTunMetadata24{Oxm: parent}
+	_nxmtunmetadata24.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata24, nil
 }
 
 func NewNxmTunMetadata24() *NxmTunMetadata24 {
-	return &NxmTunMetadata24{
+	obj := &NxmTunMetadata24{
 		Oxm: NewOxm(98428),
 	}
+	return obj
 }
 func (self *NxmTunMetadata24) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata24) GetName() string {
-	return "nxm_tun_metadata24"
+	return "tun_metadata24"
 }
 
 type NxmTunMetadata24Masked struct {
@@ -6518,24 +6672,25 @@ func (self *NxmTunMetadata24Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata24Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata24Masked, error) {
-	nxmtunmetadata24masked := &NxmTunMetadata24Masked{Oxm: parent}
-	nxmtunmetadata24masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata24masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata24masked, nil
+func DecodeNxmTunMetadata24Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata24Masked, error) {
+	_nxmtunmetadata24masked := &NxmTunMetadata24Masked{Oxm: parent}
+	_nxmtunmetadata24masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata24masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata24masked, nil
 }
 
 func NewNxmTunMetadata24Masked() *NxmTunMetadata24Masked {
-	return &NxmTunMetadata24Masked{
+	obj := &NxmTunMetadata24Masked{
 		Oxm: NewOxm(98684),
 	}
+	return obj
 }
 func (self *NxmTunMetadata24Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata24Masked) GetName() string {
-	return "nxm_tun_metadata24_masked"
+	return "tun_metadata24_masked"
 }
 
 type NxmTunMetadata25 struct {
@@ -6553,23 +6708,24 @@ func (self *NxmTunMetadata25) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata25(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata25, error) {
-	nxmtunmetadata25 := &NxmTunMetadata25{Oxm: parent}
-	nxmtunmetadata25.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata25, nil
+func DecodeNxmTunMetadata25(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata25, error) {
+	_nxmtunmetadata25 := &NxmTunMetadata25{Oxm: parent}
+	_nxmtunmetadata25.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata25, nil
 }
 
 func NewNxmTunMetadata25() *NxmTunMetadata25 {
-	return &NxmTunMetadata25{
+	obj := &NxmTunMetadata25{
 		Oxm: NewOxm(98940),
 	}
+	return obj
 }
 func (self *NxmTunMetadata25) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata25) GetName() string {
-	return "nxm_tun_metadata25"
+	return "tun_metadata25"
 }
 
 type NxmTunMetadata25Masked struct {
@@ -6589,24 +6745,25 @@ func (self *NxmTunMetadata25Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata25Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata25Masked, error) {
-	nxmtunmetadata25masked := &NxmTunMetadata25Masked{Oxm: parent}
-	nxmtunmetadata25masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata25masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata25masked, nil
+func DecodeNxmTunMetadata25Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata25Masked, error) {
+	_nxmtunmetadata25masked := &NxmTunMetadata25Masked{Oxm: parent}
+	_nxmtunmetadata25masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata25masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata25masked, nil
 }
 
 func NewNxmTunMetadata25Masked() *NxmTunMetadata25Masked {
-	return &NxmTunMetadata25Masked{
+	obj := &NxmTunMetadata25Masked{
 		Oxm: NewOxm(99196),
 	}
+	return obj
 }
 func (self *NxmTunMetadata25Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata25Masked) GetName() string {
-	return "nxm_tun_metadata25_masked"
+	return "tun_metadata25_masked"
 }
 
 type NxmTunMetadata26 struct {
@@ -6624,23 +6781,24 @@ func (self *NxmTunMetadata26) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata26(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata26, error) {
-	nxmtunmetadata26 := &NxmTunMetadata26{Oxm: parent}
-	nxmtunmetadata26.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata26, nil
+func DecodeNxmTunMetadata26(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata26, error) {
+	_nxmtunmetadata26 := &NxmTunMetadata26{Oxm: parent}
+	_nxmtunmetadata26.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata26, nil
 }
 
 func NewNxmTunMetadata26() *NxmTunMetadata26 {
-	return &NxmTunMetadata26{
+	obj := &NxmTunMetadata26{
 		Oxm: NewOxm(99452),
 	}
+	return obj
 }
 func (self *NxmTunMetadata26) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata26) GetName() string {
-	return "nxm_tun_metadata26"
+	return "tun_metadata26"
 }
 
 type NxmTunMetadata26Masked struct {
@@ -6660,24 +6818,25 @@ func (self *NxmTunMetadata26Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata26Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata26Masked, error) {
-	nxmtunmetadata26masked := &NxmTunMetadata26Masked{Oxm: parent}
-	nxmtunmetadata26masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata26masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata26masked, nil
+func DecodeNxmTunMetadata26Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata26Masked, error) {
+	_nxmtunmetadata26masked := &NxmTunMetadata26Masked{Oxm: parent}
+	_nxmtunmetadata26masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata26masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata26masked, nil
 }
 
 func NewNxmTunMetadata26Masked() *NxmTunMetadata26Masked {
-	return &NxmTunMetadata26Masked{
+	obj := &NxmTunMetadata26Masked{
 		Oxm: NewOxm(99708),
 	}
+	return obj
 }
 func (self *NxmTunMetadata26Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata26Masked) GetName() string {
-	return "nxm_tun_metadata26_masked"
+	return "tun_metadata26_masked"
 }
 
 type NxmTunMetadata27 struct {
@@ -6695,23 +6854,24 @@ func (self *NxmTunMetadata27) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata27(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata27, error) {
-	nxmtunmetadata27 := &NxmTunMetadata27{Oxm: parent}
-	nxmtunmetadata27.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata27, nil
+func DecodeNxmTunMetadata27(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata27, error) {
+	_nxmtunmetadata27 := &NxmTunMetadata27{Oxm: parent}
+	_nxmtunmetadata27.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata27, nil
 }
 
 func NewNxmTunMetadata27() *NxmTunMetadata27 {
-	return &NxmTunMetadata27{
+	obj := &NxmTunMetadata27{
 		Oxm: NewOxm(99964),
 	}
+	return obj
 }
 func (self *NxmTunMetadata27) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata27) GetName() string {
-	return "nxm_tun_metadata27"
+	return "tun_metadata27"
 }
 
 type NxmTunMetadata27Masked struct {
@@ -6731,24 +6891,25 @@ func (self *NxmTunMetadata27Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata27Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata27Masked, error) {
-	nxmtunmetadata27masked := &NxmTunMetadata27Masked{Oxm: parent}
-	nxmtunmetadata27masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata27masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata27masked, nil
+func DecodeNxmTunMetadata27Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata27Masked, error) {
+	_nxmtunmetadata27masked := &NxmTunMetadata27Masked{Oxm: parent}
+	_nxmtunmetadata27masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata27masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata27masked, nil
 }
 
 func NewNxmTunMetadata27Masked() *NxmTunMetadata27Masked {
-	return &NxmTunMetadata27Masked{
+	obj := &NxmTunMetadata27Masked{
 		Oxm: NewOxm(100220),
 	}
+	return obj
 }
 func (self *NxmTunMetadata27Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata27Masked) GetName() string {
-	return "nxm_tun_metadata27_masked"
+	return "tun_metadata27_masked"
 }
 
 type NxmTunMetadata28 struct {
@@ -6766,23 +6927,24 @@ func (self *NxmTunMetadata28) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata28(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata28, error) {
-	nxmtunmetadata28 := &NxmTunMetadata28{Oxm: parent}
-	nxmtunmetadata28.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata28, nil
+func DecodeNxmTunMetadata28(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata28, error) {
+	_nxmtunmetadata28 := &NxmTunMetadata28{Oxm: parent}
+	_nxmtunmetadata28.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata28, nil
 }
 
 func NewNxmTunMetadata28() *NxmTunMetadata28 {
-	return &NxmTunMetadata28{
+	obj := &NxmTunMetadata28{
 		Oxm: NewOxm(100476),
 	}
+	return obj
 }
 func (self *NxmTunMetadata28) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata28) GetName() string {
-	return "nxm_tun_metadata28"
+	return "tun_metadata28"
 }
 
 type NxmTunMetadata28Masked struct {
@@ -6802,24 +6964,25 @@ func (self *NxmTunMetadata28Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata28Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata28Masked, error) {
-	nxmtunmetadata28masked := &NxmTunMetadata28Masked{Oxm: parent}
-	nxmtunmetadata28masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata28masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata28masked, nil
+func DecodeNxmTunMetadata28Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata28Masked, error) {
+	_nxmtunmetadata28masked := &NxmTunMetadata28Masked{Oxm: parent}
+	_nxmtunmetadata28masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata28masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata28masked, nil
 }
 
 func NewNxmTunMetadata28Masked() *NxmTunMetadata28Masked {
-	return &NxmTunMetadata28Masked{
+	obj := &NxmTunMetadata28Masked{
 		Oxm: NewOxm(100732),
 	}
+	return obj
 }
 func (self *NxmTunMetadata28Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata28Masked) GetName() string {
-	return "nxm_tun_metadata28_masked"
+	return "tun_metadata28_masked"
 }
 
 type NxmTunMetadata29 struct {
@@ -6837,23 +7000,24 @@ func (self *NxmTunMetadata29) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata29(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata29, error) {
-	nxmtunmetadata29 := &NxmTunMetadata29{Oxm: parent}
-	nxmtunmetadata29.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata29, nil
+func DecodeNxmTunMetadata29(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata29, error) {
+	_nxmtunmetadata29 := &NxmTunMetadata29{Oxm: parent}
+	_nxmtunmetadata29.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata29, nil
 }
 
 func NewNxmTunMetadata29() *NxmTunMetadata29 {
-	return &NxmTunMetadata29{
+	obj := &NxmTunMetadata29{
 		Oxm: NewOxm(100988),
 	}
+	return obj
 }
 func (self *NxmTunMetadata29) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata29) GetName() string {
-	return "nxm_tun_metadata29"
+	return "tun_metadata29"
 }
 
 type NxmTunMetadata29Masked struct {
@@ -6873,24 +7037,25 @@ func (self *NxmTunMetadata29Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata29Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata29Masked, error) {
-	nxmtunmetadata29masked := &NxmTunMetadata29Masked{Oxm: parent}
-	nxmtunmetadata29masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata29masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata29masked, nil
+func DecodeNxmTunMetadata29Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata29Masked, error) {
+	_nxmtunmetadata29masked := &NxmTunMetadata29Masked{Oxm: parent}
+	_nxmtunmetadata29masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata29masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata29masked, nil
 }
 
 func NewNxmTunMetadata29Masked() *NxmTunMetadata29Masked {
-	return &NxmTunMetadata29Masked{
+	obj := &NxmTunMetadata29Masked{
 		Oxm: NewOxm(101244),
 	}
+	return obj
 }
 func (self *NxmTunMetadata29Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata29Masked) GetName() string {
-	return "nxm_tun_metadata29_masked"
+	return "tun_metadata29_masked"
 }
 
 type NxmTunMetadata2Masked struct {
@@ -6910,24 +7075,25 @@ func (self *NxmTunMetadata2Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata2Masked, error) {
-	nxmtunmetadata2masked := &NxmTunMetadata2Masked{Oxm: parent}
-	nxmtunmetadata2masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata2masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata2masked, nil
+func DecodeNxmTunMetadata2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata2Masked, error) {
+	_nxmtunmetadata2masked := &NxmTunMetadata2Masked{Oxm: parent}
+	_nxmtunmetadata2masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata2masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata2masked, nil
 }
 
 func NewNxmTunMetadata2Masked() *NxmTunMetadata2Masked {
-	return &NxmTunMetadata2Masked{
+	obj := &NxmTunMetadata2Masked{
 		Oxm: NewOxm(87420),
 	}
+	return obj
 }
 func (self *NxmTunMetadata2Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata2Masked) GetName() string {
-	return "nxm_tun_metadata2_masked"
+	return "tun_metadata2_masked"
 }
 
 type NxmTunMetadata3 struct {
@@ -6945,23 +7111,24 @@ func (self *NxmTunMetadata3) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata3(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata3, error) {
-	nxmtunmetadata3 := &NxmTunMetadata3{Oxm: parent}
-	nxmtunmetadata3.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata3, nil
+func DecodeNxmTunMetadata3(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata3, error) {
+	_nxmtunmetadata3 := &NxmTunMetadata3{Oxm: parent}
+	_nxmtunmetadata3.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata3, nil
 }
 
 func NewNxmTunMetadata3() *NxmTunMetadata3 {
-	return &NxmTunMetadata3{
+	obj := &NxmTunMetadata3{
 		Oxm: NewOxm(87676),
 	}
+	return obj
 }
 func (self *NxmTunMetadata3) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata3) GetName() string {
-	return "nxm_tun_metadata3"
+	return "tun_metadata3"
 }
 
 type NxmTunMetadata30 struct {
@@ -6979,23 +7146,24 @@ func (self *NxmTunMetadata30) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata30(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata30, error) {
-	nxmtunmetadata30 := &NxmTunMetadata30{Oxm: parent}
-	nxmtunmetadata30.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata30, nil
+func DecodeNxmTunMetadata30(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata30, error) {
+	_nxmtunmetadata30 := &NxmTunMetadata30{Oxm: parent}
+	_nxmtunmetadata30.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata30, nil
 }
 
 func NewNxmTunMetadata30() *NxmTunMetadata30 {
-	return &NxmTunMetadata30{
+	obj := &NxmTunMetadata30{
 		Oxm: NewOxm(101500),
 	}
+	return obj
 }
 func (self *NxmTunMetadata30) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata30) GetName() string {
-	return "nxm_tun_metadata30"
+	return "tun_metadata30"
 }
 
 type NxmTunMetadata30Masked struct {
@@ -7015,24 +7183,25 @@ func (self *NxmTunMetadata30Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata30Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata30Masked, error) {
-	nxmtunmetadata30masked := &NxmTunMetadata30Masked{Oxm: parent}
-	nxmtunmetadata30masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata30masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata30masked, nil
+func DecodeNxmTunMetadata30Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata30Masked, error) {
+	_nxmtunmetadata30masked := &NxmTunMetadata30Masked{Oxm: parent}
+	_nxmtunmetadata30masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata30masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata30masked, nil
 }
 
 func NewNxmTunMetadata30Masked() *NxmTunMetadata30Masked {
-	return &NxmTunMetadata30Masked{
+	obj := &NxmTunMetadata30Masked{
 		Oxm: NewOxm(101756),
 	}
+	return obj
 }
 func (self *NxmTunMetadata30Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata30Masked) GetName() string {
-	return "nxm_tun_metadata30_masked"
+	return "tun_metadata30_masked"
 }
 
 type NxmTunMetadata31 struct {
@@ -7050,23 +7219,24 @@ func (self *NxmTunMetadata31) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata31(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata31, error) {
-	nxmtunmetadata31 := &NxmTunMetadata31{Oxm: parent}
-	nxmtunmetadata31.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata31, nil
+func DecodeNxmTunMetadata31(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata31, error) {
+	_nxmtunmetadata31 := &NxmTunMetadata31{Oxm: parent}
+	_nxmtunmetadata31.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata31, nil
 }
 
 func NewNxmTunMetadata31() *NxmTunMetadata31 {
-	return &NxmTunMetadata31{
+	obj := &NxmTunMetadata31{
 		Oxm: NewOxm(102012),
 	}
+	return obj
 }
 func (self *NxmTunMetadata31) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata31) GetName() string {
-	return "nxm_tun_metadata31"
+	return "tun_metadata31"
 }
 
 type NxmTunMetadata31Masked struct {
@@ -7086,24 +7256,25 @@ func (self *NxmTunMetadata31Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata31Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata31Masked, error) {
-	nxmtunmetadata31masked := &NxmTunMetadata31Masked{Oxm: parent}
-	nxmtunmetadata31masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata31masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata31masked, nil
+func DecodeNxmTunMetadata31Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata31Masked, error) {
+	_nxmtunmetadata31masked := &NxmTunMetadata31Masked{Oxm: parent}
+	_nxmtunmetadata31masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata31masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata31masked, nil
 }
 
 func NewNxmTunMetadata31Masked() *NxmTunMetadata31Masked {
-	return &NxmTunMetadata31Masked{
+	obj := &NxmTunMetadata31Masked{
 		Oxm: NewOxm(102268),
 	}
+	return obj
 }
 func (self *NxmTunMetadata31Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata31Masked) GetName() string {
-	return "nxm_tun_metadata31_masked"
+	return "tun_metadata31_masked"
 }
 
 type NxmTunMetadata32 struct {
@@ -7121,23 +7292,24 @@ func (self *NxmTunMetadata32) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata32(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata32, error) {
-	nxmtunmetadata32 := &NxmTunMetadata32{Oxm: parent}
-	nxmtunmetadata32.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata32, nil
+func DecodeNxmTunMetadata32(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata32, error) {
+	_nxmtunmetadata32 := &NxmTunMetadata32{Oxm: parent}
+	_nxmtunmetadata32.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata32, nil
 }
 
 func NewNxmTunMetadata32() *NxmTunMetadata32 {
-	return &NxmTunMetadata32{
+	obj := &NxmTunMetadata32{
 		Oxm: NewOxm(102524),
 	}
+	return obj
 }
 func (self *NxmTunMetadata32) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata32) GetName() string {
-	return "nxm_tun_metadata32"
+	return "tun_metadata32"
 }
 
 type NxmTunMetadata32Masked struct {
@@ -7157,24 +7329,25 @@ func (self *NxmTunMetadata32Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata32Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata32Masked, error) {
-	nxmtunmetadata32masked := &NxmTunMetadata32Masked{Oxm: parent}
-	nxmtunmetadata32masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata32masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata32masked, nil
+func DecodeNxmTunMetadata32Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata32Masked, error) {
+	_nxmtunmetadata32masked := &NxmTunMetadata32Masked{Oxm: parent}
+	_nxmtunmetadata32masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata32masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata32masked, nil
 }
 
 func NewNxmTunMetadata32Masked() *NxmTunMetadata32Masked {
-	return &NxmTunMetadata32Masked{
+	obj := &NxmTunMetadata32Masked{
 		Oxm: NewOxm(102780),
 	}
+	return obj
 }
 func (self *NxmTunMetadata32Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata32Masked) GetName() string {
-	return "nxm_tun_metadata32_masked"
+	return "tun_metadata32_masked"
 }
 
 type NxmTunMetadata33 struct {
@@ -7192,23 +7365,24 @@ func (self *NxmTunMetadata33) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata33(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata33, error) {
-	nxmtunmetadata33 := &NxmTunMetadata33{Oxm: parent}
-	nxmtunmetadata33.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata33, nil
+func DecodeNxmTunMetadata33(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata33, error) {
+	_nxmtunmetadata33 := &NxmTunMetadata33{Oxm: parent}
+	_nxmtunmetadata33.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata33, nil
 }
 
 func NewNxmTunMetadata33() *NxmTunMetadata33 {
-	return &NxmTunMetadata33{
+	obj := &NxmTunMetadata33{
 		Oxm: NewOxm(103036),
 	}
+	return obj
 }
 func (self *NxmTunMetadata33) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata33) GetName() string {
-	return "nxm_tun_metadata33"
+	return "tun_metadata33"
 }
 
 type NxmTunMetadata33Masked struct {
@@ -7228,24 +7402,25 @@ func (self *NxmTunMetadata33Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata33Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata33Masked, error) {
-	nxmtunmetadata33masked := &NxmTunMetadata33Masked{Oxm: parent}
-	nxmtunmetadata33masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata33masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata33masked, nil
+func DecodeNxmTunMetadata33Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata33Masked, error) {
+	_nxmtunmetadata33masked := &NxmTunMetadata33Masked{Oxm: parent}
+	_nxmtunmetadata33masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata33masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata33masked, nil
 }
 
 func NewNxmTunMetadata33Masked() *NxmTunMetadata33Masked {
-	return &NxmTunMetadata33Masked{
+	obj := &NxmTunMetadata33Masked{
 		Oxm: NewOxm(103292),
 	}
+	return obj
 }
 func (self *NxmTunMetadata33Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata33Masked) GetName() string {
-	return "nxm_tun_metadata33_masked"
+	return "tun_metadata33_masked"
 }
 
 type NxmTunMetadata34 struct {
@@ -7263,23 +7438,24 @@ func (self *NxmTunMetadata34) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata34(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata34, error) {
-	nxmtunmetadata34 := &NxmTunMetadata34{Oxm: parent}
-	nxmtunmetadata34.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata34, nil
+func DecodeNxmTunMetadata34(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata34, error) {
+	_nxmtunmetadata34 := &NxmTunMetadata34{Oxm: parent}
+	_nxmtunmetadata34.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata34, nil
 }
 
 func NewNxmTunMetadata34() *NxmTunMetadata34 {
-	return &NxmTunMetadata34{
+	obj := &NxmTunMetadata34{
 		Oxm: NewOxm(103548),
 	}
+	return obj
 }
 func (self *NxmTunMetadata34) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata34) GetName() string {
-	return "nxm_tun_metadata34"
+	return "tun_metadata34"
 }
 
 type NxmTunMetadata34Masked struct {
@@ -7299,24 +7475,25 @@ func (self *NxmTunMetadata34Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata34Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata34Masked, error) {
-	nxmtunmetadata34masked := &NxmTunMetadata34Masked{Oxm: parent}
-	nxmtunmetadata34masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata34masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata34masked, nil
+func DecodeNxmTunMetadata34Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata34Masked, error) {
+	_nxmtunmetadata34masked := &NxmTunMetadata34Masked{Oxm: parent}
+	_nxmtunmetadata34masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata34masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata34masked, nil
 }
 
 func NewNxmTunMetadata34Masked() *NxmTunMetadata34Masked {
-	return &NxmTunMetadata34Masked{
+	obj := &NxmTunMetadata34Masked{
 		Oxm: NewOxm(103804),
 	}
+	return obj
 }
 func (self *NxmTunMetadata34Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata34Masked) GetName() string {
-	return "nxm_tun_metadata34_masked"
+	return "tun_metadata34_masked"
 }
 
 type NxmTunMetadata35 struct {
@@ -7334,23 +7511,24 @@ func (self *NxmTunMetadata35) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata35(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata35, error) {
-	nxmtunmetadata35 := &NxmTunMetadata35{Oxm: parent}
-	nxmtunmetadata35.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata35, nil
+func DecodeNxmTunMetadata35(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata35, error) {
+	_nxmtunmetadata35 := &NxmTunMetadata35{Oxm: parent}
+	_nxmtunmetadata35.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata35, nil
 }
 
 func NewNxmTunMetadata35() *NxmTunMetadata35 {
-	return &NxmTunMetadata35{
+	obj := &NxmTunMetadata35{
 		Oxm: NewOxm(104060),
 	}
+	return obj
 }
 func (self *NxmTunMetadata35) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata35) GetName() string {
-	return "nxm_tun_metadata35"
+	return "tun_metadata35"
 }
 
 type NxmTunMetadata35Masked struct {
@@ -7370,24 +7548,25 @@ func (self *NxmTunMetadata35Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata35Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata35Masked, error) {
-	nxmtunmetadata35masked := &NxmTunMetadata35Masked{Oxm: parent}
-	nxmtunmetadata35masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata35masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata35masked, nil
+func DecodeNxmTunMetadata35Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata35Masked, error) {
+	_nxmtunmetadata35masked := &NxmTunMetadata35Masked{Oxm: parent}
+	_nxmtunmetadata35masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata35masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata35masked, nil
 }
 
 func NewNxmTunMetadata35Masked() *NxmTunMetadata35Masked {
-	return &NxmTunMetadata35Masked{
+	obj := &NxmTunMetadata35Masked{
 		Oxm: NewOxm(104316),
 	}
+	return obj
 }
 func (self *NxmTunMetadata35Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata35Masked) GetName() string {
-	return "nxm_tun_metadata35_masked"
+	return "tun_metadata35_masked"
 }
 
 type NxmTunMetadata36 struct {
@@ -7405,23 +7584,24 @@ func (self *NxmTunMetadata36) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata36(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata36, error) {
-	nxmtunmetadata36 := &NxmTunMetadata36{Oxm: parent}
-	nxmtunmetadata36.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata36, nil
+func DecodeNxmTunMetadata36(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata36, error) {
+	_nxmtunmetadata36 := &NxmTunMetadata36{Oxm: parent}
+	_nxmtunmetadata36.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata36, nil
 }
 
 func NewNxmTunMetadata36() *NxmTunMetadata36 {
-	return &NxmTunMetadata36{
+	obj := &NxmTunMetadata36{
 		Oxm: NewOxm(104572),
 	}
+	return obj
 }
 func (self *NxmTunMetadata36) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata36) GetName() string {
-	return "nxm_tun_metadata36"
+	return "tun_metadata36"
 }
 
 type NxmTunMetadata36Masked struct {
@@ -7441,24 +7621,25 @@ func (self *NxmTunMetadata36Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata36Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata36Masked, error) {
-	nxmtunmetadata36masked := &NxmTunMetadata36Masked{Oxm: parent}
-	nxmtunmetadata36masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata36masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata36masked, nil
+func DecodeNxmTunMetadata36Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata36Masked, error) {
+	_nxmtunmetadata36masked := &NxmTunMetadata36Masked{Oxm: parent}
+	_nxmtunmetadata36masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata36masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata36masked, nil
 }
 
 func NewNxmTunMetadata36Masked() *NxmTunMetadata36Masked {
-	return &NxmTunMetadata36Masked{
+	obj := &NxmTunMetadata36Masked{
 		Oxm: NewOxm(104828),
 	}
+	return obj
 }
 func (self *NxmTunMetadata36Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata36Masked) GetName() string {
-	return "nxm_tun_metadata36_masked"
+	return "tun_metadata36_masked"
 }
 
 type NxmTunMetadata37 struct {
@@ -7476,23 +7657,24 @@ func (self *NxmTunMetadata37) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata37(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata37, error) {
-	nxmtunmetadata37 := &NxmTunMetadata37{Oxm: parent}
-	nxmtunmetadata37.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata37, nil
+func DecodeNxmTunMetadata37(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata37, error) {
+	_nxmtunmetadata37 := &NxmTunMetadata37{Oxm: parent}
+	_nxmtunmetadata37.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata37, nil
 }
 
 func NewNxmTunMetadata37() *NxmTunMetadata37 {
-	return &NxmTunMetadata37{
+	obj := &NxmTunMetadata37{
 		Oxm: NewOxm(105084),
 	}
+	return obj
 }
 func (self *NxmTunMetadata37) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata37) GetName() string {
-	return "nxm_tun_metadata37"
+	return "tun_metadata37"
 }
 
 type NxmTunMetadata37Masked struct {
@@ -7512,24 +7694,25 @@ func (self *NxmTunMetadata37Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata37Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata37Masked, error) {
-	nxmtunmetadata37masked := &NxmTunMetadata37Masked{Oxm: parent}
-	nxmtunmetadata37masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata37masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata37masked, nil
+func DecodeNxmTunMetadata37Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata37Masked, error) {
+	_nxmtunmetadata37masked := &NxmTunMetadata37Masked{Oxm: parent}
+	_nxmtunmetadata37masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata37masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata37masked, nil
 }
 
 func NewNxmTunMetadata37Masked() *NxmTunMetadata37Masked {
-	return &NxmTunMetadata37Masked{
+	obj := &NxmTunMetadata37Masked{
 		Oxm: NewOxm(105340),
 	}
+	return obj
 }
 func (self *NxmTunMetadata37Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata37Masked) GetName() string {
-	return "nxm_tun_metadata37_masked"
+	return "tun_metadata37_masked"
 }
 
 type NxmTunMetadata38 struct {
@@ -7547,23 +7730,24 @@ func (self *NxmTunMetadata38) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata38(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata38, error) {
-	nxmtunmetadata38 := &NxmTunMetadata38{Oxm: parent}
-	nxmtunmetadata38.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata38, nil
+func DecodeNxmTunMetadata38(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata38, error) {
+	_nxmtunmetadata38 := &NxmTunMetadata38{Oxm: parent}
+	_nxmtunmetadata38.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata38, nil
 }
 
 func NewNxmTunMetadata38() *NxmTunMetadata38 {
-	return &NxmTunMetadata38{
+	obj := &NxmTunMetadata38{
 		Oxm: NewOxm(105596),
 	}
+	return obj
 }
 func (self *NxmTunMetadata38) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata38) GetName() string {
-	return "nxm_tun_metadata38"
+	return "tun_metadata38"
 }
 
 type NxmTunMetadata38Masked struct {
@@ -7583,24 +7767,25 @@ func (self *NxmTunMetadata38Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata38Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata38Masked, error) {
-	nxmtunmetadata38masked := &NxmTunMetadata38Masked{Oxm: parent}
-	nxmtunmetadata38masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata38masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata38masked, nil
+func DecodeNxmTunMetadata38Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata38Masked, error) {
+	_nxmtunmetadata38masked := &NxmTunMetadata38Masked{Oxm: parent}
+	_nxmtunmetadata38masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata38masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata38masked, nil
 }
 
 func NewNxmTunMetadata38Masked() *NxmTunMetadata38Masked {
-	return &NxmTunMetadata38Masked{
+	obj := &NxmTunMetadata38Masked{
 		Oxm: NewOxm(105852),
 	}
+	return obj
 }
 func (self *NxmTunMetadata38Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata38Masked) GetName() string {
-	return "nxm_tun_metadata38_masked"
+	return "tun_metadata38_masked"
 }
 
 type NxmTunMetadata39 struct {
@@ -7618,23 +7803,24 @@ func (self *NxmTunMetadata39) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata39(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata39, error) {
-	nxmtunmetadata39 := &NxmTunMetadata39{Oxm: parent}
-	nxmtunmetadata39.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata39, nil
+func DecodeNxmTunMetadata39(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata39, error) {
+	_nxmtunmetadata39 := &NxmTunMetadata39{Oxm: parent}
+	_nxmtunmetadata39.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata39, nil
 }
 
 func NewNxmTunMetadata39() *NxmTunMetadata39 {
-	return &NxmTunMetadata39{
+	obj := &NxmTunMetadata39{
 		Oxm: NewOxm(106108),
 	}
+	return obj
 }
 func (self *NxmTunMetadata39) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata39) GetName() string {
-	return "nxm_tun_metadata39"
+	return "tun_metadata39"
 }
 
 type NxmTunMetadata39Masked struct {
@@ -7654,24 +7840,25 @@ func (self *NxmTunMetadata39Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata39Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata39Masked, error) {
-	nxmtunmetadata39masked := &NxmTunMetadata39Masked{Oxm: parent}
-	nxmtunmetadata39masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata39masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata39masked, nil
+func DecodeNxmTunMetadata39Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata39Masked, error) {
+	_nxmtunmetadata39masked := &NxmTunMetadata39Masked{Oxm: parent}
+	_nxmtunmetadata39masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata39masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata39masked, nil
 }
 
 func NewNxmTunMetadata39Masked() *NxmTunMetadata39Masked {
-	return &NxmTunMetadata39Masked{
+	obj := &NxmTunMetadata39Masked{
 		Oxm: NewOxm(106364),
 	}
+	return obj
 }
 func (self *NxmTunMetadata39Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata39Masked) GetName() string {
-	return "nxm_tun_metadata39_masked"
+	return "tun_metadata39_masked"
 }
 
 type NxmTunMetadata3Masked struct {
@@ -7691,24 +7878,25 @@ func (self *NxmTunMetadata3Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata3Masked, error) {
-	nxmtunmetadata3masked := &NxmTunMetadata3Masked{Oxm: parent}
-	nxmtunmetadata3masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata3masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata3masked, nil
+func DecodeNxmTunMetadata3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata3Masked, error) {
+	_nxmtunmetadata3masked := &NxmTunMetadata3Masked{Oxm: parent}
+	_nxmtunmetadata3masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata3masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata3masked, nil
 }
 
 func NewNxmTunMetadata3Masked() *NxmTunMetadata3Masked {
-	return &NxmTunMetadata3Masked{
+	obj := &NxmTunMetadata3Masked{
 		Oxm: NewOxm(87932),
 	}
+	return obj
 }
 func (self *NxmTunMetadata3Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata3Masked) GetName() string {
-	return "nxm_tun_metadata3_masked"
+	return "tun_metadata3_masked"
 }
 
 type NxmTunMetadata4 struct {
@@ -7726,23 +7914,24 @@ func (self *NxmTunMetadata4) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata4(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata4, error) {
-	nxmtunmetadata4 := &NxmTunMetadata4{Oxm: parent}
-	nxmtunmetadata4.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata4, nil
+func DecodeNxmTunMetadata4(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata4, error) {
+	_nxmtunmetadata4 := &NxmTunMetadata4{Oxm: parent}
+	_nxmtunmetadata4.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata4, nil
 }
 
 func NewNxmTunMetadata4() *NxmTunMetadata4 {
-	return &NxmTunMetadata4{
+	obj := &NxmTunMetadata4{
 		Oxm: NewOxm(88188),
 	}
+	return obj
 }
 func (self *NxmTunMetadata4) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata4) GetName() string {
-	return "nxm_tun_metadata4"
+	return "tun_metadata4"
 }
 
 type NxmTunMetadata40 struct {
@@ -7760,23 +7949,24 @@ func (self *NxmTunMetadata40) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata40(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata40, error) {
-	nxmtunmetadata40 := &NxmTunMetadata40{Oxm: parent}
-	nxmtunmetadata40.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata40, nil
+func DecodeNxmTunMetadata40(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata40, error) {
+	_nxmtunmetadata40 := &NxmTunMetadata40{Oxm: parent}
+	_nxmtunmetadata40.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata40, nil
 }
 
 func NewNxmTunMetadata40() *NxmTunMetadata40 {
-	return &NxmTunMetadata40{
+	obj := &NxmTunMetadata40{
 		Oxm: NewOxm(106620),
 	}
+	return obj
 }
 func (self *NxmTunMetadata40) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata40) GetName() string {
-	return "nxm_tun_metadata40"
+	return "tun_metadata40"
 }
 
 type NxmTunMetadata40Masked struct {
@@ -7796,24 +7986,25 @@ func (self *NxmTunMetadata40Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata40Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata40Masked, error) {
-	nxmtunmetadata40masked := &NxmTunMetadata40Masked{Oxm: parent}
-	nxmtunmetadata40masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata40masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata40masked, nil
+func DecodeNxmTunMetadata40Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata40Masked, error) {
+	_nxmtunmetadata40masked := &NxmTunMetadata40Masked{Oxm: parent}
+	_nxmtunmetadata40masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata40masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata40masked, nil
 }
 
 func NewNxmTunMetadata40Masked() *NxmTunMetadata40Masked {
-	return &NxmTunMetadata40Masked{
+	obj := &NxmTunMetadata40Masked{
 		Oxm: NewOxm(106876),
 	}
+	return obj
 }
 func (self *NxmTunMetadata40Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata40Masked) GetName() string {
-	return "nxm_tun_metadata40_masked"
+	return "tun_metadata40_masked"
 }
 
 type NxmTunMetadata41 struct {
@@ -7831,23 +8022,24 @@ func (self *NxmTunMetadata41) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata41(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata41, error) {
-	nxmtunmetadata41 := &NxmTunMetadata41{Oxm: parent}
-	nxmtunmetadata41.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata41, nil
+func DecodeNxmTunMetadata41(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata41, error) {
+	_nxmtunmetadata41 := &NxmTunMetadata41{Oxm: parent}
+	_nxmtunmetadata41.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata41, nil
 }
 
 func NewNxmTunMetadata41() *NxmTunMetadata41 {
-	return &NxmTunMetadata41{
+	obj := &NxmTunMetadata41{
 		Oxm: NewOxm(107132),
 	}
+	return obj
 }
 func (self *NxmTunMetadata41) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata41) GetName() string {
-	return "nxm_tun_metadata41"
+	return "tun_metadata41"
 }
 
 type NxmTunMetadata41Masked struct {
@@ -7867,24 +8059,25 @@ func (self *NxmTunMetadata41Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata41Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata41Masked, error) {
-	nxmtunmetadata41masked := &NxmTunMetadata41Masked{Oxm: parent}
-	nxmtunmetadata41masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata41masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata41masked, nil
+func DecodeNxmTunMetadata41Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata41Masked, error) {
+	_nxmtunmetadata41masked := &NxmTunMetadata41Masked{Oxm: parent}
+	_nxmtunmetadata41masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata41masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata41masked, nil
 }
 
 func NewNxmTunMetadata41Masked() *NxmTunMetadata41Masked {
-	return &NxmTunMetadata41Masked{
+	obj := &NxmTunMetadata41Masked{
 		Oxm: NewOxm(107388),
 	}
+	return obj
 }
 func (self *NxmTunMetadata41Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata41Masked) GetName() string {
-	return "nxm_tun_metadata41_masked"
+	return "tun_metadata41_masked"
 }
 
 type NxmTunMetadata42 struct {
@@ -7902,23 +8095,24 @@ func (self *NxmTunMetadata42) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata42(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata42, error) {
-	nxmtunmetadata42 := &NxmTunMetadata42{Oxm: parent}
-	nxmtunmetadata42.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata42, nil
+func DecodeNxmTunMetadata42(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata42, error) {
+	_nxmtunmetadata42 := &NxmTunMetadata42{Oxm: parent}
+	_nxmtunmetadata42.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata42, nil
 }
 
 func NewNxmTunMetadata42() *NxmTunMetadata42 {
-	return &NxmTunMetadata42{
+	obj := &NxmTunMetadata42{
 		Oxm: NewOxm(107644),
 	}
+	return obj
 }
 func (self *NxmTunMetadata42) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata42) GetName() string {
-	return "nxm_tun_metadata42"
+	return "tun_metadata42"
 }
 
 type NxmTunMetadata42Masked struct {
@@ -7938,24 +8132,25 @@ func (self *NxmTunMetadata42Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata42Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata42Masked, error) {
-	nxmtunmetadata42masked := &NxmTunMetadata42Masked{Oxm: parent}
-	nxmtunmetadata42masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata42masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata42masked, nil
+func DecodeNxmTunMetadata42Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata42Masked, error) {
+	_nxmtunmetadata42masked := &NxmTunMetadata42Masked{Oxm: parent}
+	_nxmtunmetadata42masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata42masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata42masked, nil
 }
 
 func NewNxmTunMetadata42Masked() *NxmTunMetadata42Masked {
-	return &NxmTunMetadata42Masked{
+	obj := &NxmTunMetadata42Masked{
 		Oxm: NewOxm(107900),
 	}
+	return obj
 }
 func (self *NxmTunMetadata42Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata42Masked) GetName() string {
-	return "nxm_tun_metadata42_masked"
+	return "tun_metadata42_masked"
 }
 
 type NxmTunMetadata43 struct {
@@ -7973,23 +8168,24 @@ func (self *NxmTunMetadata43) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata43(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata43, error) {
-	nxmtunmetadata43 := &NxmTunMetadata43{Oxm: parent}
-	nxmtunmetadata43.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata43, nil
+func DecodeNxmTunMetadata43(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata43, error) {
+	_nxmtunmetadata43 := &NxmTunMetadata43{Oxm: parent}
+	_nxmtunmetadata43.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata43, nil
 }
 
 func NewNxmTunMetadata43() *NxmTunMetadata43 {
-	return &NxmTunMetadata43{
+	obj := &NxmTunMetadata43{
 		Oxm: NewOxm(108156),
 	}
+	return obj
 }
 func (self *NxmTunMetadata43) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata43) GetName() string {
-	return "nxm_tun_metadata43"
+	return "tun_metadata43"
 }
 
 type NxmTunMetadata43Masked struct {
@@ -8009,24 +8205,25 @@ func (self *NxmTunMetadata43Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata43Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata43Masked, error) {
-	nxmtunmetadata43masked := &NxmTunMetadata43Masked{Oxm: parent}
-	nxmtunmetadata43masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata43masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata43masked, nil
+func DecodeNxmTunMetadata43Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata43Masked, error) {
+	_nxmtunmetadata43masked := &NxmTunMetadata43Masked{Oxm: parent}
+	_nxmtunmetadata43masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata43masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata43masked, nil
 }
 
 func NewNxmTunMetadata43Masked() *NxmTunMetadata43Masked {
-	return &NxmTunMetadata43Masked{
+	obj := &NxmTunMetadata43Masked{
 		Oxm: NewOxm(108412),
 	}
+	return obj
 }
 func (self *NxmTunMetadata43Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata43Masked) GetName() string {
-	return "nxm_tun_metadata43_masked"
+	return "tun_metadata43_masked"
 }
 
 type NxmTunMetadata44 struct {
@@ -8044,23 +8241,24 @@ func (self *NxmTunMetadata44) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata44(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata44, error) {
-	nxmtunmetadata44 := &NxmTunMetadata44{Oxm: parent}
-	nxmtunmetadata44.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata44, nil
+func DecodeNxmTunMetadata44(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata44, error) {
+	_nxmtunmetadata44 := &NxmTunMetadata44{Oxm: parent}
+	_nxmtunmetadata44.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata44, nil
 }
 
 func NewNxmTunMetadata44() *NxmTunMetadata44 {
-	return &NxmTunMetadata44{
+	obj := &NxmTunMetadata44{
 		Oxm: NewOxm(108668),
 	}
+	return obj
 }
 func (self *NxmTunMetadata44) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata44) GetName() string {
-	return "nxm_tun_metadata44"
+	return "tun_metadata44"
 }
 
 type NxmTunMetadata44Masked struct {
@@ -8080,24 +8278,25 @@ func (self *NxmTunMetadata44Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata44Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata44Masked, error) {
-	nxmtunmetadata44masked := &NxmTunMetadata44Masked{Oxm: parent}
-	nxmtunmetadata44masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata44masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata44masked, nil
+func DecodeNxmTunMetadata44Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata44Masked, error) {
+	_nxmtunmetadata44masked := &NxmTunMetadata44Masked{Oxm: parent}
+	_nxmtunmetadata44masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata44masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata44masked, nil
 }
 
 func NewNxmTunMetadata44Masked() *NxmTunMetadata44Masked {
-	return &NxmTunMetadata44Masked{
+	obj := &NxmTunMetadata44Masked{
 		Oxm: NewOxm(108924),
 	}
+	return obj
 }
 func (self *NxmTunMetadata44Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata44Masked) GetName() string {
-	return "nxm_tun_metadata44_masked"
+	return "tun_metadata44_masked"
 }
 
 type NxmTunMetadata45 struct {
@@ -8115,23 +8314,24 @@ func (self *NxmTunMetadata45) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata45(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata45, error) {
-	nxmtunmetadata45 := &NxmTunMetadata45{Oxm: parent}
-	nxmtunmetadata45.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata45, nil
+func DecodeNxmTunMetadata45(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata45, error) {
+	_nxmtunmetadata45 := &NxmTunMetadata45{Oxm: parent}
+	_nxmtunmetadata45.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata45, nil
 }
 
 func NewNxmTunMetadata45() *NxmTunMetadata45 {
-	return &NxmTunMetadata45{
+	obj := &NxmTunMetadata45{
 		Oxm: NewOxm(109180),
 	}
+	return obj
 }
 func (self *NxmTunMetadata45) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata45) GetName() string {
-	return "nxm_tun_metadata45"
+	return "tun_metadata45"
 }
 
 type NxmTunMetadata45Masked struct {
@@ -8151,24 +8351,25 @@ func (self *NxmTunMetadata45Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata45Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata45Masked, error) {
-	nxmtunmetadata45masked := &NxmTunMetadata45Masked{Oxm: parent}
-	nxmtunmetadata45masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata45masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata45masked, nil
+func DecodeNxmTunMetadata45Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata45Masked, error) {
+	_nxmtunmetadata45masked := &NxmTunMetadata45Masked{Oxm: parent}
+	_nxmtunmetadata45masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata45masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata45masked, nil
 }
 
 func NewNxmTunMetadata45Masked() *NxmTunMetadata45Masked {
-	return &NxmTunMetadata45Masked{
+	obj := &NxmTunMetadata45Masked{
 		Oxm: NewOxm(109436),
 	}
+	return obj
 }
 func (self *NxmTunMetadata45Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata45Masked) GetName() string {
-	return "nxm_tun_metadata45_masked"
+	return "tun_metadata45_masked"
 }
 
 type NxmTunMetadata46 struct {
@@ -8186,23 +8387,24 @@ func (self *NxmTunMetadata46) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata46(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata46, error) {
-	nxmtunmetadata46 := &NxmTunMetadata46{Oxm: parent}
-	nxmtunmetadata46.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata46, nil
+func DecodeNxmTunMetadata46(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata46, error) {
+	_nxmtunmetadata46 := &NxmTunMetadata46{Oxm: parent}
+	_nxmtunmetadata46.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata46, nil
 }
 
 func NewNxmTunMetadata46() *NxmTunMetadata46 {
-	return &NxmTunMetadata46{
+	obj := &NxmTunMetadata46{
 		Oxm: NewOxm(109692),
 	}
+	return obj
 }
 func (self *NxmTunMetadata46) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata46) GetName() string {
-	return "nxm_tun_metadata46"
+	return "tun_metadata46"
 }
 
 type NxmTunMetadata46Masked struct {
@@ -8222,24 +8424,25 @@ func (self *NxmTunMetadata46Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata46Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata46Masked, error) {
-	nxmtunmetadata46masked := &NxmTunMetadata46Masked{Oxm: parent}
-	nxmtunmetadata46masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata46masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata46masked, nil
+func DecodeNxmTunMetadata46Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata46Masked, error) {
+	_nxmtunmetadata46masked := &NxmTunMetadata46Masked{Oxm: parent}
+	_nxmtunmetadata46masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata46masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata46masked, nil
 }
 
 func NewNxmTunMetadata46Masked() *NxmTunMetadata46Masked {
-	return &NxmTunMetadata46Masked{
+	obj := &NxmTunMetadata46Masked{
 		Oxm: NewOxm(109948),
 	}
+	return obj
 }
 func (self *NxmTunMetadata46Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata46Masked) GetName() string {
-	return "nxm_tun_metadata46_masked"
+	return "tun_metadata46_masked"
 }
 
 type NxmTunMetadata47 struct {
@@ -8257,23 +8460,24 @@ func (self *NxmTunMetadata47) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata47(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata47, error) {
-	nxmtunmetadata47 := &NxmTunMetadata47{Oxm: parent}
-	nxmtunmetadata47.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata47, nil
+func DecodeNxmTunMetadata47(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata47, error) {
+	_nxmtunmetadata47 := &NxmTunMetadata47{Oxm: parent}
+	_nxmtunmetadata47.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata47, nil
 }
 
 func NewNxmTunMetadata47() *NxmTunMetadata47 {
-	return &NxmTunMetadata47{
+	obj := &NxmTunMetadata47{
 		Oxm: NewOxm(110204),
 	}
+	return obj
 }
 func (self *NxmTunMetadata47) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata47) GetName() string {
-	return "nxm_tun_metadata47"
+	return "tun_metadata47"
 }
 
 type NxmTunMetadata47Masked struct {
@@ -8293,24 +8497,25 @@ func (self *NxmTunMetadata47Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata47Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata47Masked, error) {
-	nxmtunmetadata47masked := &NxmTunMetadata47Masked{Oxm: parent}
-	nxmtunmetadata47masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata47masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata47masked, nil
+func DecodeNxmTunMetadata47Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata47Masked, error) {
+	_nxmtunmetadata47masked := &NxmTunMetadata47Masked{Oxm: parent}
+	_nxmtunmetadata47masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata47masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata47masked, nil
 }
 
 func NewNxmTunMetadata47Masked() *NxmTunMetadata47Masked {
-	return &NxmTunMetadata47Masked{
+	obj := &NxmTunMetadata47Masked{
 		Oxm: NewOxm(110460),
 	}
+	return obj
 }
 func (self *NxmTunMetadata47Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata47Masked) GetName() string {
-	return "nxm_tun_metadata47_masked"
+	return "tun_metadata47_masked"
 }
 
 type NxmTunMetadata48 struct {
@@ -8328,23 +8533,24 @@ func (self *NxmTunMetadata48) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata48(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata48, error) {
-	nxmtunmetadata48 := &NxmTunMetadata48{Oxm: parent}
-	nxmtunmetadata48.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata48, nil
+func DecodeNxmTunMetadata48(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata48, error) {
+	_nxmtunmetadata48 := &NxmTunMetadata48{Oxm: parent}
+	_nxmtunmetadata48.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata48, nil
 }
 
 func NewNxmTunMetadata48() *NxmTunMetadata48 {
-	return &NxmTunMetadata48{
+	obj := &NxmTunMetadata48{
 		Oxm: NewOxm(110716),
 	}
+	return obj
 }
 func (self *NxmTunMetadata48) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata48) GetName() string {
-	return "nxm_tun_metadata48"
+	return "tun_metadata48"
 }
 
 type NxmTunMetadata48Masked struct {
@@ -8364,24 +8570,25 @@ func (self *NxmTunMetadata48Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata48Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata48Masked, error) {
-	nxmtunmetadata48masked := &NxmTunMetadata48Masked{Oxm: parent}
-	nxmtunmetadata48masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata48masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata48masked, nil
+func DecodeNxmTunMetadata48Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata48Masked, error) {
+	_nxmtunmetadata48masked := &NxmTunMetadata48Masked{Oxm: parent}
+	_nxmtunmetadata48masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata48masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata48masked, nil
 }
 
 func NewNxmTunMetadata48Masked() *NxmTunMetadata48Masked {
-	return &NxmTunMetadata48Masked{
+	obj := &NxmTunMetadata48Masked{
 		Oxm: NewOxm(110972),
 	}
+	return obj
 }
 func (self *NxmTunMetadata48Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata48Masked) GetName() string {
-	return "nxm_tun_metadata48_masked"
+	return "tun_metadata48_masked"
 }
 
 type NxmTunMetadata49 struct {
@@ -8399,23 +8606,24 @@ func (self *NxmTunMetadata49) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata49(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata49, error) {
-	nxmtunmetadata49 := &NxmTunMetadata49{Oxm: parent}
-	nxmtunmetadata49.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata49, nil
+func DecodeNxmTunMetadata49(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata49, error) {
+	_nxmtunmetadata49 := &NxmTunMetadata49{Oxm: parent}
+	_nxmtunmetadata49.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata49, nil
 }
 
 func NewNxmTunMetadata49() *NxmTunMetadata49 {
-	return &NxmTunMetadata49{
+	obj := &NxmTunMetadata49{
 		Oxm: NewOxm(111228),
 	}
+	return obj
 }
 func (self *NxmTunMetadata49) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata49) GetName() string {
-	return "nxm_tun_metadata49"
+	return "tun_metadata49"
 }
 
 type NxmTunMetadata49Masked struct {
@@ -8435,24 +8643,25 @@ func (self *NxmTunMetadata49Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata49Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata49Masked, error) {
-	nxmtunmetadata49masked := &NxmTunMetadata49Masked{Oxm: parent}
-	nxmtunmetadata49masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata49masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata49masked, nil
+func DecodeNxmTunMetadata49Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata49Masked, error) {
+	_nxmtunmetadata49masked := &NxmTunMetadata49Masked{Oxm: parent}
+	_nxmtunmetadata49masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata49masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata49masked, nil
 }
 
 func NewNxmTunMetadata49Masked() *NxmTunMetadata49Masked {
-	return &NxmTunMetadata49Masked{
+	obj := &NxmTunMetadata49Masked{
 		Oxm: NewOxm(111484),
 	}
+	return obj
 }
 func (self *NxmTunMetadata49Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata49Masked) GetName() string {
-	return "nxm_tun_metadata49_masked"
+	return "tun_metadata49_masked"
 }
 
 type NxmTunMetadata4Masked struct {
@@ -8472,24 +8681,25 @@ func (self *NxmTunMetadata4Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata4Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata4Masked, error) {
-	nxmtunmetadata4masked := &NxmTunMetadata4Masked{Oxm: parent}
-	nxmtunmetadata4masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata4masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata4masked, nil
+func DecodeNxmTunMetadata4Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata4Masked, error) {
+	_nxmtunmetadata4masked := &NxmTunMetadata4Masked{Oxm: parent}
+	_nxmtunmetadata4masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata4masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata4masked, nil
 }
 
 func NewNxmTunMetadata4Masked() *NxmTunMetadata4Masked {
-	return &NxmTunMetadata4Masked{
+	obj := &NxmTunMetadata4Masked{
 		Oxm: NewOxm(88444),
 	}
+	return obj
 }
 func (self *NxmTunMetadata4Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata4Masked) GetName() string {
-	return "nxm_tun_metadata4_masked"
+	return "tun_metadata4_masked"
 }
 
 type NxmTunMetadata5 struct {
@@ -8507,23 +8717,24 @@ func (self *NxmTunMetadata5) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata5(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata5, error) {
-	nxmtunmetadata5 := &NxmTunMetadata5{Oxm: parent}
-	nxmtunmetadata5.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata5, nil
+func DecodeNxmTunMetadata5(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata5, error) {
+	_nxmtunmetadata5 := &NxmTunMetadata5{Oxm: parent}
+	_nxmtunmetadata5.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata5, nil
 }
 
 func NewNxmTunMetadata5() *NxmTunMetadata5 {
-	return &NxmTunMetadata5{
+	obj := &NxmTunMetadata5{
 		Oxm: NewOxm(88700),
 	}
+	return obj
 }
 func (self *NxmTunMetadata5) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata5) GetName() string {
-	return "nxm_tun_metadata5"
+	return "tun_metadata5"
 }
 
 type NxmTunMetadata50 struct {
@@ -8541,23 +8752,24 @@ func (self *NxmTunMetadata50) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata50(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata50, error) {
-	nxmtunmetadata50 := &NxmTunMetadata50{Oxm: parent}
-	nxmtunmetadata50.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata50, nil
+func DecodeNxmTunMetadata50(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata50, error) {
+	_nxmtunmetadata50 := &NxmTunMetadata50{Oxm: parent}
+	_nxmtunmetadata50.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata50, nil
 }
 
 func NewNxmTunMetadata50() *NxmTunMetadata50 {
-	return &NxmTunMetadata50{
+	obj := &NxmTunMetadata50{
 		Oxm: NewOxm(111740),
 	}
+	return obj
 }
 func (self *NxmTunMetadata50) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata50) GetName() string {
-	return "nxm_tun_metadata50"
+	return "tun_metadata50"
 }
 
 type NxmTunMetadata50Masked struct {
@@ -8577,24 +8789,25 @@ func (self *NxmTunMetadata50Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata50Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata50Masked, error) {
-	nxmtunmetadata50masked := &NxmTunMetadata50Masked{Oxm: parent}
-	nxmtunmetadata50masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata50masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata50masked, nil
+func DecodeNxmTunMetadata50Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata50Masked, error) {
+	_nxmtunmetadata50masked := &NxmTunMetadata50Masked{Oxm: parent}
+	_nxmtunmetadata50masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata50masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata50masked, nil
 }
 
 func NewNxmTunMetadata50Masked() *NxmTunMetadata50Masked {
-	return &NxmTunMetadata50Masked{
+	obj := &NxmTunMetadata50Masked{
 		Oxm: NewOxm(111996),
 	}
+	return obj
 }
 func (self *NxmTunMetadata50Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata50Masked) GetName() string {
-	return "nxm_tun_metadata50_masked"
+	return "tun_metadata50_masked"
 }
 
 type NxmTunMetadata51 struct {
@@ -8612,23 +8825,24 @@ func (self *NxmTunMetadata51) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata51(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata51, error) {
-	nxmtunmetadata51 := &NxmTunMetadata51{Oxm: parent}
-	nxmtunmetadata51.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata51, nil
+func DecodeNxmTunMetadata51(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata51, error) {
+	_nxmtunmetadata51 := &NxmTunMetadata51{Oxm: parent}
+	_nxmtunmetadata51.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata51, nil
 }
 
 func NewNxmTunMetadata51() *NxmTunMetadata51 {
-	return &NxmTunMetadata51{
+	obj := &NxmTunMetadata51{
 		Oxm: NewOxm(112252),
 	}
+	return obj
 }
 func (self *NxmTunMetadata51) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata51) GetName() string {
-	return "nxm_tun_metadata51"
+	return "tun_metadata51"
 }
 
 type NxmTunMetadata51Masked struct {
@@ -8648,24 +8862,25 @@ func (self *NxmTunMetadata51Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata51Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata51Masked, error) {
-	nxmtunmetadata51masked := &NxmTunMetadata51Masked{Oxm: parent}
-	nxmtunmetadata51masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata51masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata51masked, nil
+func DecodeNxmTunMetadata51Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata51Masked, error) {
+	_nxmtunmetadata51masked := &NxmTunMetadata51Masked{Oxm: parent}
+	_nxmtunmetadata51masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata51masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata51masked, nil
 }
 
 func NewNxmTunMetadata51Masked() *NxmTunMetadata51Masked {
-	return &NxmTunMetadata51Masked{
+	obj := &NxmTunMetadata51Masked{
 		Oxm: NewOxm(112508),
 	}
+	return obj
 }
 func (self *NxmTunMetadata51Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata51Masked) GetName() string {
-	return "nxm_tun_metadata51_masked"
+	return "tun_metadata51_masked"
 }
 
 type NxmTunMetadata52 struct {
@@ -8683,23 +8898,24 @@ func (self *NxmTunMetadata52) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata52(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata52, error) {
-	nxmtunmetadata52 := &NxmTunMetadata52{Oxm: parent}
-	nxmtunmetadata52.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata52, nil
+func DecodeNxmTunMetadata52(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata52, error) {
+	_nxmtunmetadata52 := &NxmTunMetadata52{Oxm: parent}
+	_nxmtunmetadata52.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata52, nil
 }
 
 func NewNxmTunMetadata52() *NxmTunMetadata52 {
-	return &NxmTunMetadata52{
+	obj := &NxmTunMetadata52{
 		Oxm: NewOxm(112764),
 	}
+	return obj
 }
 func (self *NxmTunMetadata52) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata52) GetName() string {
-	return "nxm_tun_metadata52"
+	return "tun_metadata52"
 }
 
 type NxmTunMetadata52Masked struct {
@@ -8719,24 +8935,25 @@ func (self *NxmTunMetadata52Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata52Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata52Masked, error) {
-	nxmtunmetadata52masked := &NxmTunMetadata52Masked{Oxm: parent}
-	nxmtunmetadata52masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata52masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata52masked, nil
+func DecodeNxmTunMetadata52Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata52Masked, error) {
+	_nxmtunmetadata52masked := &NxmTunMetadata52Masked{Oxm: parent}
+	_nxmtunmetadata52masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata52masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata52masked, nil
 }
 
 func NewNxmTunMetadata52Masked() *NxmTunMetadata52Masked {
-	return &NxmTunMetadata52Masked{
+	obj := &NxmTunMetadata52Masked{
 		Oxm: NewOxm(113020),
 	}
+	return obj
 }
 func (self *NxmTunMetadata52Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata52Masked) GetName() string {
-	return "nxm_tun_metadata52_masked"
+	return "tun_metadata52_masked"
 }
 
 type NxmTunMetadata53 struct {
@@ -8754,23 +8971,24 @@ func (self *NxmTunMetadata53) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata53(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata53, error) {
-	nxmtunmetadata53 := &NxmTunMetadata53{Oxm: parent}
-	nxmtunmetadata53.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata53, nil
+func DecodeNxmTunMetadata53(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata53, error) {
+	_nxmtunmetadata53 := &NxmTunMetadata53{Oxm: parent}
+	_nxmtunmetadata53.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata53, nil
 }
 
 func NewNxmTunMetadata53() *NxmTunMetadata53 {
-	return &NxmTunMetadata53{
+	obj := &NxmTunMetadata53{
 		Oxm: NewOxm(113276),
 	}
+	return obj
 }
 func (self *NxmTunMetadata53) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata53) GetName() string {
-	return "nxm_tun_metadata53"
+	return "tun_metadata53"
 }
 
 type NxmTunMetadata53Masked struct {
@@ -8790,24 +9008,25 @@ func (self *NxmTunMetadata53Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata53Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata53Masked, error) {
-	nxmtunmetadata53masked := &NxmTunMetadata53Masked{Oxm: parent}
-	nxmtunmetadata53masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata53masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata53masked, nil
+func DecodeNxmTunMetadata53Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata53Masked, error) {
+	_nxmtunmetadata53masked := &NxmTunMetadata53Masked{Oxm: parent}
+	_nxmtunmetadata53masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata53masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata53masked, nil
 }
 
 func NewNxmTunMetadata53Masked() *NxmTunMetadata53Masked {
-	return &NxmTunMetadata53Masked{
+	obj := &NxmTunMetadata53Masked{
 		Oxm: NewOxm(113532),
 	}
+	return obj
 }
 func (self *NxmTunMetadata53Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata53Masked) GetName() string {
-	return "nxm_tun_metadata53_masked"
+	return "tun_metadata53_masked"
 }
 
 type NxmTunMetadata54 struct {
@@ -8825,23 +9044,24 @@ func (self *NxmTunMetadata54) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata54(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata54, error) {
-	nxmtunmetadata54 := &NxmTunMetadata54{Oxm: parent}
-	nxmtunmetadata54.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata54, nil
+func DecodeNxmTunMetadata54(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata54, error) {
+	_nxmtunmetadata54 := &NxmTunMetadata54{Oxm: parent}
+	_nxmtunmetadata54.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata54, nil
 }
 
 func NewNxmTunMetadata54() *NxmTunMetadata54 {
-	return &NxmTunMetadata54{
+	obj := &NxmTunMetadata54{
 		Oxm: NewOxm(113788),
 	}
+	return obj
 }
 func (self *NxmTunMetadata54) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata54) GetName() string {
-	return "nxm_tun_metadata54"
+	return "tun_metadata54"
 }
 
 type NxmTunMetadata54Masked struct {
@@ -8861,24 +9081,25 @@ func (self *NxmTunMetadata54Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata54Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata54Masked, error) {
-	nxmtunmetadata54masked := &NxmTunMetadata54Masked{Oxm: parent}
-	nxmtunmetadata54masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata54masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata54masked, nil
+func DecodeNxmTunMetadata54Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata54Masked, error) {
+	_nxmtunmetadata54masked := &NxmTunMetadata54Masked{Oxm: parent}
+	_nxmtunmetadata54masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata54masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata54masked, nil
 }
 
 func NewNxmTunMetadata54Masked() *NxmTunMetadata54Masked {
-	return &NxmTunMetadata54Masked{
+	obj := &NxmTunMetadata54Masked{
 		Oxm: NewOxm(114044),
 	}
+	return obj
 }
 func (self *NxmTunMetadata54Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata54Masked) GetName() string {
-	return "nxm_tun_metadata54_masked"
+	return "tun_metadata54_masked"
 }
 
 type NxmTunMetadata55 struct {
@@ -8896,23 +9117,24 @@ func (self *NxmTunMetadata55) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata55(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata55, error) {
-	nxmtunmetadata55 := &NxmTunMetadata55{Oxm: parent}
-	nxmtunmetadata55.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata55, nil
+func DecodeNxmTunMetadata55(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata55, error) {
+	_nxmtunmetadata55 := &NxmTunMetadata55{Oxm: parent}
+	_nxmtunmetadata55.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata55, nil
 }
 
 func NewNxmTunMetadata55() *NxmTunMetadata55 {
-	return &NxmTunMetadata55{
+	obj := &NxmTunMetadata55{
 		Oxm: NewOxm(114300),
 	}
+	return obj
 }
 func (self *NxmTunMetadata55) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata55) GetName() string {
-	return "nxm_tun_metadata55"
+	return "tun_metadata55"
 }
 
 type NxmTunMetadata55Masked struct {
@@ -8932,24 +9154,25 @@ func (self *NxmTunMetadata55Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata55Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata55Masked, error) {
-	nxmtunmetadata55masked := &NxmTunMetadata55Masked{Oxm: parent}
-	nxmtunmetadata55masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata55masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata55masked, nil
+func DecodeNxmTunMetadata55Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata55Masked, error) {
+	_nxmtunmetadata55masked := &NxmTunMetadata55Masked{Oxm: parent}
+	_nxmtunmetadata55masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata55masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata55masked, nil
 }
 
 func NewNxmTunMetadata55Masked() *NxmTunMetadata55Masked {
-	return &NxmTunMetadata55Masked{
+	obj := &NxmTunMetadata55Masked{
 		Oxm: NewOxm(114556),
 	}
+	return obj
 }
 func (self *NxmTunMetadata55Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata55Masked) GetName() string {
-	return "nxm_tun_metadata55_masked"
+	return "tun_metadata55_masked"
 }
 
 type NxmTunMetadata56 struct {
@@ -8967,23 +9190,24 @@ func (self *NxmTunMetadata56) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata56(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata56, error) {
-	nxmtunmetadata56 := &NxmTunMetadata56{Oxm: parent}
-	nxmtunmetadata56.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata56, nil
+func DecodeNxmTunMetadata56(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata56, error) {
+	_nxmtunmetadata56 := &NxmTunMetadata56{Oxm: parent}
+	_nxmtunmetadata56.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata56, nil
 }
 
 func NewNxmTunMetadata56() *NxmTunMetadata56 {
-	return &NxmTunMetadata56{
+	obj := &NxmTunMetadata56{
 		Oxm: NewOxm(114812),
 	}
+	return obj
 }
 func (self *NxmTunMetadata56) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata56) GetName() string {
-	return "nxm_tun_metadata56"
+	return "tun_metadata56"
 }
 
 type NxmTunMetadata56Masked struct {
@@ -9003,24 +9227,25 @@ func (self *NxmTunMetadata56Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata56Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata56Masked, error) {
-	nxmtunmetadata56masked := &NxmTunMetadata56Masked{Oxm: parent}
-	nxmtunmetadata56masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata56masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata56masked, nil
+func DecodeNxmTunMetadata56Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata56Masked, error) {
+	_nxmtunmetadata56masked := &NxmTunMetadata56Masked{Oxm: parent}
+	_nxmtunmetadata56masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata56masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata56masked, nil
 }
 
 func NewNxmTunMetadata56Masked() *NxmTunMetadata56Masked {
-	return &NxmTunMetadata56Masked{
+	obj := &NxmTunMetadata56Masked{
 		Oxm: NewOxm(115068),
 	}
+	return obj
 }
 func (self *NxmTunMetadata56Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata56Masked) GetName() string {
-	return "nxm_tun_metadata56_masked"
+	return "tun_metadata56_masked"
 }
 
 type NxmTunMetadata57 struct {
@@ -9038,23 +9263,24 @@ func (self *NxmTunMetadata57) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata57(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata57, error) {
-	nxmtunmetadata57 := &NxmTunMetadata57{Oxm: parent}
-	nxmtunmetadata57.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata57, nil
+func DecodeNxmTunMetadata57(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata57, error) {
+	_nxmtunmetadata57 := &NxmTunMetadata57{Oxm: parent}
+	_nxmtunmetadata57.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata57, nil
 }
 
 func NewNxmTunMetadata57() *NxmTunMetadata57 {
-	return &NxmTunMetadata57{
+	obj := &NxmTunMetadata57{
 		Oxm: NewOxm(115324),
 	}
+	return obj
 }
 func (self *NxmTunMetadata57) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata57) GetName() string {
-	return "nxm_tun_metadata57"
+	return "tun_metadata57"
 }
 
 type NxmTunMetadata57Masked struct {
@@ -9074,24 +9300,25 @@ func (self *NxmTunMetadata57Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata57Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata57Masked, error) {
-	nxmtunmetadata57masked := &NxmTunMetadata57Masked{Oxm: parent}
-	nxmtunmetadata57masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata57masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata57masked, nil
+func DecodeNxmTunMetadata57Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata57Masked, error) {
+	_nxmtunmetadata57masked := &NxmTunMetadata57Masked{Oxm: parent}
+	_nxmtunmetadata57masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata57masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata57masked, nil
 }
 
 func NewNxmTunMetadata57Masked() *NxmTunMetadata57Masked {
-	return &NxmTunMetadata57Masked{
+	obj := &NxmTunMetadata57Masked{
 		Oxm: NewOxm(115580),
 	}
+	return obj
 }
 func (self *NxmTunMetadata57Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata57Masked) GetName() string {
-	return "nxm_tun_metadata57_masked"
+	return "tun_metadata57_masked"
 }
 
 type NxmTunMetadata58 struct {
@@ -9109,23 +9336,24 @@ func (self *NxmTunMetadata58) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata58(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata58, error) {
-	nxmtunmetadata58 := &NxmTunMetadata58{Oxm: parent}
-	nxmtunmetadata58.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata58, nil
+func DecodeNxmTunMetadata58(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata58, error) {
+	_nxmtunmetadata58 := &NxmTunMetadata58{Oxm: parent}
+	_nxmtunmetadata58.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata58, nil
 }
 
 func NewNxmTunMetadata58() *NxmTunMetadata58 {
-	return &NxmTunMetadata58{
+	obj := &NxmTunMetadata58{
 		Oxm: NewOxm(115836),
 	}
+	return obj
 }
 func (self *NxmTunMetadata58) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata58) GetName() string {
-	return "nxm_tun_metadata58"
+	return "tun_metadata58"
 }
 
 type NxmTunMetadata58Masked struct {
@@ -9145,24 +9373,25 @@ func (self *NxmTunMetadata58Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata58Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata58Masked, error) {
-	nxmtunmetadata58masked := &NxmTunMetadata58Masked{Oxm: parent}
-	nxmtunmetadata58masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata58masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata58masked, nil
+func DecodeNxmTunMetadata58Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata58Masked, error) {
+	_nxmtunmetadata58masked := &NxmTunMetadata58Masked{Oxm: parent}
+	_nxmtunmetadata58masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata58masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata58masked, nil
 }
 
 func NewNxmTunMetadata58Masked() *NxmTunMetadata58Masked {
-	return &NxmTunMetadata58Masked{
+	obj := &NxmTunMetadata58Masked{
 		Oxm: NewOxm(116092),
 	}
+	return obj
 }
 func (self *NxmTunMetadata58Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata58Masked) GetName() string {
-	return "nxm_tun_metadata58_masked"
+	return "tun_metadata58_masked"
 }
 
 type NxmTunMetadata59 struct {
@@ -9180,23 +9409,24 @@ func (self *NxmTunMetadata59) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata59(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata59, error) {
-	nxmtunmetadata59 := &NxmTunMetadata59{Oxm: parent}
-	nxmtunmetadata59.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata59, nil
+func DecodeNxmTunMetadata59(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata59, error) {
+	_nxmtunmetadata59 := &NxmTunMetadata59{Oxm: parent}
+	_nxmtunmetadata59.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata59, nil
 }
 
 func NewNxmTunMetadata59() *NxmTunMetadata59 {
-	return &NxmTunMetadata59{
+	obj := &NxmTunMetadata59{
 		Oxm: NewOxm(116348),
 	}
+	return obj
 }
 func (self *NxmTunMetadata59) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata59) GetName() string {
-	return "nxm_tun_metadata59"
+	return "tun_metadata59"
 }
 
 type NxmTunMetadata59Masked struct {
@@ -9216,24 +9446,25 @@ func (self *NxmTunMetadata59Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata59Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata59Masked, error) {
-	nxmtunmetadata59masked := &NxmTunMetadata59Masked{Oxm: parent}
-	nxmtunmetadata59masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata59masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata59masked, nil
+func DecodeNxmTunMetadata59Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata59Masked, error) {
+	_nxmtunmetadata59masked := &NxmTunMetadata59Masked{Oxm: parent}
+	_nxmtunmetadata59masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata59masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata59masked, nil
 }
 
 func NewNxmTunMetadata59Masked() *NxmTunMetadata59Masked {
-	return &NxmTunMetadata59Masked{
+	obj := &NxmTunMetadata59Masked{
 		Oxm: NewOxm(116604),
 	}
+	return obj
 }
 func (self *NxmTunMetadata59Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata59Masked) GetName() string {
-	return "nxm_tun_metadata59_masked"
+	return "tun_metadata59_masked"
 }
 
 type NxmTunMetadata5Masked struct {
@@ -9253,24 +9484,25 @@ func (self *NxmTunMetadata5Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata5Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata5Masked, error) {
-	nxmtunmetadata5masked := &NxmTunMetadata5Masked{Oxm: parent}
-	nxmtunmetadata5masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata5masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata5masked, nil
+func DecodeNxmTunMetadata5Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata5Masked, error) {
+	_nxmtunmetadata5masked := &NxmTunMetadata5Masked{Oxm: parent}
+	_nxmtunmetadata5masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata5masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata5masked, nil
 }
 
 func NewNxmTunMetadata5Masked() *NxmTunMetadata5Masked {
-	return &NxmTunMetadata5Masked{
+	obj := &NxmTunMetadata5Masked{
 		Oxm: NewOxm(88956),
 	}
+	return obj
 }
 func (self *NxmTunMetadata5Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata5Masked) GetName() string {
-	return "nxm_tun_metadata5_masked"
+	return "tun_metadata5_masked"
 }
 
 type NxmTunMetadata6 struct {
@@ -9288,23 +9520,24 @@ func (self *NxmTunMetadata6) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata6(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata6, error) {
-	nxmtunmetadata6 := &NxmTunMetadata6{Oxm: parent}
-	nxmtunmetadata6.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata6, nil
+func DecodeNxmTunMetadata6(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata6, error) {
+	_nxmtunmetadata6 := &NxmTunMetadata6{Oxm: parent}
+	_nxmtunmetadata6.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata6, nil
 }
 
 func NewNxmTunMetadata6() *NxmTunMetadata6 {
-	return &NxmTunMetadata6{
+	obj := &NxmTunMetadata6{
 		Oxm: NewOxm(89212),
 	}
+	return obj
 }
 func (self *NxmTunMetadata6) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata6) GetName() string {
-	return "nxm_tun_metadata6"
+	return "tun_metadata6"
 }
 
 type NxmTunMetadata60 struct {
@@ -9322,23 +9555,24 @@ func (self *NxmTunMetadata60) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata60(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata60, error) {
-	nxmtunmetadata60 := &NxmTunMetadata60{Oxm: parent}
-	nxmtunmetadata60.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata60, nil
+func DecodeNxmTunMetadata60(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata60, error) {
+	_nxmtunmetadata60 := &NxmTunMetadata60{Oxm: parent}
+	_nxmtunmetadata60.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata60, nil
 }
 
 func NewNxmTunMetadata60() *NxmTunMetadata60 {
-	return &NxmTunMetadata60{
+	obj := &NxmTunMetadata60{
 		Oxm: NewOxm(116860),
 	}
+	return obj
 }
 func (self *NxmTunMetadata60) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata60) GetName() string {
-	return "nxm_tun_metadata60"
+	return "tun_metadata60"
 }
 
 type NxmTunMetadata60Masked struct {
@@ -9358,24 +9592,25 @@ func (self *NxmTunMetadata60Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata60Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata60Masked, error) {
-	nxmtunmetadata60masked := &NxmTunMetadata60Masked{Oxm: parent}
-	nxmtunmetadata60masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata60masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata60masked, nil
+func DecodeNxmTunMetadata60Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata60Masked, error) {
+	_nxmtunmetadata60masked := &NxmTunMetadata60Masked{Oxm: parent}
+	_nxmtunmetadata60masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata60masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata60masked, nil
 }
 
 func NewNxmTunMetadata60Masked() *NxmTunMetadata60Masked {
-	return &NxmTunMetadata60Masked{
+	obj := &NxmTunMetadata60Masked{
 		Oxm: NewOxm(117116),
 	}
+	return obj
 }
 func (self *NxmTunMetadata60Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata60Masked) GetName() string {
-	return "nxm_tun_metadata60_masked"
+	return "tun_metadata60_masked"
 }
 
 type NxmTunMetadata61 struct {
@@ -9393,23 +9628,24 @@ func (self *NxmTunMetadata61) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata61(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata61, error) {
-	nxmtunmetadata61 := &NxmTunMetadata61{Oxm: parent}
-	nxmtunmetadata61.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata61, nil
+func DecodeNxmTunMetadata61(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata61, error) {
+	_nxmtunmetadata61 := &NxmTunMetadata61{Oxm: parent}
+	_nxmtunmetadata61.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata61, nil
 }
 
 func NewNxmTunMetadata61() *NxmTunMetadata61 {
-	return &NxmTunMetadata61{
+	obj := &NxmTunMetadata61{
 		Oxm: NewOxm(117372),
 	}
+	return obj
 }
 func (self *NxmTunMetadata61) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata61) GetName() string {
-	return "nxm_tun_metadata61"
+	return "tun_metadata61"
 }
 
 type NxmTunMetadata61Masked struct {
@@ -9429,24 +9665,25 @@ func (self *NxmTunMetadata61Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata61Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata61Masked, error) {
-	nxmtunmetadata61masked := &NxmTunMetadata61Masked{Oxm: parent}
-	nxmtunmetadata61masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata61masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata61masked, nil
+func DecodeNxmTunMetadata61Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata61Masked, error) {
+	_nxmtunmetadata61masked := &NxmTunMetadata61Masked{Oxm: parent}
+	_nxmtunmetadata61masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata61masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata61masked, nil
 }
 
 func NewNxmTunMetadata61Masked() *NxmTunMetadata61Masked {
-	return &NxmTunMetadata61Masked{
+	obj := &NxmTunMetadata61Masked{
 		Oxm: NewOxm(117628),
 	}
+	return obj
 }
 func (self *NxmTunMetadata61Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata61Masked) GetName() string {
-	return "nxm_tun_metadata61_masked"
+	return "tun_metadata61_masked"
 }
 
 type NxmTunMetadata62 struct {
@@ -9464,23 +9701,24 @@ func (self *NxmTunMetadata62) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata62(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata62, error) {
-	nxmtunmetadata62 := &NxmTunMetadata62{Oxm: parent}
-	nxmtunmetadata62.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata62, nil
+func DecodeNxmTunMetadata62(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata62, error) {
+	_nxmtunmetadata62 := &NxmTunMetadata62{Oxm: parent}
+	_nxmtunmetadata62.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata62, nil
 }
 
 func NewNxmTunMetadata62() *NxmTunMetadata62 {
-	return &NxmTunMetadata62{
+	obj := &NxmTunMetadata62{
 		Oxm: NewOxm(117884),
 	}
+	return obj
 }
 func (self *NxmTunMetadata62) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata62) GetName() string {
-	return "nxm_tun_metadata62"
+	return "tun_metadata62"
 }
 
 type NxmTunMetadata62Masked struct {
@@ -9500,24 +9738,25 @@ func (self *NxmTunMetadata62Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata62Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata62Masked, error) {
-	nxmtunmetadata62masked := &NxmTunMetadata62Masked{Oxm: parent}
-	nxmtunmetadata62masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata62masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata62masked, nil
+func DecodeNxmTunMetadata62Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata62Masked, error) {
+	_nxmtunmetadata62masked := &NxmTunMetadata62Masked{Oxm: parent}
+	_nxmtunmetadata62masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata62masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata62masked, nil
 }
 
 func NewNxmTunMetadata62Masked() *NxmTunMetadata62Masked {
-	return &NxmTunMetadata62Masked{
+	obj := &NxmTunMetadata62Masked{
 		Oxm: NewOxm(118140),
 	}
+	return obj
 }
 func (self *NxmTunMetadata62Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata62Masked) GetName() string {
-	return "nxm_tun_metadata62_masked"
+	return "tun_metadata62_masked"
 }
 
 type NxmTunMetadata63 struct {
@@ -9535,23 +9774,24 @@ func (self *NxmTunMetadata63) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata63(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata63, error) {
-	nxmtunmetadata63 := &NxmTunMetadata63{Oxm: parent}
-	nxmtunmetadata63.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata63, nil
+func DecodeNxmTunMetadata63(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata63, error) {
+	_nxmtunmetadata63 := &NxmTunMetadata63{Oxm: parent}
+	_nxmtunmetadata63.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata63, nil
 }
 
 func NewNxmTunMetadata63() *NxmTunMetadata63 {
-	return &NxmTunMetadata63{
+	obj := &NxmTunMetadata63{
 		Oxm: NewOxm(118396),
 	}
+	return obj
 }
 func (self *NxmTunMetadata63) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata63) GetName() string {
-	return "nxm_tun_metadata63"
+	return "tun_metadata63"
 }
 
 type NxmTunMetadata63Masked struct {
@@ -9571,24 +9811,25 @@ func (self *NxmTunMetadata63Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata63Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata63Masked, error) {
-	nxmtunmetadata63masked := &NxmTunMetadata63Masked{Oxm: parent}
-	nxmtunmetadata63masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata63masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata63masked, nil
+func DecodeNxmTunMetadata63Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata63Masked, error) {
+	_nxmtunmetadata63masked := &NxmTunMetadata63Masked{Oxm: parent}
+	_nxmtunmetadata63masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata63masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata63masked, nil
 }
 
 func NewNxmTunMetadata63Masked() *NxmTunMetadata63Masked {
-	return &NxmTunMetadata63Masked{
+	obj := &NxmTunMetadata63Masked{
 		Oxm: NewOxm(118652),
 	}
+	return obj
 }
 func (self *NxmTunMetadata63Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata63Masked) GetName() string {
-	return "nxm_tun_metadata63_masked"
+	return "tun_metadata63_masked"
 }
 
 type NxmTunMetadata6Masked struct {
@@ -9608,24 +9849,25 @@ func (self *NxmTunMetadata6Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata6Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata6Masked, error) {
-	nxmtunmetadata6masked := &NxmTunMetadata6Masked{Oxm: parent}
-	nxmtunmetadata6masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata6masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata6masked, nil
+func DecodeNxmTunMetadata6Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata6Masked, error) {
+	_nxmtunmetadata6masked := &NxmTunMetadata6Masked{Oxm: parent}
+	_nxmtunmetadata6masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata6masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata6masked, nil
 }
 
 func NewNxmTunMetadata6Masked() *NxmTunMetadata6Masked {
-	return &NxmTunMetadata6Masked{
+	obj := &NxmTunMetadata6Masked{
 		Oxm: NewOxm(89468),
 	}
+	return obj
 }
 func (self *NxmTunMetadata6Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata6Masked) GetName() string {
-	return "nxm_tun_metadata6_masked"
+	return "tun_metadata6_masked"
 }
 
 type NxmTunMetadata7 struct {
@@ -9643,23 +9885,24 @@ func (self *NxmTunMetadata7) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata7(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata7, error) {
-	nxmtunmetadata7 := &NxmTunMetadata7{Oxm: parent}
-	nxmtunmetadata7.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata7, nil
+func DecodeNxmTunMetadata7(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata7, error) {
+	_nxmtunmetadata7 := &NxmTunMetadata7{Oxm: parent}
+	_nxmtunmetadata7.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata7, nil
 }
 
 func NewNxmTunMetadata7() *NxmTunMetadata7 {
-	return &NxmTunMetadata7{
+	obj := &NxmTunMetadata7{
 		Oxm: NewOxm(89724),
 	}
+	return obj
 }
 func (self *NxmTunMetadata7) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata7) GetName() string {
-	return "nxm_tun_metadata7"
+	return "tun_metadata7"
 }
 
 type NxmTunMetadata7Masked struct {
@@ -9679,24 +9922,25 @@ func (self *NxmTunMetadata7Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata7Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata7Masked, error) {
-	nxmtunmetadata7masked := &NxmTunMetadata7Masked{Oxm: parent}
-	nxmtunmetadata7masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata7masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata7masked, nil
+func DecodeNxmTunMetadata7Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata7Masked, error) {
+	_nxmtunmetadata7masked := &NxmTunMetadata7Masked{Oxm: parent}
+	_nxmtunmetadata7masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata7masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata7masked, nil
 }
 
 func NewNxmTunMetadata7Masked() *NxmTunMetadata7Masked {
-	return &NxmTunMetadata7Masked{
+	obj := &NxmTunMetadata7Masked{
 		Oxm: NewOxm(89980),
 	}
+	return obj
 }
 func (self *NxmTunMetadata7Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata7Masked) GetName() string {
-	return "nxm_tun_metadata7_masked"
+	return "tun_metadata7_masked"
 }
 
 type NxmTunMetadata8 struct {
@@ -9714,23 +9958,24 @@ func (self *NxmTunMetadata8) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata8(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata8, error) {
-	nxmtunmetadata8 := &NxmTunMetadata8{Oxm: parent}
-	nxmtunmetadata8.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata8, nil
+func DecodeNxmTunMetadata8(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata8, error) {
+	_nxmtunmetadata8 := &NxmTunMetadata8{Oxm: parent}
+	_nxmtunmetadata8.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata8, nil
 }
 
 func NewNxmTunMetadata8() *NxmTunMetadata8 {
-	return &NxmTunMetadata8{
+	obj := &NxmTunMetadata8{
 		Oxm: NewOxm(90236),
 	}
+	return obj
 }
 func (self *NxmTunMetadata8) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata8) GetName() string {
-	return "nxm_tun_metadata8"
+	return "tun_metadata8"
 }
 
 type NxmTunMetadata8Masked struct {
@@ -9750,24 +9995,25 @@ func (self *NxmTunMetadata8Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata8Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata8Masked, error) {
-	nxmtunmetadata8masked := &NxmTunMetadata8Masked{Oxm: parent}
-	nxmtunmetadata8masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata8masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata8masked, nil
+func DecodeNxmTunMetadata8Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata8Masked, error) {
+	_nxmtunmetadata8masked := &NxmTunMetadata8Masked{Oxm: parent}
+	_nxmtunmetadata8masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata8masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata8masked, nil
 }
 
 func NewNxmTunMetadata8Masked() *NxmTunMetadata8Masked {
-	return &NxmTunMetadata8Masked{
+	obj := &NxmTunMetadata8Masked{
 		Oxm: NewOxm(90492),
 	}
+	return obj
 }
 func (self *NxmTunMetadata8Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata8Masked) GetName() string {
-	return "nxm_tun_metadata8_masked"
+	return "tun_metadata8_masked"
 }
 
 type NxmTunMetadata9 struct {
@@ -9785,23 +10031,24 @@ func (self *NxmTunMetadata9) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata9(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata9, error) {
-	nxmtunmetadata9 := &NxmTunMetadata9{Oxm: parent}
-	nxmtunmetadata9.Value = decoder.Read(decoder.Length())
-	return nxmtunmetadata9, nil
+func DecodeNxmTunMetadata9(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata9, error) {
+	_nxmtunmetadata9 := &NxmTunMetadata9{Oxm: parent}
+	_nxmtunmetadata9.Value = decoder.Read(decoder.Length())
+	return _nxmtunmetadata9, nil
 }
 
 func NewNxmTunMetadata9() *NxmTunMetadata9 {
-	return &NxmTunMetadata9{
+	obj := &NxmTunMetadata9{
 		Oxm: NewOxm(90748),
 	}
+	return obj
 }
 func (self *NxmTunMetadata9) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata9) GetName() string {
-	return "nxm_tun_metadata9"
+	return "tun_metadata9"
 }
 
 type NxmTunMetadata9Masked struct {
@@ -9821,24 +10068,25 @@ func (self *NxmTunMetadata9Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunMetadata9Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata9Masked, error) {
-	nxmtunmetadata9masked := &NxmTunMetadata9Masked{Oxm: parent}
-	nxmtunmetadata9masked.Value = decoder.Read(decoder.Length())
-	nxmtunmetadata9masked.ValueMask = decoder.Read(decoder.Length())
-	return nxmtunmetadata9masked, nil
+func DecodeNxmTunMetadata9Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunMetadata9Masked, error) {
+	_nxmtunmetadata9masked := &NxmTunMetadata9Masked{Oxm: parent}
+	_nxmtunmetadata9masked.Value = decoder.Read(decoder.Length())
+	_nxmtunmetadata9masked.ValueMask = decoder.Read(decoder.Length())
+	return _nxmtunmetadata9masked, nil
 }
 
 func NewNxmTunMetadata9Masked() *NxmTunMetadata9Masked {
-	return &NxmTunMetadata9Masked{
+	obj := &NxmTunMetadata9Masked{
 		Oxm: NewOxm(91004),
 	}
+	return obj
 }
 func (self *NxmTunMetadata9Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunMetadata9Masked) GetName() string {
-	return "nxm_tun_metadata9_masked"
+	return "tun_metadata9_masked"
 }
 
 type NxmTunSrc struct {
@@ -9856,26 +10104,27 @@ func (self *NxmTunSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunSrc, error) {
-	nxmtunsrc := &NxmTunSrc{Oxm: parent}
+func DecodeNxmTunSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunSrc, error) {
+	_nxmtunsrc := &NxmTunSrc{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmTunSrc packet too short: %d < 4", decoder.Length())
 	}
-	nxmtunsrc.Value = net.IP(decoder.Read(4))
-	return nxmtunsrc, nil
+	_nxmtunsrc.Value = net.IP(decoder.Read(4))
+	return _nxmtunsrc, nil
 }
 
 func NewNxmTunSrc() *NxmTunSrc {
-	return &NxmTunSrc{
+	obj := &NxmTunSrc{
 		Oxm: NewOxm(81412),
 	}
+	return obj
 }
 func (self *NxmTunSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunSrc) GetName() string {
-	return "nxm_tun_src"
+	return "tun_src"
 }
 
 type NxmTunSrcMasked struct {
@@ -9895,27 +10144,28 @@ func (self *NxmTunSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmTunSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunSrcMasked, error) {
-	nxmtunsrcmasked := &NxmTunSrcMasked{Oxm: parent}
+func DecodeNxmTunSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunSrcMasked, error) {
+	_nxmtunsrcmasked := &NxmTunSrcMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("NxmTunSrcMasked packet too short: %d < 8", decoder.Length())
 	}
-	nxmtunsrcmasked.Value = net.IP(decoder.Read(4))
-	nxmtunsrcmasked.ValueMask = net.IP(decoder.Read(4))
-	return nxmtunsrcmasked, nil
+	_nxmtunsrcmasked.Value = net.IP(decoder.Read(4))
+	_nxmtunsrcmasked.ValueMask = net.IP(decoder.Read(4))
+	return _nxmtunsrcmasked, nil
 }
 
 func NewNxmTunSrcMasked() *NxmTunSrcMasked {
-	return &NxmTunSrcMasked{
+	obj := &NxmTunSrcMasked{
 		Oxm: NewOxm(81668),
 	}
+	return obj
 }
 func (self *NxmTunSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmTunSrcMasked) GetName() string {
-	return "nxm_tun_src_masked"
+	return "tun_src_masked"
 }
 
 type NxmUdpDst struct {
@@ -9933,26 +10183,27 @@ func (self *NxmUdpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmUdpDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpDst, error) {
-	nxmudpdst := &NxmUdpDst{Oxm: parent}
+func DecodeNxmUdpDst(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpDst, error) {
+	_nxmudpdst := &NxmUdpDst{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmUdpDst packet too short: %d < 2", decoder.Length())
 	}
-	nxmudpdst.Value = uint16(decoder.ReadUint16())
-	return nxmudpdst, nil
+	_nxmudpdst.Value = uint16(decoder.ReadUint16())
+	return _nxmudpdst, nil
 }
 
 func NewNxmUdpDst() *NxmUdpDst {
-	return &NxmUdpDst{
+	obj := &NxmUdpDst{
 		Oxm: NewOxm(6146),
 	}
+	return obj
 }
 func (self *NxmUdpDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmUdpDst) GetName() string {
-	return "nxm_udp_dst"
+	return "udp_dst"
 }
 
 type NxmUdpDstMasked struct {
@@ -9972,27 +10223,28 @@ func (self *NxmUdpDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmUdpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpDstMasked, error) {
-	nxmudpdstmasked := &NxmUdpDstMasked{Oxm: parent}
+func DecodeNxmUdpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpDstMasked, error) {
+	_nxmudpdstmasked := &NxmUdpDstMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmUdpDstMasked packet too short: %d < 4", decoder.Length())
 	}
-	nxmudpdstmasked.Value = uint16(decoder.ReadUint16())
-	nxmudpdstmasked.ValueMask = uint16(decoder.ReadUint16())
-	return nxmudpdstmasked, nil
+	_nxmudpdstmasked.Value = uint16(decoder.ReadUint16())
+	_nxmudpdstmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _nxmudpdstmasked, nil
 }
 
 func NewNxmUdpDstMasked() *NxmUdpDstMasked {
-	return &NxmUdpDstMasked{
+	obj := &NxmUdpDstMasked{
 		Oxm: NewOxm(6402),
 	}
+	return obj
 }
 func (self *NxmUdpDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmUdpDstMasked) GetName() string {
-	return "nxm_udp_dst_masked"
+	return "udp_dst_masked"
 }
 
 type NxmUdpSrc struct {
@@ -10010,26 +10262,27 @@ func (self *NxmUdpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmUdpSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpSrc, error) {
-	nxmudpsrc := &NxmUdpSrc{Oxm: parent}
+func DecodeNxmUdpSrc(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpSrc, error) {
+	_nxmudpsrc := &NxmUdpSrc{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmUdpSrc packet too short: %d < 2", decoder.Length())
 	}
-	nxmudpsrc.Value = uint16(decoder.ReadUint16())
-	return nxmudpsrc, nil
+	_nxmudpsrc.Value = uint16(decoder.ReadUint16())
+	return _nxmudpsrc, nil
 }
 
 func NewNxmUdpSrc() *NxmUdpSrc {
-	return &NxmUdpSrc{
+	obj := &NxmUdpSrc{
 		Oxm: NewOxm(5634),
 	}
+	return obj
 }
 func (self *NxmUdpSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmUdpSrc) GetName() string {
-	return "nxm_udp_src"
+	return "udp_src"
 }
 
 type NxmUdpSrcMasked struct {
@@ -10049,27 +10302,28 @@ func (self *NxmUdpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmUdpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpSrcMasked, error) {
-	nxmudpsrcmasked := &NxmUdpSrcMasked{Oxm: parent}
+func DecodeNxmUdpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpSrcMasked, error) {
+	_nxmudpsrcmasked := &NxmUdpSrcMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmUdpSrcMasked packet too short: %d < 4", decoder.Length())
 	}
-	nxmudpsrcmasked.Value = uint16(decoder.ReadUint16())
-	nxmudpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
-	return nxmudpsrcmasked, nil
+	_nxmudpsrcmasked.Value = uint16(decoder.ReadUint16())
+	_nxmudpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _nxmudpsrcmasked, nil
 }
 
 func NewNxmUdpSrcMasked() *NxmUdpSrcMasked {
-	return &NxmUdpSrcMasked{
+	obj := &NxmUdpSrcMasked{
 		Oxm: NewOxm(5890),
 	}
+	return obj
 }
 func (self *NxmUdpSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmUdpSrcMasked) GetName() string {
-	return "nxm_udp_src_masked"
+	return "udp_src_masked"
 }
 
 type NxmVlanTci struct {
@@ -10087,26 +10341,27 @@ func (self *NxmVlanTci) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmVlanTci(parent *Oxm, decoder *goloxi.Decoder) (*NxmVlanTci, error) {
-	nxmvlantci := &NxmVlanTci{Oxm: parent}
+func DecodeNxmVlanTci(parent *Oxm, decoder *goloxi.Decoder) (*NxmVlanTci, error) {
+	_nxmvlantci := &NxmVlanTci{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("NxmVlanTci packet too short: %d < 2", decoder.Length())
 	}
-	nxmvlantci.Value = uint16(decoder.ReadUint16())
-	return nxmvlantci, nil
+	_nxmvlantci.Value = uint16(decoder.ReadUint16())
+	return _nxmvlantci, nil
 }
 
 func NewNxmVlanTci() *NxmVlanTci {
-	return &NxmVlanTci{
+	obj := &NxmVlanTci{
 		Oxm: NewOxm(2050),
 	}
+	return obj
 }
 func (self *NxmVlanTci) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmVlanTci) GetName() string {
-	return "nxm_vlan_tci"
+	return "vlan_tci"
 }
 
 type NxmVlanTciMasked struct {
@@ -10126,27 +10381,28 @@ func (self *NxmVlanTciMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmVlanTciMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmVlanTciMasked, error) {
-	nxmvlantcimasked := &NxmVlanTciMasked{Oxm: parent}
+func DecodeNxmVlanTciMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmVlanTciMasked, error) {
+	_nxmvlantcimasked := &NxmVlanTciMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("NxmVlanTciMasked packet too short: %d < 4", decoder.Length())
 	}
-	nxmvlantcimasked.Value = uint16(decoder.ReadUint16())
-	nxmvlantcimasked.ValueMask = uint16(decoder.ReadUint16())
-	return nxmvlantcimasked, nil
+	_nxmvlantcimasked.Value = uint16(decoder.ReadUint16())
+	_nxmvlantcimasked.ValueMask = uint16(decoder.ReadUint16())
+	return _nxmvlantcimasked, nil
 }
 
 func NewNxmVlanTciMasked() *NxmVlanTciMasked {
-	return &NxmVlanTciMasked{
+	obj := &NxmVlanTciMasked{
 		Oxm: NewOxm(2306),
 	}
+	return obj
 }
 func (self *NxmVlanTciMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmVlanTciMasked) GetName() string {
-	return "nxm_vlan_tci_masked"
+	return "vlan_tci_masked"
 }
 
 type NxmXxreg0 struct {
@@ -10164,26 +10420,27 @@ func (self *NxmXxreg0) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmXxreg0(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg0, error) {
-	nxmxxreg0 := &NxmXxreg0{Oxm: parent}
+func DecodeNxmXxreg0(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg0, error) {
+	_nxmxxreg0 := &NxmXxreg0{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmXxreg0 packet too short: %d < 16", decoder.Length())
 	}
-	nxmxxreg0.Value = uint128(decoder.ReadUint128())
-	return nxmxxreg0, nil
+	_nxmxxreg0.Value = uint128(decoder.ReadUint128())
+	return _nxmxxreg0, nil
 }
 
 func NewNxmXxreg0() *NxmXxreg0 {
-	return &NxmXxreg0{
+	obj := &NxmXxreg0{
 		Oxm: NewOxm(122384),
 	}
+	return obj
 }
 func (self *NxmXxreg0) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmXxreg0) GetName() string {
-	return "nxm_xxreg0"
+	return "xxreg0"
 }
 
 type NxmXxreg0Masked struct {
@@ -10203,27 +10460,28 @@ func (self *NxmXxreg0Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmXxreg0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg0Masked, error) {
-	nxmxxreg0masked := &NxmXxreg0Masked{Oxm: parent}
+func DecodeNxmXxreg0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg0Masked, error) {
+	_nxmxxreg0masked := &NxmXxreg0Masked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmXxreg0Masked packet too short: %d < 32", decoder.Length())
 	}
-	nxmxxreg0masked.Value = uint128(decoder.ReadUint128())
-	nxmxxreg0masked.ValueMask = uint128(decoder.ReadUint128())
-	return nxmxxreg0masked, nil
+	_nxmxxreg0masked.Value = uint128(decoder.ReadUint128())
+	_nxmxxreg0masked.ValueMask = uint128(decoder.ReadUint128())
+	return _nxmxxreg0masked, nil
 }
 
 func NewNxmXxreg0Masked() *NxmXxreg0Masked {
-	return &NxmXxreg0Masked{
+	obj := &NxmXxreg0Masked{
 		Oxm: NewOxm(122640),
 	}
+	return obj
 }
 func (self *NxmXxreg0Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmXxreg0Masked) GetName() string {
-	return "nxm_xxreg0_masked"
+	return "xxreg0_masked"
 }
 
 type NxmXxreg1 struct {
@@ -10241,26 +10499,27 @@ func (self *NxmXxreg1) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmXxreg1(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg1, error) {
-	nxmxxreg1 := &NxmXxreg1{Oxm: parent}
+func DecodeNxmXxreg1(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg1, error) {
+	_nxmxxreg1 := &NxmXxreg1{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmXxreg1 packet too short: %d < 16", decoder.Length())
 	}
-	nxmxxreg1.Value = uint128(decoder.ReadUint128())
-	return nxmxxreg1, nil
+	_nxmxxreg1.Value = uint128(decoder.ReadUint128())
+	return _nxmxxreg1, nil
 }
 
 func NewNxmXxreg1() *NxmXxreg1 {
-	return &NxmXxreg1{
+	obj := &NxmXxreg1{
 		Oxm: NewOxm(122896),
 	}
+	return obj
 }
 func (self *NxmXxreg1) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmXxreg1) GetName() string {
-	return "nxm_xxreg1"
+	return "xxreg1"
 }
 
 type NxmXxreg1Masked struct {
@@ -10280,27 +10539,28 @@ func (self *NxmXxreg1Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmXxreg1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg1Masked, error) {
-	nxmxxreg1masked := &NxmXxreg1Masked{Oxm: parent}
+func DecodeNxmXxreg1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg1Masked, error) {
+	_nxmxxreg1masked := &NxmXxreg1Masked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmXxreg1Masked packet too short: %d < 32", decoder.Length())
 	}
-	nxmxxreg1masked.Value = uint128(decoder.ReadUint128())
-	nxmxxreg1masked.ValueMask = uint128(decoder.ReadUint128())
-	return nxmxxreg1masked, nil
+	_nxmxxreg1masked.Value = uint128(decoder.ReadUint128())
+	_nxmxxreg1masked.ValueMask = uint128(decoder.ReadUint128())
+	return _nxmxxreg1masked, nil
 }
 
 func NewNxmXxreg1Masked() *NxmXxreg1Masked {
-	return &NxmXxreg1Masked{
+	obj := &NxmXxreg1Masked{
 		Oxm: NewOxm(123152),
 	}
+	return obj
 }
 func (self *NxmXxreg1Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmXxreg1Masked) GetName() string {
-	return "nxm_xxreg1_masked"
+	return "xxreg1_masked"
 }
 
 type NxmXxreg2 struct {
@@ -10318,26 +10578,27 @@ func (self *NxmXxreg2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmXxreg2(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg2, error) {
-	nxmxxreg2 := &NxmXxreg2{Oxm: parent}
+func DecodeNxmXxreg2(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg2, error) {
+	_nxmxxreg2 := &NxmXxreg2{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmXxreg2 packet too short: %d < 16", decoder.Length())
 	}
-	nxmxxreg2.Value = uint128(decoder.ReadUint128())
-	return nxmxxreg2, nil
+	_nxmxxreg2.Value = uint128(decoder.ReadUint128())
+	return _nxmxxreg2, nil
 }
 
 func NewNxmXxreg2() *NxmXxreg2 {
-	return &NxmXxreg2{
+	obj := &NxmXxreg2{
 		Oxm: NewOxm(123408),
 	}
+	return obj
 }
 func (self *NxmXxreg2) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmXxreg2) GetName() string {
-	return "nxm_xxreg2"
+	return "xxreg2"
 }
 
 type NxmXxreg2Masked struct {
@@ -10357,27 +10618,28 @@ func (self *NxmXxreg2Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmXxreg2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg2Masked, error) {
-	nxmxxreg2masked := &NxmXxreg2Masked{Oxm: parent}
+func DecodeNxmXxreg2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg2Masked, error) {
+	_nxmxxreg2masked := &NxmXxreg2Masked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmXxreg2Masked packet too short: %d < 32", decoder.Length())
 	}
-	nxmxxreg2masked.Value = uint128(decoder.ReadUint128())
-	nxmxxreg2masked.ValueMask = uint128(decoder.ReadUint128())
-	return nxmxxreg2masked, nil
+	_nxmxxreg2masked.Value = uint128(decoder.ReadUint128())
+	_nxmxxreg2masked.ValueMask = uint128(decoder.ReadUint128())
+	return _nxmxxreg2masked, nil
 }
 
 func NewNxmXxreg2Masked() *NxmXxreg2Masked {
-	return &NxmXxreg2Masked{
+	obj := &NxmXxreg2Masked{
 		Oxm: NewOxm(123664),
 	}
+	return obj
 }
 func (self *NxmXxreg2Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmXxreg2Masked) GetName() string {
-	return "nxm_xxreg2_masked"
+	return "xxreg2_masked"
 }
 
 type NxmXxreg3 struct {
@@ -10395,26 +10657,27 @@ func (self *NxmXxreg3) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmXxreg3(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg3, error) {
-	nxmxxreg3 := &NxmXxreg3{Oxm: parent}
+func DecodeNxmXxreg3(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg3, error) {
+	_nxmxxreg3 := &NxmXxreg3{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("NxmXxreg3 packet too short: %d < 16", decoder.Length())
 	}
-	nxmxxreg3.Value = uint128(decoder.ReadUint128())
-	return nxmxxreg3, nil
+	_nxmxxreg3.Value = uint128(decoder.ReadUint128())
+	return _nxmxxreg3, nil
 }
 
 func NewNxmXxreg3() *NxmXxreg3 {
-	return &NxmXxreg3{
+	obj := &NxmXxreg3{
 		Oxm: NewOxm(123920),
 	}
+	return obj
 }
 func (self *NxmXxreg3) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmXxreg3) GetName() string {
-	return "nxm_xxreg3"
+	return "xxreg3"
 }
 
 type NxmXxreg3Masked struct {
@@ -10434,27 +10697,28 @@ func (self *NxmXxreg3Masked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeNxmXxreg3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg3Masked, error) {
-	nxmxxreg3masked := &NxmXxreg3Masked{Oxm: parent}
+func DecodeNxmXxreg3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg3Masked, error) {
+	_nxmxxreg3masked := &NxmXxreg3Masked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("NxmXxreg3Masked packet too short: %d < 32", decoder.Length())
 	}
-	nxmxxreg3masked.Value = uint128(decoder.ReadUint128())
-	nxmxxreg3masked.ValueMask = uint128(decoder.ReadUint128())
-	return nxmxxreg3masked, nil
+	_nxmxxreg3masked.Value = uint128(decoder.ReadUint128())
+	_nxmxxreg3masked.ValueMask = uint128(decoder.ReadUint128())
+	return _nxmxxreg3masked, nil
 }
 
 func NewNxmXxreg3Masked() *NxmXxreg3Masked {
-	return &NxmXxreg3Masked{
+	obj := &NxmXxreg3Masked{
 		Oxm: NewOxm(124176),
 	}
+	return obj
 }
 func (self *NxmXxreg3Masked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *NxmXxreg3Masked) GetName() string {
-	return "nxm_xxreg3_masked"
+	return "xxreg3_masked"
 }
 
 type OxmArpOp struct {
@@ -10472,26 +10736,27 @@ func (self *OxmArpOp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpOp(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpOp, error) {
-	oxmarpop := &OxmArpOp{Oxm: parent}
+func DecodeOxmArpOp(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpOp, error) {
+	_oxmarpop := &OxmArpOp{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmArpOp packet too short: %d < 2", decoder.Length())
 	}
-	oxmarpop.Value = uint16(decoder.ReadUint16())
-	return oxmarpop, nil
+	_oxmarpop.Value = uint16(decoder.ReadUint16())
+	return _oxmarpop, nil
 }
 
 func NewOxmArpOp() *OxmArpOp {
-	return &OxmArpOp{
+	obj := &OxmArpOp{
 		Oxm: NewOxm(2147494402),
 	}
+	return obj
 }
 func (self *OxmArpOp) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpOp) GetName() string {
-	return "oxm_arp_op"
+	return "arp_op"
 }
 
 type OxmArpOpMasked struct {
@@ -10511,27 +10776,28 @@ func (self *OxmArpOpMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpOpMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpOpMasked, error) {
-	oxmarpopmasked := &OxmArpOpMasked{Oxm: parent}
+func DecodeOxmArpOpMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpOpMasked, error) {
+	_oxmarpopmasked := &OxmArpOpMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmArpOpMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmarpopmasked.Value = uint16(decoder.ReadUint16())
-	oxmarpopmasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmarpopmasked, nil
+	_oxmarpopmasked.Value = uint16(decoder.ReadUint16())
+	_oxmarpopmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmarpopmasked, nil
 }
 
 func NewOxmArpOpMasked() *OxmArpOpMasked {
-	return &OxmArpOpMasked{
+	obj := &OxmArpOpMasked{
 		Oxm: NewOxm(2147494660),
 	}
+	return obj
 }
 func (self *OxmArpOpMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpOpMasked) GetName() string {
-	return "oxm_arp_op_masked"
+	return "arp_op_masked"
 }
 
 type OxmArpSha struct {
@@ -10549,26 +10815,27 @@ func (self *OxmArpSha) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpSha(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpSha, error) {
-	oxmarpsha := &OxmArpSha{Oxm: parent}
+func DecodeOxmArpSha(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpSha, error) {
+	_oxmarpsha := &OxmArpSha{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("OxmArpSha packet too short: %d < 6", decoder.Length())
 	}
-	oxmarpsha.Value = net.HardwareAddr(decoder.Read(6))
-	return oxmarpsha, nil
+	_oxmarpsha.Value = net.HardwareAddr(decoder.Read(6))
+	return _oxmarpsha, nil
 }
 
 func NewOxmArpSha() *OxmArpSha {
-	return &OxmArpSha{
+	obj := &OxmArpSha{
 		Oxm: NewOxm(2147495942),
 	}
+	return obj
 }
 func (self *OxmArpSha) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpSha) GetName() string {
-	return "oxm_arp_sha"
+	return "arp_sha"
 }
 
 type OxmArpShaMasked struct {
@@ -10588,27 +10855,28 @@ func (self *OxmArpShaMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpShaMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpShaMasked, error) {
-	oxmarpshamasked := &OxmArpShaMasked{Oxm: parent}
+func DecodeOxmArpShaMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpShaMasked, error) {
+	_oxmarpshamasked := &OxmArpShaMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("OxmArpShaMasked packet too short: %d < 12", decoder.Length())
 	}
-	oxmarpshamasked.Value = net.HardwareAddr(decoder.Read(6))
-	oxmarpshamasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return oxmarpshamasked, nil
+	_oxmarpshamasked.Value = net.HardwareAddr(decoder.Read(6))
+	_oxmarpshamasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _oxmarpshamasked, nil
 }
 
 func NewOxmArpShaMasked() *OxmArpShaMasked {
-	return &OxmArpShaMasked{
+	obj := &OxmArpShaMasked{
 		Oxm: NewOxm(2147496204),
 	}
+	return obj
 }
 func (self *OxmArpShaMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpShaMasked) GetName() string {
-	return "oxm_arp_sha_masked"
+	return "arp_sha_masked"
 }
 
 type OxmArpSpa struct {
@@ -10626,26 +10894,27 @@ func (self *OxmArpSpa) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpSpa(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpSpa, error) {
-	oxmarpspa := &OxmArpSpa{Oxm: parent}
+func DecodeOxmArpSpa(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpSpa, error) {
+	_oxmarpspa := &OxmArpSpa{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmArpSpa packet too short: %d < 4", decoder.Length())
 	}
-	oxmarpspa.Value = uint32(decoder.ReadUint32())
-	return oxmarpspa, nil
+	_oxmarpspa.Value = uint32(decoder.ReadUint32())
+	return _oxmarpspa, nil
 }
 
 func NewOxmArpSpa() *OxmArpSpa {
-	return &OxmArpSpa{
+	obj := &OxmArpSpa{
 		Oxm: NewOxm(2147494916),
 	}
+	return obj
 }
 func (self *OxmArpSpa) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpSpa) GetName() string {
-	return "oxm_arp_spa"
+	return "arp_spa"
 }
 
 type OxmArpSpaMasked struct {
@@ -10665,27 +10934,28 @@ func (self *OxmArpSpaMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpSpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpSpaMasked, error) {
-	oxmarpspamasked := &OxmArpSpaMasked{Oxm: parent}
+func DecodeOxmArpSpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpSpaMasked, error) {
+	_oxmarpspamasked := &OxmArpSpaMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxmArpSpaMasked packet too short: %d < 8", decoder.Length())
 	}
-	oxmarpspamasked.Value = uint32(decoder.ReadUint32())
-	oxmarpspamasked.ValueMask = uint32(decoder.ReadUint32())
-	return oxmarpspamasked, nil
+	_oxmarpspamasked.Value = uint32(decoder.ReadUint32())
+	_oxmarpspamasked.ValueMask = uint32(decoder.ReadUint32())
+	return _oxmarpspamasked, nil
 }
 
 func NewOxmArpSpaMasked() *OxmArpSpaMasked {
-	return &OxmArpSpaMasked{
+	obj := &OxmArpSpaMasked{
 		Oxm: NewOxm(2147495176),
 	}
+	return obj
 }
 func (self *OxmArpSpaMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpSpaMasked) GetName() string {
-	return "oxm_arp_spa_masked"
+	return "arp_spa_masked"
 }
 
 type OxmArpTha struct {
@@ -10703,26 +10973,27 @@ func (self *OxmArpTha) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpTha(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpTha, error) {
-	oxmarptha := &OxmArpTha{Oxm: parent}
+func DecodeOxmArpTha(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpTha, error) {
+	_oxmarptha := &OxmArpTha{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("OxmArpTha packet too short: %d < 6", decoder.Length())
 	}
-	oxmarptha.Value = net.HardwareAddr(decoder.Read(6))
-	return oxmarptha, nil
+	_oxmarptha.Value = net.HardwareAddr(decoder.Read(6))
+	return _oxmarptha, nil
 }
 
 func NewOxmArpTha() *OxmArpTha {
-	return &OxmArpTha{
+	obj := &OxmArpTha{
 		Oxm: NewOxm(2147496454),
 	}
+	return obj
 }
 func (self *OxmArpTha) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpTha) GetName() string {
-	return "oxm_arp_tha"
+	return "arp_tha"
 }
 
 type OxmArpThaMasked struct {
@@ -10742,27 +11013,28 @@ func (self *OxmArpThaMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpThaMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpThaMasked, error) {
-	oxmarpthamasked := &OxmArpThaMasked{Oxm: parent}
+func DecodeOxmArpThaMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpThaMasked, error) {
+	_oxmarpthamasked := &OxmArpThaMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("OxmArpThaMasked packet too short: %d < 12", decoder.Length())
 	}
-	oxmarpthamasked.Value = net.HardwareAddr(decoder.Read(6))
-	oxmarpthamasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return oxmarpthamasked, nil
+	_oxmarpthamasked.Value = net.HardwareAddr(decoder.Read(6))
+	_oxmarpthamasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _oxmarpthamasked, nil
 }
 
 func NewOxmArpThaMasked() *OxmArpThaMasked {
-	return &OxmArpThaMasked{
+	obj := &OxmArpThaMasked{
 		Oxm: NewOxm(2147496716),
 	}
+	return obj
 }
 func (self *OxmArpThaMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpThaMasked) GetName() string {
-	return "oxm_arp_tha_masked"
+	return "arp_tha_masked"
 }
 
 type OxmArpTpa struct {
@@ -10780,26 +11052,27 @@ func (self *OxmArpTpa) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpTpa(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpTpa, error) {
-	oxmarptpa := &OxmArpTpa{Oxm: parent}
+func DecodeOxmArpTpa(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpTpa, error) {
+	_oxmarptpa := &OxmArpTpa{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmArpTpa packet too short: %d < 4", decoder.Length())
 	}
-	oxmarptpa.Value = uint32(decoder.ReadUint32())
-	return oxmarptpa, nil
+	_oxmarptpa.Value = uint32(decoder.ReadUint32())
+	return _oxmarptpa, nil
 }
 
 func NewOxmArpTpa() *OxmArpTpa {
-	return &OxmArpTpa{
+	obj := &OxmArpTpa{
 		Oxm: NewOxm(2147495428),
 	}
+	return obj
 }
 func (self *OxmArpTpa) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpTpa) GetName() string {
-	return "oxm_arp_tpa"
+	return "arp_tpa"
 }
 
 type OxmArpTpaMasked struct {
@@ -10819,27 +11092,28 @@ func (self *OxmArpTpaMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmArpTpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpTpaMasked, error) {
-	oxmarptpamasked := &OxmArpTpaMasked{Oxm: parent}
+func DecodeOxmArpTpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmArpTpaMasked, error) {
+	_oxmarptpamasked := &OxmArpTpaMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxmArpTpaMasked packet too short: %d < 8", decoder.Length())
 	}
-	oxmarptpamasked.Value = uint32(decoder.ReadUint32())
-	oxmarptpamasked.ValueMask = uint32(decoder.ReadUint32())
-	return oxmarptpamasked, nil
+	_oxmarptpamasked.Value = uint32(decoder.ReadUint32())
+	_oxmarptpamasked.ValueMask = uint32(decoder.ReadUint32())
+	return _oxmarptpamasked, nil
 }
 
 func NewOxmArpTpaMasked() *OxmArpTpaMasked {
-	return &OxmArpTpaMasked{
+	obj := &OxmArpTpaMasked{
 		Oxm: NewOxm(2147495688),
 	}
+	return obj
 }
 func (self *OxmArpTpaMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmArpTpaMasked) GetName() string {
-	return "oxm_arp_tpa_masked"
+	return "arp_tpa_masked"
 }
 
 type OxmEthDst struct {
@@ -10857,26 +11131,27 @@ func (self *OxmEthDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmEthDst(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthDst, error) {
-	oxmethdst := &OxmEthDst{Oxm: parent}
+func DecodeOxmEthDst(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthDst, error) {
+	_oxmethdst := &OxmEthDst{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("OxmEthDst packet too short: %d < 6", decoder.Length())
 	}
-	oxmethdst.Value = net.HardwareAddr(decoder.Read(6))
-	return oxmethdst, nil
+	_oxmethdst.Value = net.HardwareAddr(decoder.Read(6))
+	return _oxmethdst, nil
 }
 
 func NewOxmEthDst() *OxmEthDst {
-	return &OxmEthDst{
+	obj := &OxmEthDst{
 		Oxm: NewOxm(2147485190),
 	}
+	return obj
 }
 func (self *OxmEthDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmEthDst) GetName() string {
-	return "oxm_eth_dst"
+	return "eth_dst"
 }
 
 type OxmEthDstMasked struct {
@@ -10896,27 +11171,28 @@ func (self *OxmEthDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmEthDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthDstMasked, error) {
-	oxmethdstmasked := &OxmEthDstMasked{Oxm: parent}
+func DecodeOxmEthDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthDstMasked, error) {
+	_oxmethdstmasked := &OxmEthDstMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("OxmEthDstMasked packet too short: %d < 12", decoder.Length())
 	}
-	oxmethdstmasked.Value = net.HardwareAddr(decoder.Read(6))
-	oxmethdstmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return oxmethdstmasked, nil
+	_oxmethdstmasked.Value = net.HardwareAddr(decoder.Read(6))
+	_oxmethdstmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _oxmethdstmasked, nil
 }
 
 func NewOxmEthDstMasked() *OxmEthDstMasked {
-	return &OxmEthDstMasked{
+	obj := &OxmEthDstMasked{
 		Oxm: NewOxm(2147485452),
 	}
+	return obj
 }
 func (self *OxmEthDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmEthDstMasked) GetName() string {
-	return "oxm_eth_dst_masked"
+	return "eth_dst_masked"
 }
 
 type OxmEthSrc struct {
@@ -10934,26 +11210,27 @@ func (self *OxmEthSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmEthSrc(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthSrc, error) {
-	oxmethsrc := &OxmEthSrc{Oxm: parent}
+func DecodeOxmEthSrc(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthSrc, error) {
+	_oxmethsrc := &OxmEthSrc{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("OxmEthSrc packet too short: %d < 6", decoder.Length())
 	}
-	oxmethsrc.Value = net.HardwareAddr(decoder.Read(6))
-	return oxmethsrc, nil
+	_oxmethsrc.Value = net.HardwareAddr(decoder.Read(6))
+	return _oxmethsrc, nil
 }
 
 func NewOxmEthSrc() *OxmEthSrc {
-	return &OxmEthSrc{
+	obj := &OxmEthSrc{
 		Oxm: NewOxm(2147485702),
 	}
+	return obj
 }
 func (self *OxmEthSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmEthSrc) GetName() string {
-	return "oxm_eth_src"
+	return "eth_src"
 }
 
 type OxmEthSrcMasked struct {
@@ -10973,27 +11250,28 @@ func (self *OxmEthSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmEthSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthSrcMasked, error) {
-	oxmethsrcmasked := &OxmEthSrcMasked{Oxm: parent}
+func DecodeOxmEthSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthSrcMasked, error) {
+	_oxmethsrcmasked := &OxmEthSrcMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("OxmEthSrcMasked packet too short: %d < 12", decoder.Length())
 	}
-	oxmethsrcmasked.Value = net.HardwareAddr(decoder.Read(6))
-	oxmethsrcmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return oxmethsrcmasked, nil
+	_oxmethsrcmasked.Value = net.HardwareAddr(decoder.Read(6))
+	_oxmethsrcmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _oxmethsrcmasked, nil
 }
 
 func NewOxmEthSrcMasked() *OxmEthSrcMasked {
-	return &OxmEthSrcMasked{
+	obj := &OxmEthSrcMasked{
 		Oxm: NewOxm(2147485964),
 	}
+	return obj
 }
 func (self *OxmEthSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmEthSrcMasked) GetName() string {
-	return "oxm_eth_src_masked"
+	return "eth_src_masked"
 }
 
 type OxmEthType struct {
@@ -11011,26 +11289,27 @@ func (self *OxmEthType) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmEthType(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthType, error) {
-	oxmethtype := &OxmEthType{Oxm: parent}
+func DecodeOxmEthType(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthType, error) {
+	_oxmethtype := &OxmEthType{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmEthType packet too short: %d < 2", decoder.Length())
 	}
-	oxmethtype.Value = uint16(decoder.ReadUint16())
-	return oxmethtype, nil
+	_oxmethtype.Value = uint16(decoder.ReadUint16())
+	return _oxmethtype, nil
 }
 
 func NewOxmEthType() *OxmEthType {
-	return &OxmEthType{
+	obj := &OxmEthType{
 		Oxm: NewOxm(2147486210),
 	}
+	return obj
 }
 func (self *OxmEthType) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmEthType) GetName() string {
-	return "oxm_eth_type"
+	return "eth_type"
 }
 
 type OxmEthTypeMasked struct {
@@ -11050,27 +11329,28 @@ func (self *OxmEthTypeMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmEthTypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthTypeMasked, error) {
-	oxmethtypemasked := &OxmEthTypeMasked{Oxm: parent}
+func DecodeOxmEthTypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthTypeMasked, error) {
+	_oxmethtypemasked := &OxmEthTypeMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmEthTypeMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmethtypemasked.Value = uint16(decoder.ReadUint16())
-	oxmethtypemasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmethtypemasked, nil
+	_oxmethtypemasked.Value = uint16(decoder.ReadUint16())
+	_oxmethtypemasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmethtypemasked, nil
 }
 
 func NewOxmEthTypeMasked() *OxmEthTypeMasked {
-	return &OxmEthTypeMasked{
+	obj := &OxmEthTypeMasked{
 		Oxm: NewOxm(2147486468),
 	}
+	return obj
 }
 func (self *OxmEthTypeMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmEthTypeMasked) GetName() string {
-	return "oxm_eth_type_masked"
+	return "eth_type_masked"
 }
 
 type OxmIcmpv4Code struct {
@@ -11088,26 +11368,27 @@ func (self *OxmIcmpv4Code) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIcmpv4Code(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4Code, error) {
-	oxmicmpv4code := &OxmIcmpv4Code{Oxm: parent}
+func DecodeOxmIcmpv4Code(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4Code, error) {
+	_oxmicmpv4code := &OxmIcmpv4Code{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIcmpv4Code packet too short: %d < 1", decoder.Length())
 	}
-	oxmicmpv4code.Value = uint8(decoder.ReadByte())
-	return oxmicmpv4code, nil
+	_oxmicmpv4code.Value = uint8(decoder.ReadByte())
+	return _oxmicmpv4code, nil
 }
 
 func NewOxmIcmpv4Code() *OxmIcmpv4Code {
-	return &OxmIcmpv4Code{
+	obj := &OxmIcmpv4Code{
 		Oxm: NewOxm(2147493889),
 	}
+	return obj
 }
 func (self *OxmIcmpv4Code) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIcmpv4Code) GetName() string {
-	return "oxm_icmpv4_code"
+	return "icmpv4_code"
 }
 
 type OxmIcmpv4CodeMasked struct {
@@ -11127,27 +11408,28 @@ func (self *OxmIcmpv4CodeMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIcmpv4CodeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4CodeMasked, error) {
-	oxmicmpv4codemasked := &OxmIcmpv4CodeMasked{Oxm: parent}
+func DecodeOxmIcmpv4CodeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4CodeMasked, error) {
+	_oxmicmpv4codemasked := &OxmIcmpv4CodeMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIcmpv4CodeMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmicmpv4codemasked.Value = uint8(decoder.ReadByte())
-	oxmicmpv4codemasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmicmpv4codemasked, nil
+	_oxmicmpv4codemasked.Value = uint8(decoder.ReadByte())
+	_oxmicmpv4codemasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmicmpv4codemasked, nil
 }
 
 func NewOxmIcmpv4CodeMasked() *OxmIcmpv4CodeMasked {
-	return &OxmIcmpv4CodeMasked{
+	obj := &OxmIcmpv4CodeMasked{
 		Oxm: NewOxm(2147494146),
 	}
+	return obj
 }
 func (self *OxmIcmpv4CodeMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIcmpv4CodeMasked) GetName() string {
-	return "oxm_icmpv4_code_masked"
+	return "icmpv4_code_masked"
 }
 
 type OxmIcmpv4Type struct {
@@ -11165,26 +11447,27 @@ func (self *OxmIcmpv4Type) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIcmpv4Type(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4Type, error) {
-	oxmicmpv4type := &OxmIcmpv4Type{Oxm: parent}
+func DecodeOxmIcmpv4Type(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4Type, error) {
+	_oxmicmpv4type := &OxmIcmpv4Type{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIcmpv4Type packet too short: %d < 1", decoder.Length())
 	}
-	oxmicmpv4type.Value = uint8(decoder.ReadByte())
-	return oxmicmpv4type, nil
+	_oxmicmpv4type.Value = uint8(decoder.ReadByte())
+	return _oxmicmpv4type, nil
 }
 
 func NewOxmIcmpv4Type() *OxmIcmpv4Type {
-	return &OxmIcmpv4Type{
+	obj := &OxmIcmpv4Type{
 		Oxm: NewOxm(2147493377),
 	}
+	return obj
 }
 func (self *OxmIcmpv4Type) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIcmpv4Type) GetName() string {
-	return "oxm_icmpv4_type"
+	return "icmpv4_type"
 }
 
 type OxmIcmpv4TypeMasked struct {
@@ -11204,27 +11487,28 @@ func (self *OxmIcmpv4TypeMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIcmpv4TypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4TypeMasked, error) {
-	oxmicmpv4typemasked := &OxmIcmpv4TypeMasked{Oxm: parent}
+func DecodeOxmIcmpv4TypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4TypeMasked, error) {
+	_oxmicmpv4typemasked := &OxmIcmpv4TypeMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIcmpv4TypeMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmicmpv4typemasked.Value = uint8(decoder.ReadByte())
-	oxmicmpv4typemasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmicmpv4typemasked, nil
+	_oxmicmpv4typemasked.Value = uint8(decoder.ReadByte())
+	_oxmicmpv4typemasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmicmpv4typemasked, nil
 }
 
 func NewOxmIcmpv4TypeMasked() *OxmIcmpv4TypeMasked {
-	return &OxmIcmpv4TypeMasked{
+	obj := &OxmIcmpv4TypeMasked{
 		Oxm: NewOxm(2147493634),
 	}
+	return obj
 }
 func (self *OxmIcmpv4TypeMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIcmpv4TypeMasked) GetName() string {
-	return "oxm_icmpv4_type_masked"
+	return "icmpv4_type_masked"
 }
 
 type OxmIcmpv6Code struct {
@@ -11242,26 +11526,27 @@ func (self *OxmIcmpv6Code) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIcmpv6Code(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6Code, error) {
-	oxmicmpv6code := &OxmIcmpv6Code{Oxm: parent}
+func DecodeOxmIcmpv6Code(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6Code, error) {
+	_oxmicmpv6code := &OxmIcmpv6Code{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIcmpv6Code packet too short: %d < 1", decoder.Length())
 	}
-	oxmicmpv6code.Value = uint8(decoder.ReadByte())
-	return oxmicmpv6code, nil
+	_oxmicmpv6code.Value = uint8(decoder.ReadByte())
+	return _oxmicmpv6code, nil
 }
 
 func NewOxmIcmpv6Code() *OxmIcmpv6Code {
-	return &OxmIcmpv6Code{
+	obj := &OxmIcmpv6Code{
 		Oxm: NewOxm(2147499009),
 	}
+	return obj
 }
 func (self *OxmIcmpv6Code) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIcmpv6Code) GetName() string {
-	return "oxm_icmpv6_code"
+	return "icmpv6_code"
 }
 
 type OxmIcmpv6CodeMasked struct {
@@ -11281,27 +11566,28 @@ func (self *OxmIcmpv6CodeMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIcmpv6CodeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6CodeMasked, error) {
-	oxmicmpv6codemasked := &OxmIcmpv6CodeMasked{Oxm: parent}
+func DecodeOxmIcmpv6CodeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6CodeMasked, error) {
+	_oxmicmpv6codemasked := &OxmIcmpv6CodeMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIcmpv6CodeMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmicmpv6codemasked.Value = uint8(decoder.ReadByte())
-	oxmicmpv6codemasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmicmpv6codemasked, nil
+	_oxmicmpv6codemasked.Value = uint8(decoder.ReadByte())
+	_oxmicmpv6codemasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmicmpv6codemasked, nil
 }
 
 func NewOxmIcmpv6CodeMasked() *OxmIcmpv6CodeMasked {
-	return &OxmIcmpv6CodeMasked{
+	obj := &OxmIcmpv6CodeMasked{
 		Oxm: NewOxm(2147499266),
 	}
+	return obj
 }
 func (self *OxmIcmpv6CodeMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIcmpv6CodeMasked) GetName() string {
-	return "oxm_icmpv6_code_masked"
+	return "icmpv6_code_masked"
 }
 
 type OxmIcmpv6Type struct {
@@ -11319,26 +11605,27 @@ func (self *OxmIcmpv6Type) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIcmpv6Type(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6Type, error) {
-	oxmicmpv6type := &OxmIcmpv6Type{Oxm: parent}
+func DecodeOxmIcmpv6Type(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6Type, error) {
+	_oxmicmpv6type := &OxmIcmpv6Type{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIcmpv6Type packet too short: %d < 1", decoder.Length())
 	}
-	oxmicmpv6type.Value = uint8(decoder.ReadByte())
-	return oxmicmpv6type, nil
+	_oxmicmpv6type.Value = uint8(decoder.ReadByte())
+	return _oxmicmpv6type, nil
 }
 
 func NewOxmIcmpv6Type() *OxmIcmpv6Type {
-	return &OxmIcmpv6Type{
+	obj := &OxmIcmpv6Type{
 		Oxm: NewOxm(2147498497),
 	}
+	return obj
 }
 func (self *OxmIcmpv6Type) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIcmpv6Type) GetName() string {
-	return "oxm_icmpv6_type"
+	return "icmpv6_type"
 }
 
 type OxmIcmpv6TypeMasked struct {
@@ -11358,27 +11645,28 @@ func (self *OxmIcmpv6TypeMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIcmpv6TypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6TypeMasked, error) {
-	oxmicmpv6typemasked := &OxmIcmpv6TypeMasked{Oxm: parent}
+func DecodeOxmIcmpv6TypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6TypeMasked, error) {
+	_oxmicmpv6typemasked := &OxmIcmpv6TypeMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIcmpv6TypeMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmicmpv6typemasked.Value = uint8(decoder.ReadByte())
-	oxmicmpv6typemasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmicmpv6typemasked, nil
+	_oxmicmpv6typemasked.Value = uint8(decoder.ReadByte())
+	_oxmicmpv6typemasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmicmpv6typemasked, nil
 }
 
 func NewOxmIcmpv6TypeMasked() *OxmIcmpv6TypeMasked {
-	return &OxmIcmpv6TypeMasked{
+	obj := &OxmIcmpv6TypeMasked{
 		Oxm: NewOxm(2147498754),
 	}
+	return obj
 }
 func (self *OxmIcmpv6TypeMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIcmpv6TypeMasked) GetName() string {
-	return "oxm_icmpv6_type_masked"
+	return "icmpv6_type_masked"
 }
 
 type OxmInPhyPort struct {
@@ -11396,26 +11684,27 @@ func (self *OxmInPhyPort) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmInPhyPort(parent *Oxm, decoder *goloxi.Decoder) (*OxmInPhyPort, error) {
-	oxminphyport := &OxmInPhyPort{Oxm: parent}
+func DecodeOxmInPhyPort(parent *Oxm, decoder *goloxi.Decoder) (*OxmInPhyPort, error) {
+	_oxminphyport := &OxmInPhyPort{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmInPhyPort packet too short: %d < 2", decoder.Length())
 	}
-	oxminphyport.Value.Decode(decoder)
-	return oxminphyport, nil
+	_oxminphyport.Value.Decode(decoder)
+	return _oxminphyport, nil
 }
 
 func NewOxmInPhyPort() *OxmInPhyPort {
-	return &OxmInPhyPort{
+	obj := &OxmInPhyPort{
 		Oxm: NewOxm(2147484164),
 	}
+	return obj
 }
 func (self *OxmInPhyPort) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmInPhyPort) GetName() string {
-	return "oxm_in_phy_port"
+	return "in_phy_port"
 }
 
 type OxmInPhyPortMasked struct {
@@ -11435,27 +11724,28 @@ func (self *OxmInPhyPortMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmInPhyPortMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmInPhyPortMasked, error) {
-	oxminphyportmasked := &OxmInPhyPortMasked{Oxm: parent}
+func DecodeOxmInPhyPortMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmInPhyPortMasked, error) {
+	_oxminphyportmasked := &OxmInPhyPortMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmInPhyPortMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxminphyportmasked.Value.Decode(decoder)
-	oxminphyportmasked.ValueMask.Decode(decoder)
-	return oxminphyportmasked, nil
+	_oxminphyportmasked.Value.Decode(decoder)
+	_oxminphyportmasked.ValueMask.Decode(decoder)
+	return _oxminphyportmasked, nil
 }
 
 func NewOxmInPhyPortMasked() *OxmInPhyPortMasked {
-	return &OxmInPhyPortMasked{
+	obj := &OxmInPhyPortMasked{
 		Oxm: NewOxm(2147484424),
 	}
+	return obj
 }
 func (self *OxmInPhyPortMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmInPhyPortMasked) GetName() string {
-	return "oxm_in_phy_port_masked"
+	return "in_phy_port_masked"
 }
 
 type OxmInPort struct {
@@ -11473,26 +11763,27 @@ func (self *OxmInPort) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmInPort(parent *Oxm, decoder *goloxi.Decoder) (*OxmInPort, error) {
-	oxminport := &OxmInPort{Oxm: parent}
+func DecodeOxmInPort(parent *Oxm, decoder *goloxi.Decoder) (*OxmInPort, error) {
+	_oxminport := &OxmInPort{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmInPort packet too short: %d < 2", decoder.Length())
 	}
-	oxminport.Value.Decode(decoder)
-	return oxminport, nil
+	_oxminport.Value.Decode(decoder)
+	return _oxminport, nil
 }
 
 func NewOxmInPort() *OxmInPort {
-	return &OxmInPort{
+	obj := &OxmInPort{
 		Oxm: NewOxm(2147483652),
 	}
+	return obj
 }
 func (self *OxmInPort) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmInPort) GetName() string {
-	return "oxm_in_port"
+	return "in_port"
 }
 
 type OxmInPortMasked struct {
@@ -11512,27 +11803,28 @@ func (self *OxmInPortMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmInPortMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmInPortMasked, error) {
-	oxminportmasked := &OxmInPortMasked{Oxm: parent}
+func DecodeOxmInPortMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmInPortMasked, error) {
+	_oxminportmasked := &OxmInPortMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmInPortMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxminportmasked.Value.Decode(decoder)
-	oxminportmasked.ValueMask.Decode(decoder)
-	return oxminportmasked, nil
+	_oxminportmasked.Value.Decode(decoder)
+	_oxminportmasked.ValueMask.Decode(decoder)
+	return _oxminportmasked, nil
 }
 
 func NewOxmInPortMasked() *OxmInPortMasked {
-	return &OxmInPortMasked{
+	obj := &OxmInPortMasked{
 		Oxm: NewOxm(2147483912),
 	}
+	return obj
 }
 func (self *OxmInPortMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmInPortMasked) GetName() string {
-	return "oxm_in_port_masked"
+	return "in_port_masked"
 }
 
 type OxmIpDscp struct {
@@ -11550,26 +11842,27 @@ func (self *OxmIpDscp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpDscp(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpDscp, error) {
-	oxmipdscp := &OxmIpDscp{Oxm: parent}
+func DecodeOxmIpDscp(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpDscp, error) {
+	_oxmipdscp := &OxmIpDscp{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIpDscp packet too short: %d < 1", decoder.Length())
 	}
-	oxmipdscp.Value = uint8(decoder.ReadByte())
-	return oxmipdscp, nil
+	_oxmipdscp.Value = uint8(decoder.ReadByte())
+	return _oxmipdscp, nil
 }
 
 func NewOxmIpDscp() *OxmIpDscp {
-	return &OxmIpDscp{
+	obj := &OxmIpDscp{
 		Oxm: NewOxm(2147487745),
 	}
+	return obj
 }
 func (self *OxmIpDscp) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpDscp) GetName() string {
-	return "oxm_ip_dscp"
+	return "ip_dscp"
 }
 
 type OxmIpDscpMasked struct {
@@ -11589,27 +11882,28 @@ func (self *OxmIpDscpMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpDscpMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpDscpMasked, error) {
-	oxmipdscpmasked := &OxmIpDscpMasked{Oxm: parent}
+func DecodeOxmIpDscpMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpDscpMasked, error) {
+	_oxmipdscpmasked := &OxmIpDscpMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIpDscpMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmipdscpmasked.Value = uint8(decoder.ReadByte())
-	oxmipdscpmasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmipdscpmasked, nil
+	_oxmipdscpmasked.Value = uint8(decoder.ReadByte())
+	_oxmipdscpmasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmipdscpmasked, nil
 }
 
 func NewOxmIpDscpMasked() *OxmIpDscpMasked {
-	return &OxmIpDscpMasked{
+	obj := &OxmIpDscpMasked{
 		Oxm: NewOxm(2147488002),
 	}
+	return obj
 }
 func (self *OxmIpDscpMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpDscpMasked) GetName() string {
-	return "oxm_ip_dscp_masked"
+	return "ip_dscp_masked"
 }
 
 type OxmIpEcn struct {
@@ -11627,26 +11921,27 @@ func (self *OxmIpEcn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpEcn(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpEcn, error) {
-	oxmipecn := &OxmIpEcn{Oxm: parent}
+func DecodeOxmIpEcn(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpEcn, error) {
+	_oxmipecn := &OxmIpEcn{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIpEcn packet too short: %d < 1", decoder.Length())
 	}
-	oxmipecn.Value = uint8(decoder.ReadByte())
-	return oxmipecn, nil
+	_oxmipecn.Value = uint8(decoder.ReadByte())
+	return _oxmipecn, nil
 }
 
 func NewOxmIpEcn() *OxmIpEcn {
-	return &OxmIpEcn{
+	obj := &OxmIpEcn{
 		Oxm: NewOxm(2147488257),
 	}
+	return obj
 }
 func (self *OxmIpEcn) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpEcn) GetName() string {
-	return "oxm_ip_ecn"
+	return "ip_ecn"
 }
 
 type OxmIpEcnMasked struct {
@@ -11666,27 +11961,28 @@ func (self *OxmIpEcnMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpEcnMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpEcnMasked, error) {
-	oxmipecnmasked := &OxmIpEcnMasked{Oxm: parent}
+func DecodeOxmIpEcnMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpEcnMasked, error) {
+	_oxmipecnmasked := &OxmIpEcnMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIpEcnMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmipecnmasked.Value = uint8(decoder.ReadByte())
-	oxmipecnmasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmipecnmasked, nil
+	_oxmipecnmasked.Value = uint8(decoder.ReadByte())
+	_oxmipecnmasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmipecnmasked, nil
 }
 
 func NewOxmIpEcnMasked() *OxmIpEcnMasked {
-	return &OxmIpEcnMasked{
+	obj := &OxmIpEcnMasked{
 		Oxm: NewOxm(2147488514),
 	}
+	return obj
 }
 func (self *OxmIpEcnMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpEcnMasked) GetName() string {
-	return "oxm_ip_ecn_masked"
+	return "ip_ecn_masked"
 }
 
 type OxmIpProto struct {
@@ -11704,26 +12000,27 @@ func (self *OxmIpProto) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpProto(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpProto, error) {
-	oxmipproto := &OxmIpProto{Oxm: parent}
+func DecodeOxmIpProto(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpProto, error) {
+	_oxmipproto := &OxmIpProto{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIpProto packet too short: %d < 1", decoder.Length())
 	}
-	oxmipproto.Value = uint8(decoder.ReadByte())
-	return oxmipproto, nil
+	_oxmipproto.Value = uint8(decoder.ReadByte())
+	return _oxmipproto, nil
 }
 
 func NewOxmIpProto() *OxmIpProto {
-	return &OxmIpProto{
+	obj := &OxmIpProto{
 		Oxm: NewOxm(2147488769),
 	}
+	return obj
 }
 func (self *OxmIpProto) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpProto) GetName() string {
-	return "oxm_ip_proto"
+	return "ip_proto"
 }
 
 type OxmIpProtoMasked struct {
@@ -11743,27 +12040,28 @@ func (self *OxmIpProtoMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpProtoMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpProtoMasked, error) {
-	oxmipprotomasked := &OxmIpProtoMasked{Oxm: parent}
+func DecodeOxmIpProtoMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpProtoMasked, error) {
+	_oxmipprotomasked := &OxmIpProtoMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIpProtoMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmipprotomasked.Value = uint8(decoder.ReadByte())
-	oxmipprotomasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmipprotomasked, nil
+	_oxmipprotomasked.Value = uint8(decoder.ReadByte())
+	_oxmipprotomasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmipprotomasked, nil
 }
 
 func NewOxmIpProtoMasked() *OxmIpProtoMasked {
-	return &OxmIpProtoMasked{
+	obj := &OxmIpProtoMasked{
 		Oxm: NewOxm(2147489026),
 	}
+	return obj
 }
 func (self *OxmIpProtoMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpProtoMasked) GetName() string {
-	return "oxm_ip_proto_masked"
+	return "ip_proto_masked"
 }
 
 type OxmIpv4Dst struct {
@@ -11781,26 +12079,27 @@ func (self *OxmIpv4Dst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv4Dst(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv4Dst, error) {
-	oxmipv4dst := &OxmIpv4Dst{Oxm: parent}
+func DecodeOxmIpv4Dst(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv4Dst, error) {
+	_oxmipv4dst := &OxmIpv4Dst{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmIpv4Dst packet too short: %d < 4", decoder.Length())
 	}
-	oxmipv4dst.Value = net.IP(decoder.Read(4))
-	return oxmipv4dst, nil
+	_oxmipv4dst.Value = net.IP(decoder.Read(4))
+	return _oxmipv4dst, nil
 }
 
 func NewOxmIpv4Dst() *OxmIpv4Dst {
-	return &OxmIpv4Dst{
+	obj := &OxmIpv4Dst{
 		Oxm: NewOxm(2147489796),
 	}
+	return obj
 }
 func (self *OxmIpv4Dst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv4Dst) GetName() string {
-	return "oxm_ipv4_dst"
+	return "ipv4_dst"
 }
 
 type OxmIpv4DstMasked struct {
@@ -11820,27 +12119,28 @@ func (self *OxmIpv4DstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv4DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv4DstMasked, error) {
-	oxmipv4dstmasked := &OxmIpv4DstMasked{Oxm: parent}
+func DecodeOxmIpv4DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv4DstMasked, error) {
+	_oxmipv4dstmasked := &OxmIpv4DstMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxmIpv4DstMasked packet too short: %d < 8", decoder.Length())
 	}
-	oxmipv4dstmasked.Value = net.IP(decoder.Read(4))
-	oxmipv4dstmasked.ValueMask = net.IP(decoder.Read(4))
-	return oxmipv4dstmasked, nil
+	_oxmipv4dstmasked.Value = net.IP(decoder.Read(4))
+	_oxmipv4dstmasked.ValueMask = net.IP(decoder.Read(4))
+	return _oxmipv4dstmasked, nil
 }
 
 func NewOxmIpv4DstMasked() *OxmIpv4DstMasked {
-	return &OxmIpv4DstMasked{
+	obj := &OxmIpv4DstMasked{
 		Oxm: NewOxm(2147490056),
 	}
+	return obj
 }
 func (self *OxmIpv4DstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv4DstMasked) GetName() string {
-	return "oxm_ipv4_dst_masked"
+	return "ipv4_dst_masked"
 }
 
 type OxmIpv4Src struct {
@@ -11858,26 +12158,27 @@ func (self *OxmIpv4Src) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv4Src(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv4Src, error) {
-	oxmipv4src := &OxmIpv4Src{Oxm: parent}
+func DecodeOxmIpv4Src(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv4Src, error) {
+	_oxmipv4src := &OxmIpv4Src{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmIpv4Src packet too short: %d < 4", decoder.Length())
 	}
-	oxmipv4src.Value = net.IP(decoder.Read(4))
-	return oxmipv4src, nil
+	_oxmipv4src.Value = net.IP(decoder.Read(4))
+	return _oxmipv4src, nil
 }
 
 func NewOxmIpv4Src() *OxmIpv4Src {
-	return &OxmIpv4Src{
+	obj := &OxmIpv4Src{
 		Oxm: NewOxm(2147489284),
 	}
+	return obj
 }
 func (self *OxmIpv4Src) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv4Src) GetName() string {
-	return "oxm_ipv4_src"
+	return "ipv4_src"
 }
 
 type OxmIpv4SrcMasked struct {
@@ -11897,27 +12198,28 @@ func (self *OxmIpv4SrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv4SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv4SrcMasked, error) {
-	oxmipv4srcmasked := &OxmIpv4SrcMasked{Oxm: parent}
+func DecodeOxmIpv4SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv4SrcMasked, error) {
+	_oxmipv4srcmasked := &OxmIpv4SrcMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxmIpv4SrcMasked packet too short: %d < 8", decoder.Length())
 	}
-	oxmipv4srcmasked.Value = net.IP(decoder.Read(4))
-	oxmipv4srcmasked.ValueMask = net.IP(decoder.Read(4))
-	return oxmipv4srcmasked, nil
+	_oxmipv4srcmasked.Value = net.IP(decoder.Read(4))
+	_oxmipv4srcmasked.ValueMask = net.IP(decoder.Read(4))
+	return _oxmipv4srcmasked, nil
 }
 
 func NewOxmIpv4SrcMasked() *OxmIpv4SrcMasked {
-	return &OxmIpv4SrcMasked{
+	obj := &OxmIpv4SrcMasked{
 		Oxm: NewOxm(2147489544),
 	}
+	return obj
 }
 func (self *OxmIpv4SrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv4SrcMasked) GetName() string {
-	return "oxm_ipv4_src_masked"
+	return "ipv4_src_masked"
 }
 
 type OxmIpv6Dst struct {
@@ -11935,26 +12237,27 @@ func (self *OxmIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6Dst(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6Dst, error) {
-	oxmipv6dst := &OxmIpv6Dst{Oxm: parent}
+func DecodeOxmIpv6Dst(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6Dst, error) {
+	_oxmipv6dst := &OxmIpv6Dst{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("OxmIpv6Dst packet too short: %d < 16", decoder.Length())
 	}
-	oxmipv6dst.Value = net.IP(decoder.Read(16))
-	return oxmipv6dst, nil
+	_oxmipv6dst.Value = net.IP(decoder.Read(16))
+	return _oxmipv6dst, nil
 }
 
 func NewOxmIpv6Dst() *OxmIpv6Dst {
-	return &OxmIpv6Dst{
+	obj := &OxmIpv6Dst{
 		Oxm: NewOxm(2147497488),
 	}
+	return obj
 }
 func (self *OxmIpv6Dst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6Dst) GetName() string {
-	return "oxm_ipv6_dst"
+	return "ipv6_dst"
 }
 
 type OxmIpv6DstMasked struct {
@@ -11974,27 +12277,28 @@ func (self *OxmIpv6DstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6DstMasked, error) {
-	oxmipv6dstmasked := &OxmIpv6DstMasked{Oxm: parent}
+func DecodeOxmIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6DstMasked, error) {
+	_oxmipv6dstmasked := &OxmIpv6DstMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("OxmIpv6DstMasked packet too short: %d < 32", decoder.Length())
 	}
-	oxmipv6dstmasked.Value = net.IP(decoder.Read(16))
-	oxmipv6dstmasked.ValueMask = net.IP(decoder.Read(16))
-	return oxmipv6dstmasked, nil
+	_oxmipv6dstmasked.Value = net.IP(decoder.Read(16))
+	_oxmipv6dstmasked.ValueMask = net.IP(decoder.Read(16))
+	return _oxmipv6dstmasked, nil
 }
 
 func NewOxmIpv6DstMasked() *OxmIpv6DstMasked {
-	return &OxmIpv6DstMasked{
+	obj := &OxmIpv6DstMasked{
 		Oxm: NewOxm(2147497760),
 	}
+	return obj
 }
 func (self *OxmIpv6DstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6DstMasked) GetName() string {
-	return "oxm_ipv6_dst_masked"
+	return "ipv6_dst_masked"
 }
 
 type OxmIpv6Flabel struct {
@@ -12012,26 +12316,27 @@ func (self *OxmIpv6Flabel) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6Flabel(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6Flabel, error) {
-	oxmipv6flabel := &OxmIpv6Flabel{Oxm: parent}
+func DecodeOxmIpv6Flabel(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6Flabel, error) {
+	_oxmipv6flabel := &OxmIpv6Flabel{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmIpv6Flabel packet too short: %d < 4", decoder.Length())
 	}
-	oxmipv6flabel.Value = uint32(decoder.ReadUint32())
-	return oxmipv6flabel, nil
+	_oxmipv6flabel.Value = uint32(decoder.ReadUint32())
+	return _oxmipv6flabel, nil
 }
 
 func NewOxmIpv6Flabel() *OxmIpv6Flabel {
-	return &OxmIpv6Flabel{
+	obj := &OxmIpv6Flabel{
 		Oxm: NewOxm(2147497988),
 	}
+	return obj
 }
 func (self *OxmIpv6Flabel) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6Flabel) GetName() string {
-	return "oxm_ipv6_flabel"
+	return "ipv6_flabel"
 }
 
 type OxmIpv6FlabelMasked struct {
@@ -12051,27 +12356,28 @@ func (self *OxmIpv6FlabelMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6FlabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6FlabelMasked, error) {
-	oxmipv6flabelmasked := &OxmIpv6FlabelMasked{Oxm: parent}
+func DecodeOxmIpv6FlabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6FlabelMasked, error) {
+	_oxmipv6flabelmasked := &OxmIpv6FlabelMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxmIpv6FlabelMasked packet too short: %d < 8", decoder.Length())
 	}
-	oxmipv6flabelmasked.Value = uint32(decoder.ReadUint32())
-	oxmipv6flabelmasked.ValueMask = uint32(decoder.ReadUint32())
-	return oxmipv6flabelmasked, nil
+	_oxmipv6flabelmasked.Value = uint32(decoder.ReadUint32())
+	_oxmipv6flabelmasked.ValueMask = uint32(decoder.ReadUint32())
+	return _oxmipv6flabelmasked, nil
 }
 
 func NewOxmIpv6FlabelMasked() *OxmIpv6FlabelMasked {
-	return &OxmIpv6FlabelMasked{
+	obj := &OxmIpv6FlabelMasked{
 		Oxm: NewOxm(2147498248),
 	}
+	return obj
 }
 func (self *OxmIpv6FlabelMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6FlabelMasked) GetName() string {
-	return "oxm_ipv6_flabel_masked"
+	return "ipv6_flabel_masked"
 }
 
 type OxmIpv6NdSll struct {
@@ -12089,26 +12395,27 @@ func (self *OxmIpv6NdSll) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6NdSll(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdSll, error) {
-	oxmipv6ndsll := &OxmIpv6NdSll{Oxm: parent}
+func DecodeOxmIpv6NdSll(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdSll, error) {
+	_oxmipv6ndsll := &OxmIpv6NdSll{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("OxmIpv6NdSll packet too short: %d < 6", decoder.Length())
 	}
-	oxmipv6ndsll.Value = net.HardwareAddr(decoder.Read(6))
-	return oxmipv6ndsll, nil
+	_oxmipv6ndsll.Value = net.HardwareAddr(decoder.Read(6))
+	return _oxmipv6ndsll, nil
 }
 
 func NewOxmIpv6NdSll() *OxmIpv6NdSll {
-	return &OxmIpv6NdSll{
+	obj := &OxmIpv6NdSll{
 		Oxm: NewOxm(2147500038),
 	}
+	return obj
 }
 func (self *OxmIpv6NdSll) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6NdSll) GetName() string {
-	return "oxm_ipv6_nd_sll"
+	return "ipv6_nd_sll"
 }
 
 type OxmIpv6NdSllMasked struct {
@@ -12128,27 +12435,28 @@ func (self *OxmIpv6NdSllMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6NdSllMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdSllMasked, error) {
-	oxmipv6ndsllmasked := &OxmIpv6NdSllMasked{Oxm: parent}
+func DecodeOxmIpv6NdSllMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdSllMasked, error) {
+	_oxmipv6ndsllmasked := &OxmIpv6NdSllMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("OxmIpv6NdSllMasked packet too short: %d < 12", decoder.Length())
 	}
-	oxmipv6ndsllmasked.Value = net.HardwareAddr(decoder.Read(6))
-	oxmipv6ndsllmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return oxmipv6ndsllmasked, nil
+	_oxmipv6ndsllmasked.Value = net.HardwareAddr(decoder.Read(6))
+	_oxmipv6ndsllmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _oxmipv6ndsllmasked, nil
 }
 
 func NewOxmIpv6NdSllMasked() *OxmIpv6NdSllMasked {
-	return &OxmIpv6NdSllMasked{
+	obj := &OxmIpv6NdSllMasked{
 		Oxm: NewOxm(2147500300),
 	}
+	return obj
 }
 func (self *OxmIpv6NdSllMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6NdSllMasked) GetName() string {
-	return "oxm_ipv6_nd_sll_masked"
+	return "ipv6_nd_sll_masked"
 }
 
 type OxmIpv6NdTarget struct {
@@ -12166,26 +12474,27 @@ func (self *OxmIpv6NdTarget) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6NdTarget(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdTarget, error) {
-	oxmipv6ndtarget := &OxmIpv6NdTarget{Oxm: parent}
+func DecodeOxmIpv6NdTarget(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdTarget, error) {
+	_oxmipv6ndtarget := &OxmIpv6NdTarget{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("OxmIpv6NdTarget packet too short: %d < 16", decoder.Length())
 	}
-	oxmipv6ndtarget.Value = net.IP(decoder.Read(16))
-	return oxmipv6ndtarget, nil
+	_oxmipv6ndtarget.Value = net.IP(decoder.Read(16))
+	return _oxmipv6ndtarget, nil
 }
 
 func NewOxmIpv6NdTarget() *OxmIpv6NdTarget {
-	return &OxmIpv6NdTarget{
+	obj := &OxmIpv6NdTarget{
 		Oxm: NewOxm(2147499536),
 	}
+	return obj
 }
 func (self *OxmIpv6NdTarget) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6NdTarget) GetName() string {
-	return "oxm_ipv6_nd_target"
+	return "ipv6_nd_target"
 }
 
 type OxmIpv6NdTargetMasked struct {
@@ -12205,27 +12514,28 @@ func (self *OxmIpv6NdTargetMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6NdTargetMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdTargetMasked, error) {
-	oxmipv6ndtargetmasked := &OxmIpv6NdTargetMasked{Oxm: parent}
+func DecodeOxmIpv6NdTargetMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdTargetMasked, error) {
+	_oxmipv6ndtargetmasked := &OxmIpv6NdTargetMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("OxmIpv6NdTargetMasked packet too short: %d < 32", decoder.Length())
 	}
-	oxmipv6ndtargetmasked.Value = net.IP(decoder.Read(16))
-	oxmipv6ndtargetmasked.ValueMask = net.IP(decoder.Read(16))
-	return oxmipv6ndtargetmasked, nil
+	_oxmipv6ndtargetmasked.Value = net.IP(decoder.Read(16))
+	_oxmipv6ndtargetmasked.ValueMask = net.IP(decoder.Read(16))
+	return _oxmipv6ndtargetmasked, nil
 }
 
 func NewOxmIpv6NdTargetMasked() *OxmIpv6NdTargetMasked {
-	return &OxmIpv6NdTargetMasked{
+	obj := &OxmIpv6NdTargetMasked{
 		Oxm: NewOxm(2147499808),
 	}
+	return obj
 }
 func (self *OxmIpv6NdTargetMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6NdTargetMasked) GetName() string {
-	return "oxm_ipv6_nd_target_masked"
+	return "ipv6_nd_target_masked"
 }
 
 type OxmIpv6NdTll struct {
@@ -12243,26 +12553,27 @@ func (self *OxmIpv6NdTll) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6NdTll(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdTll, error) {
-	oxmipv6ndtll := &OxmIpv6NdTll{Oxm: parent}
+func DecodeOxmIpv6NdTll(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdTll, error) {
+	_oxmipv6ndtll := &OxmIpv6NdTll{Oxm: parent}
 	if decoder.Length() < 6 {
 		return nil, fmt.Errorf("OxmIpv6NdTll packet too short: %d < 6", decoder.Length())
 	}
-	oxmipv6ndtll.Value = net.HardwareAddr(decoder.Read(6))
-	return oxmipv6ndtll, nil
+	_oxmipv6ndtll.Value = net.HardwareAddr(decoder.Read(6))
+	return _oxmipv6ndtll, nil
 }
 
 func NewOxmIpv6NdTll() *OxmIpv6NdTll {
-	return &OxmIpv6NdTll{
+	obj := &OxmIpv6NdTll{
 		Oxm: NewOxm(2147500550),
 	}
+	return obj
 }
 func (self *OxmIpv6NdTll) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6NdTll) GetName() string {
-	return "oxm_ipv6_nd_tll"
+	return "ipv6_nd_tll"
 }
 
 type OxmIpv6NdTllMasked struct {
@@ -12282,27 +12593,28 @@ func (self *OxmIpv6NdTllMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6NdTllMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdTllMasked, error) {
-	oxmipv6ndtllmasked := &OxmIpv6NdTllMasked{Oxm: parent}
+func DecodeOxmIpv6NdTllMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6NdTllMasked, error) {
+	_oxmipv6ndtllmasked := &OxmIpv6NdTllMasked{Oxm: parent}
 	if decoder.Length() < 12 {
 		return nil, fmt.Errorf("OxmIpv6NdTllMasked packet too short: %d < 12", decoder.Length())
 	}
-	oxmipv6ndtllmasked.Value = net.HardwareAddr(decoder.Read(6))
-	oxmipv6ndtllmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
-	return oxmipv6ndtllmasked, nil
+	_oxmipv6ndtllmasked.Value = net.HardwareAddr(decoder.Read(6))
+	_oxmipv6ndtllmasked.ValueMask = net.HardwareAddr(decoder.Read(6))
+	return _oxmipv6ndtllmasked, nil
 }
 
 func NewOxmIpv6NdTllMasked() *OxmIpv6NdTllMasked {
-	return &OxmIpv6NdTllMasked{
+	obj := &OxmIpv6NdTllMasked{
 		Oxm: NewOxm(2147500812),
 	}
+	return obj
 }
 func (self *OxmIpv6NdTllMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6NdTllMasked) GetName() string {
-	return "oxm_ipv6_nd_tll_masked"
+	return "ipv6_nd_tll_masked"
 }
 
 type OxmIpv6Src struct {
@@ -12320,26 +12632,27 @@ func (self *OxmIpv6Src) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6Src(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6Src, error) {
-	oxmipv6src := &OxmIpv6Src{Oxm: parent}
+func DecodeOxmIpv6Src(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6Src, error) {
+	_oxmipv6src := &OxmIpv6Src{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("OxmIpv6Src packet too short: %d < 16", decoder.Length())
 	}
-	oxmipv6src.Value = net.IP(decoder.Read(16))
-	return oxmipv6src, nil
+	_oxmipv6src.Value = net.IP(decoder.Read(16))
+	return _oxmipv6src, nil
 }
 
 func NewOxmIpv6Src() *OxmIpv6Src {
-	return &OxmIpv6Src{
+	obj := &OxmIpv6Src{
 		Oxm: NewOxm(2147496976),
 	}
+	return obj
 }
 func (self *OxmIpv6Src) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6Src) GetName() string {
-	return "oxm_ipv6_src"
+	return "ipv6_src"
 }
 
 type OxmIpv6SrcMasked struct {
@@ -12359,27 +12672,28 @@ func (self *OxmIpv6SrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6SrcMasked, error) {
-	oxmipv6srcmasked := &OxmIpv6SrcMasked{Oxm: parent}
+func DecodeOxmIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpv6SrcMasked, error) {
+	_oxmipv6srcmasked := &OxmIpv6SrcMasked{Oxm: parent}
 	if decoder.Length() < 32 {
 		return nil, fmt.Errorf("OxmIpv6SrcMasked packet too short: %d < 32", decoder.Length())
 	}
-	oxmipv6srcmasked.Value = net.IP(decoder.Read(16))
-	oxmipv6srcmasked.ValueMask = net.IP(decoder.Read(16))
-	return oxmipv6srcmasked, nil
+	_oxmipv6srcmasked.Value = net.IP(decoder.Read(16))
+	_oxmipv6srcmasked.ValueMask = net.IP(decoder.Read(16))
+	return _oxmipv6srcmasked, nil
 }
 
 func NewOxmIpv6SrcMasked() *OxmIpv6SrcMasked {
-	return &OxmIpv6SrcMasked{
+	obj := &OxmIpv6SrcMasked{
 		Oxm: NewOxm(2147497248),
 	}
+	return obj
 }
 func (self *OxmIpv6SrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmIpv6SrcMasked) GetName() string {
-	return "oxm_ipv6_src_masked"
+	return "ipv6_src_masked"
 }
 
 type OxmMetadata struct {
@@ -12397,26 +12711,27 @@ func (self *OxmMetadata) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmMetadata(parent *Oxm, decoder *goloxi.Decoder) (*OxmMetadata, error) {
-	oxmmetadata := &OxmMetadata{Oxm: parent}
+func DecodeOxmMetadata(parent *Oxm, decoder *goloxi.Decoder) (*OxmMetadata, error) {
+	_oxmmetadata := &OxmMetadata{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxmMetadata packet too short: %d < 8", decoder.Length())
 	}
-	oxmmetadata.Value = uint64(decoder.ReadUint64())
-	return oxmmetadata, nil
+	_oxmmetadata.Value = uint64(decoder.ReadUint64())
+	return _oxmmetadata, nil
 }
 
 func NewOxmMetadata() *OxmMetadata {
-	return &OxmMetadata{
+	obj := &OxmMetadata{
 		Oxm: NewOxm(2147484680),
 	}
+	return obj
 }
 func (self *OxmMetadata) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmMetadata) GetName() string {
-	return "oxm_metadata"
+	return "metadata"
 }
 
 type OxmMetadataMasked struct {
@@ -12436,27 +12751,28 @@ func (self *OxmMetadataMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmMetadataMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmMetadataMasked, error) {
-	oxmmetadatamasked := &OxmMetadataMasked{Oxm: parent}
+func DecodeOxmMetadataMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmMetadataMasked, error) {
+	_oxmmetadatamasked := &OxmMetadataMasked{Oxm: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("OxmMetadataMasked packet too short: %d < 16", decoder.Length())
 	}
-	oxmmetadatamasked.Value = uint64(decoder.ReadUint64())
-	oxmmetadatamasked.ValueMask = uint64(decoder.ReadUint64())
-	return oxmmetadatamasked, nil
+	_oxmmetadatamasked.Value = uint64(decoder.ReadUint64())
+	_oxmmetadatamasked.ValueMask = uint64(decoder.ReadUint64())
+	return _oxmmetadatamasked, nil
 }
 
 func NewOxmMetadataMasked() *OxmMetadataMasked {
-	return &OxmMetadataMasked{
+	obj := &OxmMetadataMasked{
 		Oxm: NewOxm(2147484944),
 	}
+	return obj
 }
 func (self *OxmMetadataMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmMetadataMasked) GetName() string {
-	return "oxm_metadata_masked"
+	return "metadata_masked"
 }
 
 type OxmMplsLabel struct {
@@ -12474,26 +12790,27 @@ func (self *OxmMplsLabel) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmMplsLabel(parent *Oxm, decoder *goloxi.Decoder) (*OxmMplsLabel, error) {
-	oxmmplslabel := &OxmMplsLabel{Oxm: parent}
+func DecodeOxmMplsLabel(parent *Oxm, decoder *goloxi.Decoder) (*OxmMplsLabel, error) {
+	_oxmmplslabel := &OxmMplsLabel{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmMplsLabel packet too short: %d < 4", decoder.Length())
 	}
-	oxmmplslabel.Value = uint32(decoder.ReadUint32())
-	return oxmmplslabel, nil
+	_oxmmplslabel.Value = uint32(decoder.ReadUint32())
+	return _oxmmplslabel, nil
 }
 
 func NewOxmMplsLabel() *OxmMplsLabel {
-	return &OxmMplsLabel{
+	obj := &OxmMplsLabel{
 		Oxm: NewOxm(2147501060),
 	}
+	return obj
 }
 func (self *OxmMplsLabel) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmMplsLabel) GetName() string {
-	return "oxm_mpls_label"
+	return "mpls_label"
 }
 
 type OxmMplsLabelMasked struct {
@@ -12513,27 +12830,28 @@ func (self *OxmMplsLabelMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmMplsLabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmMplsLabelMasked, error) {
-	oxmmplslabelmasked := &OxmMplsLabelMasked{Oxm: parent}
+func DecodeOxmMplsLabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmMplsLabelMasked, error) {
+	_oxmmplslabelmasked := &OxmMplsLabelMasked{Oxm: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxmMplsLabelMasked packet too short: %d < 8", decoder.Length())
 	}
-	oxmmplslabelmasked.Value = uint32(decoder.ReadUint32())
-	oxmmplslabelmasked.ValueMask = uint32(decoder.ReadUint32())
-	return oxmmplslabelmasked, nil
+	_oxmmplslabelmasked.Value = uint32(decoder.ReadUint32())
+	_oxmmplslabelmasked.ValueMask = uint32(decoder.ReadUint32())
+	return _oxmmplslabelmasked, nil
 }
 
 func NewOxmMplsLabelMasked() *OxmMplsLabelMasked {
-	return &OxmMplsLabelMasked{
+	obj := &OxmMplsLabelMasked{
 		Oxm: NewOxm(2147501320),
 	}
+	return obj
 }
 func (self *OxmMplsLabelMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmMplsLabelMasked) GetName() string {
-	return "oxm_mpls_label_masked"
+	return "mpls_label_masked"
 }
 
 type OxmMplsTc struct {
@@ -12551,26 +12869,27 @@ func (self *OxmMplsTc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmMplsTc(parent *Oxm, decoder *goloxi.Decoder) (*OxmMplsTc, error) {
-	oxmmplstc := &OxmMplsTc{Oxm: parent}
+func DecodeOxmMplsTc(parent *Oxm, decoder *goloxi.Decoder) (*OxmMplsTc, error) {
+	_oxmmplstc := &OxmMplsTc{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmMplsTc packet too short: %d < 1", decoder.Length())
 	}
-	oxmmplstc.Value = uint8(decoder.ReadByte())
-	return oxmmplstc, nil
+	_oxmmplstc.Value = uint8(decoder.ReadByte())
+	return _oxmmplstc, nil
 }
 
 func NewOxmMplsTc() *OxmMplsTc {
-	return &OxmMplsTc{
+	obj := &OxmMplsTc{
 		Oxm: NewOxm(2147501569),
 	}
+	return obj
 }
 func (self *OxmMplsTc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmMplsTc) GetName() string {
-	return "oxm_mpls_tc"
+	return "mpls_tc"
 }
 
 type OxmMplsTcMasked struct {
@@ -12590,27 +12909,28 @@ func (self *OxmMplsTcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmMplsTcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmMplsTcMasked, error) {
-	oxmmplstcmasked := &OxmMplsTcMasked{Oxm: parent}
+func DecodeOxmMplsTcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmMplsTcMasked, error) {
+	_oxmmplstcmasked := &OxmMplsTcMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmMplsTcMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmmplstcmasked.Value = uint8(decoder.ReadByte())
-	oxmmplstcmasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmmplstcmasked, nil
+	_oxmmplstcmasked.Value = uint8(decoder.ReadByte())
+	_oxmmplstcmasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmmplstcmasked, nil
 }
 
 func NewOxmMplsTcMasked() *OxmMplsTcMasked {
-	return &OxmMplsTcMasked{
+	obj := &OxmMplsTcMasked{
 		Oxm: NewOxm(2147501826),
 	}
+	return obj
 }
 func (self *OxmMplsTcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmMplsTcMasked) GetName() string {
-	return "oxm_mpls_tc_masked"
+	return "mpls_tc_masked"
 }
 
 type OxmSctpDst struct {
@@ -12628,26 +12948,27 @@ func (self *OxmSctpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmSctpDst(parent *Oxm, decoder *goloxi.Decoder) (*OxmSctpDst, error) {
-	oxmsctpdst := &OxmSctpDst{Oxm: parent}
+func DecodeOxmSctpDst(parent *Oxm, decoder *goloxi.Decoder) (*OxmSctpDst, error) {
+	_oxmsctpdst := &OxmSctpDst{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmSctpDst packet too short: %d < 2", decoder.Length())
 	}
-	oxmsctpdst.Value = uint16(decoder.ReadUint16())
-	return oxmsctpdst, nil
+	_oxmsctpdst.Value = uint16(decoder.ReadUint16())
+	return _oxmsctpdst, nil
 }
 
 func NewOxmSctpDst() *OxmSctpDst {
-	return &OxmSctpDst{
+	obj := &OxmSctpDst{
 		Oxm: NewOxm(2147492866),
 	}
+	return obj
 }
 func (self *OxmSctpDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmSctpDst) GetName() string {
-	return "oxm_sctp_dst"
+	return "sctp_dst"
 }
 
 type OxmSctpDstMasked struct {
@@ -12667,27 +12988,28 @@ func (self *OxmSctpDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmSctpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmSctpDstMasked, error) {
-	oxmsctpdstmasked := &OxmSctpDstMasked{Oxm: parent}
+func DecodeOxmSctpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmSctpDstMasked, error) {
+	_oxmsctpdstmasked := &OxmSctpDstMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmSctpDstMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmsctpdstmasked.Value = uint16(decoder.ReadUint16())
-	oxmsctpdstmasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmsctpdstmasked, nil
+	_oxmsctpdstmasked.Value = uint16(decoder.ReadUint16())
+	_oxmsctpdstmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmsctpdstmasked, nil
 }
 
 func NewOxmSctpDstMasked() *OxmSctpDstMasked {
-	return &OxmSctpDstMasked{
+	obj := &OxmSctpDstMasked{
 		Oxm: NewOxm(2147493124),
 	}
+	return obj
 }
 func (self *OxmSctpDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmSctpDstMasked) GetName() string {
-	return "oxm_sctp_dst_masked"
+	return "sctp_dst_masked"
 }
 
 type OxmSctpSrc struct {
@@ -12705,26 +13027,27 @@ func (self *OxmSctpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmSctpSrc(parent *Oxm, decoder *goloxi.Decoder) (*OxmSctpSrc, error) {
-	oxmsctpsrc := &OxmSctpSrc{Oxm: parent}
+func DecodeOxmSctpSrc(parent *Oxm, decoder *goloxi.Decoder) (*OxmSctpSrc, error) {
+	_oxmsctpsrc := &OxmSctpSrc{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmSctpSrc packet too short: %d < 2", decoder.Length())
 	}
-	oxmsctpsrc.Value = uint16(decoder.ReadUint16())
-	return oxmsctpsrc, nil
+	_oxmsctpsrc.Value = uint16(decoder.ReadUint16())
+	return _oxmsctpsrc, nil
 }
 
 func NewOxmSctpSrc() *OxmSctpSrc {
-	return &OxmSctpSrc{
+	obj := &OxmSctpSrc{
 		Oxm: NewOxm(2147492354),
 	}
+	return obj
 }
 func (self *OxmSctpSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmSctpSrc) GetName() string {
-	return "oxm_sctp_src"
+	return "sctp_src"
 }
 
 type OxmSctpSrcMasked struct {
@@ -12744,27 +13067,28 @@ func (self *OxmSctpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmSctpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmSctpSrcMasked, error) {
-	oxmsctpsrcmasked := &OxmSctpSrcMasked{Oxm: parent}
+func DecodeOxmSctpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmSctpSrcMasked, error) {
+	_oxmsctpsrcmasked := &OxmSctpSrcMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmSctpSrcMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmsctpsrcmasked.Value = uint16(decoder.ReadUint16())
-	oxmsctpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmsctpsrcmasked, nil
+	_oxmsctpsrcmasked.Value = uint16(decoder.ReadUint16())
+	_oxmsctpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmsctpsrcmasked, nil
 }
 
 func NewOxmSctpSrcMasked() *OxmSctpSrcMasked {
-	return &OxmSctpSrcMasked{
+	obj := &OxmSctpSrcMasked{
 		Oxm: NewOxm(2147492612),
 	}
+	return obj
 }
 func (self *OxmSctpSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmSctpSrcMasked) GetName() string {
-	return "oxm_sctp_src_masked"
+	return "sctp_src_masked"
 }
 
 type OxmTcpDst struct {
@@ -12782,26 +13106,27 @@ func (self *OxmTcpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmTcpDst(parent *Oxm, decoder *goloxi.Decoder) (*OxmTcpDst, error) {
-	oxmtcpdst := &OxmTcpDst{Oxm: parent}
+func DecodeOxmTcpDst(parent *Oxm, decoder *goloxi.Decoder) (*OxmTcpDst, error) {
+	_oxmtcpdst := &OxmTcpDst{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmTcpDst packet too short: %d < 2", decoder.Length())
 	}
-	oxmtcpdst.Value = uint16(decoder.ReadUint16())
-	return oxmtcpdst, nil
+	_oxmtcpdst.Value = uint16(decoder.ReadUint16())
+	return _oxmtcpdst, nil
 }
 
 func NewOxmTcpDst() *OxmTcpDst {
-	return &OxmTcpDst{
+	obj := &OxmTcpDst{
 		Oxm: NewOxm(2147490818),
 	}
+	return obj
 }
 func (self *OxmTcpDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmTcpDst) GetName() string {
-	return "oxm_tcp_dst"
+	return "tcp_dst"
 }
 
 type OxmTcpDstMasked struct {
@@ -12821,27 +13146,28 @@ func (self *OxmTcpDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmTcpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmTcpDstMasked, error) {
-	oxmtcpdstmasked := &OxmTcpDstMasked{Oxm: parent}
+func DecodeOxmTcpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmTcpDstMasked, error) {
+	_oxmtcpdstmasked := &OxmTcpDstMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmTcpDstMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmtcpdstmasked.Value = uint16(decoder.ReadUint16())
-	oxmtcpdstmasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmtcpdstmasked, nil
+	_oxmtcpdstmasked.Value = uint16(decoder.ReadUint16())
+	_oxmtcpdstmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmtcpdstmasked, nil
 }
 
 func NewOxmTcpDstMasked() *OxmTcpDstMasked {
-	return &OxmTcpDstMasked{
+	obj := &OxmTcpDstMasked{
 		Oxm: NewOxm(2147491076),
 	}
+	return obj
 }
 func (self *OxmTcpDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmTcpDstMasked) GetName() string {
-	return "oxm_tcp_dst_masked"
+	return "tcp_dst_masked"
 }
 
 type OxmTcpSrc struct {
@@ -12859,26 +13185,27 @@ func (self *OxmTcpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmTcpSrc(parent *Oxm, decoder *goloxi.Decoder) (*OxmTcpSrc, error) {
-	oxmtcpsrc := &OxmTcpSrc{Oxm: parent}
+func DecodeOxmTcpSrc(parent *Oxm, decoder *goloxi.Decoder) (*OxmTcpSrc, error) {
+	_oxmtcpsrc := &OxmTcpSrc{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmTcpSrc packet too short: %d < 2", decoder.Length())
 	}
-	oxmtcpsrc.Value = uint16(decoder.ReadUint16())
-	return oxmtcpsrc, nil
+	_oxmtcpsrc.Value = uint16(decoder.ReadUint16())
+	return _oxmtcpsrc, nil
 }
 
 func NewOxmTcpSrc() *OxmTcpSrc {
-	return &OxmTcpSrc{
+	obj := &OxmTcpSrc{
 		Oxm: NewOxm(2147490306),
 	}
+	return obj
 }
 func (self *OxmTcpSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmTcpSrc) GetName() string {
-	return "oxm_tcp_src"
+	return "tcp_src"
 }
 
 type OxmTcpSrcMasked struct {
@@ -12898,27 +13225,28 @@ func (self *OxmTcpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmTcpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmTcpSrcMasked, error) {
-	oxmtcpsrcmasked := &OxmTcpSrcMasked{Oxm: parent}
+func DecodeOxmTcpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmTcpSrcMasked, error) {
+	_oxmtcpsrcmasked := &OxmTcpSrcMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmTcpSrcMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmtcpsrcmasked.Value = uint16(decoder.ReadUint16())
-	oxmtcpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmtcpsrcmasked, nil
+	_oxmtcpsrcmasked.Value = uint16(decoder.ReadUint16())
+	_oxmtcpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmtcpsrcmasked, nil
 }
 
 func NewOxmTcpSrcMasked() *OxmTcpSrcMasked {
-	return &OxmTcpSrcMasked{
+	obj := &OxmTcpSrcMasked{
 		Oxm: NewOxm(2147490564),
 	}
+	return obj
 }
 func (self *OxmTcpSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmTcpSrcMasked) GetName() string {
-	return "oxm_tcp_src_masked"
+	return "tcp_src_masked"
 }
 
 type OxmUdpDst struct {
@@ -12936,26 +13264,27 @@ func (self *OxmUdpDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmUdpDst(parent *Oxm, decoder *goloxi.Decoder) (*OxmUdpDst, error) {
-	oxmudpdst := &OxmUdpDst{Oxm: parent}
+func DecodeOxmUdpDst(parent *Oxm, decoder *goloxi.Decoder) (*OxmUdpDst, error) {
+	_oxmudpdst := &OxmUdpDst{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmUdpDst packet too short: %d < 2", decoder.Length())
 	}
-	oxmudpdst.Value = uint16(decoder.ReadUint16())
-	return oxmudpdst, nil
+	_oxmudpdst.Value = uint16(decoder.ReadUint16())
+	return _oxmudpdst, nil
 }
 
 func NewOxmUdpDst() *OxmUdpDst {
-	return &OxmUdpDst{
+	obj := &OxmUdpDst{
 		Oxm: NewOxm(2147491842),
 	}
+	return obj
 }
 func (self *OxmUdpDst) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmUdpDst) GetName() string {
-	return "oxm_udp_dst"
+	return "udp_dst"
 }
 
 type OxmUdpDstMasked struct {
@@ -12975,27 +13304,28 @@ func (self *OxmUdpDstMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmUdpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmUdpDstMasked, error) {
-	oxmudpdstmasked := &OxmUdpDstMasked{Oxm: parent}
+func DecodeOxmUdpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmUdpDstMasked, error) {
+	_oxmudpdstmasked := &OxmUdpDstMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmUdpDstMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmudpdstmasked.Value = uint16(decoder.ReadUint16())
-	oxmudpdstmasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmudpdstmasked, nil
+	_oxmudpdstmasked.Value = uint16(decoder.ReadUint16())
+	_oxmudpdstmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmudpdstmasked, nil
 }
 
 func NewOxmUdpDstMasked() *OxmUdpDstMasked {
-	return &OxmUdpDstMasked{
+	obj := &OxmUdpDstMasked{
 		Oxm: NewOxm(2147492100),
 	}
+	return obj
 }
 func (self *OxmUdpDstMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmUdpDstMasked) GetName() string {
-	return "oxm_udp_dst_masked"
+	return "udp_dst_masked"
 }
 
 type OxmUdpSrc struct {
@@ -13013,26 +13343,27 @@ func (self *OxmUdpSrc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmUdpSrc(parent *Oxm, decoder *goloxi.Decoder) (*OxmUdpSrc, error) {
-	oxmudpsrc := &OxmUdpSrc{Oxm: parent}
+func DecodeOxmUdpSrc(parent *Oxm, decoder *goloxi.Decoder) (*OxmUdpSrc, error) {
+	_oxmudpsrc := &OxmUdpSrc{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmUdpSrc packet too short: %d < 2", decoder.Length())
 	}
-	oxmudpsrc.Value = uint16(decoder.ReadUint16())
-	return oxmudpsrc, nil
+	_oxmudpsrc.Value = uint16(decoder.ReadUint16())
+	return _oxmudpsrc, nil
 }
 
 func NewOxmUdpSrc() *OxmUdpSrc {
-	return &OxmUdpSrc{
+	obj := &OxmUdpSrc{
 		Oxm: NewOxm(2147491330),
 	}
+	return obj
 }
 func (self *OxmUdpSrc) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmUdpSrc) GetName() string {
-	return "oxm_udp_src"
+	return "udp_src"
 }
 
 type OxmUdpSrcMasked struct {
@@ -13052,27 +13383,28 @@ func (self *OxmUdpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmUdpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmUdpSrcMasked, error) {
-	oxmudpsrcmasked := &OxmUdpSrcMasked{Oxm: parent}
+func DecodeOxmUdpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmUdpSrcMasked, error) {
+	_oxmudpsrcmasked := &OxmUdpSrcMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmUdpSrcMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmudpsrcmasked.Value = uint16(decoder.ReadUint16())
-	oxmudpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmudpsrcmasked, nil
+	_oxmudpsrcmasked.Value = uint16(decoder.ReadUint16())
+	_oxmudpsrcmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmudpsrcmasked, nil
 }
 
 func NewOxmUdpSrcMasked() *OxmUdpSrcMasked {
-	return &OxmUdpSrcMasked{
+	obj := &OxmUdpSrcMasked{
 		Oxm: NewOxm(2147491588),
 	}
+	return obj
 }
 func (self *OxmUdpSrcMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmUdpSrcMasked) GetName() string {
-	return "oxm_udp_src_masked"
+	return "udp_src_masked"
 }
 
 type OxmVlanPcp struct {
@@ -13090,26 +13422,27 @@ func (self *OxmVlanPcp) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmVlanPcp(parent *Oxm, decoder *goloxi.Decoder) (*OxmVlanPcp, error) {
-	oxmvlanpcp := &OxmVlanPcp{Oxm: parent}
+func DecodeOxmVlanPcp(parent *Oxm, decoder *goloxi.Decoder) (*OxmVlanPcp, error) {
+	_oxmvlanpcp := &OxmVlanPcp{Oxm: parent}
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmVlanPcp packet too short: %d < 1", decoder.Length())
 	}
-	oxmvlanpcp.Value = uint8(decoder.ReadByte())
-	return oxmvlanpcp, nil
+	_oxmvlanpcp.Value = uint8(decoder.ReadByte())
+	return _oxmvlanpcp, nil
 }
 
 func NewOxmVlanPcp() *OxmVlanPcp {
-	return &OxmVlanPcp{
+	obj := &OxmVlanPcp{
 		Oxm: NewOxm(2147487233),
 	}
+	return obj
 }
 func (self *OxmVlanPcp) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmVlanPcp) GetName() string {
-	return "oxm_vlan_pcp"
+	return "vlan_pcp"
 }
 
 type OxmVlanPcpMasked struct {
@@ -13129,27 +13462,28 @@ func (self *OxmVlanPcpMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmVlanPcpMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmVlanPcpMasked, error) {
-	oxmvlanpcpmasked := &OxmVlanPcpMasked{Oxm: parent}
+func DecodeOxmVlanPcpMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmVlanPcpMasked, error) {
+	_oxmvlanpcpmasked := &OxmVlanPcpMasked{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmVlanPcpMasked packet too short: %d < 2", decoder.Length())
 	}
-	oxmvlanpcpmasked.Value = uint8(decoder.ReadByte())
-	oxmvlanpcpmasked.ValueMask = uint8(decoder.ReadByte())
-	return oxmvlanpcpmasked, nil
+	_oxmvlanpcpmasked.Value = uint8(decoder.ReadByte())
+	_oxmvlanpcpmasked.ValueMask = uint8(decoder.ReadByte())
+	return _oxmvlanpcpmasked, nil
 }
 
 func NewOxmVlanPcpMasked() *OxmVlanPcpMasked {
-	return &OxmVlanPcpMasked{
+	obj := &OxmVlanPcpMasked{
 		Oxm: NewOxm(2147487490),
 	}
+	return obj
 }
 func (self *OxmVlanPcpMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmVlanPcpMasked) GetName() string {
-	return "oxm_vlan_pcp_masked"
+	return "vlan_pcp_masked"
 }
 
 type OxmVlanVid struct {
@@ -13167,26 +13501,27 @@ func (self *OxmVlanVid) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmVlanVid(parent *Oxm, decoder *goloxi.Decoder) (*OxmVlanVid, error) {
-	oxmvlanvid := &OxmVlanVid{Oxm: parent}
+func DecodeOxmVlanVid(parent *Oxm, decoder *goloxi.Decoder) (*OxmVlanVid, error) {
+	_oxmvlanvid := &OxmVlanVid{Oxm: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmVlanVid packet too short: %d < 2", decoder.Length())
 	}
-	oxmvlanvid.Value = uint16(decoder.ReadUint16())
-	return oxmvlanvid, nil
+	_oxmvlanvid.Value = uint16(decoder.ReadUint16())
+	return _oxmvlanvid, nil
 }
 
 func NewOxmVlanVid() *OxmVlanVid {
-	return &OxmVlanVid{
+	obj := &OxmVlanVid{
 		Oxm: NewOxm(2147486722),
 	}
+	return obj
 }
 func (self *OxmVlanVid) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmVlanVid) GetName() string {
-	return "oxm_vlan_vid"
+	return "vlan_vid"
 }
 
 type OxmVlanVidMasked struct {
@@ -13206,25 +13541,26 @@ func (self *OxmVlanVidMasked) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxmVlanVidMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmVlanVidMasked, error) {
-	oxmvlanvidmasked := &OxmVlanVidMasked{Oxm: parent}
+func DecodeOxmVlanVidMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmVlanVidMasked, error) {
+	_oxmvlanvidmasked := &OxmVlanVidMasked{Oxm: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmVlanVidMasked packet too short: %d < 4", decoder.Length())
 	}
-	oxmvlanvidmasked.Value = uint16(decoder.ReadUint16())
-	oxmvlanvidmasked.ValueMask = uint16(decoder.ReadUint16())
-	return oxmvlanvidmasked, nil
+	_oxmvlanvidmasked.Value = uint16(decoder.ReadUint16())
+	_oxmvlanvidmasked.ValueMask = uint16(decoder.ReadUint16())
+	return _oxmvlanvidmasked, nil
 }
 
 func NewOxmVlanVidMasked() *OxmVlanVidMasked {
-	return &OxmVlanVidMasked{
+	obj := &OxmVlanVidMasked{
 		Oxm: NewOxm(2147486980),
 	}
+	return obj
 }
 func (self *OxmVlanVidMasked) GetValue() interface{} {
 	return self.Value
 }
 
 func (self *OxmVlanVidMasked) GetName() string {
-	return "oxm_vlan_vid_masked"
+	return "vlan_vid_masked"
 }

@@ -34,33 +34,33 @@ func (self *Oxs) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxs(decoder *goloxi.Decoder) (IOxs, error) {
-	oxs := &Oxs{}
+func DecodeOxs(decoder *goloxi.Decoder) (IOxs, error) {
+	_oxs := &Oxs{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("Oxs packet too short: %d < 4", decoder.Length())
 	}
-	oxs.TypeLen = uint32(decoder.ReadUint32())
+	_oxs.TypeLen = uint32(decoder.ReadUint32())
 
-	switch oxs.TypeLen {
+	switch _oxs.TypeLen {
 	case 2147616776:
-		return decodeOxsByteCount(oxs, decoder)
+		return DecodeOxsByteCount(_oxs, decoder)
 	case 2147614728:
-		return decodeOxsDuration(oxs, decoder)
+		return DecodeOxsDuration(_oxs, decoder)
 	case 2147615748:
-		return decodeOxsFlowCount(oxs, decoder)
+		return DecodeOxsFlowCount(_oxs, decoder)
 	case 2147616264:
-		return decodeOxsPacketCount(oxs, decoder)
+		return DecodeOxsPacketCount(_oxs, decoder)
 	case 2147615240:
-		return decodeOxsIdleTime(oxs, decoder)
+		return DecodeOxsIdleTime(_oxs, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'Oxs'", oxs.TypeLen)
+		return nil, fmt.Errorf("Invalid type '%d' for 'Oxs'", _oxs.TypeLen)
 	}
 }
 
 func NewOxs(_type_len uint32) *Oxs {
-	return &Oxs{
-		TypeLen: _type_len,
-	}
+	obj := &Oxs{}
+	obj.TypeLen = _type_len
+	return obj
 }
 
 type OxsByteCount struct {
@@ -78,19 +78,20 @@ func (self *OxsByteCount) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxsByteCount(parent *Oxs, decoder *goloxi.Decoder) (*OxsByteCount, error) {
-	oxsbytecount := &OxsByteCount{Oxs: parent}
+func DecodeOxsByteCount(parent *Oxs, decoder *goloxi.Decoder) (*OxsByteCount, error) {
+	_oxsbytecount := &OxsByteCount{Oxs: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxsByteCount packet too short: %d < 8", decoder.Length())
 	}
-	oxsbytecount.Value = uint64(decoder.ReadUint64())
-	return oxsbytecount, nil
+	_oxsbytecount.Value = uint64(decoder.ReadUint64())
+	return _oxsbytecount, nil
 }
 
 func NewOxsByteCount() *OxsByteCount {
-	return &OxsByteCount{
+	obj := &OxsByteCount{
 		Oxs: NewOxs(2147616776),
 	}
+	return obj
 }
 
 type OxsDuration struct {
@@ -108,19 +109,20 @@ func (self *OxsDuration) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxsDuration(parent *Oxs, decoder *goloxi.Decoder) (*OxsDuration, error) {
-	oxsduration := &OxsDuration{Oxs: parent}
+func DecodeOxsDuration(parent *Oxs, decoder *goloxi.Decoder) (*OxsDuration, error) {
+	_oxsduration := &OxsDuration{Oxs: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxsDuration packet too short: %d < 8", decoder.Length())
 	}
-	oxsduration.Value = uint64(decoder.ReadUint64())
-	return oxsduration, nil
+	_oxsduration.Value = uint64(decoder.ReadUint64())
+	return _oxsduration, nil
 }
 
 func NewOxsDuration() *OxsDuration {
-	return &OxsDuration{
+	obj := &OxsDuration{
 		Oxs: NewOxs(2147614728),
 	}
+	return obj
 }
 
 type OxsFlowCount struct {
@@ -138,19 +140,20 @@ func (self *OxsFlowCount) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxsFlowCount(parent *Oxs, decoder *goloxi.Decoder) (*OxsFlowCount, error) {
-	oxsflowcount := &OxsFlowCount{Oxs: parent}
+func DecodeOxsFlowCount(parent *Oxs, decoder *goloxi.Decoder) (*OxsFlowCount, error) {
+	_oxsflowcount := &OxsFlowCount{Oxs: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxsFlowCount packet too short: %d < 4", decoder.Length())
 	}
-	oxsflowcount.Value = uint32(decoder.ReadUint32())
-	return oxsflowcount, nil
+	_oxsflowcount.Value = uint32(decoder.ReadUint32())
+	return _oxsflowcount, nil
 }
 
 func NewOxsFlowCount() *OxsFlowCount {
-	return &OxsFlowCount{
+	obj := &OxsFlowCount{
 		Oxs: NewOxs(2147615748),
 	}
+	return obj
 }
 
 type OxsIdleTime struct {
@@ -168,19 +171,20 @@ func (self *OxsIdleTime) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxsIdleTime(parent *Oxs, decoder *goloxi.Decoder) (*OxsIdleTime, error) {
-	oxsidletime := &OxsIdleTime{Oxs: parent}
+func DecodeOxsIdleTime(parent *Oxs, decoder *goloxi.Decoder) (*OxsIdleTime, error) {
+	_oxsidletime := &OxsIdleTime{Oxs: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxsIdleTime packet too short: %d < 8", decoder.Length())
 	}
-	oxsidletime.Value = uint64(decoder.ReadUint64())
-	return oxsidletime, nil
+	_oxsidletime.Value = uint64(decoder.ReadUint64())
+	return _oxsidletime, nil
 }
 
 func NewOxsIdleTime() *OxsIdleTime {
-	return &OxsIdleTime{
+	obj := &OxsIdleTime{
 		Oxs: NewOxs(2147615240),
 	}
+	return obj
 }
 
 type OxsPacketCount struct {
@@ -198,17 +202,18 @@ func (self *OxsPacketCount) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeOxsPacketCount(parent *Oxs, decoder *goloxi.Decoder) (*OxsPacketCount, error) {
-	oxspacketcount := &OxsPacketCount{Oxs: parent}
+func DecodeOxsPacketCount(parent *Oxs, decoder *goloxi.Decoder) (*OxsPacketCount, error) {
+	_oxspacketcount := &OxsPacketCount{Oxs: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("OxsPacketCount packet too short: %d < 8", decoder.Length())
 	}
-	oxspacketcount.Value = uint64(decoder.ReadUint64())
-	return oxspacketcount, nil
+	_oxspacketcount.Value = uint64(decoder.ReadUint64())
+	return _oxspacketcount, nil
 }
 
 func NewOxsPacketCount() *OxsPacketCount {
-	return &OxsPacketCount{
+	obj := &OxsPacketCount{
 		Oxs: NewOxs(2147616264),
 	}
+	return obj
 }

@@ -42,61 +42,61 @@ func (self *ActionId) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionId(decoder *goloxi.Decoder) (IActionId, error) {
-	actionid := &ActionId{}
+func DecodeActionId(decoder *goloxi.Decoder) (IActionId, error) {
+	_actionid := &ActionId{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionId packet too short: %d < 4", decoder.Length())
 	}
-	actionid.Type = uint16(decoder.ReadUint16())
-	actionid.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(actionid.Len), 2+2)
+	_actionid.Type = uint16(decoder.ReadUint16())
+	_actionid.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_actionid.Len), 2+2)
 
-	switch actionid.Type {
+	switch _actionid.Type {
 	case 0:
-		return decodeActionIdOutput(actionid, decoder)
+		return DecodeActionIdOutput(_actionid, decoder)
 	case 11:
-		return decodeActionIdCopyTtlOut(actionid, decoder)
+		return DecodeActionIdCopyTtlOut(_actionid, decoder)
 	case 12:
-		return decodeActionIdCopyTtlIn(actionid, decoder)
+		return DecodeActionIdCopyTtlIn(_actionid, decoder)
 	case 15:
-		return decodeActionIdSetMplsTtl(actionid, decoder)
+		return DecodeActionIdSetMplsTtl(_actionid, decoder)
 	case 16:
-		return decodeActionIdDecMplsTtl(actionid, decoder)
+		return DecodeActionIdDecMplsTtl(_actionid, decoder)
 	case 17:
-		return decodeActionIdPushVlan(actionid, decoder)
+		return DecodeActionIdPushVlan(_actionid, decoder)
 	case 18:
-		return decodeActionIdPopVlan(actionid, decoder)
+		return DecodeActionIdPopVlan(_actionid, decoder)
 	case 19:
-		return decodeActionIdPushMpls(actionid, decoder)
+		return DecodeActionIdPushMpls(_actionid, decoder)
 	case 20:
-		return decodeActionIdPopMpls(actionid, decoder)
+		return DecodeActionIdPopMpls(_actionid, decoder)
 	case 21:
-		return decodeActionIdSetQueue(actionid, decoder)
+		return DecodeActionIdSetQueue(_actionid, decoder)
 	case 22:
-		return decodeActionIdGroup(actionid, decoder)
+		return DecodeActionIdGroup(_actionid, decoder)
 	case 23:
-		return decodeActionIdSetNwTtl(actionid, decoder)
+		return DecodeActionIdSetNwTtl(_actionid, decoder)
 	case 24:
-		return decodeActionIdDecNwTtl(actionid, decoder)
+		return DecodeActionIdDecNwTtl(_actionid, decoder)
 	case 25:
-		return decodeActionIdSetField(actionid, decoder)
+		return DecodeActionIdSetField(_actionid, decoder)
 	case 26:
-		return decodeActionIdPushPbb(actionid, decoder)
+		return DecodeActionIdPushPbb(_actionid, decoder)
 	case 27:
-		return decodeActionIdPopPbb(actionid, decoder)
+		return DecodeActionIdPopPbb(_actionid, decoder)
 	case 29:
-		return decodeActionIdMeter(actionid, decoder)
+		return DecodeActionIdMeter(_actionid, decoder)
 	case 65535:
-		return decodeActionIdExperimenter(actionid, decoder)
+		return DecodeActionIdExperimenter(_actionid, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionId'", actionid.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ActionId'", _actionid.Type)
 	}
 }
 
 func NewActionId(_type uint16) *ActionId {
-	return &ActionId{
-		Type: _type,
-	}
+	obj := &ActionId{}
+	obj.Type = _type
+	return obj
 }
 
 type ActionIdExperimenter struct {
@@ -123,28 +123,29 @@ func (self *ActionIdExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdExperimenter(parent *ActionId, decoder *goloxi.Decoder) (IActionIdExperimenter, error) {
-	actionidexperimenter := &ActionIdExperimenter{ActionId: parent}
+func DecodeActionIdExperimenter(parent *ActionId, decoder *goloxi.Decoder) (IActionIdExperimenter, error) {
+	_actionidexperimenter := &ActionIdExperimenter{ActionId: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionIdExperimenter packet too short: %d < 4", decoder.Length())
 	}
-	actionidexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_actionidexperimenter.Experimenter = uint32(decoder.ReadUint32())
 
-	switch actionidexperimenter.Experimenter {
+	switch _actionidexperimenter.Experimenter {
 	case 8992:
-		return decodeActionIdNicira(actionidexperimenter, decoder)
+		return DecodeActionIdNicira(_actionidexperimenter, decoder)
 	case 6035143:
-		return decodeActionIdBsn(actionidexperimenter, decoder)
+		return DecodeActionIdBsn(_actionidexperimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdExperimenter'", actionidexperimenter.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdExperimenter'", _actionidexperimenter.Experimenter)
 	}
 }
 
 func NewActionIdExperimenter(_experimenter uint32) *ActionIdExperimenter {
-	return &ActionIdExperimenter{
-		Experimenter: _experimenter,
-		ActionId:     NewActionId(65535),
+	obj := &ActionIdExperimenter{
+		ActionId: NewActionId(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type ActionIdBsn struct {
@@ -171,32 +172,33 @@ func (self *ActionIdBsn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdBsn(parent *ActionIdExperimenter, decoder *goloxi.Decoder) (IActionIdBsn, error) {
-	actionidbsn := &ActionIdBsn{ActionIdExperimenter: parent}
+func DecodeActionIdBsn(parent *ActionIdExperimenter, decoder *goloxi.Decoder) (IActionIdBsn, error) {
+	_actionidbsn := &ActionIdBsn{ActionIdExperimenter: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionIdBsn packet too short: %d < 4", decoder.Length())
 	}
-	actionidbsn.Subtype = uint32(decoder.ReadUint32())
+	_actionidbsn.Subtype = uint32(decoder.ReadUint32())
 
-	switch actionidbsn.Subtype {
+	switch _actionidbsn.Subtype {
 	case 1:
-		return decodeActionIdBsnMirror(actionidbsn, decoder)
+		return DecodeActionIdBsnMirror(_actionidbsn, decoder)
 	case 2:
-		return decodeActionIdBsnSetTunnelDst(actionidbsn, decoder)
+		return DecodeActionIdBsnSetTunnelDst(_actionidbsn, decoder)
 	case 4:
-		return decodeActionIdBsnChecksum(actionidbsn, decoder)
+		return DecodeActionIdBsnChecksum(_actionidbsn, decoder)
 	case 5:
-		return decodeActionIdBsnGentable(actionidbsn, decoder)
+		return DecodeActionIdBsnGentable(_actionidbsn, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdBsn'", actionidbsn.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdBsn'", _actionidbsn.Subtype)
 	}
 }
 
 func NewActionIdBsn(_subtype uint32) *ActionIdBsn {
-	return &ActionIdBsn{
-		Subtype:              _subtype,
+	obj := &ActionIdBsn{
 		ActionIdExperimenter: NewActionIdExperimenter(6035143),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type ActionIdBsnChecksum struct {
@@ -214,15 +216,16 @@ func (self *ActionIdBsnChecksum) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdBsnChecksum(parent *ActionIdBsn, decoder *goloxi.Decoder) (*ActionIdBsnChecksum, error) {
-	actionidbsnchecksum := &ActionIdBsnChecksum{ActionIdBsn: parent}
-	return actionidbsnchecksum, nil
+func DecodeActionIdBsnChecksum(parent *ActionIdBsn, decoder *goloxi.Decoder) (*ActionIdBsnChecksum, error) {
+	_actionidbsnchecksum := &ActionIdBsnChecksum{ActionIdBsn: parent}
+	return _actionidbsnchecksum, nil
 }
 
 func NewActionIdBsnChecksum() *ActionIdBsnChecksum {
-	return &ActionIdBsnChecksum{
+	obj := &ActionIdBsnChecksum{
 		ActionIdBsn: NewActionIdBsn(4),
 	}
+	return obj
 }
 
 type ActionIdBsnGentable struct {
@@ -240,15 +243,16 @@ func (self *ActionIdBsnGentable) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdBsnGentable(parent *ActionIdBsn, decoder *goloxi.Decoder) (*ActionIdBsnGentable, error) {
-	actionidbsngentable := &ActionIdBsnGentable{ActionIdBsn: parent}
-	return actionidbsngentable, nil
+func DecodeActionIdBsnGentable(parent *ActionIdBsn, decoder *goloxi.Decoder) (*ActionIdBsnGentable, error) {
+	_actionidbsngentable := &ActionIdBsnGentable{ActionIdBsn: parent}
+	return _actionidbsngentable, nil
 }
 
 func NewActionIdBsnGentable() *ActionIdBsnGentable {
-	return &ActionIdBsnGentable{
+	obj := &ActionIdBsnGentable{
 		ActionIdBsn: NewActionIdBsn(5),
 	}
+	return obj
 }
 
 type ActionIdBsnMirror struct {
@@ -266,15 +270,16 @@ func (self *ActionIdBsnMirror) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdBsnMirror(parent *ActionIdBsn, decoder *goloxi.Decoder) (*ActionIdBsnMirror, error) {
-	actionidbsnmirror := &ActionIdBsnMirror{ActionIdBsn: parent}
-	return actionidbsnmirror, nil
+func DecodeActionIdBsnMirror(parent *ActionIdBsn, decoder *goloxi.Decoder) (*ActionIdBsnMirror, error) {
+	_actionidbsnmirror := &ActionIdBsnMirror{ActionIdBsn: parent}
+	return _actionidbsnmirror, nil
 }
 
 func NewActionIdBsnMirror() *ActionIdBsnMirror {
-	return &ActionIdBsnMirror{
+	obj := &ActionIdBsnMirror{
 		ActionIdBsn: NewActionIdBsn(1),
 	}
+	return obj
 }
 
 type ActionIdBsnSetTunnelDst struct {
@@ -292,15 +297,16 @@ func (self *ActionIdBsnSetTunnelDst) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdBsnSetTunnelDst(parent *ActionIdBsn, decoder *goloxi.Decoder) (*ActionIdBsnSetTunnelDst, error) {
-	actionidbsnsettunneldst := &ActionIdBsnSetTunnelDst{ActionIdBsn: parent}
-	return actionidbsnsettunneldst, nil
+func DecodeActionIdBsnSetTunnelDst(parent *ActionIdBsn, decoder *goloxi.Decoder) (*ActionIdBsnSetTunnelDst, error) {
+	_actionidbsnsettunneldst := &ActionIdBsnSetTunnelDst{ActionIdBsn: parent}
+	return _actionidbsnsettunneldst, nil
 }
 
 func NewActionIdBsnSetTunnelDst() *ActionIdBsnSetTunnelDst {
-	return &ActionIdBsnSetTunnelDst{
+	obj := &ActionIdBsnSetTunnelDst{
 		ActionIdBsn: NewActionIdBsn(2),
 	}
+	return obj
 }
 
 type ActionIdCopyTtlIn struct {
@@ -318,15 +324,16 @@ func (self *ActionIdCopyTtlIn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdCopyTtlIn(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdCopyTtlIn, error) {
-	actionidcopyttlin := &ActionIdCopyTtlIn{ActionId: parent}
-	return actionidcopyttlin, nil
+func DecodeActionIdCopyTtlIn(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdCopyTtlIn, error) {
+	_actionidcopyttlin := &ActionIdCopyTtlIn{ActionId: parent}
+	return _actionidcopyttlin, nil
 }
 
 func NewActionIdCopyTtlIn() *ActionIdCopyTtlIn {
-	return &ActionIdCopyTtlIn{
+	obj := &ActionIdCopyTtlIn{
 		ActionId: NewActionId(12),
 	}
+	return obj
 }
 
 type ActionIdCopyTtlOut struct {
@@ -344,15 +351,16 @@ func (self *ActionIdCopyTtlOut) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdCopyTtlOut(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdCopyTtlOut, error) {
-	actionidcopyttlout := &ActionIdCopyTtlOut{ActionId: parent}
-	return actionidcopyttlout, nil
+func DecodeActionIdCopyTtlOut(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdCopyTtlOut, error) {
+	_actionidcopyttlout := &ActionIdCopyTtlOut{ActionId: parent}
+	return _actionidcopyttlout, nil
 }
 
 func NewActionIdCopyTtlOut() *ActionIdCopyTtlOut {
-	return &ActionIdCopyTtlOut{
+	obj := &ActionIdCopyTtlOut{
 		ActionId: NewActionId(11),
 	}
+	return obj
 }
 
 type ActionIdDecMplsTtl struct {
@@ -370,15 +378,16 @@ func (self *ActionIdDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdDecMplsTtl(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdDecMplsTtl, error) {
-	actioniddecmplsttl := &ActionIdDecMplsTtl{ActionId: parent}
-	return actioniddecmplsttl, nil
+func DecodeActionIdDecMplsTtl(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdDecMplsTtl, error) {
+	_actioniddecmplsttl := &ActionIdDecMplsTtl{ActionId: parent}
+	return _actioniddecmplsttl, nil
 }
 
 func NewActionIdDecMplsTtl() *ActionIdDecMplsTtl {
-	return &ActionIdDecMplsTtl{
+	obj := &ActionIdDecMplsTtl{
 		ActionId: NewActionId(16),
 	}
+	return obj
 }
 
 type ActionIdDecNwTtl struct {
@@ -396,15 +405,16 @@ func (self *ActionIdDecNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdDecNwTtl(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdDecNwTtl, error) {
-	actioniddecnwttl := &ActionIdDecNwTtl{ActionId: parent}
-	return actioniddecnwttl, nil
+func DecodeActionIdDecNwTtl(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdDecNwTtl, error) {
+	_actioniddecnwttl := &ActionIdDecNwTtl{ActionId: parent}
+	return _actioniddecnwttl, nil
 }
 
 func NewActionIdDecNwTtl() *ActionIdDecNwTtl {
-	return &ActionIdDecNwTtl{
+	obj := &ActionIdDecNwTtl{
 		ActionId: NewActionId(24),
 	}
+	return obj
 }
 
 type ActionIdGroup struct {
@@ -422,15 +432,16 @@ func (self *ActionIdGroup) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdGroup(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdGroup, error) {
-	actionidgroup := &ActionIdGroup{ActionId: parent}
-	return actionidgroup, nil
+func DecodeActionIdGroup(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdGroup, error) {
+	_actionidgroup := &ActionIdGroup{ActionId: parent}
+	return _actionidgroup, nil
 }
 
 func NewActionIdGroup() *ActionIdGroup {
-	return &ActionIdGroup{
+	obj := &ActionIdGroup{
 		ActionId: NewActionId(22),
 	}
+	return obj
 }
 
 type ActionIdMeter struct {
@@ -448,15 +459,16 @@ func (self *ActionIdMeter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdMeter(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdMeter, error) {
-	actionidmeter := &ActionIdMeter{ActionId: parent}
-	return actionidmeter, nil
+func DecodeActionIdMeter(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdMeter, error) {
+	_actionidmeter := &ActionIdMeter{ActionId: parent}
+	return _actionidmeter, nil
 }
 
 func NewActionIdMeter() *ActionIdMeter {
-	return &ActionIdMeter{
+	obj := &ActionIdMeter{
 		ActionId: NewActionId(29),
 	}
+	return obj
 }
 
 type ActionIdNicira struct {
@@ -483,100 +495,101 @@ func (self *ActionIdNicira) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNicira(parent *ActionIdExperimenter, decoder *goloxi.Decoder) (IActionIdNicira, error) {
-	actionidnicira := &ActionIdNicira{ActionIdExperimenter: parent}
+func DecodeActionIdNicira(parent *ActionIdExperimenter, decoder *goloxi.Decoder) (IActionIdNicira, error) {
+	_actionidnicira := &ActionIdNicira{ActionIdExperimenter: parent}
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("ActionIdNicira packet too short: %d < 2", decoder.Length())
 	}
-	actionidnicira.Subtype = uint16(decoder.ReadUint16())
+	_actionidnicira.Subtype = uint16(decoder.ReadUint16())
 
-	switch actionidnicira.Subtype {
+	switch _actionidnicira.Subtype {
 	case 1:
-		return decodeActionIdNxResubmit(actionidnicira, decoder)
+		return DecodeActionIdNxResubmit(_actionidnicira, decoder)
 	case 2:
-		return decodeActionIdNxSetTunnel(actionidnicira, decoder)
+		return DecodeActionIdNxSetTunnel(_actionidnicira, decoder)
 	case 5:
-		return decodeActionIdNxPopQueue(actionidnicira, decoder)
+		return DecodeActionIdNxPopQueue(_actionidnicira, decoder)
 	case 6:
-		return decodeActionIdNxRegMove(actionidnicira, decoder)
+		return DecodeActionIdNxRegMove(_actionidnicira, decoder)
 	case 7:
-		return decodeActionIdNxRegLoad(actionidnicira, decoder)
+		return DecodeActionIdNxRegLoad(_actionidnicira, decoder)
 	case 8:
-		return decodeActionIdNxNote(actionidnicira, decoder)
+		return DecodeActionIdNxNote(_actionidnicira, decoder)
 	case 9:
-		return decodeActionIdNxSetTunnel64(actionidnicira, decoder)
+		return DecodeActionIdNxSetTunnel64(_actionidnicira, decoder)
 	case 10:
-		return decodeActionIdNxMultipath(actionidnicira, decoder)
+		return DecodeActionIdNxMultipath(_actionidnicira, decoder)
 	case 12:
-		return decodeActionIdNxBundle(actionidnicira, decoder)
+		return DecodeActionIdNxBundle(_actionidnicira, decoder)
 	case 13:
-		return decodeActionIdNxBundleLoad(actionidnicira, decoder)
+		return DecodeActionIdNxBundleLoad(_actionidnicira, decoder)
 	case 14:
-		return decodeActionIdResubmit(actionidnicira, decoder)
+		return DecodeActionIdResubmit(_actionidnicira, decoder)
 	case 15:
-		return decodeActionIdNxOutputReg(actionidnicira, decoder)
+		return DecodeActionIdNxOutputReg(_actionidnicira, decoder)
 	case 16:
-		return decodeActionIdNxLearn(actionidnicira, decoder)
+		return DecodeActionIdNxLearn(_actionidnicira, decoder)
 	case 17:
-		return decodeActionIdNxExit(actionidnicira, decoder)
+		return DecodeActionIdNxExit(_actionidnicira, decoder)
 	case 18:
-		return decodeActionIdNiciraDecTtl(actionidnicira, decoder)
+		return DecodeActionIdNiciraDecTtl(_actionidnicira, decoder)
 	case 19:
-		return decodeActionIdNxFinTimeout(actionidnicira, decoder)
+		return DecodeActionIdNxFinTimeout(_actionidnicira, decoder)
 	case 20:
-		return decodeActionIdNxController(actionidnicira, decoder)
+		return DecodeActionIdNxController(_actionidnicira, decoder)
 	case 21:
-		return decodeActionIdNxDecTtlCntIds(actionidnicira, decoder)
+		return DecodeActionIdNxDecTtlCntIds(_actionidnicira, decoder)
 	case 22:
-		return decodeActionIdNxWriteMetadata(actionidnicira, decoder)
+		return DecodeActionIdNxWriteMetadata(_actionidnicira, decoder)
 	case 27:
-		return decodeActionIdNxStackPush(actionidnicira, decoder)
+		return DecodeActionIdNxStackPush(_actionidnicira, decoder)
 	case 28:
-		return decodeActionIdNxStackPop(actionidnicira, decoder)
+		return DecodeActionIdNxStackPop(_actionidnicira, decoder)
 	case 29:
-		return decodeActionIdNxSample(actionidnicira, decoder)
+		return DecodeActionIdNxSample(_actionidnicira, decoder)
 	case 32:
-		return decodeActionIdNxOutputReg2(actionidnicira, decoder)
+		return DecodeActionIdNxOutputReg2(_actionidnicira, decoder)
 	case 33:
-		return decodeActionIdNxRegLoad2(actionidnicira, decoder)
+		return DecodeActionIdNxRegLoad2(_actionidnicira, decoder)
 	case 34:
-		return decodeActionIdNxConjunction(actionidnicira, decoder)
+		return DecodeActionIdNxConjunction(_actionidnicira, decoder)
 	case 35:
-		return decodeActionIdNxCt(actionidnicira, decoder)
+		return DecodeActionIdNxCt(_actionidnicira, decoder)
 	case 36:
-		return decodeActionIdNxNat(actionidnicira, decoder)
+		return DecodeActionIdNxNat(_actionidnicira, decoder)
 	case 37:
-		return decodeActionIdNxController2(actionidnicira, decoder)
+		return DecodeActionIdNxController2(_actionidnicira, decoder)
 	case 38:
-		return decodeActionIdNxSample2(actionidnicira, decoder)
+		return DecodeActionIdNxSample2(_actionidnicira, decoder)
 	case 39:
-		return decodeActionIdNxOutputTrunc(actionidnicira, decoder)
+		return DecodeActionIdNxOutputTrunc(_actionidnicira, decoder)
 	case 41:
-		return decodeActionIdNxSample3(actionidnicira, decoder)
+		return DecodeActionIdNxSample3(_actionidnicira, decoder)
 	case 42:
-		return decodeActionIdNxClone(actionidnicira, decoder)
+		return DecodeActionIdNxClone(_actionidnicira, decoder)
 	case 43:
-		return decodeActionIdNxCtClear(actionidnicira, decoder)
+		return DecodeActionIdNxCtClear(_actionidnicira, decoder)
 	case 44:
-		return decodeActionIdNxResubmitTableCt(actionidnicira, decoder)
+		return DecodeActionIdNxResubmitTableCt(_actionidnicira, decoder)
 	case 45:
-		return decodeActionIdNxLearn2(actionidnicira, decoder)
+		return DecodeActionIdNxLearn2(_actionidnicira, decoder)
 	case 46:
-		return decodeActionIdNxEncap(actionidnicira, decoder)
+		return DecodeActionIdNxEncap(_actionidnicira, decoder)
 	case 47:
-		return decodeActionIdNxDecap(actionidnicira, decoder)
+		return DecodeActionIdNxDecap(_actionidnicira, decoder)
 	case 255:
-		return decodeActionIdNxDebugRecirc(actionidnicira, decoder)
+		return DecodeActionIdNxDebugRecirc(_actionidnicira, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdNicira'", actionidnicira.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdNicira'", _actionidnicira.Subtype)
 	}
 }
 
 func NewActionIdNicira(_subtype uint16) *ActionIdNicira {
-	return &ActionIdNicira{
-		Subtype:              _subtype,
+	obj := &ActionIdNicira{
 		ActionIdExperimenter: NewActionIdExperimenter(8992),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type ActionIdNiciraDecTtl struct {
@@ -594,15 +607,16 @@ func (self *ActionIdNiciraDecTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNiciraDecTtl(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNiciraDecTtl, error) {
-	actionidniciradecttl := &ActionIdNiciraDecTtl{ActionIdNicira: parent}
-	return actionidniciradecttl, nil
+func DecodeActionIdNiciraDecTtl(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNiciraDecTtl, error) {
+	_actionidniciradecttl := &ActionIdNiciraDecTtl{ActionIdNicira: parent}
+	return _actionidniciradecttl, nil
 }
 
 func NewActionIdNiciraDecTtl() *ActionIdNiciraDecTtl {
-	return &ActionIdNiciraDecTtl{
+	obj := &ActionIdNiciraDecTtl{
 		ActionIdNicira: NewActionIdNicira(18),
 	}
+	return obj
 }
 
 type ActionIdNxBundle struct {
@@ -620,15 +634,16 @@ func (self *ActionIdNxBundle) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxBundle(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxBundle, error) {
-	actionidnxbundle := &ActionIdNxBundle{ActionIdNicira: parent}
-	return actionidnxbundle, nil
+func DecodeActionIdNxBundle(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxBundle, error) {
+	_actionidnxbundle := &ActionIdNxBundle{ActionIdNicira: parent}
+	return _actionidnxbundle, nil
 }
 
 func NewActionIdNxBundle() *ActionIdNxBundle {
-	return &ActionIdNxBundle{
+	obj := &ActionIdNxBundle{
 		ActionIdNicira: NewActionIdNicira(12),
 	}
+	return obj
 }
 
 type ActionIdNxBundleLoad struct {
@@ -646,15 +661,16 @@ func (self *ActionIdNxBundleLoad) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxBundleLoad(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxBundleLoad, error) {
-	actionidnxbundleload := &ActionIdNxBundleLoad{ActionIdNicira: parent}
-	return actionidnxbundleload, nil
+func DecodeActionIdNxBundleLoad(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxBundleLoad, error) {
+	_actionidnxbundleload := &ActionIdNxBundleLoad{ActionIdNicira: parent}
+	return _actionidnxbundleload, nil
 }
 
 func NewActionIdNxBundleLoad() *ActionIdNxBundleLoad {
-	return &ActionIdNxBundleLoad{
+	obj := &ActionIdNxBundleLoad{
 		ActionIdNicira: NewActionIdNicira(13),
 	}
+	return obj
 }
 
 type ActionIdNxClone struct {
@@ -672,15 +688,16 @@ func (self *ActionIdNxClone) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxClone(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxClone, error) {
-	actionidnxclone := &ActionIdNxClone{ActionIdNicira: parent}
-	return actionidnxclone, nil
+func DecodeActionIdNxClone(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxClone, error) {
+	_actionidnxclone := &ActionIdNxClone{ActionIdNicira: parent}
+	return _actionidnxclone, nil
 }
 
 func NewActionIdNxClone() *ActionIdNxClone {
-	return &ActionIdNxClone{
+	obj := &ActionIdNxClone{
 		ActionIdNicira: NewActionIdNicira(42),
 	}
+	return obj
 }
 
 type ActionIdNxConjunction struct {
@@ -698,15 +715,16 @@ func (self *ActionIdNxConjunction) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxConjunction(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxConjunction, error) {
-	actionidnxconjunction := &ActionIdNxConjunction{ActionIdNicira: parent}
-	return actionidnxconjunction, nil
+func DecodeActionIdNxConjunction(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxConjunction, error) {
+	_actionidnxconjunction := &ActionIdNxConjunction{ActionIdNicira: parent}
+	return _actionidnxconjunction, nil
 }
 
 func NewActionIdNxConjunction() *ActionIdNxConjunction {
-	return &ActionIdNxConjunction{
+	obj := &ActionIdNxConjunction{
 		ActionIdNicira: NewActionIdNicira(34),
 	}
+	return obj
 }
 
 type ActionIdNxController struct {
@@ -724,15 +742,16 @@ func (self *ActionIdNxController) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxController(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxController, error) {
-	actionidnxcontroller := &ActionIdNxController{ActionIdNicira: parent}
-	return actionidnxcontroller, nil
+func DecodeActionIdNxController(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxController, error) {
+	_actionidnxcontroller := &ActionIdNxController{ActionIdNicira: parent}
+	return _actionidnxcontroller, nil
 }
 
 func NewActionIdNxController() *ActionIdNxController {
-	return &ActionIdNxController{
+	obj := &ActionIdNxController{
 		ActionIdNicira: NewActionIdNicira(20),
 	}
+	return obj
 }
 
 type ActionIdNxController2 struct {
@@ -750,15 +769,16 @@ func (self *ActionIdNxController2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxController2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxController2, error) {
-	actionidnxcontroller2 := &ActionIdNxController2{ActionIdNicira: parent}
-	return actionidnxcontroller2, nil
+func DecodeActionIdNxController2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxController2, error) {
+	_actionidnxcontroller2 := &ActionIdNxController2{ActionIdNicira: parent}
+	return _actionidnxcontroller2, nil
 }
 
 func NewActionIdNxController2() *ActionIdNxController2 {
-	return &ActionIdNxController2{
+	obj := &ActionIdNxController2{
 		ActionIdNicira: NewActionIdNicira(37),
 	}
+	return obj
 }
 
 type ActionIdNxCt struct {
@@ -776,15 +796,16 @@ func (self *ActionIdNxCt) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxCt(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxCt, error) {
-	actionidnxct := &ActionIdNxCt{ActionIdNicira: parent}
-	return actionidnxct, nil
+func DecodeActionIdNxCt(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxCt, error) {
+	_actionidnxct := &ActionIdNxCt{ActionIdNicira: parent}
+	return _actionidnxct, nil
 }
 
 func NewActionIdNxCt() *ActionIdNxCt {
-	return &ActionIdNxCt{
+	obj := &ActionIdNxCt{
 		ActionIdNicira: NewActionIdNicira(35),
 	}
+	return obj
 }
 
 type ActionIdNxCtClear struct {
@@ -802,15 +823,16 @@ func (self *ActionIdNxCtClear) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxCtClear(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxCtClear, error) {
-	actionidnxctclear := &ActionIdNxCtClear{ActionIdNicira: parent}
-	return actionidnxctclear, nil
+func DecodeActionIdNxCtClear(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxCtClear, error) {
+	_actionidnxctclear := &ActionIdNxCtClear{ActionIdNicira: parent}
+	return _actionidnxctclear, nil
 }
 
 func NewActionIdNxCtClear() *ActionIdNxCtClear {
-	return &ActionIdNxCtClear{
+	obj := &ActionIdNxCtClear{
 		ActionIdNicira: NewActionIdNicira(43),
 	}
+	return obj
 }
 
 type ActionIdNxDebugRecirc struct {
@@ -828,15 +850,16 @@ func (self *ActionIdNxDebugRecirc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxDebugRecirc(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDebugRecirc, error) {
-	actionidnxdebugrecirc := &ActionIdNxDebugRecirc{ActionIdNicira: parent}
-	return actionidnxdebugrecirc, nil
+func DecodeActionIdNxDebugRecirc(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDebugRecirc, error) {
+	_actionidnxdebugrecirc := &ActionIdNxDebugRecirc{ActionIdNicira: parent}
+	return _actionidnxdebugrecirc, nil
 }
 
 func NewActionIdNxDebugRecirc() *ActionIdNxDebugRecirc {
-	return &ActionIdNxDebugRecirc{
+	obj := &ActionIdNxDebugRecirc{
 		ActionIdNicira: NewActionIdNicira(255),
 	}
+	return obj
 }
 
 type ActionIdNxDecTtlCntIds struct {
@@ -854,15 +877,16 @@ func (self *ActionIdNxDecTtlCntIds) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxDecTtlCntIds(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDecTtlCntIds, error) {
-	actionidnxdecttlcntids := &ActionIdNxDecTtlCntIds{ActionIdNicira: parent}
-	return actionidnxdecttlcntids, nil
+func DecodeActionIdNxDecTtlCntIds(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDecTtlCntIds, error) {
+	_actionidnxdecttlcntids := &ActionIdNxDecTtlCntIds{ActionIdNicira: parent}
+	return _actionidnxdecttlcntids, nil
 }
 
 func NewActionIdNxDecTtlCntIds() *ActionIdNxDecTtlCntIds {
-	return &ActionIdNxDecTtlCntIds{
+	obj := &ActionIdNxDecTtlCntIds{
 		ActionIdNicira: NewActionIdNicira(21),
 	}
+	return obj
 }
 
 type ActionIdNxDecap struct {
@@ -880,15 +904,16 @@ func (self *ActionIdNxDecap) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxDecap(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDecap, error) {
-	actionidnxdecap := &ActionIdNxDecap{ActionIdNicira: parent}
-	return actionidnxdecap, nil
+func DecodeActionIdNxDecap(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDecap, error) {
+	_actionidnxdecap := &ActionIdNxDecap{ActionIdNicira: parent}
+	return _actionidnxdecap, nil
 }
 
 func NewActionIdNxDecap() *ActionIdNxDecap {
-	return &ActionIdNxDecap{
+	obj := &ActionIdNxDecap{
 		ActionIdNicira: NewActionIdNicira(47),
 	}
+	return obj
 }
 
 type ActionIdNxEncap struct {
@@ -906,15 +931,16 @@ func (self *ActionIdNxEncap) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxEncap(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxEncap, error) {
-	actionidnxencap := &ActionIdNxEncap{ActionIdNicira: parent}
-	return actionidnxencap, nil
+func DecodeActionIdNxEncap(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxEncap, error) {
+	_actionidnxencap := &ActionIdNxEncap{ActionIdNicira: parent}
+	return _actionidnxencap, nil
 }
 
 func NewActionIdNxEncap() *ActionIdNxEncap {
-	return &ActionIdNxEncap{
+	obj := &ActionIdNxEncap{
 		ActionIdNicira: NewActionIdNicira(46),
 	}
+	return obj
 }
 
 type ActionIdNxExit struct {
@@ -932,15 +958,16 @@ func (self *ActionIdNxExit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxExit(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxExit, error) {
-	actionidnxexit := &ActionIdNxExit{ActionIdNicira: parent}
-	return actionidnxexit, nil
+func DecodeActionIdNxExit(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxExit, error) {
+	_actionidnxexit := &ActionIdNxExit{ActionIdNicira: parent}
+	return _actionidnxexit, nil
 }
 
 func NewActionIdNxExit() *ActionIdNxExit {
-	return &ActionIdNxExit{
+	obj := &ActionIdNxExit{
 		ActionIdNicira: NewActionIdNicira(17),
 	}
+	return obj
 }
 
 type ActionIdNxFinTimeout struct {
@@ -958,15 +985,16 @@ func (self *ActionIdNxFinTimeout) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxFinTimeout(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxFinTimeout, error) {
-	actionidnxfintimeout := &ActionIdNxFinTimeout{ActionIdNicira: parent}
-	return actionidnxfintimeout, nil
+func DecodeActionIdNxFinTimeout(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxFinTimeout, error) {
+	_actionidnxfintimeout := &ActionIdNxFinTimeout{ActionIdNicira: parent}
+	return _actionidnxfintimeout, nil
 }
 
 func NewActionIdNxFinTimeout() *ActionIdNxFinTimeout {
-	return &ActionIdNxFinTimeout{
+	obj := &ActionIdNxFinTimeout{
 		ActionIdNicira: NewActionIdNicira(19),
 	}
+	return obj
 }
 
 type ActionIdNxLearn struct {
@@ -984,15 +1012,16 @@ func (self *ActionIdNxLearn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxLearn(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxLearn, error) {
-	actionidnxlearn := &ActionIdNxLearn{ActionIdNicira: parent}
-	return actionidnxlearn, nil
+func DecodeActionIdNxLearn(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxLearn, error) {
+	_actionidnxlearn := &ActionIdNxLearn{ActionIdNicira: parent}
+	return _actionidnxlearn, nil
 }
 
 func NewActionIdNxLearn() *ActionIdNxLearn {
-	return &ActionIdNxLearn{
+	obj := &ActionIdNxLearn{
 		ActionIdNicira: NewActionIdNicira(16),
 	}
+	return obj
 }
 
 type ActionIdNxLearn2 struct {
@@ -1010,15 +1039,16 @@ func (self *ActionIdNxLearn2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxLearn2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxLearn2, error) {
-	actionidnxlearn2 := &ActionIdNxLearn2{ActionIdNicira: parent}
-	return actionidnxlearn2, nil
+func DecodeActionIdNxLearn2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxLearn2, error) {
+	_actionidnxlearn2 := &ActionIdNxLearn2{ActionIdNicira: parent}
+	return _actionidnxlearn2, nil
 }
 
 func NewActionIdNxLearn2() *ActionIdNxLearn2 {
-	return &ActionIdNxLearn2{
+	obj := &ActionIdNxLearn2{
 		ActionIdNicira: NewActionIdNicira(45),
 	}
+	return obj
 }
 
 type ActionIdNxMultipath struct {
@@ -1036,15 +1066,16 @@ func (self *ActionIdNxMultipath) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxMultipath(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxMultipath, error) {
-	actionidnxmultipath := &ActionIdNxMultipath{ActionIdNicira: parent}
-	return actionidnxmultipath, nil
+func DecodeActionIdNxMultipath(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxMultipath, error) {
+	_actionidnxmultipath := &ActionIdNxMultipath{ActionIdNicira: parent}
+	return _actionidnxmultipath, nil
 }
 
 func NewActionIdNxMultipath() *ActionIdNxMultipath {
-	return &ActionIdNxMultipath{
+	obj := &ActionIdNxMultipath{
 		ActionIdNicira: NewActionIdNicira(10),
 	}
+	return obj
 }
 
 type ActionIdNxNat struct {
@@ -1062,15 +1093,16 @@ func (self *ActionIdNxNat) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxNat(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxNat, error) {
-	actionidnxnat := &ActionIdNxNat{ActionIdNicira: parent}
-	return actionidnxnat, nil
+func DecodeActionIdNxNat(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxNat, error) {
+	_actionidnxnat := &ActionIdNxNat{ActionIdNicira: parent}
+	return _actionidnxnat, nil
 }
 
 func NewActionIdNxNat() *ActionIdNxNat {
-	return &ActionIdNxNat{
+	obj := &ActionIdNxNat{
 		ActionIdNicira: NewActionIdNicira(36),
 	}
+	return obj
 }
 
 type ActionIdNxNote struct {
@@ -1088,15 +1120,16 @@ func (self *ActionIdNxNote) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxNote(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxNote, error) {
-	actionidnxnote := &ActionIdNxNote{ActionIdNicira: parent}
-	return actionidnxnote, nil
+func DecodeActionIdNxNote(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxNote, error) {
+	_actionidnxnote := &ActionIdNxNote{ActionIdNicira: parent}
+	return _actionidnxnote, nil
 }
 
 func NewActionIdNxNote() *ActionIdNxNote {
-	return &ActionIdNxNote{
+	obj := &ActionIdNxNote{
 		ActionIdNicira: NewActionIdNicira(8),
 	}
+	return obj
 }
 
 type ActionIdNxOutputReg struct {
@@ -1114,15 +1147,16 @@ func (self *ActionIdNxOutputReg) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxOutputReg(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxOutputReg, error) {
-	actionidnxoutputreg := &ActionIdNxOutputReg{ActionIdNicira: parent}
-	return actionidnxoutputreg, nil
+func DecodeActionIdNxOutputReg(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxOutputReg, error) {
+	_actionidnxoutputreg := &ActionIdNxOutputReg{ActionIdNicira: parent}
+	return _actionidnxoutputreg, nil
 }
 
 func NewActionIdNxOutputReg() *ActionIdNxOutputReg {
-	return &ActionIdNxOutputReg{
+	obj := &ActionIdNxOutputReg{
 		ActionIdNicira: NewActionIdNicira(15),
 	}
+	return obj
 }
 
 type ActionIdNxOutputReg2 struct {
@@ -1140,15 +1174,16 @@ func (self *ActionIdNxOutputReg2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxOutputReg2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxOutputReg2, error) {
-	actionidnxoutputreg2 := &ActionIdNxOutputReg2{ActionIdNicira: parent}
-	return actionidnxoutputreg2, nil
+func DecodeActionIdNxOutputReg2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxOutputReg2, error) {
+	_actionidnxoutputreg2 := &ActionIdNxOutputReg2{ActionIdNicira: parent}
+	return _actionidnxoutputreg2, nil
 }
 
 func NewActionIdNxOutputReg2() *ActionIdNxOutputReg2 {
-	return &ActionIdNxOutputReg2{
+	obj := &ActionIdNxOutputReg2{
 		ActionIdNicira: NewActionIdNicira(32),
 	}
+	return obj
 }
 
 type ActionIdNxOutputTrunc struct {
@@ -1166,15 +1201,16 @@ func (self *ActionIdNxOutputTrunc) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxOutputTrunc(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxOutputTrunc, error) {
-	actionidnxoutputtrunc := &ActionIdNxOutputTrunc{ActionIdNicira: parent}
-	return actionidnxoutputtrunc, nil
+func DecodeActionIdNxOutputTrunc(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxOutputTrunc, error) {
+	_actionidnxoutputtrunc := &ActionIdNxOutputTrunc{ActionIdNicira: parent}
+	return _actionidnxoutputtrunc, nil
 }
 
 func NewActionIdNxOutputTrunc() *ActionIdNxOutputTrunc {
-	return &ActionIdNxOutputTrunc{
+	obj := &ActionIdNxOutputTrunc{
 		ActionIdNicira: NewActionIdNicira(39),
 	}
+	return obj
 }
 
 type ActionIdNxPopQueue struct {
@@ -1192,15 +1228,16 @@ func (self *ActionIdNxPopQueue) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxPopQueue(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxPopQueue, error) {
-	actionidnxpopqueue := &ActionIdNxPopQueue{ActionIdNicira: parent}
-	return actionidnxpopqueue, nil
+func DecodeActionIdNxPopQueue(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxPopQueue, error) {
+	_actionidnxpopqueue := &ActionIdNxPopQueue{ActionIdNicira: parent}
+	return _actionidnxpopqueue, nil
 }
 
 func NewActionIdNxPopQueue() *ActionIdNxPopQueue {
-	return &ActionIdNxPopQueue{
+	obj := &ActionIdNxPopQueue{
 		ActionIdNicira: NewActionIdNicira(5),
 	}
+	return obj
 }
 
 type ActionIdNxRegLoad struct {
@@ -1218,15 +1255,16 @@ func (self *ActionIdNxRegLoad) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxRegLoad(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxRegLoad, error) {
-	actionidnxregload := &ActionIdNxRegLoad{ActionIdNicira: parent}
-	return actionidnxregload, nil
+func DecodeActionIdNxRegLoad(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxRegLoad, error) {
+	_actionidnxregload := &ActionIdNxRegLoad{ActionIdNicira: parent}
+	return _actionidnxregload, nil
 }
 
 func NewActionIdNxRegLoad() *ActionIdNxRegLoad {
-	return &ActionIdNxRegLoad{
+	obj := &ActionIdNxRegLoad{
 		ActionIdNicira: NewActionIdNicira(7),
 	}
+	return obj
 }
 
 type ActionIdNxRegLoad2 struct {
@@ -1244,15 +1282,16 @@ func (self *ActionIdNxRegLoad2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxRegLoad2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxRegLoad2, error) {
-	actionidnxregload2 := &ActionIdNxRegLoad2{ActionIdNicira: parent}
-	return actionidnxregload2, nil
+func DecodeActionIdNxRegLoad2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxRegLoad2, error) {
+	_actionidnxregload2 := &ActionIdNxRegLoad2{ActionIdNicira: parent}
+	return _actionidnxregload2, nil
 }
 
 func NewActionIdNxRegLoad2() *ActionIdNxRegLoad2 {
-	return &ActionIdNxRegLoad2{
+	obj := &ActionIdNxRegLoad2{
 		ActionIdNicira: NewActionIdNicira(33),
 	}
+	return obj
 }
 
 type ActionIdNxRegMove struct {
@@ -1270,15 +1309,16 @@ func (self *ActionIdNxRegMove) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxRegMove(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxRegMove, error) {
-	actionidnxregmove := &ActionIdNxRegMove{ActionIdNicira: parent}
-	return actionidnxregmove, nil
+func DecodeActionIdNxRegMove(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxRegMove, error) {
+	_actionidnxregmove := &ActionIdNxRegMove{ActionIdNicira: parent}
+	return _actionidnxregmove, nil
 }
 
 func NewActionIdNxRegMove() *ActionIdNxRegMove {
-	return &ActionIdNxRegMove{
+	obj := &ActionIdNxRegMove{
 		ActionIdNicira: NewActionIdNicira(6),
 	}
+	return obj
 }
 
 type ActionIdNxResubmit struct {
@@ -1296,15 +1336,16 @@ func (self *ActionIdNxResubmit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxResubmit(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxResubmit, error) {
-	actionidnxresubmit := &ActionIdNxResubmit{ActionIdNicira: parent}
-	return actionidnxresubmit, nil
+func DecodeActionIdNxResubmit(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxResubmit, error) {
+	_actionidnxresubmit := &ActionIdNxResubmit{ActionIdNicira: parent}
+	return _actionidnxresubmit, nil
 }
 
 func NewActionIdNxResubmit() *ActionIdNxResubmit {
-	return &ActionIdNxResubmit{
+	obj := &ActionIdNxResubmit{
 		ActionIdNicira: NewActionIdNicira(1),
 	}
+	return obj
 }
 
 type ActionIdNxResubmitTable struct {
@@ -1322,15 +1363,16 @@ func (self *ActionIdNxResubmitTable) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxResubmitTable(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxResubmitTable, error) {
-	actionidnxresubmittable := &ActionIdNxResubmitTable{ActionIdNicira: parent}
-	return actionidnxresubmittable, nil
+func DecodeActionIdNxResubmitTable(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxResubmitTable, error) {
+	_actionidnxresubmittable := &ActionIdNxResubmitTable{ActionIdNicira: parent}
+	return _actionidnxresubmittable, nil
 }
 
 func NewActionIdNxResubmitTable() *ActionIdNxResubmitTable {
-	return &ActionIdNxResubmitTable{
+	obj := &ActionIdNxResubmitTable{
 		ActionIdNicira: NewActionIdNicira(14),
 	}
+	return obj
 }
 
 type ActionIdNxResubmitTableCt struct {
@@ -1348,15 +1390,16 @@ func (self *ActionIdNxResubmitTableCt) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeActionIdNxResubmitTableCt(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxResubmitTableCt, error) {
-	actionidnxresubmittablect := &ActionIdNxResubmitTableCt{ActionIdNicira: parent}
-	return actionidnxresubmittablect, nil
+func DecodeActionIdNxResubmitTableCt(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxResubmitTableCt, error) {
+	_actionidnxresubmittablect := &ActionIdNxResubmitTableCt{ActionIdNicira: parent}
+	return _actionidnxresubmittablect, nil
 }
 
 func NewActionIdNxResubmitTableCt() *ActionIdNxResubmitTableCt {
-	return &ActionIdNxResubmitTableCt{
+	obj := &ActionIdNxResubmitTableCt{
 		ActionIdNicira: NewActionIdNicira(44),
 	}
+	return obj
 }
 
 type ActionIdNxSample struct {
@@ -1374,15 +1417,16 @@ func (self *ActionIdNxSample) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxSample(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSample, error) {
-	actionidnxsample := &ActionIdNxSample{ActionIdNicira: parent}
-	return actionidnxsample, nil
+func DecodeActionIdNxSample(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSample, error) {
+	_actionidnxsample := &ActionIdNxSample{ActionIdNicira: parent}
+	return _actionidnxsample, nil
 }
 
 func NewActionIdNxSample() *ActionIdNxSample {
-	return &ActionIdNxSample{
+	obj := &ActionIdNxSample{
 		ActionIdNicira: NewActionIdNicira(29),
 	}
+	return obj
 }
 
 type ActionIdNxSample2 struct {
@@ -1400,15 +1444,16 @@ func (self *ActionIdNxSample2) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxSample2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSample2, error) {
-	actionidnxsample2 := &ActionIdNxSample2{ActionIdNicira: parent}
-	return actionidnxsample2, nil
+func DecodeActionIdNxSample2(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSample2, error) {
+	_actionidnxsample2 := &ActionIdNxSample2{ActionIdNicira: parent}
+	return _actionidnxsample2, nil
 }
 
 func NewActionIdNxSample2() *ActionIdNxSample2 {
-	return &ActionIdNxSample2{
+	obj := &ActionIdNxSample2{
 		ActionIdNicira: NewActionIdNicira(38),
 	}
+	return obj
 }
 
 type ActionIdNxSample3 struct {
@@ -1426,15 +1471,16 @@ func (self *ActionIdNxSample3) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxSample3(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSample3, error) {
-	actionidnxsample3 := &ActionIdNxSample3{ActionIdNicira: parent}
-	return actionidnxsample3, nil
+func DecodeActionIdNxSample3(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSample3, error) {
+	_actionidnxsample3 := &ActionIdNxSample3{ActionIdNicira: parent}
+	return _actionidnxsample3, nil
 }
 
 func NewActionIdNxSample3() *ActionIdNxSample3 {
-	return &ActionIdNxSample3{
+	obj := &ActionIdNxSample3{
 		ActionIdNicira: NewActionIdNicira(41),
 	}
+	return obj
 }
 
 type ActionIdNxSetTunnel struct {
@@ -1452,15 +1498,16 @@ func (self *ActionIdNxSetTunnel) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxSetTunnel(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSetTunnel, error) {
-	actionidnxsettunnel := &ActionIdNxSetTunnel{ActionIdNicira: parent}
-	return actionidnxsettunnel, nil
+func DecodeActionIdNxSetTunnel(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSetTunnel, error) {
+	_actionidnxsettunnel := &ActionIdNxSetTunnel{ActionIdNicira: parent}
+	return _actionidnxsettunnel, nil
 }
 
 func NewActionIdNxSetTunnel() *ActionIdNxSetTunnel {
-	return &ActionIdNxSetTunnel{
+	obj := &ActionIdNxSetTunnel{
 		ActionIdNicira: NewActionIdNicira(2),
 	}
+	return obj
 }
 
 type ActionIdNxSetTunnel64 struct {
@@ -1478,15 +1525,16 @@ func (self *ActionIdNxSetTunnel64) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxSetTunnel64(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSetTunnel64, error) {
-	actionidnxsettunnel64 := &ActionIdNxSetTunnel64{ActionIdNicira: parent}
-	return actionidnxsettunnel64, nil
+func DecodeActionIdNxSetTunnel64(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSetTunnel64, error) {
+	_actionidnxsettunnel64 := &ActionIdNxSetTunnel64{ActionIdNicira: parent}
+	return _actionidnxsettunnel64, nil
 }
 
 func NewActionIdNxSetTunnel64() *ActionIdNxSetTunnel64 {
-	return &ActionIdNxSetTunnel64{
+	obj := &ActionIdNxSetTunnel64{
 		ActionIdNicira: NewActionIdNicira(9),
 	}
+	return obj
 }
 
 type ActionIdNxStackPop struct {
@@ -1504,15 +1552,16 @@ func (self *ActionIdNxStackPop) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxStackPop(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxStackPop, error) {
-	actionidnxstackpop := &ActionIdNxStackPop{ActionIdNicira: parent}
-	return actionidnxstackpop, nil
+func DecodeActionIdNxStackPop(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxStackPop, error) {
+	_actionidnxstackpop := &ActionIdNxStackPop{ActionIdNicira: parent}
+	return _actionidnxstackpop, nil
 }
 
 func NewActionIdNxStackPop() *ActionIdNxStackPop {
-	return &ActionIdNxStackPop{
+	obj := &ActionIdNxStackPop{
 		ActionIdNicira: NewActionIdNicira(28),
 	}
+	return obj
 }
 
 type ActionIdNxStackPush struct {
@@ -1530,15 +1579,16 @@ func (self *ActionIdNxStackPush) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxStackPush(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxStackPush, error) {
-	actionidnxstackpush := &ActionIdNxStackPush{ActionIdNicira: parent}
-	return actionidnxstackpush, nil
+func DecodeActionIdNxStackPush(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxStackPush, error) {
+	_actionidnxstackpush := &ActionIdNxStackPush{ActionIdNicira: parent}
+	return _actionidnxstackpush, nil
 }
 
 func NewActionIdNxStackPush() *ActionIdNxStackPush {
-	return &ActionIdNxStackPush{
+	obj := &ActionIdNxStackPush{
 		ActionIdNicira: NewActionIdNicira(27),
 	}
+	return obj
 }
 
 type ActionIdNxWriteMetadata struct {
@@ -1556,15 +1606,16 @@ func (self *ActionIdNxWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdNxWriteMetadata(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxWriteMetadata, error) {
-	actionidnxwritemetadata := &ActionIdNxWriteMetadata{ActionIdNicira: parent}
-	return actionidnxwritemetadata, nil
+func DecodeActionIdNxWriteMetadata(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxWriteMetadata, error) {
+	_actionidnxwritemetadata := &ActionIdNxWriteMetadata{ActionIdNicira: parent}
+	return _actionidnxwritemetadata, nil
 }
 
 func NewActionIdNxWriteMetadata() *ActionIdNxWriteMetadata {
-	return &ActionIdNxWriteMetadata{
+	obj := &ActionIdNxWriteMetadata{
 		ActionIdNicira: NewActionIdNicira(22),
 	}
+	return obj
 }
 
 type ActionIdOutput struct {
@@ -1582,15 +1633,16 @@ func (self *ActionIdOutput) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdOutput(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdOutput, error) {
-	actionidoutput := &ActionIdOutput{ActionId: parent}
-	return actionidoutput, nil
+func DecodeActionIdOutput(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdOutput, error) {
+	_actionidoutput := &ActionIdOutput{ActionId: parent}
+	return _actionidoutput, nil
 }
 
 func NewActionIdOutput() *ActionIdOutput {
-	return &ActionIdOutput{
+	obj := &ActionIdOutput{
 		ActionId: NewActionId(0),
 	}
+	return obj
 }
 
 type ActionIdPopMpls struct {
@@ -1608,15 +1660,16 @@ func (self *ActionIdPopMpls) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdPopMpls(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPopMpls, error) {
-	actionidpopmpls := &ActionIdPopMpls{ActionId: parent}
-	return actionidpopmpls, nil
+func DecodeActionIdPopMpls(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPopMpls, error) {
+	_actionidpopmpls := &ActionIdPopMpls{ActionId: parent}
+	return _actionidpopmpls, nil
 }
 
 func NewActionIdPopMpls() *ActionIdPopMpls {
-	return &ActionIdPopMpls{
+	obj := &ActionIdPopMpls{
 		ActionId: NewActionId(20),
 	}
+	return obj
 }
 
 type ActionIdPopPbb struct {
@@ -1634,15 +1687,16 @@ func (self *ActionIdPopPbb) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdPopPbb(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPopPbb, error) {
-	actionidpoppbb := &ActionIdPopPbb{ActionId: parent}
-	return actionidpoppbb, nil
+func DecodeActionIdPopPbb(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPopPbb, error) {
+	_actionidpoppbb := &ActionIdPopPbb{ActionId: parent}
+	return _actionidpoppbb, nil
 }
 
 func NewActionIdPopPbb() *ActionIdPopPbb {
-	return &ActionIdPopPbb{
+	obj := &ActionIdPopPbb{
 		ActionId: NewActionId(27),
 	}
+	return obj
 }
 
 type ActionIdPopVlan struct {
@@ -1660,15 +1714,16 @@ func (self *ActionIdPopVlan) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdPopVlan(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPopVlan, error) {
-	actionidpopvlan := &ActionIdPopVlan{ActionId: parent}
-	return actionidpopvlan, nil
+func DecodeActionIdPopVlan(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPopVlan, error) {
+	_actionidpopvlan := &ActionIdPopVlan{ActionId: parent}
+	return _actionidpopvlan, nil
 }
 
 func NewActionIdPopVlan() *ActionIdPopVlan {
-	return &ActionIdPopVlan{
+	obj := &ActionIdPopVlan{
 		ActionId: NewActionId(18),
 	}
+	return obj
 }
 
 type ActionIdPushMpls struct {
@@ -1686,15 +1741,16 @@ func (self *ActionIdPushMpls) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdPushMpls(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPushMpls, error) {
-	actionidpushmpls := &ActionIdPushMpls{ActionId: parent}
-	return actionidpushmpls, nil
+func DecodeActionIdPushMpls(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPushMpls, error) {
+	_actionidpushmpls := &ActionIdPushMpls{ActionId: parent}
+	return _actionidpushmpls, nil
 }
 
 func NewActionIdPushMpls() *ActionIdPushMpls {
-	return &ActionIdPushMpls{
+	obj := &ActionIdPushMpls{
 		ActionId: NewActionId(19),
 	}
+	return obj
 }
 
 type ActionIdPushPbb struct {
@@ -1712,15 +1768,16 @@ func (self *ActionIdPushPbb) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdPushPbb(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPushPbb, error) {
-	actionidpushpbb := &ActionIdPushPbb{ActionId: parent}
-	return actionidpushpbb, nil
+func DecodeActionIdPushPbb(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPushPbb, error) {
+	_actionidpushpbb := &ActionIdPushPbb{ActionId: parent}
+	return _actionidpushpbb, nil
 }
 
 func NewActionIdPushPbb() *ActionIdPushPbb {
-	return &ActionIdPushPbb{
+	obj := &ActionIdPushPbb{
 		ActionId: NewActionId(26),
 	}
+	return obj
 }
 
 type ActionIdPushVlan struct {
@@ -1738,15 +1795,16 @@ func (self *ActionIdPushVlan) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdPushVlan(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPushVlan, error) {
-	actionidpushvlan := &ActionIdPushVlan{ActionId: parent}
-	return actionidpushvlan, nil
+func DecodeActionIdPushVlan(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdPushVlan, error) {
+	_actionidpushvlan := &ActionIdPushVlan{ActionId: parent}
+	return _actionidpushvlan, nil
 }
 
 func NewActionIdPushVlan() *ActionIdPushVlan {
-	return &ActionIdPushVlan{
+	obj := &ActionIdPushVlan{
 		ActionId: NewActionId(17),
 	}
+	return obj
 }
 
 type ActionIdResubmit struct {
@@ -1764,15 +1822,16 @@ func (self *ActionIdResubmit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdResubmit(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdResubmit, error) {
-	actionidresubmit := &ActionIdResubmit{ActionIdNicira: parent}
-	return actionidresubmit, nil
+func DecodeActionIdResubmit(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdResubmit, error) {
+	_actionidresubmit := &ActionIdResubmit{ActionIdNicira: parent}
+	return _actionidresubmit, nil
 }
 
 func NewActionIdResubmit() *ActionIdResubmit {
-	return &ActionIdResubmit{
+	obj := &ActionIdResubmit{
 		ActionIdNicira: NewActionIdNicira(14),
 	}
+	return obj
 }
 
 type ActionIdSetField struct {
@@ -1790,15 +1849,16 @@ func (self *ActionIdSetField) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdSetField(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdSetField, error) {
-	actionidsetfield := &ActionIdSetField{ActionId: parent}
-	return actionidsetfield, nil
+func DecodeActionIdSetField(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdSetField, error) {
+	_actionidsetfield := &ActionIdSetField{ActionId: parent}
+	return _actionidsetfield, nil
 }
 
 func NewActionIdSetField() *ActionIdSetField {
-	return &ActionIdSetField{
+	obj := &ActionIdSetField{
 		ActionId: NewActionId(25),
 	}
+	return obj
 }
 
 type ActionIdSetMplsTtl struct {
@@ -1816,15 +1876,16 @@ func (self *ActionIdSetMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdSetMplsTtl(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdSetMplsTtl, error) {
-	actionidsetmplsttl := &ActionIdSetMplsTtl{ActionId: parent}
-	return actionidsetmplsttl, nil
+func DecodeActionIdSetMplsTtl(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdSetMplsTtl, error) {
+	_actionidsetmplsttl := &ActionIdSetMplsTtl{ActionId: parent}
+	return _actionidsetmplsttl, nil
 }
 
 func NewActionIdSetMplsTtl() *ActionIdSetMplsTtl {
-	return &ActionIdSetMplsTtl{
+	obj := &ActionIdSetMplsTtl{
 		ActionId: NewActionId(15),
 	}
+	return obj
 }
 
 type ActionIdSetNwTtl struct {
@@ -1842,15 +1903,16 @@ func (self *ActionIdSetNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdSetNwTtl(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdSetNwTtl, error) {
-	actionidsetnwttl := &ActionIdSetNwTtl{ActionId: parent}
-	return actionidsetnwttl, nil
+func DecodeActionIdSetNwTtl(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdSetNwTtl, error) {
+	_actionidsetnwttl := &ActionIdSetNwTtl{ActionId: parent}
+	return _actionidsetnwttl, nil
 }
 
 func NewActionIdSetNwTtl() *ActionIdSetNwTtl {
-	return &ActionIdSetNwTtl{
+	obj := &ActionIdSetNwTtl{
 		ActionId: NewActionId(23),
 	}
+	return obj
 }
 
 type ActionIdSetQueue struct {
@@ -1868,13 +1930,14 @@ func (self *ActionIdSetQueue) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeActionIdSetQueue(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdSetQueue, error) {
-	actionidsetqueue := &ActionIdSetQueue{ActionId: parent}
-	return actionidsetqueue, nil
+func DecodeActionIdSetQueue(parent *ActionId, decoder *goloxi.Decoder) (*ActionIdSetQueue, error) {
+	_actionidsetqueue := &ActionIdSetQueue{ActionId: parent}
+	return _actionidsetqueue, nil
 }
 
 func NewActionIdSetQueue() *ActionIdSetQueue {
-	return &ActionIdSetQueue{
+	obj := &ActionIdSetQueue{
 		ActionId: NewActionId(21),
 	}
+	return obj
 }

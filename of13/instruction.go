@@ -43,39 +43,39 @@ func (self *Instruction) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstruction(decoder *goloxi.Decoder) (IInstruction, error) {
-	instruction := &Instruction{}
+func DecodeInstruction(decoder *goloxi.Decoder) (IInstruction, error) {
+	_instruction := &Instruction{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("Instruction packet too short: %d < 4", decoder.Length())
 	}
-	instruction.Type = uint16(decoder.ReadUint16())
-	instruction.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(instruction.Len), 2+2)
+	_instruction.Type = uint16(decoder.ReadUint16())
+	_instruction.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_instruction.Len), 2+2)
 
-	switch instruction.Type {
+	switch _instruction.Type {
 	case 1:
-		return decodeInstructionGotoTable(instruction, decoder)
+		return DecodeInstructionGotoTable(_instruction, decoder)
 	case 2:
-		return decodeInstructionWriteMetadata(instruction, decoder)
+		return DecodeInstructionWriteMetadata(_instruction, decoder)
 	case 3:
-		return decodeInstructionWriteActions(instruction, decoder)
+		return DecodeInstructionWriteActions(_instruction, decoder)
 	case 4:
-		return decodeInstructionApplyActions(instruction, decoder)
+		return DecodeInstructionApplyActions(_instruction, decoder)
 	case 5:
-		return decodeInstructionClearActions(instruction, decoder)
+		return DecodeInstructionClearActions(_instruction, decoder)
 	case 6:
-		return decodeInstructionMeter(instruction, decoder)
+		return DecodeInstructionMeter(_instruction, decoder)
 	case 65535:
-		return decodeInstructionExperimenter(instruction, decoder)
+		return DecodeInstructionExperimenter(_instruction, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'Instruction'", instruction.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'Instruction'", _instruction.Type)
 	}
 }
 
 func NewInstruction(_type uint16) *Instruction {
-	return &Instruction{
-		Type: _type,
-	}
+	obj := &Instruction{}
+	obj.Type = _type
+	return obj
 }
 
 type InstructionApplyActions struct {
@@ -101,24 +101,25 @@ func (self *InstructionApplyActions) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionApplyActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionApplyActions, error) {
-	instructionapplyactions := &InstructionApplyActions{Instruction: parent}
+func DecodeInstructionApplyActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionApplyActions, error) {
+	_instructionapplyactions := &InstructionApplyActions{Instruction: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		instructionapplyactions.Actions = append(instructionapplyactions.Actions, item)
+		_instructionapplyactions.Actions = append(_instructionapplyactions.Actions, item)
 	}
-	return instructionapplyactions, nil
+	return _instructionapplyactions, nil
 }
 
 func NewInstructionApplyActions() *InstructionApplyActions {
-	return &InstructionApplyActions{
+	obj := &InstructionApplyActions{
 		Instruction: NewInstruction(4),
 	}
+	return obj
 }
 
 type InstructionExperimenter struct {
@@ -145,26 +146,27 @@ func (self *InstructionExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionExperimenter(parent *Instruction, decoder *goloxi.Decoder) (IInstructionExperimenter, error) {
-	instructionexperimenter := &InstructionExperimenter{Instruction: parent}
+func DecodeInstructionExperimenter(parent *Instruction, decoder *goloxi.Decoder) (IInstructionExperimenter, error) {
+	_instructionexperimenter := &InstructionExperimenter{Instruction: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionExperimenter packet too short: %d < 4", decoder.Length())
 	}
-	instructionexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	_instructionexperimenter.Experimenter = uint32(decoder.ReadUint32())
 
-	switch instructionexperimenter.Experimenter {
+	switch _instructionexperimenter.Experimenter {
 	case 6035143:
-		return decodeInstructionBsn(instructionexperimenter, decoder)
+		return DecodeInstructionBsn(_instructionexperimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionExperimenter'", instructionexperimenter.Experimenter)
+		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionExperimenter'", _instructionexperimenter.Experimenter)
 	}
 }
 
 func NewInstructionExperimenter(_experimenter uint32) *InstructionExperimenter {
-	return &InstructionExperimenter{
-		Experimenter: _experimenter,
-		Instruction:  NewInstruction(65535),
+	obj := &InstructionExperimenter{
+		Instruction: NewInstruction(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type InstructionBsn struct {
@@ -191,58 +193,59 @@ func (self *InstructionBsn) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionBsn(parent *InstructionExperimenter, decoder *goloxi.Decoder) (IInstructionBsn, error) {
-	instructionbsn := &InstructionBsn{InstructionExperimenter: parent}
+func DecodeInstructionBsn(parent *InstructionExperimenter, decoder *goloxi.Decoder) (IInstructionBsn, error) {
+	_instructionbsn := &InstructionBsn{InstructionExperimenter: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionBsn packet too short: %d < 4", decoder.Length())
 	}
-	instructionbsn.Subtype = uint32(decoder.ReadUint32())
+	_instructionbsn.Subtype = uint32(decoder.ReadUint32())
 
-	switch instructionbsn.Subtype {
+	switch _instructionbsn.Subtype {
 	case 0:
-		return decodeInstructionBsnDisableSrcMacCheck(instructionbsn, decoder)
+		return DecodeInstructionBsnDisableSrcMacCheck(_instructionbsn, decoder)
 	case 1:
-		return decodeInstructionBsnArpOffload(instructionbsn, decoder)
+		return DecodeInstructionBsnArpOffload(_instructionbsn, decoder)
 	case 2:
-		return decodeInstructionBsnDhcpOffload(instructionbsn, decoder)
+		return DecodeInstructionBsnDhcpOffload(_instructionbsn, decoder)
 	case 3:
-		return decodeInstructionBsnDisableSplitHorizonCheck(instructionbsn, decoder)
+		return DecodeInstructionBsnDisableSplitHorizonCheck(_instructionbsn, decoder)
 	case 4:
-		return decodeInstructionBsnPermit(instructionbsn, decoder)
+		return DecodeInstructionBsnPermit(_instructionbsn, decoder)
 	case 5:
-		return decodeInstructionBsnDeny(instructionbsn, decoder)
+		return DecodeInstructionBsnDeny(_instructionbsn, decoder)
 	case 6:
-		return decodeInstructionBsnPacketOfDeath(instructionbsn, decoder)
+		return DecodeInstructionBsnPacketOfDeath(_instructionbsn, decoder)
 	case 7:
-		return decodeInstructionBsnPrioritizePdus(instructionbsn, decoder)
+		return DecodeInstructionBsnPrioritizePdus(_instructionbsn, decoder)
 	case 8:
-		return decodeInstructionBsnRequireVlanXlate(instructionbsn, decoder)
+		return DecodeInstructionBsnRequireVlanXlate(_instructionbsn, decoder)
 	case 9:
-		return decodeInstructionBsnDisableVlanCounters(instructionbsn, decoder)
+		return DecodeInstructionBsnDisableVlanCounters(_instructionbsn, decoder)
 	case 10:
-		return decodeInstructionBsnSpanDestination(instructionbsn, decoder)
+		return DecodeInstructionBsnSpanDestination(_instructionbsn, decoder)
 	case 11:
-		return decodeInstructionBsnAutoNegotiation(instructionbsn, decoder)
+		return DecodeInstructionBsnAutoNegotiation(_instructionbsn, decoder)
 	case 12:
-		return decodeInstructionBsnInternalPriority(instructionbsn, decoder)
+		return DecodeInstructionBsnInternalPriority(_instructionbsn, decoder)
 	case 13:
-		return decodeInstructionBsnDisableL3(instructionbsn, decoder)
+		return DecodeInstructionBsnDisableL3(_instructionbsn, decoder)
 	case 14:
-		return decodeInstructionBsnNdpOffload(instructionbsn, decoder)
+		return DecodeInstructionBsnNdpOffload(_instructionbsn, decoder)
 	case 15:
-		return decodeInstructionBsnHashSelect(instructionbsn, decoder)
+		return DecodeInstructionBsnHashSelect(_instructionbsn, decoder)
 	case 16:
-		return decodeInstructionBsnDirectedBroadcast(instructionbsn, decoder)
+		return DecodeInstructionBsnDirectedBroadcast(_instructionbsn, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionBsn'", instructionbsn.Subtype)
+		return nil, fmt.Errorf("Invalid type '%d' for 'InstructionBsn'", _instructionbsn.Subtype)
 	}
 }
 
 func NewInstructionBsn(_subtype uint32) *InstructionBsn {
-	return &InstructionBsn{
-		Subtype:                 _subtype,
+	obj := &InstructionBsn{
 		InstructionExperimenter: NewInstructionExperimenter(6035143),
 	}
+	obj.Subtype = _subtype
+	return obj
 }
 
 type InstructionBsnArpOffload struct {
@@ -262,19 +265,20 @@ func (self *InstructionBsnArpOffload) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionBsnArpOffload(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnArpOffload, error) {
-	instructionbsnarpoffload := &InstructionBsnArpOffload{InstructionBsn: parent}
+func DecodeInstructionBsnArpOffload(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnArpOffload, error) {
+	_instructionbsnarpoffload := &InstructionBsnArpOffload{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnArpOffload packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsnarpoffload, nil
+	return _instructionbsnarpoffload, nil
 }
 
 func NewInstructionBsnArpOffload() *InstructionBsnArpOffload {
-	return &InstructionBsnArpOffload{
+	obj := &InstructionBsnArpOffload{
 		InstructionBsn: NewInstructionBsn(1),
 	}
+	return obj
 }
 
 type InstructionBsnAutoNegotiation struct {
@@ -294,19 +298,20 @@ func (self *InstructionBsnAutoNegotiation) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeInstructionBsnAutoNegotiation(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnAutoNegotiation, error) {
-	instructionbsnautonegotiation := &InstructionBsnAutoNegotiation{InstructionBsn: parent}
+func DecodeInstructionBsnAutoNegotiation(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnAutoNegotiation, error) {
+	_instructionbsnautonegotiation := &InstructionBsnAutoNegotiation{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnAutoNegotiation packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsnautonegotiation, nil
+	return _instructionbsnautonegotiation, nil
 }
 
 func NewInstructionBsnAutoNegotiation() *InstructionBsnAutoNegotiation {
-	return &InstructionBsnAutoNegotiation{
+	obj := &InstructionBsnAutoNegotiation{
 		InstructionBsn: NewInstructionBsn(11),
 	}
+	return obj
 }
 
 type InstructionBsnDeny struct {
@@ -326,19 +331,20 @@ func (self *InstructionBsnDeny) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionBsnDeny(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDeny, error) {
-	instructionbsndeny := &InstructionBsnDeny{InstructionBsn: parent}
+func DecodeInstructionBsnDeny(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDeny, error) {
+	_instructionbsndeny := &InstructionBsnDeny{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnDeny packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsndeny, nil
+	return _instructionbsndeny, nil
 }
 
 func NewInstructionBsnDeny() *InstructionBsnDeny {
-	return &InstructionBsnDeny{
+	obj := &InstructionBsnDeny{
 		InstructionBsn: NewInstructionBsn(5),
 	}
+	return obj
 }
 
 type InstructionBsnDhcpOffload struct {
@@ -358,19 +364,20 @@ func (self *InstructionBsnDhcpOffload) Serialize(encoder *goloxi.Encoder) error 
 	return nil
 }
 
-func decodeInstructionBsnDhcpOffload(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDhcpOffload, error) {
-	instructionbsndhcpoffload := &InstructionBsnDhcpOffload{InstructionBsn: parent}
+func DecodeInstructionBsnDhcpOffload(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDhcpOffload, error) {
+	_instructionbsndhcpoffload := &InstructionBsnDhcpOffload{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnDhcpOffload packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsndhcpoffload, nil
+	return _instructionbsndhcpoffload, nil
 }
 
 func NewInstructionBsnDhcpOffload() *InstructionBsnDhcpOffload {
-	return &InstructionBsnDhcpOffload{
+	obj := &InstructionBsnDhcpOffload{
 		InstructionBsn: NewInstructionBsn(2),
 	}
+	return obj
 }
 
 type InstructionBsnDirectedBroadcast struct {
@@ -390,19 +397,20 @@ func (self *InstructionBsnDirectedBroadcast) Serialize(encoder *goloxi.Encoder) 
 	return nil
 }
 
-func decodeInstructionBsnDirectedBroadcast(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDirectedBroadcast, error) {
-	instructionbsndirectedbroadcast := &InstructionBsnDirectedBroadcast{InstructionBsn: parent}
+func DecodeInstructionBsnDirectedBroadcast(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDirectedBroadcast, error) {
+	_instructionbsndirectedbroadcast := &InstructionBsnDirectedBroadcast{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnDirectedBroadcast packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsndirectedbroadcast, nil
+	return _instructionbsndirectedbroadcast, nil
 }
 
 func NewInstructionBsnDirectedBroadcast() *InstructionBsnDirectedBroadcast {
-	return &InstructionBsnDirectedBroadcast{
+	obj := &InstructionBsnDirectedBroadcast{
 		InstructionBsn: NewInstructionBsn(16),
 	}
+	return obj
 }
 
 type InstructionBsnDisableL3 struct {
@@ -422,19 +430,20 @@ func (self *InstructionBsnDisableL3) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionBsnDisableL3(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDisableL3, error) {
-	instructionbsndisablel3 := &InstructionBsnDisableL3{InstructionBsn: parent}
+func DecodeInstructionBsnDisableL3(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDisableL3, error) {
+	_instructionbsndisablel3 := &InstructionBsnDisableL3{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnDisableL3 packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsndisablel3, nil
+	return _instructionbsndisablel3, nil
 }
 
 func NewInstructionBsnDisableL3() *InstructionBsnDisableL3 {
-	return &InstructionBsnDisableL3{
+	obj := &InstructionBsnDisableL3{
 		InstructionBsn: NewInstructionBsn(13),
 	}
+	return obj
 }
 
 type InstructionBsnDisableSplitHorizonCheck struct {
@@ -454,19 +463,20 @@ func (self *InstructionBsnDisableSplitHorizonCheck) Serialize(encoder *goloxi.En
 	return nil
 }
 
-func decodeInstructionBsnDisableSplitHorizonCheck(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDisableSplitHorizonCheck, error) {
-	instructionbsndisablesplithorizoncheck := &InstructionBsnDisableSplitHorizonCheck{InstructionBsn: parent}
+func DecodeInstructionBsnDisableSplitHorizonCheck(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDisableSplitHorizonCheck, error) {
+	_instructionbsndisablesplithorizoncheck := &InstructionBsnDisableSplitHorizonCheck{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnDisableSplitHorizonCheck packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsndisablesplithorizoncheck, nil
+	return _instructionbsndisablesplithorizoncheck, nil
 }
 
 func NewInstructionBsnDisableSplitHorizonCheck() *InstructionBsnDisableSplitHorizonCheck {
-	return &InstructionBsnDisableSplitHorizonCheck{
+	obj := &InstructionBsnDisableSplitHorizonCheck{
 		InstructionBsn: NewInstructionBsn(3),
 	}
+	return obj
 }
 
 type InstructionBsnDisableSrcMacCheck struct {
@@ -486,19 +496,20 @@ func (self *InstructionBsnDisableSrcMacCheck) Serialize(encoder *goloxi.Encoder)
 	return nil
 }
 
-func decodeInstructionBsnDisableSrcMacCheck(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDisableSrcMacCheck, error) {
-	instructionbsndisablesrcmaccheck := &InstructionBsnDisableSrcMacCheck{InstructionBsn: parent}
+func DecodeInstructionBsnDisableSrcMacCheck(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDisableSrcMacCheck, error) {
+	_instructionbsndisablesrcmaccheck := &InstructionBsnDisableSrcMacCheck{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnDisableSrcMacCheck packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsndisablesrcmaccheck, nil
+	return _instructionbsndisablesrcmaccheck, nil
 }
 
 func NewInstructionBsnDisableSrcMacCheck() *InstructionBsnDisableSrcMacCheck {
-	return &InstructionBsnDisableSrcMacCheck{
+	obj := &InstructionBsnDisableSrcMacCheck{
 		InstructionBsn: NewInstructionBsn(0),
 	}
+	return obj
 }
 
 type InstructionBsnDisableVlanCounters struct {
@@ -518,19 +529,20 @@ func (self *InstructionBsnDisableVlanCounters) Serialize(encoder *goloxi.Encoder
 	return nil
 }
 
-func decodeInstructionBsnDisableVlanCounters(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDisableVlanCounters, error) {
-	instructionbsndisablevlancounters := &InstructionBsnDisableVlanCounters{InstructionBsn: parent}
+func DecodeInstructionBsnDisableVlanCounters(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnDisableVlanCounters, error) {
+	_instructionbsndisablevlancounters := &InstructionBsnDisableVlanCounters{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnDisableVlanCounters packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsndisablevlancounters, nil
+	return _instructionbsndisablevlancounters, nil
 }
 
 func NewInstructionBsnDisableVlanCounters() *InstructionBsnDisableVlanCounters {
-	return &InstructionBsnDisableVlanCounters{
+	obj := &InstructionBsnDisableVlanCounters{
 		InstructionBsn: NewInstructionBsn(9),
 	}
+	return obj
 }
 
 type InstructionBsnHashSelect struct {
@@ -551,19 +563,20 @@ func (self *InstructionBsnHashSelect) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionBsnHashSelect(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnHashSelect, error) {
-	instructionbsnhashselect := &InstructionBsnHashSelect{InstructionBsn: parent}
+func DecodeInstructionBsnHashSelect(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnHashSelect, error) {
+	_instructionbsnhashselect := &InstructionBsnHashSelect{InstructionBsn: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionBsnHashSelect packet too short: %d < 4", decoder.Length())
 	}
-	instructionbsnhashselect.Flags = BsnHashSelectFlags(decoder.ReadUint32())
-	return instructionbsnhashselect, nil
+	_instructionbsnhashselect.Flags = BsnHashSelectFlags(decoder.ReadUint32())
+	return _instructionbsnhashselect, nil
 }
 
 func NewInstructionBsnHashSelect() *InstructionBsnHashSelect {
-	return &InstructionBsnHashSelect{
+	obj := &InstructionBsnHashSelect{
 		InstructionBsn: NewInstructionBsn(15),
 	}
+	return obj
 }
 
 type InstructionBsnInternalPriority struct {
@@ -584,19 +597,20 @@ func (self *InstructionBsnInternalPriority) Serialize(encoder *goloxi.Encoder) e
 	return nil
 }
 
-func decodeInstructionBsnInternalPriority(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnInternalPriority, error) {
-	instructionbsninternalpriority := &InstructionBsnInternalPriority{InstructionBsn: parent}
+func DecodeInstructionBsnInternalPriority(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnInternalPriority, error) {
+	_instructionbsninternalpriority := &InstructionBsnInternalPriority{InstructionBsn: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionBsnInternalPriority packet too short: %d < 4", decoder.Length())
 	}
-	instructionbsninternalpriority.Value = uint32(decoder.ReadUint32())
-	return instructionbsninternalpriority, nil
+	_instructionbsninternalpriority.Value = uint32(decoder.ReadUint32())
+	return _instructionbsninternalpriority, nil
 }
 
 func NewInstructionBsnInternalPriority() *InstructionBsnInternalPriority {
-	return &InstructionBsnInternalPriority{
+	obj := &InstructionBsnInternalPriority{
 		InstructionBsn: NewInstructionBsn(12),
 	}
+	return obj
 }
 
 type InstructionBsnNdpOffload struct {
@@ -616,19 +630,20 @@ func (self *InstructionBsnNdpOffload) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionBsnNdpOffload(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnNdpOffload, error) {
-	instructionbsnndpoffload := &InstructionBsnNdpOffload{InstructionBsn: parent}
+func DecodeInstructionBsnNdpOffload(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnNdpOffload, error) {
+	_instructionbsnndpoffload := &InstructionBsnNdpOffload{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnNdpOffload packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsnndpoffload, nil
+	return _instructionbsnndpoffload, nil
 }
 
 func NewInstructionBsnNdpOffload() *InstructionBsnNdpOffload {
-	return &InstructionBsnNdpOffload{
+	obj := &InstructionBsnNdpOffload{
 		InstructionBsn: NewInstructionBsn(14),
 	}
+	return obj
 }
 
 type InstructionBsnPacketOfDeath struct {
@@ -648,19 +663,20 @@ func (self *InstructionBsnPacketOfDeath) Serialize(encoder *goloxi.Encoder) erro
 	return nil
 }
 
-func decodeInstructionBsnPacketOfDeath(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnPacketOfDeath, error) {
-	instructionbsnpacketofdeath := &InstructionBsnPacketOfDeath{InstructionBsn: parent}
+func DecodeInstructionBsnPacketOfDeath(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnPacketOfDeath, error) {
+	_instructionbsnpacketofdeath := &InstructionBsnPacketOfDeath{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnPacketOfDeath packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsnpacketofdeath, nil
+	return _instructionbsnpacketofdeath, nil
 }
 
 func NewInstructionBsnPacketOfDeath() *InstructionBsnPacketOfDeath {
-	return &InstructionBsnPacketOfDeath{
+	obj := &InstructionBsnPacketOfDeath{
 		InstructionBsn: NewInstructionBsn(6),
 	}
+	return obj
 }
 
 type InstructionBsnPermit struct {
@@ -680,19 +696,20 @@ func (self *InstructionBsnPermit) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionBsnPermit(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnPermit, error) {
-	instructionbsnpermit := &InstructionBsnPermit{InstructionBsn: parent}
+func DecodeInstructionBsnPermit(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnPermit, error) {
+	_instructionbsnpermit := &InstructionBsnPermit{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnPermit packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsnpermit, nil
+	return _instructionbsnpermit, nil
 }
 
 func NewInstructionBsnPermit() *InstructionBsnPermit {
-	return &InstructionBsnPermit{
+	obj := &InstructionBsnPermit{
 		InstructionBsn: NewInstructionBsn(4),
 	}
+	return obj
 }
 
 type InstructionBsnPrioritizePdus struct {
@@ -712,19 +729,20 @@ func (self *InstructionBsnPrioritizePdus) Serialize(encoder *goloxi.Encoder) err
 	return nil
 }
 
-func decodeInstructionBsnPrioritizePdus(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnPrioritizePdus, error) {
-	instructionbsnprioritizepdus := &InstructionBsnPrioritizePdus{InstructionBsn: parent}
+func DecodeInstructionBsnPrioritizePdus(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnPrioritizePdus, error) {
+	_instructionbsnprioritizepdus := &InstructionBsnPrioritizePdus{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnPrioritizePdus packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsnprioritizepdus, nil
+	return _instructionbsnprioritizepdus, nil
 }
 
 func NewInstructionBsnPrioritizePdus() *InstructionBsnPrioritizePdus {
-	return &InstructionBsnPrioritizePdus{
+	obj := &InstructionBsnPrioritizePdus{
 		InstructionBsn: NewInstructionBsn(7),
 	}
+	return obj
 }
 
 type InstructionBsnRequireVlanXlate struct {
@@ -744,19 +762,20 @@ func (self *InstructionBsnRequireVlanXlate) Serialize(encoder *goloxi.Encoder) e
 	return nil
 }
 
-func decodeInstructionBsnRequireVlanXlate(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnRequireVlanXlate, error) {
-	instructionbsnrequirevlanxlate := &InstructionBsnRequireVlanXlate{InstructionBsn: parent}
+func DecodeInstructionBsnRequireVlanXlate(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnRequireVlanXlate, error) {
+	_instructionbsnrequirevlanxlate := &InstructionBsnRequireVlanXlate{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnRequireVlanXlate packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsnrequirevlanxlate, nil
+	return _instructionbsnrequirevlanxlate, nil
 }
 
 func NewInstructionBsnRequireVlanXlate() *InstructionBsnRequireVlanXlate {
-	return &InstructionBsnRequireVlanXlate{
+	obj := &InstructionBsnRequireVlanXlate{
 		InstructionBsn: NewInstructionBsn(8),
 	}
+	return obj
 }
 
 type InstructionBsnSpanDestination struct {
@@ -776,19 +795,20 @@ func (self *InstructionBsnSpanDestination) Serialize(encoder *goloxi.Encoder) er
 	return nil
 }
 
-func decodeInstructionBsnSpanDestination(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnSpanDestination, error) {
-	instructionbsnspandestination := &InstructionBsnSpanDestination{InstructionBsn: parent}
+func DecodeInstructionBsnSpanDestination(parent *InstructionBsn, decoder *goloxi.Decoder) (*InstructionBsnSpanDestination, error) {
+	_instructionbsnspandestination := &InstructionBsnSpanDestination{InstructionBsn: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionBsnSpanDestination packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionbsnspandestination, nil
+	return _instructionbsnspandestination, nil
 }
 
 func NewInstructionBsnSpanDestination() *InstructionBsnSpanDestination {
-	return &InstructionBsnSpanDestination{
+	obj := &InstructionBsnSpanDestination{
 		InstructionBsn: NewInstructionBsn(10),
 	}
+	return obj
 }
 
 type InstructionClearActions struct {
@@ -808,19 +828,20 @@ func (self *InstructionClearActions) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionClearActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionClearActions, error) {
-	instructionclearactions := &InstructionClearActions{Instruction: parent}
+func DecodeInstructionClearActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionClearActions, error) {
+	_instructionclearactions := &InstructionClearActions{Instruction: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("InstructionClearActions packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionclearactions, nil
+	return _instructionclearactions, nil
 }
 
 func NewInstructionClearActions() *InstructionClearActions {
-	return &InstructionClearActions{
+	obj := &InstructionClearActions{
 		Instruction: NewInstruction(5),
 	}
+	return obj
 }
 
 type InstructionGotoTable struct {
@@ -842,20 +863,21 @@ func (self *InstructionGotoTable) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionGotoTable(parent *Instruction, decoder *goloxi.Decoder) (*InstructionGotoTable, error) {
-	instructiongototable := &InstructionGotoTable{Instruction: parent}
+func DecodeInstructionGotoTable(parent *Instruction, decoder *goloxi.Decoder) (*InstructionGotoTable, error) {
+	_instructiongototable := &InstructionGotoTable{Instruction: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionGotoTable packet too short: %d < 4", decoder.Length())
 	}
-	instructiongototable.TableId = uint8(decoder.ReadByte())
+	_instructiongototable.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return instructiongototable, nil
+	return _instructiongototable, nil
 }
 
 func NewInstructionGotoTable() *InstructionGotoTable {
-	return &InstructionGotoTable{
+	obj := &InstructionGotoTable{
 		Instruction: NewInstruction(1),
 	}
+	return obj
 }
 
 type InstructionMeter struct {
@@ -876,19 +898,20 @@ func (self *InstructionMeter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionMeter(parent *Instruction, decoder *goloxi.Decoder) (*InstructionMeter, error) {
-	instructionmeter := &InstructionMeter{Instruction: parent}
+func DecodeInstructionMeter(parent *Instruction, decoder *goloxi.Decoder) (*InstructionMeter, error) {
+	_instructionmeter := &InstructionMeter{Instruction: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionMeter packet too short: %d < 4", decoder.Length())
 	}
-	instructionmeter.MeterId = uint32(decoder.ReadUint32())
-	return instructionmeter, nil
+	_instructionmeter.MeterId = uint32(decoder.ReadUint32())
+	return _instructionmeter, nil
 }
 
 func NewInstructionMeter() *InstructionMeter {
-	return &InstructionMeter{
+	obj := &InstructionMeter{
 		Instruction: NewInstruction(6),
 	}
+	return obj
 }
 
 type InstructionWriteActions struct {
@@ -914,24 +937,25 @@ func (self *InstructionWriteActions) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionWriteActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteActions, error) {
-	instructionwriteactions := &InstructionWriteActions{Instruction: parent}
+func DecodeInstructionWriteActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteActions, error) {
+	_instructionwriteactions := &InstructionWriteActions{Instruction: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		instructionwriteactions.Actions = append(instructionwriteactions.Actions, item)
+		_instructionwriteactions.Actions = append(_instructionwriteactions.Actions, item)
 	}
-	return instructionwriteactions, nil
+	return _instructionwriteactions, nil
 }
 
 func NewInstructionWriteActions() *InstructionWriteActions {
-	return &InstructionWriteActions{
+	obj := &InstructionWriteActions{
 		Instruction: NewInstruction(3),
 	}
+	return obj
 }
 
 type InstructionWriteMetadata struct {
@@ -955,19 +979,20 @@ func (self *InstructionWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionWriteMetadata(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteMetadata, error) {
-	instructionwritemetadata := &InstructionWriteMetadata{Instruction: parent}
+func DecodeInstructionWriteMetadata(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteMetadata, error) {
+	_instructionwritemetadata := &InstructionWriteMetadata{Instruction: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionWriteMetadata packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	instructionwritemetadata.Metadata = uint64(decoder.ReadUint64())
-	instructionwritemetadata.MetadataMask = uint64(decoder.ReadUint64())
-	return instructionwritemetadata, nil
+	_instructionwritemetadata.Metadata = uint64(decoder.ReadUint64())
+	_instructionwritemetadata.MetadataMask = uint64(decoder.ReadUint64())
+	return _instructionwritemetadata, nil
 }
 
 func NewInstructionWriteMetadata() *InstructionWriteMetadata {
-	return &InstructionWriteMetadata{
+	obj := &InstructionWriteMetadata{
 		Instruction: NewInstruction(2),
 	}
+	return obj
 }

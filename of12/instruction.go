@@ -43,37 +43,37 @@ func (self *Instruction) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstruction(decoder *goloxi.Decoder) (IInstruction, error) {
-	instruction := &Instruction{}
+func DecodeInstruction(decoder *goloxi.Decoder) (IInstruction, error) {
+	_instruction := &Instruction{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("Instruction packet too short: %d < 4", decoder.Length())
 	}
-	instruction.Type = uint16(decoder.ReadUint16())
-	instruction.Len = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(instruction.Len), 2+2)
+	_instruction.Type = uint16(decoder.ReadUint16())
+	_instruction.Len = uint16(decoder.ReadUint16())
+	decoder = decoder.SliceDecoder(int(_instruction.Len), 2+2)
 
-	switch instruction.Type {
+	switch _instruction.Type {
 	case 1:
-		return decodeInstructionGotoTable(instruction, decoder)
+		return DecodeInstructionGotoTable(_instruction, decoder)
 	case 2:
-		return decodeInstructionWriteMetadata(instruction, decoder)
+		return DecodeInstructionWriteMetadata(_instruction, decoder)
 	case 3:
-		return decodeInstructionWriteActions(instruction, decoder)
+		return DecodeInstructionWriteActions(_instruction, decoder)
 	case 4:
-		return decodeInstructionApplyActions(instruction, decoder)
+		return DecodeInstructionApplyActions(_instruction, decoder)
 	case 5:
-		return decodeInstructionClearActions(instruction, decoder)
+		return DecodeInstructionClearActions(_instruction, decoder)
 	case 65535:
-		return decodeInstructionExperimenter(instruction, decoder)
+		return DecodeInstructionExperimenter(_instruction, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'Instruction'", instruction.Type)
+		return nil, fmt.Errorf("Invalid type '%d' for 'Instruction'", _instruction.Type)
 	}
 }
 
 func NewInstruction(_type uint16) *Instruction {
-	return &Instruction{
-		Type: _type,
-	}
+	obj := &Instruction{}
+	obj.Type = _type
+	return obj
 }
 
 type InstructionApplyActions struct {
@@ -99,24 +99,25 @@ func (self *InstructionApplyActions) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionApplyActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionApplyActions, error) {
-	instructionapplyactions := &InstructionApplyActions{Instruction: parent}
+func DecodeInstructionApplyActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionApplyActions, error) {
+	_instructionapplyactions := &InstructionApplyActions{Instruction: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		instructionapplyactions.Actions = append(instructionapplyactions.Actions, item)
+		_instructionapplyactions.Actions = append(_instructionapplyactions.Actions, item)
 	}
-	return instructionapplyactions, nil
+	return _instructionapplyactions, nil
 }
 
 func NewInstructionApplyActions() *InstructionApplyActions {
-	return &InstructionApplyActions{
+	obj := &InstructionApplyActions{
 		Instruction: NewInstruction(4),
 	}
+	return obj
 }
 
 type InstructionClearActions struct {
@@ -136,19 +137,20 @@ func (self *InstructionClearActions) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionClearActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionClearActions, error) {
-	instructionclearactions := &InstructionClearActions{Instruction: parent}
+func DecodeInstructionClearActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionClearActions, error) {
+	_instructionclearactions := &InstructionClearActions{Instruction: parent}
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("InstructionClearActions packet too short: %d < 8", decoder.Length())
 	}
 	decoder.Skip(4)
-	return instructionclearactions, nil
+	return _instructionclearactions, nil
 }
 
 func NewInstructionClearActions() *InstructionClearActions {
-	return &InstructionClearActions{
+	obj := &InstructionClearActions{
 		Instruction: NewInstruction(5),
 	}
+	return obj
 }
 
 type InstructionExperimenter struct {
@@ -175,20 +177,21 @@ func (self *InstructionExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionExperimenter(parent *Instruction, decoder *goloxi.Decoder) (IInstructionExperimenter, error) {
-	instructionexperimenter := &InstructionExperimenter{Instruction: parent}
+func DecodeInstructionExperimenter(parent *Instruction, decoder *goloxi.Decoder) (IInstructionExperimenter, error) {
+	_instructionexperimenter := &InstructionExperimenter{Instruction: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionExperimenter packet too short: %d < 4", decoder.Length())
 	}
-	instructionexperimenter.Experimenter = uint32(decoder.ReadUint32())
-	return instructionexperimenter, nil
+	_instructionexperimenter.Experimenter = uint32(decoder.ReadUint32())
+	return _instructionexperimenter, nil
 }
 
 func NewInstructionExperimenter(_experimenter uint32) *InstructionExperimenter {
-	return &InstructionExperimenter{
-		Experimenter: _experimenter,
-		Instruction:  NewInstruction(65535),
+	obj := &InstructionExperimenter{
+		Instruction: NewInstruction(65535),
 	}
+	obj.Experimenter = _experimenter
+	return obj
 }
 
 type InstructionGotoTable struct {
@@ -210,20 +213,21 @@ func (self *InstructionGotoTable) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionGotoTable(parent *Instruction, decoder *goloxi.Decoder) (*InstructionGotoTable, error) {
-	instructiongototable := &InstructionGotoTable{Instruction: parent}
+func DecodeInstructionGotoTable(parent *Instruction, decoder *goloxi.Decoder) (*InstructionGotoTable, error) {
+	_instructiongototable := &InstructionGotoTable{Instruction: parent}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("InstructionGotoTable packet too short: %d < 4", decoder.Length())
 	}
-	instructiongototable.TableId = uint8(decoder.ReadByte())
+	_instructiongototable.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	return instructiongototable, nil
+	return _instructiongototable, nil
 }
 
 func NewInstructionGotoTable() *InstructionGotoTable {
-	return &InstructionGotoTable{
+	obj := &InstructionGotoTable{
 		Instruction: NewInstruction(1),
 	}
+	return obj
 }
 
 type InstructionWriteActions struct {
@@ -249,24 +253,25 @@ func (self *InstructionWriteActions) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionWriteActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteActions, error) {
-	instructionwriteactions := &InstructionWriteActions{Instruction: parent}
+func DecodeInstructionWriteActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteActions, error) {
+	_instructionwriteactions := &InstructionWriteActions{Instruction: parent}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
-		item, err := decodeAction(decoder)
+		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		instructionwriteactions.Actions = append(instructionwriteactions.Actions, item)
+		_instructionwriteactions.Actions = append(_instructionwriteactions.Actions, item)
 	}
-	return instructionwriteactions, nil
+	return _instructionwriteactions, nil
 }
 
 func NewInstructionWriteActions() *InstructionWriteActions {
-	return &InstructionWriteActions{
+	obj := &InstructionWriteActions{
 		Instruction: NewInstruction(3),
 	}
+	return obj
 }
 
 type InstructionWriteMetadata struct {
@@ -290,19 +295,20 @@ func (self *InstructionWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	return nil
 }
 
-func decodeInstructionWriteMetadata(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteMetadata, error) {
-	instructionwritemetadata := &InstructionWriteMetadata{Instruction: parent}
+func DecodeInstructionWriteMetadata(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteMetadata, error) {
+	_instructionwritemetadata := &InstructionWriteMetadata{Instruction: parent}
 	if decoder.Length() < 16 {
 		return nil, fmt.Errorf("InstructionWriteMetadata packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(4)
-	instructionwritemetadata.Metadata = uint64(decoder.ReadUint64())
-	instructionwritemetadata.MetadataMask = uint64(decoder.ReadUint64())
-	return instructionwritemetadata, nil
+	_instructionwritemetadata.Metadata = uint64(decoder.ReadUint64())
+	_instructionwritemetadata.MetadataMask = uint64(decoder.ReadUint64())
+	return _instructionwritemetadata, nil
 }
 
 func NewInstructionWriteMetadata() *InstructionWriteMetadata {
-	return &InstructionWriteMetadata{
+	obj := &InstructionWriteMetadata{
 		Instruction: NewInstruction(2),
 	}
+	return obj
 }

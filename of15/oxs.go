@@ -28,7 +28,12 @@ func (self *Oxs) GetTypeLen() uint32 {
 	return self.TypeLen
 }
 
+func (self *Oxs) SetTypeLen(v uint32) {
+	self.TypeLen = v
+}
+
 func (self *Oxs) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint32(uint32(self.TypeLen))
 
 	return nil
@@ -68,6 +73,19 @@ type OxsByteCount struct {
 	Value uint64
 }
 
+type IOxsByteCount interface {
+	IOxs
+	GetValue() uint64
+}
+
+func (self *OxsByteCount) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *OxsByteCount) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *OxsByteCount) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Oxs.Serialize(encoder); err != nil {
 		return err
@@ -97,6 +115,19 @@ func NewOxsByteCount() *OxsByteCount {
 type OxsDuration struct {
 	*Oxs
 	Value uint64
+}
+
+type IOxsDuration interface {
+	IOxs
+	GetValue() uint64
+}
+
+func (self *OxsDuration) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *OxsDuration) SetValue(v uint64) {
+	self.Value = v
 }
 
 func (self *OxsDuration) Serialize(encoder *goloxi.Encoder) error {
@@ -130,6 +161,19 @@ type OxsFlowCount struct {
 	Value uint32
 }
 
+type IOxsFlowCount interface {
+	IOxs
+	GetValue() uint32
+}
+
+func (self *OxsFlowCount) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *OxsFlowCount) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *OxsFlowCount) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Oxs.Serialize(encoder); err != nil {
 		return err
@@ -161,6 +205,19 @@ type OxsIdleTime struct {
 	Value uint64
 }
 
+type IOxsIdleTime interface {
+	IOxs
+	GetValue() uint64
+}
+
+func (self *OxsIdleTime) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *OxsIdleTime) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *OxsIdleTime) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Oxs.Serialize(encoder); err != nil {
 		return err
@@ -190,6 +247,19 @@ func NewOxsIdleTime() *OxsIdleTime {
 type OxsPacketCount struct {
 	*Oxs
 	Value uint64
+}
+
+type IOxsPacketCount interface {
+	IOxs
+	GetValue() uint64
+}
+
+func (self *OxsPacketCount) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *OxsPacketCount) SetValue(v uint64) {
+	self.Value = v
 }
 
 func (self *OxsPacketCount) Serialize(encoder *goloxi.Encoder) error {

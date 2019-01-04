@@ -18,6 +18,1207 @@ import (
 	"github.com/skydive-project/goloxi"
 )
 
+type OxmId struct {
+	TypeLen uint32
+}
+
+type IOxmId interface {
+	goloxi.Serializable
+	GetTypeLen() uint32
+	GetOXMName() string
+}
+
+func (self *OxmId) GetTypeLen() uint32 {
+	return self.TypeLen
+}
+
+func (self *OxmId) SetTypeLen(v uint32) {
+	self.TypeLen = v
+}
+
+func (self *OxmId) Serialize(encoder *goloxi.Encoder) error {
+
+	encoder.PutUint32(uint32(self.TypeLen))
+
+	return nil
+}
+
+func DecodeOxmId(decoder *goloxi.Decoder) (IOxmId, error) {
+	_oxmid := &OxmId{}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("OxmId packet too short: %d < 4", decoder.Length())
+	}
+	_oxmid.TypeLen = uint32(decoder.ReadUint32())
+
+	switch _oxmid.TypeLen {
+	case 2147487745:
+		return DecodeOxmIdIpDscp(_oxmid, decoder)
+	case 129026:
+		return DecodeOxmIdConnTrackingTpSrc(_oxmid, decoder)
+	case 65540:
+		return DecodeOxmIdReg0(_oxmid, decoder)
+	case 77830:
+		return DecodeOxmIdNdSll(_oxmid, decoder)
+	case 80897:
+		return DecodeOxmIdMplsTtl(_oxmid, decoder)
+	case 73736:
+		return DecodeOxmIdTunId(_oxmid, decoder)
+	case 2:
+		return DecodeOxmIdInPort(_oxmid, decoder)
+	case 2147484944:
+		return DecodeOxmIdMetadataMasked(_oxmid, decoder)
+	case 122896:
+		return DecodeOxmIdXxreg1(_oxmid, decoder)
+	case 94588:
+		return DecodeOxmIdTunMetadata16Masked(_oxmid, decoder)
+	case 111228:
+		return DecodeOxmIdTunMetadata49(_oxmid, decoder)
+	case 1030:
+		return DecodeOxmIdEthSrc(_oxmid, decoder)
+	case 2147499266:
+		return DecodeOxmIdIcmpv6CodeMasked(_oxmid, decoder)
+	case 2147503112:
+		return DecodeOxmIdTunnelId(_oxmid, decoder)
+	case 95612:
+		return DecodeOxmIdTunMetadata18Masked(_oxmid, decoder)
+	case 112252:
+		return DecodeOxmIdTunMetadata51(_oxmid, decoder)
+	case 96892:
+		return DecodeOxmIdTunMetadata21(_oxmid, decoder)
+	case 96636:
+		return DecodeOxmIdTunMetadata20Masked(_oxmid, decoder)
+	case 121872:
+		return DecodeOxmIdTunIpv6Dst(_oxmid, decoder)
+	case 110204:
+		return DecodeOxmIdTunMetadata47(_oxmid, decoder)
+	case 126980:
+		return DecodeOxmIdConnTrackingNwSrc(_oxmid, decoder)
+	case 97660:
+		return DecodeOxmIdTunMetadata22Masked(_oxmid, decoder)
+	case 94332:
+		return DecodeOxmIdTunMetadata16(_oxmid, decoder)
+	case 2050:
+		return DecodeOxmIdVlanTci(_oxmid, decoder)
+	case 3073:
+		return DecodeOxmIdNwProto(_oxmid, decoder)
+	case 82180:
+		return DecodeOxmIdTunDstMasked(_oxmid, decoder)
+	case 2147502338:
+		return DecodeOxmIdMplsBosMasked(_oxmid, decoder)
+	case 121120:
+		return DecodeOxmIdConnTrackingLabelMasked(_oxmid, decoder)
+	case 98684:
+		return DecodeOxmIdTunMetadata24Masked(_oxmid, decoder)
+	case 66564:
+		return DecodeOxmIdReg2(_oxmid, decoder)
+	case 115324:
+		return DecodeOxmIdTunMetadata57(_oxmid, decoder)
+	case 95356:
+		return DecodeOxmIdTunMetadata18(_oxmid, decoder)
+	case 120848:
+		return DecodeOxmIdConnTrackingLabel(_oxmid, decoder)
+	case 85250:
+		return DecodeOxmIdTunGbpIdMasked(_oxmid, decoder)
+	case 99708:
+		return DecodeOxmIdTunMetadata26Masked(_oxmid, decoder)
+	case 198660:
+		return DecodeOxmIdBsnL3InterfaceClassId(_oxmid, decoder)
+	case 2147488769:
+		return DecodeOxmIdIpProto(_oxmid, decoder)
+	case 199172:
+		return DecodeOxmIdBsnL3SrcClassId(_oxmid, decoder)
+	case 100732:
+		return DecodeOxmIdTunMetadata28Masked(_oxmid, decoder)
+	case 68612:
+		return DecodeOxmIdReg6(_oxmid, decoder)
+	case 117372:
+		return DecodeOxmIdTunMetadata61(_oxmid, decoder)
+	case 5122:
+		return DecodeOxmIdTcpDst(_oxmid, decoder)
+	case 93564:
+		return DecodeOxmIdTunMetadata14Masked(_oxmid, decoder)
+	case 209156:
+		return DecodeOxmIdBsnInnerVlanVidMasked(_oxmid, decoder)
+	case 101244:
+		return DecodeOxmIdTunMetadata29Masked(_oxmid, decoder)
+	case 81672:
+		return DecodeOxmIdTunnelIpv4SrcMasked(_oxmid, decoder)
+	case 101756:
+		return DecodeOxmIdTunMetadata30Masked(_oxmid, decoder)
+	case 4100:
+		return DecodeOxmIdIpDst(_oxmid, decoder)
+	case 118396:
+		return DecodeOxmIdTunMetadata63(_oxmid, decoder)
+	case 119042:
+		return DecodeOxmIdTunFlagsMasked(_oxmid, decoder)
+	case 127236:
+		return DecodeOxmIdCtNwSrcMasked(_oxmid, decoder)
+	case 78086:
+		return DecodeOxmIdNdSllMasked(_oxmid, decoder)
+	case 200968:
+		return DecodeOxmIdBsnUdf0Masked(_oxmid, decoder)
+	case 2147500300:
+		return DecodeOxmIdIpv6NdSllMasked(_oxmid, decoder)
+	case 76048:
+		return DecodeOxmIdIpv6DstMasked(_oxmid, decoder)
+	case 86140:
+		return DecodeOxmIdTunMetadata0(_oxmid, decoder)
+	case 119556:
+		return DecodeOxmIdCtStateMasked(_oxmid, decoder)
+	case 102780:
+		return DecodeOxmIdTunMetadata32Masked(_oxmid, decoder)
+	case 70660:
+		return DecodeOxmIdReg10(_oxmid, decoder)
+	case 196896:
+		return DecodeOxmIdBsnInPorts128Masked(_oxmid, decoder)
+	case 78849:
+		return DecodeOxmIdIpFrag(_oxmid, decoder)
+	case 87164:
+		return DecodeOxmIdTunMetadata2(_oxmid, decoder)
+	case 120580:
+		return DecodeOxmIdCtMarkMasked(_oxmid, decoder)
+	case 103804:
+		return DecodeOxmIdTunMetadata34Masked(_oxmid, decoder)
+	case 202756:
+		return DecodeOxmIdBsnUdf4(_oxmid, decoder)
+	case 204802:
+		return DecodeOxmIdBsnTcpFlags(_oxmid, decoder)
+	case 205825:
+		return DecodeOxmIdBsnL2CacheHit(_oxmid, decoder)
+	case 88188:
+		return DecodeOxmIdTunMetadata4(_oxmid, decoder)
+	case 104828:
+		return DecodeOxmIdTunMetadata36Masked(_oxmid, decoder)
+	case 72708:
+		return DecodeOxmIdReg14(_oxmid, decoder)
+	case 2147492866:
+		return DecodeOxmIdSctpDst(_oxmid, decoder)
+	case 2147493889:
+		return DecodeOxmIdIcmpv4Code(_oxmid, decoder)
+	case 200196:
+		return DecodeOxmIdBsnEgrPortGroupId(_oxmid, decoder)
+	case 89212:
+		return DecodeOxmIdTunMetadata6(_oxmid, decoder)
+	case 105852:
+		return DecodeOxmIdTunMetadata38Masked(_oxmid, decoder)
+	case 113020:
+		return DecodeOxmIdTunMetadata52Masked(_oxmid, decoder)
+	case 8196:
+		return DecodeOxmIdArpSpa(_oxmid, decoder)
+	case 76801:
+		return DecodeOxmIdIcmpv6Code(_oxmid, decoder)
+	case 70148:
+		return DecodeOxmIdReg9(_oxmid, decoder)
+	case 119560:
+		return DecodeOxmIdConnTrackingStateMasked(_oxmid, decoder)
+	case 90236:
+		return DecodeOxmIdTunMetadata8(_oxmid, decoder)
+	case 106876:
+		return DecodeOxmIdTunMetadata40Masked(_oxmid, decoder)
+	case 4294923528:
+		return DecodeOxmIdOvsTcpFlagsMasked(_oxmid, decoder)
+	case 120584:
+		return DecodeOxmIdConnTrackingMarkMasked(_oxmid, decoder)
+	case 91260:
+		return DecodeOxmIdTunMetadata10(_oxmid, decoder)
+	case 107900:
+		return DecodeOxmIdTunMetadata42Masked(_oxmid, decoder)
+	case 126722:
+		return DecodeOxmIdConnTrackingNwProtoMasked(_oxmid, decoder)
+	case 206852:
+		return DecodeOxmIdBsnIngressPortGroupId(_oxmid, decoder)
+	case 208898:
+		return DecodeOxmIdBsnInnerVlanVid(_oxmid, decoder)
+	case 209921:
+		return DecodeOxmIdBsnIpFragmentation(_oxmid, decoder)
+	case 92284:
+		return DecodeOxmIdTunMetadata12(_oxmid, decoder)
+	case 108924:
+		return DecodeOxmIdTunMetadata44Masked(_oxmid, decoder)
+	case 74758:
+		return DecodeOxmIdArpTha(_oxmid, decoder)
+	case 121104:
+		return DecodeOxmIdCtLabelMasked(_oxmid, decoder)
+	case 79873:
+		return DecodeOxmIdNwEcn(_oxmid, decoder)
+	case 196624:
+		return DecodeOxmIdBsnInPorts128(_oxmid, decoder)
+	case 2147489284:
+		return DecodeOxmIdIpv4Src(_oxmid, decoder)
+	case 93308:
+		return DecodeOxmIdTunMetadata14(_oxmid, decoder)
+	case 2147492612:
+		return DecodeOxmIdSctpSrcMasked(_oxmid, decoder)
+	case 2561:
+		return DecodeOxmIdNwTos(_oxmid, decoder)
+	case 129538:
+		return DecodeOxmIdConnTrackingTpDst(_oxmid, decoder)
+	case 2147500550:
+		return DecodeOxmIdIpv6NdTll(_oxmid, decoder)
+	case 84484:
+		return DecodeOxmIdConjId(_oxmid, decoder)
+	case 78342:
+		return DecodeOxmIdNdTll(_oxmid, decoder)
+	case 2147498754:
+		return DecodeOxmIdIcmpv6TypeMasked(_oxmid, decoder)
+	case 121360:
+		return DecodeOxmIdTunIpv6Src(_oxmid, decoder)
+	case 71428:
+		return DecodeOxmIdReg11Masked(_oxmid, decoder)
+	case 774:
+		return DecodeOxmIdEthDstMasked(_oxmid, decoder)
+	case 207624:
+		return DecodeOxmIdBsnVxlanNetworkIdMasked(_oxmid, decoder)
+	case 111996:
+		return DecodeOxmIdTunMetadata50Masked(_oxmid, decoder)
+	case 2147497988:
+		return DecodeOxmIdIpv6Flabel(_oxmid, decoder)
+	case 2147503376:
+		return DecodeOxmIdTunnelIdMasked(_oxmid, decoder)
+	case 96380:
+		return DecodeOxmIdTunMetadata20(_oxmid, decoder)
+	case 113276:
+		return DecodeOxmIdTunMetadata53(_oxmid, decoder)
+	case 129796:
+		return DecodeOxmIdConnTrackingTpDstMasked(_oxmid, decoder)
+	case 75536:
+		return DecodeOxmIdIpv6SrcMasked(_oxmid, decoder)
+	case 2147502081:
+		return DecodeOxmIdMplsBos(_oxmid, decoder)
+	case 2147489544:
+		return DecodeOxmIdIpv4SrcMasked(_oxmid, decoder)
+	case 97404:
+		return DecodeOxmIdTunMetadata22(_oxmid, decoder)
+	case 114044:
+		return DecodeOxmIdTunMetadata54Masked(_oxmid, decoder)
+	case 198402:
+		return DecodeOxmIdBsnGlobalVrfAllowedMasked(_oxmid, decoder)
+	case 94844:
+		return DecodeOxmIdTunMetadata17(_oxmid, decoder)
+	case 81924:
+		return DecodeOxmIdTunnelIpv4Dst(_oxmid, decoder)
+	case 2147486980:
+		return DecodeOxmIdVlanVidMasked(_oxmid, decoder)
+	case 127752:
+		return DecodeOxmIdConnTrackingNwDstMasked(_oxmid, decoder)
+	case 98428:
+		return DecodeOxmIdTunMetadata24(_oxmid, decoder)
+	case 66308:
+		return DecodeOxmIdReg1Masked(_oxmid, decoder)
+	case 2147489026:
+		return DecodeOxmIdIpProtoMasked(_oxmid, decoder)
+	case 115068:
+		return DecodeOxmIdTunMetadata56Masked(_oxmid, decoder)
+	case 2147501060:
+		return DecodeOxmIdMplsLabel(_oxmid, decoder)
+	case 84994:
+		return DecodeOxmIdTunGbpId(_oxmid, decoder)
+	case 202244:
+		return DecodeOxmIdBsnUdf3(_oxmid, decoder)
+	case 99452:
+		return DecodeOxmIdTunMetadata26(_oxmid, decoder)
+	case 67332:
+		return DecodeOxmIdReg3Masked(_oxmid, decoder)
+	case 116092:
+		return DecodeOxmIdTunMetadata58Masked(_oxmid, decoder)
+	case 2147500038:
+		return DecodeOxmIdIpv6NdSll(_oxmid, decoder)
+	case 83972:
+		return DecodeOxmIdRecircId(_oxmid, decoder)
+	case 2147499808:
+		return DecodeOxmIdIpv6NdTargetMasked(_oxmid, decoder)
+	case 72196:
+		return DecodeOxmIdReg13(_oxmid, decoder)
+	case 100476:
+		return DecodeOxmIdTunMetadata28(_oxmid, decoder)
+	case 68356:
+		return DecodeOxmIdReg5Masked(_oxmid, decoder)
+	case 117116:
+		return DecodeOxmIdTunMetadata60Masked(_oxmid, decoder)
+	case 4866:
+		return DecodeOxmIdTcpSrcMasked(_oxmid, decoder)
+	case 112764:
+		return DecodeOxmIdTunMetadata52(_oxmid, decoder)
+	case 110972:
+		return DecodeOxmIdTunMetadata48Masked(_oxmid, decoder)
+	case 101500:
+		return DecodeOxmIdTunMetadata30(_oxmid, decoder)
+	case 3844:
+		return DecodeOxmIdIpSrcMasked(_oxmid, decoder)
+	case 118140:
+		return DecodeOxmIdTunMetadata62Masked(_oxmid, decoder)
+	case 123664:
+		return DecodeOxmIdXxreg2Masked(_oxmid, decoder)
+	case 117628:
+		return DecodeOxmIdTunMetadata61Masked(_oxmid, decoder)
+	case 129794:
+		return DecodeOxmIdCtTpDstMasked(_oxmid, decoder)
+	case 127748:
+		return DecodeOxmIdCtNwDstMasked(_oxmid, decoder)
+	case 78598:
+		return DecodeOxmIdNdTllMasked(_oxmid, decoder)
+	case 2147484424:
+		return DecodeOxmIdInPhyPortMasked(_oxmid, decoder)
+	case 2147500812:
+		return DecodeOxmIdIpv6NdTllMasked(_oxmid, decoder)
+	case 197384:
+		return DecodeOxmIdBsnLagIdMasked(_oxmid, decoder)
+	case 121616:
+		return DecodeOxmIdTunIpv6SrcMasked(_oxmid, decoder)
+	case 102524:
+		return DecodeOxmIdTunMetadata32(_oxmid, decoder)
+	case 70404:
+		return DecodeOxmIdReg9Masked(_oxmid, decoder)
+	case 75792:
+		return DecodeOxmIdIpv6Dst(_oxmid, decoder)
+	case 86908:
+		return DecodeOxmIdTunMetadata1Masked(_oxmid, decoder)
+	case 120324:
+		return DecodeOxmIdConnTrackingMark(_oxmid, decoder)
+	case 87932:
+		return DecodeOxmIdTunMetadata3Masked(_oxmid, decoder)
+	case 199432:
+		return DecodeOxmIdBsnL3SrcClassIdMasked(_oxmid, decoder)
+	case 104572:
+		return DecodeOxmIdTunMetadata36(_oxmid, decoder)
+	case 3588:
+		return DecodeOxmIdIpSrc(_oxmid, decoder)
+	case 72452:
+		return DecodeOxmIdReg13Masked(_oxmid, decoder)
+	case 4294923270:
+		return DecodeOxmIdOvsTcpFlags(_oxmid, decoder)
+	case 69892:
+		return DecodeOxmIdReg8Masked(_oxmid, decoder)
+	case 88956:
+		return DecodeOxmIdTunMetadata5Masked(_oxmid, decoder)
+	case 200456:
+		return DecodeOxmIdBsnEgrPortGroupIdMasked(_oxmid, decoder)
+	case 105596:
+		return DecodeOxmIdTunMetadata38(_oxmid, decoder)
+	case 73476:
+		return DecodeOxmIdReg15Masked(_oxmid, decoder)
+	case 2147493634:
+		return DecodeOxmIdIcmpv4TypeMasked(_oxmid, decoder)
+	case 95100:
+		return DecodeOxmIdTunMetadata17Masked(_oxmid, decoder)
+	case 201480:
+		return DecodeOxmIdBsnUdf1Masked(_oxmid, decoder)
+	case 106620:
+		return DecodeOxmIdTunMetadata40(_oxmid, decoder)
+	case 8964:
+		return DecodeOxmIdArpTpaMasked(_oxmid, decoder)
+	case 128784:
+		return DecodeOxmIdCtIpv6DstMasked(_oxmid, decoder)
+	case 91004:
+		return DecodeOxmIdTunMetadata9Masked(_oxmid, decoder)
+	case 202504:
+		return DecodeOxmIdBsnUdf3Masked(_oxmid, decoder)
+	case 107644:
+		return DecodeOxmIdTunMetadata42(_oxmid, decoder)
+	case 2147498248:
+		return DecodeOxmIdIpv6FlabelMasked(_oxmid, decoder)
+	case 92028:
+		return DecodeOxmIdTunMetadata11Masked(_oxmid, decoder)
+	case 203528:
+		return DecodeOxmIdBsnUdf5Masked(_oxmid, decoder)
+	case 8708:
+		return DecodeOxmIdArpTpa(_oxmid, decoder)
+	case 108668:
+		return DecodeOxmIdTunMetadata44(_oxmid, decoder)
+	case 74502:
+		return DecodeOxmIdArpShaMasked(_oxmid, decoder)
+	case 2147494660:
+		return DecodeOxmIdArpOpMasked(_oxmid, decoder)
+	case 197636:
+		return DecodeOxmIdBsnVrf(_oxmid, decoder)
+	case 93052:
+		return DecodeOxmIdTunMetadata13Masked(_oxmid, decoder)
+	case 204292:
+		return DecodeOxmIdBsnUdf7(_oxmid, decoder)
+	case 109692:
+		return DecodeOxmIdTunMetadata46(_oxmid, decoder)
+	case 67588:
+		return DecodeOxmIdReg4(_oxmid, decoder)
+	case 7169:
+		return DecodeOxmIdIcmpCode(_oxmid, decoder)
+	case 82946:
+		return DecodeOxmIdTcpFlags(_oxmid, decoder)
+	case 203780:
+		return DecodeOxmIdBsnUdf6(_oxmid, decoder)
+	case 207878:
+		return DecodeOxmIdBsnInnerEthDst(_oxmid, decoder)
+	case 198145:
+		return DecodeOxmIdBsnGlobalVrfAllowed(_oxmid, decoder)
+	case 2147484680:
+		return DecodeOxmIdMetadata(_oxmid, decoder)
+	case 1538:
+		return DecodeOxmIdEthType(_oxmid, decoder)
+	case 205576:
+		return DecodeOxmIdBsnVlanXlatePortGroupIdMasked(_oxmid, decoder)
+	case 128016:
+		return DecodeOxmIdConnTrackingIpv6Src(_oxmid, decoder)
+	case 110716:
+		return DecodeOxmIdTunMetadata48(_oxmid, decoder)
+	case 209668:
+		return DecodeOxmIdBsnVfiMasked(_oxmid, decoder)
+	case 127492:
+		return DecodeOxmIdConnTrackingNwDst(_oxmid, decoder)
+	case 518:
+		return DecodeOxmIdEthDst(_oxmid, decoder)
+	case 111740:
+		return DecodeOxmIdTunMetadata50(_oxmid, decoder)
+	case 96124:
+		return DecodeOxmIdTunMetadata19Masked(_oxmid, decoder)
+	case 122384:
+		return DecodeOxmIdXxreg0(_oxmid, decoder)
+	case 97148:
+		return DecodeOxmIdTunMetadata21Masked(_oxmid, decoder)
+	case 2147503876:
+		return DecodeOxmIdIpv6ExthdrMasked(_oxmid, decoder)
+	case 113788:
+		return DecodeOxmIdTunMetadata54(_oxmid, decoder)
+	case 81668:
+		return DecodeOxmIdTunSrcMasked(_oxmid, decoder)
+	case 2147501826:
+		return DecodeOxmIdMplsTcMasked(_oxmid, decoder)
+	case 103548:
+		return DecodeOxmIdTunMetadata34(_oxmid, decoder)
+	case 98172:
+		return DecodeOxmIdTunMetadata23Masked(_oxmid, decoder)
+	case 66052:
+		return DecodeOxmIdReg1(_oxmid, decoder)
+	case 114812:
+		return DecodeOxmIdTunMetadata56(_oxmid, decoder)
+	case 2147487233:
+		return DecodeOxmIdVlanPcp(_oxmid, decoder)
+	case 82692:
+		return DecodeOxmIdPktMarkMasked(_oxmid, decoder)
+	case 99196:
+		return DecodeOxmIdTunMetadata25Masked(_oxmid, decoder)
+	case 67076:
+		return DecodeOxmIdReg3(_oxmid, decoder)
+	case 115836:
+		return DecodeOxmIdTunMetadata58(_oxmid, decoder)
+	case 2147488257:
+		return DecodeOxmIdIpEcn(_oxmid, decoder)
+	case 83716:
+		return DecodeOxmIdDpHashMasked(_oxmid, decoder)
+	case 100220:
+		return DecodeOxmIdTunMetadata27Masked(_oxmid, decoder)
+	case 68100:
+		return DecodeOxmIdReg5(_oxmid, decoder)
+	case 116860:
+		return DecodeOxmIdTunMetadata60(_oxmid, decoder)
+	case 4610:
+		return DecodeOxmIdTcpSrc(_oxmid, decoder)
+	case 89980:
+		return DecodeOxmIdTunMetadata7Masked(_oxmid, decoder)
+	case 69124:
+		return DecodeOxmIdReg7(_oxmid, decoder)
+	case 117884:
+		return DecodeOxmIdTunMetadata62(_oxmid, decoder)
+	case 5634:
+		return DecodeOxmIdUdpSrc(_oxmid, decoder)
+	case 6657:
+		return DecodeOxmIdIcmpType(_oxmid, decoder)
+	case 123408:
+		return DecodeOxmIdXxreg2(_oxmid, decoder)
+	case 79105:
+		return DecodeOxmIdIpFragMasked(_oxmid, decoder)
+	case 210178:
+		return DecodeOxmIdBsnIpFragmentationMasked(_oxmid, decoder)
+	case 70916:
+		return DecodeOxmIdReg10Masked(_oxmid, decoder)
+	case 1286:
+		return DecodeOxmIdEthSrcMasked(_oxmid, decoder)
+	case 197896:
+		return DecodeOxmIdBsnVrfMasked(_oxmid, decoder)
+	case 102268:
+		return DecodeOxmIdTunMetadata31Masked(_oxmid, decoder)
+	case 208140:
+		return DecodeOxmIdBsnInnerEthDstMasked(_oxmid, decoder)
+	case 201220:
+		return DecodeOxmIdBsnUdf1(_oxmid, decoder)
+	case 128272:
+		return DecodeOxmIdCtIpv6SrcMasked(_oxmid, decoder)
+	case 6146:
+		return DecodeOxmIdUdpDst(_oxmid, decoder)
+	case 199684:
+		return DecodeOxmIdBsnL3DstClassId(_oxmid, decoder)
+	case 128288:
+		return DecodeOxmIdConnTrackingIpv6SrcMasked(_oxmid, decoder)
+	case 86652:
+		return DecodeOxmIdTunMetadata1(_oxmid, decoder)
+	case 120068:
+		return DecodeOxmIdConnTrackingZoneMasked(_oxmid, decoder)
+	case 103292:
+		return DecodeOxmIdTunMetadata33Masked(_oxmid, decoder)
+	case 71172:
+		return DecodeOxmIdReg11(_oxmid, decoder)
+	case 69636:
+		return DecodeOxmIdReg8(_oxmid, decoder)
+	case 87676:
+		return DecodeOxmIdTunMetadata3(_oxmid, decoder)
+	case 82184:
+		return DecodeOxmIdTunnelIpv4DstMasked(_oxmid, decoder)
+	case 104316:
+		return DecodeOxmIdTunMetadata35Masked(_oxmid, decoder)
+	case 203268:
+		return DecodeOxmIdBsnUdf5(_oxmid, decoder)
+	case 2147492354:
+		return DecodeOxmIdSctpSrc(_oxmid, decoder)
+	case 2147493377:
+		return DecodeOxmIdIcmpv4Type(_oxmid, decoder)
+	case 102012:
+		return DecodeOxmIdTunMetadata31(_oxmid, decoder)
+	case 77584:
+		return DecodeOxmIdNdTargetMasked(_oxmid, decoder)
+	case 88700:
+		return DecodeOxmIdTunMetadata5(_oxmid, decoder)
+	case 105340:
+		return DecodeOxmIdTunMetadata37Masked(_oxmid, decoder)
+	case 73220:
+		return DecodeOxmIdReg15(_oxmid, decoder)
+	case 76289:
+		return DecodeOxmIdIcmpv6Type(_oxmid, decoder)
+	case 109948:
+		return DecodeOxmIdTunMetadata46Masked(_oxmid, decoder)
+	case 89724:
+		return DecodeOxmIdTunMetadata7(_oxmid, decoder)
+	case 106364:
+		return DecodeOxmIdTunMetadata39Masked(_oxmid, decoder)
+	case 205316:
+		return DecodeOxmIdBsnVlanXlatePortGroupId(_oxmid, decoder)
+	case 128528:
+		return DecodeOxmIdConnTrackingIpv6Dst(_oxmid, decoder)
+	case 123920:
+		return DecodeOxmIdXxreg3(_oxmid, decoder)
+	case 90748:
+		return DecodeOxmIdTunMetadata9(_oxmid, decoder)
+	case 2147487490:
+		return DecodeOxmIdVlanPcpMasked(_oxmid, decoder)
+	case 2147501320:
+		return DecodeOxmIdMplsLabelMasked(_oxmid, decoder)
+	case 107388:
+		return DecodeOxmIdTunMetadata41Masked(_oxmid, decoder)
+	case 200708:
+		return DecodeOxmIdBsnUdf0(_oxmid, decoder)
+	case 91772:
+		return DecodeOxmIdTunMetadata11(_oxmid, decoder)
+	case 108412:
+		return DecodeOxmIdTunMetadata43Masked(_oxmid, decoder)
+	case 74246:
+		return DecodeOxmIdArpSha(_oxmid, decoder)
+	case 207364:
+		return DecodeOxmIdBsnVxlanNetworkId(_oxmid, decoder)
+	case 209410:
+		return DecodeOxmIdBsnVfi(_oxmid, decoder)
+	case 92796:
+		return DecodeOxmIdTunMetadata13(_oxmid, decoder)
+	case 109436:
+		return DecodeOxmIdTunMetadata45Masked(_oxmid, decoder)
+	case 80385:
+		return DecodeOxmIdNwTtl(_oxmid, decoder)
+	case 126465:
+		return DecodeOxmIdConnTrackingNwProto(_oxmid, decoder)
+	case 7682:
+		return DecodeOxmIdArpOp(_oxmid, decoder)
+	case 79364:
+		return DecodeOxmIdIpv6Label(_oxmid, decoder)
+	case 208390:
+		return DecodeOxmIdBsnInnerEthSrc(_oxmid, decoder)
+	case 110460:
+		return DecodeOxmIdTunMetadata47Masked(_oxmid, decoder)
+	case 129282:
+		return DecodeOxmIdCtTpSrcMasked(_oxmid, decoder)
+	case 83202:
+		return DecodeOxmIdTcpFlagsMasked(_oxmid, decoder)
+	case 75280:
+		return DecodeOxmIdIpv6Src(_oxmid, decoder)
+	case 8452:
+		return DecodeOxmIdArpSpaMasked(_oxmid, decoder)
+	case 75014:
+		return DecodeOxmIdArpThaMasked(_oxmid, decoder)
+	case 111484:
+		return DecodeOxmIdTunMetadata49Masked(_oxmid, decoder)
+	case 207112:
+		return DecodeOxmIdBsnIngressPortGroupIdMasked(_oxmid, decoder)
+	case 2147489796:
+		return DecodeOxmIdIpv4Dst(_oxmid, decoder)
+	case 206400:
+		return DecodeOxmIdBsnInPorts512(_oxmid, decoder)
+	case 95868:
+		return DecodeOxmIdTunMetadata19(_oxmid, decoder)
+	case 129284:
+		return DecodeOxmIdConnTrackingTpSrcMasked(_oxmid, decoder)
+	case 2147488514:
+		return DecodeOxmIdIpEcnMasked(_oxmid, decoder)
+	case 112508:
+		return DecodeOxmIdTunMetadata51Masked(_oxmid, decoder)
+	case 2147501569:
+		return DecodeOxmIdMplsTc(_oxmid, decoder)
+	case 201732:
+		return DecodeOxmIdBsnUdf2(_oxmid, decoder)
+	case 122128:
+		return DecodeOxmIdTunIpv6DstMasked(_oxmid, decoder)
+	case 113532:
+		return DecodeOxmIdTunMetadata53Masked(_oxmid, decoder)
+	case 81412:
+		return DecodeOxmIdTunnelIpv4Src(_oxmid, decoder)
+	case 114300:
+		return DecodeOxmIdTunMetadata55(_oxmid, decoder)
+	case 71684:
+		return DecodeOxmIdReg12(_oxmid, decoder)
+	case 127240:
+		return DecodeOxmIdConnTrackingNwSrcMasked(_oxmid, decoder)
+	case 97916:
+		return DecodeOxmIdTunMetadata23(_oxmid, decoder)
+	case 65796:
+		return DecodeOxmIdReg0Masked(_oxmid, decoder)
+	case 114556:
+		return DecodeOxmIdTunMetadata55Masked(_oxmid, decoder)
+	case 2306:
+		return DecodeOxmIdVlanTciMasked(_oxmid, decoder)
+	case 82436:
+		return DecodeOxmIdPktMark(_oxmid, decoder)
+	case 85505:
+		return DecodeOxmIdTunGbpFlags(_oxmid, decoder)
+	case 98940:
+		return DecodeOxmIdTunMetadata25(_oxmid, decoder)
+	case 66820:
+		return DecodeOxmIdReg2Masked(_oxmid, decoder)
+	case 115580:
+		return DecodeOxmIdTunMetadata57Masked(_oxmid, decoder)
+	case 83460:
+		return DecodeOxmIdDpHash(_oxmid, decoder)
+	case 2147503618:
+		return DecodeOxmIdIpv6Exthdr(_oxmid, decoder)
+	case 2147490056:
+		return DecodeOxmIdIpv4DstMasked(_oxmid, decoder)
+	case 99964:
+		return DecodeOxmIdTunMetadata27(_oxmid, decoder)
+	case 118786:
+		return DecodeOxmIdTunFlags(_oxmid, decoder)
+	case 67844:
+		return DecodeOxmIdReg4Masked(_oxmid, decoder)
+	case 2147484164:
+		return DecodeOxmIdInPhyPort(_oxmid, decoder)
+	case 116604:
+		return DecodeOxmIdTunMetadata59Masked(_oxmid, decoder)
+	case 2147488002:
+		return DecodeOxmIdIpDscpMasked(_oxmid, decoder)
+	case 100988:
+		return DecodeOxmIdTunMetadata29(_oxmid, decoder)
+	case 119810:
+		return DecodeOxmIdConnTrackingZone(_oxmid, decoder)
+	case 68868:
+		return DecodeOxmIdReg6Masked(_oxmid, decoder)
+	case 116348:
+		return DecodeOxmIdTunMetadata59(_oxmid, decoder)
+	case 5378:
+		return DecodeOxmIdTcpDstMasked(_oxmid, decoder)
+	case 123152:
+		return DecodeOxmIdXxreg1Masked(_oxmid, decoder)
+	case 2147486468:
+		return DecodeOxmIdEthTypeMasked(_oxmid, decoder)
+	case 2147483912:
+		return DecodeOxmIdInPortMasked(_oxmid, decoder)
+	case 85761:
+		return DecodeOxmIdTunGbpFlagsMasked(_oxmid, decoder)
+	case 5890:
+		return DecodeOxmIdUdpSrcMasked(_oxmid, decoder)
+	case 79620:
+		return DecodeOxmIdIpv6LabelMasked(_oxmid, decoder)
+	case 4356:
+		return DecodeOxmIdIpDstMasked(_oxmid, decoder)
+	case 204552:
+		return DecodeOxmIdBsnUdf7Masked(_oxmid, decoder)
+	case 118652:
+		return DecodeOxmIdTunMetadata63Masked(_oxmid, decoder)
+	case 6402:
+		return DecodeOxmIdUdpDstMasked(_oxmid, decoder)
+	case 208652:
+		return DecodeOxmIdBsnInnerEthSrcMasked(_oxmid, decoder)
+	case 124176:
+		return DecodeOxmIdXxreg3Masked(_oxmid, decoder)
+	case 122640:
+		return DecodeOxmIdXxreg0Masked(_oxmid, decoder)
+	case 69380:
+		return DecodeOxmIdReg7Masked(_oxmid, decoder)
+	case 86396:
+		return DecodeOxmIdTunMetadata0Masked(_oxmid, decoder)
+	case 128800:
+		return DecodeOxmIdConnTrackingIpv6DstMasked(_oxmid, decoder)
+	case 103036:
+		return DecodeOxmIdTunMetadata33(_oxmid, decoder)
+	case 87420:
+		return DecodeOxmIdTunMetadata2Masked(_oxmid, decoder)
+	case 198920:
+		return DecodeOxmIdBsnL3InterfaceClassIdMasked(_oxmid, decoder)
+	case 104060:
+		return DecodeOxmIdTunMetadata35(_oxmid, decoder)
+	case 71940:
+		return DecodeOxmIdReg12Masked(_oxmid, decoder)
+	case 77328:
+		return DecodeOxmIdNdTarget(_oxmid, decoder)
+	case 88444:
+		return DecodeOxmIdTunMetadata4Masked(_oxmid, decoder)
+	case 199944:
+		return DecodeOxmIdBsnL3DstClassIdMasked(_oxmid, decoder)
+	case 105084:
+		return DecodeOxmIdTunMetadata37(_oxmid, decoder)
+	case 72964:
+		return DecodeOxmIdReg14Masked(_oxmid, decoder)
+	case 206082:
+		return DecodeOxmIdBsnL2CacheHitMasked(_oxmid, decoder)
+	case 89468:
+		return DecodeOxmIdTunMetadata6Masked(_oxmid, decoder)
+	case 94076:
+		return DecodeOxmIdTunMetadata15Masked(_oxmid, decoder)
+	case 206720:
+		return DecodeOxmIdBsnInPorts512Masked(_oxmid, decoder)
+	case 106108:
+		return DecodeOxmIdTunMetadata39(_oxmid, decoder)
+	case 205060:
+		return DecodeOxmIdBsnTcpFlagsMasked(_oxmid, decoder)
+	case 197124:
+		return DecodeOxmIdBsnLagId(_oxmid, decoder)
+	case 2147494146:
+		return DecodeOxmIdIcmpv4CodeMasked(_oxmid, decoder)
+	case 90492:
+		return DecodeOxmIdTunMetadata8Masked(_oxmid, decoder)
+	case 201992:
+		return DecodeOxmIdBsnUdf2Masked(_oxmid, decoder)
+	case 107132:
+		return DecodeOxmIdTunMetadata41(_oxmid, decoder)
+	case 2147493124:
+		return DecodeOxmIdSctpDstMasked(_oxmid, decoder)
+	case 91516:
+		return DecodeOxmIdTunMetadata10Masked(_oxmid, decoder)
+	case 119300:
+		return DecodeOxmIdConnTrackingState(_oxmid, decoder)
+	case 203016:
+		return DecodeOxmIdBsnUdf4Masked(_oxmid, decoder)
+	case 108156:
+		return DecodeOxmIdTunMetadata43(_oxmid, decoder)
+	case 2147499536:
+		return DecodeOxmIdIpv6NdTarget(_oxmid, decoder)
+	case 92540:
+		return DecodeOxmIdTunMetadata12Masked(_oxmid, decoder)
+	case 204040:
+		return DecodeOxmIdBsnUdf6Masked(_oxmid, decoder)
+	case 109180:
+		return DecodeOxmIdTunMetadata45(_oxmid, decoder)
+	case 2147486722:
+		return DecodeOxmIdVlanVid(_oxmid, decoder)
+	case 93820:
+		return DecodeOxmIdTunMetadata15(_oxmid, decoder)
+	case 73992:
+		return DecodeOxmIdTunIdMasked(_oxmid, decoder)
+	default:
+		return _oxmid, nil
+	}
+}
+
+func NewOxmId(_type_len uint32) *OxmId {
+	obj := &OxmId{}
+	obj.TypeLen = _type_len
+	return obj
+}
+func (self *OxmId) GetOXMName() string {
+	return ""
+}
+
+func (self *OxmId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type ActionNxBundleLoadSlave struct {
+	Port Port
+}
+
+type IActionNxBundleLoadSlave interface {
+	goloxi.Serializable
+	GetPort() Port
+}
+
+func (self *ActionNxBundleLoadSlave) GetPort() Port {
+	return self.Port
+}
+
+func (self *ActionNxBundleLoadSlave) SetPort(v Port) {
+	self.Port = v
+}
+
+func (self *ActionNxBundleLoadSlave) Serialize(encoder *goloxi.Encoder) error {
+
+	encoder.PutUint32(uint32(self.Port))
+
+	return nil
+}
+
+func DecodeActionNxBundleLoadSlave(decoder *goloxi.Decoder) (*ActionNxBundleLoadSlave, error) {
+	_actionnxbundleloadslave := &ActionNxBundleLoadSlave{}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("ActionNxBundleLoadSlave packet too short: %d < 4", decoder.Length())
+	}
+	_actionnxbundleloadslave.Port = Port(decoder.ReadUint32())
+	return _actionnxbundleloadslave, nil
+}
+
+func NewActionNxBundleLoadSlave() *ActionNxBundleLoadSlave {
+	obj := &ActionNxBundleLoadSlave{}
+	return obj
+}
+
+type ActionNxController2Property struct {
+	Type NxActionController2PropType
+}
+
+type IActionNxController2Property interface {
+	goloxi.Serializable
+	GetType() NxActionController2PropType
+}
+
+func (self *ActionNxController2Property) GetType() NxActionController2PropType {
+	return self.Type
+}
+
+func (self *ActionNxController2Property) SetType(v NxActionController2PropType) {
+	self.Type = v
+}
+
+func (self *ActionNxController2Property) Serialize(encoder *goloxi.Encoder) error {
+
+	encoder.PutUint16(uint16(self.Type))
+
+	return nil
+}
+
+func DecodeActionNxController2Property(decoder *goloxi.Decoder) (IActionNxController2Property, error) {
+	_actionnxcontroller2property := &ActionNxController2Property{}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("ActionNxController2Property packet too short: %d < 2", decoder.Length())
+	}
+	_actionnxcontroller2property.Type = NxActionController2PropType(decoder.ReadUint16())
+
+	switch _actionnxcontroller2property.Type {
+	case 0:
+		return DecodeActionNxController2PropertyMaxLen(_actionnxcontroller2property, decoder)
+	case 1:
+		return DecodeActionNxController2PropertyControllerId(_actionnxcontroller2property, decoder)
+	case 2:
+		return DecodeActionNxController2PropertyReason(_actionnxcontroller2property, decoder)
+	case 3:
+		return DecodeActionNxController2PropertyUserdata(_actionnxcontroller2property, decoder)
+	case 4:
+		return DecodeActionNxController2PropertyPause(_actionnxcontroller2property, decoder)
+	case 5:
+		return DecodeActionNxController2PropertyMeterId(_actionnxcontroller2property, decoder)
+	default:
+		return nil, fmt.Errorf("Invalid type '%d' for 'ActionNxController2Property'", _actionnxcontroller2property.Type)
+	}
+}
+
+func NewActionNxController2Property(_type NxActionController2PropType) *ActionNxController2Property {
+	obj := &ActionNxController2Property{}
+	obj.Type = _type
+	return obj
+}
+
+type ActionNxController2PropertyControllerId struct {
+	*ActionNxController2Property
+	ControllerId uint16
+}
+
+type IActionNxController2PropertyControllerId interface {
+	IActionNxController2Property
+	GetControllerId() uint16
+}
+
+func (self *ActionNxController2PropertyControllerId) GetControllerId() uint16 {
+	return self.ControllerId
+}
+
+func (self *ActionNxController2PropertyControllerId) SetControllerId(v uint16) {
+	self.ControllerId = v
+}
+
+func (self *ActionNxController2PropertyControllerId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNxController2Property.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint16(uint16(self.ControllerId))
+
+	encoder.SkipAlign()
+
+	return nil
+}
+
+func DecodeActionNxController2PropertyControllerId(parent *ActionNxController2Property, decoder *goloxi.Decoder) (*ActionNxController2PropertyControllerId, error) {
+	_actionnxcontroller2propertycontrollerid := &ActionNxController2PropertyControllerId{ActionNxController2Property: parent}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("ActionNxController2PropertyControllerId packet too short: %d < 2", decoder.Length())
+	}
+	defer decoder.SkipAlign()
+
+	_actionnxcontroller2propertycontrollerid.ControllerId = uint16(decoder.ReadUint16())
+	return _actionnxcontroller2propertycontrollerid, nil
+}
+
+func NewActionNxController2PropertyControllerId() *ActionNxController2PropertyControllerId {
+	obj := &ActionNxController2PropertyControllerId{
+		ActionNxController2Property: NewActionNxController2Property(1),
+	}
+	return obj
+}
+
+type ActionNxController2PropertyMaxLen struct {
+	*ActionNxController2Property
+	MaxLen uint16
+}
+
+type IActionNxController2PropertyMaxLen interface {
+	IActionNxController2Property
+	GetMaxLen() uint16
+}
+
+func (self *ActionNxController2PropertyMaxLen) GetMaxLen() uint16 {
+	return self.MaxLen
+}
+
+func (self *ActionNxController2PropertyMaxLen) SetMaxLen(v uint16) {
+	self.MaxLen = v
+}
+
+func (self *ActionNxController2PropertyMaxLen) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNxController2Property.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint16(uint16(self.MaxLen))
+
+	encoder.SkipAlign()
+
+	return nil
+}
+
+func DecodeActionNxController2PropertyMaxLen(parent *ActionNxController2Property, decoder *goloxi.Decoder) (*ActionNxController2PropertyMaxLen, error) {
+	_actionnxcontroller2propertymaxlen := &ActionNxController2PropertyMaxLen{ActionNxController2Property: parent}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("ActionNxController2PropertyMaxLen packet too short: %d < 2", decoder.Length())
+	}
+	defer decoder.SkipAlign()
+
+	_actionnxcontroller2propertymaxlen.MaxLen = uint16(decoder.ReadUint16())
+	return _actionnxcontroller2propertymaxlen, nil
+}
+
+func NewActionNxController2PropertyMaxLen() *ActionNxController2PropertyMaxLen {
+	obj := &ActionNxController2PropertyMaxLen{
+		ActionNxController2Property: NewActionNxController2Property(0),
+	}
+	return obj
+}
+
+type ActionNxController2PropertyMeterId struct {
+	*ActionNxController2Property
+	MeterId uint32
+}
+
+type IActionNxController2PropertyMeterId interface {
+	IActionNxController2Property
+	GetMeterId() uint32
+}
+
+func (self *ActionNxController2PropertyMeterId) GetMeterId() uint32 {
+	return self.MeterId
+}
+
+func (self *ActionNxController2PropertyMeterId) SetMeterId(v uint32) {
+	self.MeterId = v
+}
+
+func (self *ActionNxController2PropertyMeterId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNxController2Property.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint32(uint32(self.MeterId))
+
+	encoder.SkipAlign()
+
+	return nil
+}
+
+func DecodeActionNxController2PropertyMeterId(parent *ActionNxController2Property, decoder *goloxi.Decoder) (*ActionNxController2PropertyMeterId, error) {
+	_actionnxcontroller2propertymeterid := &ActionNxController2PropertyMeterId{ActionNxController2Property: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("ActionNxController2PropertyMeterId packet too short: %d < 4", decoder.Length())
+	}
+	defer decoder.SkipAlign()
+
+	_actionnxcontroller2propertymeterid.MeterId = uint32(decoder.ReadUint32())
+	return _actionnxcontroller2propertymeterid, nil
+}
+
+func NewActionNxController2PropertyMeterId() *ActionNxController2PropertyMeterId {
+	obj := &ActionNxController2PropertyMeterId{
+		ActionNxController2Property: NewActionNxController2Property(5),
+	}
+	return obj
+}
+
+type ActionNxController2PropertyPause struct {
+	*ActionNxController2Property
+}
+
+type IActionNxController2PropertyPause interface {
+	IActionNxController2Property
+}
+
+func (self *ActionNxController2PropertyPause) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNxController2Property.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.SkipAlign()
+
+	return nil
+}
+
+func DecodeActionNxController2PropertyPause(parent *ActionNxController2Property, decoder *goloxi.Decoder) (*ActionNxController2PropertyPause, error) {
+	_actionnxcontroller2propertypause := &ActionNxController2PropertyPause{ActionNxController2Property: parent}
+	defer decoder.SkipAlign()
+
+	return _actionnxcontroller2propertypause, nil
+}
+
+func NewActionNxController2PropertyPause() *ActionNxController2PropertyPause {
+	obj := &ActionNxController2PropertyPause{
+		ActionNxController2Property: NewActionNxController2Property(4),
+	}
+	return obj
+}
+
+type ActionNxController2PropertyReason struct {
+	*ActionNxController2Property
+	Reason PacketInReason
+}
+
+type IActionNxController2PropertyReason interface {
+	IActionNxController2Property
+	GetReason() PacketInReason
+}
+
+func (self *ActionNxController2PropertyReason) GetReason() PacketInReason {
+	return self.Reason
+}
+
+func (self *ActionNxController2PropertyReason) SetReason(v PacketInReason) {
+	self.Reason = v
+}
+
+func (self *ActionNxController2PropertyReason) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNxController2Property.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.Reason))
+
+	encoder.SkipAlign()
+
+	return nil
+}
+
+func DecodeActionNxController2PropertyReason(parent *ActionNxController2Property, decoder *goloxi.Decoder) (*ActionNxController2PropertyReason, error) {
+	_actionnxcontroller2propertyreason := &ActionNxController2PropertyReason{ActionNxController2Property: parent}
+	if decoder.Length() < 1 {
+		return nil, fmt.Errorf("ActionNxController2PropertyReason packet too short: %d < 1", decoder.Length())
+	}
+	defer decoder.SkipAlign()
+
+	_actionnxcontroller2propertyreason.Reason = PacketInReason(decoder.ReadByte())
+	return _actionnxcontroller2propertyreason, nil
+}
+
+func NewActionNxController2PropertyReason() *ActionNxController2PropertyReason {
+	obj := &ActionNxController2PropertyReason{
+		ActionNxController2Property: NewActionNxController2Property(2),
+	}
+	return obj
+}
+
+type ActionNxController2PropertyUserdata struct {
+	*ActionNxController2Property
+	Length   uint16
+	Userdata []byte
+}
+
+type IActionNxController2PropertyUserdata interface {
+	IActionNxController2Property
+	GetLength() uint16
+	GetUserdata() []byte
+}
+
+func (self *ActionNxController2PropertyUserdata) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *ActionNxController2PropertyUserdata) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *ActionNxController2PropertyUserdata) GetUserdata() []byte {
+	return self.Userdata
+}
+
+func (self *ActionNxController2PropertyUserdata) SetUserdata(v []byte) {
+	self.Userdata = v
+}
+
+func (self *ActionNxController2PropertyUserdata) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNxController2Property.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint16(uint16(self.Length))
+	encoder.Write(self.Userdata)
+
+	encoder.SkipAlign()
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxController2PropertyUserdata(parent *ActionNxController2Property, decoder *goloxi.Decoder) (*ActionNxController2PropertyUserdata, error) {
+	_actionnxcontroller2propertyuserdata := &ActionNxController2PropertyUserdata{ActionNxController2Property: parent}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("ActionNxController2PropertyUserdata packet too short: %d < 2", decoder.Length())
+	}
+	defer decoder.SkipAlign()
+
+	_actionnxcontroller2propertyuserdata.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
+	decoder = decoder.SliceDecoder(int(((_actionnxcontroller2propertyuserdata.Length)+7)/8*8), 2+2)
+	_actionnxcontroller2propertyuserdata.Userdata = decoder.Read(int(decoder.Length()))
+	return _actionnxcontroller2propertyuserdata, nil
+}
+
+func NewActionNxController2PropertyUserdata() *ActionNxController2PropertyUserdata {
+	obj := &ActionNxController2PropertyUserdata{
+		ActionNxController2Property: NewActionNxController2Property(3),
+	}
+	return obj
+}
+
 type BsnControllerConnection struct {
 	State       BsnControllerConnectionState
 	AuxiliaryId uint8
@@ -25,7 +1226,48 @@ type BsnControllerConnection struct {
 	Uri         string
 }
 
+type IBsnControllerConnection interface {
+	goloxi.Serializable
+	GetState() BsnControllerConnectionState
+	GetAuxiliaryId() uint8
+	GetRole() ControllerRole
+	GetUri() string
+}
+
+func (self *BsnControllerConnection) GetState() BsnControllerConnectionState {
+	return self.State
+}
+
+func (self *BsnControllerConnection) SetState(v BsnControllerConnectionState) {
+	self.State = v
+}
+
+func (self *BsnControllerConnection) GetAuxiliaryId() uint8 {
+	return self.AuxiliaryId
+}
+
+func (self *BsnControllerConnection) SetAuxiliaryId(v uint8) {
+	self.AuxiliaryId = v
+}
+
+func (self *BsnControllerConnection) GetRole() ControllerRole {
+	return self.Role
+}
+
+func (self *BsnControllerConnection) SetRole(v ControllerRole) {
+	self.Role = v
+}
+
+func (self *BsnControllerConnection) GetUri() string {
+	return self.Uri
+}
+
+func (self *BsnControllerConnection) SetUri(v string) {
+	self.Uri = v
+}
+
 func (self *BsnControllerConnection) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint8(uint8(self.State))
 	encoder.PutUint8(uint8(self.AuxiliaryId))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
@@ -59,7 +1301,39 @@ type BsnDebugCounterDescStatsEntry struct {
 	Description string
 }
 
+type IBsnDebugCounterDescStatsEntry interface {
+	goloxi.Serializable
+	GetCounterId() uint64
+	GetName() string
+	GetDescription() string
+}
+
+func (self *BsnDebugCounterDescStatsEntry) GetCounterId() uint64 {
+	return self.CounterId
+}
+
+func (self *BsnDebugCounterDescStatsEntry) SetCounterId(v uint64) {
+	self.CounterId = v
+}
+
+func (self *BsnDebugCounterDescStatsEntry) GetName() string {
+	return self.Name
+}
+
+func (self *BsnDebugCounterDescStatsEntry) SetName(v string) {
+	self.Name = v
+}
+
+func (self *BsnDebugCounterDescStatsEntry) GetDescription() string {
+	return self.Description
+}
+
+func (self *BsnDebugCounterDescStatsEntry) SetDescription(v string) {
+	self.Description = v
+}
+
 func (self *BsnDebugCounterDescStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint64(uint64(self.CounterId))
 	encoder.Write([]byte(self.Name))
 	encoder.Write([]byte(self.Description))
@@ -88,7 +1362,30 @@ type BsnDebugCounterStatsEntry struct {
 	Value     uint64
 }
 
+type IBsnDebugCounterStatsEntry interface {
+	goloxi.Serializable
+	GetCounterId() uint64
+	GetValue() uint64
+}
+
+func (self *BsnDebugCounterStatsEntry) GetCounterId() uint64 {
+	return self.CounterId
+}
+
+func (self *BsnDebugCounterStatsEntry) SetCounterId(v uint64) {
+	self.CounterId = v
+}
+
+func (self *BsnDebugCounterStatsEntry) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnDebugCounterStatsEntry) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnDebugCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint64(uint64(self.CounterId))
 	encoder.PutUint64(uint64(self.Value))
 
@@ -114,7 +1411,21 @@ type BsnFlowChecksumBucketStatsEntry struct {
 	Checksum uint64
 }
 
+type IBsnFlowChecksumBucketStatsEntry interface {
+	goloxi.Serializable
+	GetChecksum() uint64
+}
+
+func (self *BsnFlowChecksumBucketStatsEntry) GetChecksum() uint64 {
+	return self.Checksum
+}
+
+func (self *BsnFlowChecksumBucketStatsEntry) SetChecksum(v uint64) {
+	self.Checksum = v
+}
+
 func (self *BsnFlowChecksumBucketStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint64(uint64(self.Checksum))
 
 	return nil
@@ -139,7 +1450,30 @@ type BsnGenericStatsEntry struct {
 	Tlvs   []IBsnTlv
 }
 
+type IBsnGenericStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetTlvs() []IBsnTlv
+}
+
+func (self *BsnGenericStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *BsnGenericStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *BsnGenericStatsEntry) GetTlvs() []IBsnTlv {
+	return self.Tlvs
+}
+
+func (self *BsnGenericStatsEntry) SetTlvs(v []IBsnTlv) {
+	self.Tlvs = v
+}
+
 func (self *BsnGenericStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	for _, obj := range self.Tlvs {
 		if err := obj.Serialize(encoder); err != nil {
@@ -147,7 +1481,6 @@ func (self *BsnGenericStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -159,6 +1492,8 @@ func DecodeBsnGenericStatsEntry(decoder *goloxi.Decoder) (*BsnGenericStatsEntry,
 		return nil, fmt.Errorf("BsnGenericStatsEntry packet too short: %d < 2", decoder.Length())
 	}
 	_bsngenericstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bsngenericstatsentry.Length), 2+0)
 
 	for decoder.Length() >= 4 {
@@ -166,7 +1501,9 @@ func DecodeBsnGenericStatsEntry(decoder *goloxi.Decoder) (*BsnGenericStatsEntry,
 		if err != nil {
 			return nil, err
 		}
-		_bsngenericstatsentry.Tlvs = append(_bsngenericstatsentry.Tlvs, item)
+		if item != nil {
+			_bsngenericstatsentry.Tlvs = append(_bsngenericstatsentry.Tlvs, item)
+		}
 	}
 	return _bsngenericstatsentry, nil
 }
@@ -180,7 +1517,21 @@ type BsnGentableBucketStatsEntry struct {
 	Checksum Checksum128
 }
 
+type IBsnGentableBucketStatsEntry interface {
+	goloxi.Serializable
+	GetChecksum() Checksum128
+}
+
+func (self *BsnGentableBucketStatsEntry) GetChecksum() Checksum128 {
+	return self.Checksum
+}
+
+func (self *BsnGentableBucketStatsEntry) SetChecksum(v Checksum128) {
+	self.Checksum = v
+}
+
 func (self *BsnGentableBucketStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	self.Checksum.Serialize(encoder)
 
 	return nil
@@ -208,7 +1559,57 @@ type BsnGentableDescStatsEntry struct {
 	MaxEntries  uint32
 }
 
+type IBsnGentableDescStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetTableId() uint16
+	GetName() string
+	GetBucketsSize() uint32
+	GetMaxEntries() uint32
+}
+
+func (self *BsnGentableDescStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *BsnGentableDescStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *BsnGentableDescStatsEntry) GetTableId() uint16 {
+	return self.TableId
+}
+
+func (self *BsnGentableDescStatsEntry) SetTableId(v uint16) {
+	self.TableId = v
+}
+
+func (self *BsnGentableDescStatsEntry) GetName() string {
+	return self.Name
+}
+
+func (self *BsnGentableDescStatsEntry) SetName(v string) {
+	self.Name = v
+}
+
+func (self *BsnGentableDescStatsEntry) GetBucketsSize() uint32 {
+	return self.BucketsSize
+}
+
+func (self *BsnGentableDescStatsEntry) SetBucketsSize(v uint32) {
+	self.BucketsSize = v
+}
+
+func (self *BsnGentableDescStatsEntry) GetMaxEntries() uint32 {
+	return self.MaxEntries
+}
+
+func (self *BsnGentableDescStatsEntry) SetMaxEntries(v uint32) {
+	self.MaxEntries = v
+}
+
 func (self *BsnGentableDescStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint16(uint16(self.TableId))
 	encoder.Write([]byte(self.Name))
@@ -216,7 +1617,6 @@ func (self *BsnGentableDescStatsEntry) Serialize(encoder *goloxi.Encoder) error 
 	encoder.PutUint32(uint32(self.MaxEntries))
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -228,6 +1628,8 @@ func DecodeBsnGentableDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentableDescS
 		return nil, fmt.Errorf("BsnGentableDescStatsEntry packet too short: %d < 48", decoder.Length())
 	}
 	_bsngentabledescstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bsngentabledescstatsentry.Length), 2+0)
 	_bsngentabledescstatsentry.TableId = uint16(decoder.ReadUint16())
 	_bsngentabledescstatsentry.Name = string(bytes.Trim(decoder.Read(32), "\x00"))
@@ -250,7 +1652,57 @@ type BsnGentableEntryDescStatsEntry struct {
 	Value     []IBsnTlv
 }
 
+type IBsnGentableEntryDescStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetKeyLength() uint16
+	GetChecksum() Checksum128
+	GetKey() []IBsnTlv
+	GetValue() []IBsnTlv
+}
+
+func (self *BsnGentableEntryDescStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *BsnGentableEntryDescStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *BsnGentableEntryDescStatsEntry) GetKeyLength() uint16 {
+	return self.KeyLength
+}
+
+func (self *BsnGentableEntryDescStatsEntry) SetKeyLength(v uint16) {
+	self.KeyLength = v
+}
+
+func (self *BsnGentableEntryDescStatsEntry) GetChecksum() Checksum128 {
+	return self.Checksum
+}
+
+func (self *BsnGentableEntryDescStatsEntry) SetChecksum(v Checksum128) {
+	self.Checksum = v
+}
+
+func (self *BsnGentableEntryDescStatsEntry) GetKey() []IBsnTlv {
+	return self.Key
+}
+
+func (self *BsnGentableEntryDescStatsEntry) SetKey(v []IBsnTlv) {
+	self.Key = v
+}
+
+func (self *BsnGentableEntryDescStatsEntry) GetValue() []IBsnTlv {
+	return self.Value
+}
+
+func (self *BsnGentableEntryDescStatsEntry) SetValue(v []IBsnTlv) {
+	self.Value = v
+}
+
 func (self *BsnGentableEntryDescStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint16(uint16(self.KeyLength))
 	self.Checksum.Serialize(encoder)
@@ -265,7 +1717,6 @@ func (self *BsnGentableEntryDescStatsEntry) Serialize(encoder *goloxi.Encoder) e
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -277,16 +1728,20 @@ func DecodeBsnGentableEntryDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentable
 		return nil, fmt.Errorf("BsnGentableEntryDescStatsEntry packet too short: %d < 20", decoder.Length())
 	}
 	_bsngentableentrydescstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bsngentableentrydescstatsentry.Length), 2+0)
 	_bsngentableentrydescstatsentry.KeyLength = uint16(decoder.ReadUint16())
 	_bsngentableentrydescstatsentry.Checksum.Decode(decoder)
 
-	for decoder.Length() >= 4 {
+	for i := 0; i < int(_bsngentableentrydescstatsentry.KeyLength); i++ {
 		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_bsngentableentrydescstatsentry.Key = append(_bsngentableentrydescstatsentry.Key, item)
+		if item != nil {
+			_bsngentableentrydescstatsentry.Key = append(_bsngentableentrydescstatsentry.Key, item)
+		}
 	}
 
 	for decoder.Length() >= 4 {
@@ -294,7 +1749,9 @@ func DecodeBsnGentableEntryDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentable
 		if err != nil {
 			return nil, err
 		}
-		_bsngentableentrydescstatsentry.Value = append(_bsngentableentrydescstatsentry.Value, item)
+		if item != nil {
+			_bsngentableentrydescstatsentry.Value = append(_bsngentableentrydescstatsentry.Value, item)
+		}
 	}
 	return _bsngentableentrydescstatsentry, nil
 }
@@ -311,7 +1768,48 @@ type BsnGentableEntryStatsEntry struct {
 	Stats     []IBsnTlv
 }
 
+type IBsnGentableEntryStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetKeyLength() uint16
+	GetKey() []IBsnTlv
+	GetStats() []IBsnTlv
+}
+
+func (self *BsnGentableEntryStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *BsnGentableEntryStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *BsnGentableEntryStatsEntry) GetKeyLength() uint16 {
+	return self.KeyLength
+}
+
+func (self *BsnGentableEntryStatsEntry) SetKeyLength(v uint16) {
+	self.KeyLength = v
+}
+
+func (self *BsnGentableEntryStatsEntry) GetKey() []IBsnTlv {
+	return self.Key
+}
+
+func (self *BsnGentableEntryStatsEntry) SetKey(v []IBsnTlv) {
+	self.Key = v
+}
+
+func (self *BsnGentableEntryStatsEntry) GetStats() []IBsnTlv {
+	return self.Stats
+}
+
+func (self *BsnGentableEntryStatsEntry) SetStats(v []IBsnTlv) {
+	self.Stats = v
+}
+
 func (self *BsnGentableEntryStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint16(uint16(self.KeyLength))
 	for _, obj := range self.Key {
@@ -325,7 +1823,6 @@ func (self *BsnGentableEntryStatsEntry) Serialize(encoder *goloxi.Encoder) error
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -337,15 +1834,19 @@ func DecodeBsnGentableEntryStatsEntry(decoder *goloxi.Decoder) (*BsnGentableEntr
 		return nil, fmt.Errorf("BsnGentableEntryStatsEntry packet too short: %d < 4", decoder.Length())
 	}
 	_bsngentableentrystatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bsngentableentrystatsentry.Length), 2+0)
 	_bsngentableentrystatsentry.KeyLength = uint16(decoder.ReadUint16())
 
-	for decoder.Length() >= 4 {
+	for i := 0; i < int(_bsngentableentrystatsentry.KeyLength); i++ {
 		item, err := DecodeBsnTlv(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_bsngentableentrystatsentry.Key = append(_bsngentableentrystatsentry.Key, item)
+		if item != nil {
+			_bsngentableentrystatsentry.Key = append(_bsngentableentrystatsentry.Key, item)
+		}
 	}
 
 	for decoder.Length() >= 4 {
@@ -353,7 +1854,9 @@ func DecodeBsnGentableEntryStatsEntry(decoder *goloxi.Decoder) (*BsnGentableEntr
 		if err != nil {
 			return nil, err
 		}
-		_bsngentableentrystatsentry.Stats = append(_bsngentableentrystatsentry.Stats, item)
+		if item != nil {
+			_bsngentableentrystatsentry.Stats = append(_bsngentableentrystatsentry.Stats, item)
+		}
 	}
 	return _bsngentableentrystatsentry, nil
 }
@@ -369,7 +1872,39 @@ type BsnGentableStatsEntry struct {
 	Checksum   Checksum128
 }
 
+type IBsnGentableStatsEntry interface {
+	goloxi.Serializable
+	GetTableId() uint16
+	GetEntryCount() uint32
+	GetChecksum() Checksum128
+}
+
+func (self *BsnGentableStatsEntry) GetTableId() uint16 {
+	return self.TableId
+}
+
+func (self *BsnGentableStatsEntry) SetTableId(v uint16) {
+	self.TableId = v
+}
+
+func (self *BsnGentableStatsEntry) GetEntryCount() uint32 {
+	return self.EntryCount
+}
+
+func (self *BsnGentableStatsEntry) SetEntryCount(v uint32) {
+	self.EntryCount = v
+}
+
+func (self *BsnGentableStatsEntry) GetChecksum() Checksum128 {
+	return self.Checksum
+}
+
+func (self *BsnGentableStatsEntry) SetChecksum(v Checksum128) {
+	self.Checksum = v
+}
+
 func (self *BsnGentableStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.PutUint32(uint32(self.EntryCount))
@@ -402,7 +1937,48 @@ type BsnInterface struct {
 	Ipv4Netmask net.IP
 }
 
+type IBsnInterface interface {
+	goloxi.Serializable
+	GetHwAddr() net.HardwareAddr
+	GetName() string
+	GetIpv4Addr() net.IP
+	GetIpv4Netmask() net.IP
+}
+
+func (self *BsnInterface) GetHwAddr() net.HardwareAddr {
+	return self.HwAddr
+}
+
+func (self *BsnInterface) SetHwAddr(v net.HardwareAddr) {
+	self.HwAddr = v
+}
+
+func (self *BsnInterface) GetName() string {
+	return self.Name
+}
+
+func (self *BsnInterface) SetName(v string) {
+	self.Name = v
+}
+
+func (self *BsnInterface) GetIpv4Addr() net.IP {
+	return self.Ipv4Addr
+}
+
+func (self *BsnInterface) SetIpv4Addr(v net.IP) {
+	self.Ipv4Addr = v
+}
+
+func (self *BsnInterface) GetIpv4Netmask() net.IP {
+	return self.Ipv4Netmask
+}
+
+func (self *BsnInterface) SetIpv4Netmask(v net.IP) {
+	self.Ipv4Netmask = v
+}
+
 func (self *BsnInterface) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.Write(self.HwAddr)
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.Write([]byte(self.Name))
@@ -431,7 +2007,7 @@ func NewBsnInterface() *BsnInterface {
 }
 
 type BsnLacpStatsEntry struct {
-	PortNo              PortNo
+	PortNo              Port
 	ActorSysPriority    uint16
 	ActorSysMac         net.HardwareAddr
 	ActorPortPriority   uint16
@@ -445,7 +2021,120 @@ type BsnLacpStatsEntry struct {
 	PartnerKey          uint16
 }
 
+type IBsnLacpStatsEntry interface {
+	goloxi.Serializable
+	GetPortNo() Port
+	GetActorSysPriority() uint16
+	GetActorSysMac() net.HardwareAddr
+	GetActorPortPriority() uint16
+	GetActorPortNum() uint16
+	GetActorKey() uint16
+	GetConvergenceStatus() uint8
+	GetPartnerSysPriority() uint16
+	GetPartnerSysMac() net.HardwareAddr
+	GetPartnerPortPriority() uint16
+	GetPartnerPortNum() uint16
+	GetPartnerKey() uint16
+}
+
+func (self *BsnLacpStatsEntry) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *BsnLacpStatsEntry) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *BsnLacpStatsEntry) GetActorSysPriority() uint16 {
+	return self.ActorSysPriority
+}
+
+func (self *BsnLacpStatsEntry) SetActorSysPriority(v uint16) {
+	self.ActorSysPriority = v
+}
+
+func (self *BsnLacpStatsEntry) GetActorSysMac() net.HardwareAddr {
+	return self.ActorSysMac
+}
+
+func (self *BsnLacpStatsEntry) SetActorSysMac(v net.HardwareAddr) {
+	self.ActorSysMac = v
+}
+
+func (self *BsnLacpStatsEntry) GetActorPortPriority() uint16 {
+	return self.ActorPortPriority
+}
+
+func (self *BsnLacpStatsEntry) SetActorPortPriority(v uint16) {
+	self.ActorPortPriority = v
+}
+
+func (self *BsnLacpStatsEntry) GetActorPortNum() uint16 {
+	return self.ActorPortNum
+}
+
+func (self *BsnLacpStatsEntry) SetActorPortNum(v uint16) {
+	self.ActorPortNum = v
+}
+
+func (self *BsnLacpStatsEntry) GetActorKey() uint16 {
+	return self.ActorKey
+}
+
+func (self *BsnLacpStatsEntry) SetActorKey(v uint16) {
+	self.ActorKey = v
+}
+
+func (self *BsnLacpStatsEntry) GetConvergenceStatus() uint8 {
+	return self.ConvergenceStatus
+}
+
+func (self *BsnLacpStatsEntry) SetConvergenceStatus(v uint8) {
+	self.ConvergenceStatus = v
+}
+
+func (self *BsnLacpStatsEntry) GetPartnerSysPriority() uint16 {
+	return self.PartnerSysPriority
+}
+
+func (self *BsnLacpStatsEntry) SetPartnerSysPriority(v uint16) {
+	self.PartnerSysPriority = v
+}
+
+func (self *BsnLacpStatsEntry) GetPartnerSysMac() net.HardwareAddr {
+	return self.PartnerSysMac
+}
+
+func (self *BsnLacpStatsEntry) SetPartnerSysMac(v net.HardwareAddr) {
+	self.PartnerSysMac = v
+}
+
+func (self *BsnLacpStatsEntry) GetPartnerPortPriority() uint16 {
+	return self.PartnerPortPriority
+}
+
+func (self *BsnLacpStatsEntry) SetPartnerPortPriority(v uint16) {
+	self.PartnerPortPriority = v
+}
+
+func (self *BsnLacpStatsEntry) GetPartnerPortNum() uint16 {
+	return self.PartnerPortNum
+}
+
+func (self *BsnLacpStatsEntry) SetPartnerPortNum(v uint16) {
+	self.PartnerPortNum = v
+}
+
+func (self *BsnLacpStatsEntry) GetPartnerKey() uint16 {
+	return self.PartnerKey
+}
+
+func (self *BsnLacpStatsEntry) SetPartnerKey(v uint16) {
+	self.PartnerKey = v
+}
+
 func (self *BsnLacpStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	self.PortNo.Serialize(encoder)
 	encoder.PutUint16(uint16(self.ActorSysPriority))
 	encoder.Write(self.ActorSysMac)
@@ -493,11 +2182,43 @@ func NewBsnLacpStatsEntry() *BsnLacpStatsEntry {
 
 type BsnPortCounterStatsEntry struct {
 	Length uint16
-	PortNo PortNo
+	PortNo Port
 	Values []*Uint64
 }
 
+type IBsnPortCounterStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetPortNo() Port
+	GetValues() []*Uint64
+}
+
+func (self *BsnPortCounterStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *BsnPortCounterStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *BsnPortCounterStatsEntry) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *BsnPortCounterStatsEntry) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *BsnPortCounterStatsEntry) GetValues() []*Uint64 {
+	return self.Values
+}
+
+func (self *BsnPortCounterStatsEntry) SetValues(v []*Uint64) {
+	self.Values = v
+}
+
 func (self *BsnPortCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	self.PortNo.Serialize(encoder)
@@ -507,7 +2228,6 @@ func (self *BsnPortCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -519,6 +2239,8 @@ func DecodeBsnPortCounterStatsEntry(decoder *goloxi.Decoder) (*BsnPortCounterSta
 		return nil, fmt.Errorf("BsnPortCounterStatsEntry packet too short: %d < 8", decoder.Length())
 	}
 	_bsnportcounterstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bsnportcounterstatsentry.Length), 2+0)
 	decoder.Skip(2)
 	_bsnportcounterstatsentry.PortNo.Decode(decoder)
@@ -528,7 +2250,9 @@ func DecodeBsnPortCounterStatsEntry(decoder *goloxi.Decoder) (*BsnPortCounterSta
 		if err != nil {
 			return nil, err
 		}
-		_bsnportcounterstatsentry.Values = append(_bsnportcounterstatsentry.Values, item)
+		if item != nil {
+			_bsnportcounterstatsentry.Values = append(_bsnportcounterstatsentry.Values, item)
+		}
 	}
 	return _bsnportcounterstatsentry, nil
 }
@@ -542,7 +2266,21 @@ type BsnSwitchPipelineStatsEntry struct {
 	Pipeline string
 }
 
+type IBsnSwitchPipelineStatsEntry interface {
+	goloxi.Serializable
+	GetPipeline() string
+}
+
+func (self *BsnSwitchPipelineStatsEntry) GetPipeline() string {
+	return self.Pipeline
+}
+
+func (self *BsnSwitchPipelineStatsEntry) SetPipeline(v string) {
+	self.Pipeline = v
+}
+
 func (self *BsnSwitchPipelineStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.Write([]byte(self.Pipeline))
 
 	return nil
@@ -567,7 +2305,30 @@ type BsnTableChecksumStatsEntry struct {
 	Checksum uint64
 }
 
+type IBsnTableChecksumStatsEntry interface {
+	goloxi.Serializable
+	GetTableId() uint8
+	GetChecksum() uint64
+}
+
+func (self *BsnTableChecksumStatsEntry) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *BsnTableChecksumStatsEntry) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *BsnTableChecksumStatsEntry) GetChecksum() uint64 {
+	return self.Checksum
+}
+
+func (self *BsnTableChecksumStatsEntry) SetChecksum(v uint64) {
+	self.Checksum = v
+}
+
 func (self *BsnTableChecksumStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint8(uint8(self.TableId))
 	encoder.PutUint64(uint64(self.Checksum))
 
@@ -604,11 +2365,20 @@ func (self *BsnTlv) GetType() uint16 {
 	return self.Type
 }
 
+func (self *BsnTlv) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *BsnTlv) GetLength() uint16 {
 	return self.Length
 }
 
+func (self *BsnTlv) SetLength(v uint16) {
+	self.Length = v
+}
+
 func (self *BsnTlv) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Length))
 
@@ -622,6 +2392,8 @@ func DecodeBsnTlv(decoder *goloxi.Decoder) (IBsnTlv, error) {
 	}
 	_bsntlv.Type = uint16(decoder.ReadUint16())
 	_bsntlv.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bsntlv.Length), 2+2)
 
 	switch _bsntlv.Type {
@@ -1009,6 +2781,19 @@ type BsnTlvActorKey struct {
 	Value uint16
 }
 
+type IBsnTlvActorKey interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvActorKey) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvActorKey) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvActorKey) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1016,7 +2801,6 @@ func (self *BsnTlvActorKey) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1043,6 +2827,19 @@ type BsnTlvActorPortNum struct {
 	Value uint16
 }
 
+type IBsnTlvActorPortNum interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvActorPortNum) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvActorPortNum) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvActorPortNum) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1050,7 +2847,6 @@ func (self *BsnTlvActorPortNum) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1077,6 +2873,19 @@ type BsnTlvActorPortPriority struct {
 	Value uint16
 }
 
+type IBsnTlvActorPortPriority interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvActorPortPriority) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvActorPortPriority) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvActorPortPriority) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1084,7 +2893,6 @@ func (self *BsnTlvActorPortPriority) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1111,6 +2919,19 @@ type BsnTlvActorState struct {
 	Value BsnLacpState
 }
 
+type IBsnTlvActorState interface {
+	IBsnTlv
+	GetValue() BsnLacpState
+}
+
+func (self *BsnTlvActorState) GetValue() BsnLacpState {
+	return self.Value
+}
+
+func (self *BsnTlvActorState) SetValue(v BsnLacpState) {
+	self.Value = v
+}
+
 func (self *BsnTlvActorState) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1118,7 +2939,6 @@ func (self *BsnTlvActorState) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1145,6 +2965,19 @@ type BsnTlvActorSystemMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvActorSystemMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvActorSystemMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvActorSystemMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvActorSystemMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1152,7 +2985,6 @@ func (self *BsnTlvActorSystemMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1179,6 +3011,19 @@ type BsnTlvActorSystemPriority struct {
 	Value uint16
 }
 
+type IBsnTlvActorSystemPriority interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvActorSystemPriority) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvActorSystemPriority) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvActorSystemPriority) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1186,7 +3031,6 @@ func (self *BsnTlvActorSystemPriority) Serialize(encoder *goloxi.Encoder) error 
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1213,6 +3057,19 @@ type BsnTlvAnchor struct {
 	Value BsnAnchor
 }
 
+type IBsnTlvAnchor interface {
+	IBsnTlv
+	GetValue() BsnAnchor
+}
+
+func (self *BsnTlvAnchor) GetValue() BsnAnchor {
+	return self.Value
+}
+
+func (self *BsnTlvAnchor) SetValue(v BsnAnchor) {
+	self.Value = v
+}
+
 func (self *BsnTlvAnchor) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1220,7 +3077,6 @@ func (self *BsnTlvAnchor) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1247,6 +3103,19 @@ type BsnTlvApplyBytes struct {
 	Value uint64
 }
 
+type IBsnTlvApplyBytes interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvApplyBytes) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvApplyBytes) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvApplyBytes) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1254,7 +3123,6 @@ func (self *BsnTlvApplyBytes) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1281,6 +3149,19 @@ type BsnTlvApplyPackets struct {
 	Value uint64
 }
 
+type IBsnTlvApplyPackets interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvApplyPackets) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvApplyPackets) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvApplyPackets) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1288,7 +3169,6 @@ func (self *BsnTlvApplyPackets) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1315,6 +3195,19 @@ type BsnTlvAutoNegotiation struct {
 	Value BsnAutoNegotiationType
 }
 
+type IBsnTlvAutoNegotiation interface {
+	IBsnTlv
+	GetValue() BsnAutoNegotiationType
+}
+
+func (self *BsnTlvAutoNegotiation) GetValue() BsnAutoNegotiationType {
+	return self.Value
+}
+
+func (self *BsnTlvAutoNegotiation) SetValue(v BsnAutoNegotiationType) {
+	self.Value = v
+}
+
 func (self *BsnTlvAutoNegotiation) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1322,7 +3215,6 @@ func (self *BsnTlvAutoNegotiation) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1349,6 +3241,19 @@ type BsnTlvBfdEndpoint struct {
 	Value BsnBfdEndpoint
 }
 
+type IBsnTlvBfdEndpoint interface {
+	IBsnTlv
+	GetValue() BsnBfdEndpoint
+}
+
+func (self *BsnTlvBfdEndpoint) GetValue() BsnBfdEndpoint {
+	return self.Value
+}
+
+func (self *BsnTlvBfdEndpoint) SetValue(v BsnBfdEndpoint) {
+	self.Value = v
+}
+
 func (self *BsnTlvBfdEndpoint) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1356,7 +3261,6 @@ func (self *BsnTlvBfdEndpoint) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1383,6 +3287,19 @@ type BsnTlvBfdState struct {
 	Value BsnBfdEndpointState
 }
 
+type IBsnTlvBfdState interface {
+	IBsnTlv
+	GetValue() BsnBfdEndpointState
+}
+
+func (self *BsnTlvBfdState) GetValue() BsnBfdEndpointState {
+	return self.Value
+}
+
+func (self *BsnTlvBfdState) SetValue(v BsnBfdEndpointState) {
+	self.Value = v
+}
+
 func (self *BsnTlvBfdState) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1390,7 +3307,6 @@ func (self *BsnTlvBfdState) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1417,6 +3333,19 @@ type BsnTlvBroadcastQueryTimeout struct {
 	Value uint32
 }
 
+type IBsnTlvBroadcastQueryTimeout interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvBroadcastQueryTimeout) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvBroadcastQueryTimeout) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvBroadcastQueryTimeout) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1424,7 +3353,6 @@ func (self *BsnTlvBroadcastQueryTimeout) Serialize(encoder *goloxi.Encoder) erro
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1451,6 +3379,19 @@ type BsnTlvBroadcastRate struct {
 	Value uint32
 }
 
+type IBsnTlvBroadcastRate interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvBroadcastRate) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvBroadcastRate) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvBroadcastRate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1458,7 +3399,6 @@ func (self *BsnTlvBroadcastRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1485,6 +3425,19 @@ type BsnTlvBucket struct {
 	Value []IBsnTlv
 }
 
+type IBsnTlvBucket interface {
+	IBsnTlv
+	GetValue() []IBsnTlv
+}
+
+func (self *BsnTlvBucket) GetValue() []IBsnTlv {
+	return self.Value
+}
+
+func (self *BsnTlvBucket) SetValue(v []IBsnTlv) {
+	self.Value = v
+}
+
 func (self *BsnTlvBucket) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1496,7 +3449,6 @@ func (self *BsnTlvBucket) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1510,7 +3462,9 @@ func DecodeBsnTlvBucket(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvBucket,
 		if err != nil {
 			return nil, err
 		}
-		_bsntlvbucket.Value = append(_bsntlvbucket.Value, item)
+		if item != nil {
+			_bsntlvbucket.Value = append(_bsntlvbucket.Value, item)
+		}
 	}
 	return _bsntlvbucket, nil
 }
@@ -1527,6 +3481,19 @@ type BsnTlvCircuitId struct {
 	Value []byte
 }
 
+type IBsnTlvCircuitId interface {
+	IBsnTlv
+	GetValue() []byte
+}
+
+func (self *BsnTlvCircuitId) GetValue() []byte {
+	return self.Value
+}
+
+func (self *BsnTlvCircuitId) SetValue(v []byte) {
+	self.Value = v
+}
+
 func (self *BsnTlvCircuitId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1534,7 +3501,6 @@ func (self *BsnTlvCircuitId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1542,7 +3508,7 @@ func (self *BsnTlvCircuitId) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeBsnTlvCircuitId(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvCircuitId, error) {
 	_bsntlvcircuitid := &BsnTlvCircuitId{BsnTlv: parent}
-	_bsntlvcircuitid.Value = decoder.Read(decoder.Length())
+	_bsntlvcircuitid.Value = decoder.Read(int(decoder.Length()))
 	return _bsntlvcircuitid, nil
 }
 
@@ -1558,6 +3524,19 @@ type BsnTlvConvergenceStatus struct {
 	Value uint8
 }
 
+type IBsnTlvConvergenceStatus interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvConvergenceStatus) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvConvergenceStatus) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvConvergenceStatus) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1565,7 +3544,6 @@ func (self *BsnTlvConvergenceStatus) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1591,12 +3569,15 @@ type BsnTlvCpuLag struct {
 	*BsnTlv
 }
 
+type IBsnTlvCpuLag interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvCpuLag) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1619,6 +3600,19 @@ type BsnTlvCrcEnabled struct {
 	Value uint8
 }
 
+type IBsnTlvCrcEnabled interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvCrcEnabled) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvCrcEnabled) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvCrcEnabled) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1626,7 +3620,6 @@ func (self *BsnTlvCrcEnabled) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1653,6 +3646,19 @@ type BsnTlvData struct {
 	Value []byte
 }
 
+type IBsnTlvData interface {
+	IBsnTlv
+	GetValue() []byte
+}
+
+func (self *BsnTlvData) GetValue() []byte {
+	return self.Value
+}
+
+func (self *BsnTlvData) SetValue(v []byte) {
+	self.Value = v
+}
+
 func (self *BsnTlvData) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1660,7 +3666,6 @@ func (self *BsnTlvData) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1668,7 +3673,7 @@ func (self *BsnTlvData) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeBsnTlvData(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvData, error) {
 	_bsntlvdata := &BsnTlvData{BsnTlv: parent}
-	_bsntlvdata.Value = decoder.Read(decoder.Length())
+	_bsntlvdata.Value = decoder.Read(int(decoder.Length()))
 	return _bsntlvdata, nil
 }
 
@@ -1684,6 +3689,19 @@ type BsnTlvDataMask struct {
 	Value []byte
 }
 
+type IBsnTlvDataMask interface {
+	IBsnTlv
+	GetValue() []byte
+}
+
+func (self *BsnTlvDataMask) GetValue() []byte {
+	return self.Value
+}
+
+func (self *BsnTlvDataMask) SetValue(v []byte) {
+	self.Value = v
+}
+
 func (self *BsnTlvDataMask) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1691,7 +3709,6 @@ func (self *BsnTlvDataMask) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1699,7 +3716,7 @@ func (self *BsnTlvDataMask) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeBsnTlvDataMask(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvDataMask, error) {
 	_bsntlvdatamask := &BsnTlvDataMask{BsnTlv: parent}
-	_bsntlvdatamask.Value = decoder.Read(decoder.Length())
+	_bsntlvdatamask.Value = decoder.Read(int(decoder.Length()))
 	return _bsntlvdatamask, nil
 }
 
@@ -1715,6 +3732,19 @@ type BsnTlvDecap struct {
 	Value BsnDecap
 }
 
+type IBsnTlvDecap interface {
+	IBsnTlv
+	GetValue() BsnDecap
+}
+
+func (self *BsnTlvDecap) GetValue() BsnDecap {
+	return self.Value
+}
+
+func (self *BsnTlvDecap) SetValue(v BsnDecap) {
+	self.Value = v
+}
+
 func (self *BsnTlvDecap) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1722,7 +3752,6 @@ func (self *BsnTlvDecap) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1748,12 +3777,15 @@ type BsnTlvDisableSrcMacCheck struct {
 	*BsnTlv
 }
 
+type IBsnTlvDisableSrcMacCheck interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvDisableSrcMacCheck) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1775,12 +3807,15 @@ type BsnTlvDrop struct {
 	*BsnTlv
 }
 
+type IBsnTlvDrop interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvDrop) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1803,6 +3838,19 @@ type BsnTlvDscp struct {
 	Value uint16
 }
 
+type IBsnTlvDscp interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvDscp) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvDscp) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvDscp) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1810,7 +3858,6 @@ func (self *BsnTlvDscp) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1837,6 +3884,19 @@ type BsnTlvEcn struct {
 	Value uint8
 }
 
+type IBsnTlvEcn interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvEcn) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvEcn) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvEcn) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1844,7 +3904,6 @@ func (self *BsnTlvEcn) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1870,12 +3929,15 @@ type BsnTlvEgressOnly struct {
 	*BsnTlv
 }
 
+type IBsnTlvEgressOnly interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvEgressOnly) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1898,6 +3960,19 @@ type BsnTlvEgressPortGroupId struct {
 	Value uint32
 }
 
+type IBsnTlvEgressPortGroupId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvEgressPortGroupId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvEgressPortGroupId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvEgressPortGroupId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1905,7 +3980,6 @@ func (self *BsnTlvEgressPortGroupId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1932,6 +4006,19 @@ type BsnTlvEncap struct {
 	Value BsnEncap
 }
 
+type IBsnTlvEncap interface {
+	IBsnTlv
+	GetValue() BsnEncap
+}
+
+func (self *BsnTlvEncap) GetValue() BsnEncap {
+	return self.Value
+}
+
+func (self *BsnTlvEncap) SetValue(v BsnEncap) {
+	self.Value = v
+}
+
 func (self *BsnTlvEncap) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1939,7 +4026,6 @@ func (self *BsnTlvEncap) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1966,6 +4052,19 @@ type BsnTlvEnhancedHashCapability struct {
 	Value BsnEnhancedHashType
 }
 
+type IBsnTlvEnhancedHashCapability interface {
+	IBsnTlv
+	GetValue() BsnEnhancedHashType
+}
+
+func (self *BsnTlvEnhancedHashCapability) GetValue() BsnEnhancedHashType {
+	return self.Value
+}
+
+func (self *BsnTlvEnhancedHashCapability) SetValue(v BsnEnhancedHashType) {
+	self.Value = v
+}
+
 func (self *BsnTlvEnhancedHashCapability) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -1973,7 +4072,6 @@ func (self *BsnTlvEnhancedHashCapability) Serialize(encoder *goloxi.Encoder) err
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2000,6 +4098,19 @@ type BsnTlvEthDst struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvEthDst interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvEthDst) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvEthDst) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvEthDst) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2007,7 +4118,6 @@ func (self *BsnTlvEthDst) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2034,6 +4144,19 @@ type BsnTlvEthSrc struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvEthSrc interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvEthSrc) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvEthSrc) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvEthSrc) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2041,7 +4164,6 @@ func (self *BsnTlvEthSrc) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2068,6 +4190,19 @@ type BsnTlvEthType struct {
 	Value uint16
 }
 
+type IBsnTlvEthType interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvEthType) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvEthType) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvEthType) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2075,7 +4210,6 @@ func (self *BsnTlvEthType) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2102,6 +4236,19 @@ type BsnTlvExternalGatewayIp struct {
 	Value net.IP
 }
 
+type IBsnTlvExternalGatewayIp interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvExternalGatewayIp) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvExternalGatewayIp) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvExternalGatewayIp) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2109,7 +4256,6 @@ func (self *BsnTlvExternalGatewayIp) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To4())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2136,6 +4282,19 @@ type BsnTlvExternalGatewayMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvExternalGatewayMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvExternalGatewayMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvExternalGatewayMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvExternalGatewayMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2143,7 +4302,6 @@ func (self *BsnTlvExternalGatewayMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2170,6 +4328,19 @@ type BsnTlvExternalIp struct {
 	Value net.IP
 }
 
+type IBsnTlvExternalIp interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvExternalIp) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvExternalIp) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvExternalIp) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2177,7 +4348,6 @@ func (self *BsnTlvExternalIp) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To4())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2204,6 +4374,19 @@ type BsnTlvExternalMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvExternalMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvExternalMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvExternalMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvExternalMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2211,7 +4394,6 @@ func (self *BsnTlvExternalMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2238,6 +4420,19 @@ type BsnTlvExternalNetmask struct {
 	Value net.IP
 }
 
+type IBsnTlvExternalNetmask interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvExternalNetmask) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvExternalNetmask) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvExternalNetmask) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2245,7 +4440,6 @@ func (self *BsnTlvExternalNetmask) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To4())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2272,6 +4466,19 @@ type BsnTlvFabricPortRole struct {
 	Value BsnFabricPortRole
 }
 
+type IBsnTlvFabricPortRole interface {
+	IBsnTlv
+	GetValue() BsnFabricPortRole
+}
+
+func (self *BsnTlvFabricPortRole) GetValue() BsnFabricPortRole {
+	return self.Value
+}
+
+func (self *BsnTlvFabricPortRole) SetValue(v BsnFabricPortRole) {
+	self.Value = v
+}
+
 func (self *BsnTlvFabricPortRole) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2279,7 +4486,6 @@ func (self *BsnTlvFabricPortRole) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2305,12 +4511,15 @@ type BsnTlvFlood struct {
 	*BsnTlv
 }
 
+type IBsnTlvFlood interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvFlood) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2333,6 +4542,19 @@ type BsnTlvFlowClassifier struct {
 	Value BsnFlowClassifier
 }
 
+type IBsnTlvFlowClassifier interface {
+	IBsnTlv
+	GetValue() BsnFlowClassifier
+}
+
+func (self *BsnTlvFlowClassifier) GetValue() BsnFlowClassifier {
+	return self.Value
+}
+
+func (self *BsnTlvFlowClassifier) SetValue(v BsnFlowClassifier) {
+	self.Value = v
+}
+
 func (self *BsnTlvFlowClassifier) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2340,7 +4562,6 @@ func (self *BsnTlvFlowClassifier) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2366,12 +4587,15 @@ type BsnTlvFlowClassify struct {
 	*BsnTlv
 }
 
+type IBsnTlvFlowClassify interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvFlowClassify) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2394,6 +4618,19 @@ type BsnTlvFlowIdentifier struct {
 	Value uint32
 }
 
+type IBsnTlvFlowIdentifier interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvFlowIdentifier) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvFlowIdentifier) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvFlowIdentifier) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2401,7 +4638,6 @@ func (self *BsnTlvFlowIdentifier) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2427,12 +4663,15 @@ type BsnTlvForceLinkUp struct {
 	*BsnTlv
 }
 
+type IBsnTlvForceLinkUp interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvForceLinkUp) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2455,6 +4694,19 @@ type BsnTlvForwardErrorCorrection struct {
 	Value BsnForwardErrorCorrectionType
 }
 
+type IBsnTlvForwardErrorCorrection interface {
+	IBsnTlv
+	GetValue() BsnForwardErrorCorrectionType
+}
+
+func (self *BsnTlvForwardErrorCorrection) GetValue() BsnForwardErrorCorrectionType {
+	return self.Value
+}
+
+func (self *BsnTlvForwardErrorCorrection) SetValue(v BsnForwardErrorCorrectionType) {
+	self.Value = v
+}
+
 func (self *BsnTlvForwardErrorCorrection) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2462,7 +4714,6 @@ func (self *BsnTlvForwardErrorCorrection) Serialize(encoder *goloxi.Encoder) err
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2489,6 +4740,19 @@ type BsnTlvGenerationId struct {
 	Value uint64
 }
 
+type IBsnTlvGenerationId interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvGenerationId) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvGenerationId) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvGenerationId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2496,7 +4760,6 @@ func (self *BsnTlvGenerationId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2523,6 +4786,19 @@ type BsnTlvHashAlgorithm struct {
 	Value BsnHashAlgorithmType
 }
 
+type IBsnTlvHashAlgorithm interface {
+	IBsnTlv
+	GetValue() BsnHashAlgorithmType
+}
+
+func (self *BsnTlvHashAlgorithm) GetValue() BsnHashAlgorithmType {
+	return self.Value
+}
+
+func (self *BsnTlvHashAlgorithm) SetValue(v BsnHashAlgorithmType) {
+	self.Value = v
+}
+
 func (self *BsnTlvHashAlgorithm) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2530,7 +4806,6 @@ func (self *BsnTlvHashAlgorithm) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2558,6 +4833,28 @@ type BsnTlvHashGtpHeaderMatch struct {
 	FirstHeaderMask uint8
 }
 
+type IBsnTlvHashGtpHeaderMatch interface {
+	IBsnTlv
+	GetFirstHeaderByte() uint8
+	GetFirstHeaderMask() uint8
+}
+
+func (self *BsnTlvHashGtpHeaderMatch) GetFirstHeaderByte() uint8 {
+	return self.FirstHeaderByte
+}
+
+func (self *BsnTlvHashGtpHeaderMatch) SetFirstHeaderByte(v uint8) {
+	self.FirstHeaderByte = v
+}
+
+func (self *BsnTlvHashGtpHeaderMatch) GetFirstHeaderMask() uint8 {
+	return self.FirstHeaderMask
+}
+
+func (self *BsnTlvHashGtpHeaderMatch) SetFirstHeaderMask(v uint8) {
+	self.FirstHeaderMask = v
+}
+
 func (self *BsnTlvHashGtpHeaderMatch) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2566,7 +4863,6 @@ func (self *BsnTlvHashGtpHeaderMatch) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.FirstHeaderByte))
 	encoder.PutUint8(uint8(self.FirstHeaderMask))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2596,6 +4892,37 @@ type BsnTlvHashGtpPortMatch struct {
 	DstPort uint16
 }
 
+type IBsnTlvHashGtpPortMatch interface {
+	IBsnTlv
+	GetMatch() BsnHashGtpPortMatch
+	GetSrcPort() uint16
+	GetDstPort() uint16
+}
+
+func (self *BsnTlvHashGtpPortMatch) GetMatch() BsnHashGtpPortMatch {
+	return self.Match
+}
+
+func (self *BsnTlvHashGtpPortMatch) SetMatch(v BsnHashGtpPortMatch) {
+	self.Match = v
+}
+
+func (self *BsnTlvHashGtpPortMatch) GetSrcPort() uint16 {
+	return self.SrcPort
+}
+
+func (self *BsnTlvHashGtpPortMatch) SetSrcPort(v uint16) {
+	self.SrcPort = v
+}
+
+func (self *BsnTlvHashGtpPortMatch) GetDstPort() uint16 {
+	return self.DstPort
+}
+
+func (self *BsnTlvHashGtpPortMatch) SetDstPort(v uint16) {
+	self.DstPort = v
+}
+
 func (self *BsnTlvHashGtpPortMatch) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2605,7 +4932,6 @@ func (self *BsnTlvHashGtpPortMatch) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.SrcPort))
 	encoder.PutUint16(uint16(self.DstPort))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2634,6 +4960,19 @@ type BsnTlvHashPacketField struct {
 	Value BsnHashPacketField
 }
 
+type IBsnTlvHashPacketField interface {
+	IBsnTlv
+	GetValue() BsnHashPacketField
+}
+
+func (self *BsnTlvHashPacketField) GetValue() BsnHashPacketField {
+	return self.Value
+}
+
+func (self *BsnTlvHashPacketField) SetValue(v BsnHashPacketField) {
+	self.Value = v
+}
+
 func (self *BsnTlvHashPacketField) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2641,7 +4980,6 @@ func (self *BsnTlvHashPacketField) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2668,6 +5006,19 @@ type BsnTlvHashPacketType struct {
 	Value BsnHashPacketType
 }
 
+type IBsnTlvHashPacketType interface {
+	IBsnTlv
+	GetValue() BsnHashPacketType
+}
+
+func (self *BsnTlvHashPacketType) GetValue() BsnHashPacketType {
+	return self.Value
+}
+
+func (self *BsnTlvHashPacketType) SetValue(v BsnHashPacketType) {
+	self.Value = v
+}
+
 func (self *BsnTlvHashPacketType) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2675,7 +5026,6 @@ func (self *BsnTlvHashPacketType) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2703,6 +5053,28 @@ type BsnTlvHashSeed struct {
 	Seed2 uint32
 }
 
+type IBsnTlvHashSeed interface {
+	IBsnTlv
+	GetSeed1() uint32
+	GetSeed2() uint32
+}
+
+func (self *BsnTlvHashSeed) GetSeed1() uint32 {
+	return self.Seed1
+}
+
+func (self *BsnTlvHashSeed) SetSeed1(v uint32) {
+	self.Seed1 = v
+}
+
+func (self *BsnTlvHashSeed) GetSeed2() uint32 {
+	return self.Seed2
+}
+
+func (self *BsnTlvHashSeed) SetSeed2(v uint32) {
+	self.Seed2 = v
+}
+
 func (self *BsnTlvHashSeed) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2711,7 +5083,6 @@ func (self *BsnTlvHashSeed) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Seed1))
 	encoder.PutUint32(uint32(self.Seed2))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2739,6 +5110,19 @@ type BsnTlvHashType struct {
 	Value BsnHashType
 }
 
+type IBsnTlvHashType interface {
+	IBsnTlv
+	GetValue() BsnHashType
+}
+
+func (self *BsnTlvHashType) GetValue() BsnHashType {
+	return self.Value
+}
+
+func (self *BsnTlvHashType) SetValue(v BsnHashType) {
+	self.Value = v
+}
+
 func (self *BsnTlvHashType) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2746,7 +5130,6 @@ func (self *BsnTlvHashType) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2773,6 +5156,19 @@ type BsnTlvHeaderSize struct {
 	Value uint32
 }
 
+type IBsnTlvHeaderSize interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvHeaderSize) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvHeaderSize) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvHeaderSize) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2780,7 +5176,6 @@ func (self *BsnTlvHeaderSize) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2807,6 +5202,19 @@ type BsnTlvIcmpCode struct {
 	Value uint8
 }
 
+type IBsnTlvIcmpCode interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvIcmpCode) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvIcmpCode) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvIcmpCode) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2814,7 +5222,6 @@ func (self *BsnTlvIcmpCode) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2841,6 +5248,19 @@ type BsnTlvIcmpId struct {
 	Value uint16
 }
 
+type IBsnTlvIcmpId interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvIcmpId) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvIcmpId) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvIcmpId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2848,7 +5268,6 @@ func (self *BsnTlvIcmpId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2875,6 +5294,19 @@ type BsnTlvIcmpType struct {
 	Value uint8
 }
 
+type IBsnTlvIcmpType interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvIcmpType) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvIcmpType) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvIcmpType) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2882,7 +5314,6 @@ func (self *BsnTlvIcmpType) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2909,6 +5340,19 @@ type BsnTlvIcmpv6Chksum struct {
 	Value uint16
 }
 
+type IBsnTlvIcmpv6Chksum interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvIcmpv6Chksum) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvIcmpv6Chksum) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvIcmpv6Chksum) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2916,7 +5360,6 @@ func (self *BsnTlvIcmpv6Chksum) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2943,6 +5386,19 @@ type BsnTlvIdentifier struct {
 	Value uint32
 }
 
+type IBsnTlvIdentifier interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvIdentifier) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvIdentifier) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvIdentifier) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -2950,7 +5406,6 @@ func (self *BsnTlvIdentifier) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2976,12 +5431,15 @@ type BsnTlvIdleNotification struct {
 	*BsnTlv
 }
 
+type IBsnTlvIdleNotification interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvIdleNotification) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3004,6 +5462,19 @@ type BsnTlvIdleTime struct {
 	Value uint64
 }
 
+type IBsnTlvIdleTime interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvIdleTime) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvIdleTime) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvIdleTime) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3011,7 +5482,6 @@ func (self *BsnTlvIdleTime) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3038,6 +5508,19 @@ type BsnTlvIdleTimeout struct {
 	Value uint32
 }
 
+type IBsnTlvIdleTimeout interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvIdleTimeout) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvIdleTimeout) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvIdleTimeout) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3045,7 +5528,6 @@ func (self *BsnTlvIdleTimeout) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3071,12 +5553,15 @@ type BsnTlvIgmpSnooping struct {
 	*BsnTlv
 }
 
+type IBsnTlvIgmpSnooping interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvIgmpSnooping) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3099,6 +5584,19 @@ type BsnTlvIngressPortGroupId struct {
 	Value uint32
 }
 
+type IBsnTlvIngressPortGroupId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvIngressPortGroupId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvIngressPortGroupId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvIngressPortGroupId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3106,7 +5604,6 @@ func (self *BsnTlvIngressPortGroupId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3133,6 +5630,19 @@ type BsnTlvInternalGatewayMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvInternalGatewayMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvInternalGatewayMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvInternalGatewayMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvInternalGatewayMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3140,7 +5650,6 @@ func (self *BsnTlvInternalGatewayMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3167,6 +5676,19 @@ type BsnTlvInternalMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvInternalMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvInternalMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvInternalMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvInternalMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3174,7 +5696,6 @@ func (self *BsnTlvInternalMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3201,6 +5722,19 @@ type BsnTlvInterval struct {
 	Value uint32
 }
 
+type IBsnTlvInterval interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvInterval) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvInterval) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvInterval) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3208,7 +5742,6 @@ func (self *BsnTlvInterval) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3235,6 +5768,19 @@ type BsnTlvIpProto struct {
 	Value uint8
 }
 
+type IBsnTlvIpProto interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvIpProto) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvIpProto) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpProto) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3242,7 +5788,6 @@ func (self *BsnTlvIpProto) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3269,6 +5814,19 @@ type BsnTlvIpTunnelType struct {
 	Value BsnIpTunnelType
 }
 
+type IBsnTlvIpTunnelType interface {
+	IBsnTlv
+	GetValue() BsnIpTunnelType
+}
+
+func (self *BsnTlvIpTunnelType) GetValue() BsnIpTunnelType {
+	return self.Value
+}
+
+func (self *BsnTlvIpTunnelType) SetValue(v BsnIpTunnelType) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpTunnelType) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3276,7 +5834,6 @@ func (self *BsnTlvIpTunnelType) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3303,6 +5860,19 @@ type BsnTlvIpv4 struct {
 	Value net.IP
 }
 
+type IBsnTlvIpv4 interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvIpv4) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvIpv4) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpv4) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3310,7 +5880,6 @@ func (self *BsnTlvIpv4) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To4())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3337,6 +5906,19 @@ type BsnTlvIpv4Dst struct {
 	Value net.IP
 }
 
+type IBsnTlvIpv4Dst interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvIpv4Dst) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvIpv4Dst) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpv4Dst) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3344,7 +5926,6 @@ func (self *BsnTlvIpv4Dst) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To4())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3371,6 +5952,19 @@ type BsnTlvIpv4Netmask struct {
 	Value net.IP
 }
 
+type IBsnTlvIpv4Netmask interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvIpv4Netmask) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvIpv4Netmask) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpv4Netmask) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3378,7 +5972,6 @@ func (self *BsnTlvIpv4Netmask) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To4())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3405,6 +5998,19 @@ type BsnTlvIpv4Src struct {
 	Value net.IP
 }
 
+type IBsnTlvIpv4Src interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvIpv4Src) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvIpv4Src) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpv4Src) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3412,7 +6018,6 @@ func (self *BsnTlvIpv4Src) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To4())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3439,6 +6044,19 @@ type BsnTlvIpv6 struct {
 	Value net.IP
 }
 
+type IBsnTlvIpv6 interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvIpv6) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvIpv6) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpv6) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3446,7 +6064,6 @@ func (self *BsnTlvIpv6) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To16())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3473,6 +6090,19 @@ type BsnTlvIpv6Dst struct {
 	Value net.IP
 }
 
+type IBsnTlvIpv6Dst interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvIpv6Dst) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvIpv6Dst) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3480,7 +6110,6 @@ func (self *BsnTlvIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To16())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3508,6 +6137,28 @@ type BsnTlvIpv6Prefix struct {
 	PrefixLength uint8
 }
 
+type IBsnTlvIpv6Prefix interface {
+	IBsnTlv
+	GetValue() net.IP
+	GetPrefixLength() uint8
+}
+
+func (self *BsnTlvIpv6Prefix) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvIpv6Prefix) SetValue(v net.IP) {
+	self.Value = v
+}
+
+func (self *BsnTlvIpv6Prefix) GetPrefixLength() uint8 {
+	return self.PrefixLength
+}
+
+func (self *BsnTlvIpv6Prefix) SetPrefixLength(v uint8) {
+	self.PrefixLength = v
+}
+
 func (self *BsnTlvIpv6Prefix) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3516,7 +6167,6 @@ func (self *BsnTlvIpv6Prefix) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(self.Value.To16())
 	encoder.PutUint8(uint8(self.PrefixLength))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3544,6 +6194,19 @@ type BsnTlvIpv6Src struct {
 	Value net.IP
 }
 
+type IBsnTlvIpv6Src interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvIpv6Src) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvIpv6Src) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvIpv6Src) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3551,7 +6214,6 @@ func (self *BsnTlvIpv6Src) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To16())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3578,6 +6240,19 @@ type BsnTlvKnownMulticastRate struct {
 	Value uint32
 }
 
+type IBsnTlvKnownMulticastRate interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvKnownMulticastRate) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvKnownMulticastRate) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvKnownMulticastRate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3585,7 +6260,6 @@ func (self *BsnTlvKnownMulticastRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3611,12 +6285,15 @@ type BsnTlvL2MulticastLookup struct {
 	*BsnTlv
 }
 
+type IBsnTlvL2MulticastLookup interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvL2MulticastLookup) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3638,12 +6315,15 @@ type BsnTlvL3 struct {
 	*BsnTlv
 }
 
+type IBsnTlvL3 interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvL3) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3666,6 +6346,19 @@ type BsnTlvL3DstClassId struct {
 	Value uint32
 }
 
+type IBsnTlvL3DstClassId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvL3DstClassId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvL3DstClassId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvL3DstClassId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3673,7 +6366,6 @@ func (self *BsnTlvL3DstClassId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3700,6 +6392,19 @@ type BsnTlvL3InterfaceClassId struct {
 	Value uint32
 }
 
+type IBsnTlvL3InterfaceClassId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvL3InterfaceClassId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvL3InterfaceClassId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvL3InterfaceClassId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3707,7 +6412,6 @@ func (self *BsnTlvL3InterfaceClassId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3734,6 +6438,19 @@ type BsnTlvL3SrcClassId struct {
 	Value uint32
 }
 
+type IBsnTlvL3SrcClassId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvL3SrcClassId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvL3SrcClassId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvL3SrcClassId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3741,7 +6458,6 @@ func (self *BsnTlvL3SrcClassId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3768,6 +6484,19 @@ type BsnTlvLagOptions struct {
 	Flags BsnLagFlag
 }
 
+type IBsnTlvLagOptions interface {
+	IBsnTlv
+	GetFlags() BsnLagFlag
+}
+
+func (self *BsnTlvLagOptions) GetFlags() BsnLagFlag {
+	return self.Flags
+}
+
+func (self *BsnTlvLagOptions) SetFlags(v BsnLagFlag) {
+	self.Flags = v
+}
+
 func (self *BsnTlvLagOptions) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3775,7 +6504,6 @@ func (self *BsnTlvLagOptions) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Flags))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3802,6 +6530,19 @@ type BsnTlvLoopbackMode struct {
 	Value BsnLoopbackMode
 }
 
+type IBsnTlvLoopbackMode interface {
+	IBsnTlv
+	GetValue() BsnLoopbackMode
+}
+
+func (self *BsnTlvLoopbackMode) GetValue() BsnLoopbackMode {
+	return self.Value
+}
+
+func (self *BsnTlvLoopbackMode) SetValue(v BsnLoopbackMode) {
+	self.Value = v
+}
+
 func (self *BsnTlvLoopbackMode) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3809,7 +6550,6 @@ func (self *BsnTlvLoopbackMode) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3833,7 +6573,20 @@ func NewBsnTlvLoopbackMode() *BsnTlvLoopbackMode {
 
 type BsnTlvLoopbackPort struct {
 	*BsnTlv
-	Value PortNo
+	Value Port
+}
+
+type IBsnTlvLoopbackPort interface {
+	IBsnTlv
+	GetValue() Port
+}
+
+func (self *BsnTlvLoopbackPort) GetValue() Port {
+	return self.Value
+}
+
+func (self *BsnTlvLoopbackPort) SetValue(v Port) {
+	self.Value = v
 }
 
 func (self *BsnTlvLoopbackPort) Serialize(encoder *goloxi.Encoder) error {
@@ -3843,7 +6596,6 @@ func (self *BsnTlvLoopbackPort) Serialize(encoder *goloxi.Encoder) error {
 
 	self.Value.Serialize(encoder)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3869,12 +6621,15 @@ type BsnTlvLrAllEnabled struct {
 	*BsnTlv
 }
 
+type IBsnTlvLrAllEnabled interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvLrAllEnabled) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3897,6 +6652,19 @@ type BsnTlvMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3904,7 +6672,6 @@ func (self *BsnTlvMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3931,6 +6698,19 @@ type BsnTlvMacMask struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvMacMask interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvMacMask) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvMacMask) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvMacMask) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3938,7 +6718,6 @@ func (self *BsnTlvMacMask) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3964,12 +6743,15 @@ type BsnTlvMcgTypeVxlan struct {
 	*BsnTlv
 }
 
+type IBsnTlvMcgTypeVxlan interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvMcgTypeVxlan) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3992,6 +6774,19 @@ type BsnTlvMissPackets struct {
 	Value uint64
 }
 
+type IBsnTlvMissPackets interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvMissPackets) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvMissPackets) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvMissPackets) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -3999,7 +6794,6 @@ func (self *BsnTlvMissPackets) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4026,6 +6820,19 @@ type BsnTlvMplsControlWord struct {
 	Value uint8
 }
 
+type IBsnTlvMplsControlWord interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvMplsControlWord) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvMplsControlWord) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvMplsControlWord) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4033,7 +6840,6 @@ func (self *BsnTlvMplsControlWord) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4060,6 +6866,19 @@ type BsnTlvMplsLabel struct {
 	Value uint32
 }
 
+type IBsnTlvMplsLabel interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvMplsLabel) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvMplsLabel) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvMplsLabel) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4067,7 +6886,6 @@ func (self *BsnTlvMplsLabel) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4094,6 +6912,19 @@ type BsnTlvMplsSequenced struct {
 	Value uint8
 }
 
+type IBsnTlvMplsSequenced interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvMplsSequenced) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvMplsSequenced) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvMplsSequenced) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4101,7 +6932,6 @@ func (self *BsnTlvMplsSequenced) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4128,6 +6958,19 @@ type BsnTlvMulticastInterfaceId struct {
 	Value uint32
 }
 
+type IBsnTlvMulticastInterfaceId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvMulticastInterfaceId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvMulticastInterfaceId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvMulticastInterfaceId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4135,7 +6978,6 @@ func (self *BsnTlvMulticastInterfaceId) Serialize(encoder *goloxi.Encoder) error
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4162,6 +7004,19 @@ type BsnTlvMulticastPacket struct {
 	Value BsnMulticastPacket
 }
 
+type IBsnTlvMulticastPacket interface {
+	IBsnTlv
+	GetValue() BsnMulticastPacket
+}
+
+func (self *BsnTlvMulticastPacket) GetValue() BsnMulticastPacket {
+	return self.Value
+}
+
+func (self *BsnTlvMulticastPacket) SetValue(v BsnMulticastPacket) {
+	self.Value = v
+}
+
 func (self *BsnTlvMulticastPacket) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4169,7 +7024,6 @@ func (self *BsnTlvMulticastPacket) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4196,6 +7050,19 @@ type BsnTlvMultiplier struct {
 	Value uint32
 }
 
+type IBsnTlvMultiplier interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvMultiplier) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvMultiplier) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvMultiplier) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4203,7 +7070,6 @@ func (self *BsnTlvMultiplier) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4230,6 +7096,19 @@ type BsnTlvName struct {
 	Value []byte
 }
 
+type IBsnTlvName interface {
+	IBsnTlv
+	GetValue() []byte
+}
+
+func (self *BsnTlvName) GetValue() []byte {
+	return self.Value
+}
+
+func (self *BsnTlvName) SetValue(v []byte) {
+	self.Value = v
+}
+
 func (self *BsnTlvName) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4237,7 +7116,6 @@ func (self *BsnTlvName) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4245,7 +7123,7 @@ func (self *BsnTlvName) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeBsnTlvName(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvName, error) {
 	_bsntlvname := &BsnTlvName{BsnTlv: parent}
-	_bsntlvname.Value = decoder.Read(decoder.Length())
+	_bsntlvname.Value = decoder.Read(int(decoder.Length()))
 	return _bsntlvname, nil
 }
 
@@ -4260,12 +7138,15 @@ type BsnTlvNdpOffload struct {
 	*BsnTlv
 }
 
+type IBsnTlvNdpOffload interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvNdpOffload) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4287,12 +7168,15 @@ type BsnTlvNdpStatic struct {
 	*BsnTlv
 }
 
+type IBsnTlvNdpStatic interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvNdpStatic) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4314,12 +7198,15 @@ type BsnTlvNegate struct {
 	*BsnTlv
 }
 
+type IBsnTlvNegate interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvNegate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4342,6 +7229,19 @@ type BsnTlvNextHopIpv4 struct {
 	Value net.IP
 }
 
+type IBsnTlvNextHopIpv4 interface {
+	IBsnTlv
+	GetValue() net.IP
+}
+
+func (self *BsnTlvNextHopIpv4) GetValue() net.IP {
+	return self.Value
+}
+
+func (self *BsnTlvNextHopIpv4) SetValue(v net.IP) {
+	self.Value = v
+}
+
 func (self *BsnTlvNextHopIpv4) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4349,7 +7249,6 @@ func (self *BsnTlvNextHopIpv4) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value.To4())
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4376,6 +7275,19 @@ type BsnTlvNextHopMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvNextHopMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvNextHopMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvNextHopMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvNextHopMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4383,7 +7295,6 @@ func (self *BsnTlvNextHopMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4409,12 +7320,15 @@ type BsnTlvNexthopTypeVxlan struct {
 	*BsnTlv
 }
 
+type IBsnTlvNexthopTypeVxlan interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvNexthopTypeVxlan) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4436,12 +7350,15 @@ type BsnTlvNoArpResponse struct {
 	*BsnTlv
 }
 
+type IBsnTlvNoArpResponse interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvNoArpResponse) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4463,12 +7380,15 @@ type BsnTlvNoNsResponse struct {
 	*BsnTlv
 }
 
+type IBsnTlvNoNsResponse interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvNoNsResponse) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4491,6 +7411,19 @@ type BsnTlvOffset struct {
 	Value uint16
 }
 
+type IBsnTlvOffset interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvOffset) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvOffset) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvOffset) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4498,7 +7431,6 @@ func (self *BsnTlvOffset) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4524,12 +7456,15 @@ type BsnTlvOpticsAlwaysEnabled struct {
 	*BsnTlv
 }
 
+type IBsnTlvOpticsAlwaysEnabled interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvOpticsAlwaysEnabled) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4552,6 +7487,19 @@ type BsnTlvOuterSrcMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvOuterSrcMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvOuterSrcMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvOuterSrcMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvOuterSrcMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4559,7 +7507,6 @@ func (self *BsnTlvOuterSrcMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4583,7 +7530,20 @@ func NewBsnTlvOuterSrcMac() *BsnTlvOuterSrcMac {
 
 type BsnTlvParentPort struct {
 	*BsnTlv
-	Value PortNo
+	Value Port
+}
+
+type IBsnTlvParentPort interface {
+	IBsnTlv
+	GetValue() Port
+}
+
+func (self *BsnTlvParentPort) GetValue() Port {
+	return self.Value
+}
+
+func (self *BsnTlvParentPort) SetValue(v Port) {
+	self.Value = v
 }
 
 func (self *BsnTlvParentPort) Serialize(encoder *goloxi.Encoder) error {
@@ -4593,7 +7553,6 @@ func (self *BsnTlvParentPort) Serialize(encoder *goloxi.Encoder) error {
 
 	self.Value.Serialize(encoder)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4620,6 +7579,19 @@ type BsnTlvPartnerKey struct {
 	Value uint16
 }
 
+type IBsnTlvPartnerKey interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvPartnerKey) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvPartnerKey) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvPartnerKey) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4627,7 +7599,6 @@ func (self *BsnTlvPartnerKey) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4654,6 +7625,19 @@ type BsnTlvPartnerPortNum struct {
 	Value uint16
 }
 
+type IBsnTlvPartnerPortNum interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvPartnerPortNum) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvPartnerPortNum) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvPartnerPortNum) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4661,7 +7645,6 @@ func (self *BsnTlvPartnerPortNum) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4688,6 +7671,19 @@ type BsnTlvPartnerPortPriority struct {
 	Value uint16
 }
 
+type IBsnTlvPartnerPortPriority interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvPartnerPortPriority) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvPartnerPortPriority) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvPartnerPortPriority) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4695,7 +7691,6 @@ func (self *BsnTlvPartnerPortPriority) Serialize(encoder *goloxi.Encoder) error 
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4722,6 +7717,19 @@ type BsnTlvPartnerState struct {
 	Value BsnLacpState
 }
 
+type IBsnTlvPartnerState interface {
+	IBsnTlv
+	GetValue() BsnLacpState
+}
+
+func (self *BsnTlvPartnerState) GetValue() BsnLacpState {
+	return self.Value
+}
+
+func (self *BsnTlvPartnerState) SetValue(v BsnLacpState) {
+	self.Value = v
+}
+
 func (self *BsnTlvPartnerState) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4729,7 +7737,6 @@ func (self *BsnTlvPartnerState) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4756,6 +7763,19 @@ type BsnTlvPartnerSystemMac struct {
 	Value net.HardwareAddr
 }
 
+type IBsnTlvPartnerSystemMac interface {
+	IBsnTlv
+	GetValue() net.HardwareAddr
+}
+
+func (self *BsnTlvPartnerSystemMac) GetValue() net.HardwareAddr {
+	return self.Value
+}
+
+func (self *BsnTlvPartnerSystemMac) SetValue(v net.HardwareAddr) {
+	self.Value = v
+}
+
 func (self *BsnTlvPartnerSystemMac) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4763,7 +7783,6 @@ func (self *BsnTlvPartnerSystemMac) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4790,6 +7809,19 @@ type BsnTlvPartnerSystemPriority struct {
 	Value uint16
 }
 
+type IBsnTlvPartnerSystemPriority interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvPartnerSystemPriority) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvPartnerSystemPriority) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvPartnerSystemPriority) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4797,7 +7829,6 @@ func (self *BsnTlvPartnerSystemPriority) Serialize(encoder *goloxi.Encoder) erro
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4823,12 +7854,15 @@ type BsnTlvPassive struct {
 	*BsnTlv
 }
 
+type IBsnTlvPassive interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvPassive) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4851,6 +7885,19 @@ type BsnTlvPduaRxInstance struct {
 	Value []byte
 }
 
+type IBsnTlvPduaRxInstance interface {
+	IBsnTlv
+	GetValue() []byte
+}
+
+func (self *BsnTlvPduaRxInstance) GetValue() []byte {
+	return self.Value
+}
+
+func (self *BsnTlvPduaRxInstance) SetValue(v []byte) {
+	self.Value = v
+}
+
 func (self *BsnTlvPduaRxInstance) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4858,7 +7905,6 @@ func (self *BsnTlvPduaRxInstance) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4866,7 +7912,7 @@ func (self *BsnTlvPduaRxInstance) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeBsnTlvPduaRxInstance(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvPduaRxInstance, error) {
 	_bsntlvpduarxinstance := &BsnTlvPduaRxInstance{BsnTlv: parent}
-	_bsntlvpduarxinstance.Value = decoder.Read(decoder.Length())
+	_bsntlvpduarxinstance.Value = decoder.Read(int(decoder.Length()))
 	return _bsntlvpduarxinstance, nil
 }
 
@@ -4881,12 +7927,15 @@ type BsnTlvPimDr struct {
 	*BsnTlv
 }
 
+type IBsnTlvPimDr interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvPimDr) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4908,12 +7957,15 @@ type BsnTlvPimHelloFlood struct {
 	*BsnTlv
 }
 
+type IBsnTlvPimHelloFlood interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvPimHelloFlood) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4933,7 +7985,20 @@ func NewBsnTlvPimHelloFlood() *BsnTlvPimHelloFlood {
 
 type BsnTlvPort struct {
 	*BsnTlv
-	Value PortNo
+	Value Port
+}
+
+type IBsnTlvPort interface {
+	IBsnTlv
+	GetValue() Port
+}
+
+func (self *BsnTlvPort) GetValue() Port {
+	return self.Value
+}
+
+func (self *BsnTlvPort) SetValue(v Port) {
+	self.Value = v
 }
 
 func (self *BsnTlvPort) Serialize(encoder *goloxi.Encoder) error {
@@ -4943,7 +8008,6 @@ func (self *BsnTlvPort) Serialize(encoder *goloxi.Encoder) error {
 
 	self.Value.Serialize(encoder)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4970,6 +8034,19 @@ type BsnTlvPortMode struct {
 	Value BsnPortMode
 }
 
+type IBsnTlvPortMode interface {
+	IBsnTlv
+	GetValue() BsnPortMode
+}
+
+func (self *BsnTlvPortMode) GetValue() BsnPortMode {
+	return self.Value
+}
+
+func (self *BsnTlvPortMode) SetValue(v BsnPortMode) {
+	self.Value = v
+}
+
 func (self *BsnTlvPortMode) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -4977,7 +8054,6 @@ func (self *BsnTlvPortMode) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5004,6 +8080,19 @@ type BsnTlvPortSpeedGbps struct {
 	Value uint32
 }
 
+type IBsnTlvPortSpeedGbps interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvPortSpeedGbps) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvPortSpeedGbps) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvPortSpeedGbps) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5011,7 +8100,6 @@ func (self *BsnTlvPortSpeedGbps) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5038,6 +8126,19 @@ type BsnTlvPortUsage struct {
 	Value BsnPortUsage
 }
 
+type IBsnTlvPortUsage interface {
+	IBsnTlv
+	GetValue() BsnPortUsage
+}
+
+func (self *BsnTlvPortUsage) GetValue() BsnPortUsage {
+	return self.Value
+}
+
+func (self *BsnTlvPortUsage) SetValue(v BsnPortUsage) {
+	self.Value = v
+}
+
 func (self *BsnTlvPortUsage) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5045,7 +8146,6 @@ func (self *BsnTlvPortUsage) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5072,6 +8172,19 @@ type BsnTlvPortVxlanMode struct {
 	Value BsnPortVxlanMode
 }
 
+type IBsnTlvPortVxlanMode interface {
+	IBsnTlv
+	GetValue() BsnPortVxlanMode
+}
+
+func (self *BsnTlvPortVxlanMode) GetValue() BsnPortVxlanMode {
+	return self.Value
+}
+
+func (self *BsnTlvPortVxlanMode) SetValue(v BsnPortVxlanMode) {
+	self.Value = v
+}
+
 func (self *BsnTlvPortVxlanMode) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5079,7 +8192,6 @@ func (self *BsnTlvPortVxlanMode) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5106,6 +8218,19 @@ type BsnTlvPriority struct {
 	Value uint32
 }
 
+type IBsnTlvPriority interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvPriority) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvPriority) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvPriority) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5113,7 +8238,6 @@ func (self *BsnTlvPriority) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5139,12 +8263,15 @@ type BsnTlvPushVlanOnEgress struct {
 	*BsnTlv
 }
 
+type IBsnTlvPushVlanOnEgress interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvPushVlanOnEgress) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5167,6 +8294,19 @@ type BsnTlvPushVlanOnIngress struct {
 	Flags BsnPushVlan
 }
 
+type IBsnTlvPushVlanOnIngress interface {
+	IBsnTlv
+	GetFlags() BsnPushVlan
+}
+
+func (self *BsnTlvPushVlanOnIngress) GetFlags() BsnPushVlan {
+	return self.Flags
+}
+
+func (self *BsnTlvPushVlanOnIngress) SetFlags(v BsnPushVlan) {
+	self.Flags = v
+}
+
 func (self *BsnTlvPushVlanOnIngress) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5174,7 +8314,6 @@ func (self *BsnTlvPushVlanOnIngress) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Flags))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5201,6 +8340,19 @@ type BsnTlvQosPriority struct {
 	Value uint32
 }
 
+type IBsnTlvQosPriority interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvQosPriority) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvQosPriority) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvQosPriority) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5208,7 +8360,6 @@ func (self *BsnTlvQosPriority) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5235,6 +8386,19 @@ type BsnTlvQueueId struct {
 	Value uint32
 }
 
+type IBsnTlvQueueId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvQueueId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvQueueId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvQueueId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5242,7 +8406,6 @@ func (self *BsnTlvQueueId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5269,6 +8432,19 @@ type BsnTlvQueueWeight struct {
 	Value uint32
 }
 
+type IBsnTlvQueueWeight interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvQueueWeight) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvQueueWeight) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvQueueWeight) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5276,7 +8452,6 @@ func (self *BsnTlvQueueWeight) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5303,6 +8478,19 @@ type BsnTlvRateLimit struct {
 	Value uint32
 }
 
+type IBsnTlvRateLimit interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvRateLimit) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvRateLimit) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvRateLimit) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5310,7 +8498,6 @@ func (self *BsnTlvRateLimit) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5337,6 +8524,19 @@ type BsnTlvRateUnit struct {
 	Value BsnRateUnit
 }
 
+type IBsnTlvRateUnit interface {
+	IBsnTlv
+	GetValue() BsnRateUnit
+}
+
+func (self *BsnTlvRateUnit) GetValue() BsnRateUnit {
+	return self.Value
+}
+
+func (self *BsnTlvRateUnit) SetValue(v BsnRateUnit) {
+	self.Value = v
+}
+
 func (self *BsnTlvRateUnit) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5344,7 +8544,6 @@ func (self *BsnTlvRateUnit) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5371,6 +8570,19 @@ type BsnTlvRecordPackets struct {
 	Value uint32
 }
 
+type IBsnTlvRecordPackets interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvRecordPackets) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvRecordPackets) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvRecordPackets) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5378,7 +8590,6 @@ func (self *BsnTlvRecordPackets) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5406,6 +8617,28 @@ type BsnTlvReference struct {
 	Key     []IBsnTlv
 }
 
+type IBsnTlvReference interface {
+	IBsnTlv
+	GetTableId() uint16
+	GetKey() []IBsnTlv
+}
+
+func (self *BsnTlvReference) GetTableId() uint16 {
+	return self.TableId
+}
+
+func (self *BsnTlvReference) SetTableId(v uint16) {
+	self.TableId = v
+}
+
+func (self *BsnTlvReference) GetKey() []IBsnTlv {
+	return self.Key
+}
+
+func (self *BsnTlvReference) SetKey(v []IBsnTlv) {
+	self.Key = v
+}
+
 func (self *BsnTlvReference) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5418,7 +8651,6 @@ func (self *BsnTlvReference) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5436,7 +8668,9 @@ func DecodeBsnTlvReference(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvRefe
 		if err != nil {
 			return nil, err
 		}
-		_bsntlvreference.Key = append(_bsntlvreference.Key, item)
+		if item != nil {
+			_bsntlvreference.Key = append(_bsntlvreference.Key, item)
+		}
 	}
 	return _bsntlvreference, nil
 }
@@ -5453,6 +8687,19 @@ type BsnTlvReplyPackets struct {
 	Value uint64
 }
 
+type IBsnTlvReplyPackets interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvReplyPackets) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvReplyPackets) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvReplyPackets) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5460,7 +8707,6 @@ func (self *BsnTlvReplyPackets) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5487,6 +8733,19 @@ type BsnTlvRequestPackets struct {
 	Value uint64
 }
 
+type IBsnTlvRequestPackets interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvRequestPackets) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvRequestPackets) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvRequestPackets) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5494,7 +8753,6 @@ func (self *BsnTlvRequestPackets) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5520,12 +8778,15 @@ type BsnTlvRestServer struct {
 	*BsnTlv
 }
 
+type IBsnTlvRestServer interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvRestServer) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5548,6 +8809,19 @@ type BsnTlvRoutingParam struct {
 	Value BsnRoutingParam
 }
 
+type IBsnTlvRoutingParam interface {
+	IBsnTlv
+	GetValue() BsnRoutingParam
+}
+
+func (self *BsnTlvRoutingParam) GetValue() BsnRoutingParam {
+	return self.Value
+}
+
+func (self *BsnTlvRoutingParam) SetValue(v BsnRoutingParam) {
+	self.Value = v
+}
+
 func (self *BsnTlvRoutingParam) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5555,7 +8829,6 @@ func (self *BsnTlvRoutingParam) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5582,6 +8855,19 @@ type BsnTlvRxBytes struct {
 	Value uint64
 }
 
+type IBsnTlvRxBytes interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvRxBytes) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvRxBytes) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvRxBytes) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5589,7 +8875,6 @@ func (self *BsnTlvRxBytes) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5616,6 +8901,19 @@ type BsnTlvRxPackets struct {
 	Value uint64
 }
 
+type IBsnTlvRxPackets interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvRxPackets) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvRxPackets) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvRxPackets) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5623,7 +8921,6 @@ func (self *BsnTlvRxPackets) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5650,6 +8947,19 @@ type BsnTlvSamplingRate struct {
 	Value uint32
 }
 
+type IBsnTlvSamplingRate interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvSamplingRate) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvSamplingRate) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvSamplingRate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5657,7 +8967,6 @@ func (self *BsnTlvSamplingRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5683,12 +8992,15 @@ type BsnTlvSetLoopbackMode struct {
 	*BsnTlv
 }
 
+type IBsnTlvSetLoopbackMode interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvSetLoopbackMode) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5711,6 +9023,19 @@ type BsnTlvStatus struct {
 	Value BsnStatus
 }
 
+type IBsnTlvStatus interface {
+	IBsnTlv
+	GetValue() BsnStatus
+}
+
+func (self *BsnTlvStatus) GetValue() BsnStatus {
+	return self.Value
+}
+
+func (self *BsnTlvStatus) SetValue(v BsnStatus) {
+	self.Value = v
+}
+
 func (self *BsnTlvStatus) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5718,7 +9043,6 @@ func (self *BsnTlvStatus) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5744,12 +9068,15 @@ type BsnTlvStripMplsL2OnIngress struct {
 	*BsnTlv
 }
 
+type IBsnTlvStripMplsL2OnIngress interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvStripMplsL2OnIngress) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5771,12 +9098,15 @@ type BsnTlvStripMplsL3OnIngress struct {
 	*BsnTlv
 }
 
+type IBsnTlvStripMplsL3OnIngress interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvStripMplsL3OnIngress) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5799,6 +9129,19 @@ type BsnTlvStripVlanOnEgress struct {
 	Flags BsnStripVlan
 }
 
+type IBsnTlvStripVlanOnEgress interface {
+	IBsnTlv
+	GetFlags() BsnStripVlan
+}
+
+func (self *BsnTlvStripVlanOnEgress) GetFlags() BsnStripVlan {
+	return self.Flags
+}
+
+func (self *BsnTlvStripVlanOnEgress) SetFlags(v BsnStripVlan) {
+	self.Flags = v
+}
+
 func (self *BsnTlvStripVlanOnEgress) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5806,7 +9149,6 @@ func (self *BsnTlvStripVlanOnEgress) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Flags))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5833,6 +9175,19 @@ type BsnTlvSubAgentId struct {
 	Value uint32
 }
 
+type IBsnTlvSubAgentId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvSubAgentId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvSubAgentId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvSubAgentId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5840,7 +9195,6 @@ func (self *BsnTlvSubAgentId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5867,6 +9221,19 @@ type BsnTlvTcpDst struct {
 	Value uint16
 }
 
+type IBsnTlvTcpDst interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvTcpDst) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvTcpDst) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvTcpDst) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5874,7 +9241,6 @@ func (self *BsnTlvTcpDst) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5901,6 +9267,19 @@ type BsnTlvTcpFlags struct {
 	Value uint16
 }
 
+type IBsnTlvTcpFlags interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvTcpFlags) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvTcpFlags) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvTcpFlags) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5908,7 +9287,6 @@ func (self *BsnTlvTcpFlags) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5935,6 +9313,19 @@ type BsnTlvTcpSrc struct {
 	Value uint16
 }
 
+type IBsnTlvTcpSrc interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvTcpSrc) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvTcpSrc) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvTcpSrc) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5942,7 +9333,6 @@ func (self *BsnTlvTcpSrc) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5969,6 +9359,19 @@ type BsnTlvTimestamp struct {
 	Value uint64
 }
 
+type IBsnTlvTimestamp interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvTimestamp) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvTimestamp) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvTimestamp) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -5976,7 +9379,6 @@ func (self *BsnTlvTimestamp) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6003,6 +9405,19 @@ type BsnTlvTtl struct {
 	Value uint16
 }
 
+type IBsnTlvTtl interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvTtl) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvTtl) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvTtl) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6010,7 +9425,6 @@ func (self *BsnTlvTtl) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6037,6 +9451,19 @@ type BsnTlvTunnelCapability struct {
 	Value BsnTunnelType
 }
 
+type IBsnTlvTunnelCapability interface {
+	IBsnTlv
+	GetValue() BsnTunnelType
+}
+
+func (self *BsnTlvTunnelCapability) GetValue() BsnTunnelType {
+	return self.Value
+}
+
+func (self *BsnTlvTunnelCapability) SetValue(v BsnTunnelType) {
+	self.Value = v
+}
+
 func (self *BsnTlvTunnelCapability) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6044,7 +9471,6 @@ func (self *BsnTlvTunnelCapability) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6071,6 +9497,19 @@ type BsnTlvTxBytes struct {
 	Value uint64
 }
 
+type IBsnTlvTxBytes interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvTxBytes) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvTxBytes) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvTxBytes) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6078,7 +9517,6 @@ func (self *BsnTlvTxBytes) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6105,6 +9543,19 @@ type BsnTlvTxPackets struct {
 	Value uint64
 }
 
+type IBsnTlvTxPackets interface {
+	IBsnTlv
+	GetValue() uint64
+}
+
+func (self *BsnTlvTxPackets) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvTxPackets) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvTxPackets) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6112,7 +9563,6 @@ func (self *BsnTlvTxPackets) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6139,6 +9589,19 @@ type BsnTlvUdfAnchor struct {
 	Value BsnUdfAnchor
 }
 
+type IBsnTlvUdfAnchor interface {
+	IBsnTlv
+	GetValue() BsnUdfAnchor
+}
+
+func (self *BsnTlvUdfAnchor) GetValue() BsnUdfAnchor {
+	return self.Value
+}
+
+func (self *BsnTlvUdfAnchor) SetValue(v BsnUdfAnchor) {
+	self.Value = v
+}
+
 func (self *BsnTlvUdfAnchor) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6146,7 +9609,6 @@ func (self *BsnTlvUdfAnchor) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6173,6 +9635,19 @@ type BsnTlvUdfCapability struct {
 	Value BsnUdfMode
 }
 
+type IBsnTlvUdfCapability interface {
+	IBsnTlv
+	GetValue() BsnUdfMode
+}
+
+func (self *BsnTlvUdfCapability) GetValue() BsnUdfMode {
+	return self.Value
+}
+
+func (self *BsnTlvUdfCapability) SetValue(v BsnUdfMode) {
+	self.Value = v
+}
+
 func (self *BsnTlvUdfCapability) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6180,7 +9655,6 @@ func (self *BsnTlvUdfCapability) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6207,6 +9681,19 @@ type BsnTlvUdfId struct {
 	Value uint16
 }
 
+type IBsnTlvUdfId interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvUdfId) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvUdfId) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvUdfId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6214,7 +9701,6 @@ func (self *BsnTlvUdfId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6241,6 +9727,19 @@ type BsnTlvUdfLength struct {
 	Value uint16
 }
 
+type IBsnTlvUdfLength interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvUdfLength) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvUdfLength) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvUdfLength) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6248,7 +9747,6 @@ func (self *BsnTlvUdfLength) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6275,6 +9773,19 @@ type BsnTlvUdfOffset struct {
 	Value uint16
 }
 
+type IBsnTlvUdfOffset interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvUdfOffset) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvUdfOffset) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvUdfOffset) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6282,7 +9793,6 @@ func (self *BsnTlvUdfOffset) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6309,6 +9819,19 @@ type BsnTlvUdpDst struct {
 	Value uint16
 }
 
+type IBsnTlvUdpDst interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvUdpDst) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvUdpDst) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvUdpDst) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6316,7 +9839,6 @@ func (self *BsnTlvUdpDst) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6343,6 +9865,19 @@ type BsnTlvUdpSrc struct {
 	Value uint16
 }
 
+type IBsnTlvUdpSrc interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvUdpSrc) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvUdpSrc) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvUdpSrc) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6350,7 +9885,6 @@ func (self *BsnTlvUdpSrc) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6377,6 +9911,19 @@ type BsnTlvUint32 struct {
 	Value uint32
 }
 
+type IBsnTlvUint32 interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvUint32) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvUint32) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvUint32) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6384,7 +9931,6 @@ func (self *BsnTlvUint32) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6411,6 +9957,19 @@ type BsnTlvUint64List struct {
 	Value []*Uint64
 }
 
+type IBsnTlvUint64List interface {
+	IBsnTlv
+	GetValue() []*Uint64
+}
+
+func (self *BsnTlvUint64List) GetValue() []*Uint64 {
+	return self.Value
+}
+
+func (self *BsnTlvUint64List) SetValue(v []*Uint64) {
+	self.Value = v
+}
+
 func (self *BsnTlvUint64List) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6422,7 +9981,6 @@ func (self *BsnTlvUint64List) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6436,7 +9994,9 @@ func DecodeBsnTlvUint64List(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUin
 		if err != nil {
 			return nil, err
 		}
-		_bsntlvuint64list.Value = append(_bsntlvuint64list.Value, item)
+		if item != nil {
+			_bsntlvuint64list.Value = append(_bsntlvuint64list.Value, item)
+		}
 	}
 	return _bsntlvuint64list, nil
 }
@@ -6453,6 +10013,19 @@ type BsnTlvUnicastQueryTimeout struct {
 	Value uint32
 }
 
+type IBsnTlvUnicastQueryTimeout interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvUnicastQueryTimeout) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvUnicastQueryTimeout) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvUnicastQueryTimeout) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6460,7 +10033,6 @@ func (self *BsnTlvUnicastQueryTimeout) Serialize(encoder *goloxi.Encoder) error 
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6487,6 +10059,19 @@ type BsnTlvUnicastRate struct {
 	Value uint32
 }
 
+type IBsnTlvUnicastRate interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvUnicastRate) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvUnicastRate) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvUnicastRate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6494,7 +10079,6 @@ func (self *BsnTlvUnicastRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6521,6 +10105,19 @@ type BsnTlvUnknownMulticastRate struct {
 	Value uint32
 }
 
+type IBsnTlvUnknownMulticastRate interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvUnknownMulticastRate) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvUnknownMulticastRate) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvUnknownMulticastRate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6528,7 +10125,6 @@ func (self *BsnTlvUnknownMulticastRate) Serialize(encoder *goloxi.Encoder) error
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6554,12 +10150,15 @@ type BsnTlvUntagged struct {
 	*BsnTlv
 }
 
+type IBsnTlvUntagged interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvUntagged) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6582,6 +10181,19 @@ type BsnTlvUpgrade struct {
 	Value BsnUpgrade
 }
 
+type IBsnTlvUpgrade interface {
+	IBsnTlv
+	GetValue() BsnUpgrade
+}
+
+func (self *BsnTlvUpgrade) GetValue() BsnUpgrade {
+	return self.Value
+}
+
+func (self *BsnTlvUpgrade) SetValue(v BsnUpgrade) {
+	self.Value = v
+}
+
 func (self *BsnTlvUpgrade) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6589,7 +10201,6 @@ func (self *BsnTlvUpgrade) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6616,6 +10227,19 @@ type BsnTlvUriScheme struct {
 	Value []byte
 }
 
+type IBsnTlvUriScheme interface {
+	IBsnTlv
+	GetValue() []byte
+}
+
+func (self *BsnTlvUriScheme) GetValue() []byte {
+	return self.Value
+}
+
+func (self *BsnTlvUriScheme) SetValue(v []byte) {
+	self.Value = v
+}
+
 func (self *BsnTlvUriScheme) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6623,7 +10247,6 @@ func (self *BsnTlvUriScheme) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Value)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6631,7 +10254,7 @@ func (self *BsnTlvUriScheme) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeBsnTlvUriScheme(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvUriScheme, error) {
 	_bsntlvurischeme := &BsnTlvUriScheme{BsnTlv: parent}
-	_bsntlvurischeme.Value = decoder.Read(decoder.Length())
+	_bsntlvurischeme.Value = decoder.Read(int(decoder.Length()))
 	return _bsntlvurischeme, nil
 }
 
@@ -6647,6 +10270,19 @@ type BsnTlvUsePacketState struct {
 	Value uint8
 }
 
+type IBsnTlvUsePacketState interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvUsePacketState) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvUsePacketState) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvUsePacketState) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6654,7 +10290,6 @@ func (self *BsnTlvUsePacketState) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6680,12 +10315,15 @@ type BsnTlvUserConfigured struct {
 	*BsnTlv
 }
 
+type IBsnTlvUserConfigured interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvUserConfigured) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6708,6 +10346,19 @@ type BsnTlvVfi struct {
 	Value uint16
 }
 
+type IBsnTlvVfi interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvVfi) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvVfi) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvVfi) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6715,7 +10366,6 @@ func (self *BsnTlvVfi) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6742,6 +10392,19 @@ type BsnTlvVfpClassId struct {
 	Value uint32
 }
 
+type IBsnTlvVfpClassId interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvVfpClassId) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvVfpClassId) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvVfpClassId) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6749,7 +10412,6 @@ func (self *BsnTlvVfpClassId) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6775,12 +10437,15 @@ type BsnTlvVirtual struct {
 	*BsnTlv
 }
 
+type IBsnTlvVirtual interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvVirtual) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6803,6 +10468,19 @@ type BsnTlvVlanMacList struct {
 	Key []*BsnVlanMac
 }
 
+type IBsnTlvVlanMacList interface {
+	IBsnTlv
+	GetKey() []*BsnVlanMac
+}
+
+func (self *BsnTlvVlanMacList) GetKey() []*BsnVlanMac {
+	return self.Key
+}
+
+func (self *BsnTlvVlanMacList) SetKey(v []*BsnVlanMac) {
+	self.Key = v
+}
+
 func (self *BsnTlvVlanMacList) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6814,7 +10492,6 @@ func (self *BsnTlvVlanMacList) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6828,7 +10505,9 @@ func DecodeBsnTlvVlanMacList(parent *BsnTlv, decoder *goloxi.Decoder) (*BsnTlvVl
 		if err != nil {
 			return nil, err
 		}
-		_bsntlvvlanmaclist.Key = append(_bsntlvvlanmaclist.Key, item)
+		if item != nil {
+			_bsntlvvlanmaclist.Key = append(_bsntlvvlanmaclist.Key, item)
+		}
 	}
 	return _bsntlvvlanmaclist, nil
 }
@@ -6845,6 +10524,19 @@ type BsnTlvVlanPcp struct {
 	Value uint8
 }
 
+type IBsnTlvVlanPcp interface {
+	IBsnTlv
+	GetValue() uint8
+}
+
+func (self *BsnTlvVlanPcp) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *BsnTlvVlanPcp) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *BsnTlvVlanPcp) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6852,7 +10544,6 @@ func (self *BsnTlvVlanPcp) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint8(uint8(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6879,6 +10570,19 @@ type BsnTlvVlanVid struct {
 	Value uint16
 }
 
+type IBsnTlvVlanVid interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvVlanVid) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvVlanVid) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvVlanVid) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6886,7 +10590,6 @@ func (self *BsnTlvVlanVid) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6913,6 +10616,19 @@ type BsnTlvVlanVidMask struct {
 	Value uint16
 }
 
+type IBsnTlvVlanVidMask interface {
+	IBsnTlv
+	GetValue() uint16
+}
+
+func (self *BsnTlvVlanVidMask) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *BsnTlvVlanVidMask) SetValue(v uint16) {
+	self.Value = v
+}
+
 func (self *BsnTlvVlanVidMask) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6920,7 +10636,6 @@ func (self *BsnTlvVlanVidMask) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6947,6 +10662,19 @@ type BsnTlvVni struct {
 	Value uint32
 }
 
+type IBsnTlvVni interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvVni) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvVni) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvVni) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6954,7 +10682,6 @@ func (self *BsnTlvVni) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6981,6 +10708,19 @@ type BsnTlvVpnKey struct {
 	Value uint32
 }
 
+type IBsnTlvVpnKey interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvVpnKey) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvVpnKey) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvVpnKey) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -6988,7 +10728,6 @@ func (self *BsnTlvVpnKey) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7015,6 +10754,19 @@ type BsnTlvVrf struct {
 	Value uint32
 }
 
+type IBsnTlvVrf interface {
+	IBsnTlv
+	GetValue() uint32
+}
+
+func (self *BsnTlvVrf) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *BsnTlvVrf) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *BsnTlvVrf) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
@@ -7022,7 +10774,6 @@ func (self *BsnTlvVrf) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7048,12 +10799,15 @@ type BsnTlvVxlanEgressLag struct {
 	*BsnTlv
 }
 
+type IBsnTlvVxlanEgressLag interface {
+	IBsnTlv
+}
+
 func (self *BsnTlvVxlanEgressLag) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnTlv.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7086,11 +10840,20 @@ func (self *BsnVport) GetType() uint16 {
 	return self.Type
 }
 
+func (self *BsnVport) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *BsnVport) GetLength() uint16 {
 	return self.Length
 }
 
+func (self *BsnVport) SetLength(v uint16) {
+	self.Length = v
+}
+
 func (self *BsnVport) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Length))
 
@@ -7103,6 +10866,8 @@ func (self *BsnVport) Decode(decoder *goloxi.Decoder) error {
 
 	self.Type = uint16(decoder.ReadUint16())
 	self.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(self.Length), 2+2)
 
 	return nil
@@ -7120,7 +10885,39 @@ type BsnVlanCounterStatsEntry struct {
 	Values  []*Uint64
 }
 
+type IBsnVlanCounterStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetVlanVid() uint16
+	GetValues() []*Uint64
+}
+
+func (self *BsnVlanCounterStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *BsnVlanCounterStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *BsnVlanCounterStatsEntry) GetVlanVid() uint16 {
+	return self.VlanVid
+}
+
+func (self *BsnVlanCounterStatsEntry) SetVlanVid(v uint16) {
+	self.VlanVid = v
+}
+
+func (self *BsnVlanCounterStatsEntry) GetValues() []*Uint64 {
+	return self.Values
+}
+
+func (self *BsnVlanCounterStatsEntry) SetValues(v []*Uint64) {
+	self.Values = v
+}
+
 func (self *BsnVlanCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint16(uint16(self.VlanVid))
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
@@ -7130,7 +10927,6 @@ func (self *BsnVlanCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7142,6 +10938,8 @@ func DecodeBsnVlanCounterStatsEntry(decoder *goloxi.Decoder) (*BsnVlanCounterSta
 		return nil, fmt.Errorf("BsnVlanCounterStatsEntry packet too short: %d < 8", decoder.Length())
 	}
 	_bsnvlancounterstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bsnvlancounterstatsentry.Length), 2+0)
 	_bsnvlancounterstatsentry.VlanVid = uint16(decoder.ReadUint16())
 	decoder.Skip(4)
@@ -7151,7 +10949,9 @@ func DecodeBsnVlanCounterStatsEntry(decoder *goloxi.Decoder) (*BsnVlanCounterSta
 		if err != nil {
 			return nil, err
 		}
-		_bsnvlancounterstatsentry.Values = append(_bsnvlancounterstatsentry.Values, item)
+		if item != nil {
+			_bsnvlancounterstatsentry.Values = append(_bsnvlancounterstatsentry.Values, item)
+		}
 	}
 	return _bsnvlancounterstatsentry, nil
 }
@@ -7166,7 +10966,30 @@ type BsnVlanMac struct {
 	Mac     net.HardwareAddr
 }
 
+type IBsnVlanMac interface {
+	goloxi.Serializable
+	GetVlanVid() uint16
+	GetMac() net.HardwareAddr
+}
+
+func (self *BsnVlanMac) GetVlanVid() uint16 {
+	return self.VlanVid
+}
+
+func (self *BsnVlanMac) SetVlanVid(v uint16) {
+	self.VlanVid = v
+}
+
+func (self *BsnVlanMac) GetMac() net.HardwareAddr {
+	return self.Mac
+}
+
+func (self *BsnVlanMac) SetMac(v net.HardwareAddr) {
+	self.Mac = v
+}
+
 func (self *BsnVlanMac) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.VlanVid))
 	encoder.Write(self.Mac)
 
@@ -7191,8 +11014,8 @@ func NewBsnVlanMac() *BsnVlanMac {
 type BsnVportL2Gre struct {
 	*BsnVport
 	Flags          BsnVportL2GreFlags
-	PortNo         PortNo
-	LoopbackPortNo PortNo
+	PortNo         Port
+	LoopbackPortNo Port
 	LocalMac       net.HardwareAddr
 	NhMac          net.HardwareAddr
 	SrcIp          net.IP
@@ -7202,6 +11025,118 @@ type BsnVportL2Gre struct {
 	Vpn            uint32
 	RateLimit      uint32
 	IfName         string
+}
+
+type IBsnVportL2Gre interface {
+	IBsnVport
+	GetFlags() BsnVportL2GreFlags
+	GetPortNo() Port
+	GetLoopbackPortNo() Port
+	GetLocalMac() net.HardwareAddr
+	GetNhMac() net.HardwareAddr
+	GetSrcIp() net.IP
+	GetDstIp() net.IP
+	GetDscp() uint8
+	GetTtl() uint8
+	GetVpn() uint32
+	GetRateLimit() uint32
+	GetIfName() string
+}
+
+func (self *BsnVportL2Gre) GetFlags() BsnVportL2GreFlags {
+	return self.Flags
+}
+
+func (self *BsnVportL2Gre) SetFlags(v BsnVportL2GreFlags) {
+	self.Flags = v
+}
+
+func (self *BsnVportL2Gre) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *BsnVportL2Gre) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *BsnVportL2Gre) GetLoopbackPortNo() Port {
+	return self.LoopbackPortNo
+}
+
+func (self *BsnVportL2Gre) SetLoopbackPortNo(v Port) {
+	self.LoopbackPortNo = v
+}
+
+func (self *BsnVportL2Gre) GetLocalMac() net.HardwareAddr {
+	return self.LocalMac
+}
+
+func (self *BsnVportL2Gre) SetLocalMac(v net.HardwareAddr) {
+	self.LocalMac = v
+}
+
+func (self *BsnVportL2Gre) GetNhMac() net.HardwareAddr {
+	return self.NhMac
+}
+
+func (self *BsnVportL2Gre) SetNhMac(v net.HardwareAddr) {
+	self.NhMac = v
+}
+
+func (self *BsnVportL2Gre) GetSrcIp() net.IP {
+	return self.SrcIp
+}
+
+func (self *BsnVportL2Gre) SetSrcIp(v net.IP) {
+	self.SrcIp = v
+}
+
+func (self *BsnVportL2Gre) GetDstIp() net.IP {
+	return self.DstIp
+}
+
+func (self *BsnVportL2Gre) SetDstIp(v net.IP) {
+	self.DstIp = v
+}
+
+func (self *BsnVportL2Gre) GetDscp() uint8 {
+	return self.Dscp
+}
+
+func (self *BsnVportL2Gre) SetDscp(v uint8) {
+	self.Dscp = v
+}
+
+func (self *BsnVportL2Gre) GetTtl() uint8 {
+	return self.Ttl
+}
+
+func (self *BsnVportL2Gre) SetTtl(v uint8) {
+	self.Ttl = v
+}
+
+func (self *BsnVportL2Gre) GetVpn() uint32 {
+	return self.Vpn
+}
+
+func (self *BsnVportL2Gre) SetVpn(v uint32) {
+	self.Vpn = v
+}
+
+func (self *BsnVportL2Gre) GetRateLimit() uint32 {
+	return self.RateLimit
+}
+
+func (self *BsnVportL2Gre) SetRateLimit(v uint32) {
+	self.RateLimit = v
+}
+
+func (self *BsnVportL2Gre) GetIfName() string {
+	return self.IfName
+}
+
+func (self *BsnVportL2Gre) SetIfName(v string) {
+	self.IfName = v
 }
 
 func (self *BsnVportL2Gre) Serialize(encoder *goloxi.Encoder) error {
@@ -7223,7 +11158,6 @@ func (self *BsnVportL2Gre) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.RateLimit))
 	encoder.Write([]byte(self.IfName))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7267,6 +11201,64 @@ type BsnVportQInQ struct {
 	IfName        string
 }
 
+type IBsnVportQInQ interface {
+	IBsnVport
+	GetPortNo() uint32
+	GetIngressTpid() uint16
+	GetIngressVlanId() uint16
+	GetEgressTpid() uint16
+	GetEgressVlanId() uint16
+	GetIfName() string
+}
+
+func (self *BsnVportQInQ) GetPortNo() uint32 {
+	return self.PortNo
+}
+
+func (self *BsnVportQInQ) SetPortNo(v uint32) {
+	self.PortNo = v
+}
+
+func (self *BsnVportQInQ) GetIngressTpid() uint16 {
+	return self.IngressTpid
+}
+
+func (self *BsnVportQInQ) SetIngressTpid(v uint16) {
+	self.IngressTpid = v
+}
+
+func (self *BsnVportQInQ) GetIngressVlanId() uint16 {
+	return self.IngressVlanId
+}
+
+func (self *BsnVportQInQ) SetIngressVlanId(v uint16) {
+	self.IngressVlanId = v
+}
+
+func (self *BsnVportQInQ) GetEgressTpid() uint16 {
+	return self.EgressTpid
+}
+
+func (self *BsnVportQInQ) SetEgressTpid(v uint16) {
+	self.EgressTpid = v
+}
+
+func (self *BsnVportQInQ) GetEgressVlanId() uint16 {
+	return self.EgressVlanId
+}
+
+func (self *BsnVportQInQ) SetEgressVlanId(v uint16) {
+	self.EgressVlanId = v
+}
+
+func (self *BsnVportQInQ) GetIfName() string {
+	return self.IfName
+}
+
+func (self *BsnVportQInQ) SetIfName(v string) {
+	self.IfName = v
+}
+
 func (self *BsnVportQInQ) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnVport.Serialize(encoder); err != nil {
 		return err
@@ -7279,7 +11271,6 @@ func (self *BsnVportQInQ) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.EgressVlanId))
 	encoder.Write([]byte(self.IfName))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7312,7 +11303,39 @@ type BsnVrfCounterStatsEntry struct {
 	Values []*Uint64
 }
 
+type IBsnVrfCounterStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetVrf() uint32
+	GetValues() []*Uint64
+}
+
+func (self *BsnVrfCounterStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *BsnVrfCounterStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *BsnVrfCounterStatsEntry) GetVrf() uint32 {
+	return self.Vrf
+}
+
+func (self *BsnVrfCounterStatsEntry) SetVrf(v uint32) {
+	self.Vrf = v
+}
+
+func (self *BsnVrfCounterStatsEntry) GetValues() []*Uint64 {
+	return self.Values
+}
+
+func (self *BsnVrfCounterStatsEntry) SetValues(v []*Uint64) {
+	self.Values = v
+}
+
 func (self *BsnVrfCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.PutUint32(uint32(self.Vrf))
@@ -7322,7 +11345,6 @@ func (self *BsnVrfCounterStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7334,6 +11356,8 @@ func DecodeBsnVrfCounterStatsEntry(decoder *goloxi.Decoder) (*BsnVrfCounterStats
 		return nil, fmt.Errorf("BsnVrfCounterStatsEntry packet too short: %d < 8", decoder.Length())
 	}
 	_bsnvrfcounterstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bsnvrfcounterstatsentry.Length), 2+0)
 	decoder.Skip(2)
 	_bsnvrfcounterstatsentry.Vrf = uint32(decoder.ReadUint32())
@@ -7343,7 +11367,9 @@ func DecodeBsnVrfCounterStatsEntry(decoder *goloxi.Decoder) (*BsnVrfCounterStats
 		if err != nil {
 			return nil, err
 		}
-		_bsnvrfcounterstatsentry.Values = append(_bsnvrfcounterstatsentry.Values, item)
+		if item != nil {
+			_bsnvrfcounterstatsentry.Values = append(_bsnvrfcounterstatsentry.Values, item)
+		}
 	}
 	return _bsnvrfcounterstatsentry, nil
 }
@@ -7356,12 +11382,62 @@ func NewBsnVrfCounterStatsEntry() *BsnVrfCounterStatsEntry {
 type Bucket struct {
 	Len        uint16
 	Weight     uint16
-	WatchPort  PortNo
+	WatchPort  Port
 	WatchGroup uint32
-	Actions    []IAction
+	Actions    []goloxi.IAction
+}
+
+type IBucket interface {
+	goloxi.Serializable
+	GetLen() uint16
+	GetWeight() uint16
+	GetWatchPort() Port
+	GetWatchGroup() uint32
+	GetActions() []goloxi.IAction
+}
+
+func (self *Bucket) GetLen() uint16 {
+	return self.Len
+}
+
+func (self *Bucket) SetLen(v uint16) {
+	self.Len = v
+}
+
+func (self *Bucket) GetWeight() uint16 {
+	return self.Weight
+}
+
+func (self *Bucket) SetWeight(v uint16) {
+	self.Weight = v
+}
+
+func (self *Bucket) GetWatchPort() Port {
+	return self.WatchPort
+}
+
+func (self *Bucket) SetWatchPort(v Port) {
+	self.WatchPort = v
+}
+
+func (self *Bucket) GetWatchGroup() uint32 {
+	return self.WatchGroup
+}
+
+func (self *Bucket) SetWatchGroup(v uint32) {
+	self.WatchGroup = v
+}
+
+func (self *Bucket) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *Bucket) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *Bucket) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Len))
 	encoder.PutUint16(uint16(self.Weight))
 	self.WatchPort.Serialize(encoder)
@@ -7373,7 +11449,6 @@ func (self *Bucket) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7385,6 +11460,8 @@ func DecodeBucket(decoder *goloxi.Decoder) (*Bucket, error) {
 		return nil, fmt.Errorf("Bucket packet too short: %d < 16", decoder.Length())
 	}
 	_bucket.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_bucket.Len), 2+0)
 	_bucket.Weight = uint16(decoder.ReadUint16())
 	_bucket.WatchPort.Decode(decoder)
@@ -7396,7 +11473,9 @@ func DecodeBucket(decoder *goloxi.Decoder) (*Bucket, error) {
 		if err != nil {
 			return nil, err
 		}
-		_bucket.Actions = append(_bucket.Actions, item)
+		if item != nil {
+			_bucket.Actions = append(_bucket.Actions, item)
+		}
 	}
 	return _bucket, nil
 }
@@ -7411,7 +11490,30 @@ type BucketCounter struct {
 	ByteCount   uint64
 }
 
+type IBucketCounter interface {
+	goloxi.Serializable
+	GetPacketCount() uint64
+	GetByteCount() uint64
+}
+
+func (self *BucketCounter) GetPacketCount() uint64 {
+	return self.PacketCount
+}
+
+func (self *BucketCounter) SetPacketCount(v uint64) {
+	self.PacketCount = v
+}
+
+func (self *BucketCounter) GetByteCount() uint64 {
+	return self.ByteCount
+}
+
+func (self *BucketCounter) SetByteCount(v uint64) {
+	self.ByteCount = v
+}
+
 func (self *BucketCounter) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint64(uint64(self.PacketCount))
 	encoder.PutUint64(uint64(self.ByteCount))
 
@@ -7433,6 +11535,709 @@ func NewBucketCounter() *BucketCounter {
 	return obj
 }
 
+type EdPropHeader struct {
+	PropClass uint16
+}
+
+type IEdPropHeader interface {
+	goloxi.Serializable
+	GetPropClass() uint16
+}
+
+func (self *EdPropHeader) GetPropClass() uint16 {
+	return self.PropClass
+}
+
+func (self *EdPropHeader) SetPropClass(v uint16) {
+	self.PropClass = v
+}
+
+func (self *EdPropHeader) Serialize(encoder *goloxi.Encoder) error {
+
+	encoder.PutUint16(uint16(self.PropClass))
+
+	return nil
+}
+
+func DecodeEdPropHeader(decoder *goloxi.Decoder) (IEdPropHeader, error) {
+	_edpropheader := &EdPropHeader{}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("EdPropHeader packet too short: %d < 2", decoder.Length())
+	}
+	_edpropheader.PropClass = uint16(decoder.ReadUint16())
+
+	switch _edpropheader.PropClass {
+	case 4:
+		return DecodeEdPropNsh(_edpropheader, decoder)
+	default:
+		return nil, fmt.Errorf("Invalid type '%d' for 'EdPropHeader'", _edpropheader.PropClass)
+	}
+}
+
+func NewEdPropHeader(_prop_class uint16) *EdPropHeader {
+	obj := &EdPropHeader{}
+	obj.PropClass = _prop_class
+	return obj
+}
+
+type EdPropNsh struct {
+	*EdPropHeader
+	Type uint8
+	Len  uint8
+}
+
+type IEdPropNsh interface {
+	IEdPropHeader
+	GetType() uint8
+	GetLen() uint8
+}
+
+func (self *EdPropNsh) GetType() uint8 {
+	return self.Type
+}
+
+func (self *EdPropNsh) SetType(v uint8) {
+	self.Type = v
+}
+
+func (self *EdPropNsh) GetLen() uint8 {
+	return self.Len
+}
+
+func (self *EdPropNsh) SetLen(v uint8) {
+	self.Len = v
+}
+
+func (self *EdPropNsh) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.EdPropHeader.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.Type))
+	encoder.PutUint8(uint8(self.Len))
+
+	encoder.SkipAlign()
+
+	return nil
+}
+
+func DecodeEdPropNsh(parent *EdPropHeader, decoder *goloxi.Decoder) (IEdPropNsh, error) {
+	_edpropnsh := &EdPropNsh{EdPropHeader: parent}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("EdPropNsh packet too short: %d < 2", decoder.Length())
+	}
+	defer decoder.SkipAlign()
+
+	_edpropnsh.Type = uint8(decoder.ReadByte())
+	_edpropnsh.Len = uint8(decoder.ReadByte())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
+	decoder = decoder.SliceDecoder(int(((_edpropnsh.Len)+7)/8*8), 1+3)
+
+	switch _edpropnsh.Type {
+	case 1:
+		return DecodeEdPropNshMdType(_edpropnsh, decoder)
+	case 2:
+		return DecodeEdPropNshTlv(_edpropnsh, decoder)
+	default:
+		return nil, fmt.Errorf("Invalid type '%d' for 'EdPropNsh'", _edpropnsh.Type)
+	}
+}
+
+func NewEdPropNsh(_type uint8) *EdPropNsh {
+	obj := &EdPropNsh{
+		EdPropHeader: NewEdPropHeader(4),
+	}
+	obj.Type = _type
+	return obj
+}
+
+type EdPropNshMdType struct {
+	*EdPropNsh
+	MdType uint8
+}
+
+type IEdPropNshMdType interface {
+	IEdPropNsh
+	GetMdType() uint8
+}
+
+func (self *EdPropNshMdType) GetMdType() uint8 {
+	return self.MdType
+}
+
+func (self *EdPropNshMdType) SetMdType(v uint8) {
+	self.MdType = v
+}
+
+func (self *EdPropNshMdType) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.EdPropNsh.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.MdType))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
+
+	encoder.Bytes()[3] = uint8(len(encoder.Bytes()))
+
+	return nil
+}
+
+func DecodeEdPropNshMdType(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropNshMdType, error) {
+	_edpropnshmdtype := &EdPropNshMdType{EdPropNsh: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("EdPropNshMdType packet too short: %d < 4", decoder.Length())
+	}
+	_edpropnshmdtype.MdType = uint8(decoder.ReadByte())
+	decoder.Skip(3)
+	return _edpropnshmdtype, nil
+}
+
+func NewEdPropNshMdType() *EdPropNshMdType {
+	obj := &EdPropNshMdType{
+		EdPropNsh: NewEdPropNsh(1),
+	}
+	return obj
+}
+
+type EdPropNshTlv struct {
+	*EdPropNsh
+	TlvClass uint16
+	TlvType  uint8
+	TlvLen   uint8
+	Value    []byte
+}
+
+type IEdPropNshTlv interface {
+	IEdPropNsh
+	GetTlvClass() uint16
+	GetTlvType() uint8
+	GetTlvLen() uint8
+	GetValue() []byte
+}
+
+func (self *EdPropNshTlv) GetTlvClass() uint16 {
+	return self.TlvClass
+}
+
+func (self *EdPropNshTlv) SetTlvClass(v uint16) {
+	self.TlvClass = v
+}
+
+func (self *EdPropNshTlv) GetTlvType() uint8 {
+	return self.TlvType
+}
+
+func (self *EdPropNshTlv) SetTlvType(v uint8) {
+	self.TlvType = v
+}
+
+func (self *EdPropNshTlv) GetTlvLen() uint8 {
+	return self.TlvLen
+}
+
+func (self *EdPropNshTlv) SetTlvLen(v uint8) {
+	self.TlvLen = v
+}
+
+func (self *EdPropNshTlv) GetValue() []byte {
+	return self.Value
+}
+
+func (self *EdPropNshTlv) SetValue(v []byte) {
+	self.Value = v
+}
+
+func (self *EdPropNshTlv) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.EdPropNsh.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint16(uint16(self.TlvClass))
+	encoder.PutUint8(uint8(self.TlvType))
+	encoder.PutUint8(uint8(self.TlvLen))
+	encoder.Write(self.Value)
+
+	encoder.Bytes()[3] = uint8(len(encoder.Bytes()))
+
+	return nil
+}
+
+func DecodeEdPropNshTlv(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropNshTlv, error) {
+	_edpropnshtlv := &EdPropNshTlv{EdPropNsh: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("EdPropNshTlv packet too short: %d < 4", decoder.Length())
+	}
+	_edpropnshtlv.TlvClass = uint16(decoder.ReadUint16())
+	_edpropnshtlv.TlvType = uint8(decoder.ReadByte())
+	_edpropnshtlv.TlvLen = uint8(decoder.ReadByte())
+	_edpropnshtlv.Value = decoder.SliceDecoder(int(_edpropnshtlv.TlvLen), 0).Read(int(_edpropnshtlv.TlvLen))
+	return _edpropnshtlv, nil
+}
+
+func NewEdPropNshTlv() *EdPropNshTlv {
+	obj := &EdPropNshTlv{
+		EdPropNsh: NewEdPropNsh(2),
+	}
+	return obj
+}
+
+type FlowModSpec struct {
+	SrcDst uint8
+	NBits  uint8
+}
+
+type IFlowModSpec interface {
+	goloxi.Serializable
+	GetSrcDst() uint8
+	GetNBits() uint8
+}
+
+func (self *FlowModSpec) GetSrcDst() uint8 {
+	return self.SrcDst
+}
+
+func (self *FlowModSpec) SetSrcDst(v uint8) {
+	self.SrcDst = v
+}
+
+func (self *FlowModSpec) GetNBits() uint8 {
+	return self.NBits
+}
+
+func (self *FlowModSpec) SetNBits(v uint8) {
+	self.NBits = v
+}
+
+func (self *FlowModSpec) Serialize(encoder *goloxi.Encoder) error {
+
+	encoder.PutUint8(uint8(self.SrcDst))
+	encoder.PutUint8(uint8(self.NBits))
+
+	return nil
+}
+
+func DecodeFlowModSpec(decoder *goloxi.Decoder) (IFlowModSpec, error) {
+	_flowmodspec := &FlowModSpec{}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("FlowModSpec packet too short: %d < 2", decoder.Length())
+	}
+	_flowmodspec.SrcDst = uint8(decoder.ReadByte())
+	_flowmodspec.NBits = uint8(decoder.ReadByte())
+	if _flowmodspec.SrcDst == 0 && _flowmodspec.NBits == 0 {
+		return nil, nil
+	}
+
+	switch _flowmodspec.SrcDst {
+	case 0:
+		return DecodeFlowModSpecSrc0Dst0(_flowmodspec, decoder)
+	case 8:
+		return DecodeFlowModSpecSrc0Dst1(_flowmodspec, decoder)
+	case 40:
+		return DecodeFlowModSpecSrc1Dst1(_flowmodspec, decoder)
+	case 16:
+		return DecodeFlowModSpecSrc0Dst2(_flowmodspec, decoder)
+	case 32:
+		return DecodeFlowModSpecSrc1Dst0(_flowmodspec, decoder)
+	default:
+		return nil, fmt.Errorf("Invalid type '%d' for 'FlowModSpec'", _flowmodspec.SrcDst)
+	}
+}
+
+func NewFlowModSpec(_src_dst uint8) *FlowModSpec {
+	obj := &FlowModSpec{}
+	obj.SrcDst = _src_dst
+	return obj
+}
+
+type FlowModSpecSrc0Dst0 struct {
+	*FlowModSpec
+	Src    goloxi.IOxmId
+	SrcOfs uint16
+	Dst    goloxi.IOxmId
+	DstOfs uint16
+}
+
+type IFlowModSpecSrc0Dst0 interface {
+	IFlowModSpec
+	GetSrc() goloxi.IOxmId
+	GetSrcOfs() uint16
+	GetDst() goloxi.IOxmId
+	GetDstOfs() uint16
+}
+
+func (self *FlowModSpecSrc0Dst0) GetSrc() goloxi.IOxmId {
+	return self.Src
+}
+
+func (self *FlowModSpecSrc0Dst0) SetSrc(v goloxi.IOxmId) {
+	self.Src = v
+}
+
+func (self *FlowModSpecSrc0Dst0) GetSrcOfs() uint16 {
+	return self.SrcOfs
+}
+
+func (self *FlowModSpecSrc0Dst0) SetSrcOfs(v uint16) {
+	self.SrcOfs = v
+}
+
+func (self *FlowModSpecSrc0Dst0) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *FlowModSpecSrc0Dst0) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
+}
+
+func (self *FlowModSpecSrc0Dst0) GetDstOfs() uint16 {
+	return self.DstOfs
+}
+
+func (self *FlowModSpecSrc0Dst0) SetDstOfs(v uint16) {
+	self.DstOfs = v
+}
+
+func (self *FlowModSpecSrc0Dst0) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowModSpec.Serialize(encoder); err != nil {
+		return err
+	}
+
+	self.Src.Serialize(encoder)
+	encoder.PutUint16(uint16(self.SrcOfs))
+	self.Dst.Serialize(encoder)
+	encoder.PutUint16(uint16(self.DstOfs))
+
+	return nil
+}
+
+func DecodeFlowModSpecSrc0Dst0(parent *FlowModSpec, decoder *goloxi.Decoder) (IFlowModSpecSrc0Dst0, error) {
+	_flowmodspecsrc0dst0 := &FlowModSpecSrc0Dst0{FlowModSpec: parent}
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("FlowModSpecSrc0Dst0 packet too short: %d < 12", decoder.Length())
+	}
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_flowmodspecsrc0dst0.Src = obj
+	}
+
+	_flowmodspecsrc0dst0.SrcOfs = uint16(decoder.ReadUint16())
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_flowmodspecsrc0dst0.Dst = obj
+	}
+
+	_flowmodspecsrc0dst0.DstOfs = uint16(decoder.ReadUint16())
+	return _flowmodspecsrc0dst0, nil
+}
+
+func NewFlowModSpecSrc0Dst0(_n_bits uint8) *FlowModSpecSrc0Dst0 {
+	obj := &FlowModSpecSrc0Dst0{
+		FlowModSpec: NewFlowModSpec(0),
+	}
+	obj.NBits = _n_bits
+	return obj
+}
+
+type FlowModSpecSrc0Dst1 struct {
+	*FlowModSpec
+	Src    goloxi.IOxmId
+	SrcOfs uint16
+	Dst    goloxi.IOxmId
+	DstOfs uint16
+}
+
+type IFlowModSpecSrc0Dst1 interface {
+	IFlowModSpec
+	GetSrc() goloxi.IOxmId
+	GetSrcOfs() uint16
+	GetDst() goloxi.IOxmId
+	GetDstOfs() uint16
+}
+
+func (self *FlowModSpecSrc0Dst1) GetSrc() goloxi.IOxmId {
+	return self.Src
+}
+
+func (self *FlowModSpecSrc0Dst1) SetSrc(v goloxi.IOxmId) {
+	self.Src = v
+}
+
+func (self *FlowModSpecSrc0Dst1) GetSrcOfs() uint16 {
+	return self.SrcOfs
+}
+
+func (self *FlowModSpecSrc0Dst1) SetSrcOfs(v uint16) {
+	self.SrcOfs = v
+}
+
+func (self *FlowModSpecSrc0Dst1) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *FlowModSpecSrc0Dst1) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
+}
+
+func (self *FlowModSpecSrc0Dst1) GetDstOfs() uint16 {
+	return self.DstOfs
+}
+
+func (self *FlowModSpecSrc0Dst1) SetDstOfs(v uint16) {
+	self.DstOfs = v
+}
+
+func (self *FlowModSpecSrc0Dst1) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowModSpec.Serialize(encoder); err != nil {
+		return err
+	}
+
+	self.Src.Serialize(encoder)
+	encoder.PutUint16(uint16(self.SrcOfs))
+	self.Dst.Serialize(encoder)
+	encoder.PutUint16(uint16(self.DstOfs))
+
+	return nil
+}
+
+func DecodeFlowModSpecSrc0Dst1(parent *FlowModSpec, decoder *goloxi.Decoder) (*FlowModSpecSrc0Dst1, error) {
+	_flowmodspecsrc0dst1 := &FlowModSpecSrc0Dst1{FlowModSpec: parent}
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("FlowModSpecSrc0Dst1 packet too short: %d < 12", decoder.Length())
+	}
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_flowmodspecsrc0dst1.Src = obj
+	}
+
+	_flowmodspecsrc0dst1.SrcOfs = uint16(decoder.ReadUint16())
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_flowmodspecsrc0dst1.Dst = obj
+	}
+
+	_flowmodspecsrc0dst1.DstOfs = uint16(decoder.ReadUint16())
+	return _flowmodspecsrc0dst1, nil
+}
+
+func NewFlowModSpecSrc0Dst1() *FlowModSpecSrc0Dst1 {
+	obj := &FlowModSpecSrc0Dst1{
+		FlowModSpec: NewFlowModSpec(8),
+	}
+	return obj
+}
+
+type FlowModSpecSrc0Dst2 struct {
+	*FlowModSpec
+	Src    goloxi.IOxmId
+	SrcOfs uint16
+}
+
+type IFlowModSpecSrc0Dst2 interface {
+	IFlowModSpec
+	GetSrc() goloxi.IOxmId
+	GetSrcOfs() uint16
+}
+
+func (self *FlowModSpecSrc0Dst2) GetSrc() goloxi.IOxmId {
+	return self.Src
+}
+
+func (self *FlowModSpecSrc0Dst2) SetSrc(v goloxi.IOxmId) {
+	self.Src = v
+}
+
+func (self *FlowModSpecSrc0Dst2) GetSrcOfs() uint16 {
+	return self.SrcOfs
+}
+
+func (self *FlowModSpecSrc0Dst2) SetSrcOfs(v uint16) {
+	self.SrcOfs = v
+}
+
+func (self *FlowModSpecSrc0Dst2) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowModSpec.Serialize(encoder); err != nil {
+		return err
+	}
+
+	self.Src.Serialize(encoder)
+	encoder.PutUint16(uint16(self.SrcOfs))
+
+	return nil
+}
+
+func DecodeFlowModSpecSrc0Dst2(parent *FlowModSpec, decoder *goloxi.Decoder) (*FlowModSpecSrc0Dst2, error) {
+	_flowmodspecsrc0dst2 := &FlowModSpecSrc0Dst2{FlowModSpec: parent}
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("FlowModSpecSrc0Dst2 packet too short: %d < 6", decoder.Length())
+	}
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_flowmodspecsrc0dst2.Src = obj
+	}
+
+	_flowmodspecsrc0dst2.SrcOfs = uint16(decoder.ReadUint16())
+	return _flowmodspecsrc0dst2, nil
+}
+
+func NewFlowModSpecSrc0Dst2() *FlowModSpecSrc0Dst2 {
+	obj := &FlowModSpecSrc0Dst2{
+		FlowModSpec: NewFlowModSpec(16),
+	}
+	return obj
+}
+
+type FlowModSpecSrc1Dst0 struct {
+	*FlowModSpec
+	Src    []byte
+	Dst    goloxi.IOxmId
+	DstOfs uint16
+}
+
+type IFlowModSpecSrc1Dst0 interface {
+	IFlowModSpec
+	GetSrc() []byte
+	GetDst() goloxi.IOxmId
+	GetDstOfs() uint16
+}
+
+func (self *FlowModSpecSrc1Dst0) GetSrc() []byte {
+	return self.Src
+}
+
+func (self *FlowModSpecSrc1Dst0) SetSrc(v []byte) {
+	self.Src = v
+}
+
+func (self *FlowModSpecSrc1Dst0) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *FlowModSpecSrc1Dst0) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
+}
+
+func (self *FlowModSpecSrc1Dst0) GetDstOfs() uint16 {
+	return self.DstOfs
+}
+
+func (self *FlowModSpecSrc1Dst0) SetDstOfs(v uint16) {
+	self.DstOfs = v
+}
+
+func (self *FlowModSpecSrc1Dst0) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowModSpec.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.Write(self.Src)
+	self.Dst.Serialize(encoder)
+	encoder.PutUint16(uint16(self.DstOfs))
+
+	return nil
+}
+
+func DecodeFlowModSpecSrc1Dst0(parent *FlowModSpec, decoder *goloxi.Decoder) (*FlowModSpecSrc1Dst0, error) {
+	_flowmodspecsrc1dst0 := &FlowModSpecSrc1Dst0{FlowModSpec: parent}
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("FlowModSpecSrc1Dst0 packet too short: %d < 6", decoder.Length())
+	}
+	_flowmodspecsrc1dst0.Src = decoder.SliceDecoder(int((_flowmodspecsrc1dst0.NBits+15)/16*2), 0).Read(int(_flowmodspecsrc1dst0.NBits))
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_flowmodspecsrc1dst0.Dst = obj
+	}
+
+	_flowmodspecsrc1dst0.DstOfs = uint16(decoder.ReadUint16())
+	return _flowmodspecsrc1dst0, nil
+}
+
+func NewFlowModSpecSrc1Dst0() *FlowModSpecSrc1Dst0 {
+	obj := &FlowModSpecSrc1Dst0{
+		FlowModSpec: NewFlowModSpec(32),
+	}
+	return obj
+}
+
+type FlowModSpecSrc1Dst1 struct {
+	*FlowModSpec
+	Src    []byte
+	Dst    goloxi.IOxmId
+	DstOfs uint16
+}
+
+type IFlowModSpecSrc1Dst1 interface {
+	IFlowModSpec
+	GetSrc() []byte
+	GetDst() goloxi.IOxmId
+	GetDstOfs() uint16
+}
+
+func (self *FlowModSpecSrc1Dst1) GetSrc() []byte {
+	return self.Src
+}
+
+func (self *FlowModSpecSrc1Dst1) SetSrc(v []byte) {
+	self.Src = v
+}
+
+func (self *FlowModSpecSrc1Dst1) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *FlowModSpecSrc1Dst1) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
+}
+
+func (self *FlowModSpecSrc1Dst1) GetDstOfs() uint16 {
+	return self.DstOfs
+}
+
+func (self *FlowModSpecSrc1Dst1) SetDstOfs(v uint16) {
+	self.DstOfs = v
+}
+
+func (self *FlowModSpecSrc1Dst1) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.FlowModSpec.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.Write(self.Src)
+	self.Dst.Serialize(encoder)
+	encoder.PutUint16(uint16(self.DstOfs))
+
+	return nil
+}
+
+func DecodeFlowModSpecSrc1Dst1(parent *FlowModSpec, decoder *goloxi.Decoder) (*FlowModSpecSrc1Dst1, error) {
+	_flowmodspecsrc1dst1 := &FlowModSpecSrc1Dst1{FlowModSpec: parent}
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("FlowModSpecSrc1Dst1 packet too short: %d < 6", decoder.Length())
+	}
+	_flowmodspecsrc1dst1.Src = decoder.SliceDecoder(int((_flowmodspecsrc1dst1.NBits+15)/16*2), 0).Read(int(_flowmodspecsrc1dst1.NBits))
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_flowmodspecsrc1dst1.Dst = obj
+	}
+
+	_flowmodspecsrc1dst1.DstOfs = uint16(decoder.ReadUint16())
+	return _flowmodspecsrc1dst1, nil
+}
+
+func NewFlowModSpecSrc1Dst1() *FlowModSpecSrc1Dst1 {
+	obj := &FlowModSpecSrc1Dst1{
+		FlowModSpec: NewFlowModSpec(40),
+	}
+	return obj
+}
+
 type FlowStatsEntry struct {
 	Length       uint16
 	TableId      uint8
@@ -7449,7 +12254,129 @@ type FlowStatsEntry struct {
 	Instructions []IInstruction
 }
 
+type IFlowStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetTableId() uint8
+	GetDurationSec() uint32
+	GetDurationNsec() uint32
+	GetPriority() uint16
+	GetIdleTimeout() uint16
+	GetHardTimeout() uint16
+	GetFlags() FlowModFlags
+	GetCookie() uint64
+	GetPacketCount() uint64
+	GetByteCount() uint64
+	GetMatch() Match
+	GetInstructions() []IInstruction
+}
+
+func (self *FlowStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *FlowStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *FlowStatsEntry) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *FlowStatsEntry) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *FlowStatsEntry) GetDurationSec() uint32 {
+	return self.DurationSec
+}
+
+func (self *FlowStatsEntry) SetDurationSec(v uint32) {
+	self.DurationSec = v
+}
+
+func (self *FlowStatsEntry) GetDurationNsec() uint32 {
+	return self.DurationNsec
+}
+
+func (self *FlowStatsEntry) SetDurationNsec(v uint32) {
+	self.DurationNsec = v
+}
+
+func (self *FlowStatsEntry) GetPriority() uint16 {
+	return self.Priority
+}
+
+func (self *FlowStatsEntry) SetPriority(v uint16) {
+	self.Priority = v
+}
+
+func (self *FlowStatsEntry) GetIdleTimeout() uint16 {
+	return self.IdleTimeout
+}
+
+func (self *FlowStatsEntry) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
+func (self *FlowStatsEntry) GetHardTimeout() uint16 {
+	return self.HardTimeout
+}
+
+func (self *FlowStatsEntry) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
+}
+
+func (self *FlowStatsEntry) GetFlags() FlowModFlags {
+	return self.Flags
+}
+
+func (self *FlowStatsEntry) SetFlags(v FlowModFlags) {
+	self.Flags = v
+}
+
+func (self *FlowStatsEntry) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *FlowStatsEntry) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *FlowStatsEntry) GetPacketCount() uint64 {
+	return self.PacketCount
+}
+
+func (self *FlowStatsEntry) SetPacketCount(v uint64) {
+	self.PacketCount = v
+}
+
+func (self *FlowStatsEntry) GetByteCount() uint64 {
+	return self.ByteCount
+}
+
+func (self *FlowStatsEntry) SetByteCount(v uint64) {
+	self.ByteCount = v
+}
+
+func (self *FlowStatsEntry) GetMatch() Match {
+	return self.Match
+}
+
+func (self *FlowStatsEntry) SetMatch(v Match) {
+	self.Match = v
+}
+
+func (self *FlowStatsEntry) GetInstructions() []IInstruction {
+	return self.Instructions
+}
+
+func (self *FlowStatsEntry) SetInstructions(v []IInstruction) {
+	self.Instructions = v
+}
+
 func (self *FlowStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint8(uint8(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 1))
@@ -7473,7 +12400,6 @@ func (self *FlowStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7485,6 +12411,8 @@ func DecodeFlowStatsEntry(decoder *goloxi.Decoder) (*FlowStatsEntry, error) {
 		return nil, fmt.Errorf("FlowStatsEntry packet too short: %d < 56", decoder.Length())
 	}
 	_flowstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_flowstatsentry.Length), 2+0)
 	_flowstatsentry.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(1)
@@ -7509,7 +12437,9 @@ func DecodeFlowStatsEntry(decoder *goloxi.Decoder) (*FlowStatsEntry, error) {
 		if err != nil {
 			return nil, err
 		}
-		_flowstatsentry.Instructions = append(_flowstatsentry.Instructions, item)
+		if item != nil {
+			_flowstatsentry.Instructions = append(_flowstatsentry.Instructions, item)
+		}
 	}
 	return _flowstatsentry, nil
 }
@@ -7526,7 +12456,48 @@ type GroupDescStatsEntry struct {
 	Buckets   []*Bucket
 }
 
+type IGroupDescStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetGroupType() GroupType
+	GetGroupId() uint32
+	GetBuckets() []*Bucket
+}
+
+func (self *GroupDescStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *GroupDescStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *GroupDescStatsEntry) GetGroupType() GroupType {
+	return self.GroupType
+}
+
+func (self *GroupDescStatsEntry) SetGroupType(v GroupType) {
+	self.GroupType = v
+}
+
+func (self *GroupDescStatsEntry) GetGroupId() uint32 {
+	return self.GroupId
+}
+
+func (self *GroupDescStatsEntry) SetGroupId(v uint32) {
+	self.GroupId = v
+}
+
+func (self *GroupDescStatsEntry) GetBuckets() []*Bucket {
+	return self.Buckets
+}
+
+func (self *GroupDescStatsEntry) SetBuckets(v []*Bucket) {
+	self.Buckets = v
+}
+
 func (self *GroupDescStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint8(uint8(self.GroupType))
 	encoder.Write(bytes.Repeat([]byte{0}, 1))
@@ -7537,7 +12508,6 @@ func (self *GroupDescStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7549,6 +12519,8 @@ func DecodeGroupDescStatsEntry(decoder *goloxi.Decoder) (*GroupDescStatsEntry, e
 		return nil, fmt.Errorf("GroupDescStatsEntry packet too short: %d < 8", decoder.Length())
 	}
 	_groupdescstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_groupdescstatsentry.Length), 2+0)
 	_groupdescstatsentry.GroupType = GroupType(decoder.ReadByte())
 	decoder.Skip(1)
@@ -7559,7 +12531,9 @@ func DecodeGroupDescStatsEntry(decoder *goloxi.Decoder) (*GroupDescStatsEntry, e
 		if err != nil {
 			return nil, err
 		}
-		_groupdescstatsentry.Buckets = append(_groupdescstatsentry.Buckets, item)
+		if item != nil {
+			_groupdescstatsentry.Buckets = append(_groupdescstatsentry.Buckets, item)
+		}
 	}
 	return _groupdescstatsentry, nil
 }
@@ -7580,7 +12554,84 @@ type GroupStatsEntry struct {
 	BucketStats  []*BucketCounter
 }
 
+type IGroupStatsEntry interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetGroupId() uint32
+	GetRefCount() uint32
+	GetPacketCount() uint64
+	GetByteCount() uint64
+	GetDurationSec() uint32
+	GetDurationNsec() uint32
+	GetBucketStats() []*BucketCounter
+}
+
+func (self *GroupStatsEntry) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *GroupStatsEntry) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *GroupStatsEntry) GetGroupId() uint32 {
+	return self.GroupId
+}
+
+func (self *GroupStatsEntry) SetGroupId(v uint32) {
+	self.GroupId = v
+}
+
+func (self *GroupStatsEntry) GetRefCount() uint32 {
+	return self.RefCount
+}
+
+func (self *GroupStatsEntry) SetRefCount(v uint32) {
+	self.RefCount = v
+}
+
+func (self *GroupStatsEntry) GetPacketCount() uint64 {
+	return self.PacketCount
+}
+
+func (self *GroupStatsEntry) SetPacketCount(v uint64) {
+	self.PacketCount = v
+}
+
+func (self *GroupStatsEntry) GetByteCount() uint64 {
+	return self.ByteCount
+}
+
+func (self *GroupStatsEntry) SetByteCount(v uint64) {
+	self.ByteCount = v
+}
+
+func (self *GroupStatsEntry) GetDurationSec() uint32 {
+	return self.DurationSec
+}
+
+func (self *GroupStatsEntry) SetDurationSec(v uint32) {
+	self.DurationSec = v
+}
+
+func (self *GroupStatsEntry) GetDurationNsec() uint32 {
+	return self.DurationNsec
+}
+
+func (self *GroupStatsEntry) SetDurationNsec(v uint32) {
+	self.DurationNsec = v
+}
+
+func (self *GroupStatsEntry) GetBucketStats() []*BucketCounter {
+	return self.BucketStats
+}
+
+func (self *GroupStatsEntry) SetBucketStats(v []*BucketCounter) {
+	self.BucketStats = v
+}
+
 func (self *GroupStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.PutUint32(uint32(self.GroupId))
@@ -7596,7 +12647,6 @@ func (self *GroupStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7608,6 +12658,8 @@ func DecodeGroupStatsEntry(decoder *goloxi.Decoder) (*GroupStatsEntry, error) {
 		return nil, fmt.Errorf("GroupStatsEntry packet too short: %d < 40", decoder.Length())
 	}
 	_groupstatsentry.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_groupstatsentry.Length), 2+0)
 	decoder.Skip(2)
 	_groupstatsentry.GroupId = uint32(decoder.ReadUint32())
@@ -7623,7 +12675,9 @@ func DecodeGroupStatsEntry(decoder *goloxi.Decoder) (*GroupStatsEntry, error) {
 		if err != nil {
 			return nil, err
 		}
-		_groupstatsentry.BucketStats = append(_groupstatsentry.BucketStats, item)
+		if item != nil {
+			_groupstatsentry.BucketStats = append(_groupstatsentry.BucketStats, item)
+		}
 	}
 	return _groupstatsentry, nil
 }
@@ -7648,11 +12702,20 @@ func (self *HelloElem) GetType() uint16 {
 	return self.Type
 }
 
+func (self *HelloElem) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *HelloElem) GetLength() uint16 {
 	return self.Length
 }
 
+func (self *HelloElem) SetLength(v uint16) {
+	self.Length = v
+}
+
 func (self *HelloElem) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Length))
 
@@ -7666,6 +12729,8 @@ func DecodeHelloElem(decoder *goloxi.Decoder) (IHelloElem, error) {
 	}
 	_helloelem.Type = uint16(decoder.ReadUint16())
 	_helloelem.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_helloelem.Length), 2+2)
 
 	switch _helloelem.Type {
@@ -7687,6 +12752,19 @@ type HelloElemVersionbitmap struct {
 	Bitmaps []*Uint32
 }
 
+type IHelloElemVersionbitmap interface {
+	IHelloElem
+	GetBitmaps() []*Uint32
+}
+
+func (self *HelloElemVersionbitmap) GetBitmaps() []*Uint32 {
+	return self.Bitmaps
+}
+
+func (self *HelloElemVersionbitmap) SetBitmaps(v []*Uint32) {
+	self.Bitmaps = v
+}
+
 func (self *HelloElemVersionbitmap) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.HelloElem.Serialize(encoder); err != nil {
 		return err
@@ -7698,7 +12776,6 @@ func (self *HelloElemVersionbitmap) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7712,7 +12789,9 @@ func DecodeHelloElemVersionbitmap(parent *HelloElem, decoder *goloxi.Decoder) (*
 		if err != nil {
 			return nil, err
 		}
-		_helloelemversionbitmap.Bitmaps = append(_helloelemversionbitmap.Bitmaps, item)
+		if item != nil {
+			_helloelemversionbitmap.Bitmaps = append(_helloelemversionbitmap.Bitmaps, item)
+		}
 	}
 	return _helloelemversionbitmap, nil
 }
@@ -7739,11 +12818,20 @@ func (self *InstructionId) GetType() uint16 {
 	return self.Type
 }
 
+func (self *InstructionId) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *InstructionId) GetLen() uint16 {
 	return self.Len
 }
 
+func (self *InstructionId) SetLen(v uint16) {
+	self.Len = v
+}
+
 func (self *InstructionId) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Len))
 
@@ -7757,6 +12845,8 @@ func DecodeInstructionId(decoder *goloxi.Decoder) (IInstructionId, error) {
 	}
 	_instructionid.Type = uint16(decoder.ReadUint16())
 	_instructionid.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_instructionid.Len), 2+2)
 
 	switch _instructionid.Type {
@@ -7789,12 +12879,15 @@ type InstructionIdApplyActions struct {
 	*InstructionId
 }
 
+type IInstructionIdApplyActions interface {
+	IInstructionId
+}
+
 func (self *InstructionIdApplyActions) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7824,6 +12917,10 @@ type IInstructionIdExperimenter interface {
 
 func (self *InstructionIdExperimenter) GetExperimenter() uint32 {
 	return self.Experimenter
+}
+
+func (self *InstructionIdExperimenter) SetExperimenter(v uint32) {
+	self.Experimenter = v
 }
 
 func (self *InstructionIdExperimenter) Serialize(encoder *goloxi.Encoder) error {
@@ -7871,6 +12968,10 @@ type IInstructionIdBsn interface {
 
 func (self *InstructionIdBsn) GetSubtype() uint32 {
 	return self.Subtype
+}
+
+func (self *InstructionIdBsn) SetSubtype(v uint32) {
+	self.Subtype = v
 }
 
 func (self *InstructionIdBsn) Serialize(encoder *goloxi.Encoder) error {
@@ -7942,12 +13043,15 @@ type InstructionIdBsnArpOffload struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnArpOffload interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnArpOffload) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7969,12 +13073,15 @@ type InstructionIdBsnAutoNegotiation struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnAutoNegotiation interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnAutoNegotiation) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -7996,12 +13103,15 @@ type InstructionIdBsnDeny struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnDeny interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnDeny) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8023,12 +13133,15 @@ type InstructionIdBsnDhcpOffload struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnDhcpOffload interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnDhcpOffload) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8050,12 +13163,15 @@ type InstructionIdBsnDirectedBroadcast struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnDirectedBroadcast interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnDirectedBroadcast) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8077,12 +13193,15 @@ type InstructionIdBsnDisableL3 struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnDisableL3 interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnDisableL3) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8104,12 +13223,15 @@ type InstructionIdBsnDisableSplitHorizonCheck struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnDisableSplitHorizonCheck interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnDisableSplitHorizonCheck) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8131,12 +13253,15 @@ type InstructionIdBsnDisableSrcMacCheck struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnDisableSrcMacCheck interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnDisableSrcMacCheck) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8158,12 +13283,15 @@ type InstructionIdBsnDisableVlanCounters struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnDisableVlanCounters interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnDisableVlanCounters) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8185,12 +13313,15 @@ type InstructionIdBsnHashSelect struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnHashSelect interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnHashSelect) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8212,12 +13343,15 @@ type InstructionIdBsnInternalPriority struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnInternalPriority interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnInternalPriority) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8239,12 +13373,15 @@ type InstructionIdBsnNdpOffload struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnNdpOffload interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnNdpOffload) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8266,12 +13403,15 @@ type InstructionIdBsnPacketOfDeath struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnPacketOfDeath interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnPacketOfDeath) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8293,12 +13433,15 @@ type InstructionIdBsnPermit struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnPermit interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnPermit) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8320,12 +13463,15 @@ type InstructionIdBsnPrioritizePdus struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnPrioritizePdus interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnPrioritizePdus) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8347,12 +13493,15 @@ type InstructionIdBsnRequireVlanXlate struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnRequireVlanXlate interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnRequireVlanXlate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8374,12 +13523,15 @@ type InstructionIdBsnSpanDestination struct {
 	*InstructionIdBsn
 }
 
+type IInstructionIdBsnSpanDestination interface {
+	IInstructionIdBsn
+}
+
 func (self *InstructionIdBsnSpanDestination) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8401,12 +13553,15 @@ type InstructionIdClearActions struct {
 	*InstructionId
 }
 
+type IInstructionIdClearActions interface {
+	IInstructionId
+}
+
 func (self *InstructionIdClearActions) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8428,12 +13583,15 @@ type InstructionIdGotoTable struct {
 	*InstructionId
 }
 
+type IInstructionIdGotoTable interface {
+	IInstructionId
+}
+
 func (self *InstructionIdGotoTable) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8455,12 +13613,15 @@ type InstructionIdMeter struct {
 	*InstructionId
 }
 
+type IInstructionIdMeter interface {
+	IInstructionId
+}
+
 func (self *InstructionIdMeter) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8482,12 +13643,15 @@ type InstructionIdWriteActions struct {
 	*InstructionId
 }
 
+type IInstructionIdWriteActions interface {
+	IInstructionId
+}
+
 func (self *InstructionIdWriteActions) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8509,12 +13673,15 @@ type InstructionIdWriteMetadata struct {
 	*InstructionId
 }
 
+type IInstructionIdWriteMetadata interface {
+	IInstructionId
+}
+
 func (self *InstructionIdWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.InstructionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8535,10 +13702,42 @@ func NewInstructionIdWriteMetadata() *InstructionIdWriteMetadata {
 type MatchV3 struct {
 	Type    uint16
 	Length  uint16
-	OxmList []IOxm
+	OxmList []goloxi.IOxm
+}
+
+type IMatchV3 interface {
+	goloxi.Serializable
+	GetType() uint16
+	GetLength() uint16
+	GetOxmList() []goloxi.IOxm
+}
+
+func (self *MatchV3) GetType() uint16 {
+	return self.Type
+}
+
+func (self *MatchV3) SetType(v uint16) {
+	self.Type = v
+}
+
+func (self *MatchV3) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *MatchV3) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *MatchV3) GetOxmList() []goloxi.IOxm {
+	return self.OxmList
+}
+
+func (self *MatchV3) SetOxmList(v []goloxi.IOxm) {
+	self.OxmList = v
 }
 
 func (self *MatchV3) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Length))
 	for _, obj := range self.OxmList {
@@ -8549,7 +13748,6 @@ func (self *MatchV3) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8559,22 +13757,23 @@ func (self *MatchV3) Decode(decoder *goloxi.Decoder) error {
 		return fmt.Errorf("MatchV3 packet too short: %d < 4", decoder.Length())
 	}
 
+	defer decoder.SkipAlign()
+
 	self.Type = uint16(decoder.ReadUint16())
-	// if self.Type != 1 {
-	// 	return fmt.Errorf("Wrong value '%d' for type, expected '1'.", self.Type)
-	// }
 	self.Length = uint16(decoder.ReadUint16())
-	decoder = decoder.SliceDecoder(int(self.Length), 2+2)
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
+	decoder = decoder.SliceDecoder(int(((self.Length)+7)/8*8), 2+2)
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeOxm(decoder)
 		if err != nil {
 			return err
 		}
-		self.OxmList = append(self.OxmList, item)
+		if item != nil {
+			self.OxmList = append(self.OxmList, item)
+		}
 	}
-
-	decoder.SkipAlign()
 
 	return nil
 }
@@ -8599,11 +13798,20 @@ func (self *MeterBand) GetType() uint16 {
 	return self.Type
 }
 
+func (self *MeterBand) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *MeterBand) GetLen() uint16 {
 	return self.Len
 }
 
+func (self *MeterBand) SetLen(v uint16) {
+	self.Len = v
+}
+
 func (self *MeterBand) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Len))
 
@@ -8617,6 +13825,8 @@ func DecodeMeterBand(decoder *goloxi.Decoder) (IMeterBand, error) {
 	}
 	_meterband.Type = uint16(decoder.ReadUint16())
 	_meterband.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_meterband.Len), 2+2)
 
 	switch _meterband.Type {
@@ -8643,6 +13853,28 @@ type MeterBandDrop struct {
 	BurstSize uint32
 }
 
+type IMeterBandDrop interface {
+	IMeterBand
+	GetRate() uint32
+	GetBurstSize() uint32
+}
+
+func (self *MeterBandDrop) GetRate() uint32 {
+	return self.Rate
+}
+
+func (self *MeterBandDrop) SetRate(v uint32) {
+	self.Rate = v
+}
+
+func (self *MeterBandDrop) GetBurstSize() uint32 {
+	return self.BurstSize
+}
+
+func (self *MeterBandDrop) SetBurstSize(v uint32) {
+	self.BurstSize = v
+}
+
 func (self *MeterBandDrop) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.MeterBand.Serialize(encoder); err != nil {
 		return err
@@ -8652,7 +13884,6 @@ func (self *MeterBandDrop) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.BurstSize))
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8683,6 +13914,37 @@ type MeterBandDscpRemark struct {
 	PrecLevel uint8
 }
 
+type IMeterBandDscpRemark interface {
+	IMeterBand
+	GetRate() uint32
+	GetBurstSize() uint32
+	GetPrecLevel() uint8
+}
+
+func (self *MeterBandDscpRemark) GetRate() uint32 {
+	return self.Rate
+}
+
+func (self *MeterBandDscpRemark) SetRate(v uint32) {
+	self.Rate = v
+}
+
+func (self *MeterBandDscpRemark) GetBurstSize() uint32 {
+	return self.BurstSize
+}
+
+func (self *MeterBandDscpRemark) SetBurstSize(v uint32) {
+	self.BurstSize = v
+}
+
+func (self *MeterBandDscpRemark) GetPrecLevel() uint8 {
+	return self.PrecLevel
+}
+
+func (self *MeterBandDscpRemark) SetPrecLevel(v uint8) {
+	self.PrecLevel = v
+}
+
 func (self *MeterBandDscpRemark) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.MeterBand.Serialize(encoder); err != nil {
 		return err
@@ -8693,7 +13955,6 @@ func (self *MeterBandDscpRemark) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.PrecLevel))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8725,6 +13986,37 @@ type MeterBandExperimenter struct {
 	Experimenter uint32
 }
 
+type IMeterBandExperimenter interface {
+	IMeterBand
+	GetRate() uint32
+	GetBurstSize() uint32
+	GetExperimenter() uint32
+}
+
+func (self *MeterBandExperimenter) GetRate() uint32 {
+	return self.Rate
+}
+
+func (self *MeterBandExperimenter) SetRate(v uint32) {
+	self.Rate = v
+}
+
+func (self *MeterBandExperimenter) GetBurstSize() uint32 {
+	return self.BurstSize
+}
+
+func (self *MeterBandExperimenter) SetBurstSize(v uint32) {
+	self.BurstSize = v
+}
+
+func (self *MeterBandExperimenter) GetExperimenter() uint32 {
+	return self.Experimenter
+}
+
+func (self *MeterBandExperimenter) SetExperimenter(v uint32) {
+	self.Experimenter = v
+}
+
 func (self *MeterBandExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.MeterBand.Serialize(encoder); err != nil {
 		return err
@@ -8734,7 +14026,6 @@ func (self *MeterBandExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.BurstSize))
 	encoder.PutUint32(uint32(self.Experimenter))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8763,7 +14054,30 @@ type MeterBandStats struct {
 	ByteBandCount   uint64
 }
 
+type IMeterBandStats interface {
+	goloxi.Serializable
+	GetPacketBandCount() uint64
+	GetByteBandCount() uint64
+}
+
+func (self *MeterBandStats) GetPacketBandCount() uint64 {
+	return self.PacketBandCount
+}
+
+func (self *MeterBandStats) SetPacketBandCount(v uint64) {
+	self.PacketBandCount = v
+}
+
+func (self *MeterBandStats) GetByteBandCount() uint64 {
+	return self.ByteBandCount
+}
+
+func (self *MeterBandStats) SetByteBandCount(v uint64) {
+	self.ByteBandCount = v
+}
+
 func (self *MeterBandStats) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint64(uint64(self.PacketBandCount))
 	encoder.PutUint64(uint64(self.ByteBandCount))
 
@@ -8792,7 +14106,48 @@ type MeterConfig struct {
 	Entries []IMeterBand
 }
 
+type IMeterConfig interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetFlags() MeterFlags
+	GetMeterId() uint32
+	GetEntries() []IMeterBand
+}
+
+func (self *MeterConfig) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *MeterConfig) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *MeterConfig) GetFlags() MeterFlags {
+	return self.Flags
+}
+
+func (self *MeterConfig) SetFlags(v MeterFlags) {
+	self.Flags = v
+}
+
+func (self *MeterConfig) GetMeterId() uint32 {
+	return self.MeterId
+}
+
+func (self *MeterConfig) SetMeterId(v uint32) {
+	self.MeterId = v
+}
+
+func (self *MeterConfig) GetEntries() []IMeterBand {
+	return self.Entries
+}
+
+func (self *MeterConfig) SetEntries(v []IMeterBand) {
+	self.Entries = v
+}
+
 func (self *MeterConfig) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint16(uint16(self.Flags))
 	encoder.PutUint32(uint32(self.MeterId))
@@ -8802,7 +14157,6 @@ func (self *MeterConfig) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8814,6 +14168,8 @@ func DecodeMeterConfig(decoder *goloxi.Decoder) (*MeterConfig, error) {
 		return nil, fmt.Errorf("MeterConfig packet too short: %d < 8", decoder.Length())
 	}
 	_meterconfig.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_meterconfig.Length), 2+0)
 	_meterconfig.Flags = MeterFlags(decoder.ReadUint16())
 	_meterconfig.MeterId = uint32(decoder.ReadUint32())
@@ -8823,7 +14179,9 @@ func DecodeMeterConfig(decoder *goloxi.Decoder) (*MeterConfig, error) {
 		if err != nil {
 			return nil, err
 		}
-		_meterconfig.Entries = append(_meterconfig.Entries, item)
+		if item != nil {
+			_meterconfig.Entries = append(_meterconfig.Entries, item)
+		}
 	}
 	return _meterconfig, nil
 }
@@ -8841,7 +14199,57 @@ type MeterFeatures struct {
 	MaxColor     uint8
 }
 
+type IMeterFeatures interface {
+	goloxi.Serializable
+	GetMaxMeter() uint32
+	GetBandTypes() uint32
+	GetCapabilities() uint32
+	GetMaxBands() uint8
+	GetMaxColor() uint8
+}
+
+func (self *MeterFeatures) GetMaxMeter() uint32 {
+	return self.MaxMeter
+}
+
+func (self *MeterFeatures) SetMaxMeter(v uint32) {
+	self.MaxMeter = v
+}
+
+func (self *MeterFeatures) GetBandTypes() uint32 {
+	return self.BandTypes
+}
+
+func (self *MeterFeatures) SetBandTypes(v uint32) {
+	self.BandTypes = v
+}
+
+func (self *MeterFeatures) GetCapabilities() uint32 {
+	return self.Capabilities
+}
+
+func (self *MeterFeatures) SetCapabilities(v uint32) {
+	self.Capabilities = v
+}
+
+func (self *MeterFeatures) GetMaxBands() uint8 {
+	return self.MaxBands
+}
+
+func (self *MeterFeatures) SetMaxBands(v uint8) {
+	self.MaxBands = v
+}
+
+func (self *MeterFeatures) GetMaxColor() uint8 {
+	return self.MaxColor
+}
+
+func (self *MeterFeatures) SetMaxColor(v uint8) {
+	self.MaxColor = v
+}
+
 func (self *MeterFeatures) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint32(uint32(self.MaxMeter))
 	encoder.PutUint32(uint32(self.BandTypes))
 	encoder.PutUint32(uint32(self.Capabilities))
@@ -8882,7 +14290,84 @@ type MeterStats struct {
 	BandStats     []*MeterBandStats
 }
 
+type IMeterStats interface {
+	goloxi.Serializable
+	GetMeterId() uint32
+	GetLen() uint16
+	GetFlowCount() uint32
+	GetPacketInCount() uint64
+	GetByteInCount() uint64
+	GetDurationSec() uint32
+	GetDurationNsec() uint32
+	GetBandStats() []*MeterBandStats
+}
+
+func (self *MeterStats) GetMeterId() uint32 {
+	return self.MeterId
+}
+
+func (self *MeterStats) SetMeterId(v uint32) {
+	self.MeterId = v
+}
+
+func (self *MeterStats) GetLen() uint16 {
+	return self.Len
+}
+
+func (self *MeterStats) SetLen(v uint16) {
+	self.Len = v
+}
+
+func (self *MeterStats) GetFlowCount() uint32 {
+	return self.FlowCount
+}
+
+func (self *MeterStats) SetFlowCount(v uint32) {
+	self.FlowCount = v
+}
+
+func (self *MeterStats) GetPacketInCount() uint64 {
+	return self.PacketInCount
+}
+
+func (self *MeterStats) SetPacketInCount(v uint64) {
+	self.PacketInCount = v
+}
+
+func (self *MeterStats) GetByteInCount() uint64 {
+	return self.ByteInCount
+}
+
+func (self *MeterStats) SetByteInCount(v uint64) {
+	self.ByteInCount = v
+}
+
+func (self *MeterStats) GetDurationSec() uint32 {
+	return self.DurationSec
+}
+
+func (self *MeterStats) SetDurationSec(v uint32) {
+	self.DurationSec = v
+}
+
+func (self *MeterStats) GetDurationNsec() uint32 {
+	return self.DurationNsec
+}
+
+func (self *MeterStats) SetDurationNsec(v uint32) {
+	self.DurationNsec = v
+}
+
+func (self *MeterStats) GetBandStats() []*MeterBandStats {
+	return self.BandStats
+}
+
+func (self *MeterStats) SetBandStats(v []*MeterBandStats) {
+	self.BandStats = v
+}
+
 func (self *MeterStats) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint32(uint32(self.MeterId))
 	encoder.PutUint16(uint16(self.Len))
 	encoder.Write(bytes.Repeat([]byte{0}, 6))
@@ -8897,7 +14382,6 @@ func (self *MeterStats) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[4:6], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8910,6 +14394,8 @@ func DecodeMeterStats(decoder *goloxi.Decoder) (*MeterStats, error) {
 	}
 	_meterstats.MeterId = uint32(decoder.ReadUint32())
 	_meterstats.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_meterstats.Len), 2+4)
 	decoder.Skip(6)
 	_meterstats.FlowCount = uint32(decoder.ReadUint32())
@@ -8923,7 +14409,9 @@ func DecodeMeterStats(decoder *goloxi.Decoder) (*MeterStats, error) {
 		if err != nil {
 			return nil, err
 		}
-		_meterstats.BandStats = append(_meterstats.BandStats, item)
+		if item != nil {
+			_meterstats.BandStats = append(_meterstats.BandStats, item)
+		}
 	}
 	return _meterstats, nil
 }
@@ -8934,10 +14422,24 @@ func NewMeterStats() *MeterStats {
 }
 
 type NiciraMatch struct {
-	NxmEntries []IOxm
+	NxmEntries []goloxi.IOxm
+}
+
+type INiciraMatch interface {
+	goloxi.Serializable
+	GetNxmEntries() []goloxi.IOxm
+}
+
+func (self *NiciraMatch) GetNxmEntries() []goloxi.IOxm {
+	return self.NxmEntries
+}
+
+func (self *NiciraMatch) SetNxmEntries(v []goloxi.IOxm) {
+	self.NxmEntries = v
 }
 
 func (self *NiciraMatch) Serialize(encoder *goloxi.Encoder) error {
+
 	for _, obj := range self.NxmEntries {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
@@ -8950,15 +14452,17 @@ func (self *NiciraMatch) Serialize(encoder *goloxi.Encoder) error {
 }
 func (self *NiciraMatch) Decode(decoder *goloxi.Decoder) error {
 
+	defer decoder.SkipAlign()
+
 	for decoder.Length() >= 4 {
 		item, err := DecodeOxm(decoder)
 		if err != nil {
 			return err
 		}
-		self.NxmEntries = append(self.NxmEntries, item)
+		if item != nil {
+			self.NxmEntries = append(self.NxmEntries, item)
+		}
 	}
-
-	decoder.SkipAlign()
 
 	return nil
 }
@@ -8983,10 +14487,150 @@ type NiciraFlowStats struct {
 	PacketCount  uint64
 	ByteCount    uint64
 	Match        NiciraMatch
-	Actions      []IAction
+	Actions      []goloxi.IAction
+}
+
+type INiciraFlowStats interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetTableId() uint8
+	GetDurationSec() uint32
+	GetDurationNsec() uint32
+	GetPriority() uint16
+	GetIdleTimeout() uint16
+	GetHardTimeout() uint16
+	GetMatchLen() uint16
+	GetIdleAge() uint16
+	GetHardAge() uint16
+	GetCookie() uint64
+	GetPacketCount() uint64
+	GetByteCount() uint64
+	GetMatch() NiciraMatch
+	GetActions() []goloxi.IAction
+}
+
+func (self *NiciraFlowStats) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *NiciraFlowStats) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *NiciraFlowStats) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *NiciraFlowStats) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *NiciraFlowStats) GetDurationSec() uint32 {
+	return self.DurationSec
+}
+
+func (self *NiciraFlowStats) SetDurationSec(v uint32) {
+	self.DurationSec = v
+}
+
+func (self *NiciraFlowStats) GetDurationNsec() uint32 {
+	return self.DurationNsec
+}
+
+func (self *NiciraFlowStats) SetDurationNsec(v uint32) {
+	self.DurationNsec = v
+}
+
+func (self *NiciraFlowStats) GetPriority() uint16 {
+	return self.Priority
+}
+
+func (self *NiciraFlowStats) SetPriority(v uint16) {
+	self.Priority = v
+}
+
+func (self *NiciraFlowStats) GetIdleTimeout() uint16 {
+	return self.IdleTimeout
+}
+
+func (self *NiciraFlowStats) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
+func (self *NiciraFlowStats) GetHardTimeout() uint16 {
+	return self.HardTimeout
+}
+
+func (self *NiciraFlowStats) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
+}
+
+func (self *NiciraFlowStats) GetMatchLen() uint16 {
+	return self.MatchLen
+}
+
+func (self *NiciraFlowStats) SetMatchLen(v uint16) {
+	self.MatchLen = v
+}
+
+func (self *NiciraFlowStats) GetIdleAge() uint16 {
+	return self.IdleAge
+}
+
+func (self *NiciraFlowStats) SetIdleAge(v uint16) {
+	self.IdleAge = v
+}
+
+func (self *NiciraFlowStats) GetHardAge() uint16 {
+	return self.HardAge
+}
+
+func (self *NiciraFlowStats) SetHardAge(v uint16) {
+	self.HardAge = v
+}
+
+func (self *NiciraFlowStats) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *NiciraFlowStats) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *NiciraFlowStats) GetPacketCount() uint64 {
+	return self.PacketCount
+}
+
+func (self *NiciraFlowStats) SetPacketCount(v uint64) {
+	self.PacketCount = v
+}
+
+func (self *NiciraFlowStats) GetByteCount() uint64 {
+	return self.ByteCount
+}
+
+func (self *NiciraFlowStats) SetByteCount(v uint64) {
+	self.ByteCount = v
+}
+
+func (self *NiciraFlowStats) GetMatch() NiciraMatch {
+	return self.Match
+}
+
+func (self *NiciraFlowStats) SetMatch(v NiciraMatch) {
+	self.Match = v
+}
+
+func (self *NiciraFlowStats) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *NiciraFlowStats) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *NiciraFlowStats) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint8(uint8(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 1))
@@ -9011,7 +14655,6 @@ func (self *NiciraFlowStats) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9023,6 +14666,8 @@ func DecodeNiciraFlowStats(decoder *goloxi.Decoder) (*NiciraFlowStats, error) {
 		return nil, fmt.Errorf("NiciraFlowStats packet too short: %d < 48", decoder.Length())
 	}
 	_niciraflowstats.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_niciraflowstats.Length), 2+0)
 	_niciraflowstats.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(1)
@@ -9048,7 +14693,9 @@ func DecodeNiciraFlowStats(decoder *goloxi.Decoder) (*NiciraFlowStats, error) {
 		if err != nil {
 			return nil, err
 		}
-		_niciraflowstats.Actions = append(_niciraflowstats.Actions, item)
+		if item != nil {
+			_niciraflowstats.Actions = append(_niciraflowstats.Actions, item)
+		}
 	}
 	return _niciraflowstats, nil
 }
@@ -9073,11 +14720,20 @@ func (self *NiciraFlowUpdateEvent) GetLength() uint16 {
 	return self.Length
 }
 
+func (self *NiciraFlowUpdateEvent) SetLength(v uint16) {
+	self.Length = v
+}
+
 func (self *NiciraFlowUpdateEvent) GetEvent() uint16 {
 	return self.Event
 }
 
+func (self *NiciraFlowUpdateEvent) SetEvent(v uint16) {
+	self.Event = v
+}
+
 func (self *NiciraFlowUpdateEvent) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint16(uint16(self.Event))
 
@@ -9090,6 +14746,8 @@ func DecodeNiciraFlowUpdateEvent(decoder *goloxi.Decoder) (INiciraFlowUpdateEven
 		return nil, fmt.Errorf("NiciraFlowUpdateEvent packet too short: %d < 4", decoder.Length())
 	}
 	_niciraflowupdateevent.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_niciraflowupdateevent.Length), 2+0)
 	_niciraflowupdateevent.Event = uint16(decoder.ReadUint16())
 
@@ -9121,7 +14779,92 @@ type NiciraFlowUpdateFullAdd struct {
 	TableId     uint8
 	Cookie      uint64
 	Match       NiciraMatch
-	Actions     []IAction
+	Actions     []goloxi.IAction
+}
+
+type INiciraFlowUpdateFullAdd interface {
+	INiciraFlowUpdateEvent
+	GetReason() uint16
+	GetPriority() uint16
+	GetIdleTimeout() uint16
+	GetHardTimeout() uint16
+	GetMatchLen() uint16
+	GetTableId() uint8
+	GetCookie() uint64
+	GetMatch() NiciraMatch
+	GetActions() []goloxi.IAction
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetReason() uint16 {
+	return self.Reason
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetReason(v uint16) {
+	self.Reason = v
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetPriority() uint16 {
+	return self.Priority
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetPriority(v uint16) {
+	self.Priority = v
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetIdleTimeout() uint16 {
+	return self.IdleTimeout
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetHardTimeout() uint16 {
+	return self.HardTimeout
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetMatchLen() uint16 {
+	return self.MatchLen
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetMatchLen(v uint16) {
+	self.MatchLen = v
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetMatch() NiciraMatch {
+	return self.Match
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetMatch(v NiciraMatch) {
+	self.Match = v
+}
+
+func (self *NiciraFlowUpdateFullAdd) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *NiciraFlowUpdateFullAdd) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *NiciraFlowUpdateFullAdd) Serialize(encoder *goloxi.Encoder) error {
@@ -9147,7 +14890,6 @@ func (self *NiciraFlowUpdateFullAdd) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9177,7 +14919,9 @@ func DecodeNiciraFlowUpdateFullAdd(parent *NiciraFlowUpdateEvent, decoder *golox
 		if err != nil {
 			return nil, err
 		}
-		_niciraflowupdatefulladd.Actions = append(_niciraflowupdatefulladd.Actions, item)
+		if item != nil {
+			_niciraflowupdatefulladd.Actions = append(_niciraflowupdatefulladd.Actions, item)
+		}
 	}
 	return _niciraflowupdatefulladd, nil
 }
@@ -9199,7 +14943,92 @@ type NiciraFlowUpdateFullDeleted struct {
 	TableId     uint8
 	Cookie      uint64
 	Match       NiciraMatch
-	Actions     []IAction
+	Actions     []goloxi.IAction
+}
+
+type INiciraFlowUpdateFullDeleted interface {
+	INiciraFlowUpdateEvent
+	GetReason() uint16
+	GetPriority() uint16
+	GetIdleTimeout() uint16
+	GetHardTimeout() uint16
+	GetMatchLen() uint16
+	GetTableId() uint8
+	GetCookie() uint64
+	GetMatch() NiciraMatch
+	GetActions() []goloxi.IAction
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetReason() uint16 {
+	return self.Reason
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetReason(v uint16) {
+	self.Reason = v
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetPriority() uint16 {
+	return self.Priority
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetPriority(v uint16) {
+	self.Priority = v
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetIdleTimeout() uint16 {
+	return self.IdleTimeout
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetHardTimeout() uint16 {
+	return self.HardTimeout
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetMatchLen() uint16 {
+	return self.MatchLen
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetMatchLen(v uint16) {
+	self.MatchLen = v
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetMatch() NiciraMatch {
+	return self.Match
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetMatch(v NiciraMatch) {
+	self.Match = v
+}
+
+func (self *NiciraFlowUpdateFullDeleted) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *NiciraFlowUpdateFullDeleted) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *NiciraFlowUpdateFullDeleted) Serialize(encoder *goloxi.Encoder) error {
@@ -9225,7 +15054,6 @@ func (self *NiciraFlowUpdateFullDeleted) Serialize(encoder *goloxi.Encoder) erro
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9255,7 +15083,9 @@ func DecodeNiciraFlowUpdateFullDeleted(parent *NiciraFlowUpdateEvent, decoder *g
 		if err != nil {
 			return nil, err
 		}
-		_niciraflowupdatefulldeleted.Actions = append(_niciraflowupdatefulldeleted.Actions, item)
+		if item != nil {
+			_niciraflowupdatefulldeleted.Actions = append(_niciraflowupdatefulldeleted.Actions, item)
+		}
 	}
 	return _niciraflowupdatefulldeleted, nil
 }
@@ -9277,7 +15107,92 @@ type NiciraFlowUpdateFullModified struct {
 	TableId     uint8
 	Cookie      uint64
 	Match       NiciraMatch
-	Actions     []IAction
+	Actions     []goloxi.IAction
+}
+
+type INiciraFlowUpdateFullModified interface {
+	INiciraFlowUpdateEvent
+	GetReason() uint16
+	GetPriority() uint16
+	GetIdleTimeout() uint16
+	GetHardTimeout() uint16
+	GetMatchLen() uint16
+	GetTableId() uint8
+	GetCookie() uint64
+	GetMatch() NiciraMatch
+	GetActions() []goloxi.IAction
+}
+
+func (self *NiciraFlowUpdateFullModified) GetReason() uint16 {
+	return self.Reason
+}
+
+func (self *NiciraFlowUpdateFullModified) SetReason(v uint16) {
+	self.Reason = v
+}
+
+func (self *NiciraFlowUpdateFullModified) GetPriority() uint16 {
+	return self.Priority
+}
+
+func (self *NiciraFlowUpdateFullModified) SetPriority(v uint16) {
+	self.Priority = v
+}
+
+func (self *NiciraFlowUpdateFullModified) GetIdleTimeout() uint16 {
+	return self.IdleTimeout
+}
+
+func (self *NiciraFlowUpdateFullModified) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
+func (self *NiciraFlowUpdateFullModified) GetHardTimeout() uint16 {
+	return self.HardTimeout
+}
+
+func (self *NiciraFlowUpdateFullModified) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
+}
+
+func (self *NiciraFlowUpdateFullModified) GetMatchLen() uint16 {
+	return self.MatchLen
+}
+
+func (self *NiciraFlowUpdateFullModified) SetMatchLen(v uint16) {
+	self.MatchLen = v
+}
+
+func (self *NiciraFlowUpdateFullModified) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *NiciraFlowUpdateFullModified) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *NiciraFlowUpdateFullModified) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *NiciraFlowUpdateFullModified) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *NiciraFlowUpdateFullModified) GetMatch() NiciraMatch {
+	return self.Match
+}
+
+func (self *NiciraFlowUpdateFullModified) SetMatch(v NiciraMatch) {
+	self.Match = v
+}
+
+func (self *NiciraFlowUpdateFullModified) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *NiciraFlowUpdateFullModified) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *NiciraFlowUpdateFullModified) Serialize(encoder *goloxi.Encoder) error {
@@ -9303,7 +15218,6 @@ func (self *NiciraFlowUpdateFullModified) Serialize(encoder *goloxi.Encoder) err
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9333,7 +15247,9 @@ func DecodeNiciraFlowUpdateFullModified(parent *NiciraFlowUpdateEvent, decoder *
 		if err != nil {
 			return nil, err
 		}
-		_niciraflowupdatefullmodified.Actions = append(_niciraflowupdatefullmodified.Actions, item)
+		if item != nil {
+			_niciraflowupdatefullmodified.Actions = append(_niciraflowupdatefullmodified.Actions, item)
+		}
 	}
 	return _niciraflowupdatefullmodified, nil
 }
@@ -9345,14 +15261,15492 @@ func NewNiciraFlowUpdateFullModified() *NiciraFlowUpdateFullModified {
 	return obj
 }
 
+type OxmIdArpOp struct {
+	*OxmId
+}
+
+type IOxmIdArpOp interface {
+	IOxmId
+}
+
+func (self *OxmIdArpOp) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpOp(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpOp, error) {
+	_oxmidarpop := &OxmIdArpOp{OxmId: parent}
+	return _oxmidarpop, nil
+}
+
+func NewOxmIdArpOp() *OxmIdArpOp {
+	obj := &OxmIdArpOp{
+		OxmId: NewOxmId(7682),
+	}
+	return obj
+}
+func (self *OxmIdArpOp) GetOXMName() string {
+	return "arp_op"
+}
+
+func (self *OxmIdArpOp) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpSha struct {
+	*OxmId
+}
+
+type IOxmIdArpSha interface {
+	IOxmId
+}
+
+func (self *OxmIdArpSha) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpSha(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpSha, error) {
+	_oxmidarpsha := &OxmIdArpSha{OxmId: parent}
+	return _oxmidarpsha, nil
+}
+
+func NewOxmIdArpSha() *OxmIdArpSha {
+	obj := &OxmIdArpSha{
+		OxmId: NewOxmId(74246),
+	}
+	return obj
+}
+func (self *OxmIdArpSha) GetOXMName() string {
+	return "arp_sha"
+}
+
+func (self *OxmIdArpSha) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpShaMasked struct {
+	*OxmId
+}
+
+type IOxmIdArpShaMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdArpShaMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpShaMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpShaMasked, error) {
+	_oxmidarpshamasked := &OxmIdArpShaMasked{OxmId: parent}
+	return _oxmidarpshamasked, nil
+}
+
+func NewOxmIdArpShaMasked() *OxmIdArpShaMasked {
+	obj := &OxmIdArpShaMasked{
+		OxmId: NewOxmId(74502),
+	}
+	return obj
+}
+func (self *OxmIdArpShaMasked) GetOXMName() string {
+	return "arp_sha_masked"
+}
+
+func (self *OxmIdArpShaMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpSpa struct {
+	*OxmId
+}
+
+type IOxmIdArpSpa interface {
+	IOxmId
+}
+
+func (self *OxmIdArpSpa) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpSpa(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpSpa, error) {
+	_oxmidarpspa := &OxmIdArpSpa{OxmId: parent}
+	return _oxmidarpspa, nil
+}
+
+func NewOxmIdArpSpa() *OxmIdArpSpa {
+	obj := &OxmIdArpSpa{
+		OxmId: NewOxmId(8196),
+	}
+	return obj
+}
+func (self *OxmIdArpSpa) GetOXMName() string {
+	return "arp_spa"
+}
+
+func (self *OxmIdArpSpa) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpSpaMasked struct {
+	*OxmId
+}
+
+type IOxmIdArpSpaMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdArpSpaMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpSpaMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpSpaMasked, error) {
+	_oxmidarpspamasked := &OxmIdArpSpaMasked{OxmId: parent}
+	return _oxmidarpspamasked, nil
+}
+
+func NewOxmIdArpSpaMasked() *OxmIdArpSpaMasked {
+	obj := &OxmIdArpSpaMasked{
+		OxmId: NewOxmId(8452),
+	}
+	return obj
+}
+func (self *OxmIdArpSpaMasked) GetOXMName() string {
+	return "arp_spa_masked"
+}
+
+func (self *OxmIdArpSpaMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpTha struct {
+	*OxmId
+}
+
+type IOxmIdArpTha interface {
+	IOxmId
+}
+
+func (self *OxmIdArpTha) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpTha(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpTha, error) {
+	_oxmidarptha := &OxmIdArpTha{OxmId: parent}
+	return _oxmidarptha, nil
+}
+
+func NewOxmIdArpTha() *OxmIdArpTha {
+	obj := &OxmIdArpTha{
+		OxmId: NewOxmId(74758),
+	}
+	return obj
+}
+func (self *OxmIdArpTha) GetOXMName() string {
+	return "arp_tha"
+}
+
+func (self *OxmIdArpTha) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpThaMasked struct {
+	*OxmId
+}
+
+type IOxmIdArpThaMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdArpThaMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpThaMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpThaMasked, error) {
+	_oxmidarpthamasked := &OxmIdArpThaMasked{OxmId: parent}
+	return _oxmidarpthamasked, nil
+}
+
+func NewOxmIdArpThaMasked() *OxmIdArpThaMasked {
+	obj := &OxmIdArpThaMasked{
+		OxmId: NewOxmId(75014),
+	}
+	return obj
+}
+func (self *OxmIdArpThaMasked) GetOXMName() string {
+	return "arp_tha_masked"
+}
+
+func (self *OxmIdArpThaMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpTpa struct {
+	*OxmId
+}
+
+type IOxmIdArpTpa interface {
+	IOxmId
+}
+
+func (self *OxmIdArpTpa) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpTpa(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpTpa, error) {
+	_oxmidarptpa := &OxmIdArpTpa{OxmId: parent}
+	return _oxmidarptpa, nil
+}
+
+func NewOxmIdArpTpa() *OxmIdArpTpa {
+	obj := &OxmIdArpTpa{
+		OxmId: NewOxmId(8708),
+	}
+	return obj
+}
+func (self *OxmIdArpTpa) GetOXMName() string {
+	return "arp_tpa"
+}
+
+func (self *OxmIdArpTpa) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpTpaMasked struct {
+	*OxmId
+}
+
+type IOxmIdArpTpaMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdArpTpaMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpTpaMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpTpaMasked, error) {
+	_oxmidarptpamasked := &OxmIdArpTpaMasked{OxmId: parent}
+	return _oxmidarptpamasked, nil
+}
+
+func NewOxmIdArpTpaMasked() *OxmIdArpTpaMasked {
+	obj := &OxmIdArpTpaMasked{
+		OxmId: NewOxmId(8964),
+	}
+	return obj
+}
+func (self *OxmIdArpTpaMasked) GetOXMName() string {
+	return "arp_tpa_masked"
+}
+
+func (self *OxmIdArpTpaMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConjId struct {
+	*OxmId
+}
+
+type IOxmIdConjId interface {
+	IOxmId
+}
+
+func (self *OxmIdConjId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConjId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConjId, error) {
+	_oxmidconjid := &OxmIdConjId{OxmId: parent}
+	return _oxmidconjid, nil
+}
+
+func NewOxmIdConjId() *OxmIdConjId {
+	obj := &OxmIdConjId{
+		OxmId: NewOxmId(84484),
+	}
+	return obj
+}
+func (self *OxmIdConjId) GetOXMName() string {
+	return "conj_id"
+}
+
+func (self *OxmIdConjId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtIpv6Dst struct {
+	*OxmId
+}
+
+type IOxmIdCtIpv6Dst interface {
+	IOxmId
+}
+
+func (self *OxmIdCtIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtIpv6Dst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtIpv6Dst, error) {
+	_oxmidctipv6dst := &OxmIdCtIpv6Dst{OxmId: parent}
+	return _oxmidctipv6dst, nil
+}
+
+func NewOxmIdCtIpv6Dst() *OxmIdCtIpv6Dst {
+	obj := &OxmIdCtIpv6Dst{
+		OxmId: NewOxmId(128528),
+	}
+	return obj
+}
+func (self *OxmIdCtIpv6Dst) GetOXMName() string {
+	return "ct_ipv6_dst"
+}
+
+func (self *OxmIdCtIpv6Dst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtIpv6DstMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtIpv6DstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtIpv6DstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtIpv6DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtIpv6DstMasked, error) {
+	_oxmidctipv6dstmasked := &OxmIdCtIpv6DstMasked{OxmId: parent}
+	return _oxmidctipv6dstmasked, nil
+}
+
+func NewOxmIdCtIpv6DstMasked() *OxmIdCtIpv6DstMasked {
+	obj := &OxmIdCtIpv6DstMasked{
+		OxmId: NewOxmId(128784),
+	}
+	return obj
+}
+func (self *OxmIdCtIpv6DstMasked) GetOXMName() string {
+	return "ct_ipv6_dst_masked"
+}
+
+func (self *OxmIdCtIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtIpv6Src struct {
+	*OxmId
+}
+
+type IOxmIdCtIpv6Src interface {
+	IOxmId
+}
+
+func (self *OxmIdCtIpv6Src) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtIpv6Src(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtIpv6Src, error) {
+	_oxmidctipv6src := &OxmIdCtIpv6Src{OxmId: parent}
+	return _oxmidctipv6src, nil
+}
+
+func NewOxmIdCtIpv6Src() *OxmIdCtIpv6Src {
+	obj := &OxmIdCtIpv6Src{
+		OxmId: NewOxmId(128016),
+	}
+	return obj
+}
+func (self *OxmIdCtIpv6Src) GetOXMName() string {
+	return "ct_ipv6_src"
+}
+
+func (self *OxmIdCtIpv6Src) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtIpv6SrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtIpv6SrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtIpv6SrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtIpv6SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtIpv6SrcMasked, error) {
+	_oxmidctipv6srcmasked := &OxmIdCtIpv6SrcMasked{OxmId: parent}
+	return _oxmidctipv6srcmasked, nil
+}
+
+func NewOxmIdCtIpv6SrcMasked() *OxmIdCtIpv6SrcMasked {
+	obj := &OxmIdCtIpv6SrcMasked{
+		OxmId: NewOxmId(128272),
+	}
+	return obj
+}
+func (self *OxmIdCtIpv6SrcMasked) GetOXMName() string {
+	return "ct_ipv6_src_masked"
+}
+
+func (self *OxmIdCtIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtLabel struct {
+	*OxmId
+}
+
+type IOxmIdCtLabel interface {
+	IOxmId
+}
+
+func (self *OxmIdCtLabel) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtLabel(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtLabel, error) {
+	_oxmidctlabel := &OxmIdCtLabel{OxmId: parent}
+	return _oxmidctlabel, nil
+}
+
+func NewOxmIdCtLabel() *OxmIdCtLabel {
+	obj := &OxmIdCtLabel{
+		OxmId: NewOxmId(120848),
+	}
+	return obj
+}
+func (self *OxmIdCtLabel) GetOXMName() string {
+	return "ct_label"
+}
+
+func (self *OxmIdCtLabel) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtLabelMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtLabelMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtLabelMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtLabelMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtLabelMasked, error) {
+	_oxmidctlabelmasked := &OxmIdCtLabelMasked{OxmId: parent}
+	return _oxmidctlabelmasked, nil
+}
+
+func NewOxmIdCtLabelMasked() *OxmIdCtLabelMasked {
+	obj := &OxmIdCtLabelMasked{
+		OxmId: NewOxmId(121104),
+	}
+	return obj
+}
+func (self *OxmIdCtLabelMasked) GetOXMName() string {
+	return "ct_label_masked"
+}
+
+func (self *OxmIdCtLabelMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtMark struct {
+	*OxmId
+}
+
+type IOxmIdCtMark interface {
+	IOxmId
+}
+
+func (self *OxmIdCtMark) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtMark(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtMark, error) {
+	_oxmidctmark := &OxmIdCtMark{OxmId: parent}
+	return _oxmidctmark, nil
+}
+
+func NewOxmIdCtMark() *OxmIdCtMark {
+	obj := &OxmIdCtMark{
+		OxmId: NewOxmId(120324),
+	}
+	return obj
+}
+func (self *OxmIdCtMark) GetOXMName() string {
+	return "ct_mark"
+}
+
+func (self *OxmIdCtMark) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtMarkMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtMarkMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtMarkMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtMarkMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtMarkMasked, error) {
+	_oxmidctmarkmasked := &OxmIdCtMarkMasked{OxmId: parent}
+	return _oxmidctmarkmasked, nil
+}
+
+func NewOxmIdCtMarkMasked() *OxmIdCtMarkMasked {
+	obj := &OxmIdCtMarkMasked{
+		OxmId: NewOxmId(120580),
+	}
+	return obj
+}
+func (self *OxmIdCtMarkMasked) GetOXMName() string {
+	return "ct_mark_masked"
+}
+
+func (self *OxmIdCtMarkMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtNwDst struct {
+	*OxmId
+}
+
+type IOxmIdCtNwDst interface {
+	IOxmId
+}
+
+func (self *OxmIdCtNwDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtNwDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtNwDst, error) {
+	_oxmidctnwdst := &OxmIdCtNwDst{OxmId: parent}
+	return _oxmidctnwdst, nil
+}
+
+func NewOxmIdCtNwDst() *OxmIdCtNwDst {
+	obj := &OxmIdCtNwDst{
+		OxmId: NewOxmId(127492),
+	}
+	return obj
+}
+func (self *OxmIdCtNwDst) GetOXMName() string {
+	return "ct_nw_dst"
+}
+
+func (self *OxmIdCtNwDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtNwDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtNwDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtNwDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtNwDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtNwDstMasked, error) {
+	_oxmidctnwdstmasked := &OxmIdCtNwDstMasked{OxmId: parent}
+	return _oxmidctnwdstmasked, nil
+}
+
+func NewOxmIdCtNwDstMasked() *OxmIdCtNwDstMasked {
+	obj := &OxmIdCtNwDstMasked{
+		OxmId: NewOxmId(127748),
+	}
+	return obj
+}
+func (self *OxmIdCtNwDstMasked) GetOXMName() string {
+	return "ct_nw_dst_masked"
+}
+
+func (self *OxmIdCtNwDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtNwProto struct {
+	*OxmId
+}
+
+type IOxmIdCtNwProto interface {
+	IOxmId
+}
+
+func (self *OxmIdCtNwProto) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtNwProto(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtNwProto, error) {
+	_oxmidctnwproto := &OxmIdCtNwProto{OxmId: parent}
+	return _oxmidctnwproto, nil
+}
+
+func NewOxmIdCtNwProto() *OxmIdCtNwProto {
+	obj := &OxmIdCtNwProto{
+		OxmId: NewOxmId(126465),
+	}
+	return obj
+}
+func (self *OxmIdCtNwProto) GetOXMName() string {
+	return "ct_nw_proto"
+}
+
+func (self *OxmIdCtNwProto) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtNwSrc struct {
+	*OxmId
+}
+
+type IOxmIdCtNwSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdCtNwSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtNwSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtNwSrc, error) {
+	_oxmidctnwsrc := &OxmIdCtNwSrc{OxmId: parent}
+	return _oxmidctnwsrc, nil
+}
+
+func NewOxmIdCtNwSrc() *OxmIdCtNwSrc {
+	obj := &OxmIdCtNwSrc{
+		OxmId: NewOxmId(126980),
+	}
+	return obj
+}
+func (self *OxmIdCtNwSrc) GetOXMName() string {
+	return "ct_nw_src"
+}
+
+func (self *OxmIdCtNwSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtNwSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtNwSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtNwSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtNwSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtNwSrcMasked, error) {
+	_oxmidctnwsrcmasked := &OxmIdCtNwSrcMasked{OxmId: parent}
+	return _oxmidctnwsrcmasked, nil
+}
+
+func NewOxmIdCtNwSrcMasked() *OxmIdCtNwSrcMasked {
+	obj := &OxmIdCtNwSrcMasked{
+		OxmId: NewOxmId(127236),
+	}
+	return obj
+}
+func (self *OxmIdCtNwSrcMasked) GetOXMName() string {
+	return "ct_nw_src_masked"
+}
+
+func (self *OxmIdCtNwSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtState struct {
+	*OxmId
+}
+
+type IOxmIdCtState interface {
+	IOxmId
+}
+
+func (self *OxmIdCtState) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtState(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtState, error) {
+	_oxmidctstate := &OxmIdCtState{OxmId: parent}
+	return _oxmidctstate, nil
+}
+
+func NewOxmIdCtState() *OxmIdCtState {
+	obj := &OxmIdCtState{
+		OxmId: NewOxmId(119300),
+	}
+	return obj
+}
+func (self *OxmIdCtState) GetOXMName() string {
+	return "ct_state"
+}
+
+func (self *OxmIdCtState) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtStateMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtStateMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtStateMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtStateMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtStateMasked, error) {
+	_oxmidctstatemasked := &OxmIdCtStateMasked{OxmId: parent}
+	return _oxmidctstatemasked, nil
+}
+
+func NewOxmIdCtStateMasked() *OxmIdCtStateMasked {
+	obj := &OxmIdCtStateMasked{
+		OxmId: NewOxmId(119556),
+	}
+	return obj
+}
+func (self *OxmIdCtStateMasked) GetOXMName() string {
+	return "ct_state_masked"
+}
+
+func (self *OxmIdCtStateMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtTpDst struct {
+	*OxmId
+}
+
+type IOxmIdCtTpDst interface {
+	IOxmId
+}
+
+func (self *OxmIdCtTpDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtTpDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtTpDst, error) {
+	_oxmidcttpdst := &OxmIdCtTpDst{OxmId: parent}
+	return _oxmidcttpdst, nil
+}
+
+func NewOxmIdCtTpDst() *OxmIdCtTpDst {
+	obj := &OxmIdCtTpDst{
+		OxmId: NewOxmId(129538),
+	}
+	return obj
+}
+func (self *OxmIdCtTpDst) GetOXMName() string {
+	return "ct_tp_dst"
+}
+
+func (self *OxmIdCtTpDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtTpDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtTpDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtTpDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtTpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtTpDstMasked, error) {
+	_oxmidcttpdstmasked := &OxmIdCtTpDstMasked{OxmId: parent}
+	return _oxmidcttpdstmasked, nil
+}
+
+func NewOxmIdCtTpDstMasked() *OxmIdCtTpDstMasked {
+	obj := &OxmIdCtTpDstMasked{
+		OxmId: NewOxmId(129794),
+	}
+	return obj
+}
+func (self *OxmIdCtTpDstMasked) GetOXMName() string {
+	return "ct_tp_dst_masked"
+}
+
+func (self *OxmIdCtTpDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtTpSrc struct {
+	*OxmId
+}
+
+type IOxmIdCtTpSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdCtTpSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtTpSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtTpSrc, error) {
+	_oxmidcttpsrc := &OxmIdCtTpSrc{OxmId: parent}
+	return _oxmidcttpsrc, nil
+}
+
+func NewOxmIdCtTpSrc() *OxmIdCtTpSrc {
+	obj := &OxmIdCtTpSrc{
+		OxmId: NewOxmId(129026),
+	}
+	return obj
+}
+func (self *OxmIdCtTpSrc) GetOXMName() string {
+	return "ct_tp_src"
+}
+
+func (self *OxmIdCtTpSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtTpSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdCtTpSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdCtTpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtTpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtTpSrcMasked, error) {
+	_oxmidcttpsrcmasked := &OxmIdCtTpSrcMasked{OxmId: parent}
+	return _oxmidcttpsrcmasked, nil
+}
+
+func NewOxmIdCtTpSrcMasked() *OxmIdCtTpSrcMasked {
+	obj := &OxmIdCtTpSrcMasked{
+		OxmId: NewOxmId(129282),
+	}
+	return obj
+}
+func (self *OxmIdCtTpSrcMasked) GetOXMName() string {
+	return "ct_tp_src_masked"
+}
+
+func (self *OxmIdCtTpSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdCtZone struct {
+	*OxmId
+}
+
+type IOxmIdCtZone interface {
+	IOxmId
+}
+
+func (self *OxmIdCtZone) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdCtZone(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtZone, error) {
+	_oxmidctzone := &OxmIdCtZone{OxmId: parent}
+	return _oxmidctzone, nil
+}
+
+func NewOxmIdCtZone() *OxmIdCtZone {
+	obj := &OxmIdCtZone{
+		OxmId: NewOxmId(119810),
+	}
+	return obj
+}
+func (self *OxmIdCtZone) GetOXMName() string {
+	return "ct_zone"
+}
+
+func (self *OxmIdCtZone) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdDpHash struct {
+	*OxmId
+}
+
+type IOxmIdDpHash interface {
+	IOxmId
+}
+
+func (self *OxmIdDpHash) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdDpHash(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdDpHash, error) {
+	_oxmiddphash := &OxmIdDpHash{OxmId: parent}
+	return _oxmiddphash, nil
+}
+
+func NewOxmIdDpHash() *OxmIdDpHash {
+	obj := &OxmIdDpHash{
+		OxmId: NewOxmId(83460),
+	}
+	return obj
+}
+func (self *OxmIdDpHash) GetOXMName() string {
+	return "dp_hash"
+}
+
+func (self *OxmIdDpHash) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdDpHashMasked struct {
+	*OxmId
+}
+
+type IOxmIdDpHashMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdDpHashMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdDpHashMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdDpHashMasked, error) {
+	_oxmiddphashmasked := &OxmIdDpHashMasked{OxmId: parent}
+	return _oxmiddphashmasked, nil
+}
+
+func NewOxmIdDpHashMasked() *OxmIdDpHashMasked {
+	obj := &OxmIdDpHashMasked{
+		OxmId: NewOxmId(83716),
+	}
+	return obj
+}
+func (self *OxmIdDpHashMasked) GetOXMName() string {
+	return "dp_hash_masked"
+}
+
+func (self *OxmIdDpHashMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdEthDst struct {
+	*OxmId
+}
+
+type IOxmIdEthDst interface {
+	IOxmId
+}
+
+func (self *OxmIdEthDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdEthDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdEthDst, error) {
+	_oxmidethdst := &OxmIdEthDst{OxmId: parent}
+	return _oxmidethdst, nil
+}
+
+func NewOxmIdEthDst() *OxmIdEthDst {
+	obj := &OxmIdEthDst{
+		OxmId: NewOxmId(518),
+	}
+	return obj
+}
+func (self *OxmIdEthDst) GetOXMName() string {
+	return "eth_dst"
+}
+
+func (self *OxmIdEthDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdEthDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdEthDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdEthDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdEthDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdEthDstMasked, error) {
+	_oxmidethdstmasked := &OxmIdEthDstMasked{OxmId: parent}
+	return _oxmidethdstmasked, nil
+}
+
+func NewOxmIdEthDstMasked() *OxmIdEthDstMasked {
+	obj := &OxmIdEthDstMasked{
+		OxmId: NewOxmId(774),
+	}
+	return obj
+}
+func (self *OxmIdEthDstMasked) GetOXMName() string {
+	return "eth_dst_masked"
+}
+
+func (self *OxmIdEthDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdEthSrc struct {
+	*OxmId
+}
+
+type IOxmIdEthSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdEthSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdEthSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdEthSrc, error) {
+	_oxmidethsrc := &OxmIdEthSrc{OxmId: parent}
+	return _oxmidethsrc, nil
+}
+
+func NewOxmIdEthSrc() *OxmIdEthSrc {
+	obj := &OxmIdEthSrc{
+		OxmId: NewOxmId(1030),
+	}
+	return obj
+}
+func (self *OxmIdEthSrc) GetOXMName() string {
+	return "eth_src"
+}
+
+func (self *OxmIdEthSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdEthSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdEthSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdEthSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdEthSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdEthSrcMasked, error) {
+	_oxmidethsrcmasked := &OxmIdEthSrcMasked{OxmId: parent}
+	return _oxmidethsrcmasked, nil
+}
+
+func NewOxmIdEthSrcMasked() *OxmIdEthSrcMasked {
+	obj := &OxmIdEthSrcMasked{
+		OxmId: NewOxmId(1286),
+	}
+	return obj
+}
+func (self *OxmIdEthSrcMasked) GetOXMName() string {
+	return "eth_src_masked"
+}
+
+func (self *OxmIdEthSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdEthType struct {
+	*OxmId
+}
+
+type IOxmIdEthType interface {
+	IOxmId
+}
+
+func (self *OxmIdEthType) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdEthType(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdEthType, error) {
+	_oxmidethtype := &OxmIdEthType{OxmId: parent}
+	return _oxmidethtype, nil
+}
+
+func NewOxmIdEthType() *OxmIdEthType {
+	obj := &OxmIdEthType{
+		OxmId: NewOxmId(1538),
+	}
+	return obj
+}
+func (self *OxmIdEthType) GetOXMName() string {
+	return "eth_type"
+}
+
+func (self *OxmIdEthType) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpCode struct {
+	*OxmId
+}
+
+type IOxmIdIcmpCode interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpCode) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpCode(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpCode, error) {
+	_oxmidicmpcode := &OxmIdIcmpCode{OxmId: parent}
+	return _oxmidicmpcode, nil
+}
+
+func NewOxmIdIcmpCode() *OxmIdIcmpCode {
+	obj := &OxmIdIcmpCode{
+		OxmId: NewOxmId(7169),
+	}
+	return obj
+}
+func (self *OxmIdIcmpCode) GetOXMName() string {
+	return "icmp_code"
+}
+
+func (self *OxmIdIcmpCode) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpType struct {
+	*OxmId
+}
+
+type IOxmIdIcmpType interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpType) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpType(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpType, error) {
+	_oxmidicmptype := &OxmIdIcmpType{OxmId: parent}
+	return _oxmidicmptype, nil
+}
+
+func NewOxmIdIcmpType() *OxmIdIcmpType {
+	obj := &OxmIdIcmpType{
+		OxmId: NewOxmId(6657),
+	}
+	return obj
+}
+func (self *OxmIdIcmpType) GetOXMName() string {
+	return "icmp_type"
+}
+
+func (self *OxmIdIcmpType) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpv6Code struct {
+	*OxmId
+}
+
+type IOxmIdIcmpv6Code interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpv6Code) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpv6Code(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpv6Code, error) {
+	_oxmidicmpv6code := &OxmIdIcmpv6Code{OxmId: parent}
+	return _oxmidicmpv6code, nil
+}
+
+func NewOxmIdIcmpv6Code() *OxmIdIcmpv6Code {
+	obj := &OxmIdIcmpv6Code{
+		OxmId: NewOxmId(76801),
+	}
+	return obj
+}
+func (self *OxmIdIcmpv6Code) GetOXMName() string {
+	return "icmpv6_code"
+}
+
+func (self *OxmIdIcmpv6Code) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpv6Type struct {
+	*OxmId
+}
+
+type IOxmIdIcmpv6Type interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpv6Type) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpv6Type(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpv6Type, error) {
+	_oxmidicmpv6type := &OxmIdIcmpv6Type{OxmId: parent}
+	return _oxmidicmpv6type, nil
+}
+
+func NewOxmIdIcmpv6Type() *OxmIdIcmpv6Type {
+	obj := &OxmIdIcmpv6Type{
+		OxmId: NewOxmId(76289),
+	}
+	return obj
+}
+func (self *OxmIdIcmpv6Type) GetOXMName() string {
+	return "icmpv6_type"
+}
+
+func (self *OxmIdIcmpv6Type) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdInPort struct {
+	*OxmId
+}
+
+type IOxmIdInPort interface {
+	IOxmId
+}
+
+func (self *OxmIdInPort) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdInPort(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdInPort, error) {
+	_oxmidinport := &OxmIdInPort{OxmId: parent}
+	return _oxmidinport, nil
+}
+
+func NewOxmIdInPort() *OxmIdInPort {
+	obj := &OxmIdInPort{
+		OxmId: NewOxmId(2),
+	}
+	return obj
+}
+func (self *OxmIdInPort) GetOXMName() string {
+	return "in_port"
+}
+
+func (self *OxmIdInPort) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpDst struct {
+	*OxmId
+}
+
+type IOxmIdIpDst interface {
+	IOxmId
+}
+
+func (self *OxmIdIpDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpDst, error) {
+	_oxmidipdst := &OxmIdIpDst{OxmId: parent}
+	return _oxmidipdst, nil
+}
+
+func NewOxmIdIpDst() *OxmIdIpDst {
+	obj := &OxmIdIpDst{
+		OxmId: NewOxmId(4100),
+	}
+	return obj
+}
+func (self *OxmIdIpDst) GetOXMName() string {
+	return "ip_dst"
+}
+
+func (self *OxmIdIpDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpDstMasked, error) {
+	_oxmidipdstmasked := &OxmIdIpDstMasked{OxmId: parent}
+	return _oxmidipdstmasked, nil
+}
+
+func NewOxmIdIpDstMasked() *OxmIdIpDstMasked {
+	obj := &OxmIdIpDstMasked{
+		OxmId: NewOxmId(4356),
+	}
+	return obj
+}
+func (self *OxmIdIpDstMasked) GetOXMName() string {
+	return "ip_dst_masked"
+}
+
+func (self *OxmIdIpDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpFrag struct {
+	*OxmId
+}
+
+type IOxmIdIpFrag interface {
+	IOxmId
+}
+
+func (self *OxmIdIpFrag) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpFrag(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpFrag, error) {
+	_oxmidipfrag := &OxmIdIpFrag{OxmId: parent}
+	return _oxmidipfrag, nil
+}
+
+func NewOxmIdIpFrag() *OxmIdIpFrag {
+	obj := &OxmIdIpFrag{
+		OxmId: NewOxmId(78849),
+	}
+	return obj
+}
+func (self *OxmIdIpFrag) GetOXMName() string {
+	return "ip_frag"
+}
+
+func (self *OxmIdIpFrag) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpFragMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpFragMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpFragMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpFragMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpFragMasked, error) {
+	_oxmidipfragmasked := &OxmIdIpFragMasked{OxmId: parent}
+	return _oxmidipfragmasked, nil
+}
+
+func NewOxmIdIpFragMasked() *OxmIdIpFragMasked {
+	obj := &OxmIdIpFragMasked{
+		OxmId: NewOxmId(79105),
+	}
+	return obj
+}
+func (self *OxmIdIpFragMasked) GetOXMName() string {
+	return "ip_frag_masked"
+}
+
+func (self *OxmIdIpFragMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpSrc struct {
+	*OxmId
+}
+
+type IOxmIdIpSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdIpSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpSrc, error) {
+	_oxmidipsrc := &OxmIdIpSrc{OxmId: parent}
+	return _oxmidipsrc, nil
+}
+
+func NewOxmIdIpSrc() *OxmIdIpSrc {
+	obj := &OxmIdIpSrc{
+		OxmId: NewOxmId(3588),
+	}
+	return obj
+}
+func (self *OxmIdIpSrc) GetOXMName() string {
+	return "ip_src"
+}
+
+func (self *OxmIdIpSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpSrcMasked, error) {
+	_oxmidipsrcmasked := &OxmIdIpSrcMasked{OxmId: parent}
+	return _oxmidipsrcmasked, nil
+}
+
+func NewOxmIdIpSrcMasked() *OxmIdIpSrcMasked {
+	obj := &OxmIdIpSrcMasked{
+		OxmId: NewOxmId(3844),
+	}
+	return obj
+}
+func (self *OxmIdIpSrcMasked) GetOXMName() string {
+	return "ip_src_masked"
+}
+
+func (self *OxmIdIpSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6Dst struct {
+	*OxmId
+}
+
+type IOxmIdIpv6Dst interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6Dst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6Dst, error) {
+	_oxmidipv6dst := &OxmIdIpv6Dst{OxmId: parent}
+	return _oxmidipv6dst, nil
+}
+
+func NewOxmIdIpv6Dst() *OxmIdIpv6Dst {
+	obj := &OxmIdIpv6Dst{
+		OxmId: NewOxmId(75792),
+	}
+	return obj
+}
+func (self *OxmIdIpv6Dst) GetOXMName() string {
+	return "ipv6_dst"
+}
+
+func (self *OxmIdIpv6Dst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6DstMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv6DstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6DstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6DstMasked, error) {
+	_oxmidipv6dstmasked := &OxmIdIpv6DstMasked{OxmId: parent}
+	return _oxmidipv6dstmasked, nil
+}
+
+func NewOxmIdIpv6DstMasked() *OxmIdIpv6DstMasked {
+	obj := &OxmIdIpv6DstMasked{
+		OxmId: NewOxmId(76048),
+	}
+	return obj
+}
+func (self *OxmIdIpv6DstMasked) GetOXMName() string {
+	return "ipv6_dst_masked"
+}
+
+func (self *OxmIdIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6Label struct {
+	*OxmId
+}
+
+type IOxmIdIpv6Label interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6Label) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6Label(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6Label, error) {
+	_oxmidipv6label := &OxmIdIpv6Label{OxmId: parent}
+	return _oxmidipv6label, nil
+}
+
+func NewOxmIdIpv6Label() *OxmIdIpv6Label {
+	obj := &OxmIdIpv6Label{
+		OxmId: NewOxmId(79364),
+	}
+	return obj
+}
+func (self *OxmIdIpv6Label) GetOXMName() string {
+	return "ipv6_label"
+}
+
+func (self *OxmIdIpv6Label) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6LabelMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv6LabelMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6LabelMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6LabelMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6LabelMasked, error) {
+	_oxmidipv6labelmasked := &OxmIdIpv6LabelMasked{OxmId: parent}
+	return _oxmidipv6labelmasked, nil
+}
+
+func NewOxmIdIpv6LabelMasked() *OxmIdIpv6LabelMasked {
+	obj := &OxmIdIpv6LabelMasked{
+		OxmId: NewOxmId(79620),
+	}
+	return obj
+}
+func (self *OxmIdIpv6LabelMasked) GetOXMName() string {
+	return "ipv6_label_masked"
+}
+
+func (self *OxmIdIpv6LabelMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6Src struct {
+	*OxmId
+}
+
+type IOxmIdIpv6Src interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6Src) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6Src(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6Src, error) {
+	_oxmidipv6src := &OxmIdIpv6Src{OxmId: parent}
+	return _oxmidipv6src, nil
+}
+
+func NewOxmIdIpv6Src() *OxmIdIpv6Src {
+	obj := &OxmIdIpv6Src{
+		OxmId: NewOxmId(75280),
+	}
+	return obj
+}
+func (self *OxmIdIpv6Src) GetOXMName() string {
+	return "ipv6_src"
+}
+
+func (self *OxmIdIpv6Src) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6SrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv6SrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6SrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6SrcMasked, error) {
+	_oxmidipv6srcmasked := &OxmIdIpv6SrcMasked{OxmId: parent}
+	return _oxmidipv6srcmasked, nil
+}
+
+func NewOxmIdIpv6SrcMasked() *OxmIdIpv6SrcMasked {
+	obj := &OxmIdIpv6SrcMasked{
+		OxmId: NewOxmId(75536),
+	}
+	return obj
+}
+func (self *OxmIdIpv6SrcMasked) GetOXMName() string {
+	return "ipv6_src_masked"
+}
+
+func (self *OxmIdIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMplsTtl struct {
+	*OxmId
+}
+
+type IOxmIdMplsTtl interface {
+	IOxmId
+}
+
+func (self *OxmIdMplsTtl) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMplsTtl(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMplsTtl, error) {
+	_oxmidmplsttl := &OxmIdMplsTtl{OxmId: parent}
+	return _oxmidmplsttl, nil
+}
+
+func NewOxmIdMplsTtl() *OxmIdMplsTtl {
+	obj := &OxmIdMplsTtl{
+		OxmId: NewOxmId(80897),
+	}
+	return obj
+}
+func (self *OxmIdMplsTtl) GetOXMName() string {
+	return "mpls_ttl"
+}
+
+func (self *OxmIdMplsTtl) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNdSll struct {
+	*OxmId
+}
+
+type IOxmIdNdSll interface {
+	IOxmId
+}
+
+func (self *OxmIdNdSll) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNdSll(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNdSll, error) {
+	_oxmidndsll := &OxmIdNdSll{OxmId: parent}
+	return _oxmidndsll, nil
+}
+
+func NewOxmIdNdSll() *OxmIdNdSll {
+	obj := &OxmIdNdSll{
+		OxmId: NewOxmId(77830),
+	}
+	return obj
+}
+func (self *OxmIdNdSll) GetOXMName() string {
+	return "nd_sll"
+}
+
+func (self *OxmIdNdSll) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNdSllMasked struct {
+	*OxmId
+}
+
+type IOxmIdNdSllMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdNdSllMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNdSllMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNdSllMasked, error) {
+	_oxmidndsllmasked := &OxmIdNdSllMasked{OxmId: parent}
+	return _oxmidndsllmasked, nil
+}
+
+func NewOxmIdNdSllMasked() *OxmIdNdSllMasked {
+	obj := &OxmIdNdSllMasked{
+		OxmId: NewOxmId(78086),
+	}
+	return obj
+}
+func (self *OxmIdNdSllMasked) GetOXMName() string {
+	return "nd_sll_masked"
+}
+
+func (self *OxmIdNdSllMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNdTarget struct {
+	*OxmId
+}
+
+type IOxmIdNdTarget interface {
+	IOxmId
+}
+
+func (self *OxmIdNdTarget) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNdTarget(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNdTarget, error) {
+	_oxmidndtarget := &OxmIdNdTarget{OxmId: parent}
+	return _oxmidndtarget, nil
+}
+
+func NewOxmIdNdTarget() *OxmIdNdTarget {
+	obj := &OxmIdNdTarget{
+		OxmId: NewOxmId(77328),
+	}
+	return obj
+}
+func (self *OxmIdNdTarget) GetOXMName() string {
+	return "nd_target"
+}
+
+func (self *OxmIdNdTarget) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNdTargetMasked struct {
+	*OxmId
+}
+
+type IOxmIdNdTargetMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdNdTargetMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNdTargetMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNdTargetMasked, error) {
+	_oxmidndtargetmasked := &OxmIdNdTargetMasked{OxmId: parent}
+	return _oxmidndtargetmasked, nil
+}
+
+func NewOxmIdNdTargetMasked() *OxmIdNdTargetMasked {
+	obj := &OxmIdNdTargetMasked{
+		OxmId: NewOxmId(77584),
+	}
+	return obj
+}
+func (self *OxmIdNdTargetMasked) GetOXMName() string {
+	return "nd_target_masked"
+}
+
+func (self *OxmIdNdTargetMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNdTll struct {
+	*OxmId
+}
+
+type IOxmIdNdTll interface {
+	IOxmId
+}
+
+func (self *OxmIdNdTll) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNdTll(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNdTll, error) {
+	_oxmidndtll := &OxmIdNdTll{OxmId: parent}
+	return _oxmidndtll, nil
+}
+
+func NewOxmIdNdTll() *OxmIdNdTll {
+	obj := &OxmIdNdTll{
+		OxmId: NewOxmId(78342),
+	}
+	return obj
+}
+func (self *OxmIdNdTll) GetOXMName() string {
+	return "nd_tll"
+}
+
+func (self *OxmIdNdTll) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNdTllMasked struct {
+	*OxmId
+}
+
+type IOxmIdNdTllMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdNdTllMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNdTllMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNdTllMasked, error) {
+	_oxmidndtllmasked := &OxmIdNdTllMasked{OxmId: parent}
+	return _oxmidndtllmasked, nil
+}
+
+func NewOxmIdNdTllMasked() *OxmIdNdTllMasked {
+	obj := &OxmIdNdTllMasked{
+		OxmId: NewOxmId(78598),
+	}
+	return obj
+}
+func (self *OxmIdNdTllMasked) GetOXMName() string {
+	return "nd_tll_masked"
+}
+
+func (self *OxmIdNdTllMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNwEcn struct {
+	*OxmId
+}
+
+type IOxmIdNwEcn interface {
+	IOxmId
+}
+
+func (self *OxmIdNwEcn) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNwEcn(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNwEcn, error) {
+	_oxmidnwecn := &OxmIdNwEcn{OxmId: parent}
+	return _oxmidnwecn, nil
+}
+
+func NewOxmIdNwEcn() *OxmIdNwEcn {
+	obj := &OxmIdNwEcn{
+		OxmId: NewOxmId(79873),
+	}
+	return obj
+}
+func (self *OxmIdNwEcn) GetOXMName() string {
+	return "nw_ecn"
+}
+
+func (self *OxmIdNwEcn) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNwProto struct {
+	*OxmId
+}
+
+type IOxmIdNwProto interface {
+	IOxmId
+}
+
+func (self *OxmIdNwProto) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNwProto(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNwProto, error) {
+	_oxmidnwproto := &OxmIdNwProto{OxmId: parent}
+	return _oxmidnwproto, nil
+}
+
+func NewOxmIdNwProto() *OxmIdNwProto {
+	obj := &OxmIdNwProto{
+		OxmId: NewOxmId(3073),
+	}
+	return obj
+}
+func (self *OxmIdNwProto) GetOXMName() string {
+	return "nw_proto"
+}
+
+func (self *OxmIdNwProto) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNwTos struct {
+	*OxmId
+}
+
+type IOxmIdNwTos interface {
+	IOxmId
+}
+
+func (self *OxmIdNwTos) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNwTos(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNwTos, error) {
+	_oxmidnwtos := &OxmIdNwTos{OxmId: parent}
+	return _oxmidnwtos, nil
+}
+
+func NewOxmIdNwTos() *OxmIdNwTos {
+	obj := &OxmIdNwTos{
+		OxmId: NewOxmId(2561),
+	}
+	return obj
+}
+func (self *OxmIdNwTos) GetOXMName() string {
+	return "nw_tos"
+}
+
+func (self *OxmIdNwTos) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdNwTtl struct {
+	*OxmId
+}
+
+type IOxmIdNwTtl interface {
+	IOxmId
+}
+
+func (self *OxmIdNwTtl) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdNwTtl(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNwTtl, error) {
+	_oxmidnwttl := &OxmIdNwTtl{OxmId: parent}
+	return _oxmidnwttl, nil
+}
+
+func NewOxmIdNwTtl() *OxmIdNwTtl {
+	obj := &OxmIdNwTtl{
+		OxmId: NewOxmId(80385),
+	}
+	return obj
+}
+func (self *OxmIdNwTtl) GetOXMName() string {
+	return "nw_ttl"
+}
+
+func (self *OxmIdNwTtl) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdPktMark struct {
+	*OxmId
+}
+
+type IOxmIdPktMark interface {
+	IOxmId
+}
+
+func (self *OxmIdPktMark) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdPktMark(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdPktMark, error) {
+	_oxmidpktmark := &OxmIdPktMark{OxmId: parent}
+	return _oxmidpktmark, nil
+}
+
+func NewOxmIdPktMark() *OxmIdPktMark {
+	obj := &OxmIdPktMark{
+		OxmId: NewOxmId(82436),
+	}
+	return obj
+}
+func (self *OxmIdPktMark) GetOXMName() string {
+	return "pkt_mark"
+}
+
+func (self *OxmIdPktMark) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdPktMarkMasked struct {
+	*OxmId
+}
+
+type IOxmIdPktMarkMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdPktMarkMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdPktMarkMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdPktMarkMasked, error) {
+	_oxmidpktmarkmasked := &OxmIdPktMarkMasked{OxmId: parent}
+	return _oxmidpktmarkmasked, nil
+}
+
+func NewOxmIdPktMarkMasked() *OxmIdPktMarkMasked {
+	obj := &OxmIdPktMarkMasked{
+		OxmId: NewOxmId(82692),
+	}
+	return obj
+}
+func (self *OxmIdPktMarkMasked) GetOXMName() string {
+	return "pkt_mark_masked"
+}
+
+func (self *OxmIdPktMarkMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdRecircId struct {
+	*OxmId
+}
+
+type IOxmIdRecircId interface {
+	IOxmId
+}
+
+func (self *OxmIdRecircId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdRecircId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdRecircId, error) {
+	_oxmidrecircid := &OxmIdRecircId{OxmId: parent}
+	return _oxmidrecircid, nil
+}
+
+func NewOxmIdRecircId() *OxmIdRecircId {
+	obj := &OxmIdRecircId{
+		OxmId: NewOxmId(83972),
+	}
+	return obj
+}
+func (self *OxmIdRecircId) GetOXMName() string {
+	return "recirc_id"
+}
+
+func (self *OxmIdRecircId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg0 struct {
+	*OxmId
+}
+
+type IOxmIdReg0 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg0) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg0(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg0, error) {
+	_oxmidreg0 := &OxmIdReg0{OxmId: parent}
+	return _oxmidreg0, nil
+}
+
+func NewOxmIdReg0() *OxmIdReg0 {
+	obj := &OxmIdReg0{
+		OxmId: NewOxmId(65540),
+	}
+	return obj
+}
+func (self *OxmIdReg0) GetOXMName() string {
+	return "reg0"
+}
+
+func (self *OxmIdReg0) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg0Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg0Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg0Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg0Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg0Masked, error) {
+	_oxmidreg0masked := &OxmIdReg0Masked{OxmId: parent}
+	return _oxmidreg0masked, nil
+}
+
+func NewOxmIdReg0Masked() *OxmIdReg0Masked {
+	obj := &OxmIdReg0Masked{
+		OxmId: NewOxmId(65796),
+	}
+	return obj
+}
+func (self *OxmIdReg0Masked) GetOXMName() string {
+	return "reg0_masked"
+}
+
+func (self *OxmIdReg0Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg1 struct {
+	*OxmId
+}
+
+type IOxmIdReg1 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg1) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg1(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg1, error) {
+	_oxmidreg1 := &OxmIdReg1{OxmId: parent}
+	return _oxmidreg1, nil
+}
+
+func NewOxmIdReg1() *OxmIdReg1 {
+	obj := &OxmIdReg1{
+		OxmId: NewOxmId(66052),
+	}
+	return obj
+}
+func (self *OxmIdReg1) GetOXMName() string {
+	return "reg1"
+}
+
+func (self *OxmIdReg1) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg10 struct {
+	*OxmId
+}
+
+type IOxmIdReg10 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg10) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg10(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg10, error) {
+	_oxmidreg10 := &OxmIdReg10{OxmId: parent}
+	return _oxmidreg10, nil
+}
+
+func NewOxmIdReg10() *OxmIdReg10 {
+	obj := &OxmIdReg10{
+		OxmId: NewOxmId(70660),
+	}
+	return obj
+}
+func (self *OxmIdReg10) GetOXMName() string {
+	return "reg10"
+}
+
+func (self *OxmIdReg10) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg10Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg10Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg10Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg10Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg10Masked, error) {
+	_oxmidreg10masked := &OxmIdReg10Masked{OxmId: parent}
+	return _oxmidreg10masked, nil
+}
+
+func NewOxmIdReg10Masked() *OxmIdReg10Masked {
+	obj := &OxmIdReg10Masked{
+		OxmId: NewOxmId(70916),
+	}
+	return obj
+}
+func (self *OxmIdReg10Masked) GetOXMName() string {
+	return "reg10_masked"
+}
+
+func (self *OxmIdReg10Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg11 struct {
+	*OxmId
+}
+
+type IOxmIdReg11 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg11) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg11(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg11, error) {
+	_oxmidreg11 := &OxmIdReg11{OxmId: parent}
+	return _oxmidreg11, nil
+}
+
+func NewOxmIdReg11() *OxmIdReg11 {
+	obj := &OxmIdReg11{
+		OxmId: NewOxmId(71172),
+	}
+	return obj
+}
+func (self *OxmIdReg11) GetOXMName() string {
+	return "reg11"
+}
+
+func (self *OxmIdReg11) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg11Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg11Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg11Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg11Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg11Masked, error) {
+	_oxmidreg11masked := &OxmIdReg11Masked{OxmId: parent}
+	return _oxmidreg11masked, nil
+}
+
+func NewOxmIdReg11Masked() *OxmIdReg11Masked {
+	obj := &OxmIdReg11Masked{
+		OxmId: NewOxmId(71428),
+	}
+	return obj
+}
+func (self *OxmIdReg11Masked) GetOXMName() string {
+	return "reg11_masked"
+}
+
+func (self *OxmIdReg11Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg12 struct {
+	*OxmId
+}
+
+type IOxmIdReg12 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg12) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg12(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg12, error) {
+	_oxmidreg12 := &OxmIdReg12{OxmId: parent}
+	return _oxmidreg12, nil
+}
+
+func NewOxmIdReg12() *OxmIdReg12 {
+	obj := &OxmIdReg12{
+		OxmId: NewOxmId(71684),
+	}
+	return obj
+}
+func (self *OxmIdReg12) GetOXMName() string {
+	return "reg12"
+}
+
+func (self *OxmIdReg12) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg12Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg12Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg12Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg12Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg12Masked, error) {
+	_oxmidreg12masked := &OxmIdReg12Masked{OxmId: parent}
+	return _oxmidreg12masked, nil
+}
+
+func NewOxmIdReg12Masked() *OxmIdReg12Masked {
+	obj := &OxmIdReg12Masked{
+		OxmId: NewOxmId(71940),
+	}
+	return obj
+}
+func (self *OxmIdReg12Masked) GetOXMName() string {
+	return "reg12_masked"
+}
+
+func (self *OxmIdReg12Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg13 struct {
+	*OxmId
+}
+
+type IOxmIdReg13 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg13) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg13(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg13, error) {
+	_oxmidreg13 := &OxmIdReg13{OxmId: parent}
+	return _oxmidreg13, nil
+}
+
+func NewOxmIdReg13() *OxmIdReg13 {
+	obj := &OxmIdReg13{
+		OxmId: NewOxmId(72196),
+	}
+	return obj
+}
+func (self *OxmIdReg13) GetOXMName() string {
+	return "reg13"
+}
+
+func (self *OxmIdReg13) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg13Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg13Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg13Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg13Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg13Masked, error) {
+	_oxmidreg13masked := &OxmIdReg13Masked{OxmId: parent}
+	return _oxmidreg13masked, nil
+}
+
+func NewOxmIdReg13Masked() *OxmIdReg13Masked {
+	obj := &OxmIdReg13Masked{
+		OxmId: NewOxmId(72452),
+	}
+	return obj
+}
+func (self *OxmIdReg13Masked) GetOXMName() string {
+	return "reg13_masked"
+}
+
+func (self *OxmIdReg13Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg14 struct {
+	*OxmId
+}
+
+type IOxmIdReg14 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg14) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg14(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg14, error) {
+	_oxmidreg14 := &OxmIdReg14{OxmId: parent}
+	return _oxmidreg14, nil
+}
+
+func NewOxmIdReg14() *OxmIdReg14 {
+	obj := &OxmIdReg14{
+		OxmId: NewOxmId(72708),
+	}
+	return obj
+}
+func (self *OxmIdReg14) GetOXMName() string {
+	return "reg14"
+}
+
+func (self *OxmIdReg14) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg14Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg14Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg14Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg14Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg14Masked, error) {
+	_oxmidreg14masked := &OxmIdReg14Masked{OxmId: parent}
+	return _oxmidreg14masked, nil
+}
+
+func NewOxmIdReg14Masked() *OxmIdReg14Masked {
+	obj := &OxmIdReg14Masked{
+		OxmId: NewOxmId(72964),
+	}
+	return obj
+}
+func (self *OxmIdReg14Masked) GetOXMName() string {
+	return "reg14_masked"
+}
+
+func (self *OxmIdReg14Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg15 struct {
+	*OxmId
+}
+
+type IOxmIdReg15 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg15) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg15(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg15, error) {
+	_oxmidreg15 := &OxmIdReg15{OxmId: parent}
+	return _oxmidreg15, nil
+}
+
+func NewOxmIdReg15() *OxmIdReg15 {
+	obj := &OxmIdReg15{
+		OxmId: NewOxmId(73220),
+	}
+	return obj
+}
+func (self *OxmIdReg15) GetOXMName() string {
+	return "reg15"
+}
+
+func (self *OxmIdReg15) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg15Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg15Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg15Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg15Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg15Masked, error) {
+	_oxmidreg15masked := &OxmIdReg15Masked{OxmId: parent}
+	return _oxmidreg15masked, nil
+}
+
+func NewOxmIdReg15Masked() *OxmIdReg15Masked {
+	obj := &OxmIdReg15Masked{
+		OxmId: NewOxmId(73476),
+	}
+	return obj
+}
+func (self *OxmIdReg15Masked) GetOXMName() string {
+	return "reg15_masked"
+}
+
+func (self *OxmIdReg15Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg1Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg1Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg1Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg1Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg1Masked, error) {
+	_oxmidreg1masked := &OxmIdReg1Masked{OxmId: parent}
+	return _oxmidreg1masked, nil
+}
+
+func NewOxmIdReg1Masked() *OxmIdReg1Masked {
+	obj := &OxmIdReg1Masked{
+		OxmId: NewOxmId(66308),
+	}
+	return obj
+}
+func (self *OxmIdReg1Masked) GetOXMName() string {
+	return "reg1_masked"
+}
+
+func (self *OxmIdReg1Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg2 struct {
+	*OxmId
+}
+
+type IOxmIdReg2 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg2) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg2(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg2, error) {
+	_oxmidreg2 := &OxmIdReg2{OxmId: parent}
+	return _oxmidreg2, nil
+}
+
+func NewOxmIdReg2() *OxmIdReg2 {
+	obj := &OxmIdReg2{
+		OxmId: NewOxmId(66564),
+	}
+	return obj
+}
+func (self *OxmIdReg2) GetOXMName() string {
+	return "reg2"
+}
+
+func (self *OxmIdReg2) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg2Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg2Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg2Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg2Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg2Masked, error) {
+	_oxmidreg2masked := &OxmIdReg2Masked{OxmId: parent}
+	return _oxmidreg2masked, nil
+}
+
+func NewOxmIdReg2Masked() *OxmIdReg2Masked {
+	obj := &OxmIdReg2Masked{
+		OxmId: NewOxmId(66820),
+	}
+	return obj
+}
+func (self *OxmIdReg2Masked) GetOXMName() string {
+	return "reg2_masked"
+}
+
+func (self *OxmIdReg2Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg3 struct {
+	*OxmId
+}
+
+type IOxmIdReg3 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg3) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg3(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg3, error) {
+	_oxmidreg3 := &OxmIdReg3{OxmId: parent}
+	return _oxmidreg3, nil
+}
+
+func NewOxmIdReg3() *OxmIdReg3 {
+	obj := &OxmIdReg3{
+		OxmId: NewOxmId(67076),
+	}
+	return obj
+}
+func (self *OxmIdReg3) GetOXMName() string {
+	return "reg3"
+}
+
+func (self *OxmIdReg3) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg3Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg3Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg3Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg3Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg3Masked, error) {
+	_oxmidreg3masked := &OxmIdReg3Masked{OxmId: parent}
+	return _oxmidreg3masked, nil
+}
+
+func NewOxmIdReg3Masked() *OxmIdReg3Masked {
+	obj := &OxmIdReg3Masked{
+		OxmId: NewOxmId(67332),
+	}
+	return obj
+}
+func (self *OxmIdReg3Masked) GetOXMName() string {
+	return "reg3_masked"
+}
+
+func (self *OxmIdReg3Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg4 struct {
+	*OxmId
+}
+
+type IOxmIdReg4 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg4) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg4(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg4, error) {
+	_oxmidreg4 := &OxmIdReg4{OxmId: parent}
+	return _oxmidreg4, nil
+}
+
+func NewOxmIdReg4() *OxmIdReg4 {
+	obj := &OxmIdReg4{
+		OxmId: NewOxmId(67588),
+	}
+	return obj
+}
+func (self *OxmIdReg4) GetOXMName() string {
+	return "reg4"
+}
+
+func (self *OxmIdReg4) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg4Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg4Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg4Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg4Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg4Masked, error) {
+	_oxmidreg4masked := &OxmIdReg4Masked{OxmId: parent}
+	return _oxmidreg4masked, nil
+}
+
+func NewOxmIdReg4Masked() *OxmIdReg4Masked {
+	obj := &OxmIdReg4Masked{
+		OxmId: NewOxmId(67844),
+	}
+	return obj
+}
+func (self *OxmIdReg4Masked) GetOXMName() string {
+	return "reg4_masked"
+}
+
+func (self *OxmIdReg4Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg5 struct {
+	*OxmId
+}
+
+type IOxmIdReg5 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg5) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg5(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg5, error) {
+	_oxmidreg5 := &OxmIdReg5{OxmId: parent}
+	return _oxmidreg5, nil
+}
+
+func NewOxmIdReg5() *OxmIdReg5 {
+	obj := &OxmIdReg5{
+		OxmId: NewOxmId(68100),
+	}
+	return obj
+}
+func (self *OxmIdReg5) GetOXMName() string {
+	return "reg5"
+}
+
+func (self *OxmIdReg5) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg5Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg5Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg5Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg5Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg5Masked, error) {
+	_oxmidreg5masked := &OxmIdReg5Masked{OxmId: parent}
+	return _oxmidreg5masked, nil
+}
+
+func NewOxmIdReg5Masked() *OxmIdReg5Masked {
+	obj := &OxmIdReg5Masked{
+		OxmId: NewOxmId(68356),
+	}
+	return obj
+}
+func (self *OxmIdReg5Masked) GetOXMName() string {
+	return "reg5_masked"
+}
+
+func (self *OxmIdReg5Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg6 struct {
+	*OxmId
+}
+
+type IOxmIdReg6 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg6) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg6(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg6, error) {
+	_oxmidreg6 := &OxmIdReg6{OxmId: parent}
+	return _oxmidreg6, nil
+}
+
+func NewOxmIdReg6() *OxmIdReg6 {
+	obj := &OxmIdReg6{
+		OxmId: NewOxmId(68612),
+	}
+	return obj
+}
+func (self *OxmIdReg6) GetOXMName() string {
+	return "reg6"
+}
+
+func (self *OxmIdReg6) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg6Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg6Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg6Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg6Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg6Masked, error) {
+	_oxmidreg6masked := &OxmIdReg6Masked{OxmId: parent}
+	return _oxmidreg6masked, nil
+}
+
+func NewOxmIdReg6Masked() *OxmIdReg6Masked {
+	obj := &OxmIdReg6Masked{
+		OxmId: NewOxmId(68868),
+	}
+	return obj
+}
+func (self *OxmIdReg6Masked) GetOXMName() string {
+	return "reg6_masked"
+}
+
+func (self *OxmIdReg6Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg7 struct {
+	*OxmId
+}
+
+type IOxmIdReg7 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg7) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg7(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg7, error) {
+	_oxmidreg7 := &OxmIdReg7{OxmId: parent}
+	return _oxmidreg7, nil
+}
+
+func NewOxmIdReg7() *OxmIdReg7 {
+	obj := &OxmIdReg7{
+		OxmId: NewOxmId(69124),
+	}
+	return obj
+}
+func (self *OxmIdReg7) GetOXMName() string {
+	return "reg7"
+}
+
+func (self *OxmIdReg7) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg7Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg7Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg7Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg7Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg7Masked, error) {
+	_oxmidreg7masked := &OxmIdReg7Masked{OxmId: parent}
+	return _oxmidreg7masked, nil
+}
+
+func NewOxmIdReg7Masked() *OxmIdReg7Masked {
+	obj := &OxmIdReg7Masked{
+		OxmId: NewOxmId(69380),
+	}
+	return obj
+}
+func (self *OxmIdReg7Masked) GetOXMName() string {
+	return "reg7_masked"
+}
+
+func (self *OxmIdReg7Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg8 struct {
+	*OxmId
+}
+
+type IOxmIdReg8 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg8) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg8(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg8, error) {
+	_oxmidreg8 := &OxmIdReg8{OxmId: parent}
+	return _oxmidreg8, nil
+}
+
+func NewOxmIdReg8() *OxmIdReg8 {
+	obj := &OxmIdReg8{
+		OxmId: NewOxmId(69636),
+	}
+	return obj
+}
+func (self *OxmIdReg8) GetOXMName() string {
+	return "reg8"
+}
+
+func (self *OxmIdReg8) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg8Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg8Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg8Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg8Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg8Masked, error) {
+	_oxmidreg8masked := &OxmIdReg8Masked{OxmId: parent}
+	return _oxmidreg8masked, nil
+}
+
+func NewOxmIdReg8Masked() *OxmIdReg8Masked {
+	obj := &OxmIdReg8Masked{
+		OxmId: NewOxmId(69892),
+	}
+	return obj
+}
+func (self *OxmIdReg8Masked) GetOXMName() string {
+	return "reg8_masked"
+}
+
+func (self *OxmIdReg8Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg9 struct {
+	*OxmId
+}
+
+type IOxmIdReg9 interface {
+	IOxmId
+}
+
+func (self *OxmIdReg9) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg9(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg9, error) {
+	_oxmidreg9 := &OxmIdReg9{OxmId: parent}
+	return _oxmidreg9, nil
+}
+
+func NewOxmIdReg9() *OxmIdReg9 {
+	obj := &OxmIdReg9{
+		OxmId: NewOxmId(70148),
+	}
+	return obj
+}
+func (self *OxmIdReg9) GetOXMName() string {
+	return "reg9"
+}
+
+func (self *OxmIdReg9) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdReg9Masked struct {
+	*OxmId
+}
+
+type IOxmIdReg9Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdReg9Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdReg9Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg9Masked, error) {
+	_oxmidreg9masked := &OxmIdReg9Masked{OxmId: parent}
+	return _oxmidreg9masked, nil
+}
+
+func NewOxmIdReg9Masked() *OxmIdReg9Masked {
+	obj := &OxmIdReg9Masked{
+		OxmId: NewOxmId(70404),
+	}
+	return obj
+}
+func (self *OxmIdReg9Masked) GetOXMName() string {
+	return "reg9_masked"
+}
+
+func (self *OxmIdReg9Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTcpDst struct {
+	*OxmId
+}
+
+type IOxmIdTcpDst interface {
+	IOxmId
+}
+
+func (self *OxmIdTcpDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTcpDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTcpDst, error) {
+	_oxmidtcpdst := &OxmIdTcpDst{OxmId: parent}
+	return _oxmidtcpdst, nil
+}
+
+func NewOxmIdTcpDst() *OxmIdTcpDst {
+	obj := &OxmIdTcpDst{
+		OxmId: NewOxmId(5122),
+	}
+	return obj
+}
+func (self *OxmIdTcpDst) GetOXMName() string {
+	return "tcp_dst"
+}
+
+func (self *OxmIdTcpDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTcpDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdTcpDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTcpDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTcpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTcpDstMasked, error) {
+	_oxmidtcpdstmasked := &OxmIdTcpDstMasked{OxmId: parent}
+	return _oxmidtcpdstmasked, nil
+}
+
+func NewOxmIdTcpDstMasked() *OxmIdTcpDstMasked {
+	obj := &OxmIdTcpDstMasked{
+		OxmId: NewOxmId(5378),
+	}
+	return obj
+}
+func (self *OxmIdTcpDstMasked) GetOXMName() string {
+	return "tcp_dst_masked"
+}
+
+func (self *OxmIdTcpDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTcpFlags struct {
+	*OxmId
+}
+
+type IOxmIdTcpFlags interface {
+	IOxmId
+}
+
+func (self *OxmIdTcpFlags) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTcpFlags(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTcpFlags, error) {
+	_oxmidtcpflags := &OxmIdTcpFlags{OxmId: parent}
+	return _oxmidtcpflags, nil
+}
+
+func NewOxmIdTcpFlags() *OxmIdTcpFlags {
+	obj := &OxmIdTcpFlags{
+		OxmId: NewOxmId(82946),
+	}
+	return obj
+}
+func (self *OxmIdTcpFlags) GetOXMName() string {
+	return "tcp_flags"
+}
+
+func (self *OxmIdTcpFlags) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTcpFlagsMasked struct {
+	*OxmId
+}
+
+type IOxmIdTcpFlagsMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTcpFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTcpFlagsMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTcpFlagsMasked, error) {
+	_oxmidtcpflagsmasked := &OxmIdTcpFlagsMasked{OxmId: parent}
+	return _oxmidtcpflagsmasked, nil
+}
+
+func NewOxmIdTcpFlagsMasked() *OxmIdTcpFlagsMasked {
+	obj := &OxmIdTcpFlagsMasked{
+		OxmId: NewOxmId(83202),
+	}
+	return obj
+}
+func (self *OxmIdTcpFlagsMasked) GetOXMName() string {
+	return "tcp_flags_masked"
+}
+
+func (self *OxmIdTcpFlagsMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTcpSrc struct {
+	*OxmId
+}
+
+type IOxmIdTcpSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdTcpSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTcpSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTcpSrc, error) {
+	_oxmidtcpsrc := &OxmIdTcpSrc{OxmId: parent}
+	return _oxmidtcpsrc, nil
+}
+
+func NewOxmIdTcpSrc() *OxmIdTcpSrc {
+	obj := &OxmIdTcpSrc{
+		OxmId: NewOxmId(4610),
+	}
+	return obj
+}
+func (self *OxmIdTcpSrc) GetOXMName() string {
+	return "tcp_src"
+}
+
+func (self *OxmIdTcpSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTcpSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdTcpSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTcpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTcpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTcpSrcMasked, error) {
+	_oxmidtcpsrcmasked := &OxmIdTcpSrcMasked{OxmId: parent}
+	return _oxmidtcpsrcmasked, nil
+}
+
+func NewOxmIdTcpSrcMasked() *OxmIdTcpSrcMasked {
+	obj := &OxmIdTcpSrcMasked{
+		OxmId: NewOxmId(4866),
+	}
+	return obj
+}
+func (self *OxmIdTcpSrcMasked) GetOXMName() string {
+	return "tcp_src_masked"
+}
+
+func (self *OxmIdTcpSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunDst struct {
+	*OxmId
+}
+
+type IOxmIdTunDst interface {
+	IOxmId
+}
+
+func (self *OxmIdTunDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunDst, error) {
+	_oxmidtundst := &OxmIdTunDst{OxmId: parent}
+	return _oxmidtundst, nil
+}
+
+func NewOxmIdTunDst() *OxmIdTunDst {
+	obj := &OxmIdTunDst{
+		OxmId: NewOxmId(81924),
+	}
+	return obj
+}
+func (self *OxmIdTunDst) GetOXMName() string {
+	return "tun_dst"
+}
+
+func (self *OxmIdTunDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunDstMasked, error) {
+	_oxmidtundstmasked := &OxmIdTunDstMasked{OxmId: parent}
+	return _oxmidtundstmasked, nil
+}
+
+func NewOxmIdTunDstMasked() *OxmIdTunDstMasked {
+	obj := &OxmIdTunDstMasked{
+		OxmId: NewOxmId(82180),
+	}
+	return obj
+}
+func (self *OxmIdTunDstMasked) GetOXMName() string {
+	return "tun_dst_masked"
+}
+
+func (self *OxmIdTunDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunFlags struct {
+	*OxmId
+}
+
+type IOxmIdTunFlags interface {
+	IOxmId
+}
+
+func (self *OxmIdTunFlags) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunFlags(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunFlags, error) {
+	_oxmidtunflags := &OxmIdTunFlags{OxmId: parent}
+	return _oxmidtunflags, nil
+}
+
+func NewOxmIdTunFlags() *OxmIdTunFlags {
+	obj := &OxmIdTunFlags{
+		OxmId: NewOxmId(118786),
+	}
+	return obj
+}
+func (self *OxmIdTunFlags) GetOXMName() string {
+	return "tun_flags"
+}
+
+func (self *OxmIdTunFlags) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunFlagsMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunFlagsMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunFlagsMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunFlagsMasked, error) {
+	_oxmidtunflagsmasked := &OxmIdTunFlagsMasked{OxmId: parent}
+	return _oxmidtunflagsmasked, nil
+}
+
+func NewOxmIdTunFlagsMasked() *OxmIdTunFlagsMasked {
+	obj := &OxmIdTunFlagsMasked{
+		OxmId: NewOxmId(119042),
+	}
+	return obj
+}
+func (self *OxmIdTunFlagsMasked) GetOXMName() string {
+	return "tun_flags_masked"
+}
+
+func (self *OxmIdTunFlagsMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunGbpFlags struct {
+	*OxmId
+}
+
+type IOxmIdTunGbpFlags interface {
+	IOxmId
+}
+
+func (self *OxmIdTunGbpFlags) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunGbpFlags(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunGbpFlags, error) {
+	_oxmidtungbpflags := &OxmIdTunGbpFlags{OxmId: parent}
+	return _oxmidtungbpflags, nil
+}
+
+func NewOxmIdTunGbpFlags() *OxmIdTunGbpFlags {
+	obj := &OxmIdTunGbpFlags{
+		OxmId: NewOxmId(85505),
+	}
+	return obj
+}
+func (self *OxmIdTunGbpFlags) GetOXMName() string {
+	return "tun_gbp_flags"
+}
+
+func (self *OxmIdTunGbpFlags) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunGbpFlagsMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunGbpFlagsMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunGbpFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunGbpFlagsMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunGbpFlagsMasked, error) {
+	_oxmidtungbpflagsmasked := &OxmIdTunGbpFlagsMasked{OxmId: parent}
+	return _oxmidtungbpflagsmasked, nil
+}
+
+func NewOxmIdTunGbpFlagsMasked() *OxmIdTunGbpFlagsMasked {
+	obj := &OxmIdTunGbpFlagsMasked{
+		OxmId: NewOxmId(85761),
+	}
+	return obj
+}
+func (self *OxmIdTunGbpFlagsMasked) GetOXMName() string {
+	return "tun_gbp_flags_masked"
+}
+
+func (self *OxmIdTunGbpFlagsMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunGbpId struct {
+	*OxmId
+}
+
+type IOxmIdTunGbpId interface {
+	IOxmId
+}
+
+func (self *OxmIdTunGbpId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunGbpId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunGbpId, error) {
+	_oxmidtungbpid := &OxmIdTunGbpId{OxmId: parent}
+	return _oxmidtungbpid, nil
+}
+
+func NewOxmIdTunGbpId() *OxmIdTunGbpId {
+	obj := &OxmIdTunGbpId{
+		OxmId: NewOxmId(84994),
+	}
+	return obj
+}
+func (self *OxmIdTunGbpId) GetOXMName() string {
+	return "tun_gbp_id"
+}
+
+func (self *OxmIdTunGbpId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunGbpIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunGbpIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunGbpIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunGbpIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunGbpIdMasked, error) {
+	_oxmidtungbpidmasked := &OxmIdTunGbpIdMasked{OxmId: parent}
+	return _oxmidtungbpidmasked, nil
+}
+
+func NewOxmIdTunGbpIdMasked() *OxmIdTunGbpIdMasked {
+	obj := &OxmIdTunGbpIdMasked{
+		OxmId: NewOxmId(85250),
+	}
+	return obj
+}
+func (self *OxmIdTunGbpIdMasked) GetOXMName() string {
+	return "tun_gbp_id_masked"
+}
+
+func (self *OxmIdTunGbpIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunId struct {
+	*OxmId
+}
+
+type IOxmIdTunId interface {
+	IOxmId
+}
+
+func (self *OxmIdTunId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunId, error) {
+	_oxmidtunid := &OxmIdTunId{OxmId: parent}
+	return _oxmidtunid, nil
+}
+
+func NewOxmIdTunId() *OxmIdTunId {
+	obj := &OxmIdTunId{
+		OxmId: NewOxmId(73736),
+	}
+	return obj
+}
+func (self *OxmIdTunId) GetOXMName() string {
+	return "tun_id"
+}
+
+func (self *OxmIdTunId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunIdMasked, error) {
+	_oxmidtunidmasked := &OxmIdTunIdMasked{OxmId: parent}
+	return _oxmidtunidmasked, nil
+}
+
+func NewOxmIdTunIdMasked() *OxmIdTunIdMasked {
+	obj := &OxmIdTunIdMasked{
+		OxmId: NewOxmId(73992),
+	}
+	return obj
+}
+func (self *OxmIdTunIdMasked) GetOXMName() string {
+	return "tun_id_masked"
+}
+
+func (self *OxmIdTunIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunIpv6Dst struct {
+	*OxmId
+}
+
+type IOxmIdTunIpv6Dst interface {
+	IOxmId
+}
+
+func (self *OxmIdTunIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunIpv6Dst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunIpv6Dst, error) {
+	_oxmidtunipv6dst := &OxmIdTunIpv6Dst{OxmId: parent}
+	return _oxmidtunipv6dst, nil
+}
+
+func NewOxmIdTunIpv6Dst() *OxmIdTunIpv6Dst {
+	obj := &OxmIdTunIpv6Dst{
+		OxmId: NewOxmId(121872),
+	}
+	return obj
+}
+func (self *OxmIdTunIpv6Dst) GetOXMName() string {
+	return "tun_ipv6_dst"
+}
+
+func (self *OxmIdTunIpv6Dst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunIpv6DstMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunIpv6DstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunIpv6DstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunIpv6DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunIpv6DstMasked, error) {
+	_oxmidtunipv6dstmasked := &OxmIdTunIpv6DstMasked{OxmId: parent}
+	return _oxmidtunipv6dstmasked, nil
+}
+
+func NewOxmIdTunIpv6DstMasked() *OxmIdTunIpv6DstMasked {
+	obj := &OxmIdTunIpv6DstMasked{
+		OxmId: NewOxmId(122128),
+	}
+	return obj
+}
+func (self *OxmIdTunIpv6DstMasked) GetOXMName() string {
+	return "tun_ipv6_dst_masked"
+}
+
+func (self *OxmIdTunIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunIpv6Src struct {
+	*OxmId
+}
+
+type IOxmIdTunIpv6Src interface {
+	IOxmId
+}
+
+func (self *OxmIdTunIpv6Src) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunIpv6Src(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunIpv6Src, error) {
+	_oxmidtunipv6src := &OxmIdTunIpv6Src{OxmId: parent}
+	return _oxmidtunipv6src, nil
+}
+
+func NewOxmIdTunIpv6Src() *OxmIdTunIpv6Src {
+	obj := &OxmIdTunIpv6Src{
+		OxmId: NewOxmId(121360),
+	}
+	return obj
+}
+func (self *OxmIdTunIpv6Src) GetOXMName() string {
+	return "tun_ipv6_src"
+}
+
+func (self *OxmIdTunIpv6Src) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunIpv6SrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunIpv6SrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunIpv6SrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunIpv6SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunIpv6SrcMasked, error) {
+	_oxmidtunipv6srcmasked := &OxmIdTunIpv6SrcMasked{OxmId: parent}
+	return _oxmidtunipv6srcmasked, nil
+}
+
+func NewOxmIdTunIpv6SrcMasked() *OxmIdTunIpv6SrcMasked {
+	obj := &OxmIdTunIpv6SrcMasked{
+		OxmId: NewOxmId(121616),
+	}
+	return obj
+}
+func (self *OxmIdTunIpv6SrcMasked) GetOXMName() string {
+	return "tun_ipv6_src_masked"
+}
+
+func (self *OxmIdTunIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata0 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata0 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata0) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata0(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata0, error) {
+	_oxmidtunmetadata0 := &OxmIdTunMetadata0{OxmId: parent}
+	return _oxmidtunmetadata0, nil
+}
+
+func NewOxmIdTunMetadata0() *OxmIdTunMetadata0 {
+	obj := &OxmIdTunMetadata0{
+		OxmId: NewOxmId(86140),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata0) GetOXMName() string {
+	return "tun_metadata0"
+}
+
+func (self *OxmIdTunMetadata0) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata0Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata0Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata0Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata0Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata0Masked, error) {
+	_oxmidtunmetadata0masked := &OxmIdTunMetadata0Masked{OxmId: parent}
+	return _oxmidtunmetadata0masked, nil
+}
+
+func NewOxmIdTunMetadata0Masked() *OxmIdTunMetadata0Masked {
+	obj := &OxmIdTunMetadata0Masked{
+		OxmId: NewOxmId(86396),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata0Masked) GetOXMName() string {
+	return "tun_metadata0_masked"
+}
+
+func (self *OxmIdTunMetadata0Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata1 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata1 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata1) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata1(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata1, error) {
+	_oxmidtunmetadata1 := &OxmIdTunMetadata1{OxmId: parent}
+	return _oxmidtunmetadata1, nil
+}
+
+func NewOxmIdTunMetadata1() *OxmIdTunMetadata1 {
+	obj := &OxmIdTunMetadata1{
+		OxmId: NewOxmId(86652),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata1) GetOXMName() string {
+	return "tun_metadata1"
+}
+
+func (self *OxmIdTunMetadata1) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata10 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata10 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata10) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata10(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata10, error) {
+	_oxmidtunmetadata10 := &OxmIdTunMetadata10{OxmId: parent}
+	return _oxmidtunmetadata10, nil
+}
+
+func NewOxmIdTunMetadata10() *OxmIdTunMetadata10 {
+	obj := &OxmIdTunMetadata10{
+		OxmId: NewOxmId(91260),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata10) GetOXMName() string {
+	return "tun_metadata10"
+}
+
+func (self *OxmIdTunMetadata10) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata10Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata10Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata10Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata10Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata10Masked, error) {
+	_oxmidtunmetadata10masked := &OxmIdTunMetadata10Masked{OxmId: parent}
+	return _oxmidtunmetadata10masked, nil
+}
+
+func NewOxmIdTunMetadata10Masked() *OxmIdTunMetadata10Masked {
+	obj := &OxmIdTunMetadata10Masked{
+		OxmId: NewOxmId(91516),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata10Masked) GetOXMName() string {
+	return "tun_metadata10_masked"
+}
+
+func (self *OxmIdTunMetadata10Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata11 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata11 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata11) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata11(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata11, error) {
+	_oxmidtunmetadata11 := &OxmIdTunMetadata11{OxmId: parent}
+	return _oxmidtunmetadata11, nil
+}
+
+func NewOxmIdTunMetadata11() *OxmIdTunMetadata11 {
+	obj := &OxmIdTunMetadata11{
+		OxmId: NewOxmId(91772),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata11) GetOXMName() string {
+	return "tun_metadata11"
+}
+
+func (self *OxmIdTunMetadata11) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata11Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata11Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata11Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata11Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata11Masked, error) {
+	_oxmidtunmetadata11masked := &OxmIdTunMetadata11Masked{OxmId: parent}
+	return _oxmidtunmetadata11masked, nil
+}
+
+func NewOxmIdTunMetadata11Masked() *OxmIdTunMetadata11Masked {
+	obj := &OxmIdTunMetadata11Masked{
+		OxmId: NewOxmId(92028),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata11Masked) GetOXMName() string {
+	return "tun_metadata11_masked"
+}
+
+func (self *OxmIdTunMetadata11Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata12 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata12 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata12) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata12(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata12, error) {
+	_oxmidtunmetadata12 := &OxmIdTunMetadata12{OxmId: parent}
+	return _oxmidtunmetadata12, nil
+}
+
+func NewOxmIdTunMetadata12() *OxmIdTunMetadata12 {
+	obj := &OxmIdTunMetadata12{
+		OxmId: NewOxmId(92284),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata12) GetOXMName() string {
+	return "tun_metadata12"
+}
+
+func (self *OxmIdTunMetadata12) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata12Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata12Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata12Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata12Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata12Masked, error) {
+	_oxmidtunmetadata12masked := &OxmIdTunMetadata12Masked{OxmId: parent}
+	return _oxmidtunmetadata12masked, nil
+}
+
+func NewOxmIdTunMetadata12Masked() *OxmIdTunMetadata12Masked {
+	obj := &OxmIdTunMetadata12Masked{
+		OxmId: NewOxmId(92540),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata12Masked) GetOXMName() string {
+	return "tun_metadata12_masked"
+}
+
+func (self *OxmIdTunMetadata12Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata13 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata13 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata13) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata13(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata13, error) {
+	_oxmidtunmetadata13 := &OxmIdTunMetadata13{OxmId: parent}
+	return _oxmidtunmetadata13, nil
+}
+
+func NewOxmIdTunMetadata13() *OxmIdTunMetadata13 {
+	obj := &OxmIdTunMetadata13{
+		OxmId: NewOxmId(92796),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata13) GetOXMName() string {
+	return "tun_metadata13"
+}
+
+func (self *OxmIdTunMetadata13) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata13Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata13Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata13Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata13Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata13Masked, error) {
+	_oxmidtunmetadata13masked := &OxmIdTunMetadata13Masked{OxmId: parent}
+	return _oxmidtunmetadata13masked, nil
+}
+
+func NewOxmIdTunMetadata13Masked() *OxmIdTunMetadata13Masked {
+	obj := &OxmIdTunMetadata13Masked{
+		OxmId: NewOxmId(93052),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata13Masked) GetOXMName() string {
+	return "tun_metadata13_masked"
+}
+
+func (self *OxmIdTunMetadata13Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata14 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata14 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata14) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata14(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata14, error) {
+	_oxmidtunmetadata14 := &OxmIdTunMetadata14{OxmId: parent}
+	return _oxmidtunmetadata14, nil
+}
+
+func NewOxmIdTunMetadata14() *OxmIdTunMetadata14 {
+	obj := &OxmIdTunMetadata14{
+		OxmId: NewOxmId(93308),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata14) GetOXMName() string {
+	return "tun_metadata14"
+}
+
+func (self *OxmIdTunMetadata14) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata14Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata14Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata14Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata14Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata14Masked, error) {
+	_oxmidtunmetadata14masked := &OxmIdTunMetadata14Masked{OxmId: parent}
+	return _oxmidtunmetadata14masked, nil
+}
+
+func NewOxmIdTunMetadata14Masked() *OxmIdTunMetadata14Masked {
+	obj := &OxmIdTunMetadata14Masked{
+		OxmId: NewOxmId(93564),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata14Masked) GetOXMName() string {
+	return "tun_metadata14_masked"
+}
+
+func (self *OxmIdTunMetadata14Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata15 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata15 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata15) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata15(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata15, error) {
+	_oxmidtunmetadata15 := &OxmIdTunMetadata15{OxmId: parent}
+	return _oxmidtunmetadata15, nil
+}
+
+func NewOxmIdTunMetadata15() *OxmIdTunMetadata15 {
+	obj := &OxmIdTunMetadata15{
+		OxmId: NewOxmId(93820),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata15) GetOXMName() string {
+	return "tun_metadata15"
+}
+
+func (self *OxmIdTunMetadata15) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata15Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata15Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata15Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata15Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata15Masked, error) {
+	_oxmidtunmetadata15masked := &OxmIdTunMetadata15Masked{OxmId: parent}
+	return _oxmidtunmetadata15masked, nil
+}
+
+func NewOxmIdTunMetadata15Masked() *OxmIdTunMetadata15Masked {
+	obj := &OxmIdTunMetadata15Masked{
+		OxmId: NewOxmId(94076),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata15Masked) GetOXMName() string {
+	return "tun_metadata15_masked"
+}
+
+func (self *OxmIdTunMetadata15Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata16 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata16 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata16) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata16(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata16, error) {
+	_oxmidtunmetadata16 := &OxmIdTunMetadata16{OxmId: parent}
+	return _oxmidtunmetadata16, nil
+}
+
+func NewOxmIdTunMetadata16() *OxmIdTunMetadata16 {
+	obj := &OxmIdTunMetadata16{
+		OxmId: NewOxmId(94332),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata16) GetOXMName() string {
+	return "tun_metadata16"
+}
+
+func (self *OxmIdTunMetadata16) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata16Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata16Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata16Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata16Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata16Masked, error) {
+	_oxmidtunmetadata16masked := &OxmIdTunMetadata16Masked{OxmId: parent}
+	return _oxmidtunmetadata16masked, nil
+}
+
+func NewOxmIdTunMetadata16Masked() *OxmIdTunMetadata16Masked {
+	obj := &OxmIdTunMetadata16Masked{
+		OxmId: NewOxmId(94588),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata16Masked) GetOXMName() string {
+	return "tun_metadata16_masked"
+}
+
+func (self *OxmIdTunMetadata16Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata17 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata17 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata17) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata17(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata17, error) {
+	_oxmidtunmetadata17 := &OxmIdTunMetadata17{OxmId: parent}
+	return _oxmidtunmetadata17, nil
+}
+
+func NewOxmIdTunMetadata17() *OxmIdTunMetadata17 {
+	obj := &OxmIdTunMetadata17{
+		OxmId: NewOxmId(94844),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata17) GetOXMName() string {
+	return "tun_metadata17"
+}
+
+func (self *OxmIdTunMetadata17) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata17Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata17Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata17Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata17Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata17Masked, error) {
+	_oxmidtunmetadata17masked := &OxmIdTunMetadata17Masked{OxmId: parent}
+	return _oxmidtunmetadata17masked, nil
+}
+
+func NewOxmIdTunMetadata17Masked() *OxmIdTunMetadata17Masked {
+	obj := &OxmIdTunMetadata17Masked{
+		OxmId: NewOxmId(95100),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata17Masked) GetOXMName() string {
+	return "tun_metadata17_masked"
+}
+
+func (self *OxmIdTunMetadata17Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata18 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata18 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata18) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata18(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata18, error) {
+	_oxmidtunmetadata18 := &OxmIdTunMetadata18{OxmId: parent}
+	return _oxmidtunmetadata18, nil
+}
+
+func NewOxmIdTunMetadata18() *OxmIdTunMetadata18 {
+	obj := &OxmIdTunMetadata18{
+		OxmId: NewOxmId(95356),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata18) GetOXMName() string {
+	return "tun_metadata18"
+}
+
+func (self *OxmIdTunMetadata18) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata18Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata18Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata18Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata18Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata18Masked, error) {
+	_oxmidtunmetadata18masked := &OxmIdTunMetadata18Masked{OxmId: parent}
+	return _oxmidtunmetadata18masked, nil
+}
+
+func NewOxmIdTunMetadata18Masked() *OxmIdTunMetadata18Masked {
+	obj := &OxmIdTunMetadata18Masked{
+		OxmId: NewOxmId(95612),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata18Masked) GetOXMName() string {
+	return "tun_metadata18_masked"
+}
+
+func (self *OxmIdTunMetadata18Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata19 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata19 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata19) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata19(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata19, error) {
+	_oxmidtunmetadata19 := &OxmIdTunMetadata19{OxmId: parent}
+	return _oxmidtunmetadata19, nil
+}
+
+func NewOxmIdTunMetadata19() *OxmIdTunMetadata19 {
+	obj := &OxmIdTunMetadata19{
+		OxmId: NewOxmId(95868),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata19) GetOXMName() string {
+	return "tun_metadata19"
+}
+
+func (self *OxmIdTunMetadata19) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata19Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata19Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata19Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata19Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata19Masked, error) {
+	_oxmidtunmetadata19masked := &OxmIdTunMetadata19Masked{OxmId: parent}
+	return _oxmidtunmetadata19masked, nil
+}
+
+func NewOxmIdTunMetadata19Masked() *OxmIdTunMetadata19Masked {
+	obj := &OxmIdTunMetadata19Masked{
+		OxmId: NewOxmId(96124),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata19Masked) GetOXMName() string {
+	return "tun_metadata19_masked"
+}
+
+func (self *OxmIdTunMetadata19Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata1Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata1Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata1Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata1Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata1Masked, error) {
+	_oxmidtunmetadata1masked := &OxmIdTunMetadata1Masked{OxmId: parent}
+	return _oxmidtunmetadata1masked, nil
+}
+
+func NewOxmIdTunMetadata1Masked() *OxmIdTunMetadata1Masked {
+	obj := &OxmIdTunMetadata1Masked{
+		OxmId: NewOxmId(86908),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata1Masked) GetOXMName() string {
+	return "tun_metadata1_masked"
+}
+
+func (self *OxmIdTunMetadata1Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata2 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata2 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata2) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata2(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata2, error) {
+	_oxmidtunmetadata2 := &OxmIdTunMetadata2{OxmId: parent}
+	return _oxmidtunmetadata2, nil
+}
+
+func NewOxmIdTunMetadata2() *OxmIdTunMetadata2 {
+	obj := &OxmIdTunMetadata2{
+		OxmId: NewOxmId(87164),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata2) GetOXMName() string {
+	return "tun_metadata2"
+}
+
+func (self *OxmIdTunMetadata2) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata20 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata20 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata20) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata20(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata20, error) {
+	_oxmidtunmetadata20 := &OxmIdTunMetadata20{OxmId: parent}
+	return _oxmidtunmetadata20, nil
+}
+
+func NewOxmIdTunMetadata20() *OxmIdTunMetadata20 {
+	obj := &OxmIdTunMetadata20{
+		OxmId: NewOxmId(96380),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata20) GetOXMName() string {
+	return "tun_metadata20"
+}
+
+func (self *OxmIdTunMetadata20) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata20Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata20Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata20Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata20Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata20Masked, error) {
+	_oxmidtunmetadata20masked := &OxmIdTunMetadata20Masked{OxmId: parent}
+	return _oxmidtunmetadata20masked, nil
+}
+
+func NewOxmIdTunMetadata20Masked() *OxmIdTunMetadata20Masked {
+	obj := &OxmIdTunMetadata20Masked{
+		OxmId: NewOxmId(96636),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata20Masked) GetOXMName() string {
+	return "tun_metadata20_masked"
+}
+
+func (self *OxmIdTunMetadata20Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata21 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata21 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata21) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata21(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata21, error) {
+	_oxmidtunmetadata21 := &OxmIdTunMetadata21{OxmId: parent}
+	return _oxmidtunmetadata21, nil
+}
+
+func NewOxmIdTunMetadata21() *OxmIdTunMetadata21 {
+	obj := &OxmIdTunMetadata21{
+		OxmId: NewOxmId(96892),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata21) GetOXMName() string {
+	return "tun_metadata21"
+}
+
+func (self *OxmIdTunMetadata21) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata21Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata21Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata21Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata21Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata21Masked, error) {
+	_oxmidtunmetadata21masked := &OxmIdTunMetadata21Masked{OxmId: parent}
+	return _oxmidtunmetadata21masked, nil
+}
+
+func NewOxmIdTunMetadata21Masked() *OxmIdTunMetadata21Masked {
+	obj := &OxmIdTunMetadata21Masked{
+		OxmId: NewOxmId(97148),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata21Masked) GetOXMName() string {
+	return "tun_metadata21_masked"
+}
+
+func (self *OxmIdTunMetadata21Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata22 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata22 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata22) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata22(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata22, error) {
+	_oxmidtunmetadata22 := &OxmIdTunMetadata22{OxmId: parent}
+	return _oxmidtunmetadata22, nil
+}
+
+func NewOxmIdTunMetadata22() *OxmIdTunMetadata22 {
+	obj := &OxmIdTunMetadata22{
+		OxmId: NewOxmId(97404),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata22) GetOXMName() string {
+	return "tun_metadata22"
+}
+
+func (self *OxmIdTunMetadata22) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata22Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata22Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata22Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata22Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata22Masked, error) {
+	_oxmidtunmetadata22masked := &OxmIdTunMetadata22Masked{OxmId: parent}
+	return _oxmidtunmetadata22masked, nil
+}
+
+func NewOxmIdTunMetadata22Masked() *OxmIdTunMetadata22Masked {
+	obj := &OxmIdTunMetadata22Masked{
+		OxmId: NewOxmId(97660),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata22Masked) GetOXMName() string {
+	return "tun_metadata22_masked"
+}
+
+func (self *OxmIdTunMetadata22Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata23 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata23 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata23) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata23(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata23, error) {
+	_oxmidtunmetadata23 := &OxmIdTunMetadata23{OxmId: parent}
+	return _oxmidtunmetadata23, nil
+}
+
+func NewOxmIdTunMetadata23() *OxmIdTunMetadata23 {
+	obj := &OxmIdTunMetadata23{
+		OxmId: NewOxmId(97916),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata23) GetOXMName() string {
+	return "tun_metadata23"
+}
+
+func (self *OxmIdTunMetadata23) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata23Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata23Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata23Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata23Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata23Masked, error) {
+	_oxmidtunmetadata23masked := &OxmIdTunMetadata23Masked{OxmId: parent}
+	return _oxmidtunmetadata23masked, nil
+}
+
+func NewOxmIdTunMetadata23Masked() *OxmIdTunMetadata23Masked {
+	obj := &OxmIdTunMetadata23Masked{
+		OxmId: NewOxmId(98172),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata23Masked) GetOXMName() string {
+	return "tun_metadata23_masked"
+}
+
+func (self *OxmIdTunMetadata23Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata24 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata24 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata24) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata24(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata24, error) {
+	_oxmidtunmetadata24 := &OxmIdTunMetadata24{OxmId: parent}
+	return _oxmidtunmetadata24, nil
+}
+
+func NewOxmIdTunMetadata24() *OxmIdTunMetadata24 {
+	obj := &OxmIdTunMetadata24{
+		OxmId: NewOxmId(98428),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata24) GetOXMName() string {
+	return "tun_metadata24"
+}
+
+func (self *OxmIdTunMetadata24) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata24Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata24Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata24Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata24Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata24Masked, error) {
+	_oxmidtunmetadata24masked := &OxmIdTunMetadata24Masked{OxmId: parent}
+	return _oxmidtunmetadata24masked, nil
+}
+
+func NewOxmIdTunMetadata24Masked() *OxmIdTunMetadata24Masked {
+	obj := &OxmIdTunMetadata24Masked{
+		OxmId: NewOxmId(98684),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata24Masked) GetOXMName() string {
+	return "tun_metadata24_masked"
+}
+
+func (self *OxmIdTunMetadata24Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata25 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata25 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata25) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata25(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata25, error) {
+	_oxmidtunmetadata25 := &OxmIdTunMetadata25{OxmId: parent}
+	return _oxmidtunmetadata25, nil
+}
+
+func NewOxmIdTunMetadata25() *OxmIdTunMetadata25 {
+	obj := &OxmIdTunMetadata25{
+		OxmId: NewOxmId(98940),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata25) GetOXMName() string {
+	return "tun_metadata25"
+}
+
+func (self *OxmIdTunMetadata25) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata25Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata25Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata25Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata25Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata25Masked, error) {
+	_oxmidtunmetadata25masked := &OxmIdTunMetadata25Masked{OxmId: parent}
+	return _oxmidtunmetadata25masked, nil
+}
+
+func NewOxmIdTunMetadata25Masked() *OxmIdTunMetadata25Masked {
+	obj := &OxmIdTunMetadata25Masked{
+		OxmId: NewOxmId(99196),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata25Masked) GetOXMName() string {
+	return "tun_metadata25_masked"
+}
+
+func (self *OxmIdTunMetadata25Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata26 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata26 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata26) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata26(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata26, error) {
+	_oxmidtunmetadata26 := &OxmIdTunMetadata26{OxmId: parent}
+	return _oxmidtunmetadata26, nil
+}
+
+func NewOxmIdTunMetadata26() *OxmIdTunMetadata26 {
+	obj := &OxmIdTunMetadata26{
+		OxmId: NewOxmId(99452),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata26) GetOXMName() string {
+	return "tun_metadata26"
+}
+
+func (self *OxmIdTunMetadata26) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata26Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata26Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata26Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata26Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata26Masked, error) {
+	_oxmidtunmetadata26masked := &OxmIdTunMetadata26Masked{OxmId: parent}
+	return _oxmidtunmetadata26masked, nil
+}
+
+func NewOxmIdTunMetadata26Masked() *OxmIdTunMetadata26Masked {
+	obj := &OxmIdTunMetadata26Masked{
+		OxmId: NewOxmId(99708),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata26Masked) GetOXMName() string {
+	return "tun_metadata26_masked"
+}
+
+func (self *OxmIdTunMetadata26Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata27 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata27 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata27) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata27(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata27, error) {
+	_oxmidtunmetadata27 := &OxmIdTunMetadata27{OxmId: parent}
+	return _oxmidtunmetadata27, nil
+}
+
+func NewOxmIdTunMetadata27() *OxmIdTunMetadata27 {
+	obj := &OxmIdTunMetadata27{
+		OxmId: NewOxmId(99964),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata27) GetOXMName() string {
+	return "tun_metadata27"
+}
+
+func (self *OxmIdTunMetadata27) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata27Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata27Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata27Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata27Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata27Masked, error) {
+	_oxmidtunmetadata27masked := &OxmIdTunMetadata27Masked{OxmId: parent}
+	return _oxmidtunmetadata27masked, nil
+}
+
+func NewOxmIdTunMetadata27Masked() *OxmIdTunMetadata27Masked {
+	obj := &OxmIdTunMetadata27Masked{
+		OxmId: NewOxmId(100220),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata27Masked) GetOXMName() string {
+	return "tun_metadata27_masked"
+}
+
+func (self *OxmIdTunMetadata27Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata28 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata28 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata28) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata28(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata28, error) {
+	_oxmidtunmetadata28 := &OxmIdTunMetadata28{OxmId: parent}
+	return _oxmidtunmetadata28, nil
+}
+
+func NewOxmIdTunMetadata28() *OxmIdTunMetadata28 {
+	obj := &OxmIdTunMetadata28{
+		OxmId: NewOxmId(100476),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata28) GetOXMName() string {
+	return "tun_metadata28"
+}
+
+func (self *OxmIdTunMetadata28) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata28Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata28Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata28Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata28Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata28Masked, error) {
+	_oxmidtunmetadata28masked := &OxmIdTunMetadata28Masked{OxmId: parent}
+	return _oxmidtunmetadata28masked, nil
+}
+
+func NewOxmIdTunMetadata28Masked() *OxmIdTunMetadata28Masked {
+	obj := &OxmIdTunMetadata28Masked{
+		OxmId: NewOxmId(100732),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata28Masked) GetOXMName() string {
+	return "tun_metadata28_masked"
+}
+
+func (self *OxmIdTunMetadata28Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata29 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata29 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata29) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata29(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata29, error) {
+	_oxmidtunmetadata29 := &OxmIdTunMetadata29{OxmId: parent}
+	return _oxmidtunmetadata29, nil
+}
+
+func NewOxmIdTunMetadata29() *OxmIdTunMetadata29 {
+	obj := &OxmIdTunMetadata29{
+		OxmId: NewOxmId(100988),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata29) GetOXMName() string {
+	return "tun_metadata29"
+}
+
+func (self *OxmIdTunMetadata29) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata29Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata29Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata29Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata29Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata29Masked, error) {
+	_oxmidtunmetadata29masked := &OxmIdTunMetadata29Masked{OxmId: parent}
+	return _oxmidtunmetadata29masked, nil
+}
+
+func NewOxmIdTunMetadata29Masked() *OxmIdTunMetadata29Masked {
+	obj := &OxmIdTunMetadata29Masked{
+		OxmId: NewOxmId(101244),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata29Masked) GetOXMName() string {
+	return "tun_metadata29_masked"
+}
+
+func (self *OxmIdTunMetadata29Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata2Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata2Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata2Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata2Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata2Masked, error) {
+	_oxmidtunmetadata2masked := &OxmIdTunMetadata2Masked{OxmId: parent}
+	return _oxmidtunmetadata2masked, nil
+}
+
+func NewOxmIdTunMetadata2Masked() *OxmIdTunMetadata2Masked {
+	obj := &OxmIdTunMetadata2Masked{
+		OxmId: NewOxmId(87420),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata2Masked) GetOXMName() string {
+	return "tun_metadata2_masked"
+}
+
+func (self *OxmIdTunMetadata2Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata3 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata3 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata3) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata3(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata3, error) {
+	_oxmidtunmetadata3 := &OxmIdTunMetadata3{OxmId: parent}
+	return _oxmidtunmetadata3, nil
+}
+
+func NewOxmIdTunMetadata3() *OxmIdTunMetadata3 {
+	obj := &OxmIdTunMetadata3{
+		OxmId: NewOxmId(87676),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata3) GetOXMName() string {
+	return "tun_metadata3"
+}
+
+func (self *OxmIdTunMetadata3) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata30 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata30 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata30) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata30(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata30, error) {
+	_oxmidtunmetadata30 := &OxmIdTunMetadata30{OxmId: parent}
+	return _oxmidtunmetadata30, nil
+}
+
+func NewOxmIdTunMetadata30() *OxmIdTunMetadata30 {
+	obj := &OxmIdTunMetadata30{
+		OxmId: NewOxmId(101500),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata30) GetOXMName() string {
+	return "tun_metadata30"
+}
+
+func (self *OxmIdTunMetadata30) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata30Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata30Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata30Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata30Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata30Masked, error) {
+	_oxmidtunmetadata30masked := &OxmIdTunMetadata30Masked{OxmId: parent}
+	return _oxmidtunmetadata30masked, nil
+}
+
+func NewOxmIdTunMetadata30Masked() *OxmIdTunMetadata30Masked {
+	obj := &OxmIdTunMetadata30Masked{
+		OxmId: NewOxmId(101756),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata30Masked) GetOXMName() string {
+	return "tun_metadata30_masked"
+}
+
+func (self *OxmIdTunMetadata30Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata31 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata31 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata31) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata31(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata31, error) {
+	_oxmidtunmetadata31 := &OxmIdTunMetadata31{OxmId: parent}
+	return _oxmidtunmetadata31, nil
+}
+
+func NewOxmIdTunMetadata31() *OxmIdTunMetadata31 {
+	obj := &OxmIdTunMetadata31{
+		OxmId: NewOxmId(102012),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata31) GetOXMName() string {
+	return "tun_metadata31"
+}
+
+func (self *OxmIdTunMetadata31) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata31Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata31Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata31Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata31Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata31Masked, error) {
+	_oxmidtunmetadata31masked := &OxmIdTunMetadata31Masked{OxmId: parent}
+	return _oxmidtunmetadata31masked, nil
+}
+
+func NewOxmIdTunMetadata31Masked() *OxmIdTunMetadata31Masked {
+	obj := &OxmIdTunMetadata31Masked{
+		OxmId: NewOxmId(102268),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata31Masked) GetOXMName() string {
+	return "tun_metadata31_masked"
+}
+
+func (self *OxmIdTunMetadata31Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata32 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata32 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata32) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata32(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata32, error) {
+	_oxmidtunmetadata32 := &OxmIdTunMetadata32{OxmId: parent}
+	return _oxmidtunmetadata32, nil
+}
+
+func NewOxmIdTunMetadata32() *OxmIdTunMetadata32 {
+	obj := &OxmIdTunMetadata32{
+		OxmId: NewOxmId(102524),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata32) GetOXMName() string {
+	return "tun_metadata32"
+}
+
+func (self *OxmIdTunMetadata32) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata32Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata32Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata32Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata32Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata32Masked, error) {
+	_oxmidtunmetadata32masked := &OxmIdTunMetadata32Masked{OxmId: parent}
+	return _oxmidtunmetadata32masked, nil
+}
+
+func NewOxmIdTunMetadata32Masked() *OxmIdTunMetadata32Masked {
+	obj := &OxmIdTunMetadata32Masked{
+		OxmId: NewOxmId(102780),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata32Masked) GetOXMName() string {
+	return "tun_metadata32_masked"
+}
+
+func (self *OxmIdTunMetadata32Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata33 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata33 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata33) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata33(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata33, error) {
+	_oxmidtunmetadata33 := &OxmIdTunMetadata33{OxmId: parent}
+	return _oxmidtunmetadata33, nil
+}
+
+func NewOxmIdTunMetadata33() *OxmIdTunMetadata33 {
+	obj := &OxmIdTunMetadata33{
+		OxmId: NewOxmId(103036),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata33) GetOXMName() string {
+	return "tun_metadata33"
+}
+
+func (self *OxmIdTunMetadata33) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata33Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata33Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata33Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata33Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata33Masked, error) {
+	_oxmidtunmetadata33masked := &OxmIdTunMetadata33Masked{OxmId: parent}
+	return _oxmidtunmetadata33masked, nil
+}
+
+func NewOxmIdTunMetadata33Masked() *OxmIdTunMetadata33Masked {
+	obj := &OxmIdTunMetadata33Masked{
+		OxmId: NewOxmId(103292),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata33Masked) GetOXMName() string {
+	return "tun_metadata33_masked"
+}
+
+func (self *OxmIdTunMetadata33Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata34 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata34 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata34) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata34(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata34, error) {
+	_oxmidtunmetadata34 := &OxmIdTunMetadata34{OxmId: parent}
+	return _oxmidtunmetadata34, nil
+}
+
+func NewOxmIdTunMetadata34() *OxmIdTunMetadata34 {
+	obj := &OxmIdTunMetadata34{
+		OxmId: NewOxmId(103548),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata34) GetOXMName() string {
+	return "tun_metadata34"
+}
+
+func (self *OxmIdTunMetadata34) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata34Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata34Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata34Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata34Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata34Masked, error) {
+	_oxmidtunmetadata34masked := &OxmIdTunMetadata34Masked{OxmId: parent}
+	return _oxmidtunmetadata34masked, nil
+}
+
+func NewOxmIdTunMetadata34Masked() *OxmIdTunMetadata34Masked {
+	obj := &OxmIdTunMetadata34Masked{
+		OxmId: NewOxmId(103804),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata34Masked) GetOXMName() string {
+	return "tun_metadata34_masked"
+}
+
+func (self *OxmIdTunMetadata34Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata35 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata35 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata35) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata35(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata35, error) {
+	_oxmidtunmetadata35 := &OxmIdTunMetadata35{OxmId: parent}
+	return _oxmidtunmetadata35, nil
+}
+
+func NewOxmIdTunMetadata35() *OxmIdTunMetadata35 {
+	obj := &OxmIdTunMetadata35{
+		OxmId: NewOxmId(104060),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata35) GetOXMName() string {
+	return "tun_metadata35"
+}
+
+func (self *OxmIdTunMetadata35) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata35Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata35Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata35Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata35Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata35Masked, error) {
+	_oxmidtunmetadata35masked := &OxmIdTunMetadata35Masked{OxmId: parent}
+	return _oxmidtunmetadata35masked, nil
+}
+
+func NewOxmIdTunMetadata35Masked() *OxmIdTunMetadata35Masked {
+	obj := &OxmIdTunMetadata35Masked{
+		OxmId: NewOxmId(104316),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata35Masked) GetOXMName() string {
+	return "tun_metadata35_masked"
+}
+
+func (self *OxmIdTunMetadata35Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata36 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata36 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata36) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata36(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata36, error) {
+	_oxmidtunmetadata36 := &OxmIdTunMetadata36{OxmId: parent}
+	return _oxmidtunmetadata36, nil
+}
+
+func NewOxmIdTunMetadata36() *OxmIdTunMetadata36 {
+	obj := &OxmIdTunMetadata36{
+		OxmId: NewOxmId(104572),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata36) GetOXMName() string {
+	return "tun_metadata36"
+}
+
+func (self *OxmIdTunMetadata36) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata36Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata36Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata36Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata36Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata36Masked, error) {
+	_oxmidtunmetadata36masked := &OxmIdTunMetadata36Masked{OxmId: parent}
+	return _oxmidtunmetadata36masked, nil
+}
+
+func NewOxmIdTunMetadata36Masked() *OxmIdTunMetadata36Masked {
+	obj := &OxmIdTunMetadata36Masked{
+		OxmId: NewOxmId(104828),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata36Masked) GetOXMName() string {
+	return "tun_metadata36_masked"
+}
+
+func (self *OxmIdTunMetadata36Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata37 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata37 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata37) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata37(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata37, error) {
+	_oxmidtunmetadata37 := &OxmIdTunMetadata37{OxmId: parent}
+	return _oxmidtunmetadata37, nil
+}
+
+func NewOxmIdTunMetadata37() *OxmIdTunMetadata37 {
+	obj := &OxmIdTunMetadata37{
+		OxmId: NewOxmId(105084),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata37) GetOXMName() string {
+	return "tun_metadata37"
+}
+
+func (self *OxmIdTunMetadata37) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata37Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata37Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata37Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata37Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata37Masked, error) {
+	_oxmidtunmetadata37masked := &OxmIdTunMetadata37Masked{OxmId: parent}
+	return _oxmidtunmetadata37masked, nil
+}
+
+func NewOxmIdTunMetadata37Masked() *OxmIdTunMetadata37Masked {
+	obj := &OxmIdTunMetadata37Masked{
+		OxmId: NewOxmId(105340),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata37Masked) GetOXMName() string {
+	return "tun_metadata37_masked"
+}
+
+func (self *OxmIdTunMetadata37Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata38 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata38 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata38) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata38(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata38, error) {
+	_oxmidtunmetadata38 := &OxmIdTunMetadata38{OxmId: parent}
+	return _oxmidtunmetadata38, nil
+}
+
+func NewOxmIdTunMetadata38() *OxmIdTunMetadata38 {
+	obj := &OxmIdTunMetadata38{
+		OxmId: NewOxmId(105596),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata38) GetOXMName() string {
+	return "tun_metadata38"
+}
+
+func (self *OxmIdTunMetadata38) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata38Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata38Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata38Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata38Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata38Masked, error) {
+	_oxmidtunmetadata38masked := &OxmIdTunMetadata38Masked{OxmId: parent}
+	return _oxmidtunmetadata38masked, nil
+}
+
+func NewOxmIdTunMetadata38Masked() *OxmIdTunMetadata38Masked {
+	obj := &OxmIdTunMetadata38Masked{
+		OxmId: NewOxmId(105852),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata38Masked) GetOXMName() string {
+	return "tun_metadata38_masked"
+}
+
+func (self *OxmIdTunMetadata38Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata39 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata39 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata39) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata39(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata39, error) {
+	_oxmidtunmetadata39 := &OxmIdTunMetadata39{OxmId: parent}
+	return _oxmidtunmetadata39, nil
+}
+
+func NewOxmIdTunMetadata39() *OxmIdTunMetadata39 {
+	obj := &OxmIdTunMetadata39{
+		OxmId: NewOxmId(106108),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata39) GetOXMName() string {
+	return "tun_metadata39"
+}
+
+func (self *OxmIdTunMetadata39) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata39Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata39Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata39Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata39Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata39Masked, error) {
+	_oxmidtunmetadata39masked := &OxmIdTunMetadata39Masked{OxmId: parent}
+	return _oxmidtunmetadata39masked, nil
+}
+
+func NewOxmIdTunMetadata39Masked() *OxmIdTunMetadata39Masked {
+	obj := &OxmIdTunMetadata39Masked{
+		OxmId: NewOxmId(106364),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata39Masked) GetOXMName() string {
+	return "tun_metadata39_masked"
+}
+
+func (self *OxmIdTunMetadata39Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata3Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata3Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata3Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata3Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata3Masked, error) {
+	_oxmidtunmetadata3masked := &OxmIdTunMetadata3Masked{OxmId: parent}
+	return _oxmidtunmetadata3masked, nil
+}
+
+func NewOxmIdTunMetadata3Masked() *OxmIdTunMetadata3Masked {
+	obj := &OxmIdTunMetadata3Masked{
+		OxmId: NewOxmId(87932),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata3Masked) GetOXMName() string {
+	return "tun_metadata3_masked"
+}
+
+func (self *OxmIdTunMetadata3Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata4 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata4 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata4) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata4(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata4, error) {
+	_oxmidtunmetadata4 := &OxmIdTunMetadata4{OxmId: parent}
+	return _oxmidtunmetadata4, nil
+}
+
+func NewOxmIdTunMetadata4() *OxmIdTunMetadata4 {
+	obj := &OxmIdTunMetadata4{
+		OxmId: NewOxmId(88188),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata4) GetOXMName() string {
+	return "tun_metadata4"
+}
+
+func (self *OxmIdTunMetadata4) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata40 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata40 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata40) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata40(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata40, error) {
+	_oxmidtunmetadata40 := &OxmIdTunMetadata40{OxmId: parent}
+	return _oxmidtunmetadata40, nil
+}
+
+func NewOxmIdTunMetadata40() *OxmIdTunMetadata40 {
+	obj := &OxmIdTunMetadata40{
+		OxmId: NewOxmId(106620),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata40) GetOXMName() string {
+	return "tun_metadata40"
+}
+
+func (self *OxmIdTunMetadata40) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata40Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata40Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata40Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata40Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata40Masked, error) {
+	_oxmidtunmetadata40masked := &OxmIdTunMetadata40Masked{OxmId: parent}
+	return _oxmidtunmetadata40masked, nil
+}
+
+func NewOxmIdTunMetadata40Masked() *OxmIdTunMetadata40Masked {
+	obj := &OxmIdTunMetadata40Masked{
+		OxmId: NewOxmId(106876),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata40Masked) GetOXMName() string {
+	return "tun_metadata40_masked"
+}
+
+func (self *OxmIdTunMetadata40Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata41 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata41 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata41) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata41(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata41, error) {
+	_oxmidtunmetadata41 := &OxmIdTunMetadata41{OxmId: parent}
+	return _oxmidtunmetadata41, nil
+}
+
+func NewOxmIdTunMetadata41() *OxmIdTunMetadata41 {
+	obj := &OxmIdTunMetadata41{
+		OxmId: NewOxmId(107132),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata41) GetOXMName() string {
+	return "tun_metadata41"
+}
+
+func (self *OxmIdTunMetadata41) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata41Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata41Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata41Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata41Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata41Masked, error) {
+	_oxmidtunmetadata41masked := &OxmIdTunMetadata41Masked{OxmId: parent}
+	return _oxmidtunmetadata41masked, nil
+}
+
+func NewOxmIdTunMetadata41Masked() *OxmIdTunMetadata41Masked {
+	obj := &OxmIdTunMetadata41Masked{
+		OxmId: NewOxmId(107388),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata41Masked) GetOXMName() string {
+	return "tun_metadata41_masked"
+}
+
+func (self *OxmIdTunMetadata41Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata42 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata42 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata42) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata42(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata42, error) {
+	_oxmidtunmetadata42 := &OxmIdTunMetadata42{OxmId: parent}
+	return _oxmidtunmetadata42, nil
+}
+
+func NewOxmIdTunMetadata42() *OxmIdTunMetadata42 {
+	obj := &OxmIdTunMetadata42{
+		OxmId: NewOxmId(107644),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata42) GetOXMName() string {
+	return "tun_metadata42"
+}
+
+func (self *OxmIdTunMetadata42) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata42Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata42Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata42Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata42Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata42Masked, error) {
+	_oxmidtunmetadata42masked := &OxmIdTunMetadata42Masked{OxmId: parent}
+	return _oxmidtunmetadata42masked, nil
+}
+
+func NewOxmIdTunMetadata42Masked() *OxmIdTunMetadata42Masked {
+	obj := &OxmIdTunMetadata42Masked{
+		OxmId: NewOxmId(107900),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata42Masked) GetOXMName() string {
+	return "tun_metadata42_masked"
+}
+
+func (self *OxmIdTunMetadata42Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata43 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata43 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata43) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata43(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata43, error) {
+	_oxmidtunmetadata43 := &OxmIdTunMetadata43{OxmId: parent}
+	return _oxmidtunmetadata43, nil
+}
+
+func NewOxmIdTunMetadata43() *OxmIdTunMetadata43 {
+	obj := &OxmIdTunMetadata43{
+		OxmId: NewOxmId(108156),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata43) GetOXMName() string {
+	return "tun_metadata43"
+}
+
+func (self *OxmIdTunMetadata43) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata43Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata43Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata43Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata43Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata43Masked, error) {
+	_oxmidtunmetadata43masked := &OxmIdTunMetadata43Masked{OxmId: parent}
+	return _oxmidtunmetadata43masked, nil
+}
+
+func NewOxmIdTunMetadata43Masked() *OxmIdTunMetadata43Masked {
+	obj := &OxmIdTunMetadata43Masked{
+		OxmId: NewOxmId(108412),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata43Masked) GetOXMName() string {
+	return "tun_metadata43_masked"
+}
+
+func (self *OxmIdTunMetadata43Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata44 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata44 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata44) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata44(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata44, error) {
+	_oxmidtunmetadata44 := &OxmIdTunMetadata44{OxmId: parent}
+	return _oxmidtunmetadata44, nil
+}
+
+func NewOxmIdTunMetadata44() *OxmIdTunMetadata44 {
+	obj := &OxmIdTunMetadata44{
+		OxmId: NewOxmId(108668),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata44) GetOXMName() string {
+	return "tun_metadata44"
+}
+
+func (self *OxmIdTunMetadata44) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata44Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata44Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata44Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata44Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata44Masked, error) {
+	_oxmidtunmetadata44masked := &OxmIdTunMetadata44Masked{OxmId: parent}
+	return _oxmidtunmetadata44masked, nil
+}
+
+func NewOxmIdTunMetadata44Masked() *OxmIdTunMetadata44Masked {
+	obj := &OxmIdTunMetadata44Masked{
+		OxmId: NewOxmId(108924),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata44Masked) GetOXMName() string {
+	return "tun_metadata44_masked"
+}
+
+func (self *OxmIdTunMetadata44Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata45 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata45 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata45) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata45(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata45, error) {
+	_oxmidtunmetadata45 := &OxmIdTunMetadata45{OxmId: parent}
+	return _oxmidtunmetadata45, nil
+}
+
+func NewOxmIdTunMetadata45() *OxmIdTunMetadata45 {
+	obj := &OxmIdTunMetadata45{
+		OxmId: NewOxmId(109180),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata45) GetOXMName() string {
+	return "tun_metadata45"
+}
+
+func (self *OxmIdTunMetadata45) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata45Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata45Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata45Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata45Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata45Masked, error) {
+	_oxmidtunmetadata45masked := &OxmIdTunMetadata45Masked{OxmId: parent}
+	return _oxmidtunmetadata45masked, nil
+}
+
+func NewOxmIdTunMetadata45Masked() *OxmIdTunMetadata45Masked {
+	obj := &OxmIdTunMetadata45Masked{
+		OxmId: NewOxmId(109436),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata45Masked) GetOXMName() string {
+	return "tun_metadata45_masked"
+}
+
+func (self *OxmIdTunMetadata45Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata46 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata46 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata46) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata46(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata46, error) {
+	_oxmidtunmetadata46 := &OxmIdTunMetadata46{OxmId: parent}
+	return _oxmidtunmetadata46, nil
+}
+
+func NewOxmIdTunMetadata46() *OxmIdTunMetadata46 {
+	obj := &OxmIdTunMetadata46{
+		OxmId: NewOxmId(109692),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata46) GetOXMName() string {
+	return "tun_metadata46"
+}
+
+func (self *OxmIdTunMetadata46) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata46Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata46Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata46Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata46Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata46Masked, error) {
+	_oxmidtunmetadata46masked := &OxmIdTunMetadata46Masked{OxmId: parent}
+	return _oxmidtunmetadata46masked, nil
+}
+
+func NewOxmIdTunMetadata46Masked() *OxmIdTunMetadata46Masked {
+	obj := &OxmIdTunMetadata46Masked{
+		OxmId: NewOxmId(109948),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata46Masked) GetOXMName() string {
+	return "tun_metadata46_masked"
+}
+
+func (self *OxmIdTunMetadata46Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata47 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata47 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata47) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata47(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata47, error) {
+	_oxmidtunmetadata47 := &OxmIdTunMetadata47{OxmId: parent}
+	return _oxmidtunmetadata47, nil
+}
+
+func NewOxmIdTunMetadata47() *OxmIdTunMetadata47 {
+	obj := &OxmIdTunMetadata47{
+		OxmId: NewOxmId(110204),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata47) GetOXMName() string {
+	return "tun_metadata47"
+}
+
+func (self *OxmIdTunMetadata47) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata47Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata47Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata47Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata47Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata47Masked, error) {
+	_oxmidtunmetadata47masked := &OxmIdTunMetadata47Masked{OxmId: parent}
+	return _oxmidtunmetadata47masked, nil
+}
+
+func NewOxmIdTunMetadata47Masked() *OxmIdTunMetadata47Masked {
+	obj := &OxmIdTunMetadata47Masked{
+		OxmId: NewOxmId(110460),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata47Masked) GetOXMName() string {
+	return "tun_metadata47_masked"
+}
+
+func (self *OxmIdTunMetadata47Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata48 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata48 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata48) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata48(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata48, error) {
+	_oxmidtunmetadata48 := &OxmIdTunMetadata48{OxmId: parent}
+	return _oxmidtunmetadata48, nil
+}
+
+func NewOxmIdTunMetadata48() *OxmIdTunMetadata48 {
+	obj := &OxmIdTunMetadata48{
+		OxmId: NewOxmId(110716),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata48) GetOXMName() string {
+	return "tun_metadata48"
+}
+
+func (self *OxmIdTunMetadata48) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata48Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata48Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata48Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata48Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata48Masked, error) {
+	_oxmidtunmetadata48masked := &OxmIdTunMetadata48Masked{OxmId: parent}
+	return _oxmidtunmetadata48masked, nil
+}
+
+func NewOxmIdTunMetadata48Masked() *OxmIdTunMetadata48Masked {
+	obj := &OxmIdTunMetadata48Masked{
+		OxmId: NewOxmId(110972),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata48Masked) GetOXMName() string {
+	return "tun_metadata48_masked"
+}
+
+func (self *OxmIdTunMetadata48Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata49 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata49 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata49) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata49(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata49, error) {
+	_oxmidtunmetadata49 := &OxmIdTunMetadata49{OxmId: parent}
+	return _oxmidtunmetadata49, nil
+}
+
+func NewOxmIdTunMetadata49() *OxmIdTunMetadata49 {
+	obj := &OxmIdTunMetadata49{
+		OxmId: NewOxmId(111228),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata49) GetOXMName() string {
+	return "tun_metadata49"
+}
+
+func (self *OxmIdTunMetadata49) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata49Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata49Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata49Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata49Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata49Masked, error) {
+	_oxmidtunmetadata49masked := &OxmIdTunMetadata49Masked{OxmId: parent}
+	return _oxmidtunmetadata49masked, nil
+}
+
+func NewOxmIdTunMetadata49Masked() *OxmIdTunMetadata49Masked {
+	obj := &OxmIdTunMetadata49Masked{
+		OxmId: NewOxmId(111484),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata49Masked) GetOXMName() string {
+	return "tun_metadata49_masked"
+}
+
+func (self *OxmIdTunMetadata49Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata4Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata4Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata4Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata4Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata4Masked, error) {
+	_oxmidtunmetadata4masked := &OxmIdTunMetadata4Masked{OxmId: parent}
+	return _oxmidtunmetadata4masked, nil
+}
+
+func NewOxmIdTunMetadata4Masked() *OxmIdTunMetadata4Masked {
+	obj := &OxmIdTunMetadata4Masked{
+		OxmId: NewOxmId(88444),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata4Masked) GetOXMName() string {
+	return "tun_metadata4_masked"
+}
+
+func (self *OxmIdTunMetadata4Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata5 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata5 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata5) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata5(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata5, error) {
+	_oxmidtunmetadata5 := &OxmIdTunMetadata5{OxmId: parent}
+	return _oxmidtunmetadata5, nil
+}
+
+func NewOxmIdTunMetadata5() *OxmIdTunMetadata5 {
+	obj := &OxmIdTunMetadata5{
+		OxmId: NewOxmId(88700),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata5) GetOXMName() string {
+	return "tun_metadata5"
+}
+
+func (self *OxmIdTunMetadata5) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata50 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata50 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata50) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata50(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata50, error) {
+	_oxmidtunmetadata50 := &OxmIdTunMetadata50{OxmId: parent}
+	return _oxmidtunmetadata50, nil
+}
+
+func NewOxmIdTunMetadata50() *OxmIdTunMetadata50 {
+	obj := &OxmIdTunMetadata50{
+		OxmId: NewOxmId(111740),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata50) GetOXMName() string {
+	return "tun_metadata50"
+}
+
+func (self *OxmIdTunMetadata50) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata50Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata50Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata50Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata50Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata50Masked, error) {
+	_oxmidtunmetadata50masked := &OxmIdTunMetadata50Masked{OxmId: parent}
+	return _oxmidtunmetadata50masked, nil
+}
+
+func NewOxmIdTunMetadata50Masked() *OxmIdTunMetadata50Masked {
+	obj := &OxmIdTunMetadata50Masked{
+		OxmId: NewOxmId(111996),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata50Masked) GetOXMName() string {
+	return "tun_metadata50_masked"
+}
+
+func (self *OxmIdTunMetadata50Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata51 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata51 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata51) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata51(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata51, error) {
+	_oxmidtunmetadata51 := &OxmIdTunMetadata51{OxmId: parent}
+	return _oxmidtunmetadata51, nil
+}
+
+func NewOxmIdTunMetadata51() *OxmIdTunMetadata51 {
+	obj := &OxmIdTunMetadata51{
+		OxmId: NewOxmId(112252),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata51) GetOXMName() string {
+	return "tun_metadata51"
+}
+
+func (self *OxmIdTunMetadata51) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata51Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata51Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata51Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata51Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata51Masked, error) {
+	_oxmidtunmetadata51masked := &OxmIdTunMetadata51Masked{OxmId: parent}
+	return _oxmidtunmetadata51masked, nil
+}
+
+func NewOxmIdTunMetadata51Masked() *OxmIdTunMetadata51Masked {
+	obj := &OxmIdTunMetadata51Masked{
+		OxmId: NewOxmId(112508),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata51Masked) GetOXMName() string {
+	return "tun_metadata51_masked"
+}
+
+func (self *OxmIdTunMetadata51Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata52 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata52 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata52) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata52(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata52, error) {
+	_oxmidtunmetadata52 := &OxmIdTunMetadata52{OxmId: parent}
+	return _oxmidtunmetadata52, nil
+}
+
+func NewOxmIdTunMetadata52() *OxmIdTunMetadata52 {
+	obj := &OxmIdTunMetadata52{
+		OxmId: NewOxmId(112764),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata52) GetOXMName() string {
+	return "tun_metadata52"
+}
+
+func (self *OxmIdTunMetadata52) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata52Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata52Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata52Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata52Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata52Masked, error) {
+	_oxmidtunmetadata52masked := &OxmIdTunMetadata52Masked{OxmId: parent}
+	return _oxmidtunmetadata52masked, nil
+}
+
+func NewOxmIdTunMetadata52Masked() *OxmIdTunMetadata52Masked {
+	obj := &OxmIdTunMetadata52Masked{
+		OxmId: NewOxmId(113020),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata52Masked) GetOXMName() string {
+	return "tun_metadata52_masked"
+}
+
+func (self *OxmIdTunMetadata52Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata53 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata53 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata53) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata53(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata53, error) {
+	_oxmidtunmetadata53 := &OxmIdTunMetadata53{OxmId: parent}
+	return _oxmidtunmetadata53, nil
+}
+
+func NewOxmIdTunMetadata53() *OxmIdTunMetadata53 {
+	obj := &OxmIdTunMetadata53{
+		OxmId: NewOxmId(113276),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata53) GetOXMName() string {
+	return "tun_metadata53"
+}
+
+func (self *OxmIdTunMetadata53) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata53Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata53Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata53Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata53Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata53Masked, error) {
+	_oxmidtunmetadata53masked := &OxmIdTunMetadata53Masked{OxmId: parent}
+	return _oxmidtunmetadata53masked, nil
+}
+
+func NewOxmIdTunMetadata53Masked() *OxmIdTunMetadata53Masked {
+	obj := &OxmIdTunMetadata53Masked{
+		OxmId: NewOxmId(113532),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata53Masked) GetOXMName() string {
+	return "tun_metadata53_masked"
+}
+
+func (self *OxmIdTunMetadata53Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata54 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata54 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata54) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata54(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata54, error) {
+	_oxmidtunmetadata54 := &OxmIdTunMetadata54{OxmId: parent}
+	return _oxmidtunmetadata54, nil
+}
+
+func NewOxmIdTunMetadata54() *OxmIdTunMetadata54 {
+	obj := &OxmIdTunMetadata54{
+		OxmId: NewOxmId(113788),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata54) GetOXMName() string {
+	return "tun_metadata54"
+}
+
+func (self *OxmIdTunMetadata54) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata54Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata54Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata54Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata54Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata54Masked, error) {
+	_oxmidtunmetadata54masked := &OxmIdTunMetadata54Masked{OxmId: parent}
+	return _oxmidtunmetadata54masked, nil
+}
+
+func NewOxmIdTunMetadata54Masked() *OxmIdTunMetadata54Masked {
+	obj := &OxmIdTunMetadata54Masked{
+		OxmId: NewOxmId(114044),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata54Masked) GetOXMName() string {
+	return "tun_metadata54_masked"
+}
+
+func (self *OxmIdTunMetadata54Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata55 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata55 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata55) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata55(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata55, error) {
+	_oxmidtunmetadata55 := &OxmIdTunMetadata55{OxmId: parent}
+	return _oxmidtunmetadata55, nil
+}
+
+func NewOxmIdTunMetadata55() *OxmIdTunMetadata55 {
+	obj := &OxmIdTunMetadata55{
+		OxmId: NewOxmId(114300),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata55) GetOXMName() string {
+	return "tun_metadata55"
+}
+
+func (self *OxmIdTunMetadata55) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata55Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata55Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata55Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata55Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata55Masked, error) {
+	_oxmidtunmetadata55masked := &OxmIdTunMetadata55Masked{OxmId: parent}
+	return _oxmidtunmetadata55masked, nil
+}
+
+func NewOxmIdTunMetadata55Masked() *OxmIdTunMetadata55Masked {
+	obj := &OxmIdTunMetadata55Masked{
+		OxmId: NewOxmId(114556),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata55Masked) GetOXMName() string {
+	return "tun_metadata55_masked"
+}
+
+func (self *OxmIdTunMetadata55Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata56 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata56 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata56) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata56(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata56, error) {
+	_oxmidtunmetadata56 := &OxmIdTunMetadata56{OxmId: parent}
+	return _oxmidtunmetadata56, nil
+}
+
+func NewOxmIdTunMetadata56() *OxmIdTunMetadata56 {
+	obj := &OxmIdTunMetadata56{
+		OxmId: NewOxmId(114812),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata56) GetOXMName() string {
+	return "tun_metadata56"
+}
+
+func (self *OxmIdTunMetadata56) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata56Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata56Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata56Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata56Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata56Masked, error) {
+	_oxmidtunmetadata56masked := &OxmIdTunMetadata56Masked{OxmId: parent}
+	return _oxmidtunmetadata56masked, nil
+}
+
+func NewOxmIdTunMetadata56Masked() *OxmIdTunMetadata56Masked {
+	obj := &OxmIdTunMetadata56Masked{
+		OxmId: NewOxmId(115068),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata56Masked) GetOXMName() string {
+	return "tun_metadata56_masked"
+}
+
+func (self *OxmIdTunMetadata56Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata57 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata57 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata57) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata57(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata57, error) {
+	_oxmidtunmetadata57 := &OxmIdTunMetadata57{OxmId: parent}
+	return _oxmidtunmetadata57, nil
+}
+
+func NewOxmIdTunMetadata57() *OxmIdTunMetadata57 {
+	obj := &OxmIdTunMetadata57{
+		OxmId: NewOxmId(115324),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata57) GetOXMName() string {
+	return "tun_metadata57"
+}
+
+func (self *OxmIdTunMetadata57) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata57Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata57Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata57Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata57Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata57Masked, error) {
+	_oxmidtunmetadata57masked := &OxmIdTunMetadata57Masked{OxmId: parent}
+	return _oxmidtunmetadata57masked, nil
+}
+
+func NewOxmIdTunMetadata57Masked() *OxmIdTunMetadata57Masked {
+	obj := &OxmIdTunMetadata57Masked{
+		OxmId: NewOxmId(115580),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata57Masked) GetOXMName() string {
+	return "tun_metadata57_masked"
+}
+
+func (self *OxmIdTunMetadata57Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata58 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata58 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata58) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata58(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata58, error) {
+	_oxmidtunmetadata58 := &OxmIdTunMetadata58{OxmId: parent}
+	return _oxmidtunmetadata58, nil
+}
+
+func NewOxmIdTunMetadata58() *OxmIdTunMetadata58 {
+	obj := &OxmIdTunMetadata58{
+		OxmId: NewOxmId(115836),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata58) GetOXMName() string {
+	return "tun_metadata58"
+}
+
+func (self *OxmIdTunMetadata58) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata58Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata58Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata58Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata58Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata58Masked, error) {
+	_oxmidtunmetadata58masked := &OxmIdTunMetadata58Masked{OxmId: parent}
+	return _oxmidtunmetadata58masked, nil
+}
+
+func NewOxmIdTunMetadata58Masked() *OxmIdTunMetadata58Masked {
+	obj := &OxmIdTunMetadata58Masked{
+		OxmId: NewOxmId(116092),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata58Masked) GetOXMName() string {
+	return "tun_metadata58_masked"
+}
+
+func (self *OxmIdTunMetadata58Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata59 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata59 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata59) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata59(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata59, error) {
+	_oxmidtunmetadata59 := &OxmIdTunMetadata59{OxmId: parent}
+	return _oxmidtunmetadata59, nil
+}
+
+func NewOxmIdTunMetadata59() *OxmIdTunMetadata59 {
+	obj := &OxmIdTunMetadata59{
+		OxmId: NewOxmId(116348),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata59) GetOXMName() string {
+	return "tun_metadata59"
+}
+
+func (self *OxmIdTunMetadata59) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata59Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata59Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata59Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata59Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata59Masked, error) {
+	_oxmidtunmetadata59masked := &OxmIdTunMetadata59Masked{OxmId: parent}
+	return _oxmidtunmetadata59masked, nil
+}
+
+func NewOxmIdTunMetadata59Masked() *OxmIdTunMetadata59Masked {
+	obj := &OxmIdTunMetadata59Masked{
+		OxmId: NewOxmId(116604),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata59Masked) GetOXMName() string {
+	return "tun_metadata59_masked"
+}
+
+func (self *OxmIdTunMetadata59Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata5Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata5Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata5Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata5Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata5Masked, error) {
+	_oxmidtunmetadata5masked := &OxmIdTunMetadata5Masked{OxmId: parent}
+	return _oxmidtunmetadata5masked, nil
+}
+
+func NewOxmIdTunMetadata5Masked() *OxmIdTunMetadata5Masked {
+	obj := &OxmIdTunMetadata5Masked{
+		OxmId: NewOxmId(88956),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata5Masked) GetOXMName() string {
+	return "tun_metadata5_masked"
+}
+
+func (self *OxmIdTunMetadata5Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata6 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata6 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata6) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata6(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata6, error) {
+	_oxmidtunmetadata6 := &OxmIdTunMetadata6{OxmId: parent}
+	return _oxmidtunmetadata6, nil
+}
+
+func NewOxmIdTunMetadata6() *OxmIdTunMetadata6 {
+	obj := &OxmIdTunMetadata6{
+		OxmId: NewOxmId(89212),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata6) GetOXMName() string {
+	return "tun_metadata6"
+}
+
+func (self *OxmIdTunMetadata6) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata60 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata60 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata60) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata60(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata60, error) {
+	_oxmidtunmetadata60 := &OxmIdTunMetadata60{OxmId: parent}
+	return _oxmidtunmetadata60, nil
+}
+
+func NewOxmIdTunMetadata60() *OxmIdTunMetadata60 {
+	obj := &OxmIdTunMetadata60{
+		OxmId: NewOxmId(116860),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata60) GetOXMName() string {
+	return "tun_metadata60"
+}
+
+func (self *OxmIdTunMetadata60) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata60Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata60Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata60Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata60Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata60Masked, error) {
+	_oxmidtunmetadata60masked := &OxmIdTunMetadata60Masked{OxmId: parent}
+	return _oxmidtunmetadata60masked, nil
+}
+
+func NewOxmIdTunMetadata60Masked() *OxmIdTunMetadata60Masked {
+	obj := &OxmIdTunMetadata60Masked{
+		OxmId: NewOxmId(117116),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata60Masked) GetOXMName() string {
+	return "tun_metadata60_masked"
+}
+
+func (self *OxmIdTunMetadata60Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata61 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata61 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata61) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata61(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata61, error) {
+	_oxmidtunmetadata61 := &OxmIdTunMetadata61{OxmId: parent}
+	return _oxmidtunmetadata61, nil
+}
+
+func NewOxmIdTunMetadata61() *OxmIdTunMetadata61 {
+	obj := &OxmIdTunMetadata61{
+		OxmId: NewOxmId(117372),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata61) GetOXMName() string {
+	return "tun_metadata61"
+}
+
+func (self *OxmIdTunMetadata61) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata61Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata61Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata61Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata61Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata61Masked, error) {
+	_oxmidtunmetadata61masked := &OxmIdTunMetadata61Masked{OxmId: parent}
+	return _oxmidtunmetadata61masked, nil
+}
+
+func NewOxmIdTunMetadata61Masked() *OxmIdTunMetadata61Masked {
+	obj := &OxmIdTunMetadata61Masked{
+		OxmId: NewOxmId(117628),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata61Masked) GetOXMName() string {
+	return "tun_metadata61_masked"
+}
+
+func (self *OxmIdTunMetadata61Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata62 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata62 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata62) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata62(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata62, error) {
+	_oxmidtunmetadata62 := &OxmIdTunMetadata62{OxmId: parent}
+	return _oxmidtunmetadata62, nil
+}
+
+func NewOxmIdTunMetadata62() *OxmIdTunMetadata62 {
+	obj := &OxmIdTunMetadata62{
+		OxmId: NewOxmId(117884),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata62) GetOXMName() string {
+	return "tun_metadata62"
+}
+
+func (self *OxmIdTunMetadata62) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata62Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata62Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata62Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata62Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata62Masked, error) {
+	_oxmidtunmetadata62masked := &OxmIdTunMetadata62Masked{OxmId: parent}
+	return _oxmidtunmetadata62masked, nil
+}
+
+func NewOxmIdTunMetadata62Masked() *OxmIdTunMetadata62Masked {
+	obj := &OxmIdTunMetadata62Masked{
+		OxmId: NewOxmId(118140),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata62Masked) GetOXMName() string {
+	return "tun_metadata62_masked"
+}
+
+func (self *OxmIdTunMetadata62Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata63 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata63 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata63) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata63(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata63, error) {
+	_oxmidtunmetadata63 := &OxmIdTunMetadata63{OxmId: parent}
+	return _oxmidtunmetadata63, nil
+}
+
+func NewOxmIdTunMetadata63() *OxmIdTunMetadata63 {
+	obj := &OxmIdTunMetadata63{
+		OxmId: NewOxmId(118396),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata63) GetOXMName() string {
+	return "tun_metadata63"
+}
+
+func (self *OxmIdTunMetadata63) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata63Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata63Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata63Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata63Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata63Masked, error) {
+	_oxmidtunmetadata63masked := &OxmIdTunMetadata63Masked{OxmId: parent}
+	return _oxmidtunmetadata63masked, nil
+}
+
+func NewOxmIdTunMetadata63Masked() *OxmIdTunMetadata63Masked {
+	obj := &OxmIdTunMetadata63Masked{
+		OxmId: NewOxmId(118652),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata63Masked) GetOXMName() string {
+	return "tun_metadata63_masked"
+}
+
+func (self *OxmIdTunMetadata63Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata6Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata6Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata6Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata6Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata6Masked, error) {
+	_oxmidtunmetadata6masked := &OxmIdTunMetadata6Masked{OxmId: parent}
+	return _oxmidtunmetadata6masked, nil
+}
+
+func NewOxmIdTunMetadata6Masked() *OxmIdTunMetadata6Masked {
+	obj := &OxmIdTunMetadata6Masked{
+		OxmId: NewOxmId(89468),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata6Masked) GetOXMName() string {
+	return "tun_metadata6_masked"
+}
+
+func (self *OxmIdTunMetadata6Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata7 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata7 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata7) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata7(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata7, error) {
+	_oxmidtunmetadata7 := &OxmIdTunMetadata7{OxmId: parent}
+	return _oxmidtunmetadata7, nil
+}
+
+func NewOxmIdTunMetadata7() *OxmIdTunMetadata7 {
+	obj := &OxmIdTunMetadata7{
+		OxmId: NewOxmId(89724),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata7) GetOXMName() string {
+	return "tun_metadata7"
+}
+
+func (self *OxmIdTunMetadata7) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata7Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata7Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata7Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata7Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata7Masked, error) {
+	_oxmidtunmetadata7masked := &OxmIdTunMetadata7Masked{OxmId: parent}
+	return _oxmidtunmetadata7masked, nil
+}
+
+func NewOxmIdTunMetadata7Masked() *OxmIdTunMetadata7Masked {
+	obj := &OxmIdTunMetadata7Masked{
+		OxmId: NewOxmId(89980),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata7Masked) GetOXMName() string {
+	return "tun_metadata7_masked"
+}
+
+func (self *OxmIdTunMetadata7Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata8 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata8 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata8) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata8(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata8, error) {
+	_oxmidtunmetadata8 := &OxmIdTunMetadata8{OxmId: parent}
+	return _oxmidtunmetadata8, nil
+}
+
+func NewOxmIdTunMetadata8() *OxmIdTunMetadata8 {
+	obj := &OxmIdTunMetadata8{
+		OxmId: NewOxmId(90236),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata8) GetOXMName() string {
+	return "tun_metadata8"
+}
+
+func (self *OxmIdTunMetadata8) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata8Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata8Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata8Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata8Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata8Masked, error) {
+	_oxmidtunmetadata8masked := &OxmIdTunMetadata8Masked{OxmId: parent}
+	return _oxmidtunmetadata8masked, nil
+}
+
+func NewOxmIdTunMetadata8Masked() *OxmIdTunMetadata8Masked {
+	obj := &OxmIdTunMetadata8Masked{
+		OxmId: NewOxmId(90492),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata8Masked) GetOXMName() string {
+	return "tun_metadata8_masked"
+}
+
+func (self *OxmIdTunMetadata8Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata9 struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata9 interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata9) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata9(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata9, error) {
+	_oxmidtunmetadata9 := &OxmIdTunMetadata9{OxmId: parent}
+	return _oxmidtunmetadata9, nil
+}
+
+func NewOxmIdTunMetadata9() *OxmIdTunMetadata9 {
+	obj := &OxmIdTunMetadata9{
+		OxmId: NewOxmId(90748),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata9) GetOXMName() string {
+	return "tun_metadata9"
+}
+
+func (self *OxmIdTunMetadata9) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunMetadata9Masked struct {
+	*OxmId
+}
+
+type IOxmIdTunMetadata9Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunMetadata9Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunMetadata9Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunMetadata9Masked, error) {
+	_oxmidtunmetadata9masked := &OxmIdTunMetadata9Masked{OxmId: parent}
+	return _oxmidtunmetadata9masked, nil
+}
+
+func NewOxmIdTunMetadata9Masked() *OxmIdTunMetadata9Masked {
+	obj := &OxmIdTunMetadata9Masked{
+		OxmId: NewOxmId(91004),
+	}
+	return obj
+}
+func (self *OxmIdTunMetadata9Masked) GetOXMName() string {
+	return "tun_metadata9_masked"
+}
+
+func (self *OxmIdTunMetadata9Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunSrc struct {
+	*OxmId
+}
+
+type IOxmIdTunSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdTunSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunSrc, error) {
+	_oxmidtunsrc := &OxmIdTunSrc{OxmId: parent}
+	return _oxmidtunsrc, nil
+}
+
+func NewOxmIdTunSrc() *OxmIdTunSrc {
+	obj := &OxmIdTunSrc{
+		OxmId: NewOxmId(81412),
+	}
+	return obj
+}
+func (self *OxmIdTunSrc) GetOXMName() string {
+	return "tun_src"
+}
+
+func (self *OxmIdTunSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunSrcMasked, error) {
+	_oxmidtunsrcmasked := &OxmIdTunSrcMasked{OxmId: parent}
+	return _oxmidtunsrcmasked, nil
+}
+
+func NewOxmIdTunSrcMasked() *OxmIdTunSrcMasked {
+	obj := &OxmIdTunSrcMasked{
+		OxmId: NewOxmId(81668),
+	}
+	return obj
+}
+func (self *OxmIdTunSrcMasked) GetOXMName() string {
+	return "tun_src_masked"
+}
+
+func (self *OxmIdTunSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdUdpDst struct {
+	*OxmId
+}
+
+type IOxmIdUdpDst interface {
+	IOxmId
+}
+
+func (self *OxmIdUdpDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdUdpDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdUdpDst, error) {
+	_oxmidudpdst := &OxmIdUdpDst{OxmId: parent}
+	return _oxmidudpdst, nil
+}
+
+func NewOxmIdUdpDst() *OxmIdUdpDst {
+	obj := &OxmIdUdpDst{
+		OxmId: NewOxmId(6146),
+	}
+	return obj
+}
+func (self *OxmIdUdpDst) GetOXMName() string {
+	return "udp_dst"
+}
+
+func (self *OxmIdUdpDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdUdpDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdUdpDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdUdpDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdUdpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdUdpDstMasked, error) {
+	_oxmidudpdstmasked := &OxmIdUdpDstMasked{OxmId: parent}
+	return _oxmidudpdstmasked, nil
+}
+
+func NewOxmIdUdpDstMasked() *OxmIdUdpDstMasked {
+	obj := &OxmIdUdpDstMasked{
+		OxmId: NewOxmId(6402),
+	}
+	return obj
+}
+func (self *OxmIdUdpDstMasked) GetOXMName() string {
+	return "udp_dst_masked"
+}
+
+func (self *OxmIdUdpDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdUdpSrc struct {
+	*OxmId
+}
+
+type IOxmIdUdpSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdUdpSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdUdpSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdUdpSrc, error) {
+	_oxmidudpsrc := &OxmIdUdpSrc{OxmId: parent}
+	return _oxmidudpsrc, nil
+}
+
+func NewOxmIdUdpSrc() *OxmIdUdpSrc {
+	obj := &OxmIdUdpSrc{
+		OxmId: NewOxmId(5634),
+	}
+	return obj
+}
+func (self *OxmIdUdpSrc) GetOXMName() string {
+	return "udp_src"
+}
+
+func (self *OxmIdUdpSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdUdpSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdUdpSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdUdpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdUdpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdUdpSrcMasked, error) {
+	_oxmidudpsrcmasked := &OxmIdUdpSrcMasked{OxmId: parent}
+	return _oxmidudpsrcmasked, nil
+}
+
+func NewOxmIdUdpSrcMasked() *OxmIdUdpSrcMasked {
+	obj := &OxmIdUdpSrcMasked{
+		OxmId: NewOxmId(5890),
+	}
+	return obj
+}
+func (self *OxmIdUdpSrcMasked) GetOXMName() string {
+	return "udp_src_masked"
+}
+
+func (self *OxmIdUdpSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdVlanTci struct {
+	*OxmId
+}
+
+type IOxmIdVlanTci interface {
+	IOxmId
+}
+
+func (self *OxmIdVlanTci) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdVlanTci(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdVlanTci, error) {
+	_oxmidvlantci := &OxmIdVlanTci{OxmId: parent}
+	return _oxmidvlantci, nil
+}
+
+func NewOxmIdVlanTci() *OxmIdVlanTci {
+	obj := &OxmIdVlanTci{
+		OxmId: NewOxmId(2050),
+	}
+	return obj
+}
+func (self *OxmIdVlanTci) GetOXMName() string {
+	return "vlan_tci"
+}
+
+func (self *OxmIdVlanTci) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdVlanTciMasked struct {
+	*OxmId
+}
+
+type IOxmIdVlanTciMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdVlanTciMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdVlanTciMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdVlanTciMasked, error) {
+	_oxmidvlantcimasked := &OxmIdVlanTciMasked{OxmId: parent}
+	return _oxmidvlantcimasked, nil
+}
+
+func NewOxmIdVlanTciMasked() *OxmIdVlanTciMasked {
+	obj := &OxmIdVlanTciMasked{
+		OxmId: NewOxmId(2306),
+	}
+	return obj
+}
+func (self *OxmIdVlanTciMasked) GetOXMName() string {
+	return "vlan_tci_masked"
+}
+
+func (self *OxmIdVlanTciMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdXxreg0 struct {
+	*OxmId
+}
+
+type IOxmIdXxreg0 interface {
+	IOxmId
+}
+
+func (self *OxmIdXxreg0) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdXxreg0(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxreg0, error) {
+	_oxmidxxreg0 := &OxmIdXxreg0{OxmId: parent}
+	return _oxmidxxreg0, nil
+}
+
+func NewOxmIdXxreg0() *OxmIdXxreg0 {
+	obj := &OxmIdXxreg0{
+		OxmId: NewOxmId(122384),
+	}
+	return obj
+}
+func (self *OxmIdXxreg0) GetOXMName() string {
+	return "xxreg0"
+}
+
+func (self *OxmIdXxreg0) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdXxreg0Masked struct {
+	*OxmId
+}
+
+type IOxmIdXxreg0Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdXxreg0Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdXxreg0Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxreg0Masked, error) {
+	_oxmidxxreg0masked := &OxmIdXxreg0Masked{OxmId: parent}
+	return _oxmidxxreg0masked, nil
+}
+
+func NewOxmIdXxreg0Masked() *OxmIdXxreg0Masked {
+	obj := &OxmIdXxreg0Masked{
+		OxmId: NewOxmId(122640),
+	}
+	return obj
+}
+func (self *OxmIdXxreg0Masked) GetOXMName() string {
+	return "xxreg0_masked"
+}
+
+func (self *OxmIdXxreg0Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdXxreg1 struct {
+	*OxmId
+}
+
+type IOxmIdXxreg1 interface {
+	IOxmId
+}
+
+func (self *OxmIdXxreg1) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdXxreg1(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxreg1, error) {
+	_oxmidxxreg1 := &OxmIdXxreg1{OxmId: parent}
+	return _oxmidxxreg1, nil
+}
+
+func NewOxmIdXxreg1() *OxmIdXxreg1 {
+	obj := &OxmIdXxreg1{
+		OxmId: NewOxmId(122896),
+	}
+	return obj
+}
+func (self *OxmIdXxreg1) GetOXMName() string {
+	return "xxreg1"
+}
+
+func (self *OxmIdXxreg1) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdXxreg1Masked struct {
+	*OxmId
+}
+
+type IOxmIdXxreg1Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdXxreg1Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdXxreg1Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxreg1Masked, error) {
+	_oxmidxxreg1masked := &OxmIdXxreg1Masked{OxmId: parent}
+	return _oxmidxxreg1masked, nil
+}
+
+func NewOxmIdXxreg1Masked() *OxmIdXxreg1Masked {
+	obj := &OxmIdXxreg1Masked{
+		OxmId: NewOxmId(123152),
+	}
+	return obj
+}
+func (self *OxmIdXxreg1Masked) GetOXMName() string {
+	return "xxreg1_masked"
+}
+
+func (self *OxmIdXxreg1Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdXxreg2 struct {
+	*OxmId
+}
+
+type IOxmIdXxreg2 interface {
+	IOxmId
+}
+
+func (self *OxmIdXxreg2) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdXxreg2(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxreg2, error) {
+	_oxmidxxreg2 := &OxmIdXxreg2{OxmId: parent}
+	return _oxmidxxreg2, nil
+}
+
+func NewOxmIdXxreg2() *OxmIdXxreg2 {
+	obj := &OxmIdXxreg2{
+		OxmId: NewOxmId(123408),
+	}
+	return obj
+}
+func (self *OxmIdXxreg2) GetOXMName() string {
+	return "xxreg2"
+}
+
+func (self *OxmIdXxreg2) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdXxreg2Masked struct {
+	*OxmId
+}
+
+type IOxmIdXxreg2Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdXxreg2Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdXxreg2Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxreg2Masked, error) {
+	_oxmidxxreg2masked := &OxmIdXxreg2Masked{OxmId: parent}
+	return _oxmidxxreg2masked, nil
+}
+
+func NewOxmIdXxreg2Masked() *OxmIdXxreg2Masked {
+	obj := &OxmIdXxreg2Masked{
+		OxmId: NewOxmId(123664),
+	}
+	return obj
+}
+func (self *OxmIdXxreg2Masked) GetOXMName() string {
+	return "xxreg2_masked"
+}
+
+func (self *OxmIdXxreg2Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdXxreg3 struct {
+	*OxmId
+}
+
+type IOxmIdXxreg3 interface {
+	IOxmId
+}
+
+func (self *OxmIdXxreg3) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdXxreg3(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxreg3, error) {
+	_oxmidxxreg3 := &OxmIdXxreg3{OxmId: parent}
+	return _oxmidxxreg3, nil
+}
+
+func NewOxmIdXxreg3() *OxmIdXxreg3 {
+	obj := &OxmIdXxreg3{
+		OxmId: NewOxmId(123920),
+	}
+	return obj
+}
+func (self *OxmIdXxreg3) GetOXMName() string {
+	return "xxreg3"
+}
+
+func (self *OxmIdXxreg3) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdXxreg3Masked struct {
+	*OxmId
+}
+
+type IOxmIdXxreg3Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdXxreg3Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdXxreg3Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxreg3Masked, error) {
+	_oxmidxxreg3masked := &OxmIdXxreg3Masked{OxmId: parent}
+	return _oxmidxxreg3masked, nil
+}
+
+func NewOxmIdXxreg3Masked() *OxmIdXxreg3Masked {
+	obj := &OxmIdXxreg3Masked{
+		OxmId: NewOxmId(124176),
+	}
+	return obj
+}
+func (self *OxmIdXxreg3Masked) GetOXMName() string {
+	return "xxreg3_masked"
+}
+
+func (self *OxmIdXxreg3Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdArpOpMasked struct {
+	*OxmId
+}
+
+type IOxmIdArpOpMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdArpOpMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdArpOpMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpOpMasked, error) {
+	_oxmidarpopmasked := &OxmIdArpOpMasked{OxmId: parent}
+	return _oxmidarpopmasked, nil
+}
+
+func NewOxmIdArpOpMasked() *OxmIdArpOpMasked {
+	obj := &OxmIdArpOpMasked{
+		OxmId: NewOxmId(2147494660),
+	}
+	return obj
+}
+func (self *OxmIdArpOpMasked) GetOXMName() string {
+	return "arp_op_masked"
+}
+
+func (self *OxmIdArpOpMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnEgrPortGroupId struct {
+	*OxmId
+}
+
+type IOxmIdBsnEgrPortGroupId interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnEgrPortGroupId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnEgrPortGroupId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnEgrPortGroupId, error) {
+	_oxmidbsnegrportgroupid := &OxmIdBsnEgrPortGroupId{OxmId: parent}
+	return _oxmidbsnegrportgroupid, nil
+}
+
+func NewOxmIdBsnEgrPortGroupId() *OxmIdBsnEgrPortGroupId {
+	obj := &OxmIdBsnEgrPortGroupId{
+		OxmId: NewOxmId(200196),
+	}
+	return obj
+}
+func (self *OxmIdBsnEgrPortGroupId) GetOXMName() string {
+	return "bsn_egr_port_group_id"
+}
+
+func (self *OxmIdBsnEgrPortGroupId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnEgrPortGroupIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnEgrPortGroupIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnEgrPortGroupIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnEgrPortGroupIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnEgrPortGroupIdMasked, error) {
+	_oxmidbsnegrportgroupidmasked := &OxmIdBsnEgrPortGroupIdMasked{OxmId: parent}
+	return _oxmidbsnegrportgroupidmasked, nil
+}
+
+func NewOxmIdBsnEgrPortGroupIdMasked() *OxmIdBsnEgrPortGroupIdMasked {
+	obj := &OxmIdBsnEgrPortGroupIdMasked{
+		OxmId: NewOxmId(200456),
+	}
+	return obj
+}
+func (self *OxmIdBsnEgrPortGroupIdMasked) GetOXMName() string {
+	return "bsn_egr_port_group_id_masked"
+}
+
+func (self *OxmIdBsnEgrPortGroupIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnGlobalVrfAllowed struct {
+	*OxmId
+}
+
+type IOxmIdBsnGlobalVrfAllowed interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnGlobalVrfAllowed) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnGlobalVrfAllowed(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnGlobalVrfAllowed, error) {
+	_oxmidbsnglobalvrfallowed := &OxmIdBsnGlobalVrfAllowed{OxmId: parent}
+	return _oxmidbsnglobalvrfallowed, nil
+}
+
+func NewOxmIdBsnGlobalVrfAllowed() *OxmIdBsnGlobalVrfAllowed {
+	obj := &OxmIdBsnGlobalVrfAllowed{
+		OxmId: NewOxmId(198145),
+	}
+	return obj
+}
+func (self *OxmIdBsnGlobalVrfAllowed) GetOXMName() string {
+	return "bsn_global_vrf_allowed"
+}
+
+func (self *OxmIdBsnGlobalVrfAllowed) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnGlobalVrfAllowedMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnGlobalVrfAllowedMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnGlobalVrfAllowedMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnGlobalVrfAllowedMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnGlobalVrfAllowedMasked, error) {
+	_oxmidbsnglobalvrfallowedmasked := &OxmIdBsnGlobalVrfAllowedMasked{OxmId: parent}
+	return _oxmidbsnglobalvrfallowedmasked, nil
+}
+
+func NewOxmIdBsnGlobalVrfAllowedMasked() *OxmIdBsnGlobalVrfAllowedMasked {
+	obj := &OxmIdBsnGlobalVrfAllowedMasked{
+		OxmId: NewOxmId(198402),
+	}
+	return obj
+}
+func (self *OxmIdBsnGlobalVrfAllowedMasked) GetOXMName() string {
+	return "bsn_global_vrf_allowed_masked"
+}
+
+func (self *OxmIdBsnGlobalVrfAllowedMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInPorts128 struct {
+	*OxmId
+}
+
+type IOxmIdBsnInPorts128 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInPorts128) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInPorts128(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInPorts128, error) {
+	_oxmidbsninports128 := &OxmIdBsnInPorts128{OxmId: parent}
+	return _oxmidbsninports128, nil
+}
+
+func NewOxmIdBsnInPorts128() *OxmIdBsnInPorts128 {
+	obj := &OxmIdBsnInPorts128{
+		OxmId: NewOxmId(196624),
+	}
+	return obj
+}
+func (self *OxmIdBsnInPorts128) GetOXMName() string {
+	return "bsn_in_ports_128"
+}
+
+func (self *OxmIdBsnInPorts128) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInPorts128Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnInPorts128Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInPorts128Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInPorts128Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInPorts128Masked, error) {
+	_oxmidbsninports128masked := &OxmIdBsnInPorts128Masked{OxmId: parent}
+	return _oxmidbsninports128masked, nil
+}
+
+func NewOxmIdBsnInPorts128Masked() *OxmIdBsnInPorts128Masked {
+	obj := &OxmIdBsnInPorts128Masked{
+		OxmId: NewOxmId(196896),
+	}
+	return obj
+}
+func (self *OxmIdBsnInPorts128Masked) GetOXMName() string {
+	return "bsn_in_ports_128_masked"
+}
+
+func (self *OxmIdBsnInPorts128Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInPorts512 struct {
+	*OxmId
+}
+
+type IOxmIdBsnInPorts512 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInPorts512) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInPorts512(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInPorts512, error) {
+	_oxmidbsninports512 := &OxmIdBsnInPorts512{OxmId: parent}
+	return _oxmidbsninports512, nil
+}
+
+func NewOxmIdBsnInPorts512() *OxmIdBsnInPorts512 {
+	obj := &OxmIdBsnInPorts512{
+		OxmId: NewOxmId(206400),
+	}
+	return obj
+}
+func (self *OxmIdBsnInPorts512) GetOXMName() string {
+	return "bsn_in_ports_512"
+}
+
+func (self *OxmIdBsnInPorts512) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInPorts512Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnInPorts512Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInPorts512Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInPorts512Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInPorts512Masked, error) {
+	_oxmidbsninports512masked := &OxmIdBsnInPorts512Masked{OxmId: parent}
+	return _oxmidbsninports512masked, nil
+}
+
+func NewOxmIdBsnInPorts512Masked() *OxmIdBsnInPorts512Masked {
+	obj := &OxmIdBsnInPorts512Masked{
+		OxmId: NewOxmId(206720),
+	}
+	return obj
+}
+func (self *OxmIdBsnInPorts512Masked) GetOXMName() string {
+	return "bsn_in_ports_512_masked"
+}
+
+func (self *OxmIdBsnInPorts512Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnIngressPortGroupId struct {
+	*OxmId
+}
+
+type IOxmIdBsnIngressPortGroupId interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnIngressPortGroupId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnIngressPortGroupId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnIngressPortGroupId, error) {
+	_oxmidbsningressportgroupid := &OxmIdBsnIngressPortGroupId{OxmId: parent}
+	return _oxmidbsningressportgroupid, nil
+}
+
+func NewOxmIdBsnIngressPortGroupId() *OxmIdBsnIngressPortGroupId {
+	obj := &OxmIdBsnIngressPortGroupId{
+		OxmId: NewOxmId(206852),
+	}
+	return obj
+}
+func (self *OxmIdBsnIngressPortGroupId) GetOXMName() string {
+	return "bsn_ingress_port_group_id"
+}
+
+func (self *OxmIdBsnIngressPortGroupId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnIngressPortGroupIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnIngressPortGroupIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnIngressPortGroupIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnIngressPortGroupIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnIngressPortGroupIdMasked, error) {
+	_oxmidbsningressportgroupidmasked := &OxmIdBsnIngressPortGroupIdMasked{OxmId: parent}
+	return _oxmidbsningressportgroupidmasked, nil
+}
+
+func NewOxmIdBsnIngressPortGroupIdMasked() *OxmIdBsnIngressPortGroupIdMasked {
+	obj := &OxmIdBsnIngressPortGroupIdMasked{
+		OxmId: NewOxmId(207112),
+	}
+	return obj
+}
+func (self *OxmIdBsnIngressPortGroupIdMasked) GetOXMName() string {
+	return "bsn_ingress_port_group_id_masked"
+}
+
+func (self *OxmIdBsnIngressPortGroupIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInnerEthDst struct {
+	*OxmId
+}
+
+type IOxmIdBsnInnerEthDst interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInnerEthDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInnerEthDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInnerEthDst, error) {
+	_oxmidbsninnerethdst := &OxmIdBsnInnerEthDst{OxmId: parent}
+	return _oxmidbsninnerethdst, nil
+}
+
+func NewOxmIdBsnInnerEthDst() *OxmIdBsnInnerEthDst {
+	obj := &OxmIdBsnInnerEthDst{
+		OxmId: NewOxmId(207878),
+	}
+	return obj
+}
+func (self *OxmIdBsnInnerEthDst) GetOXMName() string {
+	return "bsn_inner_eth_dst"
+}
+
+func (self *OxmIdBsnInnerEthDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInnerEthDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnInnerEthDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInnerEthDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInnerEthDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInnerEthDstMasked, error) {
+	_oxmidbsninnerethdstmasked := &OxmIdBsnInnerEthDstMasked{OxmId: parent}
+	return _oxmidbsninnerethdstmasked, nil
+}
+
+func NewOxmIdBsnInnerEthDstMasked() *OxmIdBsnInnerEthDstMasked {
+	obj := &OxmIdBsnInnerEthDstMasked{
+		OxmId: NewOxmId(208140),
+	}
+	return obj
+}
+func (self *OxmIdBsnInnerEthDstMasked) GetOXMName() string {
+	return "bsn_inner_eth_dst_masked"
+}
+
+func (self *OxmIdBsnInnerEthDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInnerEthSrc struct {
+	*OxmId
+}
+
+type IOxmIdBsnInnerEthSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInnerEthSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInnerEthSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInnerEthSrc, error) {
+	_oxmidbsninnerethsrc := &OxmIdBsnInnerEthSrc{OxmId: parent}
+	return _oxmidbsninnerethsrc, nil
+}
+
+func NewOxmIdBsnInnerEthSrc() *OxmIdBsnInnerEthSrc {
+	obj := &OxmIdBsnInnerEthSrc{
+		OxmId: NewOxmId(208390),
+	}
+	return obj
+}
+func (self *OxmIdBsnInnerEthSrc) GetOXMName() string {
+	return "bsn_inner_eth_src"
+}
+
+func (self *OxmIdBsnInnerEthSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInnerEthSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnInnerEthSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInnerEthSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInnerEthSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInnerEthSrcMasked, error) {
+	_oxmidbsninnerethsrcmasked := &OxmIdBsnInnerEthSrcMasked{OxmId: parent}
+	return _oxmidbsninnerethsrcmasked, nil
+}
+
+func NewOxmIdBsnInnerEthSrcMasked() *OxmIdBsnInnerEthSrcMasked {
+	obj := &OxmIdBsnInnerEthSrcMasked{
+		OxmId: NewOxmId(208652),
+	}
+	return obj
+}
+func (self *OxmIdBsnInnerEthSrcMasked) GetOXMName() string {
+	return "bsn_inner_eth_src_masked"
+}
+
+func (self *OxmIdBsnInnerEthSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInnerVlanVid struct {
+	*OxmId
+}
+
+type IOxmIdBsnInnerVlanVid interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInnerVlanVid) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInnerVlanVid(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInnerVlanVid, error) {
+	_oxmidbsninnervlanvid := &OxmIdBsnInnerVlanVid{OxmId: parent}
+	return _oxmidbsninnervlanvid, nil
+}
+
+func NewOxmIdBsnInnerVlanVid() *OxmIdBsnInnerVlanVid {
+	obj := &OxmIdBsnInnerVlanVid{
+		OxmId: NewOxmId(208898),
+	}
+	return obj
+}
+func (self *OxmIdBsnInnerVlanVid) GetOXMName() string {
+	return "bsn_inner_vlan_vid"
+}
+
+func (self *OxmIdBsnInnerVlanVid) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnInnerVlanVidMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnInnerVlanVidMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnInnerVlanVidMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnInnerVlanVidMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnInnerVlanVidMasked, error) {
+	_oxmidbsninnervlanvidmasked := &OxmIdBsnInnerVlanVidMasked{OxmId: parent}
+	return _oxmidbsninnervlanvidmasked, nil
+}
+
+func NewOxmIdBsnInnerVlanVidMasked() *OxmIdBsnInnerVlanVidMasked {
+	obj := &OxmIdBsnInnerVlanVidMasked{
+		OxmId: NewOxmId(209156),
+	}
+	return obj
+}
+func (self *OxmIdBsnInnerVlanVidMasked) GetOXMName() string {
+	return "bsn_inner_vlan_vid_masked"
+}
+
+func (self *OxmIdBsnInnerVlanVidMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnIpFragmentation struct {
+	*OxmId
+}
+
+type IOxmIdBsnIpFragmentation interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnIpFragmentation) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnIpFragmentation(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnIpFragmentation, error) {
+	_oxmidbsnipfragmentation := &OxmIdBsnIpFragmentation{OxmId: parent}
+	return _oxmidbsnipfragmentation, nil
+}
+
+func NewOxmIdBsnIpFragmentation() *OxmIdBsnIpFragmentation {
+	obj := &OxmIdBsnIpFragmentation{
+		OxmId: NewOxmId(209921),
+	}
+	return obj
+}
+func (self *OxmIdBsnIpFragmentation) GetOXMName() string {
+	return "bsn_ip_fragmentation"
+}
+
+func (self *OxmIdBsnIpFragmentation) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnIpFragmentationMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnIpFragmentationMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnIpFragmentationMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnIpFragmentationMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnIpFragmentationMasked, error) {
+	_oxmidbsnipfragmentationmasked := &OxmIdBsnIpFragmentationMasked{OxmId: parent}
+	return _oxmidbsnipfragmentationmasked, nil
+}
+
+func NewOxmIdBsnIpFragmentationMasked() *OxmIdBsnIpFragmentationMasked {
+	obj := &OxmIdBsnIpFragmentationMasked{
+		OxmId: NewOxmId(210178),
+	}
+	return obj
+}
+func (self *OxmIdBsnIpFragmentationMasked) GetOXMName() string {
+	return "bsn_ip_fragmentation_masked"
+}
+
+func (self *OxmIdBsnIpFragmentationMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnL2CacheHit struct {
+	*OxmId
+}
+
+type IOxmIdBsnL2CacheHit interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnL2CacheHit) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnL2CacheHit(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnL2CacheHit, error) {
+	_oxmidbsnl2cachehit := &OxmIdBsnL2CacheHit{OxmId: parent}
+	return _oxmidbsnl2cachehit, nil
+}
+
+func NewOxmIdBsnL2CacheHit() *OxmIdBsnL2CacheHit {
+	obj := &OxmIdBsnL2CacheHit{
+		OxmId: NewOxmId(205825),
+	}
+	return obj
+}
+func (self *OxmIdBsnL2CacheHit) GetOXMName() string {
+	return "bsn_l2_cache_hit"
+}
+
+func (self *OxmIdBsnL2CacheHit) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnL2CacheHitMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnL2CacheHitMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnL2CacheHitMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnL2CacheHitMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnL2CacheHitMasked, error) {
+	_oxmidbsnl2cachehitmasked := &OxmIdBsnL2CacheHitMasked{OxmId: parent}
+	return _oxmidbsnl2cachehitmasked, nil
+}
+
+func NewOxmIdBsnL2CacheHitMasked() *OxmIdBsnL2CacheHitMasked {
+	obj := &OxmIdBsnL2CacheHitMasked{
+		OxmId: NewOxmId(206082),
+	}
+	return obj
+}
+func (self *OxmIdBsnL2CacheHitMasked) GetOXMName() string {
+	return "bsn_l2_cache_hit_masked"
+}
+
+func (self *OxmIdBsnL2CacheHitMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnL3DstClassId struct {
+	*OxmId
+}
+
+type IOxmIdBsnL3DstClassId interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnL3DstClassId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnL3DstClassId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnL3DstClassId, error) {
+	_oxmidbsnl3dstclassid := &OxmIdBsnL3DstClassId{OxmId: parent}
+	return _oxmidbsnl3dstclassid, nil
+}
+
+func NewOxmIdBsnL3DstClassId() *OxmIdBsnL3DstClassId {
+	obj := &OxmIdBsnL3DstClassId{
+		OxmId: NewOxmId(199684),
+	}
+	return obj
+}
+func (self *OxmIdBsnL3DstClassId) GetOXMName() string {
+	return "bsn_l3_dst_class_id"
+}
+
+func (self *OxmIdBsnL3DstClassId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnL3DstClassIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnL3DstClassIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnL3DstClassIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnL3DstClassIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnL3DstClassIdMasked, error) {
+	_oxmidbsnl3dstclassidmasked := &OxmIdBsnL3DstClassIdMasked{OxmId: parent}
+	return _oxmidbsnl3dstclassidmasked, nil
+}
+
+func NewOxmIdBsnL3DstClassIdMasked() *OxmIdBsnL3DstClassIdMasked {
+	obj := &OxmIdBsnL3DstClassIdMasked{
+		OxmId: NewOxmId(199944),
+	}
+	return obj
+}
+func (self *OxmIdBsnL3DstClassIdMasked) GetOXMName() string {
+	return "bsn_l3_dst_class_id_masked"
+}
+
+func (self *OxmIdBsnL3DstClassIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnL3InterfaceClassId struct {
+	*OxmId
+}
+
+type IOxmIdBsnL3InterfaceClassId interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnL3InterfaceClassId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnL3InterfaceClassId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnL3InterfaceClassId, error) {
+	_oxmidbsnl3interfaceclassid := &OxmIdBsnL3InterfaceClassId{OxmId: parent}
+	return _oxmidbsnl3interfaceclassid, nil
+}
+
+func NewOxmIdBsnL3InterfaceClassId() *OxmIdBsnL3InterfaceClassId {
+	obj := &OxmIdBsnL3InterfaceClassId{
+		OxmId: NewOxmId(198660),
+	}
+	return obj
+}
+func (self *OxmIdBsnL3InterfaceClassId) GetOXMName() string {
+	return "bsn_l3_interface_class_id"
+}
+
+func (self *OxmIdBsnL3InterfaceClassId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnL3InterfaceClassIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnL3InterfaceClassIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnL3InterfaceClassIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnL3InterfaceClassIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnL3InterfaceClassIdMasked, error) {
+	_oxmidbsnl3interfaceclassidmasked := &OxmIdBsnL3InterfaceClassIdMasked{OxmId: parent}
+	return _oxmidbsnl3interfaceclassidmasked, nil
+}
+
+func NewOxmIdBsnL3InterfaceClassIdMasked() *OxmIdBsnL3InterfaceClassIdMasked {
+	obj := &OxmIdBsnL3InterfaceClassIdMasked{
+		OxmId: NewOxmId(198920),
+	}
+	return obj
+}
+func (self *OxmIdBsnL3InterfaceClassIdMasked) GetOXMName() string {
+	return "bsn_l3_interface_class_id_masked"
+}
+
+func (self *OxmIdBsnL3InterfaceClassIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnL3SrcClassId struct {
+	*OxmId
+}
+
+type IOxmIdBsnL3SrcClassId interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnL3SrcClassId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnL3SrcClassId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnL3SrcClassId, error) {
+	_oxmidbsnl3srcclassid := &OxmIdBsnL3SrcClassId{OxmId: parent}
+	return _oxmidbsnl3srcclassid, nil
+}
+
+func NewOxmIdBsnL3SrcClassId() *OxmIdBsnL3SrcClassId {
+	obj := &OxmIdBsnL3SrcClassId{
+		OxmId: NewOxmId(199172),
+	}
+	return obj
+}
+func (self *OxmIdBsnL3SrcClassId) GetOXMName() string {
+	return "bsn_l3_src_class_id"
+}
+
+func (self *OxmIdBsnL3SrcClassId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnL3SrcClassIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnL3SrcClassIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnL3SrcClassIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnL3SrcClassIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnL3SrcClassIdMasked, error) {
+	_oxmidbsnl3srcclassidmasked := &OxmIdBsnL3SrcClassIdMasked{OxmId: parent}
+	return _oxmidbsnl3srcclassidmasked, nil
+}
+
+func NewOxmIdBsnL3SrcClassIdMasked() *OxmIdBsnL3SrcClassIdMasked {
+	obj := &OxmIdBsnL3SrcClassIdMasked{
+		OxmId: NewOxmId(199432),
+	}
+	return obj
+}
+func (self *OxmIdBsnL3SrcClassIdMasked) GetOXMName() string {
+	return "bsn_l3_src_class_id_masked"
+}
+
+func (self *OxmIdBsnL3SrcClassIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnLagId struct {
+	*OxmId
+}
+
+type IOxmIdBsnLagId interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnLagId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnLagId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnLagId, error) {
+	_oxmidbsnlagid := &OxmIdBsnLagId{OxmId: parent}
+	return _oxmidbsnlagid, nil
+}
+
+func NewOxmIdBsnLagId() *OxmIdBsnLagId {
+	obj := &OxmIdBsnLagId{
+		OxmId: NewOxmId(197124),
+	}
+	return obj
+}
+func (self *OxmIdBsnLagId) GetOXMName() string {
+	return "bsn_lag_id"
+}
+
+func (self *OxmIdBsnLagId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnLagIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnLagIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnLagIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnLagIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnLagIdMasked, error) {
+	_oxmidbsnlagidmasked := &OxmIdBsnLagIdMasked{OxmId: parent}
+	return _oxmidbsnlagidmasked, nil
+}
+
+func NewOxmIdBsnLagIdMasked() *OxmIdBsnLagIdMasked {
+	obj := &OxmIdBsnLagIdMasked{
+		OxmId: NewOxmId(197384),
+	}
+	return obj
+}
+func (self *OxmIdBsnLagIdMasked) GetOXMName() string {
+	return "bsn_lag_id_masked"
+}
+
+func (self *OxmIdBsnLagIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnTcpFlags struct {
+	*OxmId
+}
+
+type IOxmIdBsnTcpFlags interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnTcpFlags) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnTcpFlags(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnTcpFlags, error) {
+	_oxmidbsntcpflags := &OxmIdBsnTcpFlags{OxmId: parent}
+	return _oxmidbsntcpflags, nil
+}
+
+func NewOxmIdBsnTcpFlags() *OxmIdBsnTcpFlags {
+	obj := &OxmIdBsnTcpFlags{
+		OxmId: NewOxmId(204802),
+	}
+	return obj
+}
+func (self *OxmIdBsnTcpFlags) GetOXMName() string {
+	return "bsn_tcp_flags"
+}
+
+func (self *OxmIdBsnTcpFlags) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnTcpFlagsMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnTcpFlagsMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnTcpFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnTcpFlagsMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnTcpFlagsMasked, error) {
+	_oxmidbsntcpflagsmasked := &OxmIdBsnTcpFlagsMasked{OxmId: parent}
+	return _oxmidbsntcpflagsmasked, nil
+}
+
+func NewOxmIdBsnTcpFlagsMasked() *OxmIdBsnTcpFlagsMasked {
+	obj := &OxmIdBsnTcpFlagsMasked{
+		OxmId: NewOxmId(205060),
+	}
+	return obj
+}
+func (self *OxmIdBsnTcpFlagsMasked) GetOXMName() string {
+	return "bsn_tcp_flags_masked"
+}
+
+func (self *OxmIdBsnTcpFlagsMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf0 struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf0 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf0) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf0(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf0, error) {
+	_oxmidbsnudf0 := &OxmIdBsnUdf0{OxmId: parent}
+	return _oxmidbsnudf0, nil
+}
+
+func NewOxmIdBsnUdf0() *OxmIdBsnUdf0 {
+	obj := &OxmIdBsnUdf0{
+		OxmId: NewOxmId(200708),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf0) GetOXMName() string {
+	return "bsn_udf0"
+}
+
+func (self *OxmIdBsnUdf0) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf0Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf0Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf0Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf0Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf0Masked, error) {
+	_oxmidbsnudf0masked := &OxmIdBsnUdf0Masked{OxmId: parent}
+	return _oxmidbsnudf0masked, nil
+}
+
+func NewOxmIdBsnUdf0Masked() *OxmIdBsnUdf0Masked {
+	obj := &OxmIdBsnUdf0Masked{
+		OxmId: NewOxmId(200968),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf0Masked) GetOXMName() string {
+	return "bsn_udf0_masked"
+}
+
+func (self *OxmIdBsnUdf0Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf1 struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf1 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf1) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf1(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf1, error) {
+	_oxmidbsnudf1 := &OxmIdBsnUdf1{OxmId: parent}
+	return _oxmidbsnudf1, nil
+}
+
+func NewOxmIdBsnUdf1() *OxmIdBsnUdf1 {
+	obj := &OxmIdBsnUdf1{
+		OxmId: NewOxmId(201220),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf1) GetOXMName() string {
+	return "bsn_udf1"
+}
+
+func (self *OxmIdBsnUdf1) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf1Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf1Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf1Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf1Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf1Masked, error) {
+	_oxmidbsnudf1masked := &OxmIdBsnUdf1Masked{OxmId: parent}
+	return _oxmidbsnudf1masked, nil
+}
+
+func NewOxmIdBsnUdf1Masked() *OxmIdBsnUdf1Masked {
+	obj := &OxmIdBsnUdf1Masked{
+		OxmId: NewOxmId(201480),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf1Masked) GetOXMName() string {
+	return "bsn_udf1_masked"
+}
+
+func (self *OxmIdBsnUdf1Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf2 struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf2 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf2) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf2(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf2, error) {
+	_oxmidbsnudf2 := &OxmIdBsnUdf2{OxmId: parent}
+	return _oxmidbsnudf2, nil
+}
+
+func NewOxmIdBsnUdf2() *OxmIdBsnUdf2 {
+	obj := &OxmIdBsnUdf2{
+		OxmId: NewOxmId(201732),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf2) GetOXMName() string {
+	return "bsn_udf2"
+}
+
+func (self *OxmIdBsnUdf2) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf2Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf2Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf2Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf2Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf2Masked, error) {
+	_oxmidbsnudf2masked := &OxmIdBsnUdf2Masked{OxmId: parent}
+	return _oxmidbsnudf2masked, nil
+}
+
+func NewOxmIdBsnUdf2Masked() *OxmIdBsnUdf2Masked {
+	obj := &OxmIdBsnUdf2Masked{
+		OxmId: NewOxmId(201992),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf2Masked) GetOXMName() string {
+	return "bsn_udf2_masked"
+}
+
+func (self *OxmIdBsnUdf2Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf3 struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf3 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf3) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf3(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf3, error) {
+	_oxmidbsnudf3 := &OxmIdBsnUdf3{OxmId: parent}
+	return _oxmidbsnudf3, nil
+}
+
+func NewOxmIdBsnUdf3() *OxmIdBsnUdf3 {
+	obj := &OxmIdBsnUdf3{
+		OxmId: NewOxmId(202244),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf3) GetOXMName() string {
+	return "bsn_udf3"
+}
+
+func (self *OxmIdBsnUdf3) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf3Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf3Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf3Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf3Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf3Masked, error) {
+	_oxmidbsnudf3masked := &OxmIdBsnUdf3Masked{OxmId: parent}
+	return _oxmidbsnudf3masked, nil
+}
+
+func NewOxmIdBsnUdf3Masked() *OxmIdBsnUdf3Masked {
+	obj := &OxmIdBsnUdf3Masked{
+		OxmId: NewOxmId(202504),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf3Masked) GetOXMName() string {
+	return "bsn_udf3_masked"
+}
+
+func (self *OxmIdBsnUdf3Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf4 struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf4 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf4) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf4(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf4, error) {
+	_oxmidbsnudf4 := &OxmIdBsnUdf4{OxmId: parent}
+	return _oxmidbsnudf4, nil
+}
+
+func NewOxmIdBsnUdf4() *OxmIdBsnUdf4 {
+	obj := &OxmIdBsnUdf4{
+		OxmId: NewOxmId(202756),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf4) GetOXMName() string {
+	return "bsn_udf4"
+}
+
+func (self *OxmIdBsnUdf4) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf4Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf4Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf4Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf4Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf4Masked, error) {
+	_oxmidbsnudf4masked := &OxmIdBsnUdf4Masked{OxmId: parent}
+	return _oxmidbsnudf4masked, nil
+}
+
+func NewOxmIdBsnUdf4Masked() *OxmIdBsnUdf4Masked {
+	obj := &OxmIdBsnUdf4Masked{
+		OxmId: NewOxmId(203016),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf4Masked) GetOXMName() string {
+	return "bsn_udf4_masked"
+}
+
+func (self *OxmIdBsnUdf4Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf5 struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf5 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf5) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf5(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf5, error) {
+	_oxmidbsnudf5 := &OxmIdBsnUdf5{OxmId: parent}
+	return _oxmidbsnudf5, nil
+}
+
+func NewOxmIdBsnUdf5() *OxmIdBsnUdf5 {
+	obj := &OxmIdBsnUdf5{
+		OxmId: NewOxmId(203268),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf5) GetOXMName() string {
+	return "bsn_udf5"
+}
+
+func (self *OxmIdBsnUdf5) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf5Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf5Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf5Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf5Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf5Masked, error) {
+	_oxmidbsnudf5masked := &OxmIdBsnUdf5Masked{OxmId: parent}
+	return _oxmidbsnudf5masked, nil
+}
+
+func NewOxmIdBsnUdf5Masked() *OxmIdBsnUdf5Masked {
+	obj := &OxmIdBsnUdf5Masked{
+		OxmId: NewOxmId(203528),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf5Masked) GetOXMName() string {
+	return "bsn_udf5_masked"
+}
+
+func (self *OxmIdBsnUdf5Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf6 struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf6 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf6) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf6(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf6, error) {
+	_oxmidbsnudf6 := &OxmIdBsnUdf6{OxmId: parent}
+	return _oxmidbsnudf6, nil
+}
+
+func NewOxmIdBsnUdf6() *OxmIdBsnUdf6 {
+	obj := &OxmIdBsnUdf6{
+		OxmId: NewOxmId(203780),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf6) GetOXMName() string {
+	return "bsn_udf6"
+}
+
+func (self *OxmIdBsnUdf6) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf6Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf6Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf6Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf6Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf6Masked, error) {
+	_oxmidbsnudf6masked := &OxmIdBsnUdf6Masked{OxmId: parent}
+	return _oxmidbsnudf6masked, nil
+}
+
+func NewOxmIdBsnUdf6Masked() *OxmIdBsnUdf6Masked {
+	obj := &OxmIdBsnUdf6Masked{
+		OxmId: NewOxmId(204040),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf6Masked) GetOXMName() string {
+	return "bsn_udf6_masked"
+}
+
+func (self *OxmIdBsnUdf6Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf7 struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf7 interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf7) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf7(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf7, error) {
+	_oxmidbsnudf7 := &OxmIdBsnUdf7{OxmId: parent}
+	return _oxmidbsnudf7, nil
+}
+
+func NewOxmIdBsnUdf7() *OxmIdBsnUdf7 {
+	obj := &OxmIdBsnUdf7{
+		OxmId: NewOxmId(204292),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf7) GetOXMName() string {
+	return "bsn_udf7"
+}
+
+func (self *OxmIdBsnUdf7) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnUdf7Masked struct {
+	*OxmId
+}
+
+type IOxmIdBsnUdf7Masked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnUdf7Masked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnUdf7Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnUdf7Masked, error) {
+	_oxmidbsnudf7masked := &OxmIdBsnUdf7Masked{OxmId: parent}
+	return _oxmidbsnudf7masked, nil
+}
+
+func NewOxmIdBsnUdf7Masked() *OxmIdBsnUdf7Masked {
+	obj := &OxmIdBsnUdf7Masked{
+		OxmId: NewOxmId(204552),
+	}
+	return obj
+}
+func (self *OxmIdBsnUdf7Masked) GetOXMName() string {
+	return "bsn_udf7_masked"
+}
+
+func (self *OxmIdBsnUdf7Masked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnVfi struct {
+	*OxmId
+}
+
+type IOxmIdBsnVfi interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnVfi) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnVfi(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnVfi, error) {
+	_oxmidbsnvfi := &OxmIdBsnVfi{OxmId: parent}
+	return _oxmidbsnvfi, nil
+}
+
+func NewOxmIdBsnVfi() *OxmIdBsnVfi {
+	obj := &OxmIdBsnVfi{
+		OxmId: NewOxmId(209410),
+	}
+	return obj
+}
+func (self *OxmIdBsnVfi) GetOXMName() string {
+	return "bsn_vfi"
+}
+
+func (self *OxmIdBsnVfi) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnVfiMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnVfiMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnVfiMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnVfiMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnVfiMasked, error) {
+	_oxmidbsnvfimasked := &OxmIdBsnVfiMasked{OxmId: parent}
+	return _oxmidbsnvfimasked, nil
+}
+
+func NewOxmIdBsnVfiMasked() *OxmIdBsnVfiMasked {
+	obj := &OxmIdBsnVfiMasked{
+		OxmId: NewOxmId(209668),
+	}
+	return obj
+}
+func (self *OxmIdBsnVfiMasked) GetOXMName() string {
+	return "bsn_vfi_masked"
+}
+
+func (self *OxmIdBsnVfiMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnVlanXlatePortGroupId struct {
+	*OxmId
+}
+
+type IOxmIdBsnVlanXlatePortGroupId interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnVlanXlatePortGroupId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnVlanXlatePortGroupId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnVlanXlatePortGroupId, error) {
+	_oxmidbsnvlanxlateportgroupid := &OxmIdBsnVlanXlatePortGroupId{OxmId: parent}
+	return _oxmidbsnvlanxlateportgroupid, nil
+}
+
+func NewOxmIdBsnVlanXlatePortGroupId() *OxmIdBsnVlanXlatePortGroupId {
+	obj := &OxmIdBsnVlanXlatePortGroupId{
+		OxmId: NewOxmId(205316),
+	}
+	return obj
+}
+func (self *OxmIdBsnVlanXlatePortGroupId) GetOXMName() string {
+	return "bsn_vlan_xlate_port_group_id"
+}
+
+func (self *OxmIdBsnVlanXlatePortGroupId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnVlanXlatePortGroupIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnVlanXlatePortGroupIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnVlanXlatePortGroupIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnVlanXlatePortGroupIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnVlanXlatePortGroupIdMasked, error) {
+	_oxmidbsnvlanxlateportgroupidmasked := &OxmIdBsnVlanXlatePortGroupIdMasked{OxmId: parent}
+	return _oxmidbsnvlanxlateportgroupidmasked, nil
+}
+
+func NewOxmIdBsnVlanXlatePortGroupIdMasked() *OxmIdBsnVlanXlatePortGroupIdMasked {
+	obj := &OxmIdBsnVlanXlatePortGroupIdMasked{
+		OxmId: NewOxmId(205576),
+	}
+	return obj
+}
+func (self *OxmIdBsnVlanXlatePortGroupIdMasked) GetOXMName() string {
+	return "bsn_vlan_xlate_port_group_id_masked"
+}
+
+func (self *OxmIdBsnVlanXlatePortGroupIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnVrf struct {
+	*OxmId
+}
+
+type IOxmIdBsnVrf interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnVrf) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnVrf(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnVrf, error) {
+	_oxmidbsnvrf := &OxmIdBsnVrf{OxmId: parent}
+	return _oxmidbsnvrf, nil
+}
+
+func NewOxmIdBsnVrf() *OxmIdBsnVrf {
+	obj := &OxmIdBsnVrf{
+		OxmId: NewOxmId(197636),
+	}
+	return obj
+}
+func (self *OxmIdBsnVrf) GetOXMName() string {
+	return "bsn_vrf"
+}
+
+func (self *OxmIdBsnVrf) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnVrfMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnVrfMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnVrfMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnVrfMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnVrfMasked, error) {
+	_oxmidbsnvrfmasked := &OxmIdBsnVrfMasked{OxmId: parent}
+	return _oxmidbsnvrfmasked, nil
+}
+
+func NewOxmIdBsnVrfMasked() *OxmIdBsnVrfMasked {
+	obj := &OxmIdBsnVrfMasked{
+		OxmId: NewOxmId(197896),
+	}
+	return obj
+}
+func (self *OxmIdBsnVrfMasked) GetOXMName() string {
+	return "bsn_vrf_masked"
+}
+
+func (self *OxmIdBsnVrfMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnVxlanNetworkId struct {
+	*OxmId
+}
+
+type IOxmIdBsnVxlanNetworkId interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnVxlanNetworkId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnVxlanNetworkId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnVxlanNetworkId, error) {
+	_oxmidbsnvxlannetworkid := &OxmIdBsnVxlanNetworkId{OxmId: parent}
+	return _oxmidbsnvxlannetworkid, nil
+}
+
+func NewOxmIdBsnVxlanNetworkId() *OxmIdBsnVxlanNetworkId {
+	obj := &OxmIdBsnVxlanNetworkId{
+		OxmId: NewOxmId(207364),
+	}
+	return obj
+}
+func (self *OxmIdBsnVxlanNetworkId) GetOXMName() string {
+	return "bsn_vxlan_network_id"
+}
+
+func (self *OxmIdBsnVxlanNetworkId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdBsnVxlanNetworkIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdBsnVxlanNetworkIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdBsnVxlanNetworkIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdBsnVxlanNetworkIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdBsnVxlanNetworkIdMasked, error) {
+	_oxmidbsnvxlannetworkidmasked := &OxmIdBsnVxlanNetworkIdMasked{OxmId: parent}
+	return _oxmidbsnvxlannetworkidmasked, nil
+}
+
+func NewOxmIdBsnVxlanNetworkIdMasked() *OxmIdBsnVxlanNetworkIdMasked {
+	obj := &OxmIdBsnVxlanNetworkIdMasked{
+		OxmId: NewOxmId(207624),
+	}
+	return obj
+}
+func (self *OxmIdBsnVxlanNetworkIdMasked) GetOXMName() string {
+	return "bsn_vxlan_network_id_masked"
+}
+
+func (self *OxmIdBsnVxlanNetworkIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingIpv6Dst struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingIpv6Dst interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingIpv6Dst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingIpv6Dst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingIpv6Dst, error) {
+	_oxmidconntrackingipv6dst := &OxmIdConnTrackingIpv6Dst{OxmId: parent}
+	return _oxmidconntrackingipv6dst, nil
+}
+
+func NewOxmIdConnTrackingIpv6Dst() *OxmIdConnTrackingIpv6Dst {
+	obj := &OxmIdConnTrackingIpv6Dst{
+		OxmId: NewOxmId(128528),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingIpv6Dst) GetOXMName() string {
+	return "conn_tracking_ipv6_dst"
+}
+
+func (self *OxmIdConnTrackingIpv6Dst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingIpv6DstMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingIpv6DstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingIpv6DstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingIpv6DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingIpv6DstMasked, error) {
+	_oxmidconntrackingipv6dstmasked := &OxmIdConnTrackingIpv6DstMasked{OxmId: parent}
+	return _oxmidconntrackingipv6dstmasked, nil
+}
+
+func NewOxmIdConnTrackingIpv6DstMasked() *OxmIdConnTrackingIpv6DstMasked {
+	obj := &OxmIdConnTrackingIpv6DstMasked{
+		OxmId: NewOxmId(128800),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingIpv6DstMasked) GetOXMName() string {
+	return "conn_tracking_ipv6_dst_masked"
+}
+
+func (self *OxmIdConnTrackingIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingIpv6Src struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingIpv6Src interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingIpv6Src) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingIpv6Src(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingIpv6Src, error) {
+	_oxmidconntrackingipv6src := &OxmIdConnTrackingIpv6Src{OxmId: parent}
+	return _oxmidconntrackingipv6src, nil
+}
+
+func NewOxmIdConnTrackingIpv6Src() *OxmIdConnTrackingIpv6Src {
+	obj := &OxmIdConnTrackingIpv6Src{
+		OxmId: NewOxmId(128016),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingIpv6Src) GetOXMName() string {
+	return "conn_tracking_ipv6_src"
+}
+
+func (self *OxmIdConnTrackingIpv6Src) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingIpv6SrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingIpv6SrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingIpv6SrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingIpv6SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingIpv6SrcMasked, error) {
+	_oxmidconntrackingipv6srcmasked := &OxmIdConnTrackingIpv6SrcMasked{OxmId: parent}
+	return _oxmidconntrackingipv6srcmasked, nil
+}
+
+func NewOxmIdConnTrackingIpv6SrcMasked() *OxmIdConnTrackingIpv6SrcMasked {
+	obj := &OxmIdConnTrackingIpv6SrcMasked{
+		OxmId: NewOxmId(128288),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingIpv6SrcMasked) GetOXMName() string {
+	return "conn_tracking_ipv6_src_masked"
+}
+
+func (self *OxmIdConnTrackingIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingLabel struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingLabel interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingLabel) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingLabel(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingLabel, error) {
+	_oxmidconntrackinglabel := &OxmIdConnTrackingLabel{OxmId: parent}
+	return _oxmidconntrackinglabel, nil
+}
+
+func NewOxmIdConnTrackingLabel() *OxmIdConnTrackingLabel {
+	obj := &OxmIdConnTrackingLabel{
+		OxmId: NewOxmId(120848),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingLabel) GetOXMName() string {
+	return "conn_tracking_label"
+}
+
+func (self *OxmIdConnTrackingLabel) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingLabelMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingLabelMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingLabelMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingLabelMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingLabelMasked, error) {
+	_oxmidconntrackinglabelmasked := &OxmIdConnTrackingLabelMasked{OxmId: parent}
+	return _oxmidconntrackinglabelmasked, nil
+}
+
+func NewOxmIdConnTrackingLabelMasked() *OxmIdConnTrackingLabelMasked {
+	obj := &OxmIdConnTrackingLabelMasked{
+		OxmId: NewOxmId(121120),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingLabelMasked) GetOXMName() string {
+	return "conn_tracking_label_masked"
+}
+
+func (self *OxmIdConnTrackingLabelMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingMark struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingMark interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingMark) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingMark(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingMark, error) {
+	_oxmidconntrackingmark := &OxmIdConnTrackingMark{OxmId: parent}
+	return _oxmidconntrackingmark, nil
+}
+
+func NewOxmIdConnTrackingMark() *OxmIdConnTrackingMark {
+	obj := &OxmIdConnTrackingMark{
+		OxmId: NewOxmId(120324),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingMark) GetOXMName() string {
+	return "conn_tracking_mark"
+}
+
+func (self *OxmIdConnTrackingMark) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingMarkMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingMarkMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingMarkMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingMarkMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingMarkMasked, error) {
+	_oxmidconntrackingmarkmasked := &OxmIdConnTrackingMarkMasked{OxmId: parent}
+	return _oxmidconntrackingmarkmasked, nil
+}
+
+func NewOxmIdConnTrackingMarkMasked() *OxmIdConnTrackingMarkMasked {
+	obj := &OxmIdConnTrackingMarkMasked{
+		OxmId: NewOxmId(120584),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingMarkMasked) GetOXMName() string {
+	return "conn_tracking_mark_masked"
+}
+
+func (self *OxmIdConnTrackingMarkMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingNwDst struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingNwDst interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingNwDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingNwDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingNwDst, error) {
+	_oxmidconntrackingnwdst := &OxmIdConnTrackingNwDst{OxmId: parent}
+	return _oxmidconntrackingnwdst, nil
+}
+
+func NewOxmIdConnTrackingNwDst() *OxmIdConnTrackingNwDst {
+	obj := &OxmIdConnTrackingNwDst{
+		OxmId: NewOxmId(127492),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingNwDst) GetOXMName() string {
+	return "conn_tracking_nw_dst"
+}
+
+func (self *OxmIdConnTrackingNwDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingNwDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingNwDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingNwDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingNwDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingNwDstMasked, error) {
+	_oxmidconntrackingnwdstmasked := &OxmIdConnTrackingNwDstMasked{OxmId: parent}
+	return _oxmidconntrackingnwdstmasked, nil
+}
+
+func NewOxmIdConnTrackingNwDstMasked() *OxmIdConnTrackingNwDstMasked {
+	obj := &OxmIdConnTrackingNwDstMasked{
+		OxmId: NewOxmId(127752),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingNwDstMasked) GetOXMName() string {
+	return "conn_tracking_nw_dst_masked"
+}
+
+func (self *OxmIdConnTrackingNwDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingNwProto struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingNwProto interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingNwProto) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingNwProto(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingNwProto, error) {
+	_oxmidconntrackingnwproto := &OxmIdConnTrackingNwProto{OxmId: parent}
+	return _oxmidconntrackingnwproto, nil
+}
+
+func NewOxmIdConnTrackingNwProto() *OxmIdConnTrackingNwProto {
+	obj := &OxmIdConnTrackingNwProto{
+		OxmId: NewOxmId(126465),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingNwProto) GetOXMName() string {
+	return "conn_tracking_nw_proto"
+}
+
+func (self *OxmIdConnTrackingNwProto) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingNwProtoMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingNwProtoMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingNwProtoMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingNwProtoMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingNwProtoMasked, error) {
+	_oxmidconntrackingnwprotomasked := &OxmIdConnTrackingNwProtoMasked{OxmId: parent}
+	return _oxmidconntrackingnwprotomasked, nil
+}
+
+func NewOxmIdConnTrackingNwProtoMasked() *OxmIdConnTrackingNwProtoMasked {
+	obj := &OxmIdConnTrackingNwProtoMasked{
+		OxmId: NewOxmId(126722),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingNwProtoMasked) GetOXMName() string {
+	return "conn_tracking_nw_proto_masked"
+}
+
+func (self *OxmIdConnTrackingNwProtoMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingNwSrc struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingNwSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingNwSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingNwSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingNwSrc, error) {
+	_oxmidconntrackingnwsrc := &OxmIdConnTrackingNwSrc{OxmId: parent}
+	return _oxmidconntrackingnwsrc, nil
+}
+
+func NewOxmIdConnTrackingNwSrc() *OxmIdConnTrackingNwSrc {
+	obj := &OxmIdConnTrackingNwSrc{
+		OxmId: NewOxmId(126980),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingNwSrc) GetOXMName() string {
+	return "conn_tracking_nw_src"
+}
+
+func (self *OxmIdConnTrackingNwSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingNwSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingNwSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingNwSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingNwSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingNwSrcMasked, error) {
+	_oxmidconntrackingnwsrcmasked := &OxmIdConnTrackingNwSrcMasked{OxmId: parent}
+	return _oxmidconntrackingnwsrcmasked, nil
+}
+
+func NewOxmIdConnTrackingNwSrcMasked() *OxmIdConnTrackingNwSrcMasked {
+	obj := &OxmIdConnTrackingNwSrcMasked{
+		OxmId: NewOxmId(127240),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingNwSrcMasked) GetOXMName() string {
+	return "conn_tracking_nw_src_masked"
+}
+
+func (self *OxmIdConnTrackingNwSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingState struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingState interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingState) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingState(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingState, error) {
+	_oxmidconntrackingstate := &OxmIdConnTrackingState{OxmId: parent}
+	return _oxmidconntrackingstate, nil
+}
+
+func NewOxmIdConnTrackingState() *OxmIdConnTrackingState {
+	obj := &OxmIdConnTrackingState{
+		OxmId: NewOxmId(119300),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingState) GetOXMName() string {
+	return "conn_tracking_state"
+}
+
+func (self *OxmIdConnTrackingState) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingStateMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingStateMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingStateMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingStateMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingStateMasked, error) {
+	_oxmidconntrackingstatemasked := &OxmIdConnTrackingStateMasked{OxmId: parent}
+	return _oxmidconntrackingstatemasked, nil
+}
+
+func NewOxmIdConnTrackingStateMasked() *OxmIdConnTrackingStateMasked {
+	obj := &OxmIdConnTrackingStateMasked{
+		OxmId: NewOxmId(119560),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingStateMasked) GetOXMName() string {
+	return "conn_tracking_state_masked"
+}
+
+func (self *OxmIdConnTrackingStateMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingTpDst struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingTpDst interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingTpDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingTpDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingTpDst, error) {
+	_oxmidconntrackingtpdst := &OxmIdConnTrackingTpDst{OxmId: parent}
+	return _oxmidconntrackingtpdst, nil
+}
+
+func NewOxmIdConnTrackingTpDst() *OxmIdConnTrackingTpDst {
+	obj := &OxmIdConnTrackingTpDst{
+		OxmId: NewOxmId(129538),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingTpDst) GetOXMName() string {
+	return "conn_tracking_tp_dst"
+}
+
+func (self *OxmIdConnTrackingTpDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingTpDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingTpDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingTpDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingTpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingTpDstMasked, error) {
+	_oxmidconntrackingtpdstmasked := &OxmIdConnTrackingTpDstMasked{OxmId: parent}
+	return _oxmidconntrackingtpdstmasked, nil
+}
+
+func NewOxmIdConnTrackingTpDstMasked() *OxmIdConnTrackingTpDstMasked {
+	obj := &OxmIdConnTrackingTpDstMasked{
+		OxmId: NewOxmId(129796),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingTpDstMasked) GetOXMName() string {
+	return "conn_tracking_tp_dst_masked"
+}
+
+func (self *OxmIdConnTrackingTpDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingTpSrc struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingTpSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingTpSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingTpSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingTpSrc, error) {
+	_oxmidconntrackingtpsrc := &OxmIdConnTrackingTpSrc{OxmId: parent}
+	return _oxmidconntrackingtpsrc, nil
+}
+
+func NewOxmIdConnTrackingTpSrc() *OxmIdConnTrackingTpSrc {
+	obj := &OxmIdConnTrackingTpSrc{
+		OxmId: NewOxmId(129026),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingTpSrc) GetOXMName() string {
+	return "conn_tracking_tp_src"
+}
+
+func (self *OxmIdConnTrackingTpSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingTpSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingTpSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingTpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingTpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingTpSrcMasked, error) {
+	_oxmidconntrackingtpsrcmasked := &OxmIdConnTrackingTpSrcMasked{OxmId: parent}
+	return _oxmidconntrackingtpsrcmasked, nil
+}
+
+func NewOxmIdConnTrackingTpSrcMasked() *OxmIdConnTrackingTpSrcMasked {
+	obj := &OxmIdConnTrackingTpSrcMasked{
+		OxmId: NewOxmId(129284),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingTpSrcMasked) GetOXMName() string {
+	return "conn_tracking_tp_src_masked"
+}
+
+func (self *OxmIdConnTrackingTpSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingZone struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingZone interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingZone) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingZone(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingZone, error) {
+	_oxmidconntrackingzone := &OxmIdConnTrackingZone{OxmId: parent}
+	return _oxmidconntrackingzone, nil
+}
+
+func NewOxmIdConnTrackingZone() *OxmIdConnTrackingZone {
+	obj := &OxmIdConnTrackingZone{
+		OxmId: NewOxmId(119810),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingZone) GetOXMName() string {
+	return "conn_tracking_zone"
+}
+
+func (self *OxmIdConnTrackingZone) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdConnTrackingZoneMasked struct {
+	*OxmId
+}
+
+type IOxmIdConnTrackingZoneMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdConnTrackingZoneMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdConnTrackingZoneMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdConnTrackingZoneMasked, error) {
+	_oxmidconntrackingzonemasked := &OxmIdConnTrackingZoneMasked{OxmId: parent}
+	return _oxmidconntrackingzonemasked, nil
+}
+
+func NewOxmIdConnTrackingZoneMasked() *OxmIdConnTrackingZoneMasked {
+	obj := &OxmIdConnTrackingZoneMasked{
+		OxmId: NewOxmId(120068),
+	}
+	return obj
+}
+func (self *OxmIdConnTrackingZoneMasked) GetOXMName() string {
+	return "conn_tracking_zone_masked"
+}
+
+func (self *OxmIdConnTrackingZoneMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdEthTypeMasked struct {
+	*OxmId
+}
+
+type IOxmIdEthTypeMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdEthTypeMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdEthTypeMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdEthTypeMasked, error) {
+	_oxmidethtypemasked := &OxmIdEthTypeMasked{OxmId: parent}
+	return _oxmidethtypemasked, nil
+}
+
+func NewOxmIdEthTypeMasked() *OxmIdEthTypeMasked {
+	obj := &OxmIdEthTypeMasked{
+		OxmId: NewOxmId(2147486468),
+	}
+	return obj
+}
+func (self *OxmIdEthTypeMasked) GetOXMName() string {
+	return "eth_type_masked"
+}
+
+func (self *OxmIdEthTypeMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpv4Code struct {
+	*OxmId
+}
+
+type IOxmIdIcmpv4Code interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpv4Code) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpv4Code(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpv4Code, error) {
+	_oxmidicmpv4code := &OxmIdIcmpv4Code{OxmId: parent}
+	return _oxmidicmpv4code, nil
+}
+
+func NewOxmIdIcmpv4Code() *OxmIdIcmpv4Code {
+	obj := &OxmIdIcmpv4Code{
+		OxmId: NewOxmId(2147493889),
+	}
+	return obj
+}
+func (self *OxmIdIcmpv4Code) GetOXMName() string {
+	return "icmpv4_code"
+}
+
+func (self *OxmIdIcmpv4Code) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpv4CodeMasked struct {
+	*OxmId
+}
+
+type IOxmIdIcmpv4CodeMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpv4CodeMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpv4CodeMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpv4CodeMasked, error) {
+	_oxmidicmpv4codemasked := &OxmIdIcmpv4CodeMasked{OxmId: parent}
+	return _oxmidicmpv4codemasked, nil
+}
+
+func NewOxmIdIcmpv4CodeMasked() *OxmIdIcmpv4CodeMasked {
+	obj := &OxmIdIcmpv4CodeMasked{
+		OxmId: NewOxmId(2147494146),
+	}
+	return obj
+}
+func (self *OxmIdIcmpv4CodeMasked) GetOXMName() string {
+	return "icmpv4_code_masked"
+}
+
+func (self *OxmIdIcmpv4CodeMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpv4Type struct {
+	*OxmId
+}
+
+type IOxmIdIcmpv4Type interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpv4Type) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpv4Type(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpv4Type, error) {
+	_oxmidicmpv4type := &OxmIdIcmpv4Type{OxmId: parent}
+	return _oxmidicmpv4type, nil
+}
+
+func NewOxmIdIcmpv4Type() *OxmIdIcmpv4Type {
+	obj := &OxmIdIcmpv4Type{
+		OxmId: NewOxmId(2147493377),
+	}
+	return obj
+}
+func (self *OxmIdIcmpv4Type) GetOXMName() string {
+	return "icmpv4_type"
+}
+
+func (self *OxmIdIcmpv4Type) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpv4TypeMasked struct {
+	*OxmId
+}
+
+type IOxmIdIcmpv4TypeMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpv4TypeMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpv4TypeMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpv4TypeMasked, error) {
+	_oxmidicmpv4typemasked := &OxmIdIcmpv4TypeMasked{OxmId: parent}
+	return _oxmidicmpv4typemasked, nil
+}
+
+func NewOxmIdIcmpv4TypeMasked() *OxmIdIcmpv4TypeMasked {
+	obj := &OxmIdIcmpv4TypeMasked{
+		OxmId: NewOxmId(2147493634),
+	}
+	return obj
+}
+func (self *OxmIdIcmpv4TypeMasked) GetOXMName() string {
+	return "icmpv4_type_masked"
+}
+
+func (self *OxmIdIcmpv4TypeMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpv6CodeMasked struct {
+	*OxmId
+}
+
+type IOxmIdIcmpv6CodeMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpv6CodeMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpv6CodeMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpv6CodeMasked, error) {
+	_oxmidicmpv6codemasked := &OxmIdIcmpv6CodeMasked{OxmId: parent}
+	return _oxmidicmpv6codemasked, nil
+}
+
+func NewOxmIdIcmpv6CodeMasked() *OxmIdIcmpv6CodeMasked {
+	obj := &OxmIdIcmpv6CodeMasked{
+		OxmId: NewOxmId(2147499266),
+	}
+	return obj
+}
+func (self *OxmIdIcmpv6CodeMasked) GetOXMName() string {
+	return "icmpv6_code_masked"
+}
+
+func (self *OxmIdIcmpv6CodeMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIcmpv6TypeMasked struct {
+	*OxmId
+}
+
+type IOxmIdIcmpv6TypeMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIcmpv6TypeMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIcmpv6TypeMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIcmpv6TypeMasked, error) {
+	_oxmidicmpv6typemasked := &OxmIdIcmpv6TypeMasked{OxmId: parent}
+	return _oxmidicmpv6typemasked, nil
+}
+
+func NewOxmIdIcmpv6TypeMasked() *OxmIdIcmpv6TypeMasked {
+	obj := &OxmIdIcmpv6TypeMasked{
+		OxmId: NewOxmId(2147498754),
+	}
+	return obj
+}
+func (self *OxmIdIcmpv6TypeMasked) GetOXMName() string {
+	return "icmpv6_type_masked"
+}
+
+func (self *OxmIdIcmpv6TypeMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdInPhyPort struct {
+	*OxmId
+}
+
+type IOxmIdInPhyPort interface {
+	IOxmId
+}
+
+func (self *OxmIdInPhyPort) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdInPhyPort(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdInPhyPort, error) {
+	_oxmidinphyport := &OxmIdInPhyPort{OxmId: parent}
+	return _oxmidinphyport, nil
+}
+
+func NewOxmIdInPhyPort() *OxmIdInPhyPort {
+	obj := &OxmIdInPhyPort{
+		OxmId: NewOxmId(2147484164),
+	}
+	return obj
+}
+func (self *OxmIdInPhyPort) GetOXMName() string {
+	return "in_phy_port"
+}
+
+func (self *OxmIdInPhyPort) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdInPhyPortMasked struct {
+	*OxmId
+}
+
+type IOxmIdInPhyPortMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdInPhyPortMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdInPhyPortMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdInPhyPortMasked, error) {
+	_oxmidinphyportmasked := &OxmIdInPhyPortMasked{OxmId: parent}
+	return _oxmidinphyportmasked, nil
+}
+
+func NewOxmIdInPhyPortMasked() *OxmIdInPhyPortMasked {
+	obj := &OxmIdInPhyPortMasked{
+		OxmId: NewOxmId(2147484424),
+	}
+	return obj
+}
+func (self *OxmIdInPhyPortMasked) GetOXMName() string {
+	return "in_phy_port_masked"
+}
+
+func (self *OxmIdInPhyPortMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdInPortMasked struct {
+	*OxmId
+}
+
+type IOxmIdInPortMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdInPortMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdInPortMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdInPortMasked, error) {
+	_oxmidinportmasked := &OxmIdInPortMasked{OxmId: parent}
+	return _oxmidinportmasked, nil
+}
+
+func NewOxmIdInPortMasked() *OxmIdInPortMasked {
+	obj := &OxmIdInPortMasked{
+		OxmId: NewOxmId(2147483912),
+	}
+	return obj
+}
+func (self *OxmIdInPortMasked) GetOXMName() string {
+	return "in_port_masked"
+}
+
+func (self *OxmIdInPortMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpDscp struct {
+	*OxmId
+}
+
+type IOxmIdIpDscp interface {
+	IOxmId
+}
+
+func (self *OxmIdIpDscp) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpDscp(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpDscp, error) {
+	_oxmidipdscp := &OxmIdIpDscp{OxmId: parent}
+	return _oxmidipdscp, nil
+}
+
+func NewOxmIdIpDscp() *OxmIdIpDscp {
+	obj := &OxmIdIpDscp{
+		OxmId: NewOxmId(2147487745),
+	}
+	return obj
+}
+func (self *OxmIdIpDscp) GetOXMName() string {
+	return "ip_dscp"
+}
+
+func (self *OxmIdIpDscp) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpDscpMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpDscpMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpDscpMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpDscpMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpDscpMasked, error) {
+	_oxmidipdscpmasked := &OxmIdIpDscpMasked{OxmId: parent}
+	return _oxmidipdscpmasked, nil
+}
+
+func NewOxmIdIpDscpMasked() *OxmIdIpDscpMasked {
+	obj := &OxmIdIpDscpMasked{
+		OxmId: NewOxmId(2147488002),
+	}
+	return obj
+}
+func (self *OxmIdIpDscpMasked) GetOXMName() string {
+	return "ip_dscp_masked"
+}
+
+func (self *OxmIdIpDscpMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpEcn struct {
+	*OxmId
+}
+
+type IOxmIdIpEcn interface {
+	IOxmId
+}
+
+func (self *OxmIdIpEcn) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpEcn(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpEcn, error) {
+	_oxmidipecn := &OxmIdIpEcn{OxmId: parent}
+	return _oxmidipecn, nil
+}
+
+func NewOxmIdIpEcn() *OxmIdIpEcn {
+	obj := &OxmIdIpEcn{
+		OxmId: NewOxmId(2147488257),
+	}
+	return obj
+}
+func (self *OxmIdIpEcn) GetOXMName() string {
+	return "ip_ecn"
+}
+
+func (self *OxmIdIpEcn) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpEcnMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpEcnMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpEcnMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpEcnMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpEcnMasked, error) {
+	_oxmidipecnmasked := &OxmIdIpEcnMasked{OxmId: parent}
+	return _oxmidipecnmasked, nil
+}
+
+func NewOxmIdIpEcnMasked() *OxmIdIpEcnMasked {
+	obj := &OxmIdIpEcnMasked{
+		OxmId: NewOxmId(2147488514),
+	}
+	return obj
+}
+func (self *OxmIdIpEcnMasked) GetOXMName() string {
+	return "ip_ecn_masked"
+}
+
+func (self *OxmIdIpEcnMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpProto struct {
+	*OxmId
+}
+
+type IOxmIdIpProto interface {
+	IOxmId
+}
+
+func (self *OxmIdIpProto) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpProto(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpProto, error) {
+	_oxmidipproto := &OxmIdIpProto{OxmId: parent}
+	return _oxmidipproto, nil
+}
+
+func NewOxmIdIpProto() *OxmIdIpProto {
+	obj := &OxmIdIpProto{
+		OxmId: NewOxmId(2147488769),
+	}
+	return obj
+}
+func (self *OxmIdIpProto) GetOXMName() string {
+	return "ip_proto"
+}
+
+func (self *OxmIdIpProto) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpProtoMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpProtoMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpProtoMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpProtoMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpProtoMasked, error) {
+	_oxmidipprotomasked := &OxmIdIpProtoMasked{OxmId: parent}
+	return _oxmidipprotomasked, nil
+}
+
+func NewOxmIdIpProtoMasked() *OxmIdIpProtoMasked {
+	obj := &OxmIdIpProtoMasked{
+		OxmId: NewOxmId(2147489026),
+	}
+	return obj
+}
+func (self *OxmIdIpProtoMasked) GetOXMName() string {
+	return "ip_proto_masked"
+}
+
+func (self *OxmIdIpProtoMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv4Dst struct {
+	*OxmId
+}
+
+type IOxmIdIpv4Dst interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv4Dst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv4Dst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv4Dst, error) {
+	_oxmidipv4dst := &OxmIdIpv4Dst{OxmId: parent}
+	return _oxmidipv4dst, nil
+}
+
+func NewOxmIdIpv4Dst() *OxmIdIpv4Dst {
+	obj := &OxmIdIpv4Dst{
+		OxmId: NewOxmId(2147489796),
+	}
+	return obj
+}
+func (self *OxmIdIpv4Dst) GetOXMName() string {
+	return "ipv4_dst"
+}
+
+func (self *OxmIdIpv4Dst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv4DstMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv4DstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv4DstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv4DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv4DstMasked, error) {
+	_oxmidipv4dstmasked := &OxmIdIpv4DstMasked{OxmId: parent}
+	return _oxmidipv4dstmasked, nil
+}
+
+func NewOxmIdIpv4DstMasked() *OxmIdIpv4DstMasked {
+	obj := &OxmIdIpv4DstMasked{
+		OxmId: NewOxmId(2147490056),
+	}
+	return obj
+}
+func (self *OxmIdIpv4DstMasked) GetOXMName() string {
+	return "ipv4_dst_masked"
+}
+
+func (self *OxmIdIpv4DstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv4Src struct {
+	*OxmId
+}
+
+type IOxmIdIpv4Src interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv4Src) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv4Src(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv4Src, error) {
+	_oxmidipv4src := &OxmIdIpv4Src{OxmId: parent}
+	return _oxmidipv4src, nil
+}
+
+func NewOxmIdIpv4Src() *OxmIdIpv4Src {
+	obj := &OxmIdIpv4Src{
+		OxmId: NewOxmId(2147489284),
+	}
+	return obj
+}
+func (self *OxmIdIpv4Src) GetOXMName() string {
+	return "ipv4_src"
+}
+
+func (self *OxmIdIpv4Src) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv4SrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv4SrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv4SrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv4SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv4SrcMasked, error) {
+	_oxmidipv4srcmasked := &OxmIdIpv4SrcMasked{OxmId: parent}
+	return _oxmidipv4srcmasked, nil
+}
+
+func NewOxmIdIpv4SrcMasked() *OxmIdIpv4SrcMasked {
+	obj := &OxmIdIpv4SrcMasked{
+		OxmId: NewOxmId(2147489544),
+	}
+	return obj
+}
+func (self *OxmIdIpv4SrcMasked) GetOXMName() string {
+	return "ipv4_src_masked"
+}
+
+func (self *OxmIdIpv4SrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6Exthdr struct {
+	*OxmId
+}
+
+type IOxmIdIpv6Exthdr interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6Exthdr) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6Exthdr(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6Exthdr, error) {
+	_oxmidipv6exthdr := &OxmIdIpv6Exthdr{OxmId: parent}
+	return _oxmidipv6exthdr, nil
+}
+
+func NewOxmIdIpv6Exthdr() *OxmIdIpv6Exthdr {
+	obj := &OxmIdIpv6Exthdr{
+		OxmId: NewOxmId(2147503618),
+	}
+	return obj
+}
+func (self *OxmIdIpv6Exthdr) GetOXMName() string {
+	return "ipv6_exthdr"
+}
+
+func (self *OxmIdIpv6Exthdr) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6ExthdrMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv6ExthdrMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6ExthdrMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6ExthdrMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6ExthdrMasked, error) {
+	_oxmidipv6exthdrmasked := &OxmIdIpv6ExthdrMasked{OxmId: parent}
+	return _oxmidipv6exthdrmasked, nil
+}
+
+func NewOxmIdIpv6ExthdrMasked() *OxmIdIpv6ExthdrMasked {
+	obj := &OxmIdIpv6ExthdrMasked{
+		OxmId: NewOxmId(2147503876),
+	}
+	return obj
+}
+func (self *OxmIdIpv6ExthdrMasked) GetOXMName() string {
+	return "ipv6_exthdr_masked"
+}
+
+func (self *OxmIdIpv6ExthdrMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6Flabel struct {
+	*OxmId
+}
+
+type IOxmIdIpv6Flabel interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6Flabel) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6Flabel(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6Flabel, error) {
+	_oxmidipv6flabel := &OxmIdIpv6Flabel{OxmId: parent}
+	return _oxmidipv6flabel, nil
+}
+
+func NewOxmIdIpv6Flabel() *OxmIdIpv6Flabel {
+	obj := &OxmIdIpv6Flabel{
+		OxmId: NewOxmId(2147497988),
+	}
+	return obj
+}
+func (self *OxmIdIpv6Flabel) GetOXMName() string {
+	return "ipv6_flabel"
+}
+
+func (self *OxmIdIpv6Flabel) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6FlabelMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv6FlabelMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6FlabelMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6FlabelMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6FlabelMasked, error) {
+	_oxmidipv6flabelmasked := &OxmIdIpv6FlabelMasked{OxmId: parent}
+	return _oxmidipv6flabelmasked, nil
+}
+
+func NewOxmIdIpv6FlabelMasked() *OxmIdIpv6FlabelMasked {
+	obj := &OxmIdIpv6FlabelMasked{
+		OxmId: NewOxmId(2147498248),
+	}
+	return obj
+}
+func (self *OxmIdIpv6FlabelMasked) GetOXMName() string {
+	return "ipv6_flabel_masked"
+}
+
+func (self *OxmIdIpv6FlabelMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6NdSll struct {
+	*OxmId
+}
+
+type IOxmIdIpv6NdSll interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6NdSll) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6NdSll(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6NdSll, error) {
+	_oxmidipv6ndsll := &OxmIdIpv6NdSll{OxmId: parent}
+	return _oxmidipv6ndsll, nil
+}
+
+func NewOxmIdIpv6NdSll() *OxmIdIpv6NdSll {
+	obj := &OxmIdIpv6NdSll{
+		OxmId: NewOxmId(2147500038),
+	}
+	return obj
+}
+func (self *OxmIdIpv6NdSll) GetOXMName() string {
+	return "ipv6_nd_sll"
+}
+
+func (self *OxmIdIpv6NdSll) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6NdSllMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv6NdSllMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6NdSllMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6NdSllMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6NdSllMasked, error) {
+	_oxmidipv6ndsllmasked := &OxmIdIpv6NdSllMasked{OxmId: parent}
+	return _oxmidipv6ndsllmasked, nil
+}
+
+func NewOxmIdIpv6NdSllMasked() *OxmIdIpv6NdSllMasked {
+	obj := &OxmIdIpv6NdSllMasked{
+		OxmId: NewOxmId(2147500300),
+	}
+	return obj
+}
+func (self *OxmIdIpv6NdSllMasked) GetOXMName() string {
+	return "ipv6_nd_sll_masked"
+}
+
+func (self *OxmIdIpv6NdSllMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6NdTarget struct {
+	*OxmId
+}
+
+type IOxmIdIpv6NdTarget interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6NdTarget) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6NdTarget(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6NdTarget, error) {
+	_oxmidipv6ndtarget := &OxmIdIpv6NdTarget{OxmId: parent}
+	return _oxmidipv6ndtarget, nil
+}
+
+func NewOxmIdIpv6NdTarget() *OxmIdIpv6NdTarget {
+	obj := &OxmIdIpv6NdTarget{
+		OxmId: NewOxmId(2147499536),
+	}
+	return obj
+}
+func (self *OxmIdIpv6NdTarget) GetOXMName() string {
+	return "ipv6_nd_target"
+}
+
+func (self *OxmIdIpv6NdTarget) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6NdTargetMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv6NdTargetMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6NdTargetMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6NdTargetMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6NdTargetMasked, error) {
+	_oxmidipv6ndtargetmasked := &OxmIdIpv6NdTargetMasked{OxmId: parent}
+	return _oxmidipv6ndtargetmasked, nil
+}
+
+func NewOxmIdIpv6NdTargetMasked() *OxmIdIpv6NdTargetMasked {
+	obj := &OxmIdIpv6NdTargetMasked{
+		OxmId: NewOxmId(2147499808),
+	}
+	return obj
+}
+func (self *OxmIdIpv6NdTargetMasked) GetOXMName() string {
+	return "ipv6_nd_target_masked"
+}
+
+func (self *OxmIdIpv6NdTargetMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6NdTll struct {
+	*OxmId
+}
+
+type IOxmIdIpv6NdTll interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6NdTll) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6NdTll(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6NdTll, error) {
+	_oxmidipv6ndtll := &OxmIdIpv6NdTll{OxmId: parent}
+	return _oxmidipv6ndtll, nil
+}
+
+func NewOxmIdIpv6NdTll() *OxmIdIpv6NdTll {
+	obj := &OxmIdIpv6NdTll{
+		OxmId: NewOxmId(2147500550),
+	}
+	return obj
+}
+func (self *OxmIdIpv6NdTll) GetOXMName() string {
+	return "ipv6_nd_tll"
+}
+
+func (self *OxmIdIpv6NdTll) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdIpv6NdTllMasked struct {
+	*OxmId
+}
+
+type IOxmIdIpv6NdTllMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdIpv6NdTllMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdIpv6NdTllMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv6NdTllMasked, error) {
+	_oxmidipv6ndtllmasked := &OxmIdIpv6NdTllMasked{OxmId: parent}
+	return _oxmidipv6ndtllmasked, nil
+}
+
+func NewOxmIdIpv6NdTllMasked() *OxmIdIpv6NdTllMasked {
+	obj := &OxmIdIpv6NdTllMasked{
+		OxmId: NewOxmId(2147500812),
+	}
+	return obj
+}
+func (self *OxmIdIpv6NdTllMasked) GetOXMName() string {
+	return "ipv6_nd_tll_masked"
+}
+
+func (self *OxmIdIpv6NdTllMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMetadata struct {
+	*OxmId
+}
+
+type IOxmIdMetadata interface {
+	IOxmId
+}
+
+func (self *OxmIdMetadata) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMetadata(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMetadata, error) {
+	_oxmidmetadata := &OxmIdMetadata{OxmId: parent}
+	return _oxmidmetadata, nil
+}
+
+func NewOxmIdMetadata() *OxmIdMetadata {
+	obj := &OxmIdMetadata{
+		OxmId: NewOxmId(2147484680),
+	}
+	return obj
+}
+func (self *OxmIdMetadata) GetOXMName() string {
+	return "metadata"
+}
+
+func (self *OxmIdMetadata) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMetadataMasked struct {
+	*OxmId
+}
+
+type IOxmIdMetadataMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdMetadataMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMetadataMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMetadataMasked, error) {
+	_oxmidmetadatamasked := &OxmIdMetadataMasked{OxmId: parent}
+	return _oxmidmetadatamasked, nil
+}
+
+func NewOxmIdMetadataMasked() *OxmIdMetadataMasked {
+	obj := &OxmIdMetadataMasked{
+		OxmId: NewOxmId(2147484944),
+	}
+	return obj
+}
+func (self *OxmIdMetadataMasked) GetOXMName() string {
+	return "metadata_masked"
+}
+
+func (self *OxmIdMetadataMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMplsBos struct {
+	*OxmId
+}
+
+type IOxmIdMplsBos interface {
+	IOxmId
+}
+
+func (self *OxmIdMplsBos) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMplsBos(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMplsBos, error) {
+	_oxmidmplsbos := &OxmIdMplsBos{OxmId: parent}
+	return _oxmidmplsbos, nil
+}
+
+func NewOxmIdMplsBos() *OxmIdMplsBos {
+	obj := &OxmIdMplsBos{
+		OxmId: NewOxmId(2147502081),
+	}
+	return obj
+}
+func (self *OxmIdMplsBos) GetOXMName() string {
+	return "mpls_bos"
+}
+
+func (self *OxmIdMplsBos) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMplsBosMasked struct {
+	*OxmId
+}
+
+type IOxmIdMplsBosMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdMplsBosMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMplsBosMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMplsBosMasked, error) {
+	_oxmidmplsbosmasked := &OxmIdMplsBosMasked{OxmId: parent}
+	return _oxmidmplsbosmasked, nil
+}
+
+func NewOxmIdMplsBosMasked() *OxmIdMplsBosMasked {
+	obj := &OxmIdMplsBosMasked{
+		OxmId: NewOxmId(2147502338),
+	}
+	return obj
+}
+func (self *OxmIdMplsBosMasked) GetOXMName() string {
+	return "mpls_bos_masked"
+}
+
+func (self *OxmIdMplsBosMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMplsLabel struct {
+	*OxmId
+}
+
+type IOxmIdMplsLabel interface {
+	IOxmId
+}
+
+func (self *OxmIdMplsLabel) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMplsLabel(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMplsLabel, error) {
+	_oxmidmplslabel := &OxmIdMplsLabel{OxmId: parent}
+	return _oxmidmplslabel, nil
+}
+
+func NewOxmIdMplsLabel() *OxmIdMplsLabel {
+	obj := &OxmIdMplsLabel{
+		OxmId: NewOxmId(2147501060),
+	}
+	return obj
+}
+func (self *OxmIdMplsLabel) GetOXMName() string {
+	return "mpls_label"
+}
+
+func (self *OxmIdMplsLabel) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMplsLabelMasked struct {
+	*OxmId
+}
+
+type IOxmIdMplsLabelMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdMplsLabelMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMplsLabelMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMplsLabelMasked, error) {
+	_oxmidmplslabelmasked := &OxmIdMplsLabelMasked{OxmId: parent}
+	return _oxmidmplslabelmasked, nil
+}
+
+func NewOxmIdMplsLabelMasked() *OxmIdMplsLabelMasked {
+	obj := &OxmIdMplsLabelMasked{
+		OxmId: NewOxmId(2147501320),
+	}
+	return obj
+}
+func (self *OxmIdMplsLabelMasked) GetOXMName() string {
+	return "mpls_label_masked"
+}
+
+func (self *OxmIdMplsLabelMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMplsTc struct {
+	*OxmId
+}
+
+type IOxmIdMplsTc interface {
+	IOxmId
+}
+
+func (self *OxmIdMplsTc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMplsTc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMplsTc, error) {
+	_oxmidmplstc := &OxmIdMplsTc{OxmId: parent}
+	return _oxmidmplstc, nil
+}
+
+func NewOxmIdMplsTc() *OxmIdMplsTc {
+	obj := &OxmIdMplsTc{
+		OxmId: NewOxmId(2147501569),
+	}
+	return obj
+}
+func (self *OxmIdMplsTc) GetOXMName() string {
+	return "mpls_tc"
+}
+
+func (self *OxmIdMplsTc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdMplsTcMasked struct {
+	*OxmId
+}
+
+type IOxmIdMplsTcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdMplsTcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdMplsTcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdMplsTcMasked, error) {
+	_oxmidmplstcmasked := &OxmIdMplsTcMasked{OxmId: parent}
+	return _oxmidmplstcmasked, nil
+}
+
+func NewOxmIdMplsTcMasked() *OxmIdMplsTcMasked {
+	obj := &OxmIdMplsTcMasked{
+		OxmId: NewOxmId(2147501826),
+	}
+	return obj
+}
+func (self *OxmIdMplsTcMasked) GetOXMName() string {
+	return "mpls_tc_masked"
+}
+
+func (self *OxmIdMplsTcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdOvsTcpFlags struct {
+	*OxmId
+	ExperimenterId uint32
+}
+
+type IOxmIdOvsTcpFlags interface {
+	IOxmId
+	GetExperimenterId() uint32
+}
+
+func (self *OxmIdOvsTcpFlags) GetExperimenterId() uint32 {
+	return self.ExperimenterId
+}
+
+func (self *OxmIdOvsTcpFlags) SetExperimenterId(v uint32) {
+	self.ExperimenterId = v
+}
+
+func (self *OxmIdOvsTcpFlags) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint32(uint32(self.ExperimenterId))
+
+	return nil
+}
+
+func DecodeOxmIdOvsTcpFlags(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdOvsTcpFlags, error) {
+	_oxmidovstcpflags := &OxmIdOvsTcpFlags{OxmId: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("OxmIdOvsTcpFlags packet too short: %d < 4", decoder.Length())
+	}
+	_oxmidovstcpflags.ExperimenterId = uint32(decoder.ReadUint32())
+	return _oxmidovstcpflags, nil
+}
+
+func NewOxmIdOvsTcpFlags() *OxmIdOvsTcpFlags {
+	obj := &OxmIdOvsTcpFlags{
+		OxmId: NewOxmId(4294923270),
+	}
+	return obj
+}
+func (self *OxmIdOvsTcpFlags) GetOXMName() string {
+	return "ovs_tcp_flags"
+}
+
+func (self *OxmIdOvsTcpFlags) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdOvsTcpFlagsMasked struct {
+	*OxmId
+	ExperimenterId uint32
+}
+
+type IOxmIdOvsTcpFlagsMasked interface {
+	IOxmId
+	GetExperimenterId() uint32
+}
+
+func (self *OxmIdOvsTcpFlagsMasked) GetExperimenterId() uint32 {
+	return self.ExperimenterId
+}
+
+func (self *OxmIdOvsTcpFlagsMasked) SetExperimenterId(v uint32) {
+	self.ExperimenterId = v
+}
+
+func (self *OxmIdOvsTcpFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint32(uint32(self.ExperimenterId))
+
+	return nil
+}
+
+func DecodeOxmIdOvsTcpFlagsMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdOvsTcpFlagsMasked, error) {
+	_oxmidovstcpflagsmasked := &OxmIdOvsTcpFlagsMasked{OxmId: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("OxmIdOvsTcpFlagsMasked packet too short: %d < 4", decoder.Length())
+	}
+	_oxmidovstcpflagsmasked.ExperimenterId = uint32(decoder.ReadUint32())
+	return _oxmidovstcpflagsmasked, nil
+}
+
+func NewOxmIdOvsTcpFlagsMasked() *OxmIdOvsTcpFlagsMasked {
+	obj := &OxmIdOvsTcpFlagsMasked{
+		OxmId: NewOxmId(4294923528),
+	}
+	return obj
+}
+func (self *OxmIdOvsTcpFlagsMasked) GetOXMName() string {
+	return "ovs_tcp_flags_masked"
+}
+
+func (self *OxmIdOvsTcpFlagsMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdSctpDst struct {
+	*OxmId
+}
+
+type IOxmIdSctpDst interface {
+	IOxmId
+}
+
+func (self *OxmIdSctpDst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdSctpDst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdSctpDst, error) {
+	_oxmidsctpdst := &OxmIdSctpDst{OxmId: parent}
+	return _oxmidsctpdst, nil
+}
+
+func NewOxmIdSctpDst() *OxmIdSctpDst {
+	obj := &OxmIdSctpDst{
+		OxmId: NewOxmId(2147492866),
+	}
+	return obj
+}
+func (self *OxmIdSctpDst) GetOXMName() string {
+	return "sctp_dst"
+}
+
+func (self *OxmIdSctpDst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdSctpDstMasked struct {
+	*OxmId
+}
+
+type IOxmIdSctpDstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdSctpDstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdSctpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdSctpDstMasked, error) {
+	_oxmidsctpdstmasked := &OxmIdSctpDstMasked{OxmId: parent}
+	return _oxmidsctpdstmasked, nil
+}
+
+func NewOxmIdSctpDstMasked() *OxmIdSctpDstMasked {
+	obj := &OxmIdSctpDstMasked{
+		OxmId: NewOxmId(2147493124),
+	}
+	return obj
+}
+func (self *OxmIdSctpDstMasked) GetOXMName() string {
+	return "sctp_dst_masked"
+}
+
+func (self *OxmIdSctpDstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdSctpSrc struct {
+	*OxmId
+}
+
+type IOxmIdSctpSrc interface {
+	IOxmId
+}
+
+func (self *OxmIdSctpSrc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdSctpSrc(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdSctpSrc, error) {
+	_oxmidsctpsrc := &OxmIdSctpSrc{OxmId: parent}
+	return _oxmidsctpsrc, nil
+}
+
+func NewOxmIdSctpSrc() *OxmIdSctpSrc {
+	obj := &OxmIdSctpSrc{
+		OxmId: NewOxmId(2147492354),
+	}
+	return obj
+}
+func (self *OxmIdSctpSrc) GetOXMName() string {
+	return "sctp_src"
+}
+
+func (self *OxmIdSctpSrc) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdSctpSrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdSctpSrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdSctpSrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdSctpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdSctpSrcMasked, error) {
+	_oxmidsctpsrcmasked := &OxmIdSctpSrcMasked{OxmId: parent}
+	return _oxmidsctpsrcmasked, nil
+}
+
+func NewOxmIdSctpSrcMasked() *OxmIdSctpSrcMasked {
+	obj := &OxmIdSctpSrcMasked{
+		OxmId: NewOxmId(2147492612),
+	}
+	return obj
+}
+func (self *OxmIdSctpSrcMasked) GetOXMName() string {
+	return "sctp_src_masked"
+}
+
+func (self *OxmIdSctpSrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunnelId struct {
+	*OxmId
+}
+
+type IOxmIdTunnelId interface {
+	IOxmId
+}
+
+func (self *OxmIdTunnelId) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunnelId(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunnelId, error) {
+	_oxmidtunnelid := &OxmIdTunnelId{OxmId: parent}
+	return _oxmidtunnelid, nil
+}
+
+func NewOxmIdTunnelId() *OxmIdTunnelId {
+	obj := &OxmIdTunnelId{
+		OxmId: NewOxmId(2147503112),
+	}
+	return obj
+}
+func (self *OxmIdTunnelId) GetOXMName() string {
+	return "tunnel_id"
+}
+
+func (self *OxmIdTunnelId) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunnelIdMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunnelIdMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunnelIdMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunnelIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunnelIdMasked, error) {
+	_oxmidtunnelidmasked := &OxmIdTunnelIdMasked{OxmId: parent}
+	return _oxmidtunnelidmasked, nil
+}
+
+func NewOxmIdTunnelIdMasked() *OxmIdTunnelIdMasked {
+	obj := &OxmIdTunnelIdMasked{
+		OxmId: NewOxmId(2147503376),
+	}
+	return obj
+}
+func (self *OxmIdTunnelIdMasked) GetOXMName() string {
+	return "tunnel_id_masked"
+}
+
+func (self *OxmIdTunnelIdMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunnelIpv4Dst struct {
+	*OxmId
+}
+
+type IOxmIdTunnelIpv4Dst interface {
+	IOxmId
+}
+
+func (self *OxmIdTunnelIpv4Dst) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunnelIpv4Dst(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunnelIpv4Dst, error) {
+	_oxmidtunnelipv4dst := &OxmIdTunnelIpv4Dst{OxmId: parent}
+	return _oxmidtunnelipv4dst, nil
+}
+
+func NewOxmIdTunnelIpv4Dst() *OxmIdTunnelIpv4Dst {
+	obj := &OxmIdTunnelIpv4Dst{
+		OxmId: NewOxmId(81924),
+	}
+	return obj
+}
+func (self *OxmIdTunnelIpv4Dst) GetOXMName() string {
+	return "tunnel_ipv4_dst"
+}
+
+func (self *OxmIdTunnelIpv4Dst) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunnelIpv4DstMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunnelIpv4DstMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunnelIpv4DstMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunnelIpv4DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunnelIpv4DstMasked, error) {
+	_oxmidtunnelipv4dstmasked := &OxmIdTunnelIpv4DstMasked{OxmId: parent}
+	return _oxmidtunnelipv4dstmasked, nil
+}
+
+func NewOxmIdTunnelIpv4DstMasked() *OxmIdTunnelIpv4DstMasked {
+	obj := &OxmIdTunnelIpv4DstMasked{
+		OxmId: NewOxmId(82184),
+	}
+	return obj
+}
+func (self *OxmIdTunnelIpv4DstMasked) GetOXMName() string {
+	return "tunnel_ipv4_dst_masked"
+}
+
+func (self *OxmIdTunnelIpv4DstMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunnelIpv4Src struct {
+	*OxmId
+}
+
+type IOxmIdTunnelIpv4Src interface {
+	IOxmId
+}
+
+func (self *OxmIdTunnelIpv4Src) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunnelIpv4Src(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunnelIpv4Src, error) {
+	_oxmidtunnelipv4src := &OxmIdTunnelIpv4Src{OxmId: parent}
+	return _oxmidtunnelipv4src, nil
+}
+
+func NewOxmIdTunnelIpv4Src() *OxmIdTunnelIpv4Src {
+	obj := &OxmIdTunnelIpv4Src{
+		OxmId: NewOxmId(81412),
+	}
+	return obj
+}
+func (self *OxmIdTunnelIpv4Src) GetOXMName() string {
+	return "tunnel_ipv4_src"
+}
+
+func (self *OxmIdTunnelIpv4Src) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdTunnelIpv4SrcMasked struct {
+	*OxmId
+}
+
+type IOxmIdTunnelIpv4SrcMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdTunnelIpv4SrcMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdTunnelIpv4SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunnelIpv4SrcMasked, error) {
+	_oxmidtunnelipv4srcmasked := &OxmIdTunnelIpv4SrcMasked{OxmId: parent}
+	return _oxmidtunnelipv4srcmasked, nil
+}
+
+func NewOxmIdTunnelIpv4SrcMasked() *OxmIdTunnelIpv4SrcMasked {
+	obj := &OxmIdTunnelIpv4SrcMasked{
+		OxmId: NewOxmId(81672),
+	}
+	return obj
+}
+func (self *OxmIdTunnelIpv4SrcMasked) GetOXMName() string {
+	return "tunnel_ipv4_src_masked"
+}
+
+func (self *OxmIdTunnelIpv4SrcMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdVlanPcp struct {
+	*OxmId
+}
+
+type IOxmIdVlanPcp interface {
+	IOxmId
+}
+
+func (self *OxmIdVlanPcp) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdVlanPcp(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdVlanPcp, error) {
+	_oxmidvlanpcp := &OxmIdVlanPcp{OxmId: parent}
+	return _oxmidvlanpcp, nil
+}
+
+func NewOxmIdVlanPcp() *OxmIdVlanPcp {
+	obj := &OxmIdVlanPcp{
+		OxmId: NewOxmId(2147487233),
+	}
+	return obj
+}
+func (self *OxmIdVlanPcp) GetOXMName() string {
+	return "vlan_pcp"
+}
+
+func (self *OxmIdVlanPcp) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdVlanPcpMasked struct {
+	*OxmId
+}
+
+type IOxmIdVlanPcpMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdVlanPcpMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdVlanPcpMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdVlanPcpMasked, error) {
+	_oxmidvlanpcpmasked := &OxmIdVlanPcpMasked{OxmId: parent}
+	return _oxmidvlanpcpmasked, nil
+}
+
+func NewOxmIdVlanPcpMasked() *OxmIdVlanPcpMasked {
+	obj := &OxmIdVlanPcpMasked{
+		OxmId: NewOxmId(2147487490),
+	}
+	return obj
+}
+func (self *OxmIdVlanPcpMasked) GetOXMName() string {
+	return "vlan_pcp_masked"
+}
+
+func (self *OxmIdVlanPcpMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdVlanVid struct {
+	*OxmId
+}
+
+type IOxmIdVlanVid interface {
+	IOxmId
+}
+
+func (self *OxmIdVlanVid) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdVlanVid(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdVlanVid, error) {
+	_oxmidvlanvid := &OxmIdVlanVid{OxmId: parent}
+	return _oxmidvlanvid, nil
+}
+
+func NewOxmIdVlanVid() *OxmIdVlanVid {
+	obj := &OxmIdVlanVid{
+		OxmId: NewOxmId(2147486722),
+	}
+	return obj
+}
+func (self *OxmIdVlanVid) GetOXMName() string {
+	return "vlan_vid"
+}
+
+func (self *OxmIdVlanVid) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
+type OxmIdVlanVidMasked struct {
+	*OxmId
+}
+
+type IOxmIdVlanVidMasked interface {
+	IOxmId
+}
+
+func (self *OxmIdVlanVidMasked) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.OxmId.Serialize(encoder); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DecodeOxmIdVlanVidMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdVlanVidMasked, error) {
+	_oxmidvlanvidmasked := &OxmIdVlanVidMasked{OxmId: parent}
+	return _oxmidvlanvidmasked, nil
+}
+
+func NewOxmIdVlanVidMasked() *OxmIdVlanVidMasked {
+	obj := &OxmIdVlanVidMasked{
+		OxmId: NewOxmId(2147486980),
+	}
+	return obj
+}
+func (self *OxmIdVlanVidMasked) GetOXMName() string {
+	return "vlan_vid_masked"
+}
+
+func (self *OxmIdVlanVidMasked) MarshalJSON() ([]byte, error) {
+	if self.TypeLen == 0 {
+		return []byte("\"\""), nil
+	} else {
+		return []byte("\"" + self.GetOXMName() + "\""), nil
+	}
+}
+
 type PacketQueue struct {
 	QueueId    uint32
-	Port       PortNo
+	Port       Port
 	Len        uint16
 	Properties []IQueueProp
 }
 
+type IPacketQueue interface {
+	goloxi.Serializable
+	GetQueueId() uint32
+	GetPort() Port
+	GetLen() uint16
+	GetProperties() []IQueueProp
+}
+
+func (self *PacketQueue) GetQueueId() uint32 {
+	return self.QueueId
+}
+
+func (self *PacketQueue) SetQueueId(v uint32) {
+	self.QueueId = v
+}
+
+func (self *PacketQueue) GetPort() Port {
+	return self.Port
+}
+
+func (self *PacketQueue) SetPort(v Port) {
+	self.Port = v
+}
+
+func (self *PacketQueue) GetLen() uint16 {
+	return self.Len
+}
+
+func (self *PacketQueue) SetLen(v uint16) {
+	self.Len = v
+}
+
+func (self *PacketQueue) GetProperties() []IQueueProp {
+	return self.Properties
+}
+
+func (self *PacketQueue) SetProperties(v []IQueueProp) {
+	self.Properties = v
+}
+
 func (self *PacketQueue) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint32(uint32(self.QueueId))
 	self.Port.Serialize(encoder)
 	encoder.PutUint16(uint16(self.Len))
@@ -9363,7 +30757,6 @@ func (self *PacketQueue) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[8:10], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9377,6 +30770,8 @@ func DecodePacketQueue(decoder *goloxi.Decoder) (*PacketQueue, error) {
 	_packetqueue.QueueId = uint32(decoder.ReadUint32())
 	_packetqueue.Port.Decode(decoder)
 	_packetqueue.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_packetqueue.Len), 2+8)
 	decoder.Skip(6)
 
@@ -9385,7 +30780,9 @@ func DecodePacketQueue(decoder *goloxi.Decoder) (*PacketQueue, error) {
 		if err != nil {
 			return nil, err
 		}
-		_packetqueue.Properties = append(_packetqueue.Properties, item)
+		if item != nil {
+			_packetqueue.Properties = append(_packetqueue.Properties, item)
+		}
 	}
 	return _packetqueue, nil
 }
@@ -9396,7 +30793,7 @@ func NewPacketQueue() *PacketQueue {
 }
 
 type PortDesc struct {
-	PortNo     PortNo
+	PortNo     Port
 	HwAddr     net.HardwareAddr
 	Name       string
 	Config     PortConfig
@@ -9409,7 +30806,111 @@ type PortDesc struct {
 	MaxSpeed   uint32
 }
 
+type IPortDesc interface {
+	goloxi.Serializable
+	GetPortNo() Port
+	GetHwAddr() net.HardwareAddr
+	GetName() string
+	GetConfig() PortConfig
+	GetState() PortState
+	GetCurr() PortFeatures
+	GetAdvertised() PortFeatures
+	GetSupported() PortFeatures
+	GetPeer() PortFeatures
+	GetCurrSpeed() uint32
+	GetMaxSpeed() uint32
+}
+
+func (self *PortDesc) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *PortDesc) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *PortDesc) GetHwAddr() net.HardwareAddr {
+	return self.HwAddr
+}
+
+func (self *PortDesc) SetHwAddr(v net.HardwareAddr) {
+	self.HwAddr = v
+}
+
+func (self *PortDesc) GetName() string {
+	return self.Name
+}
+
+func (self *PortDesc) SetName(v string) {
+	self.Name = v
+}
+
+func (self *PortDesc) GetConfig() PortConfig {
+	return self.Config
+}
+
+func (self *PortDesc) SetConfig(v PortConfig) {
+	self.Config = v
+}
+
+func (self *PortDesc) GetState() PortState {
+	return self.State
+}
+
+func (self *PortDesc) SetState(v PortState) {
+	self.State = v
+}
+
+func (self *PortDesc) GetCurr() PortFeatures {
+	return self.Curr
+}
+
+func (self *PortDesc) SetCurr(v PortFeatures) {
+	self.Curr = v
+}
+
+func (self *PortDesc) GetAdvertised() PortFeatures {
+	return self.Advertised
+}
+
+func (self *PortDesc) SetAdvertised(v PortFeatures) {
+	self.Advertised = v
+}
+
+func (self *PortDesc) GetSupported() PortFeatures {
+	return self.Supported
+}
+
+func (self *PortDesc) SetSupported(v PortFeatures) {
+	self.Supported = v
+}
+
+func (self *PortDesc) GetPeer() PortFeatures {
+	return self.Peer
+}
+
+func (self *PortDesc) SetPeer(v PortFeatures) {
+	self.Peer = v
+}
+
+func (self *PortDesc) GetCurrSpeed() uint32 {
+	return self.CurrSpeed
+}
+
+func (self *PortDesc) SetCurrSpeed(v uint32) {
+	self.CurrSpeed = v
+}
+
+func (self *PortDesc) GetMaxSpeed() uint32 {
+	return self.MaxSpeed
+}
+
+func (self *PortDesc) SetMaxSpeed(v uint32) {
+	self.MaxSpeed = v
+}
+
 func (self *PortDesc) Serialize(encoder *goloxi.Encoder) error {
+
 	self.PortNo.Serialize(encoder)
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.Write(self.HwAddr)
@@ -9454,7 +30955,7 @@ func NewPortDesc() *PortDesc {
 }
 
 type PortStatsEntry struct {
-	PortNo       PortNo
+	PortNo       Port
 	RxPackets    uint64
 	TxPackets    uint64
 	RxBytes      uint64
@@ -9471,7 +30972,147 @@ type PortStatsEntry struct {
 	DurationNsec uint32
 }
 
+type IPortStatsEntry interface {
+	goloxi.Serializable
+	GetPortNo() Port
+	GetRxPackets() uint64
+	GetTxPackets() uint64
+	GetRxBytes() uint64
+	GetTxBytes() uint64
+	GetRxDropped() uint64
+	GetTxDropped() uint64
+	GetRxErrors() uint64
+	GetTxErrors() uint64
+	GetRxFrameErr() uint64
+	GetRxOverErr() uint64
+	GetRxCrcErr() uint64
+	GetCollisions() uint64
+	GetDurationSec() uint32
+	GetDurationNsec() uint32
+}
+
+func (self *PortStatsEntry) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *PortStatsEntry) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *PortStatsEntry) GetRxPackets() uint64 {
+	return self.RxPackets
+}
+
+func (self *PortStatsEntry) SetRxPackets(v uint64) {
+	self.RxPackets = v
+}
+
+func (self *PortStatsEntry) GetTxPackets() uint64 {
+	return self.TxPackets
+}
+
+func (self *PortStatsEntry) SetTxPackets(v uint64) {
+	self.TxPackets = v
+}
+
+func (self *PortStatsEntry) GetRxBytes() uint64 {
+	return self.RxBytes
+}
+
+func (self *PortStatsEntry) SetRxBytes(v uint64) {
+	self.RxBytes = v
+}
+
+func (self *PortStatsEntry) GetTxBytes() uint64 {
+	return self.TxBytes
+}
+
+func (self *PortStatsEntry) SetTxBytes(v uint64) {
+	self.TxBytes = v
+}
+
+func (self *PortStatsEntry) GetRxDropped() uint64 {
+	return self.RxDropped
+}
+
+func (self *PortStatsEntry) SetRxDropped(v uint64) {
+	self.RxDropped = v
+}
+
+func (self *PortStatsEntry) GetTxDropped() uint64 {
+	return self.TxDropped
+}
+
+func (self *PortStatsEntry) SetTxDropped(v uint64) {
+	self.TxDropped = v
+}
+
+func (self *PortStatsEntry) GetRxErrors() uint64 {
+	return self.RxErrors
+}
+
+func (self *PortStatsEntry) SetRxErrors(v uint64) {
+	self.RxErrors = v
+}
+
+func (self *PortStatsEntry) GetTxErrors() uint64 {
+	return self.TxErrors
+}
+
+func (self *PortStatsEntry) SetTxErrors(v uint64) {
+	self.TxErrors = v
+}
+
+func (self *PortStatsEntry) GetRxFrameErr() uint64 {
+	return self.RxFrameErr
+}
+
+func (self *PortStatsEntry) SetRxFrameErr(v uint64) {
+	self.RxFrameErr = v
+}
+
+func (self *PortStatsEntry) GetRxOverErr() uint64 {
+	return self.RxOverErr
+}
+
+func (self *PortStatsEntry) SetRxOverErr(v uint64) {
+	self.RxOverErr = v
+}
+
+func (self *PortStatsEntry) GetRxCrcErr() uint64 {
+	return self.RxCrcErr
+}
+
+func (self *PortStatsEntry) SetRxCrcErr(v uint64) {
+	self.RxCrcErr = v
+}
+
+func (self *PortStatsEntry) GetCollisions() uint64 {
+	return self.Collisions
+}
+
+func (self *PortStatsEntry) SetCollisions(v uint64) {
+	self.Collisions = v
+}
+
+func (self *PortStatsEntry) GetDurationSec() uint32 {
+	return self.DurationSec
+}
+
+func (self *PortStatsEntry) SetDurationSec(v uint32) {
+	self.DurationSec = v
+}
+
+func (self *PortStatsEntry) GetDurationNsec() uint32 {
+	return self.DurationNsec
+}
+
+func (self *PortStatsEntry) SetDurationNsec(v uint32) {
+	self.DurationNsec = v
+}
+
 func (self *PortStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	self.PortNo.Serialize(encoder)
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint64(uint64(self.RxPackets))
@@ -9536,11 +31177,20 @@ func (self *QueueProp) GetType() uint16 {
 	return self.Type
 }
 
+func (self *QueueProp) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *QueueProp) GetLen() uint16 {
 	return self.Len
 }
 
+func (self *QueueProp) SetLen(v uint16) {
+	self.Len = v
+}
+
 func (self *QueueProp) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Len))
 
@@ -9554,6 +31204,8 @@ func DecodeQueueProp(decoder *goloxi.Decoder) (IQueueProp, error) {
 	}
 	_queueprop.Type = uint16(decoder.ReadUint16())
 	_queueprop.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_queueprop.Len), 2+2)
 
 	switch _queueprop.Type {
@@ -9586,6 +31238,10 @@ type IQueuePropExperimenter interface {
 
 func (self *QueuePropExperimenter) GetExperimenter() uint32 {
 	return self.Experimenter
+}
+
+func (self *QueuePropExperimenter) SetExperimenter(v uint32) {
+	self.Experimenter = v
 }
 
 func (self *QueuePropExperimenter) Serialize(encoder *goloxi.Encoder) error {
@@ -9624,6 +31280,19 @@ type QueuePropMaxRate struct {
 	Rate uint16
 }
 
+type IQueuePropMaxRate interface {
+	IQueueProp
+	GetRate() uint16
+}
+
+func (self *QueuePropMaxRate) GetRate() uint16 {
+	return self.Rate
+}
+
+func (self *QueuePropMaxRate) SetRate(v uint16) {
+	self.Rate = v
+}
+
 func (self *QueuePropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.QueueProp.Serialize(encoder); err != nil {
 		return err
@@ -9633,7 +31302,6 @@ func (self *QueuePropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Rate))
 	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9662,6 +31330,19 @@ type QueuePropMinRate struct {
 	Rate uint16
 }
 
+type IQueuePropMinRate interface {
+	IQueueProp
+	GetRate() uint16
+}
+
+func (self *QueuePropMinRate) GetRate() uint16 {
+	return self.Rate
+}
+
+func (self *QueuePropMinRate) SetRate(v uint16) {
+	self.Rate = v
+}
+
 func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.QueueProp.Serialize(encoder); err != nil {
 		return err
@@ -9671,7 +31352,6 @@ func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Rate))
 	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9696,7 +31376,7 @@ func NewQueuePropMinRate() *QueuePropMinRate {
 }
 
 type QueueStatsEntry struct {
-	PortNo       PortNo
+	PortNo       Port
 	QueueId      uint32
 	TxBytes      uint64
 	TxPackets    uint64
@@ -9705,7 +31385,75 @@ type QueueStatsEntry struct {
 	DurationNsec uint32
 }
 
+type IQueueStatsEntry interface {
+	goloxi.Serializable
+	GetPortNo() Port
+	GetQueueId() uint32
+	GetTxBytes() uint64
+	GetTxPackets() uint64
+	GetTxErrors() uint64
+	GetDurationSec() uint32
+	GetDurationNsec() uint32
+}
+
+func (self *QueueStatsEntry) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *QueueStatsEntry) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *QueueStatsEntry) GetQueueId() uint32 {
+	return self.QueueId
+}
+
+func (self *QueueStatsEntry) SetQueueId(v uint32) {
+	self.QueueId = v
+}
+
+func (self *QueueStatsEntry) GetTxBytes() uint64 {
+	return self.TxBytes
+}
+
+func (self *QueueStatsEntry) SetTxBytes(v uint64) {
+	self.TxBytes = v
+}
+
+func (self *QueueStatsEntry) GetTxPackets() uint64 {
+	return self.TxPackets
+}
+
+func (self *QueueStatsEntry) SetTxPackets(v uint64) {
+	self.TxPackets = v
+}
+
+func (self *QueueStatsEntry) GetTxErrors() uint64 {
+	return self.TxErrors
+}
+
+func (self *QueueStatsEntry) SetTxErrors(v uint64) {
+	self.TxErrors = v
+}
+
+func (self *QueueStatsEntry) GetDurationSec() uint32 {
+	return self.DurationSec
+}
+
+func (self *QueueStatsEntry) SetDurationSec(v uint32) {
+	self.DurationSec = v
+}
+
+func (self *QueueStatsEntry) GetDurationNsec() uint32 {
+	return self.DurationNsec
+}
+
+func (self *QueueStatsEntry) SetDurationNsec(v uint32) {
+	self.DurationNsec = v
+}
+
 func (self *QueueStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	self.PortNo.Serialize(encoder)
 	encoder.PutUint32(uint32(self.QueueId))
 	encoder.PutUint64(uint64(self.TxBytes))
@@ -9752,11 +31500,20 @@ func (self *TableFeatureProp) GetType() uint16 {
 	return self.Type
 }
 
+func (self *TableFeatureProp) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *TableFeatureProp) GetLength() uint16 {
 	return self.Length
 }
 
+func (self *TableFeatureProp) SetLength(v uint16) {
+	self.Length = v
+}
+
 func (self *TableFeatureProp) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Length))
 
@@ -9770,6 +31527,8 @@ func DecodeTableFeatureProp(decoder *goloxi.Decoder) (ITableFeatureProp, error) 
 	}
 	_tablefeatureprop.Type = uint16(decoder.ReadUint16())
 	_tablefeatureprop.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_tablefeatureprop.Length), 2+2)
 
 	switch _tablefeatureprop.Type {
@@ -9821,6 +31580,19 @@ type TableFeaturePropApplyActions struct {
 	ActionIds []IActionId
 }
 
+type ITableFeaturePropApplyActions interface {
+	ITableFeatureProp
+	GetActionIds() []IActionId
+}
+
+func (self *TableFeaturePropApplyActions) GetActionIds() []IActionId {
+	return self.ActionIds
+}
+
+func (self *TableFeaturePropApplyActions) SetActionIds(v []IActionId) {
+	self.ActionIds = v
+}
+
 func (self *TableFeaturePropApplyActions) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -9834,7 +31606,6 @@ func (self *TableFeaturePropApplyActions) Serialize(encoder *goloxi.Encoder) err
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9842,17 +31613,17 @@ func (self *TableFeaturePropApplyActions) Serialize(encoder *goloxi.Encoder) err
 
 func DecodeTableFeaturePropApplyActions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplyActions, error) {
 	_tablefeaturepropapplyactions := &TableFeaturePropApplyActions{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeActionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropapplyactions.ActionIds = append(_tablefeaturepropapplyactions.ActionIds, item)
+		if item != nil {
+			_tablefeaturepropapplyactions.ActionIds = append(_tablefeaturepropapplyactions.ActionIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropapplyactions, nil
 }
 
@@ -9868,6 +31639,19 @@ type TableFeaturePropApplyActionsMiss struct {
 	ActionIds []IActionId
 }
 
+type ITableFeaturePropApplyActionsMiss interface {
+	ITableFeatureProp
+	GetActionIds() []IActionId
+}
+
+func (self *TableFeaturePropApplyActionsMiss) GetActionIds() []IActionId {
+	return self.ActionIds
+}
+
+func (self *TableFeaturePropApplyActionsMiss) SetActionIds(v []IActionId) {
+	self.ActionIds = v
+}
+
 func (self *TableFeaturePropApplyActionsMiss) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -9881,7 +31665,6 @@ func (self *TableFeaturePropApplyActionsMiss) Serialize(encoder *goloxi.Encoder)
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9889,17 +31672,17 @@ func (self *TableFeaturePropApplyActionsMiss) Serialize(encoder *goloxi.Encoder)
 
 func DecodeTableFeaturePropApplyActionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplyActionsMiss, error) {
 	_tablefeaturepropapplyactionsmiss := &TableFeaturePropApplyActionsMiss{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeActionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropapplyactionsmiss.ActionIds = append(_tablefeaturepropapplyactionsmiss.ActionIds, item)
+		if item != nil {
+			_tablefeaturepropapplyactionsmiss.ActionIds = append(_tablefeaturepropapplyactionsmiss.ActionIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropapplyactionsmiss, nil
 }
 
@@ -9915,6 +31698,19 @@ type TableFeaturePropApplySetfield struct {
 	OxmIds []*Uint32
 }
 
+type ITableFeaturePropApplySetfield interface {
+	ITableFeatureProp
+	GetOxmIds() []*Uint32
+}
+
+func (self *TableFeaturePropApplySetfield) GetOxmIds() []*Uint32 {
+	return self.OxmIds
+}
+
+func (self *TableFeaturePropApplySetfield) SetOxmIds(v []*Uint32) {
+	self.OxmIds = v
+}
+
 func (self *TableFeaturePropApplySetfield) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -9928,7 +31724,6 @@ func (self *TableFeaturePropApplySetfield) Serialize(encoder *goloxi.Encoder) er
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9936,17 +31731,17 @@ func (self *TableFeaturePropApplySetfield) Serialize(encoder *goloxi.Encoder) er
 
 func DecodeTableFeaturePropApplySetfield(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplySetfield, error) {
 	_tablefeaturepropapplysetfield := &TableFeaturePropApplySetfield{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropapplysetfield.OxmIds = append(_tablefeaturepropapplysetfield.OxmIds, item)
+		if item != nil {
+			_tablefeaturepropapplysetfield.OxmIds = append(_tablefeaturepropapplysetfield.OxmIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropapplysetfield, nil
 }
 
@@ -9962,6 +31757,19 @@ type TableFeaturePropApplySetfieldMiss struct {
 	OxmIds []*Uint32
 }
 
+type ITableFeaturePropApplySetfieldMiss interface {
+	ITableFeatureProp
+	GetOxmIds() []*Uint32
+}
+
+func (self *TableFeaturePropApplySetfieldMiss) GetOxmIds() []*Uint32 {
+	return self.OxmIds
+}
+
+func (self *TableFeaturePropApplySetfieldMiss) SetOxmIds(v []*Uint32) {
+	self.OxmIds = v
+}
+
 func (self *TableFeaturePropApplySetfieldMiss) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -9975,7 +31783,6 @@ func (self *TableFeaturePropApplySetfieldMiss) Serialize(encoder *goloxi.Encoder
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9983,17 +31790,17 @@ func (self *TableFeaturePropApplySetfieldMiss) Serialize(encoder *goloxi.Encoder
 
 func DecodeTableFeaturePropApplySetfieldMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropApplySetfieldMiss, error) {
 	_tablefeaturepropapplysetfieldmiss := &TableFeaturePropApplySetfieldMiss{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropapplysetfieldmiss.OxmIds = append(_tablefeaturepropapplysetfieldmiss.OxmIds, item)
+		if item != nil {
+			_tablefeaturepropapplysetfieldmiss.OxmIds = append(_tablefeaturepropapplysetfieldmiss.OxmIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropapplysetfieldmiss, nil
 }
 
@@ -10020,8 +31827,16 @@ func (self *TableFeaturePropExperimenter) GetExperimenter() uint32 {
 	return self.Experimenter
 }
 
+func (self *TableFeaturePropExperimenter) SetExperimenter(v uint32) {
+	self.Experimenter = v
+}
+
 func (self *TableFeaturePropExperimenter) GetSubtype() uint32 {
 	return self.Subtype
+}
+
+func (self *TableFeaturePropExperimenter) SetSubtype(v uint32) {
+	self.Subtype = v
 }
 
 func (self *TableFeaturePropExperimenter) Serialize(encoder *goloxi.Encoder) error {
@@ -10042,11 +31857,10 @@ func DecodeTableFeaturePropExperimenter(parent *TableFeatureProp, decoder *golox
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("TableFeaturePropExperimenter packet too short: %d < 8", decoder.Length())
 	}
+	defer decoder.SkipAlign()
+
 	_tablefeaturepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
 	_tablefeaturepropexperimenter.Subtype = uint32(decoder.ReadUint32())
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropexperimenter, nil
 }
 
@@ -10074,8 +31888,16 @@ func (self *TableFeaturePropExperimenterMiss) GetExperimenter() uint32 {
 	return self.Experimenter
 }
 
+func (self *TableFeaturePropExperimenterMiss) SetExperimenter(v uint32) {
+	self.Experimenter = v
+}
+
 func (self *TableFeaturePropExperimenterMiss) GetSubtype() uint32 {
 	return self.Subtype
+}
+
+func (self *TableFeaturePropExperimenterMiss) SetSubtype(v uint32) {
+	self.Subtype = v
 }
 
 func (self *TableFeaturePropExperimenterMiss) Serialize(encoder *goloxi.Encoder) error {
@@ -10096,11 +31918,10 @@ func DecodeTableFeaturePropExperimenterMiss(parent *TableFeatureProp, decoder *g
 	if decoder.Length() < 8 {
 		return nil, fmt.Errorf("TableFeaturePropExperimenterMiss packet too short: %d < 8", decoder.Length())
 	}
+	defer decoder.SkipAlign()
+
 	_tablefeaturepropexperimentermiss.Experimenter = uint32(decoder.ReadUint32())
 	_tablefeaturepropexperimentermiss.Subtype = uint32(decoder.ReadUint32())
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropexperimentermiss, nil
 }
 
@@ -10117,6 +31938,19 @@ type TableFeaturePropInstructions struct {
 	InstructionIds []IInstructionId
 }
 
+type ITableFeaturePropInstructions interface {
+	ITableFeatureProp
+	GetInstructionIds() []IInstructionId
+}
+
+func (self *TableFeaturePropInstructions) GetInstructionIds() []IInstructionId {
+	return self.InstructionIds
+}
+
+func (self *TableFeaturePropInstructions) SetInstructionIds(v []IInstructionId) {
+	self.InstructionIds = v
+}
+
 func (self *TableFeaturePropInstructions) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10130,7 +31964,6 @@ func (self *TableFeaturePropInstructions) Serialize(encoder *goloxi.Encoder) err
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10138,17 +31971,17 @@ func (self *TableFeaturePropInstructions) Serialize(encoder *goloxi.Encoder) err
 
 func DecodeTableFeaturePropInstructions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropInstructions, error) {
 	_tablefeaturepropinstructions := &TableFeaturePropInstructions{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeInstructionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropinstructions.InstructionIds = append(_tablefeaturepropinstructions.InstructionIds, item)
+		if item != nil {
+			_tablefeaturepropinstructions.InstructionIds = append(_tablefeaturepropinstructions.InstructionIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropinstructions, nil
 }
 
@@ -10164,6 +31997,19 @@ type TableFeaturePropInstructionsMiss struct {
 	InstructionIds []IInstructionId
 }
 
+type ITableFeaturePropInstructionsMiss interface {
+	ITableFeatureProp
+	GetInstructionIds() []IInstructionId
+}
+
+func (self *TableFeaturePropInstructionsMiss) GetInstructionIds() []IInstructionId {
+	return self.InstructionIds
+}
+
+func (self *TableFeaturePropInstructionsMiss) SetInstructionIds(v []IInstructionId) {
+	self.InstructionIds = v
+}
+
 func (self *TableFeaturePropInstructionsMiss) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10177,7 +32023,6 @@ func (self *TableFeaturePropInstructionsMiss) Serialize(encoder *goloxi.Encoder)
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10185,17 +32030,17 @@ func (self *TableFeaturePropInstructionsMiss) Serialize(encoder *goloxi.Encoder)
 
 func DecodeTableFeaturePropInstructionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropInstructionsMiss, error) {
 	_tablefeaturepropinstructionsmiss := &TableFeaturePropInstructionsMiss{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeInstructionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropinstructionsmiss.InstructionIds = append(_tablefeaturepropinstructionsmiss.InstructionIds, item)
+		if item != nil {
+			_tablefeaturepropinstructionsmiss.InstructionIds = append(_tablefeaturepropinstructionsmiss.InstructionIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropinstructionsmiss, nil
 }
 
@@ -10211,6 +32056,19 @@ type TableFeaturePropMatch struct {
 	OxmIds []*Uint32
 }
 
+type ITableFeaturePropMatch interface {
+	ITableFeatureProp
+	GetOxmIds() []*Uint32
+}
+
+func (self *TableFeaturePropMatch) GetOxmIds() []*Uint32 {
+	return self.OxmIds
+}
+
+func (self *TableFeaturePropMatch) SetOxmIds(v []*Uint32) {
+	self.OxmIds = v
+}
+
 func (self *TableFeaturePropMatch) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10224,7 +32082,6 @@ func (self *TableFeaturePropMatch) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10232,17 +32089,17 @@ func (self *TableFeaturePropMatch) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeTableFeaturePropMatch(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropMatch, error) {
 	_tablefeaturepropmatch := &TableFeaturePropMatch{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropmatch.OxmIds = append(_tablefeaturepropmatch.OxmIds, item)
+		if item != nil {
+			_tablefeaturepropmatch.OxmIds = append(_tablefeaturepropmatch.OxmIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropmatch, nil
 }
 
@@ -10258,6 +32115,19 @@ type TableFeaturePropNextTables struct {
 	NextTableIds []*Uint8
 }
 
+type ITableFeaturePropNextTables interface {
+	ITableFeatureProp
+	GetNextTableIds() []*Uint8
+}
+
+func (self *TableFeaturePropNextTables) GetNextTableIds() []*Uint8 {
+	return self.NextTableIds
+}
+
+func (self *TableFeaturePropNextTables) SetNextTableIds(v []*Uint8) {
+	self.NextTableIds = v
+}
+
 func (self *TableFeaturePropNextTables) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10271,7 +32141,6 @@ func (self *TableFeaturePropNextTables) Serialize(encoder *goloxi.Encoder) error
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10279,17 +32148,17 @@ func (self *TableFeaturePropNextTables) Serialize(encoder *goloxi.Encoder) error
 
 func DecodeTableFeaturePropNextTables(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropNextTables, error) {
 	_tablefeaturepropnexttables := &TableFeaturePropNextTables{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 1 {
 		item, err := DecodeUint8(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropnexttables.NextTableIds = append(_tablefeaturepropnexttables.NextTableIds, item)
+		if item != nil {
+			_tablefeaturepropnexttables.NextTableIds = append(_tablefeaturepropnexttables.NextTableIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropnexttables, nil
 }
 
@@ -10305,6 +32174,19 @@ type TableFeaturePropNextTablesMiss struct {
 	NextTableIds []*Uint8
 }
 
+type ITableFeaturePropNextTablesMiss interface {
+	ITableFeatureProp
+	GetNextTableIds() []*Uint8
+}
+
+func (self *TableFeaturePropNextTablesMiss) GetNextTableIds() []*Uint8 {
+	return self.NextTableIds
+}
+
+func (self *TableFeaturePropNextTablesMiss) SetNextTableIds(v []*Uint8) {
+	self.NextTableIds = v
+}
+
 func (self *TableFeaturePropNextTablesMiss) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10318,7 +32200,6 @@ func (self *TableFeaturePropNextTablesMiss) Serialize(encoder *goloxi.Encoder) e
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10326,17 +32207,17 @@ func (self *TableFeaturePropNextTablesMiss) Serialize(encoder *goloxi.Encoder) e
 
 func DecodeTableFeaturePropNextTablesMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropNextTablesMiss, error) {
 	_tablefeaturepropnexttablesmiss := &TableFeaturePropNextTablesMiss{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 1 {
 		item, err := DecodeUint8(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropnexttablesmiss.NextTableIds = append(_tablefeaturepropnexttablesmiss.NextTableIds, item)
+		if item != nil {
+			_tablefeaturepropnexttablesmiss.NextTableIds = append(_tablefeaturepropnexttablesmiss.NextTableIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropnexttablesmiss, nil
 }
 
@@ -10352,6 +32233,19 @@ type TableFeaturePropWildcards struct {
 	OxmIds []*Uint32
 }
 
+type ITableFeaturePropWildcards interface {
+	ITableFeatureProp
+	GetOxmIds() []*Uint32
+}
+
+func (self *TableFeaturePropWildcards) GetOxmIds() []*Uint32 {
+	return self.OxmIds
+}
+
+func (self *TableFeaturePropWildcards) SetOxmIds(v []*Uint32) {
+	self.OxmIds = v
+}
+
 func (self *TableFeaturePropWildcards) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10365,7 +32259,6 @@ func (self *TableFeaturePropWildcards) Serialize(encoder *goloxi.Encoder) error 
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10373,17 +32266,17 @@ func (self *TableFeaturePropWildcards) Serialize(encoder *goloxi.Encoder) error 
 
 func DecodeTableFeaturePropWildcards(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWildcards, error) {
 	_tablefeaturepropwildcards := &TableFeaturePropWildcards{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropwildcards.OxmIds = append(_tablefeaturepropwildcards.OxmIds, item)
+		if item != nil {
+			_tablefeaturepropwildcards.OxmIds = append(_tablefeaturepropwildcards.OxmIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropwildcards, nil
 }
 
@@ -10399,6 +32292,19 @@ type TableFeaturePropWriteActions struct {
 	ActionIds []IActionId
 }
 
+type ITableFeaturePropWriteActions interface {
+	ITableFeatureProp
+	GetActionIds() []IActionId
+}
+
+func (self *TableFeaturePropWriteActions) GetActionIds() []IActionId {
+	return self.ActionIds
+}
+
+func (self *TableFeaturePropWriteActions) SetActionIds(v []IActionId) {
+	self.ActionIds = v
+}
+
 func (self *TableFeaturePropWriteActions) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10412,7 +32318,6 @@ func (self *TableFeaturePropWriteActions) Serialize(encoder *goloxi.Encoder) err
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10420,17 +32325,17 @@ func (self *TableFeaturePropWriteActions) Serialize(encoder *goloxi.Encoder) err
 
 func DecodeTableFeaturePropWriteActions(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteActions, error) {
 	_tablefeaturepropwriteactions := &TableFeaturePropWriteActions{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeActionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropwriteactions.ActionIds = append(_tablefeaturepropwriteactions.ActionIds, item)
+		if item != nil {
+			_tablefeaturepropwriteactions.ActionIds = append(_tablefeaturepropwriteactions.ActionIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropwriteactions, nil
 }
 
@@ -10446,6 +32351,19 @@ type TableFeaturePropWriteActionsMiss struct {
 	ActionIds []IActionId
 }
 
+type ITableFeaturePropWriteActionsMiss interface {
+	ITableFeatureProp
+	GetActionIds() []IActionId
+}
+
+func (self *TableFeaturePropWriteActionsMiss) GetActionIds() []IActionId {
+	return self.ActionIds
+}
+
+func (self *TableFeaturePropWriteActionsMiss) SetActionIds(v []IActionId) {
+	self.ActionIds = v
+}
+
 func (self *TableFeaturePropWriteActionsMiss) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10459,7 +32377,6 @@ func (self *TableFeaturePropWriteActionsMiss) Serialize(encoder *goloxi.Encoder)
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10467,17 +32384,17 @@ func (self *TableFeaturePropWriteActionsMiss) Serialize(encoder *goloxi.Encoder)
 
 func DecodeTableFeaturePropWriteActionsMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteActionsMiss, error) {
 	_tablefeaturepropwriteactionsmiss := &TableFeaturePropWriteActionsMiss{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeActionId(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropwriteactionsmiss.ActionIds = append(_tablefeaturepropwriteactionsmiss.ActionIds, item)
+		if item != nil {
+			_tablefeaturepropwriteactionsmiss.ActionIds = append(_tablefeaturepropwriteactionsmiss.ActionIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropwriteactionsmiss, nil
 }
 
@@ -10493,6 +32410,19 @@ type TableFeaturePropWriteSetfield struct {
 	OxmIds []*Uint32
 }
 
+type ITableFeaturePropWriteSetfield interface {
+	ITableFeatureProp
+	GetOxmIds() []*Uint32
+}
+
+func (self *TableFeaturePropWriteSetfield) GetOxmIds() []*Uint32 {
+	return self.OxmIds
+}
+
+func (self *TableFeaturePropWriteSetfield) SetOxmIds(v []*Uint32) {
+	self.OxmIds = v
+}
+
 func (self *TableFeaturePropWriteSetfield) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10506,7 +32436,6 @@ func (self *TableFeaturePropWriteSetfield) Serialize(encoder *goloxi.Encoder) er
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10514,17 +32443,17 @@ func (self *TableFeaturePropWriteSetfield) Serialize(encoder *goloxi.Encoder) er
 
 func DecodeTableFeaturePropWriteSetfield(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteSetfield, error) {
 	_tablefeaturepropwritesetfield := &TableFeaturePropWriteSetfield{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropwritesetfield.OxmIds = append(_tablefeaturepropwritesetfield.OxmIds, item)
+		if item != nil {
+			_tablefeaturepropwritesetfield.OxmIds = append(_tablefeaturepropwritesetfield.OxmIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropwritesetfield, nil
 }
 
@@ -10540,6 +32469,19 @@ type TableFeaturePropWriteSetfieldMiss struct {
 	OxmIds []*Uint32
 }
 
+type ITableFeaturePropWriteSetfieldMiss interface {
+	ITableFeatureProp
+	GetOxmIds() []*Uint32
+}
+
+func (self *TableFeaturePropWriteSetfieldMiss) GetOxmIds() []*Uint32 {
+	return self.OxmIds
+}
+
+func (self *TableFeaturePropWriteSetfieldMiss) SetOxmIds(v []*Uint32) {
+	self.OxmIds = v
+}
+
 func (self *TableFeaturePropWriteSetfieldMiss) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.TableFeatureProp.Serialize(encoder); err != nil {
 		return err
@@ -10553,7 +32495,6 @@ func (self *TableFeaturePropWriteSetfieldMiss) Serialize(encoder *goloxi.Encoder
 
 	encoder.SkipAlign()
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10561,17 +32502,17 @@ func (self *TableFeaturePropWriteSetfieldMiss) Serialize(encoder *goloxi.Encoder
 
 func DecodeTableFeaturePropWriteSetfieldMiss(parent *TableFeatureProp, decoder *goloxi.Decoder) (*TableFeaturePropWriteSetfieldMiss, error) {
 	_tablefeaturepropwritesetfieldmiss := &TableFeaturePropWriteSetfieldMiss{TableFeatureProp: parent}
+	defer decoder.SkipAlign()
 
 	for decoder.Length() >= 4 {
 		item, err := DecodeUint32(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_tablefeaturepropwritesetfieldmiss.OxmIds = append(_tablefeaturepropwritesetfieldmiss.OxmIds, item)
+		if item != nil {
+			_tablefeaturepropwritesetfieldmiss.OxmIds = append(_tablefeaturepropwritesetfieldmiss.OxmIds, item)
+		}
 	}
-
-	decoder.SkipAlign()
-
 	return _tablefeaturepropwritesetfieldmiss, nil
 }
 
@@ -10593,7 +32534,84 @@ type TableFeatures struct {
 	Properties    []ITableFeatureProp
 }
 
+type ITableFeatures interface {
+	goloxi.Serializable
+	GetLength() uint16
+	GetTableId() uint8
+	GetName() string
+	GetMetadataMatch() uint64
+	GetMetadataWrite() uint64
+	GetConfig() uint32
+	GetMaxEntries() uint32
+	GetProperties() []ITableFeatureProp
+}
+
+func (self *TableFeatures) GetLength() uint16 {
+	return self.Length
+}
+
+func (self *TableFeatures) SetLength(v uint16) {
+	self.Length = v
+}
+
+func (self *TableFeatures) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *TableFeatures) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *TableFeatures) GetName() string {
+	return self.Name
+}
+
+func (self *TableFeatures) SetName(v string) {
+	self.Name = v
+}
+
+func (self *TableFeatures) GetMetadataMatch() uint64 {
+	return self.MetadataMatch
+}
+
+func (self *TableFeatures) SetMetadataMatch(v uint64) {
+	self.MetadataMatch = v
+}
+
+func (self *TableFeatures) GetMetadataWrite() uint64 {
+	return self.MetadataWrite
+}
+
+func (self *TableFeatures) SetMetadataWrite(v uint64) {
+	self.MetadataWrite = v
+}
+
+func (self *TableFeatures) GetConfig() uint32 {
+	return self.Config
+}
+
+func (self *TableFeatures) SetConfig(v uint32) {
+	self.Config = v
+}
+
+func (self *TableFeatures) GetMaxEntries() uint32 {
+	return self.MaxEntries
+}
+
+func (self *TableFeatures) SetMaxEntries(v uint32) {
+	self.MaxEntries = v
+}
+
+func (self *TableFeatures) GetProperties() []ITableFeatureProp {
+	return self.Properties
+}
+
+func (self *TableFeatures) SetProperties(v []ITableFeatureProp) {
+	self.Properties = v
+}
+
 func (self *TableFeatures) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Length))
 	encoder.PutUint8(uint8(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 5))
@@ -10608,7 +32626,6 @@ func (self *TableFeatures) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10620,6 +32637,8 @@ func DecodeTableFeatures(decoder *goloxi.Decoder) (*TableFeatures, error) {
 		return nil, fmt.Errorf("TableFeatures packet too short: %d < 64", decoder.Length())
 	}
 	_tablefeatures.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_tablefeatures.Length), 2+0)
 	_tablefeatures.TableId = uint8(decoder.ReadByte())
 	decoder.Skip(5)
@@ -10634,7 +32653,9 @@ func DecodeTableFeatures(decoder *goloxi.Decoder) (*TableFeatures, error) {
 		if err != nil {
 			return nil, err
 		}
-		_tablefeatures.Properties = append(_tablefeatures.Properties, item)
+		if item != nil {
+			_tablefeatures.Properties = append(_tablefeatures.Properties, item)
+		}
 	}
 	return _tablefeatures, nil
 }
@@ -10651,7 +32672,48 @@ type TableStatsEntry struct {
 	MatchedCount uint64
 }
 
+type ITableStatsEntry interface {
+	goloxi.Serializable
+	GetTableId() uint8
+	GetActiveCount() uint32
+	GetLookupCount() uint64
+	GetMatchedCount() uint64
+}
+
+func (self *TableStatsEntry) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *TableStatsEntry) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *TableStatsEntry) GetActiveCount() uint32 {
+	return self.ActiveCount
+}
+
+func (self *TableStatsEntry) SetActiveCount(v uint32) {
+	self.ActiveCount = v
+}
+
+func (self *TableStatsEntry) GetLookupCount() uint64 {
+	return self.LookupCount
+}
+
+func (self *TableStatsEntry) SetLookupCount(v uint64) {
+	self.LookupCount = v
+}
+
+func (self *TableStatsEntry) GetMatchedCount() uint64 {
+	return self.MatchedCount
+}
+
+func (self *TableStatsEntry) SetMatchedCount(v uint64) {
+	self.MatchedCount = v
+}
+
 func (self *TableStatsEntry) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint8(uint8(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 	encoder.PutUint32(uint32(self.ActiveCount))
@@ -10683,7 +32745,21 @@ type Uint32 struct {
 	Value uint32
 }
 
+type IUint32 interface {
+	goloxi.Serializable
+	GetValue() uint32
+}
+
+func (self *Uint32) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *Uint32) SetValue(v uint32) {
+	self.Value = v
+}
+
 func (self *Uint32) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint32(uint32(self.Value))
 
 	return nil
@@ -10707,7 +32783,21 @@ type Uint64 struct {
 	Value uint64
 }
 
+type IUint64 interface {
+	goloxi.Serializable
+	GetValue() uint64
+}
+
+func (self *Uint64) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *Uint64) SetValue(v uint64) {
+	self.Value = v
+}
+
 func (self *Uint64) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint64(uint64(self.Value))
 
 	return nil
@@ -10731,7 +32821,21 @@ type Uint8 struct {
 	Value uint8
 }
 
+type IUint8 interface {
+	goloxi.Serializable
+	GetValue() uint8
+}
+
+func (self *Uint8) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *Uint8) SetValue(v uint8) {
+	self.Value = v
+}
+
 func (self *Uint8) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint8(uint8(self.Value))
 
 	return nil
@@ -10748,173 +32852,5 @@ func DecodeUint8(decoder *goloxi.Decoder) (*Uint8, error) {
 
 func NewUint8() *Uint8 {
 	obj := &Uint8{}
-	return obj
-}
-
-type EdPropHeader struct {
-	PropClass uint16
-}
-
-type IEdPropHeader interface {
-	goloxi.Serializable
-	GetPropClass() uint16
-}
-
-func (self *EdPropHeader) GetPropClass() uint16 {
-	return self.PropClass
-}
-
-func (self *EdPropHeader) Serialize(encoder *goloxi.Encoder) error {
-	encoder.PutUint16(uint16(self.PropClass))
-
-	return nil
-}
-func (self *EdPropHeader) Decode(decoder *goloxi.Decoder) error {
-	if decoder.Length() < 2 {
-		return fmt.Errorf("EdPropHeader packet too short: %d < 2", decoder.Length())
-	}
-
-	self.PropClass = uint16(decoder.ReadUint16())
-
-	return nil
-}
-
-func NewEdPropHeader(_prop_class uint16) *EdPropHeader {
-	obj := &EdPropHeader{}
-	obj.PropClass = _prop_class
-	return obj
-}
-
-type EdPropNsh struct {
-	*EdPropHeader
-	Type uint8
-	Len  uint8
-}
-
-type IEdPropNsh interface {
-	IEdPropHeader
-	GetType() uint8
-	GetLen() uint8
-}
-
-func (self *EdPropNsh) GetType() uint8 {
-	return self.Type
-}
-
-func (self *EdPropNsh) GetLen() uint8 {
-	return self.Len
-}
-
-func (self *EdPropNsh) Serialize(encoder *goloxi.Encoder) error {
-	if err := self.EdPropHeader.Serialize(encoder); err != nil {
-		return err
-	}
-
-	encoder.PutUint8(uint8(self.Type))
-	encoder.PutUint8(uint8(self.Len))
-
-	return nil
-}
-
-func DecodeEdPropNsh(parent *EdPropHeader, decoder *goloxi.Decoder) (IEdPropNsh, error) {
-	_edpropnsh := &EdPropNsh{EdPropHeader: parent}
-	if decoder.Length() < 2 {
-		return nil, fmt.Errorf("EdPropNsh packet too short: %d < 2", decoder.Length())
-	}
-	_edpropnsh.Type = uint8(decoder.ReadByte())
-	_edpropnsh.Len = uint8(decoder.ReadByte())
-	decoder = decoder.SliceDecoder(int(_edpropnsh.Len), 1+3)
-
-	switch _edpropnsh.Type {
-	case 1:
-		return DecodeEdPropNshMdType(_edpropnsh, decoder)
-	case 2:
-		return DecodeEdPropNshTlv(_edpropnsh, decoder)
-	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'EdPropNsh'", _edpropnsh.Type)
-	}
-}
-
-func NewEdPropNsh(_type uint8) *EdPropNsh {
-	obj := &EdPropNsh{
-		EdPropHeader: NewEdPropHeader(4),
-	}
-	obj.Type = _type
-	return obj
-}
-
-type EdPropNshMdType struct {
-	*EdPropNsh
-	MdType uint8
-}
-
-func (self *EdPropNshMdType) Serialize(encoder *goloxi.Encoder) error {
-	if err := self.EdPropNsh.Serialize(encoder); err != nil {
-		return err
-	}
-
-	encoder.PutUint8(uint8(self.MdType))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
-
-	// Overwrite length
-	encoder.Bytes()[3] = uint8(len(encoder.Bytes()))
-
-	return nil
-}
-
-func DecodeEdPropNshMdType(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropNshMdType, error) {
-	_edpropnshmdtype := &EdPropNshMdType{EdPropNsh: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("EdPropNshMdType packet too short: %d < 4", decoder.Length())
-	}
-	_edpropnshmdtype.MdType = uint8(decoder.ReadByte())
-	decoder.Skip(3)
-	return _edpropnshmdtype, nil
-}
-
-func NewEdPropNshMdType() *EdPropNshMdType {
-	obj := &EdPropNshMdType{
-		EdPropNsh: NewEdPropNsh(1),
-	}
-	return obj
-}
-
-type EdPropNshTlv struct {
-	*EdPropNsh
-	TlvClass uint16
-	TlvType  uint8
-	TlvLen   uint8
-}
-
-func (self *EdPropNshTlv) Serialize(encoder *goloxi.Encoder) error {
-	if err := self.EdPropNsh.Serialize(encoder); err != nil {
-		return err
-	}
-
-	encoder.PutUint16(uint16(self.TlvClass))
-	encoder.PutUint8(uint8(self.TlvType))
-	encoder.PutUint8(uint8(self.TlvLen))
-
-	// Overwrite length
-	encoder.Bytes()[3] = uint8(len(encoder.Bytes()))
-
-	return nil
-}
-
-func DecodeEdPropNshTlv(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropNshTlv, error) {
-	_edpropnshtlv := &EdPropNshTlv{EdPropNsh: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("EdPropNshTlv packet too short: %d < 4", decoder.Length())
-	}
-	_edpropnshtlv.TlvClass = uint16(decoder.ReadUint16())
-	_edpropnshtlv.TlvType = uint8(decoder.ReadByte())
-	_edpropnshtlv.TlvLen = uint8(decoder.ReadByte())
-	return _edpropnshtlv, nil
-}
-
-func NewEdPropNshTlv() *EdPropNshTlv {
-	obj := &EdPropNshTlv{
-		EdPropNsh: NewEdPropNsh(2),
-	}
 	return obj
 }

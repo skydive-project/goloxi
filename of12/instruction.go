@@ -32,11 +32,20 @@ func (self *Instruction) GetType() uint16 {
 	return self.Type
 }
 
+func (self *Instruction) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *Instruction) GetLen() uint16 {
 	return self.Len
 }
 
+func (self *Instruction) SetLen(v uint16) {
+	self.Len = v
+}
+
 func (self *Instruction) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Len))
 
@@ -50,6 +59,8 @@ func DecodeInstruction(decoder *goloxi.Decoder) (IInstruction, error) {
 	}
 	_instruction.Type = uint16(decoder.ReadUint16())
 	_instruction.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_instruction.Len), 2+2)
 
 	switch _instruction.Type {
@@ -78,7 +89,20 @@ func NewInstruction(_type uint16) *Instruction {
 
 type InstructionApplyActions struct {
 	*Instruction
-	Actions []IAction
+	Actions []goloxi.IAction
+}
+
+type IInstructionApplyActions interface {
+	IInstruction
+	GetActions() []goloxi.IAction
+}
+
+func (self *InstructionApplyActions) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *InstructionApplyActions) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *InstructionApplyActions) Serialize(encoder *goloxi.Encoder) error {
@@ -93,7 +117,6 @@ func (self *InstructionApplyActions) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -108,7 +131,9 @@ func DecodeInstructionApplyActions(parent *Instruction, decoder *goloxi.Decoder)
 		if err != nil {
 			return nil, err
 		}
-		_instructionapplyactions.Actions = append(_instructionapplyactions.Actions, item)
+		if item != nil {
+			_instructionapplyactions.Actions = append(_instructionapplyactions.Actions, item)
+		}
 	}
 	return _instructionapplyactions, nil
 }
@@ -124,6 +149,10 @@ type InstructionClearActions struct {
 	*Instruction
 }
 
+type IInstructionClearActions interface {
+	IInstruction
+}
+
 func (self *InstructionClearActions) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Instruction.Serialize(encoder); err != nil {
 		return err
@@ -131,7 +160,6 @@ func (self *InstructionClearActions) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -167,6 +195,10 @@ func (self *InstructionExperimenter) GetExperimenter() uint32 {
 	return self.Experimenter
 }
 
+func (self *InstructionExperimenter) SetExperimenter(v uint32) {
+	self.Experimenter = v
+}
+
 func (self *InstructionExperimenter) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Instruction.Serialize(encoder); err != nil {
 		return err
@@ -199,6 +231,19 @@ type InstructionGotoTable struct {
 	TableId uint8
 }
 
+type IInstructionGotoTable interface {
+	IInstruction
+	GetTableId() uint8
+}
+
+func (self *InstructionGotoTable) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *InstructionGotoTable) SetTableId(v uint8) {
+	self.TableId = v
+}
+
 func (self *InstructionGotoTable) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Instruction.Serialize(encoder); err != nil {
 		return err
@@ -207,7 +252,6 @@ func (self *InstructionGotoTable) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -232,7 +276,20 @@ func NewInstructionGotoTable() *InstructionGotoTable {
 
 type InstructionWriteActions struct {
 	*Instruction
-	Actions []IAction
+	Actions []goloxi.IAction
+}
+
+type IInstructionWriteActions interface {
+	IInstruction
+	GetActions() []goloxi.IAction
+}
+
+func (self *InstructionWriteActions) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *InstructionWriteActions) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *InstructionWriteActions) Serialize(encoder *goloxi.Encoder) error {
@@ -247,7 +304,6 @@ func (self *InstructionWriteActions) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -262,7 +318,9 @@ func DecodeInstructionWriteActions(parent *Instruction, decoder *goloxi.Decoder)
 		if err != nil {
 			return nil, err
 		}
-		_instructionwriteactions.Actions = append(_instructionwriteactions.Actions, item)
+		if item != nil {
+			_instructionwriteactions.Actions = append(_instructionwriteactions.Actions, item)
+		}
 	}
 	return _instructionwriteactions, nil
 }
@@ -280,6 +338,28 @@ type InstructionWriteMetadata struct {
 	MetadataMask uint64
 }
 
+type IInstructionWriteMetadata interface {
+	IInstruction
+	GetMetadata() uint64
+	GetMetadataMask() uint64
+}
+
+func (self *InstructionWriteMetadata) GetMetadata() uint64 {
+	return self.Metadata
+}
+
+func (self *InstructionWriteMetadata) SetMetadata(v uint64) {
+	self.Metadata = v
+}
+
+func (self *InstructionWriteMetadata) GetMetadataMask() uint64 {
+	return self.MetadataMask
+}
+
+func (self *InstructionWriteMetadata) SetMetadataMask(v uint64) {
+	self.MetadataMask = v
+}
+
 func (self *InstructionWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Instruction.Serialize(encoder); err != nil {
 		return err
@@ -289,7 +369,6 @@ func (self *InstructionWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint64(uint64(self.Metadata))
 	encoder.PutUint64(uint64(self.MetadataMask))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil

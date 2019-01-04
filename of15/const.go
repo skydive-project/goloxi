@@ -34,6 +34,64 @@ const (
 )
 
 const (
+	// Identifiers from group nx_action_controller2_prop_type
+	Nxac2PtMaxLen       = 0 // NXAC2PT_MAX_LEN
+	Nxac2PtControllerID = 1 // NXAC2PT_CONTROLLER_ID
+	Nxac2PtReason       = 2 // NXAC2PT_REASON
+	Nxac2PtUserdata     = 3 // NXAC2PT_USERDATA
+	Nxac2PtPause        = 4 // NXAC2PT_PAUSE
+	Nxac2PtMeterID      = 5 // NXAC2PT_METER_ID
+)
+
+type NxActionController2PropType uint16
+
+func (self NxActionController2PropType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%d", self)), nil
+}
+
+const (
+	// Identifiers from group nx_bd_algorithms
+	NxBdAlgActiveBackup = 0 // NX_BD_ALG_ACTIVE_BACKUP
+	NxBdAlgHrw          = 1 // NX_BD_ALG_HRW
+)
+
+type NxBdAlgorithms uint16
+
+func (self NxBdAlgorithms) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%s", self)), nil
+}
+
+func (self NxBdAlgorithms) String() string {
+	switch self {
+	case NxBdAlgActiveBackup:
+		return "\"active_backup\""
+	case NxBdAlgHrw:
+		return "\"hrw\""
+	default:
+		return fmt.Sprintf("\"Invalid value '%d' for NxBdAlgorithms\"", self)
+	}
+}
+
+const (
+	// Identifiers from group nx_conntrack_flags
+	NxCtFCommit = 1 // NX_CT_F_COMMIT
+	NxCtFForce  = 2 // NX_CT_F_FORCE
+)
+
+type NxConntrackFlags uint16
+
+func (self NxConntrackFlags) MarshalJSON() ([]byte, error) {
+	var flags []string
+	if self&NxCtFCommit == NxCtFCommit {
+		flags = append(flags, "\"Commit\": true")
+	}
+	if self&NxCtFForce == NxCtFForce {
+		flags = append(flags, "\"Force\": true")
+	}
+	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
+}
+
+const (
 	// Identifiers from group nx_flow_monitor_flags
 	NxfmfInitial = 1  // NXFMF_INITIAL
 	NxfmfAdd     = 2  // NXFMF_ADD
@@ -48,24 +106,114 @@ type NxFlowMonitorFlags uint16
 func (self NxFlowMonitorFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&NxfmfInitial == NxfmfInitial {
-		flags = append(flags, "\"NxfmfInitial\": true")
+		flags = append(flags, "\"Initial\": true")
 	}
 	if self&NxfmfAdd == NxfmfAdd {
-		flags = append(flags, "\"NxfmfAdd\": true")
+		flags = append(flags, "\"Add\": true")
 	}
 	if self&NxfmfDelete == NxfmfDelete {
-		flags = append(flags, "\"NxfmfDelete\": true")
+		flags = append(flags, "\"Delete\": true")
 	}
 	if self&NxfmfModify == NxfmfModify {
-		flags = append(flags, "\"NxfmfModify\": true")
+		flags = append(flags, "\"Modify\": true")
 	}
 	if self&NxfmfActions == NxfmfActions {
-		flags = append(flags, "\"NxfmfActions\": true")
+		flags = append(flags, "\"Actions\": true")
 	}
 	if self&NxfmfOwn == NxfmfOwn {
-		flags = append(flags, "\"NxfmfOwn\": true")
+		flags = append(flags, "\"Own\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
+}
+
+const (
+	// Identifiers from group nx_hash_fields
+	NxHashFieldsEthSrc           = 0 // NX_HASH_FIELDS_ETH_SRC
+	NxHashFieldsSymmetricL4      = 1 // NX_HASH_FIELDS_SYMMETRIC_L4
+	NxHashFieldsSymmetricL3L4    = 2 // NX_HASH_FIELDS_SYMMETRIC_L3L4
+	NxHashFieldsSymmetricL3L4Udp = 3 // NX_HASH_FIELDS_SYMMETRIC_L3L4_UDP
+	NxHashFieldsNwSrc            = 4 // NX_HASH_FIELDS_NW_SRC
+	NxHashFieldsNwDst            = 5 // NX_HASH_FIELDS_NW_DST
+	NxHashFieldsSymmetricL3      = 6 // NX_HASH_FIELDS_SYMMETRIC_L3
+)
+
+type NxHashFields uint16
+
+func (self NxHashFields) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%s", self)), nil
+}
+
+func (self NxHashFields) String() string {
+	switch self {
+	case NxHashFieldsEthSrc:
+		return "\"eth_src\""
+	case NxHashFieldsSymmetricL4:
+		return "\"symmetric_l4\""
+	case NxHashFieldsSymmetricL3L4:
+		return "\"symmetric_l3l4\""
+	case NxHashFieldsSymmetricL3L4Udp:
+		return "\"symmetric_l3l4_udp\""
+	case NxHashFieldsNwSrc:
+		return "\"nw_src\""
+	case NxHashFieldsNwDst:
+		return "\"nw_dst\""
+	case NxHashFieldsSymmetricL3:
+		return "\"symmetric_l3\""
+	default:
+		return fmt.Sprintf("\"Invalid value '%d' for NxHashFields\"", self)
+	}
+}
+
+const (
+	// Identifiers from group nx_mp_algorithm
+	NxMpAlgModuloN       = 0 // NX_MP_ALG_MODULO_N
+	NxMpAlgHashThreshold = 1 // NX_MP_ALG_HASH_THRESHOLD
+	NxMpAlgHrw           = 2 // NX_MP_ALG_HRW
+	NxMpAlgIterHash      = 3 // NX_MP_ALG_ITER_HASH
+)
+
+type NxMpAlgorithm uint16
+
+func (self NxMpAlgorithm) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%s", self)), nil
+}
+
+func (self NxMpAlgorithm) String() string {
+	switch self {
+	case NxMpAlgModuloN:
+		return "\"modulo_n\""
+	case NxMpAlgHashThreshold:
+		return "\"hash_threshold\""
+	case NxMpAlgHrw:
+		return "\"hrw\""
+	case NxMpAlgIterHash:
+		return "\"iter_hash\""
+	default:
+		return fmt.Sprintf("\"Invalid value '%d' for NxMpAlgorithm\"", self)
+	}
+}
+
+const (
+	// Identifiers from group of_action_nx_bundle_slave_type
+	NxmOfInPort                  = 2     // NXM_OF_IN_PORT
+	NxmOfJustThereToDefinePrefix = 10000 // NXM_OF_JUST_THERE_TO_DEFINE_PREFIX
+)
+
+type ActionNxBundleSlaveType uint32
+
+func (self ActionNxBundleSlaveType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%s", self)), nil
+}
+
+func (self ActionNxBundleSlaveType) String() string {
+	switch self {
+	case NxmOfInPort:
+		return "\"in_port\""
+	case NxmOfJustThereToDefinePrefix:
+		return "\"just_there_to_define_prefix\""
+	default:
+		return fmt.Sprintf("\"Invalid value '%d' for ActionNxBundleSlaveType\"", self)
+	}
 }
 
 const (
@@ -78,16 +226,7 @@ const (
 type BsnGentableErrorCode uint16
 
 func (self BsnGentableErrorCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFBSNGentableErrorUnknown:
-		return []byte("\"OFBSNGentableErrorUnknown\""), nil
-	case OFBSNGentableErrorParam:
-		return []byte("\"OFBSNGentableErrorParam\""), nil
-	case OFBSNGentableErrorTableFull:
-		return []byte("\"OFBSNGentableErrorTableFull\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnGentableErrorCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -101,18 +240,7 @@ const (
 type BsnHashGtpPortMatch uint8
 
 func (self BsnHashGtpPortMatch) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFBSNHashGtpPortMatchSrc:
-		return []byte("\"OFBSNHashGtpPortMatchSrc\""), nil
-	case OFBSNHashGtpPortMatchDst:
-		return []byte("\"OFBSNHashGtpPortMatchDst\""), nil
-	case OFBSNHashGtpPortMatchSrcOrDst:
-		return []byte("\"OFBSNHashGtpPortMatchSrcOrDst\""), nil
-	case OFBSNHashGtpPortMatchSrcAndDst:
-		return []byte("\"OFBSNHashGtpPortMatchSrcAndDst\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnHashGtpPortMatch", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -142,58 +270,58 @@ type BsnHashPacketField uint64
 func (self BsnHashPacketField) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNHashFieldDstMAC == BSNHashFieldDstMAC {
-		flags = append(flags, "\"BSNHashFieldDstMAC\": true")
+		flags = append(flags, "\"DstMAC\": true")
 	}
 	if self&BSNHashFieldSrcMAC == BSNHashFieldSrcMAC {
-		flags = append(flags, "\"BSNHashFieldSrcMAC\": true")
+		flags = append(flags, "\"SrcMAC\": true")
 	}
 	if self&BSNHashFieldEthType == BSNHashFieldEthType {
-		flags = append(flags, "\"BSNHashFieldEthType\": true")
+		flags = append(flags, "\"EthType\": true")
 	}
 	if self&BSNHashFieldVLANID == BSNHashFieldVLANID {
-		flags = append(flags, "\"BSNHashFieldVLANID\": true")
+		flags = append(flags, "\"VlanID\": true")
 	}
 	if self&BSNHashFieldInnerL2 == BSNHashFieldInnerL2 {
-		flags = append(flags, "\"BSNHashFieldInnerL2\": true")
+		flags = append(flags, "\"InnerL2\": true")
 	}
 	if self&BSNHashFieldInnerL3 == BSNHashFieldInnerL3 {
-		flags = append(flags, "\"BSNHashFieldInnerL3\": true")
+		flags = append(flags, "\"InnerL3\": true")
 	}
 	if self&BSNHashFieldSrcIp == BSNHashFieldSrcIp {
-		flags = append(flags, "\"BSNHashFieldSrcIp\": true")
+		flags = append(flags, "\"SrcIp\": true")
 	}
 	if self&BSNHashFieldDstIp == BSNHashFieldDstIp {
-		flags = append(flags, "\"BSNHashFieldDstIp\": true")
+		flags = append(flags, "\"DstIp\": true")
 	}
 	if self&BSNHashFieldIpProto == BSNHashFieldIpProto {
-		flags = append(flags, "\"BSNHashFieldIpProto\": true")
+		flags = append(flags, "\"IpProto\": true")
 	}
 	if self&BSNHashFieldSrcL4Port == BSNHashFieldSrcL4Port {
-		flags = append(flags, "\"BSNHashFieldSrcL4Port\": true")
+		flags = append(flags, "\"SrcL4Port\": true")
 	}
 	if self&BSNHashFieldDstL4Port == BSNHashFieldDstL4Port {
-		flags = append(flags, "\"BSNHashFieldDstL4Port\": true")
+		flags = append(flags, "\"DstL4Port\": true")
 	}
 	if self&BSNHashFieldMplsLabel1 == BSNHashFieldMplsLabel1 {
-		flags = append(flags, "\"BSNHashFieldMplsLabel1\": true")
+		flags = append(flags, "\"MplsLabel1\": true")
 	}
 	if self&BSNHashFieldMplsLabel2 == BSNHashFieldMplsLabel2 {
-		flags = append(flags, "\"BSNHashFieldMplsLabel2\": true")
+		flags = append(flags, "\"MplsLabel2\": true")
 	}
 	if self&BSNHashFieldMplsLabel3 == BSNHashFieldMplsLabel3 {
-		flags = append(flags, "\"BSNHashFieldMplsLabel3\": true")
+		flags = append(flags, "\"MplsLabel3\": true")
 	}
 	if self&BSNHashFieldMplsLabelHiBits == BSNHashFieldMplsLabelHiBits {
-		flags = append(flags, "\"BSNHashFieldMplsLabelHiBits\": true")
+		flags = append(flags, "\"MplsLabelHiBits\": true")
 	}
 	if self&BSNHashFieldMplsPayloadSrcIp == BSNHashFieldMplsPayloadSrcIp {
-		flags = append(flags, "\"BSNHashFieldMplsPayloadSrcIp\": true")
+		flags = append(flags, "\"MplsPayloadSrcIp\": true")
 	}
 	if self&BSNHashFieldMplsPayloadDstIp == BSNHashFieldMplsPayloadDstIp {
-		flags = append(flags, "\"BSNHashFieldMplsPayloadDstIp\": true")
+		flags = append(flags, "\"MplsPayloadDstIp\": true")
 	}
 	if self&BSNHashFieldSymmetric == BSNHashFieldSymmetric {
-		flags = append(flags, "\"BSNHashFieldSymmetric\": true")
+		flags = append(flags, "\"Symmetric\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -211,22 +339,7 @@ const (
 type BsnHashPacketType uint8
 
 func (self BsnHashPacketType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFBSNHashPacketL2:
-		return []byte("\"OFBSNHashPacketL2\""), nil
-	case OFBSNHashPacketL2Gre:
-		return []byte("\"OFBSNHashPacketL2Gre\""), nil
-	case OFBSNHashPacketIpv4:
-		return []byte("\"OFBSNHashPacketIpv4\""), nil
-	case OFBSNHashPacketIpv6:
-		return []byte("\"OFBSNHashPacketIpv6\""), nil
-	case OFBSNHashPacketMpls:
-		return []byte("\"OFBSNHashPacketMpls\""), nil
-	case OFBSNHashPacketSymmetric:
-		return []byte("\"OFBSNHashPacketSymmetric\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnHashPacketType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -239,16 +352,7 @@ const (
 type BsnHashType uint8
 
 func (self BsnHashType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNHashTypeL2:
-		return []byte("\"BSNHashTypeL2\""), nil
-	case BSNHashTypeL3:
-		return []byte("\"BSNHashTypeL3\""), nil
-	case BSNHashTypeEnhanced:
-		return []byte("\"BSNHashTypeEnhanced\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnHashType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -261,16 +365,7 @@ const (
 type BsnLacpConvergenceStatus uint8
 
 func (self BsnLacpConvergenceStatus) MarshalJSON() ([]byte, error) {
-	switch self {
-	case LacpSuccess:
-		return []byte("\"LacpSuccess\""), nil
-	case LacpTimedout:
-		return []byte("\"LacpTimedout\""), nil
-	case LacpOutOfSync:
-		return []byte("\"LacpOutOfSync\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnLacpConvergenceStatus", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -281,12 +376,7 @@ const (
 type BsnPduSlotNum uint8
 
 func (self BsnPduSlotNum) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BsnPduSlotNumAny:
-		return []byte("\"BsnPduSlotNumAny\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnPduSlotNum", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -300,18 +390,7 @@ const (
 type BsnVlanCounter uint8
 
 func (self BsnVlanCounter) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNVLANCounterRxBytes:
-		return []byte("\"BSNVLANCounterRxBytes\""), nil
-	case BSNVLANCounterRxPackets:
-		return []byte("\"BSNVLANCounterRxPackets\""), nil
-	case BSNVLANCounterTxBytes:
-		return []byte("\"BSNVLANCounterTxBytes\""), nil
-	case BSNVLANCounterTxPackets:
-		return []byte("\"BSNVLANCounterTxPackets\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnVlanCounter", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -323,14 +402,42 @@ const (
 type BsnVrfCounter uint8
 
 func (self BsnVrfCounter) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNVrfCounterBytes:
-		return []byte("\"BSNVrfCounterBytes\""), nil
-	case BSNVrfCounterPackets:
-		return []byte("\"BSNVrfCounterPackets\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnVrfCounter", self)
+	return []byte(fmt.Sprintf("%d", self)), nil
+}
+
+const (
+	// Identifiers from group of_nx_nat_range
+	NxNatRangeIpv4Min  = 1  // NX_NAT_RANGE_IPV4_MIN
+	NxNatRangeIpv4Max  = 2  // NX_NAT_RANGE_IPV4_MAX
+	NxNatRangeIpv6Min  = 4  // NX_NAT_RANGE_IPV6_MIN
+	NxNatRangeIpv6Max  = 8  // NX_NAT_RANGE_IPV6_MAX
+	NxNatRangeProtoMin = 16 // NX_NAT_RANGE_PROTO_MIN
+	NxNatRangeProtoMax = 32 // NX_NAT_RANGE_PROTO_MAX
+)
+
+type NxNatRange uint16
+
+func (self NxNatRange) MarshalJSON() ([]byte, error) {
+	var flags []string
+	if self&NxNatRangeIpv4Min == NxNatRangeIpv4Min {
+		flags = append(flags, "\"Ipv4Min\": true")
 	}
+	if self&NxNatRangeIpv4Max == NxNatRangeIpv4Max {
+		flags = append(flags, "\"Ipv4Max\": true")
+	}
+	if self&NxNatRangeIpv6Min == NxNatRangeIpv6Min {
+		flags = append(flags, "\"Ipv6Min\": true")
+	}
+	if self&NxNatRangeIpv6Max == NxNatRangeIpv6Max {
+		flags = append(flags, "\"Ipv6Max\": true")
+	}
+	if self&NxNatRangeProtoMin == NxNatRangeProtoMin {
+		flags = append(flags, "\"ProtoMin\": true")
+	}
+	if self&NxNatRangeProtoMax == NxNatRangeProtoMax {
+		flags = append(flags, "\"ProtoMax\": true")
+	}
+	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
 
 const (
@@ -359,48 +466,7 @@ const (
 type ActionType uint16
 
 func (self ActionType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPATOutput:
-		return []byte("\"OFPATOutput\""), nil
-	case OFPATCopyTtlOut:
-		return []byte("\"OFPATCopyTtlOut\""), nil
-	case OFPATCopyTtlIn:
-		return []byte("\"OFPATCopyTtlIn\""), nil
-	case OFPATSetMplsTtl:
-		return []byte("\"OFPATSetMplsTtl\""), nil
-	case OFPATDecMplsTtl:
-		return []byte("\"OFPATDecMplsTtl\""), nil
-	case OFPATPushVLAN:
-		return []byte("\"OFPATPushVLAN\""), nil
-	case OFPATPopVLAN:
-		return []byte("\"OFPATPopVLAN\""), nil
-	case OFPATPushMpls:
-		return []byte("\"OFPATPushMpls\""), nil
-	case OFPATPopMpls:
-		return []byte("\"OFPATPopMpls\""), nil
-	case OFPATSetQueue:
-		return []byte("\"OFPATSetQueue\""), nil
-	case OFPATGroup:
-		return []byte("\"OFPATGroup\""), nil
-	case OFPATSetNwTtl:
-		return []byte("\"OFPATSetNwTtl\""), nil
-	case OFPATDecNwTtl:
-		return []byte("\"OFPATDecNwTtl\""), nil
-	case OFPATSetField:
-		return []byte("\"OFPATSetField\""), nil
-	case OFPATPushPbb:
-		return []byte("\"OFPATPushPbb\""), nil
-	case OFPATPopPbb:
-		return []byte("\"OFPATPopPbb\""), nil
-	case OFPATCopyField:
-		return []byte("\"OFPATCopyField\""), nil
-	case OFPATMeter:
-		return []byte("\"OFPATMeter\""), nil
-	case OFPATExperimenter:
-		return []byte("\"OFPATExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for ActionType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -413,16 +479,7 @@ const (
 type AsyncConfigFailedCode uint16
 
 func (self AsyncConfigFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPACFCInvalid:
-		return []byte("\"OFPACFCInvalid\""), nil
-	case OFPACFCUnsupported:
-		return []byte("\"OFPACFCUnsupported\""), nil
-	case OFPACFCEperm:
-		return []byte("\"OFPACFCEperm\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for AsyncConfigFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -472,46 +529,7 @@ const (
 type BadActionCode uint16
 
 func (self BadActionCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPBACBadType:
-		return []byte("\"OFPBACBadType\""), nil
-	case OFPBACBadLen:
-		return []byte("\"OFPBACBadLen\""), nil
-	case OFPBACBadExperimenter:
-		return []byte("\"OFPBACBadExperimenter\""), nil
-	case OFPBACBadExperimenterType:
-		return []byte("\"OFPBACBadExperimenterType\""), nil
-	case OFPBACBadOutPort:
-		return []byte("\"OFPBACBadOutPort\""), nil
-	case OFPBACBadArgument:
-		return []byte("\"OFPBACBadArgument\""), nil
-	case OFPBACEperm:
-		return []byte("\"OFPBACEperm\""), nil
-	case OFPBACTooMany:
-		return []byte("\"OFPBACTooMany\""), nil
-	case OFPBACBadQueue:
-		return []byte("\"OFPBACBadQueue\""), nil
-	case OFPBACBadOutGroup:
-		return []byte("\"OFPBACBadOutGroup\""), nil
-	case OFPBACMatchInconsistent:
-		return []byte("\"OFPBACMatchInconsistent\""), nil
-	case OFPBACUnsupportedOrder:
-		return []byte("\"OFPBACUnsupportedOrder\""), nil
-	case OFPBACBadTag:
-		return []byte("\"OFPBACBadTag\""), nil
-	case OFPBACBadSetType:
-		return []byte("\"OFPBACBadSetType\""), nil
-	case OFPBACBadSetLen:
-		return []byte("\"OFPBACBadSetLen\""), nil
-	case OFPBACBadSetArgument:
-		return []byte("\"OFPBACBadSetArgument\""), nil
-	case OFPBACBadSetMask:
-		return []byte("\"OFPBACBadSetMask\""), nil
-	case OFPBACBadMeter:
-		return []byte("\"OFPBACBadMeter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BadActionCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -531,30 +549,7 @@ const (
 type BadInstructionCode uint16
 
 func (self BadInstructionCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPBICUnknownInst:
-		return []byte("\"OFPBICUnknownInst\""), nil
-	case OFPBICUnsupInst:
-		return []byte("\"OFPBICUnsupInst\""), nil
-	case OFPBICBadTableID:
-		return []byte("\"OFPBICBadTableID\""), nil
-	case OFPBICUnsupMetadata:
-		return []byte("\"OFPBICUnsupMetadata\""), nil
-	case OFPBICUnsupMetadataMask:
-		return []byte("\"OFPBICUnsupMetadataMask\""), nil
-	case OFPBICBadExperimenter:
-		return []byte("\"OFPBICBadExperimenter\""), nil
-	case OFPBICBadExperimenterType:
-		return []byte("\"OFPBICBadExperimenterType\""), nil
-	case OFPBICBadLen:
-		return []byte("\"OFPBICBadLen\""), nil
-	case OFPBICEperm:
-		return []byte("\"OFPBICEperm\""), nil
-	case OFPBICDupInst:
-		return []byte("\"OFPBICDupInst\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BadInstructionCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -576,34 +571,7 @@ const (
 type BadMatchCode uint16
 
 func (self BadMatchCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPBMCBadType:
-		return []byte("\"OFPBMCBadType\""), nil
-	case OFPBMCBadLen:
-		return []byte("\"OFPBMCBadLen\""), nil
-	case OFPBMCBadTag:
-		return []byte("\"OFPBMCBadTag\""), nil
-	case OFPBMCBadDlAddrMask:
-		return []byte("\"OFPBMCBadDlAddrMask\""), nil
-	case OFPBMCBadNwAddrMask:
-		return []byte("\"OFPBMCBadNwAddrMask\""), nil
-	case OFPBMCBadWildcards:
-		return []byte("\"OFPBMCBadWildcards\""), nil
-	case OFPBMCBadField:
-		return []byte("\"OFPBMCBadField\""), nil
-	case OFPBMCBadValue:
-		return []byte("\"OFPBMCBadValue\""), nil
-	case OFPBMCBadMask:
-		return []byte("\"OFPBMCBadMask\""), nil
-	case OFPBMCBadPrereq:
-		return []byte("\"OFPBMCBadPrereq\""), nil
-	case OFPBMCDupField:
-		return []byte("\"OFPBMCDupField\""), nil
-	case OFPBMCEperm:
-		return []byte("\"OFPBMCEperm\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BadMatchCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -622,28 +590,7 @@ const (
 type BadPropertyCode uint16
 
 func (self BadPropertyCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPBPCBadType:
-		return []byte("\"OFPBPCBadType\""), nil
-	case OFPBPCBadLen:
-		return []byte("\"OFPBPCBadLen\""), nil
-	case OFPBPCBadValue:
-		return []byte("\"OFPBPCBadValue\""), nil
-	case OFPBPCTooMany:
-		return []byte("\"OFPBPCTooMany\""), nil
-	case OFPBPCDupType:
-		return []byte("\"OFPBPCDupType\""), nil
-	case OFPBPCBadExperimenter:
-		return []byte("\"OFPBPCBadExperimenter\""), nil
-	case OFPBPCBadExpType:
-		return []byte("\"OFPBPCBadExpType\""), nil
-	case OFPBPCBadExpValue:
-		return []byte("\"OFPBPCBadExpValue\""), nil
-	case OFPBPCEperm:
-		return []byte("\"OFPBPCEperm\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BadPropertyCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -672,48 +619,7 @@ const (
 type BadRequestCode uint16
 
 func (self BadRequestCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPBRCBadVersion:
-		return []byte("\"OFPBRCBadVersion\""), nil
-	case OFPBRCBadType:
-		return []byte("\"OFPBRCBadType\""), nil
-	case OFPBRCBadStat:
-		return []byte("\"OFPBRCBadStat\""), nil
-	case OFPBRCBadExperimenter:
-		return []byte("\"OFPBRCBadExperimenter\""), nil
-	case OFPBRCBadExperimenterType:
-		return []byte("\"OFPBRCBadExperimenterType\""), nil
-	case OFPBRCEperm:
-		return []byte("\"OFPBRCEperm\""), nil
-	case OFPBRCBadLen:
-		return []byte("\"OFPBRCBadLen\""), nil
-	case OFPBRCBufferEmpty:
-		return []byte("\"OFPBRCBufferEmpty\""), nil
-	case OFPBRCBufferUnknown:
-		return []byte("\"OFPBRCBufferUnknown\""), nil
-	case OFPBRCBadTableID:
-		return []byte("\"OFPBRCBadTableID\""), nil
-	case OFPBRCIsSlave:
-		return []byte("\"OFPBRCIsSlave\""), nil
-	case OFPBRCBadPort:
-		return []byte("\"OFPBRCBadPort\""), nil
-	case OFPBRCBadPacket:
-		return []byte("\"OFPBRCBadPacket\""), nil
-	case OFPBRCMultipartBufferOverflow:
-		return []byte("\"OFPBRCMultipartBufferOverflow\""), nil
-	case OFPBRCMultipartRequestTimeout:
-		return []byte("\"OFPBRCMultipartRequestTimeout\""), nil
-	case OFPBRCMultipartReplyTimeout:
-		return []byte("\"OFPBRCMultipartReplyTimeout\""), nil
-	case OFPBRCMultipartBadSched:
-		return []byte("\"OFPBRCMultipartBadSched\""), nil
-	case OFPBRCPipelineFieldsOnly:
-		return []byte("\"OFPBRCPipelineFieldsOnly\""), nil
-	case OFPBRCUnknown:
-		return []byte("\"OFPBRCUnknown\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BadRequestCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -727,18 +633,7 @@ const (
 type BsnAnchor uint16
 
 func (self BsnAnchor) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNAnchorPacketStart:
-		return []byte("\"BSNAnchorPacketStart\""), nil
-	case BSNAnchorL3HeaderStart:
-		return []byte("\"BSNAnchorL3HeaderStart\""), nil
-	case BSNAnchorL4HeaderStart:
-		return []byte("\"BSNAnchorL4HeaderStart\""), nil
-	case BSNAnchorL4PayloadStart:
-		return []byte("\"BSNAnchorL4PayloadStart\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnAnchor", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -751,16 +646,7 @@ const (
 type BsnAutoNegotiationType uint8
 
 func (self BsnAutoNegotiationType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNAutoNegotiationDefault:
-		return []byte("\"BSNAutoNegotiationDefault\""), nil
-	case BSNAutoNegotiationEnable:
-		return []byte("\"BSNAutoNegotiationEnable\""), nil
-	case BSNAutoNegotiationDisable:
-		return []byte("\"BSNAutoNegotiationDisable\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnAutoNegotiationType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -774,18 +660,7 @@ const (
 type BsnBfdEndpoint uint8
 
 func (self BsnBfdEndpoint) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNBfdUnused:
-		return []byte("\"BSNBfdUnused\""), nil
-	case BSNBfdMicro:
-		return []byte("\"BSNBfdMicro\""), nil
-	case BSNBfd1Hop:
-		return []byte("\"BSNBfd1Hop\""), nil
-	case BSNBfdMultiHop:
-		return []byte("\"BSNBfdMultiHop\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnBfdEndpoint", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -802,24 +677,7 @@ const (
 type BsnBfdEndpointState uint8
 
 func (self BsnBfdEndpointState) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNBfdEndpointStateAdmindown:
-		return []byte("\"BSNBfdEndpointStateAdmindown\""), nil
-	case BSNBfdEndpointStateDown:
-		return []byte("\"BSNBfdEndpointStateDown\""), nil
-	case BSNBfdEndpointStateInit:
-		return []byte("\"BSNBfdEndpointStateInit\""), nil
-	case BSNBfdEndpointStateUp:
-		return []byte("\"BSNBfdEndpointStateUp\""), nil
-	case BSNBfdEndpointSessionError:
-		return []byte("\"BSNBfdEndpointSessionError\""), nil
-	case BSNBfdEndpointRemoteAdmindown:
-		return []byte("\"BSNBfdEndpointRemoteAdmindown\""), nil
-	case BSNBfdEndpointParamsChange:
-		return []byte("\"BSNBfdEndpointParamsChange\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnBfdEndpointState", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -831,14 +689,7 @@ const (
 type BsnControllerConnectionState uint8
 
 func (self BsnControllerConnectionState) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNControllerConnectionStateDisconnected:
-		return []byte("\"BSNControllerConnectionStateDisconnected\""), nil
-	case BSNControllerConnectionStateConnected:
-		return []byte("\"BSNControllerConnectionStateConnected\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnControllerConnectionState", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -857,28 +708,7 @@ const (
 type BsnDecap uint16
 
 func (self BsnDecap) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNDecapVxlan:
-		return []byte("\"BSNDecapVxlan\""), nil
-	case BSNDecapErspan:
-		return []byte("\"BSNDecapErspan\""), nil
-	case BSNDecapL2GRE:
-		return []byte("\"BSNDecapL2GRE\""), nil
-	case BSNDecapNvgre:
-		return []byte("\"BSNDecapNvgre\""), nil
-	case BSNDecapCapwap:
-		return []byte("\"BSNDecapCapwap\""), nil
-	case BSNDecapL2Mpls:
-		return []byte("\"BSNDecapL2Mpls\""), nil
-	case BSNDecapL3GRE:
-		return []byte("\"BSNDecapL3GRE\""), nil
-	case BSNDecapGtp:
-		return []byte("\"BSNDecapGtp\""), nil
-	case BSNDecapL3Mpls:
-		return []byte("\"BSNDecapL3Mpls\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnDecap", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -891,16 +721,7 @@ const (
 type BsnEncap uint8
 
 func (self BsnEncap) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNEncapUnused:
-		return []byte("\"BSNEncapUnused\""), nil
-	case BSNEncapIpv4Udp:
-		return []byte("\"BSNEncapIpv4Udp\""), nil
-	case BSNEncapIpv6Udp:
-		return []byte("\"BSNEncapIpv6Udp\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnEncap", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -918,22 +739,22 @@ type BsnEnhancedHashType uint64
 func (self BsnEnhancedHashType) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNEnhancedHashL2 == BSNEnhancedHashL2 {
-		flags = append(flags, "\"BSNEnhancedHashL2\": true")
+		flags = append(flags, "\"L2\": true")
 	}
 	if self&BSNEnhancedHashL3 == BSNEnhancedHashL3 {
-		flags = append(flags, "\"BSNEnhancedHashL3\": true")
+		flags = append(flags, "\"L3\": true")
 	}
 	if self&BSNEnhancedHashL2Gre == BSNEnhancedHashL2Gre {
-		flags = append(flags, "\"BSNEnhancedHashL2Gre\": true")
+		flags = append(flags, "\"L2Gre\": true")
 	}
 	if self&BSNEnhancedHashMpls == BSNEnhancedHashMpls {
-		flags = append(flags, "\"BSNEnhancedHashMpls\": true")
+		flags = append(flags, "\"Mpls\": true")
 	}
 	if self&BSNEnhancedHashGtp == BSNEnhancedHashGtp {
-		flags = append(flags, "\"BSNEnhancedHashGtp\": true")
+		flags = append(flags, "\"Gtp\": true")
 	}
 	if self&BSNEnhancedHashSymmetric == BSNEnhancedHashSymmetric {
-		flags = append(flags, "\"BSNEnhancedHashSymmetric\": true")
+		flags = append(flags, "\"Symmetric\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -946,12 +767,7 @@ const (
 type BsnFabricPortRole uint16
 
 func (self BsnFabricPortRole) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNFabricPortRolePartitionedSpine:
-		return []byte("\"BSNFabricPortRolePartitionedSpine\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnFabricPortRole", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -964,16 +780,7 @@ const (
 type BsnFecConfigState uint32
 
 func (self BsnFecConfigState) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNFecConfigStateUnset:
-		return []byte("\"BSNFecConfigStateUnset\""), nil
-	case BSNFecConfigStateEnabled:
-		return []byte("\"BSNFecConfigStateEnabled\""), nil
-	case BSNFecConfigStateDisabled:
-		return []byte("\"BSNFecConfigStateDisabled\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnFecConfigState", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -993,30 +800,7 @@ const (
 type BsnFlowClassifier uint16
 
 func (self BsnFlowClassifier) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNFlowClassifierNone:
-		return []byte("\"BSNFlowClassifierNone\""), nil
-	case BSNFlowClassifierL2Bc:
-		return []byte("\"BSNFlowClassifierL2Bc\""), nil
-	case BSNFlowClassifierL2Uc:
-		return []byte("\"BSNFlowClassifierL2Uc\""), nil
-	case BSNFlowClassifierL2Unknown:
-		return []byte("\"BSNFlowClassifierL2Unknown\""), nil
-	case BSNFlowClassifierL2Mcknown:
-		return []byte("\"BSNFlowClassifierL2Mcknown\""), nil
-	case BSNFlowClassifierL2Mcunknown:
-		return []byte("\"BSNFlowClassifierL2Mcunknown\""), nil
-	case BSNFlowClassifierL3Mcunknown:
-		return []byte("\"BSNFlowClassifierL3Mcunknown\""), nil
-	case BSNFlowClassifierL3Mcknown:
-		return []byte("\"BSNFlowClassifierL3Mcknown\""), nil
-	case BSNFlowClassifierL3Ucknown:
-		return []byte("\"BSNFlowClassifierL3Ucknown\""), nil
-	case BSNFlowClassifierL3Ucunknown:
-		return []byte("\"BSNFlowClassifierL3Ucunknown\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnFlowClassifier", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1029,16 +813,7 @@ const (
 type BsnForwardErrorCorrectionType uint8
 
 func (self BsnForwardErrorCorrectionType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNForwardErrorCorrectionDefault:
-		return []byte("\"BSNForwardErrorCorrectionDefault\""), nil
-	case BSNForwardErrorCorrectionEnable:
-		return []byte("\"BSNForwardErrorCorrectionEnable\""), nil
-	case BSNForwardErrorCorrectionDisable:
-		return []byte("\"BSNForwardErrorCorrectionDisable\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnForwardErrorCorrectionType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1057,28 +832,7 @@ const (
 type BsnHashAlgorithmType uint16
 
 func (self BsnHashAlgorithmType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNHashAlgorithmCrc16Xor8:
-		return []byte("\"BSNHashAlgorithmCrc16Xor8\""), nil
-	case BSNHashAlgorithmCrc16Xor4:
-		return []byte("\"BSNHashAlgorithmCrc16Xor4\""), nil
-	case BSNHashAlgorithmCrc16Xor2:
-		return []byte("\"BSNHashAlgorithmCrc16Xor2\""), nil
-	case BSNHashAlgorithmCrc16Xor1:
-		return []byte("\"BSNHashAlgorithmCrc16Xor1\""), nil
-	case BSNHashAlgorithmCrc16:
-		return []byte("\"BSNHashAlgorithmCrc16\""), nil
-	case BSNHashAlgorithmXor16:
-		return []byte("\"BSNHashAlgorithmXor16\""), nil
-	case BSNHashAlgorithmCrc16Ccitt:
-		return []byte("\"BSNHashAlgorithmCrc16Ccitt\""), nil
-	case BSNHashAlgorithmCrc32Lo:
-		return []byte("\"BSNHashAlgorithmCrc32Lo\""), nil
-	case BSNHashAlgorithmCrc32Hi:
-		return []byte("\"BSNHashAlgorithmCrc32Hi\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnHashAlgorithmType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1092,10 +846,10 @@ type BsnHashSelectFlags uint32
 func (self BsnHashSelectFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNHashSelectSrcIp == BSNHashSelectSrcIp {
-		flags = append(flags, "\"BSNHashSelectSrcIp\": true")
+		flags = append(flags, "\"SrcIp\": true")
 	}
 	if self&BSNHashSelectDstIp == BSNHashSelectDstIp {
-		flags = append(flags, "\"BSNHashSelectDstIp\": true")
+		flags = append(flags, "\"DstIp\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -1109,14 +863,7 @@ const (
 type BsnIpTunnelType uint16
 
 func (self BsnIpTunnelType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNIpTunnelTypeNone:
-		return []byte("\"BSNIpTunnelTypeNone\""), nil
-	case BSNIpTunnelTypePim:
-		return []byte("\"BSNIpTunnelTypePim\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnIpTunnelType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1136,28 +883,28 @@ type BsnLacpState uint8
 func (self BsnLacpState) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNLacpStateActivity == BSNLacpStateActivity {
-		flags = append(flags, "\"BSNLacpStateActivity\": true")
+		flags = append(flags, "\"Activity\": true")
 	}
 	if self&BSNLacpStateTimeout == BSNLacpStateTimeout {
-		flags = append(flags, "\"BSNLacpStateTimeout\": true")
+		flags = append(flags, "\"Timeout\": true")
 	}
 	if self&BSNLacpStateAggregation == BSNLacpStateAggregation {
-		flags = append(flags, "\"BSNLacpStateAggregation\": true")
+		flags = append(flags, "\"Aggregation\": true")
 	}
 	if self&BSNLacpStateSynchronization == BSNLacpStateSynchronization {
-		flags = append(flags, "\"BSNLacpStateSynchronization\": true")
+		flags = append(flags, "\"Synchronization\": true")
 	}
 	if self&BSNLacpStateCollecting == BSNLacpStateCollecting {
-		flags = append(flags, "\"BSNLacpStateCollecting\": true")
+		flags = append(flags, "\"Collecting\": true")
 	}
 	if self&BSNLacpStateDistributing == BSNLacpStateDistributing {
-		flags = append(flags, "\"BSNLacpStateDistributing\": true")
+		flags = append(flags, "\"Distributing\": true")
 	}
 	if self&BSNLacpStateDefaulted == BSNLacpStateDefaulted {
-		flags = append(flags, "\"BSNLacpStateDefaulted\": true")
+		flags = append(flags, "\"Defaulted\": true")
 	}
 	if self&BSNLacpStateExpired == BSNLacpStateExpired {
-		flags = append(flags, "\"BSNLacpStateExpired\": true")
+		flags = append(flags, "\"Expired\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -1190,22 +937,7 @@ const (
 type BsnLoglevel uint8
 
 func (self BsnLoglevel) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNLoglevelMsg:
-		return []byte("\"BSNLoglevelMsg\""), nil
-	case BSNLoglevelError:
-		return []byte("\"BSNLoglevelError\""), nil
-	case BSNLoglevelWarn:
-		return []byte("\"BSNLoglevelWarn\""), nil
-	case BSNLoglevelInfo:
-		return []byte("\"BSNLoglevelInfo\""), nil
-	case BSNLoglevelVerbose:
-		return []byte("\"BSNLoglevelVerbose\""), nil
-	case BSNLoglevelTrace:
-		return []byte("\"BSNLoglevelTrace\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnLoglevel", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1219,18 +951,7 @@ const (
 type BsnLoopbackMode uint8
 
 func (self BsnLoopbackMode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNLoopbackModeNone:
-		return []byte("\"BSNLoopbackModeNone\""), nil
-	case BSNLoopbackModeMAC:
-		return []byte("\"BSNLoopbackModeMAC\""), nil
-	case BSNLoopbackModePhy:
-		return []byte("\"BSNLoopbackModePhy\""), nil
-	case BSNLoopbackModePhyRemote:
-		return []byte("\"BSNLoopbackModePhyRemote\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnLoopbackMode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1244,10 +965,10 @@ type BsnLuaUploadFlags uint16
 func (self BsnLuaUploadFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNLuaUploadMore == BSNLuaUploadMore {
-		flags = append(flags, "\"BSNLuaUploadMore\": true")
+		flags = append(flags, "\"More\": true")
 	}
 	if self&BSNLuaUploadForce == BSNLuaUploadForce {
-		flags = append(flags, "\"BSNLuaUploadForce\": true")
+		flags = append(flags, "\"Force\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -1278,18 +999,7 @@ const (
 type BsnMulticastPacket uint16
 
 func (self BsnMulticastPacket) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNMulticastPacketNone:
-		return []byte("\"BSNMulticastPacketNone\""), nil
-	case BSNMulticastPacketPimHello:
-		return []byte("\"BSNMulticastPacketPimHello\""), nil
-	case BSNMulticastPacketPimJoinPrune:
-		return []byte("\"BSNMulticastPacketPimJoinPrune\""), nil
-	case BSNMulticastPacketPimAssert:
-		return []byte("\"BSNMulticastPacketPimAssert\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnMulticastPacket", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1325,76 +1035,76 @@ type BsnPktinFlag uint64
 func (self BsnPktinFlag) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNPktinFlagPdu == BSNPktinFlagPdu {
-		flags = append(flags, "\"BSNPktinFlagPdu\": true")
+		flags = append(flags, "\"Pdu\": true")
 	}
 	if self&BSNPktinFlagNewHost == BSNPktinFlagNewHost {
-		flags = append(flags, "\"BSNPktinFlagNewHost\": true")
+		flags = append(flags, "\"NewHost\": true")
 	}
 	if self&BSNPktinFlagStationMove == BSNPktinFlagStationMove {
-		flags = append(flags, "\"BSNPktinFlagStationMove\": true")
+		flags = append(flags, "\"StationMove\": true")
 	}
 	if self&BSNPktinFlagARP == BSNPktinFlagARP {
-		flags = append(flags, "\"BSNPktinFlagARP\": true")
+		flags = append(flags, "\"Arp\": true")
 	}
 	if self&BSNPktinFlagDhcp == BSNPktinFlagDhcp {
-		flags = append(flags, "\"BSNPktinFlagDhcp\": true")
+		flags = append(flags, "\"Dhcp\": true")
 	}
 	if self&BSNPktinFlagL2Cpu == BSNPktinFlagL2Cpu {
-		flags = append(flags, "\"BSNPktinFlagL2Cpu\": true")
+		flags = append(flags, "\"L2Cpu\": true")
 	}
 	if self&BSNPktinFlagDebug == BSNPktinFlagDebug {
-		flags = append(flags, "\"BSNPktinFlagDebug\": true")
+		flags = append(flags, "\"Debug\": true")
 	}
 	if self&BSNPktinFlagTtlExpired == BSNPktinFlagTtlExpired {
-		flags = append(flags, "\"BSNPktinFlagTtlExpired\": true")
+		flags = append(flags, "\"TtlExpired\": true")
 	}
 	if self&BSNPktinFlagL3Miss == BSNPktinFlagL3Miss {
-		flags = append(flags, "\"BSNPktinFlagL3Miss\": true")
+		flags = append(flags, "\"L3Miss\": true")
 	}
 	if self&BSNPktinFlagL3Cpu == BSNPktinFlagL3Cpu {
-		flags = append(flags, "\"BSNPktinFlagL3Cpu\": true")
+		flags = append(flags, "\"L3Cpu\": true")
 	}
 	if self&BSNPktinFlagIngressAcl == BSNPktinFlagIngressAcl {
-		flags = append(flags, "\"BSNPktinFlagIngressAcl\": true")
+		flags = append(flags, "\"IngressAcl\": true")
 	}
 	if self&BSNPktinFlagSflow == BSNPktinFlagSflow {
-		flags = append(flags, "\"BSNPktinFlagSflow\": true")
+		flags = append(flags, "\"Sflow\": true")
 	}
 	if self&BSNPktinFlagARPCache == BSNPktinFlagARPCache {
-		flags = append(flags, "\"BSNPktinFlagARPCache\": true")
+		flags = append(flags, "\"ArpCache\": true")
 	}
 	if self&BSNPktinFlagARPTarget == BSNPktinFlagARPTarget {
-		flags = append(flags, "\"BSNPktinFlagARPTarget\": true")
+		flags = append(flags, "\"ArpTarget\": true")
 	}
 	if self&BSNPktinFlagIgmp == BSNPktinFlagIgmp {
-		flags = append(flags, "\"BSNPktinFlagIgmp\": true")
+		flags = append(flags, "\"Igmp\": true")
 	}
 	if self&BSNPktinFlagPim == BSNPktinFlagPim {
-		flags = append(flags, "\"BSNPktinFlagPim\": true")
+		flags = append(flags, "\"Pim\": true")
 	}
 	if self&BSNPktinFlagVxlanSipMiss == BSNPktinFlagVxlanSipMiss {
-		flags = append(flags, "\"BSNPktinFlagVxlanSipMiss\": true")
+		flags = append(flags, "\"VxlanSipMiss\": true")
 	}
 	if self&BSNPktinFlagMcReserved == BSNPktinFlagMcReserved {
-		flags = append(flags, "\"BSNPktinFlagMcReserved\": true")
+		flags = append(flags, "\"McReserved\": true")
 	}
 	if self&BSNPktinFlagAnalytics == BSNPktinFlagAnalytics {
-		flags = append(flags, "\"BSNPktinFlagAnalytics\": true")
+		flags = append(flags, "\"Analytics\": true")
 	}
 	if self&BSNPktinFlagIcmpv6 == BSNPktinFlagIcmpv6 {
-		flags = append(flags, "\"BSNPktinFlagIcmpv6\": true")
+		flags = append(flags, "\"Icmpv6\": true")
 	}
 	if self&BSNPktinFlagIngressAclLocal == BSNPktinFlagIngressAclLocal {
-		flags = append(flags, "\"BSNPktinFlagIngressAclLocal\": true")
+		flags = append(flags, "\"IngressAclLocal\": true")
 	}
 	if self&BSNPktinFlagIpmcMiss == BSNPktinFlagIpmcMiss {
-		flags = append(flags, "\"BSNPktinFlagIpmcMiss\": true")
+		flags = append(flags, "\"IpmcMiss\": true")
 	}
 	if self&BSNPktinFlagIpmcRpfFailed == BSNPktinFlagIpmcRpfFailed {
-		flags = append(flags, "\"BSNPktinFlagIpmcRpfFailed\": true")
+		flags = append(flags, "\"IpmcRpfFailed\": true")
 	}
 	if self&BSNPktinFlagBfdSlowpath == BSNPktinFlagBfdSlowpath {
-		flags = append(flags, "\"BSNPktinFlagBfdSlowpath\": true")
+		flags = append(flags, "\"BfdSlowpath\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -1462,122 +1172,7 @@ const (
 type BsnPortCounter uint8
 
 func (self BsnPortCounter) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNPortCounterRxBytes:
-		return []byte("\"BSNPortCounterRxBytes\""), nil
-	case BSNPortCounterRxPacketsUnicast:
-		return []byte("\"BSNPortCounterRxPacketsUnicast\""), nil
-	case BSNPortCounterRxPacketsBroadcast:
-		return []byte("\"BSNPortCounterRxPacketsBroadcast\""), nil
-	case BSNPortCounterRxPacketsMulticast:
-		return []byte("\"BSNPortCounterRxPacketsMulticast\""), nil
-	case BSNPortCounterRxDropped:
-		return []byte("\"BSNPortCounterRxDropped\""), nil
-	case BSNPortCounterRxErrors:
-		return []byte("\"BSNPortCounterRxErrors\""), nil
-	case BSNPortCounterTxBytes:
-		return []byte("\"BSNPortCounterTxBytes\""), nil
-	case BSNPortCounterTxPacketsUnicast:
-		return []byte("\"BSNPortCounterTxPacketsUnicast\""), nil
-	case BSNPortCounterTxPacketsBroadcast:
-		return []byte("\"BSNPortCounterTxPacketsBroadcast\""), nil
-	case BSNPortCounterTxPacketsMulticast:
-		return []byte("\"BSNPortCounterTxPacketsMulticast\""), nil
-	case BSNPortCounterTxDropped:
-		return []byte("\"BSNPortCounterTxDropped\""), nil
-	case BSNPortCounterTxErrors:
-		return []byte("\"BSNPortCounterTxErrors\""), nil
-	case BSNPortCounterRxRunts:
-		return []byte("\"BSNPortCounterRxRunts\""), nil
-	case BSNPortCounterRxGiants:
-		return []byte("\"BSNPortCounterRxGiants\""), nil
-	case BSNPortCounterRxCrcErrors:
-		return []byte("\"BSNPortCounterRxCrcErrors\""), nil
-	case BSNPortCounterRxAlignmentErrors:
-		return []byte("\"BSNPortCounterRxAlignmentErrors\""), nil
-	case BSNPortCounterRxSymbolErrors:
-		return []byte("\"BSNPortCounterRxSymbolErrors\""), nil
-	case BSNPortCounterRxPauseInput:
-		return []byte("\"BSNPortCounterRxPauseInput\""), nil
-	case BSNPortCounterTxCollisions:
-		return []byte("\"BSNPortCounterTxCollisions\""), nil
-	case BSNPortCounterTxLateCollisions:
-		return []byte("\"BSNPortCounterTxLateCollisions\""), nil
-	case BSNPortCounterTxDeferred:
-		return []byte("\"BSNPortCounterTxDeferred\""), nil
-	case BSNPortCounterTxPauseOutput:
-		return []byte("\"BSNPortCounterTxPauseOutput\""), nil
-	case BSNPortCounterRxPackets:
-		return []byte("\"BSNPortCounterRxPackets\""), nil
-	case BSNPortCounterTxPackets:
-		return []byte("\"BSNPortCounterTxPackets\""), nil
-	case BSNPortCounterRxLengthErrors:
-		return []byte("\"BSNPortCounterRxLengthErrors\""), nil
-	case BSNPortCounterRxOverflowErrors:
-		return []byte("\"BSNPortCounterRxOverflowErrors\""), nil
-	case BSNPortCounterTxCarrierErrors:
-		return []byte("\"BSNPortCounterTxCarrierErrors\""), nil
-	case BSNPortCounterRxPacketsBadVLAN:
-		return []byte("\"BSNPortCounterRxPacketsBadVLAN\""), nil
-	case BSNPortCounterLinkUp:
-		return []byte("\"BSNPortCounterLinkUp\""), nil
-	case BSNPortCounterLinkDown:
-		return []byte("\"BSNPortCounterLinkDown\""), nil
-	case BSNPortCounterRxPfcControlFrame:
-		return []byte("\"BSNPortCounterRxPfcControlFrame\""), nil
-	case BSNPortCounterTxPfcControlFrame:
-		return []byte("\"BSNPortCounterTxPfcControlFrame\""), nil
-	case BSNPortCounterRxPfcFrameXonPriority0:
-		return []byte("\"BSNPortCounterRxPfcFrameXonPriority0\""), nil
-	case BSNPortCounterRxPfcFrameXonPriority1:
-		return []byte("\"BSNPortCounterRxPfcFrameXonPriority1\""), nil
-	case BSNPortCounterRxPfcFrameXonPriority2:
-		return []byte("\"BSNPortCounterRxPfcFrameXonPriority2\""), nil
-	case BSNPortCounterRxPfcFrameXonPriority3:
-		return []byte("\"BSNPortCounterRxPfcFrameXonPriority3\""), nil
-	case BSNPortCounterRxPfcFrameXonPriority4:
-		return []byte("\"BSNPortCounterRxPfcFrameXonPriority4\""), nil
-	case BSNPortCounterRxPfcFrameXonPriority5:
-		return []byte("\"BSNPortCounterRxPfcFrameXonPriority5\""), nil
-	case BSNPortCounterRxPfcFrameXonPriority6:
-		return []byte("\"BSNPortCounterRxPfcFrameXonPriority6\""), nil
-	case BSNPortCounterRxPfcFrameXonPriority7:
-		return []byte("\"BSNPortCounterRxPfcFrameXonPriority7\""), nil
-	case BSNPortCounterRxPfcFramePriority0:
-		return []byte("\"BSNPortCounterRxPfcFramePriority0\""), nil
-	case BSNPortCounterRxPfcFramePriority1:
-		return []byte("\"BSNPortCounterRxPfcFramePriority1\""), nil
-	case BSNPortCounterRxPfcFramePriority2:
-		return []byte("\"BSNPortCounterRxPfcFramePriority2\""), nil
-	case BSNPortCounterRxPfcFramePriority3:
-		return []byte("\"BSNPortCounterRxPfcFramePriority3\""), nil
-	case BSNPortCounterRxPfcFramePriority4:
-		return []byte("\"BSNPortCounterRxPfcFramePriority4\""), nil
-	case BSNPortCounterRxPfcFramePriority5:
-		return []byte("\"BSNPortCounterRxPfcFramePriority5\""), nil
-	case BSNPortCounterRxPfcFramePriority6:
-		return []byte("\"BSNPortCounterRxPfcFramePriority6\""), nil
-	case BSNPortCounterRxPfcFramePriority7:
-		return []byte("\"BSNPortCounterRxPfcFramePriority7\""), nil
-	case BSNPortCounterTxPfcFramePriority0:
-		return []byte("\"BSNPortCounterTxPfcFramePriority0\""), nil
-	case BSNPortCounterTxPfcFramePriority1:
-		return []byte("\"BSNPortCounterTxPfcFramePriority1\""), nil
-	case BSNPortCounterTxPfcFramePriority2:
-		return []byte("\"BSNPortCounterTxPfcFramePriority2\""), nil
-	case BSNPortCounterTxPfcFramePriority3:
-		return []byte("\"BSNPortCounterTxPfcFramePriority3\""), nil
-	case BSNPortCounterTxPfcFramePriority4:
-		return []byte("\"BSNPortCounterTxPfcFramePriority4\""), nil
-	case BSNPortCounterTxPfcFramePriority5:
-		return []byte("\"BSNPortCounterTxPfcFramePriority5\""), nil
-	case BSNPortCounterTxPfcFramePriority6:
-		return []byte("\"BSNPortCounterTxPfcFramePriority6\""), nil
-	case BSNPortCounterTxPfcFramePriority7:
-		return []byte("\"BSNPortCounterTxPfcFramePriority7\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnPortCounter", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1598,32 +1193,7 @@ const (
 type BsnPortMode uint16
 
 func (self BsnPortMode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNPortModeNone:
-		return []byte("\"BSNPortModeNone\""), nil
-	case BSNPortMode4Xx:
-		return []byte("\"BSNPortMode4Xx\""), nil
-	case BSNPortMode4X1:
-		return []byte("\"BSNPortMode4X1\""), nil
-	case BSNPortMode4X10:
-		return []byte("\"BSNPortMode4X10\""), nil
-	case BSNPortMode4X25:
-		return []byte("\"BSNPortMode4X25\""), nil
-	case BSNPortMode2X50:
-		return []byte("\"BSNPortMode2X50\""), nil
-	case BSNPortMode1X1:
-		return []byte("\"BSNPortMode1X1\""), nil
-	case BSNPortMode1X10:
-		return []byte("\"BSNPortMode1X10\""), nil
-	case BSNPortMode1X25:
-		return []byte("\"BSNPortMode1X25\""), nil
-	case BSNPortMode1X40:
-		return []byte("\"BSNPortMode1X40\""), nil
-	case BSNPortMode1X100:
-		return []byte("\"BSNPortMode1X100\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnPortMode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1639,22 +1209,7 @@ const (
 type BsnPortSpeedGbpsType uint32
 
 func (self BsnPortSpeedGbpsType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNPortSpeedGbps1:
-		return []byte("\"BSNPortSpeedGbps1\""), nil
-	case BSNPortSpeedGbps10:
-		return []byte("\"BSNPortSpeedGbps10\""), nil
-	case BSNPortSpeedGbps25:
-		return []byte("\"BSNPortSpeedGbps25\""), nil
-	case BSNPortSpeedGbps40:
-		return []byte("\"BSNPortSpeedGbps40\""), nil
-	case BSNPortSpeedGbps50:
-		return []byte("\"BSNPortSpeedGbps50\""), nil
-	case BSNPortSpeedGbps100:
-		return []byte("\"BSNPortSpeedGbps100\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnPortSpeedGbpsType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1668,18 +1223,7 @@ const (
 type BsnPortUsage uint16
 
 func (self BsnPortUsage) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNPortUnused:
-		return []byte("\"BSNPortUnused\""), nil
-	case BSNPortTransmitOnly:
-		return []byte("\"BSNPortTransmitOnly\""), nil
-	case BSNPortReceiveOnly:
-		return []byte("\"BSNPortReceiveOnly\""), nil
-	case BSNPortBidirection:
-		return []byte("\"BSNPortBidirection\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnPortUsage", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1691,14 +1235,7 @@ const (
 type BsnPortVxlanMode uint8
 
 func (self BsnPortVxlanMode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNPortVxlanRecirculationEnable:
-		return []byte("\"BSNPortVxlanRecirculationEnable\""), nil
-	case BSNPortVxlanTerminationEnable:
-		return []byte("\"BSNPortVxlanTerminationEnable\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnPortVxlanMode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1713,13 +1250,13 @@ type BsnPushVlan uint8
 func (self BsnPushVlan) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNPushVLANUntagged == BSNPushVLANUntagged {
-		flags = append(flags, "\"BSNPushVLANUntagged\": true")
+		flags = append(flags, "\"Untagged\": true")
 	}
 	if self&BSNPushVLANSingleTagged == BSNPushVLANSingleTagged {
-		flags = append(flags, "\"BSNPushVLANSingleTagged\": true")
+		flags = append(flags, "\"SingleTagged\": true")
 	}
 	if self&BSNPushVLANDoubleTagged == BSNPushVLANDoubleTagged {
-		flags = append(flags, "\"BSNPushVLANDoubleTagged\": true")
+		flags = append(flags, "\"DoubleTagged\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -1733,14 +1270,7 @@ const (
 type BsnRateUnit uint8
 
 func (self BsnRateUnit) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNRateUnitPps:
-		return []byte("\"BSNRateUnitPps\""), nil
-	case BSNRateUnitKbitps:
-		return []byte("\"BSNRateUnitKbitps\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnRateUnit", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1756,22 +1286,7 @@ const (
 type BsnRoutingParam uint16
 
 func (self BsnRoutingParam) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNRoutingParamOspfUcast:
-		return []byte("\"BSNRoutingParamOspfUcast\""), nil
-	case BSNRoutingParamOspfMcast:
-		return []byte("\"BSNRoutingParamOspfMcast\""), nil
-	case BSNRoutingParamARPFrr:
-		return []byte("\"BSNRoutingParamARPFrr\""), nil
-	case BSNRoutingParamIpv6OspfUcast:
-		return []byte("\"BSNRoutingParamIpv6OspfUcast\""), nil
-	case BSNRoutingParamIpv6OspfMcast:
-		return []byte("\"BSNRoutingParamIpv6OspfMcast\""), nil
-	case BSNRoutingParamIpv6NdpFrr:
-		return []byte("\"BSNRoutingParamIpv6NdpFrr\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnRoutingParam", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1791,28 +1306,28 @@ type BsnSpeedCapabilities uint64
 func (self BsnSpeedCapabilities) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNSpeedCap10M == BSNSpeedCap10M {
-		flags = append(flags, "\"BSNSpeedCap10M\": true")
+		flags = append(flags, "\"10M\": true")
 	}
 	if self&BSNSpeedCap100M == BSNSpeedCap100M {
-		flags = append(flags, "\"BSNSpeedCap100M\": true")
+		flags = append(flags, "\"100M\": true")
 	}
 	if self&BSNSpeedCap1Gb == BSNSpeedCap1Gb {
-		flags = append(flags, "\"BSNSpeedCap1Gb\": true")
+		flags = append(flags, "\"1Gb\": true")
 	}
 	if self&BSNSpeedCap10Gb == BSNSpeedCap10Gb {
-		flags = append(flags, "\"BSNSpeedCap10Gb\": true")
+		flags = append(flags, "\"10Gb\": true")
 	}
 	if self&BSNSpeedCap25Gb == BSNSpeedCap25Gb {
-		flags = append(flags, "\"BSNSpeedCap25Gb\": true")
+		flags = append(flags, "\"25Gb\": true")
 	}
 	if self&BSNSpeedCap40Gb == BSNSpeedCap40Gb {
-		flags = append(flags, "\"BSNSpeedCap40Gb\": true")
+		flags = append(flags, "\"40Gb\": true")
 	}
 	if self&BSNSpeedCap50Gb == BSNSpeedCap50Gb {
-		flags = append(flags, "\"BSNSpeedCap50Gb\": true")
+		flags = append(flags, "\"50Gb\": true")
 	}
 	if self&BSNSpeedCap100Gb == BSNSpeedCap100Gb {
-		flags = append(flags, "\"BSNSpeedCap100Gb\": true")
+		flags = append(flags, "\"100Gb\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -1826,14 +1341,7 @@ const (
 type BsnStatus uint8
 
 func (self BsnStatus) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNStatusDisable:
-		return []byte("\"BSNStatusDisable\""), nil
-	case BSNStatusEnable:
-		return []byte("\"BSNStatusEnable\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnStatus", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1848,13 +1356,13 @@ type BsnStripVlan uint8
 func (self BsnStripVlan) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNStripVLANFirst == BSNStripVLANFirst {
-		flags = append(flags, "\"BSNStripVLANFirst\": true")
+		flags = append(flags, "\"First\": true")
 	}
 	if self&BSNStripVLANSecond == BSNStripVLANSecond {
-		flags = append(flags, "\"BSNStripVLANSecond\": true")
+		flags = append(flags, "\"Second\": true")
 	}
 	if self&BSNStripVLANThird == BSNStripVLANThird {
-		flags = append(flags, "\"BSNStripVLANThird\": true")
+		flags = append(flags, "\"Third\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -1877,31 +1385,31 @@ type BsnTcpFlag uint16
 func (self BsnTcpFlag) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&BSNTCPFlagFin == BSNTCPFlagFin {
-		flags = append(flags, "\"BSNTCPFlagFin\": true")
+		flags = append(flags, "\"Fin\": true")
 	}
 	if self&BSNTCPFlagSyn == BSNTCPFlagSyn {
-		flags = append(flags, "\"BSNTCPFlagSyn\": true")
+		flags = append(flags, "\"Syn\": true")
 	}
 	if self&BSNTCPFlagRst == BSNTCPFlagRst {
-		flags = append(flags, "\"BSNTCPFlagRst\": true")
+		flags = append(flags, "\"Rst\": true")
 	}
 	if self&BSNTCPFlagPsh == BSNTCPFlagPsh {
-		flags = append(flags, "\"BSNTCPFlagPsh\": true")
+		flags = append(flags, "\"Psh\": true")
 	}
 	if self&BSNTCPFlagAck == BSNTCPFlagAck {
-		flags = append(flags, "\"BSNTCPFlagAck\": true")
+		flags = append(flags, "\"Ack\": true")
 	}
 	if self&BSNTCPFlagUrg == BSNTCPFlagUrg {
-		flags = append(flags, "\"BSNTCPFlagUrg\": true")
+		flags = append(flags, "\"Urg\": true")
 	}
 	if self&BSNTCPFlagEce == BSNTCPFlagEce {
-		flags = append(flags, "\"BSNTCPFlagEce\": true")
+		flags = append(flags, "\"Ece\": true")
 	}
 	if self&BSNTCPFlagCwr == BSNTCPFlagCwr {
-		flags = append(flags, "\"BSNTCPFlagCwr\": true")
+		flags = append(flags, "\"Cwr\": true")
 	}
 	if self&BSNTCPFlagNs == BSNTCPFlagNs {
-		flags = append(flags, "\"BSNTCPFlagNs\": true")
+		flags = append(flags, "\"Ns\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -1931,16 +1439,7 @@ const (
 type BsnUdfAnchor uint16
 
 func (self BsnUdfAnchor) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNUdfAnchorPacketStart:
-		return []byte("\"BSNUdfAnchorPacketStart\""), nil
-	case BSNUdfAnchorL3HeaderStart:
-		return []byte("\"BSNUdfAnchorL3HeaderStart\""), nil
-	case BSNUdfAnchorL4HeaderStart:
-		return []byte("\"BSNUdfAnchorL4HeaderStart\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnUdfAnchor", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1967,14 +1466,7 @@ const (
 type BsnUpgrade uint16
 
 func (self BsnUpgrade) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNUpgradeInvalid:
-		return []byte("\"BSNUpgradeInvalid\""), nil
-	case BSNUpgradeInProgress:
-		return []byte("\"BSNUpgradeInProgress\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnUpgrade", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -1996,19 +1488,19 @@ type BsnVportL2GreFlags uint32
 func (self BsnVportL2GreFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFBSNVportL2GreLocalMACIsValid == OFBSNVportL2GreLocalMACIsValid {
-		flags = append(flags, "\"OFBSNVportL2GreLocalMACIsValid\": true")
+		flags = append(flags, "\"LocalMACIsValid\": true")
 	}
 	if self&OFBSNVportL2GreDSCPAssign == OFBSNVportL2GreDSCPAssign {
-		flags = append(flags, "\"OFBSNVportL2GreDSCPAssign\": true")
+		flags = append(flags, "\"DscpAssign\": true")
 	}
 	if self&OFBSNVportL2GreDSCPCopy == OFBSNVportL2GreDSCPCopy {
-		flags = append(flags, "\"OFBSNVportL2GreDSCPCopy\": true")
+		flags = append(flags, "\"DscpCopy\": true")
 	}
 	if self&OFBSNVportL2GreLoopbackIsValid == OFBSNVportL2GreLoopbackIsValid {
-		flags = append(flags, "\"OFBSNVportL2GreLoopbackIsValid\": true")
+		flags = append(flags, "\"LoopbackIsValid\": true")
 	}
 	if self&OFBSNVportL2GreRateLimitIsValid == OFBSNVportL2GreRateLimitIsValid {
-		flags = append(flags, "\"OFBSNVportL2GreRateLimitIsValid\": true")
+		flags = append(flags, "\"RateLimitIsValid\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -2021,12 +1513,7 @@ const (
 type BsnVportQInQUntagged uint16
 
 func (self BsnVportQInQUntagged) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFBSNVportQInQUntagged:
-		return []byte("\"OFBSNVportQInQUntagged\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnVportQInQUntagged", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2043,12 +1530,7 @@ const (
 type BsnVrfCounterConstants uint32
 
 func (self BsnVrfCounterConstants) MarshalJSON() ([]byte, error) {
-	switch self {
-	case BSNVrfAll:
-		return []byte("\"BSNVrfAll\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BsnVrfCounterConstants", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2066,26 +1548,7 @@ const (
 type BundleCtrlType uint16
 
 func (self BundleCtrlType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPBCTOpenRequest:
-		return []byte("\"OFPBCTOpenRequest\""), nil
-	case OFPBCTOpenReply:
-		return []byte("\"OFPBCTOpenReply\""), nil
-	case OFPBCTCloseRequest:
-		return []byte("\"OFPBCTCloseRequest\""), nil
-	case OFPBCTCloseReply:
-		return []byte("\"OFPBCTCloseReply\""), nil
-	case OFPBCTCommitRequest:
-		return []byte("\"OFPBCTCommitRequest\""), nil
-	case OFPBCTCommitReply:
-		return []byte("\"OFPBCTCommitReply\""), nil
-	case OFPBCTDiscardRequest:
-		return []byte("\"OFPBCTDiscardRequest\""), nil
-	case OFPBCTDiscardReply:
-		return []byte("\"OFPBCTDiscardReply\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BundleCtrlType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2114,48 +1577,7 @@ const (
 type BundleFailedCode uint16
 
 func (self BundleFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPBFCUnknown:
-		return []byte("\"OFPBFCUnknown\""), nil
-	case OFPBFCEperm:
-		return []byte("\"OFPBFCEperm\""), nil
-	case OFPBFCBadID:
-		return []byte("\"OFPBFCBadID\""), nil
-	case OFPBFCBundleExist:
-		return []byte("\"OFPBFCBundleExist\""), nil
-	case OFPBFCBundleClosed:
-		return []byte("\"OFPBFCBundleClosed\""), nil
-	case OFPBFCOutOfBundles:
-		return []byte("\"OFPBFCOutOfBundles\""), nil
-	case OFPBFCBadType:
-		return []byte("\"OFPBFCBadType\""), nil
-	case OFPBFCBadFlags:
-		return []byte("\"OFPBFCBadFlags\""), nil
-	case OFPBFCMsgBadLen:
-		return []byte("\"OFPBFCMsgBadLen\""), nil
-	case OFPBFCMsgBadXid:
-		return []byte("\"OFPBFCMsgBadXid\""), nil
-	case OFPBFCMsgUnsup:
-		return []byte("\"OFPBFCMsgUnsup\""), nil
-	case OFPBFCMsgConflict:
-		return []byte("\"OFPBFCMsgConflict\""), nil
-	case OFPBFCMsgTooMany:
-		return []byte("\"OFPBFCMsgTooMany\""), nil
-	case OFPBFCMsgFailed:
-		return []byte("\"OFPBFCMsgFailed\""), nil
-	case OFPBFCTimeout:
-		return []byte("\"OFPBFCTimeout\""), nil
-	case OFPBFCBundleInProgress:
-		return []byte("\"OFPBFCBundleInProgress\""), nil
-	case OFPBFCSchedNotSupported:
-		return []byte("\"OFPBFCSchedNotSupported\""), nil
-	case OFPBFCSchedFuture:
-		return []byte("\"OFPBFCSchedFuture\""), nil
-	case OFPBFCSchedPast:
-		return []byte("\"OFPBFCSchedPast\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for BundleFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2169,10 +1591,10 @@ type BundleFeatureFlags uint32
 func (self BundleFeatureFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPBFTimestamp == OFPBFTimestamp {
-		flags = append(flags, "\"OFPBFTimestamp\": true")
+		flags = append(flags, "\"Stamp\": true")
 	}
 	if self&OFPBFTimeSetSched == OFPBFTimeSetSched {
-		flags = append(flags, "\"OFPBFTimeSetSched\": true")
+		flags = append(flags, "\"SetSched\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -2195,13 +1617,13 @@ type BundleFlags uint16
 func (self BundleFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPBFAtomic == OFPBFAtomic {
-		flags = append(flags, "\"OFPBFAtomic\": true")
+		flags = append(flags, "\"Atomic\": true")
 	}
 	if self&OFPBFOrdered == OFPBFOrdered {
-		flags = append(flags, "\"OFPBFOrdered\": true")
+		flags = append(flags, "\"Ordered\": true")
 	}
 	if self&OFPBFTime == OFPBFTime {
-		flags = append(flags, "\"OFPBFTime\": true")
+		flags = append(flags, "\"Time\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -2230,31 +1652,31 @@ type Capabilities uint32
 func (self Capabilities) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPCFlowStats == OFPCFlowStats {
-		flags = append(flags, "\"OFPCFlowStats\": true")
+		flags = append(flags, "\"FlowStats\": true")
 	}
 	if self&OFPCTableStats == OFPCTableStats {
-		flags = append(flags, "\"OFPCTableStats\": true")
+		flags = append(flags, "\"TableStats\": true")
 	}
 	if self&OFPCPortStats == OFPCPortStats {
-		flags = append(flags, "\"OFPCPortStats\": true")
+		flags = append(flags, "\"PortStats\": true")
 	}
 	if self&OFPCGroupStats == OFPCGroupStats {
-		flags = append(flags, "\"OFPCGroupStats\": true")
+		flags = append(flags, "\"GroupStats\": true")
 	}
 	if self&OFPCIpReasm == OFPCIpReasm {
-		flags = append(flags, "\"OFPCIpReasm\": true")
+		flags = append(flags, "\"IpReasm\": true")
 	}
 	if self&OFPCQueueStats == OFPCQueueStats {
-		flags = append(flags, "\"OFPCQueueStats\": true")
+		flags = append(flags, "\"QueueStats\": true")
 	}
 	if self&OFPCPortBlocked == OFPCPortBlocked {
-		flags = append(flags, "\"OFPCPortBlocked\": true")
+		flags = append(flags, "\"PortBlocked\": true")
 	}
 	if self&OFPCBundles == OFPCBundles {
-		flags = append(flags, "\"OFPCBundles\": true")
+		flags = append(flags, "\"Bundles\": true")
 	}
 	if self&OFPCFlowMonitoring == OFPCFlowMonitoring {
-		flags = append(flags, "\"OFPCFlowMonitoring\": true")
+		flags = append(flags, "\"FlowMonitoring\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -2272,16 +1694,16 @@ type ConfigFlags uint16
 func (self ConfigFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPCFragNormal == OFPCFragNormal {
-		flags = append(flags, "\"OFPCFragNormal\": true")
+		flags = append(flags, "\"Normal\": true")
 	}
 	if self&OFPCFragDrop == OFPCFragDrop {
-		flags = append(flags, "\"OFPCFragDrop\": true")
+		flags = append(flags, "\"Drop\": true")
 	}
 	if self&OFPCFragReasm == OFPCFragReasm {
-		flags = append(flags, "\"OFPCFragReasm\": true")
+		flags = append(flags, "\"Reasm\": true")
 	}
 	if self&OFPCFragMask == OFPCFragMask {
-		flags = append(flags, "\"OFPCFragMask\": true")
+		flags = append(flags, "\"Mask\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -2295,14 +1717,7 @@ const (
 type ControlChannelStatus uint8
 
 func (self ControlChannelStatus) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPCTStatusUp:
-		return []byte("\"OFPCTStatusUp\""), nil
-	case OFPCTStatusDown:
-		return []byte("\"OFPCTStatusDown\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for ControlChannelStatus", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2314,14 +1729,7 @@ const (
 type ControllerMaxLen uint16
 
 func (self ControllerMaxLen) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPCMLMax:
-		return []byte("\"OFPCMLMax\""), nil
-	case OFPCMLNoBuffer:
-		return []byte("\"OFPCMLNoBuffer\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for ControllerMaxLen", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2335,18 +1743,7 @@ const (
 type ControllerRole uint32
 
 func (self ControllerRole) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPCRRoleNochange:
-		return []byte("\"OFPCRRoleNochange\""), nil
-	case OFPCRRoleEqual:
-		return []byte("\"OFPCRRoleEqual\""), nil
-	case OFPCRRoleMaster:
-		return []byte("\"OFPCRRoleMaster\""), nil
-	case OFPCRRoleSlave:
-		return []byte("\"OFPCRRoleSlave\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for ControllerRole", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2359,16 +1756,7 @@ const (
 type ControllerRoleReason uint8
 
 func (self ControllerRoleReason) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPCRRMasterRequest:
-		return []byte("\"OFPCRRMasterRequest\""), nil
-	case OFPCRRConfig:
-		return []byte("\"OFPCRRConfig\""), nil
-	case OFPCRRExperimenter:
-		return []byte("\"OFPCRRExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for ControllerRoleReason", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2391,24 +1779,50 @@ const (
 type ControllerStatusReason uint8
 
 func (self ControllerStatusReason) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPCSRRequest:
-		return []byte("\"OFPCSRRequest\""), nil
-	case OFPCSRChannelStatus:
-		return []byte("\"OFPCSRChannelStatus\""), nil
-	case OFPCSRRole:
-		return []byte("\"OFPCSRRole\""), nil
-	case OFPCSRControllerAdded:
-		return []byte("\"OFPCSRControllerAdded\""), nil
-	case OFPCSRControllerRemoved:
-		return []byte("\"OFPCSRControllerRemoved\""), nil
-	case OFPCSRShortID:
-		return []byte("\"OFPCSRShortID\""), nil
-	case OFPCSRExperimenter:
-		return []byte("\"OFPCSRExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for ControllerStatusReason", self)
+	return []byte(fmt.Sprintf("%d", self)), nil
+}
+
+const (
+	// Identifiers from group ofp_cs_states
+	CsNew         = 0  // OFP_CS_NEW
+	CsEstablished = 1  // OFP_CS_ESTABLISHED
+	CsRelated     = 2  // OFP_CS_RELATED
+	CsReplyDir    = 4  // OFP_CS_REPLY_DIR
+	CsInvalid     = 8  // OFP_CS_INVALID
+	CsTracked     = 16 // OFP_CS_TRACKED
+	CsSrcNat      = 32 // OFP_CS_SRC_NAT
+	CsDstNat      = 64 // OFP_CS_DST_NAT
+)
+
+type CsStates uint32
+
+func (self CsStates) MarshalJSON() ([]byte, error) {
+	var flags []string
+	if self&CsNew == CsNew {
+		flags = append(flags, "\"New\": true")
 	}
+	if self&CsEstablished == CsEstablished {
+		flags = append(flags, "\"Established\": true")
+	}
+	if self&CsRelated == CsRelated {
+		flags = append(flags, "\"Related\": true")
+	}
+	if self&CsReplyDir == CsReplyDir {
+		flags = append(flags, "\"ReplyDir\": true")
+	}
+	if self&CsInvalid == CsInvalid {
+		flags = append(flags, "\"Invalid\": true")
+	}
+	if self&CsTracked == CsTracked {
+		flags = append(flags, "\"Tracked\": true")
+	}
+	if self&CsSrcNat == CsSrcNat {
+		flags = append(flags, "\"SrcNat\": true")
+	}
+	if self&CsDstNat == CsDstNat {
+		flags = append(flags, "\"DstNat\": true")
+	}
+	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
 
 const (
@@ -2421,16 +1835,7 @@ const (
 type EdNshPropType uint8
 
 func (self EdNshPropType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPPPTPropNshNone:
-		return []byte("\"OFPPPTPropNshNone\""), nil
-	case OFPPPTPropNshMdtype:
-		return []byte("\"OFPPPTPropNshMdtype\""), nil
-	case OFPPPTPropNshTlv:
-		return []byte("\"OFPPPTPropNshTlv\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for EdNshPropType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2446,22 +1851,7 @@ const (
 type EdPropClass uint16
 
 func (self EdPropClass) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPPPCBasic:
-		return []byte("\"OFPPPCBasic\""), nil
-	case OFPPPCMpls:
-		return []byte("\"OFPPPCMpls\""), nil
-	case OFPPPCGRE:
-		return []byte("\"OFPPPCGRE\""), nil
-	case OFPPPCGtp:
-		return []byte("\"OFPPPCGtp\""), nil
-	case OFPPPCNsh:
-		return []byte("\"OFPPPCNsh\""), nil
-	case OFPPPCExperimenter:
-		return []byte("\"OFPPPCExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for EdPropClass", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2490,48 +1880,7 @@ const (
 type ErrorType uint16
 
 func (self ErrorType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPETHelloFailed:
-		return []byte("\"OFPETHelloFailed\""), nil
-	case OFPETBadRequest:
-		return []byte("\"OFPETBadRequest\""), nil
-	case OFPETBadAction:
-		return []byte("\"OFPETBadAction\""), nil
-	case OFPETBadInstruction:
-		return []byte("\"OFPETBadInstruction\""), nil
-	case OFPETBadMatch:
-		return []byte("\"OFPETBadMatch\""), nil
-	case OFPETFlowModFailed:
-		return []byte("\"OFPETFlowModFailed\""), nil
-	case OFPETGroupModFailed:
-		return []byte("\"OFPETGroupModFailed\""), nil
-	case OFPETPortModFailed:
-		return []byte("\"OFPETPortModFailed\""), nil
-	case OFPETTableModFailed:
-		return []byte("\"OFPETTableModFailed\""), nil
-	case OFPETQueueOpFailed:
-		return []byte("\"OFPETQueueOpFailed\""), nil
-	case OFPETSwitchConfigFailed:
-		return []byte("\"OFPETSwitchConfigFailed\""), nil
-	case OFPETRoleRequestFailed:
-		return []byte("\"OFPETRoleRequestFailed\""), nil
-	case OFPETMeterModFailed:
-		return []byte("\"OFPETMeterModFailed\""), nil
-	case OFPETTableFeaturesFailed:
-		return []byte("\"OFPETTableFeaturesFailed\""), nil
-	case OFPETBadProperty:
-		return []byte("\"OFPETBadProperty\""), nil
-	case OFPETAsyncConfigFailed:
-		return []byte("\"OFPETAsyncConfigFailed\""), nil
-	case OFPETFlowMonitorFailed:
-		return []byte("\"OFPETFlowMonitorFailed\""), nil
-	case OFPETBundleFailed:
-		return []byte("\"OFPETBundleFailed\""), nil
-	case OFPETExperimenter:
-		return []byte("\"OFPETExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for ErrorType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2546,20 +1895,7 @@ const (
 type FlowModCommand uint8
 
 func (self FlowModCommand) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPFCAdd:
-		return []byte("\"OFPFCAdd\""), nil
-	case OFPFCModify:
-		return []byte("\"OFPFCModify\""), nil
-	case OFPFCModifyStrict:
-		return []byte("\"OFPFCModifyStrict\""), nil
-	case OFPFCDelete:
-		return []byte("\"OFPFCDelete\""), nil
-	case OFPFCDeleteStrict:
-		return []byte("\"OFPFCDeleteStrict\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for FlowModCommand", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2580,32 +1916,7 @@ const (
 type FlowModFailedCode uint16
 
 func (self FlowModFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPFMFCUnknown:
-		return []byte("\"OFPFMFCUnknown\""), nil
-	case OFPFMFCTableFull:
-		return []byte("\"OFPFMFCTableFull\""), nil
-	case OFPFMFCBadTableID:
-		return []byte("\"OFPFMFCBadTableID\""), nil
-	case OFPFMFCOverlap:
-		return []byte("\"OFPFMFCOverlap\""), nil
-	case OFPFMFCEperm:
-		return []byte("\"OFPFMFCEperm\""), nil
-	case OFPFMFCBadTimeout:
-		return []byte("\"OFPFMFCBadTimeout\""), nil
-	case OFPFMFCBadCommand:
-		return []byte("\"OFPFMFCBadCommand\""), nil
-	case OFPFMFCBadFlags:
-		return []byte("\"OFPFMFCBadFlags\""), nil
-	case OFPFMFCCantSync:
-		return []byte("\"OFPFMFCCantSync\""), nil
-	case OFPFMFCBadPriority:
-		return []byte("\"OFPFMFCBadPriority\""), nil
-	case OFPFMFCIsSync:
-		return []byte("\"OFPFMFCIsSync\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for FlowModFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2623,22 +1934,22 @@ type FlowModFlags uint16
 func (self FlowModFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPFFSendFlowRem == OFPFFSendFlowRem {
-		flags = append(flags, "\"OFPFFSendFlowRem\": true")
+		flags = append(flags, "\"SendFlowRem\": true")
 	}
 	if self&OFPFFCheckOverlap == OFPFFCheckOverlap {
-		flags = append(flags, "\"OFPFFCheckOverlap\": true")
+		flags = append(flags, "\"CheckOverlap\": true")
 	}
 	if self&OFPFFResetCounts == OFPFFResetCounts {
-		flags = append(flags, "\"OFPFFResetCounts\": true")
+		flags = append(flags, "\"ResetCounts\": true")
 	}
 	if self&OFPFFNoPktCounts == OFPFFNoPktCounts {
-		flags = append(flags, "\"OFPFFNoPktCounts\": true")
+		flags = append(flags, "\"NoPktCounts\": true")
 	}
 	if self&OFPFFNoBytCounts == OFPFFNoBytCounts {
-		flags = append(flags, "\"OFPFFNoBytCounts\": true")
+		flags = append(flags, "\"NoBytCounts\": true")
 	}
 	if self&OFPFFBSNSendIdle == OFPFFBSNSendIdle {
-		flags = append(flags, "\"OFPFFBSNSendIdle\": true")
+		flags = append(flags, "\"BsnSendIdle\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -2653,16 +1964,7 @@ const (
 type FlowMonitorCommand uint8
 
 func (self FlowMonitorCommand) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPFMCAdd:
-		return []byte("\"OFPFMCAdd\""), nil
-	case OFPFMCModify:
-		return []byte("\"OFPFMCModify\""), nil
-	case OFPFMCDelete:
-		return []byte("\"OFPFMCDelete\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for FlowMonitorCommand", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2680,26 +1982,7 @@ const (
 type FlowMonitorFailedCode uint16
 
 func (self FlowMonitorFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPMOFCUnknown:
-		return []byte("\"OFPMOFCUnknown\""), nil
-	case OFPMOFCMonitorExists:
-		return []byte("\"OFPMOFCMonitorExists\""), nil
-	case OFPMOFCInvalidMonitor:
-		return []byte("\"OFPMOFCInvalidMonitor\""), nil
-	case OFPMOFCUnknownMonitor:
-		return []byte("\"OFPMOFCUnknownMonitor\""), nil
-	case OFPMOFCBadCommand:
-		return []byte("\"OFPMOFCBadCommand\""), nil
-	case OFPMOFCBadFlags:
-		return []byte("\"OFPMOFCBadFlags\""), nil
-	case OFPMOFCBadTableID:
-		return []byte("\"OFPMOFCBadTableID\""), nil
-	case OFPMOFCBadOut:
-		return []byte("\"OFPMOFCBadOut\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for FlowMonitorFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2718,25 +2001,25 @@ type FlowMonitorFlags uint16
 func (self FlowMonitorFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPFMFInitial == OFPFMFInitial {
-		flags = append(flags, "\"OFPFMFInitial\": true")
+		flags = append(flags, "\"Initial\": true")
 	}
 	if self&OFPFMFAdd == OFPFMFAdd {
-		flags = append(flags, "\"OFPFMFAdd\": true")
+		flags = append(flags, "\"Add\": true")
 	}
 	if self&OFPFMFRemoved == OFPFMFRemoved {
-		flags = append(flags, "\"OFPFMFRemoved\": true")
+		flags = append(flags, "\"Removed\": true")
 	}
 	if self&OFPFMFModify == OFPFMFModify {
-		flags = append(flags, "\"OFPFMFModify\": true")
+		flags = append(flags, "\"Modify\": true")
 	}
 	if self&OFPFMFInstructions == OFPFMFInstructions {
-		flags = append(flags, "\"OFPFMFInstructions\": true")
+		flags = append(flags, "\"Instructions\": true")
 	}
 	if self&OFPFMFNoAbbrev == OFPFMFNoAbbrev {
-		flags = append(flags, "\"OFPFMFNoAbbrev\": true")
+		flags = append(flags, "\"NoAbbrev\": true")
 	}
 	if self&OFPFMFOnlyOwn == OFPFMFOnlyOwn {
-		flags = append(flags, "\"OFPFMFOnlyOwn\": true")
+		flags = append(flags, "\"OnlyOwn\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -2754,22 +2037,7 @@ const (
 type FlowRemovedReason uint8
 
 func (self FlowRemovedReason) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPRRIdleTimeout:
-		return []byte("\"OFPRRIdleTimeout\""), nil
-	case OFPRRHardTimeout:
-		return []byte("\"OFPRRHardTimeout\""), nil
-	case OFPRRDelete:
-		return []byte("\"OFPRRDelete\""), nil
-	case OFPRRGroupDelete:
-		return []byte("\"OFPRRGroupDelete\""), nil
-	case OFPRRMeterDelete:
-		return []byte("\"OFPRRMeterDelete\""), nil
-	case OFPRREviction:
-		return []byte("\"OFPRREviction\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for FlowRemovedReason", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2781,14 +2049,7 @@ const (
 type FlowStatsReason uint8
 
 func (self FlowStatsReason) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPFSRStatsRequest:
-		return []byte("\"OFPFSRStatsRequest\""), nil
-	case OFPFSRStatTrigger:
-		return []byte("\"OFPFSRStatTrigger\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for FlowStatsReason", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2805,24 +2066,7 @@ const (
 type FlowUpdateEvent uint16
 
 func (self FlowUpdateEvent) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPFMEInitial:
-		return []byte("\"OFPFMEInitial\""), nil
-	case OFPFMEAdded:
-		return []byte("\"OFPFMEAdded\""), nil
-	case OFPFMERemoved:
-		return []byte("\"OFPFMERemoved\""), nil
-	case OFPFMEModified:
-		return []byte("\"OFPFMEModified\""), nil
-	case OFPFMEAbbrev:
-		return []byte("\"OFPFMEAbbrev\""), nil
-	case OFPFMEPaused:
-		return []byte("\"OFPFMEPaused\""), nil
-	case OFPFMEResumed:
-		return []byte("\"OFPFMEResumed\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for FlowUpdateEvent", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2835,16 +2079,7 @@ const (
 type Group uint32
 
 func (self Group) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPGMax:
-		return []byte("\"OFPGMax\""), nil
-	case OFPGAll:
-		return []byte("\"OFPGAll\""), nil
-	case OFPGAny:
-		return []byte("\"OFPGAny\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for Group", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2858,18 +2093,7 @@ const (
 type GroupBucket uint32
 
 func (self GroupBucket) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPGBucketMax:
-		return []byte("\"OFPGBucketMax\""), nil
-	case OFPGBucketFirst:
-		return []byte("\"OFPGBucketFirst\""), nil
-	case OFPGBucketLast:
-		return []byte("\"OFPGBucketLast\""), nil
-	case OFPGBucketAll:
-		return []byte("\"OFPGBucketAll\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for GroupBucket", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2893,16 +2117,16 @@ type GroupCapabilities uint32
 func (self GroupCapabilities) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPGFCSelectWeight == OFPGFCSelectWeight {
-		flags = append(flags, "\"OFPGFCSelectWeight\": true")
+		flags = append(flags, "\"SelectWeight\": true")
 	}
 	if self&OFPGFCSelectLiveness == OFPGFCSelectLiveness {
-		flags = append(flags, "\"OFPGFCSelectLiveness\": true")
+		flags = append(flags, "\"SelectLiveness\": true")
 	}
 	if self&OFPGFCChaining == OFPGFCChaining {
-		flags = append(flags, "\"OFPGFCChaining\": true")
+		flags = append(flags, "\"Chaining\": true")
 	}
 	if self&OFPGFCChainingChecks == OFPGFCChainingChecks {
-		flags = append(flags, "\"OFPGFCChainingChecks\": true")
+		flags = append(flags, "\"ChainingChecks\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -2919,20 +2143,7 @@ const (
 type GroupModCommand uint16
 
 func (self GroupModCommand) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPGCAdd:
-		return []byte("\"OFPGCAdd\""), nil
-	case OFPGCModify:
-		return []byte("\"OFPGCModify\""), nil
-	case OFPGCDelete:
-		return []byte("\"OFPGCDelete\""), nil
-	case OFPGCInsertBucket:
-		return []byte("\"OFPGCInsertBucket\""), nil
-	case OFPGCRemoveBucket:
-		return []byte("\"OFPGCRemoveBucket\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for GroupModCommand", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2959,44 +2170,7 @@ const (
 type GroupModFailedCode uint16
 
 func (self GroupModFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPGMFCGroupExists:
-		return []byte("\"OFPGMFCGroupExists\""), nil
-	case OFPGMFCInvalidGroup:
-		return []byte("\"OFPGMFCInvalidGroup\""), nil
-	case OFPGMFCWeightUnsupported:
-		return []byte("\"OFPGMFCWeightUnsupported\""), nil
-	case OFPGMFCOutOfGroups:
-		return []byte("\"OFPGMFCOutOfGroups\""), nil
-	case OFPGMFCOutOfBuckets:
-		return []byte("\"OFPGMFCOutOfBuckets\""), nil
-	case OFPGMFCChainingUnsupported:
-		return []byte("\"OFPGMFCChainingUnsupported\""), nil
-	case OFPGMFCWatchUnsupported:
-		return []byte("\"OFPGMFCWatchUnsupported\""), nil
-	case OFPGMFCLoop:
-		return []byte("\"OFPGMFCLoop\""), nil
-	case OFPGMFCUnknownGroup:
-		return []byte("\"OFPGMFCUnknownGroup\""), nil
-	case OFPGMFCChainedGroup:
-		return []byte("\"OFPGMFCChainedGroup\""), nil
-	case OFPGMFCBadType:
-		return []byte("\"OFPGMFCBadType\""), nil
-	case OFPGMFCBadCommand:
-		return []byte("\"OFPGMFCBadCommand\""), nil
-	case OFPGMFCBadBucket:
-		return []byte("\"OFPGMFCBadBucket\""), nil
-	case OFPGMFCBadWatch:
-		return []byte("\"OFPGMFCBadWatch\""), nil
-	case OFPGMFCEperm:
-		return []byte("\"OFPGMFCEperm\""), nil
-	case OFPGMFCUnknownBucket:
-		return []byte("\"OFPGMFCUnknownBucket\""), nil
-	case OFPGMFCBucketExists:
-		return []byte("\"OFPGMFCBucketExists\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for GroupModFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3015,18 +2189,7 @@ const (
 type GroupType uint8
 
 func (self GroupType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPGTAll:
-		return []byte("\"OFPGTAll\""), nil
-	case OFPGTSelect:
-		return []byte("\"OFPGTSelect\""), nil
-	case OFPGTIndirect:
-		return []byte("\"OFPGTIndirect\""), nil
-	case OFPGTFf:
-		return []byte("\"OFPGTFf\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for GroupType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3041,19 +2204,38 @@ const (
 type HeaderTypeNamespace uint16
 
 func (self HeaderTypeNamespace) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%d", self)), nil
+}
+
+const (
+	// Identifiers from group ofp_header_type_namespaces
+	OFPHTNOnf        = 0 // OFPHTN_ONF
+	OFPHTNEthertype  = 1 // OFPHTN_ETHERTYPE
+	OFPHTNIpProto    = 2 // OFPHTN_IP_PROTO
+	OFPHTNUdpTCPPort = 3 // OFPHTN_UDP_TCP_PORT
+	OFPHTNIpv4Option = 4 // OFPHTN_IPV4_OPTION
+)
+
+type HeaderTypeNamespaces uint16
+
+func (self HeaderTypeNamespaces) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%s", self)), nil
+}
+
+func (self HeaderTypeNamespaces) String() string {
 	switch self {
 	case OFPHTNOnf:
-		return []byte("\"OFPHTNOnf\""), nil
+		return "\"onf\""
 	case OFPHTNEthertype:
-		return []byte("\"OFPHTNEthertype\""), nil
+		return "\"ethertype\""
 	case OFPHTNIpProto:
-		return []byte("\"OFPHTNIpProto\""), nil
+		return "\"ip_proto\""
 	case OFPHTNUdpTCPPort:
-		return []byte("\"OFPHTNUdpTCPPort\""), nil
+		return "\"udp_tcp_port\""
 	case OFPHTNIpv4Option:
-		return []byte("\"OFPHTNIpv4Option\""), nil
+		return "\"ipv4_option\""
 	default:
-		return nil, fmt.Errorf("Invalid value '%d' for HeaderTypeNamespace", self)
+		return fmt.Sprintf("\"Invalid value '%d' for HeaderTypeNamespaces\"", self)
 	}
 }
 
@@ -3067,16 +2249,7 @@ const (
 type HeaderTypeOnf uint16
 
 func (self HeaderTypeOnf) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPHTOEthernet:
-		return []byte("\"OFPHTOEthernet\""), nil
-	case OFPHTONoHeader:
-		return []byte("\"OFPHTONoHeader\""), nil
-	case OFPHTOOXMExperimenter:
-		return []byte("\"OFPHTOOXMExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for HeaderTypeOnf", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3087,12 +2260,7 @@ const (
 type HelloElemType uint16
 
 func (self HelloElemType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPHETVersionbitmap:
-		return []byte("\"OFPHETVersionbitmap\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for HelloElemType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3104,14 +2272,7 @@ const (
 type HelloFailedCode uint16
 
 func (self HelloFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPHFCIncompatible:
-		return []byte("\"OFPHFCIncompatible\""), nil
-	case OFPHFCEperm:
-		return []byte("\"OFPHFCEperm\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for HelloFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3131,28 +2292,28 @@ type InstructionType uint16
 func (self InstructionType) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPITGotoTable == OFPITGotoTable {
-		flags = append(flags, "\"OFPITGotoTable\": true")
+		flags = append(flags, "\"GotoTable\": true")
 	}
 	if self&OFPITWriteMetadata == OFPITWriteMetadata {
-		flags = append(flags, "\"OFPITWriteMetadata\": true")
+		flags = append(flags, "\"WriteMetadata\": true")
 	}
 	if self&OFPITWriteActions == OFPITWriteActions {
-		flags = append(flags, "\"OFPITWriteActions\": true")
+		flags = append(flags, "\"WriteActions\": true")
 	}
 	if self&OFPITApplyActions == OFPITApplyActions {
-		flags = append(flags, "\"OFPITApplyActions\": true")
+		flags = append(flags, "\"ApplyActions\": true")
 	}
 	if self&OFPITClearActions == OFPITClearActions {
-		flags = append(flags, "\"OFPITClearActions\": true")
+		flags = append(flags, "\"ClearActions\": true")
 	}
 	if self&OFPITDeprecated == OFPITDeprecated {
-		flags = append(flags, "\"OFPITDeprecated\": true")
+		flags = append(flags, "\"Deprecated\": true")
 	}
 	if self&OFPITStatTrigger == OFPITStatTrigger {
-		flags = append(flags, "\"OFPITStatTrigger\": true")
+		flags = append(flags, "\"StatTrigger\": true")
 	}
 	if self&OFPITExperimenter == OFPITExperimenter {
-		flags = append(flags, "\"OFPITExperimenter\": true")
+		flags = append(flags, "\"Experimenter\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3175,31 +2336,31 @@ type Ipv6ExthdrFlags uint16
 func (self Ipv6ExthdrFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPIEHNonext == OFPIEHNonext {
-		flags = append(flags, "\"OFPIEHNonext\": true")
+		flags = append(flags, "\"Nonext\": true")
 	}
 	if self&OFPIEHEsp == OFPIEHEsp {
-		flags = append(flags, "\"OFPIEHEsp\": true")
+		flags = append(flags, "\"Esp\": true")
 	}
 	if self&OFPIEHAuth == OFPIEHAuth {
-		flags = append(flags, "\"OFPIEHAuth\": true")
+		flags = append(flags, "\"Auth\": true")
 	}
 	if self&OFPIEHDest == OFPIEHDest {
-		flags = append(flags, "\"OFPIEHDest\": true")
+		flags = append(flags, "\"Dest\": true")
 	}
 	if self&OFPIEHFrag == OFPIEHFrag {
-		flags = append(flags, "\"OFPIEHFrag\": true")
+		flags = append(flags, "\"Frag\": true")
 	}
 	if self&OFPIEHRouter == OFPIEHRouter {
-		flags = append(flags, "\"OFPIEHRouter\": true")
+		flags = append(flags, "\"Router\": true")
 	}
 	if self&OFPIEHHop == OFPIEHHop {
-		flags = append(flags, "\"OFPIEHHop\": true")
+		flags = append(flags, "\"Hop\": true")
 	}
 	if self&OFPIEHUnrep == OFPIEHUnrep {
-		flags = append(flags, "\"OFPIEHUnrep\": true")
+		flags = append(flags, "\"Unrep\": true")
 	}
 	if self&OFPIEHUnseq == OFPIEHUnseq {
-		flags = append(flags, "\"OFPIEHUnseq\": true")
+		flags = append(flags, "\"Unseq\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3213,14 +2374,7 @@ const (
 type MatchType uint16
 
 func (self MatchType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPMTStandard:
-		return []byte("\"OFPMTStandard\""), nil
-	case OFPMTOXM:
-		return []byte("\"OFPMTOXM\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for MatchType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3234,18 +2388,7 @@ const (
 type Meter uint32
 
 func (self Meter) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPMMax:
-		return []byte("\"OFPMMax\""), nil
-	case OFPMSlowpath:
-		return []byte("\"OFPMSlowpath\""), nil
-	case OFPMController:
-		return []byte("\"OFPMController\""), nil
-	case OFPMAll:
-		return []byte("\"OFPMAll\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for Meter", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3258,16 +2401,7 @@ const (
 type MeterBandType uint16
 
 func (self MeterBandType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPMBTDrop:
-		return []byte("\"OFPMBTDrop\""), nil
-	case OFPMBTDSCPRemark:
-		return []byte("\"OFPMBTDSCPRemark\""), nil
-	case OFPMBTExperimenter:
-		return []byte("\"OFPMBTExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for MeterBandType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3282,13 +2416,13 @@ type MeterFeatureFlags uint32
 func (self MeterFeatureFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPMFFActionSet == OFPMFFActionSet {
-		flags = append(flags, "\"OFPMFFActionSet\": true")
+		flags = append(flags, "\"ActionSet\": true")
 	}
 	if self&OFPMFFAnyPosition == OFPMFFAnyPosition {
-		flags = append(flags, "\"OFPMFFAnyPosition\": true")
+		flags = append(flags, "\"AnyPosition\": true")
 	}
 	if self&OFPMFFMultiList == OFPMFFMultiList {
-		flags = append(flags, "\"OFPMFFMultiList\": true")
+		flags = append(flags, "\"MultiList\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3306,16 +2440,16 @@ type MeterFlags uint16
 func (self MeterFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPMFKbps == OFPMFKbps {
-		flags = append(flags, "\"OFPMFKbps\": true")
+		flags = append(flags, "\"Kbps\": true")
 	}
 	if self&OFPMFPktps == OFPMFPktps {
-		flags = append(flags, "\"OFPMFPktps\": true")
+		flags = append(flags, "\"Pktps\": true")
 	}
 	if self&OFPMFBurst == OFPMFBurst {
-		flags = append(flags, "\"OFPMFBurst\": true")
+		flags = append(flags, "\"Burst\": true")
 	}
 	if self&OFPMFStats == OFPMFStats {
-		flags = append(flags, "\"OFPMFStats\": true")
+		flags = append(flags, "\"Stats\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3330,16 +2464,7 @@ const (
 type MeterModCommand uint16
 
 func (self MeterModCommand) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPMCAdd:
-		return []byte("\"OFPMCAdd\""), nil
-	case OFPMCModify:
-		return []byte("\"OFPMCModify\""), nil
-	case OFPMCDelete:
-		return []byte("\"OFPMCDelete\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for MeterModCommand", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3361,34 +2486,7 @@ const (
 type MeterModFailedCode uint16
 
 func (self MeterModFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPMMFCUnknown:
-		return []byte("\"OFPMMFCUnknown\""), nil
-	case OFPMMFCMeterExists:
-		return []byte("\"OFPMMFCMeterExists\""), nil
-	case OFPMMFCInvalidMeter:
-		return []byte("\"OFPMMFCInvalidMeter\""), nil
-	case OFPMMFCUnknownMeter:
-		return []byte("\"OFPMMFCUnknownMeter\""), nil
-	case OFPMMFCBadCommand:
-		return []byte("\"OFPMMFCBadCommand\""), nil
-	case OFPMMFCBadFlags:
-		return []byte("\"OFPMMFCBadFlags\""), nil
-	case OFPMMFCBadRate:
-		return []byte("\"OFPMMFCBadRate\""), nil
-	case OFPMMFCBadBurst:
-		return []byte("\"OFPMMFCBadBurst\""), nil
-	case OFPMMFCBadBand:
-		return []byte("\"OFPMMFCBadBand\""), nil
-	case OFPMMFCBadBandValue:
-		return []byte("\"OFPMMFCBadBandValue\""), nil
-	case OFPMMFCOutOfMeters:
-		return []byte("\"OFPMMFCOutOfMeters\""), nil
-	case OFPMMFCOutOfBands:
-		return []byte("\"OFPMMFCOutOfBands\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for MeterModFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3404,16 +2502,16 @@ type OpticalPortFeatures uint32
 func (self OpticalPortFeatures) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPOPFRxTune == OFPOPFRxTune {
-		flags = append(flags, "\"OFPOPFRxTune\": true")
+		flags = append(flags, "\"RxTune\": true")
 	}
 	if self&OFPOPFTxTune == OFPOPFTxTune {
-		flags = append(flags, "\"OFPOPFTxTune\": true")
+		flags = append(flags, "\"TxTune\": true")
 	}
 	if self&OFPOPFTxPwr == OFPOPFTxPwr {
-		flags = append(flags, "\"OFPOPFTxPwr\": true")
+		flags = append(flags, "\"TxPwr\": true")
 	}
 	if self&OFPOPFUseFreq == OFPOPFUseFreq {
-		flags = append(flags, "\"OFPOPFUseFreq\": true")
+		flags = append(flags, "\"UseFreq\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3436,31 +2534,31 @@ type OvsTcpFlag uint16
 func (self OvsTcpFlag) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OvsTCPFlagFin == OvsTCPFlagFin {
-		flags = append(flags, "\"OvsTCPFlagFin\": true")
+		flags = append(flags, "\"Fin\": true")
 	}
 	if self&OvsTCPFlagSyn == OvsTCPFlagSyn {
-		flags = append(flags, "\"OvsTCPFlagSyn\": true")
+		flags = append(flags, "\"Syn\": true")
 	}
 	if self&OvsTCPFlagRst == OvsTCPFlagRst {
-		flags = append(flags, "\"OvsTCPFlagRst\": true")
+		flags = append(flags, "\"Rst\": true")
 	}
 	if self&OvsTCPFlagPsh == OvsTCPFlagPsh {
-		flags = append(flags, "\"OvsTCPFlagPsh\": true")
+		flags = append(flags, "\"Psh\": true")
 	}
 	if self&OvsTCPFlagAck == OvsTCPFlagAck {
-		flags = append(flags, "\"OvsTCPFlagAck\": true")
+		flags = append(flags, "\"Ack\": true")
 	}
 	if self&OvsTCPFlagUrg == OvsTCPFlagUrg {
-		flags = append(flags, "\"OvsTCPFlagUrg\": true")
+		flags = append(flags, "\"Urg\": true")
 	}
 	if self&OvsTCPFlagEce == OvsTCPFlagEce {
-		flags = append(flags, "\"OvsTCPFlagEce\": true")
+		flags = append(flags, "\"Ece\": true")
 	}
 	if self&OvsTCPFlagCwr == OvsTCPFlagCwr {
-		flags = append(flags, "\"OvsTCPFlagCwr\": true")
+		flags = append(flags, "\"Cwr\": true")
 	}
 	if self&OvsTCPFlagNs == OvsTCPFlagNs {
-		flags = append(flags, "\"OvsTCPFlagNs\": true")
+		flags = append(flags, "\"Ns\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3477,20 +2575,7 @@ const (
 type OxmClass uint16
 
 func (self OxmClass) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPXMCNxm0:
-		return []byte("\"OFPXMCNxm0\""), nil
-	case OFPXMCNxm1:
-		return []byte("\"OFPXMCNxm1\""), nil
-	case OFPXMCOpenflowBasic:
-		return []byte("\"OFPXMCOpenflowBasic\""), nil
-	case OFPXMCPacketRegs:
-		return []byte("\"OFPXMCPacketRegs\""), nil
-	case OFPXMCExperimenter:
-		return []byte("\"OFPXMCExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for OxmClass", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3502,14 +2587,7 @@ const (
 type OxsClass uint16
 
 func (self OxsClass) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPXSCOpenflowBasic:
-		return []byte("\"OFPXSCOpenflowBasic\""), nil
-	case OFPXSCExperimenter:
-		return []byte("\"OFPXSCExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for OxsClass", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3539,49 +2617,44 @@ const (
 type PacketInReason uint8
 
 func (self PacketInReason) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%d", self)), nil
+}
+
+const (
+	// Identifiers from group ofp_packet_type
+	PtEthernet     = 0          // OFP_PT_ETHERNET
+	PtUseNextProto = 65534      // OFP_PT_USE_NEXT_PROTO
+	PtIpv4         = 67584      // OFP_PT_IPV4
+	PtMpls         = 100423     // OFP_PT_MPLS
+	PtMplsMc       = 100424     // OFP_PT_MPLS_MC
+	PtNsh          = 100687     // OFP_PT_NSH
+	PtUnknown      = 4294967295 // OFP_PT_UNKNOWN
+)
+
+type PacketType uint32
+
+func (self PacketType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%s", self)), nil
+}
+
+func (self PacketType) String() string {
 	switch self {
-	case OFPRNoMatch:
-		return []byte("\"OFPRNoMatch\""), nil
-	case OFPRAction:
-		return []byte("\"OFPRAction\""), nil
-	case OFPRInvalidTtl:
-		return []byte("\"OFPRInvalidTtl\""), nil
-	case OFPRActionSet:
-		return []byte("\"OFPRActionSet\""), nil
-	case OFPRGroup:
-		return []byte("\"OFPRGroup\""), nil
-	case OFPRPacketOut:
-		return []byte("\"OFPRPacketOut\""), nil
-	case OFPRBSNNewHost:
-		return []byte("\"OFPRBSNNewHost\""), nil
-	case OFPRBSNStationMove:
-		return []byte("\"OFPRBSNStationMove\""), nil
-	case OFPRBSNBadVLAN:
-		return []byte("\"OFPRBSNBadVLAN\""), nil
-	case OFPRBSNDestinationLookupFailure:
-		return []byte("\"OFPRBSNDestinationLookupFailure\""), nil
-	case OFPRBSNNoRoute:
-		return []byte("\"OFPRBSNNoRoute\""), nil
-	case OFPRBSNICMPEchoRequest:
-		return []byte("\"OFPRBSNICMPEchoRequest\""), nil
-	case OFPRBSNDestNetworkUnreachable:
-		return []byte("\"OFPRBSNDestNetworkUnreachable\""), nil
-	case OFPRBSNDestHostUnreachable:
-		return []byte("\"OFPRBSNDestHostUnreachable\""), nil
-	case OFPRBSNDestPortUnreachable:
-		return []byte("\"OFPRBSNDestPortUnreachable\""), nil
-	case OFPRBSNFragmentationRequired:
-		return []byte("\"OFPRBSNFragmentationRequired\""), nil
-	case OFPRBSNARP:
-		return []byte("\"OFPRBSNARP\""), nil
-	case OFPRBSNDhcp:
-		return []byte("\"OFPRBSNDhcp\""), nil
-	case OFPRBSNDebug:
-		return []byte("\"OFPRBSNDebug\""), nil
-	case OFPRBSNPacketOfDeath:
-		return []byte("\"OFPRBSNPacketOfDeath\""), nil
+	case PtEthernet:
+		return "\"ethernet\""
+	case PtUseNextProto:
+		return "\"use_next_proto\""
+	case PtIpv4:
+		return "\"ipv4\""
+	case PtMpls:
+		return "\"mpls\""
+	case PtMplsMc:
+		return "\"mpls_mc\""
+	case PtNsh:
+		return "\"nsh\""
+	case PtUnknown:
+		return "\"unknown\""
 	default:
-		return nil, fmt.Errorf("Invalid value '%d' for PacketInReason", self)
+		return fmt.Sprintf("\"Invalid value '%d' for PacketType\"", self)
 	}
 }
 
@@ -3602,30 +2675,7 @@ const (
 type Port uint32
 
 func (self Port) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPPMax:
-		return []byte("\"OFPPMax\""), nil
-	case OFPPUnset:
-		return []byte("\"OFPPUnset\""), nil
-	case OFPPInPort:
-		return []byte("\"OFPPInPort\""), nil
-	case OFPPTable:
-		return []byte("\"OFPPTable\""), nil
-	case OFPPNormal:
-		return []byte("\"OFPPNormal\""), nil
-	case OFPPFlood:
-		return []byte("\"OFPPFlood\""), nil
-	case OFPPAll:
-		return []byte("\"OFPPAll\""), nil
-	case OFPPController:
-		return []byte("\"OFPPController\""), nil
-	case OFPPLocal:
-		return []byte("\"OFPPLocal\""), nil
-	case OFPPAny:
-		return []byte("\"OFPPAny\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for Port", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3642,19 +2692,19 @@ type PortConfig uint32
 func (self PortConfig) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPPCPortDown == OFPPCPortDown {
-		flags = append(flags, "\"OFPPCPortDown\": true")
+		flags = append(flags, "\"PortDown\": true")
 	}
 	if self&OFPPCNoRecv == OFPPCNoRecv {
-		flags = append(flags, "\"OFPPCNoRecv\": true")
+		flags = append(flags, "\"NoRecv\": true")
 	}
 	if self&OFPPCNoFwd == OFPPCNoFwd {
-		flags = append(flags, "\"OFPPCNoFwd\": true")
+		flags = append(flags, "\"NoFwd\": true")
 	}
 	if self&OFPPCNoPacketIn == OFPPCNoPacketIn {
-		flags = append(flags, "\"OFPPCNoPacketIn\": true")
+		flags = append(flags, "\"NoPacketIn\": true")
 	}
 	if self&OFPPCBSNMirrorDest == OFPPCBSNMirrorDest {
-		flags = append(flags, "\"OFPPCBSNMirrorDest\": true")
+		flags = append(flags, "\"BsnMirrorDest\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3695,55 +2745,55 @@ type PortFeatures uint32
 func (self PortFeatures) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPPF10MbHd == OFPPF10MbHd {
-		flags = append(flags, "\"OFPPF10MbHd\": true")
+		flags = append(flags, "\"10MbHd\": true")
 	}
 	if self&OFPPF10MbFd == OFPPF10MbFd {
-		flags = append(flags, "\"OFPPF10MbFd\": true")
+		flags = append(flags, "\"10MbFd\": true")
 	}
 	if self&OFPPF100MbHd == OFPPF100MbHd {
-		flags = append(flags, "\"OFPPF100MbHd\": true")
+		flags = append(flags, "\"100MbHd\": true")
 	}
 	if self&OFPPF100MbFd == OFPPF100MbFd {
-		flags = append(flags, "\"OFPPF100MbFd\": true")
+		flags = append(flags, "\"100MbFd\": true")
 	}
 	if self&OFPPF1GbHd == OFPPF1GbHd {
-		flags = append(flags, "\"OFPPF1GbHd\": true")
+		flags = append(flags, "\"1GbHd\": true")
 	}
 	if self&OFPPF1GbFd == OFPPF1GbFd {
-		flags = append(flags, "\"OFPPF1GbFd\": true")
+		flags = append(flags, "\"1GbFd\": true")
 	}
 	if self&OFPPF10GbFd == OFPPF10GbFd {
-		flags = append(flags, "\"OFPPF10GbFd\": true")
+		flags = append(flags, "\"10GbFd\": true")
 	}
 	if self&OFPPF40GbFd == OFPPF40GbFd {
-		flags = append(flags, "\"OFPPF40GbFd\": true")
+		flags = append(flags, "\"40GbFd\": true")
 	}
 	if self&OFPPF100GbFd == OFPPF100GbFd {
-		flags = append(flags, "\"OFPPF100GbFd\": true")
+		flags = append(flags, "\"100GbFd\": true")
 	}
 	if self&OFPPF1TbFd == OFPPF1TbFd {
-		flags = append(flags, "\"OFPPF1TbFd\": true")
+		flags = append(flags, "\"1TbFd\": true")
 	}
 	if self&OFPPFOther == OFPPFOther {
-		flags = append(flags, "\"OFPPFOther\": true")
+		flags = append(flags, "\"Other\": true")
 	}
 	if self&OFPPFCopper == OFPPFCopper {
-		flags = append(flags, "\"OFPPFCopper\": true")
+		flags = append(flags, "\"Copper\": true")
 	}
 	if self&OFPPFFiber == OFPPFFiber {
-		flags = append(flags, "\"OFPPFFiber\": true")
+		flags = append(flags, "\"Fiber\": true")
 	}
 	if self&OFPPFAutoneg == OFPPFAutoneg {
-		flags = append(flags, "\"OFPPFAutoneg\": true")
+		flags = append(flags, "\"Autoneg\": true")
 	}
 	if self&OFPPFPause == OFPPFPause {
-		flags = append(flags, "\"OFPPFPause\": true")
+		flags = append(flags, "\"Pause\": true")
 	}
 	if self&OFPPFPauseAsym == OFPPFPauseAsym {
-		flags = append(flags, "\"OFPPFPauseAsym\": true")
+		flags = append(flags, "\"PauseAsym\": true")
 	}
 	if self&OFPPFBSNBreakoutCapable == OFPPFBSNBreakoutCapable {
-		flags = append(flags, "\"OFPPFBSNBreakoutCapable\": true")
+		flags = append(flags, "\"BsnBreakoutCapable\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3760,20 +2810,7 @@ const (
 type PortModFailedCode uint16
 
 func (self PortModFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPPMFCBadPort:
-		return []byte("\"OFPPMFCBadPort\""), nil
-	case OFPPMFCBadHwAddr:
-		return []byte("\"OFPPMFCBadHwAddr\""), nil
-	case OFPPMFCBadConfig:
-		return []byte("\"OFPPMFCBadConfig\""), nil
-	case OFPPMFCBadAdvertise:
-		return []byte("\"OFPPMFCBadAdvertise\""), nil
-	case OFPPMFCEperm:
-		return []byte("\"OFPPMFCEperm\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for PortModFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3793,16 +2830,7 @@ const (
 type PortReason uint8
 
 func (self PortReason) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPPRAdd:
-		return []byte("\"OFPPRAdd\""), nil
-	case OFPPRDelete:
-		return []byte("\"OFPPRDelete\""), nil
-	case OFPPRModify:
-		return []byte("\"OFPPRModify\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for PortReason", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3817,13 +2845,13 @@ type PortState uint32
 func (self PortState) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPPSLinkDown == OFPPSLinkDown {
-		flags = append(flags, "\"OFPPSLinkDown\": true")
+		flags = append(flags, "\"LinkDown\": true")
 	}
 	if self&OFPPSBlocked == OFPPSBlocked {
-		flags = append(flags, "\"OFPPSBlocked\": true")
+		flags = append(flags, "\"Blocked\": true")
 	}
 	if self&OFPPSLive == OFPPSLive {
-		flags = append(flags, "\"OFPPSLive\": true")
+		flags = append(flags, "\"Live\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3843,22 +2871,22 @@ type PortStatsOpticalFlags uint32
 func (self PortStatsOpticalFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPOSFRxTune == OFPOSFRxTune {
-		flags = append(flags, "\"OFPOSFRxTune\": true")
+		flags = append(flags, "\"RxTune\": true")
 	}
 	if self&OFPOSFTxTune == OFPOSFTxTune {
-		flags = append(flags, "\"OFPOSFTxTune\": true")
+		flags = append(flags, "\"TxTune\": true")
 	}
 	if self&OFPOSFTxPwr == OFPOSFTxPwr {
-		flags = append(flags, "\"OFPOSFTxPwr\": true")
+		flags = append(flags, "\"TxPwr\": true")
 	}
 	if self&OFPOSFRxPwr == OFPOSFRxPwr {
-		flags = append(flags, "\"OFPOSFRxPwr\": true")
+		flags = append(flags, "\"RxPwr\": true")
 	}
 	if self&OFPOSFTxBias == OFPOSFTxBias {
-		flags = append(flags, "\"OFPOSFTxBias\": true")
+		flags = append(flags, "\"TxBias\": true")
 	}
 	if self&OFPOSFTxTemp == OFPOSFTxTemp {
-		flags = append(flags, "\"OFPOSFTxTemp\": true")
+		flags = append(flags, "\"TxTemp\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -3873,16 +2901,7 @@ const (
 type PortStatsPropType uint16
 
 func (self PortStatsPropType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPPSPTEthernet:
-		return []byte("\"OFPPSPTEthernet\""), nil
-	case OFPPSPTOptical:
-		return []byte("\"OFPPSPTOptical\""), nil
-	case OFPPSPTExperimenter:
-		return []byte("\"OFPPSPTExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for PortStatsPropType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3902,16 +2921,7 @@ const (
 type QueueOpFailedCode uint16
 
 func (self QueueOpFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPQOFCBadPort:
-		return []byte("\"OFPQOFCBadPort\""), nil
-	case OFPQOFCBadQueue:
-		return []byte("\"OFPQOFCBadQueue\""), nil
-	case OFPQOFCEperm:
-		return []byte("\"OFPQOFCEperm\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for QueueOpFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3940,16 +2950,7 @@ const (
 type RoleRequestFailedCode uint16
 
 func (self RoleRequestFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPRRFCStale:
-		return []byte("\"OFPRRFCStale\""), nil
-	case OFPRRFCUnsup:
-		return []byte("\"OFPRRFCUnsup\""), nil
-	case OFPRRFCBadRole:
-		return []byte("\"OFPRRFCBadRole\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for RoleRequestFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -3963,10 +2964,10 @@ type StatTriggerFlags uint32
 func (self StatTriggerFlags) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPSTFPeriodic == OFPSTFPeriodic {
-		flags = append(flags, "\"OFPSTFPeriodic\": true")
+		flags = append(flags, "\"Periodic\": true")
 	}
 	if self&OFPSTFOnlyFirst == OFPSTFOnlyFirst {
-		flags = append(flags, "\"OFPSTFOnlyFirst\": true")
+		flags = append(flags, "\"OnlyFirst\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -4029,52 +3030,7 @@ const (
 type StatsType uint16
 
 func (self StatsType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPSTDesc:
-		return []byte("\"OFPSTDesc\""), nil
-	case OFPSTFlow:
-		return []byte("\"OFPSTFlow\""), nil
-	case OFPSTAggregate:
-		return []byte("\"OFPSTAggregate\""), nil
-	case OFPSTTable:
-		return []byte("\"OFPSTTable\""), nil
-	case OFPSTPort:
-		return []byte("\"OFPSTPort\""), nil
-	case OFPSTQueue:
-		return []byte("\"OFPSTQueue\""), nil
-	case OFPSTGroup:
-		return []byte("\"OFPSTGroup\""), nil
-	case OFPSTGroupDesc:
-		return []byte("\"OFPSTGroupDesc\""), nil
-	case OFPSTGroupFeatures:
-		return []byte("\"OFPSTGroupFeatures\""), nil
-	case OFPSTMeter:
-		return []byte("\"OFPSTMeter\""), nil
-	case OFPSTMeterConfig:
-		return []byte("\"OFPSTMeterConfig\""), nil
-	case OFPSTMeterFeatures:
-		return []byte("\"OFPSTMeterFeatures\""), nil
-	case OFPSTTableFeatures:
-		return []byte("\"OFPSTTableFeatures\""), nil
-	case OFPSTPortDesc:
-		return []byte("\"OFPSTPortDesc\""), nil
-	case OFPMPTableDesc:
-		return []byte("\"OFPMPTableDesc\""), nil
-	case OFPMPQueueDesc:
-		return []byte("\"OFPMPQueueDesc\""), nil
-	case OFPMPFlowMonitor:
-		return []byte("\"OFPMPFlowMonitor\""), nil
-	case OFPMPFlowLightweight:
-		return []byte("\"OFPMPFlowLightweight\""), nil
-	case OFPMPControllerStatus:
-		return []byte("\"OFPMPControllerStatus\""), nil
-	case OFPMPBundleFeatures:
-		return []byte("\"OFPMPBundleFeatures\""), nil
-	case OFPSTExperimenter:
-		return []byte("\"OFPSTExperimenter\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for StatsType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -4089,20 +3045,7 @@ const (
 type SwitchConfigFailedCode uint16
 
 func (self SwitchConfigFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPSCFCBadFlags:
-		return []byte("\"OFPSCFCBadFlags\""), nil
-	case OFPSCFCBadLen:
-		return []byte("\"OFPSCFCBadLen\""), nil
-	case OFPSCFCEperm:
-		return []byte("\"OFPSCFCEperm\""), nil
-	case OFPRRFCIDUnsup:
-		return []byte("\"OFPRRFCIDUnsup\""), nil
-	case OFPRRFCIDInUse:
-		return []byte("\"OFPRRFCIDInUse\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for SwitchConfigFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -4114,14 +3057,7 @@ const (
 type Table uint8
 
 func (self Table) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPTTMax:
-		return []byte("\"OFPTTMax\""), nil
-	case OFPTTAll:
-		return []byte("\"OFPTTAll\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for Table", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -4136,13 +3072,13 @@ type TableConfig uint32
 func (self TableConfig) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPTCDeprecatedMask == OFPTCDeprecatedMask {
-		flags = append(flags, "\"OFPTCDeprecatedMask\": true")
+		flags = append(flags, "\"DeprecatedMask\": true")
 	}
 	if self&OFPTCEviction == OFPTCEviction {
-		flags = append(flags, "\"OFPTCEviction\": true")
+		flags = append(flags, "\"Eviction\": true")
 	}
 	if self&OFPTCVacancyEvents == OFPTCVacancyEvents {
-		flags = append(flags, "\"OFPTCVacancyEvents\": true")
+		flags = append(flags, "\"VacancyEvents\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -4159,13 +3095,13 @@ type TableFeatureFlag uint32
 func (self TableFeatureFlag) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPTFFIngressTable == OFPTFFIngressTable {
-		flags = append(flags, "\"OFPTFFIngressTable\": true")
+		flags = append(flags, "\"IngressTable\": true")
 	}
 	if self&OFPTFFEgressTable == OFPTFFEgressTable {
-		flags = append(flags, "\"OFPTFFEgressTable\": true")
+		flags = append(flags, "\"EgressTable\": true")
 	}
 	if self&OFPTFFFirstEgress == OFPTFFFirstEgress {
-		flags = append(flags, "\"OFPTFFFirstEgress\": true")
+		flags = append(flags, "\"FirstEgress\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -4199,54 +3135,7 @@ const (
 type TableFeaturePropType uint16
 
 func (self TableFeaturePropType) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPTFPTInstructions:
-		return []byte("\"OFPTFPTInstructions\""), nil
-	case OFPTFPTInstructionsMiss:
-		return []byte("\"OFPTFPTInstructionsMiss\""), nil
-	case OFPTFPTNextTables:
-		return []byte("\"OFPTFPTNextTables\""), nil
-	case OFPTFPTNextTablesMiss:
-		return []byte("\"OFPTFPTNextTablesMiss\""), nil
-	case OFPTFPTWriteActions:
-		return []byte("\"OFPTFPTWriteActions\""), nil
-	case OFPTFPTWriteActionsMiss:
-		return []byte("\"OFPTFPTWriteActionsMiss\""), nil
-	case OFPTFPTApplyActions:
-		return []byte("\"OFPTFPTApplyActions\""), nil
-	case OFPTFPTApplyActionsMiss:
-		return []byte("\"OFPTFPTApplyActionsMiss\""), nil
-	case OFPTFPTMatch:
-		return []byte("\"OFPTFPTMatch\""), nil
-	case OFPTFPTWildcards:
-		return []byte("\"OFPTFPTWildcards\""), nil
-	case OFPTFPTWriteSetfield:
-		return []byte("\"OFPTFPTWriteSetfield\""), nil
-	case OFPTFPTWriteSetfieldMiss:
-		return []byte("\"OFPTFPTWriteSetfieldMiss\""), nil
-	case OFPTFPTApplySetfield:
-		return []byte("\"OFPTFPTApplySetfield\""), nil
-	case OFPTFPTApplySetfieldMiss:
-		return []byte("\"OFPTFPTApplySetfieldMiss\""), nil
-	case OFPTFPTTableSyncFrom:
-		return []byte("\"OFPTFPTTableSyncFrom\""), nil
-	case OFPTFPTWriteCopyfield:
-		return []byte("\"OFPTFPTWriteCopyfield\""), nil
-	case OFPTFPTWriteCopyfieldMiss:
-		return []byte("\"OFPTFPTWriteCopyfieldMiss\""), nil
-	case OFPTFPTApplyCopyfield:
-		return []byte("\"OFPTFPTApplyCopyfield\""), nil
-	case OFPTFPTApplyCopyfieldMiss:
-		return []byte("\"OFPTFPTApplyCopyfieldMiss\""), nil
-	case OFPTFPTPacketTypes:
-		return []byte("\"OFPTFPTPacketTypes\""), nil
-	case OFPTFPTExperimenter:
-		return []byte("\"OFPTFPTExperimenter\""), nil
-	case OFPTFPTExperimenterMiss:
-		return []byte("\"OFPTFPTExperimenterMiss\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for TableFeaturePropType", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -4260,18 +3149,7 @@ const (
 type TableFeaturesCommand uint8
 
 func (self TableFeaturesCommand) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPTFCReplace:
-		return []byte("\"OFPTFCReplace\""), nil
-	case OFPTFCModify:
-		return []byte("\"OFPTFCModify\""), nil
-	case OFPTFCEnable:
-		return []byte("\"OFPTFCEnable\""), nil
-	case OFPTFCDisable:
-		return []byte("\"OFPTFCDisable\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for TableFeaturesCommand", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -4289,26 +3167,7 @@ const (
 type TableFeaturesFailedCode uint16
 
 func (self TableFeaturesFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPTFFCBadTable:
-		return []byte("\"OFPTFFCBadTable\""), nil
-	case OFPTFFCBadMetadata:
-		return []byte("\"OFPTFFCBadMetadata\""), nil
-	case OFPTFFCEperm:
-		return []byte("\"OFPTFFCEperm\""), nil
-	case OFPTFFCBadCapa:
-		return []byte("\"OFPTFFCBadCapa\""), nil
-	case OFPTFFCBadMaxEnt:
-		return []byte("\"OFPTFFCBadMaxEnt\""), nil
-	case OFPTFFCBadFeatures:
-		return []byte("\"OFPTFFCBadFeatures\""), nil
-	case OFPTFFCBadCommand:
-		return []byte("\"OFPTFFCBadCommand\""), nil
-	case OFPTFFCTooMany:
-		return []byte("\"OFPTFFCTooMany\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for TableFeaturesFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -4321,16 +3180,7 @@ const (
 type TableModFailedCode uint16
 
 func (self TableModFailedCode) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPTMFCBadTable:
-		return []byte("\"OFPTMFCBadTable\""), nil
-	case OFPTMFCBadConfig:
-		return []byte("\"OFPTMFCBadConfig\""), nil
-	case OFPTMFCEperm:
-		return []byte("\"OFPTMFCEperm\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for TableModFailedCode", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -4345,13 +3195,13 @@ type TableModPropEvictionFlag uint32
 func (self TableModPropEvictionFlag) MarshalJSON() ([]byte, error) {
 	var flags []string
 	if self&OFPTMPEFOther == OFPTMPEFOther {
-		flags = append(flags, "\"OFPTMPEFOther\": true")
+		flags = append(flags, "\"Other\": true")
 	}
 	if self&OFPTMPEFImportance == OFPTMPEFImportance {
-		flags = append(flags, "\"OFPTMPEFImportance\": true")
+		flags = append(flags, "\"Importance\": true")
 	}
 	if self&OFPTMPEFLifetime == OFPTMPEFLifetime {
-		flags = append(flags, "\"OFPTMPEFLifetime\": true")
+		flags = append(flags, "\"Lifetime\": true")
 	}
 	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
@@ -4372,14 +3222,7 @@ const (
 type TableReason uint8
 
 func (self TableReason) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPTRVacancyDown:
-		return []byte("\"OFPTRVacancyDown\""), nil
-	case OFPTRVacancyUp:
-		return []byte("\"OFPTRVacancyUp\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for TableReason", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -4423,77 +3266,81 @@ const (
 type Type uint8
 
 func (self Type) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%s", self)), nil
+}
+
+func (self Type) String() string {
 	switch self {
 	case OFPTHello:
-		return []byte("\"OFPTHello\""), nil
+		return "\"hello\""
 	case OFPTError:
-		return []byte("\"OFPTError\""), nil
+		return "\"error\""
 	case OFPTEchoRequest:
-		return []byte("\"OFPTEchoRequest\""), nil
+		return "\"echo_request\""
 	case OFPTEchoReply:
-		return []byte("\"OFPTEchoReply\""), nil
+		return "\"echo_reply\""
 	case OFPTExperimenter:
-		return []byte("\"OFPTExperimenter\""), nil
+		return "\"experimenter\""
 	case OFPTFeaturesRequest:
-		return []byte("\"OFPTFeaturesRequest\""), nil
+		return "\"features_request\""
 	case OFPTFeaturesReply:
-		return []byte("\"OFPTFeaturesReply\""), nil
+		return "\"features_reply\""
 	case OFPTGetConfigRequest:
-		return []byte("\"OFPTGetConfigRequest\""), nil
+		return "\"get_config_request\""
 	case OFPTGetConfigReply:
-		return []byte("\"OFPTGetConfigReply\""), nil
+		return "\"get_config_reply\""
 	case OFPTSetConfig:
-		return []byte("\"OFPTSetConfig\""), nil
+		return "\"set_config\""
 	case OFPTPacketIn:
-		return []byte("\"OFPTPacketIn\""), nil
+		return "\"packet_in\""
 	case OFPTFlowRemoved:
-		return []byte("\"OFPTFlowRemoved\""), nil
+		return "\"flow_removed\""
 	case OFPTPortStatus:
-		return []byte("\"OFPTPortStatus\""), nil
+		return "\"port_status\""
 	case OFPTPacketOut:
-		return []byte("\"OFPTPacketOut\""), nil
+		return "\"packet_out\""
 	case OFPTFlowMod:
-		return []byte("\"OFPTFlowMod\""), nil
+		return "\"flow_mod\""
 	case OFPTGroupMod:
-		return []byte("\"OFPTGroupMod\""), nil
+		return "\"group_mod\""
 	case OFPTPortMod:
-		return []byte("\"OFPTPortMod\""), nil
+		return "\"port_mod\""
 	case OFPTTableMod:
-		return []byte("\"OFPTTableMod\""), nil
+		return "\"table_mod\""
 	case OFPTStatsRequest:
-		return []byte("\"OFPTStatsRequest\""), nil
+		return "\"stats_request\""
 	case OFPTStatsReply:
-		return []byte("\"OFPTStatsReply\""), nil
+		return "\"stats_reply\""
 	case OFPTBarrierRequest:
-		return []byte("\"OFPTBarrierRequest\""), nil
+		return "\"barrier_request\""
 	case OFPTBarrierReply:
-		return []byte("\"OFPTBarrierReply\""), nil
+		return "\"barrier_reply\""
 	case OFPTRoleRequest:
-		return []byte("\"OFPTRoleRequest\""), nil
+		return "\"role_request\""
 	case OFPTRoleReply:
-		return []byte("\"OFPTRoleReply\""), nil
+		return "\"role_reply\""
 	case OFPTGetAsyncRequest:
-		return []byte("\"OFPTGetAsyncRequest\""), nil
+		return "\"get_async_request\""
 	case OFPTGetAsyncReply:
-		return []byte("\"OFPTGetAsyncReply\""), nil
+		return "\"get_async_reply\""
 	case OFPTSetAsync:
-		return []byte("\"OFPTSetAsync\""), nil
+		return "\"set_async\""
 	case OFPTMeterMod:
-		return []byte("\"OFPTMeterMod\""), nil
+		return "\"meter_mod\""
 	case OFPTRoleStatus:
-		return []byte("\"OFPTRoleStatus\""), nil
+		return "\"role_status\""
 	case OFPTTableStatus:
-		return []byte("\"OFPTTableStatus\""), nil
+		return "\"table_status\""
 	case OFPTRequestforward:
-		return []byte("\"OFPTRequestforward\""), nil
+		return "\"requestforward\""
 	case OFPTBundleControl:
-		return []byte("\"OFPTBundleControl\""), nil
+		return "\"bundle_control\""
 	case OFPTBundleAddMessage:
-		return []byte("\"OFPTBundleAddMessage\""), nil
+		return "\"bundle_add_message\""
 	case OFPTControllerStatus:
-		return []byte("\"OFPTControllerStatus\""), nil
+		return "\"controller_status\""
 	default:
-		return nil, fmt.Errorf("Invalid value '%d' for Type", self)
+		return fmt.Sprintf("\"Invalid value '%d' for Type\"", self)
 	}
 }
 
@@ -4506,12 +3353,5 @@ const (
 type VlanId uint16
 
 func (self VlanId) MarshalJSON() ([]byte, error) {
-	switch self {
-	case OFPVIDNone:
-		return []byte("\"OFPVIDNone\""), nil
-	case OFPVIDPresent:
-		return []byte("\"OFPVIDPresent\""), nil
-	default:
-		return nil, fmt.Errorf("Invalid value '%d' for VlanId", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }

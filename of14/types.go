@@ -20,6 +20,10 @@ func (h *Header) MessageType() uint8 {
 	return h.Type
 }
 
+func (h *Header) MessageName() string {
+	return Type(h.Type).String()
+}
+
 func (self *Checksum128) Decode(decoder *goloxi.Decoder) error {
 	return nil
 }
@@ -112,4 +116,18 @@ func DecodeMessage(data []byte) (goloxi.Message, error) {
 	}
 
 	return header.(goloxi.Message), nil
+}
+
+func (self *Port) Serialize(encoder *goloxi.Encoder) error {
+	portNo := PortNo(*self)
+	return portNo.Serialize(encoder)
+}
+
+func (self *Port) Decode(decoder *goloxi.Decoder) error {
+	portNo := PortNo(*self)
+	if err := portNo.Decode(decoder); err != nil {
+		return err
+	}
+	*self = Port(portNo)
+	return nil
 }

@@ -31,11 +31,20 @@ func (self *ActionId) GetType() uint16 {
 	return self.Type
 }
 
+func (self *ActionId) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *ActionId) GetLen() uint16 {
 	return self.Len
 }
 
+func (self *ActionId) SetLen(v uint16) {
+	self.Len = v
+}
+
 func (self *ActionId) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Len))
 
@@ -49,6 +58,8 @@ func DecodeActionId(decoder *goloxi.Decoder) (IActionId, error) {
 	}
 	_actionid.Type = uint16(decoder.ReadUint16())
 	_actionid.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_actionid.Len), 2+2)
 
 	switch _actionid.Type {
@@ -87,7 +98,7 @@ func DecodeActionId(decoder *goloxi.Decoder) (IActionId, error) {
 	case 65535:
 		return DecodeActionIdExperimenter(_actionid, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionId'", _actionid.Type)
+		return _actionid, nil
 	}
 }
 
@@ -109,6 +120,10 @@ type IActionIdExperimenter interface {
 
 func (self *ActionIdExperimenter) GetExperimenter() uint32 {
 	return self.Experimenter
+}
+
+func (self *ActionIdExperimenter) SetExperimenter(v uint32) {
+	self.Experimenter = v
 }
 
 func (self *ActionIdExperimenter) Serialize(encoder *goloxi.Encoder) error {
@@ -134,7 +149,7 @@ func DecodeActionIdExperimenter(parent *ActionId, decoder *goloxi.Decoder) (IAct
 	case 6035143:
 		return DecodeActionIdBsn(_actionidexperimenter, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdExperimenter'", _actionidexperimenter.Experimenter)
+		return _actionidexperimenter, nil
 	}
 }
 
@@ -158,6 +173,10 @@ type IActionIdBsn interface {
 
 func (self *ActionIdBsn) GetSubtype() uint32 {
 	return self.Subtype
+}
+
+func (self *ActionIdBsn) SetSubtype(v uint32) {
+	self.Subtype = v
 }
 
 func (self *ActionIdBsn) Serialize(encoder *goloxi.Encoder) error {
@@ -187,7 +206,7 @@ func DecodeActionIdBsn(parent *ActionIdExperimenter, decoder *goloxi.Decoder) (I
 	case 5:
 		return DecodeActionIdBsnGentable(_actionidbsn, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdBsn'", _actionidbsn.Subtype)
+		return _actionidbsn, nil
 	}
 }
 
@@ -203,12 +222,15 @@ type ActionIdBsnChecksum struct {
 	*ActionIdBsn
 }
 
+type IActionIdBsnChecksum interface {
+	IActionIdBsn
+}
+
 func (self *ActionIdBsnChecksum) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -230,12 +252,15 @@ type ActionIdBsnGentable struct {
 	*ActionIdBsn
 }
 
+type IActionIdBsnGentable interface {
+	IActionIdBsn
+}
+
 func (self *ActionIdBsnGentable) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -257,12 +282,15 @@ type ActionIdBsnMirror struct {
 	*ActionIdBsn
 }
 
+type IActionIdBsnMirror interface {
+	IActionIdBsn
+}
+
 func (self *ActionIdBsnMirror) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -284,12 +312,15 @@ type ActionIdBsnSetTunnelDst struct {
 	*ActionIdBsn
 }
 
+type IActionIdBsnSetTunnelDst interface {
+	IActionIdBsn
+}
+
 func (self *ActionIdBsnSetTunnelDst) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdBsn.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -311,12 +342,15 @@ type ActionIdCopyTtlIn struct {
 	*ActionId
 }
 
+type IActionIdCopyTtlIn interface {
+	IActionId
+}
+
 func (self *ActionIdCopyTtlIn) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -338,12 +372,15 @@ type ActionIdCopyTtlOut struct {
 	*ActionId
 }
 
+type IActionIdCopyTtlOut interface {
+	IActionId
+}
+
 func (self *ActionIdCopyTtlOut) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -365,12 +402,15 @@ type ActionIdDecMplsTtl struct {
 	*ActionId
 }
 
+type IActionIdDecMplsTtl interface {
+	IActionId
+}
+
 func (self *ActionIdDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -392,12 +432,15 @@ type ActionIdDecNwTtl struct {
 	*ActionId
 }
 
+type IActionIdDecNwTtl interface {
+	IActionId
+}
+
 func (self *ActionIdDecNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -419,12 +462,15 @@ type ActionIdGroup struct {
 	*ActionId
 }
 
+type IActionIdGroup interface {
+	IActionId
+}
+
 func (self *ActionIdGroup) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -456,6 +502,10 @@ func (self *ActionIdNicira) GetSubtype() uint16 {
 	return self.Subtype
 }
 
+func (self *ActionIdNicira) SetSubtype(v uint16) {
+	self.Subtype = v
+}
+
 func (self *ActionIdNicira) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdExperimenter.Serialize(encoder); err != nil {
 		return err
@@ -478,6 +528,8 @@ func DecodeActionIdNicira(parent *ActionIdExperimenter, decoder *goloxi.Decoder)
 		return DecodeActionIdNxResubmit(_actionidnicira, decoder)
 	case 2:
 		return DecodeActionIdNxSetTunnel(_actionidnicira, decoder)
+	case 4:
+		return DecodeActionIdNxSetQueue(_actionidnicira, decoder)
 	case 5:
 		return DecodeActionIdNxPopQueue(_actionidnicira, decoder)
 	case 6:
@@ -493,7 +545,7 @@ func DecodeActionIdNicira(parent *ActionIdExperimenter, decoder *goloxi.Decoder)
 	case 12:
 		return DecodeActionIdNxBundle(_actionidnicira, decoder)
 	case 13:
-		return DecodeActionIdNxBundleLoad(_actionidnicira, decoder)
+		return DecodeActionIdNxBundleLoadInPort(_actionidnicira, decoder)
 	case 14:
 		return DecodeActionIdResubmit(_actionidnicira, decoder)
 	case 15:
@@ -512,12 +564,24 @@ func DecodeActionIdNicira(parent *ActionIdExperimenter, decoder *goloxi.Decoder)
 		return DecodeActionIdNxDecTtlCntIds(_actionidnicira, decoder)
 	case 22:
 		return DecodeActionIdNxWriteMetadata(_actionidnicira, decoder)
+	case 23:
+		return DecodeActionIdNxPushMpls(_actionidnicira, decoder)
+	case 24:
+		return DecodeActionIdNxPopMpls(_actionidnicira, decoder)
+	case 25:
+		return DecodeActionIdNxSetMplsTtl(_actionidnicira, decoder)
+	case 26:
+		return DecodeActionIdNxDecMplsTtl(_actionidnicira, decoder)
 	case 27:
 		return DecodeActionIdNxStackPush(_actionidnicira, decoder)
 	case 28:
 		return DecodeActionIdNxStackPop(_actionidnicira, decoder)
 	case 29:
 		return DecodeActionIdNxSample(_actionidnicira, decoder)
+	case 30:
+		return DecodeActionIdNxSetMplsLabel(_actionidnicira, decoder)
+	case 31:
+		return DecodeActionIdNxSetMplsTc(_actionidnicira, decoder)
 	case 32:
 		return DecodeActionIdNxOutputReg2(_actionidnicira, decoder)
 	case 33:
@@ -534,6 +598,8 @@ func DecodeActionIdNicira(parent *ActionIdExperimenter, decoder *goloxi.Decoder)
 		return DecodeActionIdNxSample2(_actionidnicira, decoder)
 	case 39:
 		return DecodeActionIdNxOutputTrunc(_actionidnicira, decoder)
+	case 40:
+		return DecodeActionIdNxGroup(_actionidnicira, decoder)
 	case 41:
 		return DecodeActionIdNxSample3(_actionidnicira, decoder)
 	case 42:
@@ -548,10 +614,14 @@ func DecodeActionIdNicira(parent *ActionIdExperimenter, decoder *goloxi.Decoder)
 		return DecodeActionIdNxEncap(_actionidnicira, decoder)
 	case 47:
 		return DecodeActionIdNxDecap(_actionidnicira, decoder)
+	case 48:
+		return DecodeActionIdNxDecNshTtl(_actionidnicira, decoder)
+	case 254:
+		return DecodeActionIdNxDebugSlow(_actionidnicira, decoder)
 	case 255:
 		return DecodeActionIdNxDebugRecirc(_actionidnicira, decoder)
 	default:
-		return nil, fmt.Errorf("Invalid type '%d' for 'ActionIdNicira'", _actionidnicira.Subtype)
+		return _actionidnicira, nil
 	}
 }
 
@@ -567,12 +637,15 @@ type ActionIdNiciraDecTtl struct {
 	*ActionIdNicira
 }
 
+type IActionIdNiciraDecTtl interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNiciraDecTtl) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -594,12 +667,15 @@ type ActionIdNxBundle struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxBundle interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxBundle) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -619,6 +695,20 @@ func NewActionIdNxBundle() *ActionIdNxBundle {
 
 type ActionIdNxBundleLoad struct {
 	*ActionIdNicira
+	SlaveType ActionNxBundleSlaveType
+}
+
+type IActionIdNxBundleLoad interface {
+	IActionIdNicira
+	GetSlaveType() ActionNxBundleSlaveType
+}
+
+func (self *ActionIdNxBundleLoad) GetSlaveType() ActionNxBundleSlaveType {
+	return self.SlaveType
+}
+
+func (self *ActionIdNxBundleLoad) SetSlaveType(v ActionNxBundleSlaveType) {
+	self.SlaveType = v
 }
 
 func (self *ActionIdNxBundleLoad) Serialize(encoder *goloxi.Encoder) error {
@@ -626,19 +716,81 @@ func (self *ActionIdNxBundleLoad) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
+	encoder.PutUint32(uint32(self.SlaveType))
+
+	return nil
+}
+
+func DecodeActionIdNxBundleLoad(parent *ActionIdNicira, decoder *goloxi.Decoder) (IActionIdNxBundleLoad, error) {
+	_actionidnxbundleload := &ActionIdNxBundleLoad{ActionIdNicira: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("ActionIdNxBundleLoad packet too short: %d < 4", decoder.Length())
+	}
+	_actionidnxbundleload.SlaveType = ActionNxBundleSlaveType(decoder.ReadUint32())
+	return _actionidnxbundleload, nil
+}
+
+func NewActionIdNxBundleLoad(_slave_type ActionNxBundleSlaveType) *ActionIdNxBundleLoad {
+	obj := &ActionIdNxBundleLoad{
+		ActionIdNicira: NewActionIdNicira(13),
+	}
+	obj.SlaveType = _slave_type
+	return obj
+}
+
+type ActionIdNxBundleLoadInPort struct {
+	*ActionIdNicira
+	SlaveType ActionNxBundleSlaveType
+	NSlaves   uint16
+}
+
+type IActionIdNxBundleLoadInPort interface {
+	IActionIdNicira
+	GetSlaveType() ActionNxBundleSlaveType
+	GetNSlaves() uint16
+}
+
+func (self *ActionIdNxBundleLoadInPort) GetSlaveType() ActionNxBundleSlaveType {
+	return self.SlaveType
+}
+
+func (self *ActionIdNxBundleLoadInPort) SetSlaveType(v ActionNxBundleSlaveType) {
+	self.SlaveType = v
+}
+
+func (self *ActionIdNxBundleLoadInPort) GetNSlaves() uint16 {
+	return self.NSlaves
+}
+
+func (self *ActionIdNxBundleLoadInPort) SetNSlaves(v uint16) {
+	self.NSlaves = v
+}
+
+func (self *ActionIdNxBundleLoadInPort) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint32(uint32(self.SlaveType))
+	encoder.PutUint16(uint16(self.NSlaves))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
 }
 
-func DecodeActionIdNxBundleLoad(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxBundleLoad, error) {
-	_actionidnxbundleload := &ActionIdNxBundleLoad{ActionIdNicira: parent}
-	return _actionidnxbundleload, nil
+func DecodeActionIdNxBundleLoadInPort(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxBundleLoadInPort, error) {
+	_actionidnxbundleloadinport := &ActionIdNxBundleLoadInPort{ActionIdNicira: parent}
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("ActionIdNxBundleLoadInPort packet too short: %d < 6", decoder.Length())
+	}
+	_actionidnxbundleloadinport.SlaveType = ActionNxBundleSlaveType(decoder.ReadUint32())
+	_actionidnxbundleloadinport.NSlaves = uint16(decoder.ReadUint16())
+	return _actionidnxbundleloadinport, nil
 }
 
-func NewActionIdNxBundleLoad() *ActionIdNxBundleLoad {
-	obj := &ActionIdNxBundleLoad{
+func NewActionIdNxBundleLoadInPort() *ActionIdNxBundleLoadInPort {
+	obj := &ActionIdNxBundleLoadInPort{
 		ActionIdNicira: NewActionIdNicira(13),
 	}
 	return obj
@@ -648,12 +800,15 @@ type ActionIdNxClone struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxClone interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxClone) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -675,12 +830,15 @@ type ActionIdNxConjunction struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxConjunction interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxConjunction) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -702,12 +860,15 @@ type ActionIdNxController struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxController interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxController) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -729,12 +890,15 @@ type ActionIdNxController2 struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxController2 interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxController2) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -756,12 +920,15 @@ type ActionIdNxCt struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxCt interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxCt) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -783,12 +950,15 @@ type ActionIdNxCtClear struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxCtClear interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxCtClear) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -810,12 +980,15 @@ type ActionIdNxDebugRecirc struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxDebugRecirc interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxDebugRecirc) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -833,8 +1006,102 @@ func NewActionIdNxDebugRecirc() *ActionIdNxDebugRecirc {
 	return obj
 }
 
+type ActionIdNxDebugSlow struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxDebugSlow interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxDebugSlow) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxDebugSlow(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDebugSlow, error) {
+	_actionidnxdebugslow := &ActionIdNxDebugSlow{ActionIdNicira: parent}
+	return _actionidnxdebugslow, nil
+}
+
+func NewActionIdNxDebugSlow() *ActionIdNxDebugSlow {
+	obj := &ActionIdNxDebugSlow{
+		ActionIdNicira: NewActionIdNicira(254),
+	}
+	return obj
+}
+
+type ActionIdNxDecMplsTtl struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxDecMplsTtl interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxDecMplsTtl(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDecMplsTtl, error) {
+	_actionidnxdecmplsttl := &ActionIdNxDecMplsTtl{ActionIdNicira: parent}
+	return _actionidnxdecmplsttl, nil
+}
+
+func NewActionIdNxDecMplsTtl() *ActionIdNxDecMplsTtl {
+	obj := &ActionIdNxDecMplsTtl{
+		ActionIdNicira: NewActionIdNicira(26),
+	}
+	return obj
+}
+
+type ActionIdNxDecNshTtl struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxDecNshTtl interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxDecNshTtl) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxDecNshTtl(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxDecNshTtl, error) {
+	_actionidnxdecnshttl := &ActionIdNxDecNshTtl{ActionIdNicira: parent}
+	return _actionidnxdecnshttl, nil
+}
+
+func NewActionIdNxDecNshTtl() *ActionIdNxDecNshTtl {
+	obj := &ActionIdNxDecNshTtl{
+		ActionIdNicira: NewActionIdNicira(48),
+	}
+	return obj
+}
+
 type ActionIdNxDecTtlCntIds struct {
 	*ActionIdNicira
+}
+
+type IActionIdNxDecTtlCntIds interface {
+	IActionIdNicira
 }
 
 func (self *ActionIdNxDecTtlCntIds) Serialize(encoder *goloxi.Encoder) error {
@@ -842,7 +1109,6 @@ func (self *ActionIdNxDecTtlCntIds) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -864,12 +1130,15 @@ type ActionIdNxDecap struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxDecap interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxDecap) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -891,12 +1160,15 @@ type ActionIdNxEncap struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxEncap interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxEncap) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -918,12 +1190,15 @@ type ActionIdNxExit struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxExit interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxExit) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -945,12 +1220,15 @@ type ActionIdNxFinTimeout struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxFinTimeout interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxFinTimeout) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -968,8 +1246,42 @@ func NewActionIdNxFinTimeout() *ActionIdNxFinTimeout {
 	return obj
 }
 
+type ActionIdNxGroup struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxGroup interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxGroup) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxGroup(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxGroup, error) {
+	_actionidnxgroup := &ActionIdNxGroup{ActionIdNicira: parent}
+	return _actionidnxgroup, nil
+}
+
+func NewActionIdNxGroup() *ActionIdNxGroup {
+	obj := &ActionIdNxGroup{
+		ActionIdNicira: NewActionIdNicira(40),
+	}
+	return obj
+}
+
 type ActionIdNxLearn struct {
 	*ActionIdNicira
+}
+
+type IActionIdNxLearn interface {
+	IActionIdNicira
 }
 
 func (self *ActionIdNxLearn) Serialize(encoder *goloxi.Encoder) error {
@@ -977,7 +1289,6 @@ func (self *ActionIdNxLearn) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -999,12 +1310,15 @@ type ActionIdNxLearn2 struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxLearn2 interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxLearn2) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1026,12 +1340,15 @@ type ActionIdNxMultipath struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxMultipath interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxMultipath) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1053,12 +1370,15 @@ type ActionIdNxNat struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxNat interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxNat) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1080,12 +1400,15 @@ type ActionIdNxNote struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxNote interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxNote) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1107,12 +1430,15 @@ type ActionIdNxOutputReg struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxOutputReg interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxOutputReg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1134,12 +1460,15 @@ type ActionIdNxOutputReg2 struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxOutputReg2 interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxOutputReg2) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1161,12 +1490,15 @@ type ActionIdNxOutputTrunc struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxOutputTrunc interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxOutputTrunc) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1184,8 +1516,42 @@ func NewActionIdNxOutputTrunc() *ActionIdNxOutputTrunc {
 	return obj
 }
 
+type ActionIdNxPopMpls struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxPopMpls interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxPopMpls) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxPopMpls(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxPopMpls, error) {
+	_actionidnxpopmpls := &ActionIdNxPopMpls{ActionIdNicira: parent}
+	return _actionidnxpopmpls, nil
+}
+
+func NewActionIdNxPopMpls() *ActionIdNxPopMpls {
+	obj := &ActionIdNxPopMpls{
+		ActionIdNicira: NewActionIdNicira(24),
+	}
+	return obj
+}
+
 type ActionIdNxPopQueue struct {
 	*ActionIdNicira
+}
+
+type IActionIdNxPopQueue interface {
+	IActionIdNicira
 }
 
 func (self *ActionIdNxPopQueue) Serialize(encoder *goloxi.Encoder) error {
@@ -1193,7 +1559,6 @@ func (self *ActionIdNxPopQueue) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1211,8 +1576,42 @@ func NewActionIdNxPopQueue() *ActionIdNxPopQueue {
 	return obj
 }
 
+type ActionIdNxPushMpls struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxPushMpls interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxPushMpls) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxPushMpls(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxPushMpls, error) {
+	_actionidnxpushmpls := &ActionIdNxPushMpls{ActionIdNicira: parent}
+	return _actionidnxpushmpls, nil
+}
+
+func NewActionIdNxPushMpls() *ActionIdNxPushMpls {
+	obj := &ActionIdNxPushMpls{
+		ActionIdNicira: NewActionIdNicira(23),
+	}
+	return obj
+}
+
 type ActionIdNxRegLoad struct {
 	*ActionIdNicira
+}
+
+type IActionIdNxRegLoad interface {
+	IActionIdNicira
 }
 
 func (self *ActionIdNxRegLoad) Serialize(encoder *goloxi.Encoder) error {
@@ -1220,7 +1619,6 @@ func (self *ActionIdNxRegLoad) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1242,12 +1640,15 @@ type ActionIdNxRegLoad2 struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxRegLoad2 interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxRegLoad2) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1269,12 +1670,15 @@ type ActionIdNxRegMove struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxRegMove interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxRegMove) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1296,12 +1700,15 @@ type ActionIdNxResubmit struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxResubmit interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxResubmit) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1323,12 +1730,15 @@ type ActionIdNxResubmitTable struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxResubmitTable interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxResubmitTable) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1350,12 +1760,15 @@ type ActionIdNxResubmitTableCt struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxResubmitTableCt interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxResubmitTableCt) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1377,12 +1790,15 @@ type ActionIdNxSample struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxSample interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxSample) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1404,12 +1820,15 @@ type ActionIdNxSample2 struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxSample2 interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxSample2) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1431,12 +1850,15 @@ type ActionIdNxSample3 struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxSample3 interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxSample3) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1454,8 +1876,132 @@ func NewActionIdNxSample3() *ActionIdNxSample3 {
 	return obj
 }
 
+type ActionIdNxSetMplsLabel struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxSetMplsLabel interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxSetMplsLabel) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxSetMplsLabel(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSetMplsLabel, error) {
+	_actionidnxsetmplslabel := &ActionIdNxSetMplsLabel{ActionIdNicira: parent}
+	return _actionidnxsetmplslabel, nil
+}
+
+func NewActionIdNxSetMplsLabel() *ActionIdNxSetMplsLabel {
+	obj := &ActionIdNxSetMplsLabel{
+		ActionIdNicira: NewActionIdNicira(30),
+	}
+	return obj
+}
+
+type ActionIdNxSetMplsTc struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxSetMplsTc interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxSetMplsTc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxSetMplsTc(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSetMplsTc, error) {
+	_actionidnxsetmplstc := &ActionIdNxSetMplsTc{ActionIdNicira: parent}
+	return _actionidnxsetmplstc, nil
+}
+
+func NewActionIdNxSetMplsTc() *ActionIdNxSetMplsTc {
+	obj := &ActionIdNxSetMplsTc{
+		ActionIdNicira: NewActionIdNicira(31),
+	}
+	return obj
+}
+
+type ActionIdNxSetMplsTtl struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxSetMplsTtl interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxSetMplsTtl) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxSetMplsTtl(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSetMplsTtl, error) {
+	_actionidnxsetmplsttl := &ActionIdNxSetMplsTtl{ActionIdNicira: parent}
+	return _actionidnxsetmplsttl, nil
+}
+
+func NewActionIdNxSetMplsTtl() *ActionIdNxSetMplsTtl {
+	obj := &ActionIdNxSetMplsTtl{
+		ActionIdNicira: NewActionIdNicira(25),
+	}
+	return obj
+}
+
+type ActionIdNxSetQueue struct {
+	*ActionIdNicira
+}
+
+type IActionIdNxSetQueue interface {
+	IActionIdNicira
+}
+
+func (self *ActionIdNxSetQueue) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionIdNxSetQueue(parent *ActionIdNicira, decoder *goloxi.Decoder) (*ActionIdNxSetQueue, error) {
+	_actionidnxsetqueue := &ActionIdNxSetQueue{ActionIdNicira: parent}
+	return _actionidnxsetqueue, nil
+}
+
+func NewActionIdNxSetQueue() *ActionIdNxSetQueue {
+	obj := &ActionIdNxSetQueue{
+		ActionIdNicira: NewActionIdNicira(4),
+	}
+	return obj
+}
+
 type ActionIdNxSetTunnel struct {
 	*ActionIdNicira
+}
+
+type IActionIdNxSetTunnel interface {
+	IActionIdNicira
 }
 
 func (self *ActionIdNxSetTunnel) Serialize(encoder *goloxi.Encoder) error {
@@ -1463,7 +2009,6 @@ func (self *ActionIdNxSetTunnel) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1485,12 +2030,15 @@ type ActionIdNxSetTunnel64 struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxSetTunnel64 interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxSetTunnel64) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1512,12 +2060,15 @@ type ActionIdNxStackPop struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxStackPop interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxStackPop) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1539,12 +2090,15 @@ type ActionIdNxStackPush struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxStackPush interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxStackPush) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1566,12 +2120,15 @@ type ActionIdNxWriteMetadata struct {
 	*ActionIdNicira
 }
 
+type IActionIdNxWriteMetadata interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdNxWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1593,12 +2150,15 @@ type ActionIdOutput struct {
 	*ActionId
 }
 
+type IActionIdOutput interface {
+	IActionId
+}
+
 func (self *ActionIdOutput) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1620,12 +2180,15 @@ type ActionIdPopMpls struct {
 	*ActionId
 }
 
+type IActionIdPopMpls interface {
+	IActionId
+}
+
 func (self *ActionIdPopMpls) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1647,12 +2210,15 @@ type ActionIdPopPbb struct {
 	*ActionId
 }
 
+type IActionIdPopPbb interface {
+	IActionId
+}
+
 func (self *ActionIdPopPbb) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1674,12 +2240,15 @@ type ActionIdPopVlan struct {
 	*ActionId
 }
 
+type IActionIdPopVlan interface {
+	IActionId
+}
+
 func (self *ActionIdPopVlan) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1701,12 +2270,15 @@ type ActionIdPushMpls struct {
 	*ActionId
 }
 
+type IActionIdPushMpls interface {
+	IActionId
+}
+
 func (self *ActionIdPushMpls) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1728,12 +2300,15 @@ type ActionIdPushPbb struct {
 	*ActionId
 }
 
+type IActionIdPushPbb interface {
+	IActionId
+}
+
 func (self *ActionIdPushPbb) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1755,12 +2330,15 @@ type ActionIdPushVlan struct {
 	*ActionId
 }
 
+type IActionIdPushVlan interface {
+	IActionId
+}
+
 func (self *ActionIdPushVlan) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1782,12 +2360,15 @@ type ActionIdResubmit struct {
 	*ActionIdNicira
 }
 
+type IActionIdResubmit interface {
+	IActionIdNicira
+}
+
 func (self *ActionIdResubmit) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionIdNicira.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1809,12 +2390,15 @@ type ActionIdSetField struct {
 	*ActionId
 }
 
+type IActionIdSetField interface {
+	IActionId
+}
+
 func (self *ActionIdSetField) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1836,12 +2420,15 @@ type ActionIdSetMplsTtl struct {
 	*ActionId
 }
 
+type IActionIdSetMplsTtl interface {
+	IActionId
+}
+
 func (self *ActionIdSetMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1863,12 +2450,15 @@ type ActionIdSetNwTtl struct {
 	*ActionId
 }
 
+type IActionIdSetNwTtl interface {
+	IActionId
+}
+
 func (self *ActionIdSetNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1890,12 +2480,15 @@ type ActionIdSetQueue struct {
 	*ActionId
 }
 
+type IActionIdSetQueue interface {
+	IActionId
+}
+
 func (self *ActionIdSetQueue) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ActionId.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil

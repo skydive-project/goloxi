@@ -20,9 +20,31 @@ type Deserializable interface {
 type Message interface {
 	Serializable
 	MessageType() uint8
+	MessageName() string
+	GetXid() uint32
+	SetXid(xid uint32)
 }
 
 type Uint128 struct {
 	Hi uint64
 	Lo uint64
+}
+
+type IOxm interface {
+	Serializable
+	GetOXMName() string
+	GetOXMValue() interface{}
+}
+
+type IOxmId interface {
+	Serializable
+	GetOXMName() string
+}
+
+type IAction interface {
+	Serializable
+	GetType() uint16
+	GetLen() uint16
+	GetActionName() string
+	GetActionFields() map[string]interface{}
 }

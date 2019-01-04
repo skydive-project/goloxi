@@ -12,7 +12,9 @@ package of12
 import (
 	"bytes"
 	"encoding/binary"
+	"encoding/json"
 	"fmt"
+	"net"
 
 	"github.com/skydive-project/goloxi"
 )
@@ -26,32 +28,43 @@ type IAction interface {
 	goloxi.Serializable
 	GetType() uint16
 	GetLen() uint16
-	GetName() string
-	GetFields() map[string]interface{}
+	GetActionName() string
+	GetActionFields() map[string]interface{}
 }
 
 func (self *Action) GetType() uint16 {
 	return self.Type
 }
 
+func (self *Action) SetType(v uint16) {
+	self.Type = v
+}
+
 func (self *Action) GetLen() uint16 {
 	return self.Len
 }
 
+func (self *Action) SetLen(v uint16) {
+	self.Len = v
+}
+
 func (self *Action) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint16(uint16(self.Type))
 	encoder.PutUint16(uint16(self.Len))
 
 	return nil
 }
 
-func DecodeAction(decoder *goloxi.Decoder) (IAction, error) {
+func DecodeAction(decoder *goloxi.Decoder) (goloxi.IAction, error) {
 	_action := &Action{}
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("Action packet too short: %d < 4", decoder.Length())
 	}
 	_action.Type = uint16(decoder.ReadUint16())
 	_action.Len = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_action.Len), 2+2)
 
 	switch _action.Type {
@@ -102,12 +115,16 @@ type ActionExperimenter struct {
 }
 
 type IActionExperimenter interface {
-	IAction
+	goloxi.IAction
 	GetExperimenter() uint32
 }
 
 func (self *ActionExperimenter) GetExperimenter() uint32 {
 	return self.Experimenter
+}
+
+func (self *ActionExperimenter) SetExperimenter(v uint32) {
+	self.Experimenter = v
 }
 
 func (self *ActionExperimenter) Serialize(encoder *goloxi.Encoder) error {
@@ -144,14 +161,22 @@ func NewActionExperimenter(_experimenter uint32) *ActionExperimenter {
 	obj.Experimenter = _experimenter
 	return obj
 }
-func (self *ActionExperimenter) GetName() string {
+func (self *ActionExperimenter) GetActionName() string {
 	return "experimenter"
 }
 
-func (self *ActionExperimenter) GetFields() map[string]interface{} {
+func (self *ActionExperimenter) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Experimenter": self.Experimenter,
 	}
+}
+
+func (self *ActionExperimenter) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionBsn struct {
@@ -166,6 +191,10 @@ type IActionBsn interface {
 
 func (self *ActionBsn) GetSubtype() uint32 {
 	return self.Subtype
+}
+
+func (self *ActionBsn) SetSubtype(v uint32) {
+	self.Subtype = v
 }
 
 func (self *ActionBsn) Serialize(encoder *goloxi.Encoder) error {
@@ -204,19 +233,40 @@ func NewActionBsn(_subtype uint32) *ActionBsn {
 	obj.Subtype = _subtype
 	return obj
 }
-func (self *ActionBsn) GetName() string {
+func (self *ActionBsn) GetActionName() string {
 	return "bsn"
 }
 
-func (self *ActionBsn) GetFields() map[string]interface{} {
+func (self *ActionBsn) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Subtype": self.Subtype,
 	}
 }
 
+func (self *ActionBsn) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionBsnChecksum struct {
 	*ActionBsn
 	Checksum Checksum128
+}
+
+type IActionBsnChecksum interface {
+	IActionBsn
+	GetChecksum() Checksum128
+}
+
+func (self *ActionBsnChecksum) GetChecksum() Checksum128 {
+	return self.Checksum
+}
+
+func (self *ActionBsnChecksum) SetChecksum(v Checksum128) {
+	self.Checksum = v
 }
 
 func (self *ActionBsnChecksum) Serialize(encoder *goloxi.Encoder) error {
@@ -226,7 +276,6 @@ func (self *ActionBsnChecksum) Serialize(encoder *goloxi.Encoder) error {
 
 	self.Checksum.Serialize(encoder)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -247,14 +296,22 @@ func NewActionBsnChecksum() *ActionBsnChecksum {
 	}
 	return obj
 }
-func (self *ActionBsnChecksum) GetName() string {
+func (self *ActionBsnChecksum) GetActionName() string {
 	return "bsn_checksum"
 }
 
-func (self *ActionBsnChecksum) GetFields() map[string]interface{} {
+func (self *ActionBsnChecksum) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Checksum": self.Checksum,
 	}
+}
+
+func (self *ActionBsnChecksum) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionBsnMirror struct {
@@ -262,6 +319,37 @@ type ActionBsnMirror struct {
 	DestPort  uint32
 	VlanTag   uint32
 	CopyStage uint8
+}
+
+type IActionBsnMirror interface {
+	IActionBsn
+	GetDestPort() uint32
+	GetVlanTag() uint32
+	GetCopyStage() uint8
+}
+
+func (self *ActionBsnMirror) GetDestPort() uint32 {
+	return self.DestPort
+}
+
+func (self *ActionBsnMirror) SetDestPort(v uint32) {
+	self.DestPort = v
+}
+
+func (self *ActionBsnMirror) GetVlanTag() uint32 {
+	return self.VlanTag
+}
+
+func (self *ActionBsnMirror) SetVlanTag(v uint32) {
+	self.VlanTag = v
+}
+
+func (self *ActionBsnMirror) GetCopyStage() uint8 {
+	return self.CopyStage
+}
+
+func (self *ActionBsnMirror) SetCopyStage(v uint8) {
+	self.CopyStage = v
 }
 
 func (self *ActionBsnMirror) Serialize(encoder *goloxi.Encoder) error {
@@ -274,7 +362,6 @@ func (self *ActionBsnMirror) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.CopyStage))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -298,11 +385,11 @@ func NewActionBsnMirror() *ActionBsnMirror {
 	}
 	return obj
 }
-func (self *ActionBsnMirror) GetName() string {
+func (self *ActionBsnMirror) GetActionName() string {
 	return "bsn_mirror"
 }
 
-func (self *ActionBsnMirror) GetFields() map[string]interface{} {
+func (self *ActionBsnMirror) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"DestPort":  self.DestPort,
 		"VlanTag":   self.VlanTag,
@@ -310,9 +397,30 @@ func (self *ActionBsnMirror) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionBsnMirror) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionBsnSetTunnelDst struct {
 	*ActionBsn
 	Dst uint32
+}
+
+type IActionBsnSetTunnelDst interface {
+	IActionBsn
+	GetDst() uint32
+}
+
+func (self *ActionBsnSetTunnelDst) GetDst() uint32 {
+	return self.Dst
+}
+
+func (self *ActionBsnSetTunnelDst) SetDst(v uint32) {
+	self.Dst = v
 }
 
 func (self *ActionBsnSetTunnelDst) Serialize(encoder *goloxi.Encoder) error {
@@ -322,7 +430,6 @@ func (self *ActionBsnSetTunnelDst) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Dst))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -343,18 +450,30 @@ func NewActionBsnSetTunnelDst() *ActionBsnSetTunnelDst {
 	}
 	return obj
 }
-func (self *ActionBsnSetTunnelDst) GetName() string {
+func (self *ActionBsnSetTunnelDst) GetActionName() string {
 	return "bsn_set_tunnel_dst"
 }
 
-func (self *ActionBsnSetTunnelDst) GetFields() map[string]interface{} {
+func (self *ActionBsnSetTunnelDst) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Dst": self.Dst,
 	}
 }
 
+func (self *ActionBsnSetTunnelDst) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionCopyTtlIn struct {
 	*Action
+}
+
+type IActionCopyTtlIn interface {
+	goloxi.IAction
 }
 
 func (self *ActionCopyTtlIn) Serialize(encoder *goloxi.Encoder) error {
@@ -364,7 +483,6 @@ func (self *ActionCopyTtlIn) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -385,16 +503,28 @@ func NewActionCopyTtlIn() *ActionCopyTtlIn {
 	}
 	return obj
 }
-func (self *ActionCopyTtlIn) GetName() string {
+func (self *ActionCopyTtlIn) GetActionName() string {
 	return "copy_ttl_in"
 }
 
-func (self *ActionCopyTtlIn) GetFields() map[string]interface{} {
+func (self *ActionCopyTtlIn) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionCopyTtlIn) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionCopyTtlOut struct {
 	*Action
+}
+
+type IActionCopyTtlOut interface {
+	goloxi.IAction
 }
 
 func (self *ActionCopyTtlOut) Serialize(encoder *goloxi.Encoder) error {
@@ -404,7 +534,6 @@ func (self *ActionCopyTtlOut) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -425,16 +554,28 @@ func NewActionCopyTtlOut() *ActionCopyTtlOut {
 	}
 	return obj
 }
-func (self *ActionCopyTtlOut) GetName() string {
+func (self *ActionCopyTtlOut) GetActionName() string {
 	return "copy_ttl_out"
 }
 
-func (self *ActionCopyTtlOut) GetFields() map[string]interface{} {
+func (self *ActionCopyTtlOut) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionCopyTtlOut) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionDecMplsTtl struct {
 	*Action
+}
+
+type IActionDecMplsTtl interface {
+	goloxi.IAction
 }
 
 func (self *ActionDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
@@ -444,7 +585,6 @@ func (self *ActionDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -465,16 +605,28 @@ func NewActionDecMplsTtl() *ActionDecMplsTtl {
 	}
 	return obj
 }
-func (self *ActionDecMplsTtl) GetName() string {
+func (self *ActionDecMplsTtl) GetActionName() string {
 	return "dec_mpls_ttl"
 }
 
-func (self *ActionDecMplsTtl) GetFields() map[string]interface{} {
+func (self *ActionDecMplsTtl) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionDecMplsTtl) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionDecNwTtl struct {
 	*Action
+}
+
+type IActionDecNwTtl interface {
+	goloxi.IAction
 }
 
 func (self *ActionDecNwTtl) Serialize(encoder *goloxi.Encoder) error {
@@ -484,7 +636,6 @@ func (self *ActionDecNwTtl) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -505,17 +656,38 @@ func NewActionDecNwTtl() *ActionDecNwTtl {
 	}
 	return obj
 }
-func (self *ActionDecNwTtl) GetName() string {
+func (self *ActionDecNwTtl) GetActionName() string {
 	return "dec_nw_ttl"
 }
 
-func (self *ActionDecNwTtl) GetFields() map[string]interface{} {
+func (self *ActionDecNwTtl) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionDecNwTtl) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionGroup struct {
 	*Action
 	GroupId uint32
+}
+
+type IActionGroup interface {
+	goloxi.IAction
+	GetGroupId() uint32
+}
+
+func (self *ActionGroup) GetGroupId() uint32 {
+	return self.GroupId
+}
+
+func (self *ActionGroup) SetGroupId(v uint32) {
+	self.GroupId = v
 }
 
 func (self *ActionGroup) Serialize(encoder *goloxi.Encoder) error {
@@ -525,7 +697,6 @@ func (self *ActionGroup) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.GroupId))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -546,14 +717,22 @@ func NewActionGroup() *ActionGroup {
 	}
 	return obj
 }
-func (self *ActionGroup) GetName() string {
+func (self *ActionGroup) GetActionName() string {
 	return "group"
 }
 
-func (self *ActionGroup) GetFields() map[string]interface{} {
+func (self *ActionGroup) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"GroupId": self.GroupId,
 	}
+}
+
+func (self *ActionGroup) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNicira struct {
@@ -568,6 +747,10 @@ type IActionNicira interface {
 
 func (self *ActionNicira) GetSubtype() uint16 {
 	return self.Subtype
+}
+
+func (self *ActionNicira) SetSubtype(v uint16) {
+	self.Subtype = v
 }
 
 func (self *ActionNicira) Serialize(encoder *goloxi.Encoder) error {
@@ -592,6 +775,8 @@ func DecodeActionNicira(parent *ActionExperimenter, decoder *goloxi.Decoder) (IA
 		return DecodeActionNxResubmit(_actionnicira, decoder)
 	case 2:
 		return DecodeActionNxSetTunnel(_actionnicira, decoder)
+	case 4:
+		return DecodeActionNxSetQueue(_actionnicira, decoder)
 	case 5:
 		return DecodeActionNxPopQueue(_actionnicira, decoder)
 	case 6:
@@ -607,7 +792,7 @@ func DecodeActionNicira(parent *ActionExperimenter, decoder *goloxi.Decoder) (IA
 	case 12:
 		return DecodeActionNxBundle(_actionnicira, decoder)
 	case 13:
-		return DecodeActionNxBundleLoad(_actionnicira, decoder)
+		return DecodeActionNxBundleLoadInPort(_actionnicira, decoder)
 	case 14:
 		return DecodeActionResubmit(_actionnicira, decoder)
 	case 15:
@@ -626,12 +811,24 @@ func DecodeActionNicira(parent *ActionExperimenter, decoder *goloxi.Decoder) (IA
 		return DecodeActionNxDecTtlCntIds(_actionnicira, decoder)
 	case 22:
 		return DecodeActionNxWriteMetadata(_actionnicira, decoder)
+	case 23:
+		return DecodeActionNxPushMpls(_actionnicira, decoder)
+	case 24:
+		return DecodeActionNxPopMpls(_actionnicira, decoder)
+	case 25:
+		return DecodeActionNxSetMplsTtl(_actionnicira, decoder)
+	case 26:
+		return DecodeActionNxDecMplsTtl(_actionnicira, decoder)
 	case 27:
 		return DecodeActionNxStackPush(_actionnicira, decoder)
 	case 28:
 		return DecodeActionNxStackPop(_actionnicira, decoder)
 	case 29:
 		return DecodeActionNxSample(_actionnicira, decoder)
+	case 30:
+		return DecodeActionNxSetMplsLabel(_actionnicira, decoder)
+	case 31:
+		return DecodeActionNxSetMplsTc(_actionnicira, decoder)
 	case 32:
 		return DecodeActionNxOutputReg2(_actionnicira, decoder)
 	case 33:
@@ -648,6 +845,8 @@ func DecodeActionNicira(parent *ActionExperimenter, decoder *goloxi.Decoder) (IA
 		return DecodeActionNxSample2(_actionnicira, decoder)
 	case 39:
 		return DecodeActionNxOutputTrunc(_actionnicira, decoder)
+	case 40:
+		return DecodeActionNxGroup(_actionnicira, decoder)
 	case 41:
 		return DecodeActionNxSample3(_actionnicira, decoder)
 	case 42:
@@ -662,6 +861,10 @@ func DecodeActionNicira(parent *ActionExperimenter, decoder *goloxi.Decoder) (IA
 		return DecodeActionNxEncap(_actionnicira, decoder)
 	case 47:
 		return DecodeActionNxDecap(_actionnicira, decoder)
+	case 48:
+		return DecodeActionNxDecNshTtl(_actionnicira, decoder)
+	case 254:
+		return DecodeActionNxDebugSlow(_actionnicira, decoder)
 	case 255:
 		return DecodeActionNxDebugRecirc(_actionnicira, decoder)
 	default:
@@ -676,18 +879,30 @@ func NewActionNicira(_subtype uint16) *ActionNicira {
 	obj.Subtype = _subtype
 	return obj
 }
-func (self *ActionNicira) GetName() string {
+func (self *ActionNicira) GetActionName() string {
 	return "nicira"
 }
 
-func (self *ActionNicira) GetFields() map[string]interface{} {
+func (self *ActionNicira) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Subtype": self.Subtype,
 	}
 }
 
+func (self *ActionNicira) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNiciraDecTtl struct {
 	*ActionNicira
+}
+
+type IActionNiciraDecTtl interface {
+	IActionNicira
 }
 
 func (self *ActionNiciraDecTtl) Serialize(encoder *goloxi.Encoder) error {
@@ -698,7 +913,6 @@ func (self *ActionNiciraDecTtl) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -720,23 +934,98 @@ func NewActionNiciraDecTtl() *ActionNiciraDecTtl {
 	}
 	return obj
 }
-func (self *ActionNiciraDecTtl) GetName() string {
+func (self *ActionNiciraDecTtl) GetActionName() string {
 	return "nicira_dec_ttl"
 }
 
-func (self *ActionNiciraDecTtl) GetFields() map[string]interface{} {
+func (self *ActionNiciraDecTtl) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionNiciraDecTtl) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxBundle struct {
 	*ActionNicira
 	Algorithm uint16
-	Fields    uint16
+	Fields    NxHashFields
 	Basis     uint16
-	SlaveType uint32
+	SlaveType ActionNxBundleSlaveType
 	NSlaves   uint16
 	OfsNbits  uint16
-	Dst       uint32
+	Dst       goloxi.IOxmId
+}
+
+type IActionNxBundle interface {
+	IActionNicira
+	GetAlgorithm() uint16
+	GetFields() NxHashFields
+	GetBasis() uint16
+	GetSlaveType() ActionNxBundleSlaveType
+	GetNSlaves() uint16
+	GetOfsNbits() uint16
+	GetDst() goloxi.IOxmId
+}
+
+func (self *ActionNxBundle) GetAlgorithm() uint16 {
+	return self.Algorithm
+}
+
+func (self *ActionNxBundle) SetAlgorithm(v uint16) {
+	self.Algorithm = v
+}
+
+func (self *ActionNxBundle) GetFields() NxHashFields {
+	return self.Fields
+}
+
+func (self *ActionNxBundle) SetFields(v NxHashFields) {
+	self.Fields = v
+}
+
+func (self *ActionNxBundle) GetBasis() uint16 {
+	return self.Basis
+}
+
+func (self *ActionNxBundle) SetBasis(v uint16) {
+	self.Basis = v
+}
+
+func (self *ActionNxBundle) GetSlaveType() ActionNxBundleSlaveType {
+	return self.SlaveType
+}
+
+func (self *ActionNxBundle) SetSlaveType(v ActionNxBundleSlaveType) {
+	self.SlaveType = v
+}
+
+func (self *ActionNxBundle) GetNSlaves() uint16 {
+	return self.NSlaves
+}
+
+func (self *ActionNxBundle) SetNSlaves(v uint16) {
+	self.NSlaves = v
+}
+
+func (self *ActionNxBundle) GetOfsNbits() uint16 {
+	return self.OfsNbits
+}
+
+func (self *ActionNxBundle) SetOfsNbits(v uint16) {
+	self.OfsNbits = v
+}
+
+func (self *ActionNxBundle) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *ActionNxBundle) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
 }
 
 func (self *ActionNxBundle) Serialize(encoder *goloxi.Encoder) error {
@@ -750,10 +1039,9 @@ func (self *ActionNxBundle) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.SlaveType))
 	encoder.PutUint16(uint16(self.NSlaves))
 	encoder.PutUint16(uint16(self.OfsNbits))
-	encoder.PutUint32(uint32(self.Dst))
+	self.Dst.Serialize(encoder)
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -765,12 +1053,17 @@ func DecodeActionNxBundle(parent *ActionNicira, decoder *goloxi.Decoder) (*Actio
 		return nil, fmt.Errorf("ActionNxBundle packet too short: %d < 22", decoder.Length())
 	}
 	_actionnxbundle.Algorithm = uint16(decoder.ReadUint16())
-	_actionnxbundle.Fields = uint16(decoder.ReadUint16())
+	_actionnxbundle.Fields = NxHashFields(decoder.ReadUint16())
 	_actionnxbundle.Basis = uint16(decoder.ReadUint16())
-	_actionnxbundle.SlaveType = uint32(decoder.ReadUint32())
+	_actionnxbundle.SlaveType = ActionNxBundleSlaveType(decoder.ReadUint32())
 	_actionnxbundle.NSlaves = uint16(decoder.ReadUint16())
 	_actionnxbundle.OfsNbits = uint16(decoder.ReadUint16())
-	_actionnxbundle.Dst = uint32(decoder.ReadUint32())
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxbundle.Dst = obj
+	}
+
 	decoder.Skip(4)
 	return _actionnxbundle, nil
 }
@@ -781,11 +1074,11 @@ func NewActionNxBundle() *ActionNxBundle {
 	}
 	return obj
 }
-func (self *ActionNxBundle) GetName() string {
+func (self *ActionNxBundle) GetActionName() string {
 	return "nx_bundle"
 }
 
-func (self *ActionNxBundle) GetFields() map[string]interface{} {
+func (self *ActionNxBundle) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Algorithm": self.Algorithm,
 		"Fields":    self.Fields,
@@ -797,15 +1090,90 @@ func (self *ActionNxBundle) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionNxBundle) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxBundleLoad struct {
 	*ActionNicira
-	Algorithm uint16
-	Fields    uint16
+	Algorithm NxBdAlgorithms
+	Fields    NxHashFields
 	Basis     uint16
-	SlaveType uint32
+	SlaveType ActionNxBundleSlaveType
 	NSlaves   uint16
 	OfsNbits  uint16
-	Dst       uint32
+	Dst       goloxi.IOxmId
+}
+
+type IActionNxBundleLoad interface {
+	IActionNicira
+	GetAlgorithm() NxBdAlgorithms
+	GetFields() NxHashFields
+	GetBasis() uint16
+	GetSlaveType() ActionNxBundleSlaveType
+	GetNSlaves() uint16
+	GetOfsNbits() uint16
+	GetDst() goloxi.IOxmId
+}
+
+func (self *ActionNxBundleLoad) GetAlgorithm() NxBdAlgorithms {
+	return self.Algorithm
+}
+
+func (self *ActionNxBundleLoad) SetAlgorithm(v NxBdAlgorithms) {
+	self.Algorithm = v
+}
+
+func (self *ActionNxBundleLoad) GetFields() NxHashFields {
+	return self.Fields
+}
+
+func (self *ActionNxBundleLoad) SetFields(v NxHashFields) {
+	self.Fields = v
+}
+
+func (self *ActionNxBundleLoad) GetBasis() uint16 {
+	return self.Basis
+}
+
+func (self *ActionNxBundleLoad) SetBasis(v uint16) {
+	self.Basis = v
+}
+
+func (self *ActionNxBundleLoad) GetSlaveType() ActionNxBundleSlaveType {
+	return self.SlaveType
+}
+
+func (self *ActionNxBundleLoad) SetSlaveType(v ActionNxBundleSlaveType) {
+	self.SlaveType = v
+}
+
+func (self *ActionNxBundleLoad) GetNSlaves() uint16 {
+	return self.NSlaves
+}
+
+func (self *ActionNxBundleLoad) SetNSlaves(v uint16) {
+	self.NSlaves = v
+}
+
+func (self *ActionNxBundleLoad) GetOfsNbits() uint16 {
+	return self.OfsNbits
+}
+
+func (self *ActionNxBundleLoad) SetOfsNbits(v uint16) {
+	self.OfsNbits = v
+}
+
+func (self *ActionNxBundleLoad) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *ActionNxBundleLoad) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
 }
 
 func (self *ActionNxBundleLoad) Serialize(encoder *goloxi.Encoder) error {
@@ -819,42 +1187,43 @@ func (self *ActionNxBundleLoad) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.SlaveType))
 	encoder.PutUint16(uint16(self.NSlaves))
 	encoder.PutUint16(uint16(self.OfsNbits))
-	encoder.PutUint32(uint32(self.Dst))
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
-	// Overwrite length
-	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+	self.Dst.Serialize(encoder)
 
 	return nil
 }
 
-func DecodeActionNxBundleLoad(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxBundleLoad, error) {
+func DecodeActionNxBundleLoad(parent *ActionNicira, decoder *goloxi.Decoder) (IActionNxBundleLoad, error) {
 	_actionnxbundleload := &ActionNxBundleLoad{ActionNicira: parent}
-	if decoder.Length() < 22 {
-		return nil, fmt.Errorf("ActionNxBundleLoad packet too short: %d < 22", decoder.Length())
+	if decoder.Length() < 18 {
+		return nil, fmt.Errorf("ActionNxBundleLoad packet too short: %d < 18", decoder.Length())
 	}
-	_actionnxbundleload.Algorithm = uint16(decoder.ReadUint16())
-	_actionnxbundleload.Fields = uint16(decoder.ReadUint16())
+	_actionnxbundleload.Algorithm = NxBdAlgorithms(decoder.ReadUint16())
+	_actionnxbundleload.Fields = NxHashFields(decoder.ReadUint16())
 	_actionnxbundleload.Basis = uint16(decoder.ReadUint16())
-	_actionnxbundleload.SlaveType = uint32(decoder.ReadUint32())
+	_actionnxbundleload.SlaveType = ActionNxBundleSlaveType(decoder.ReadUint32())
 	_actionnxbundleload.NSlaves = uint16(decoder.ReadUint16())
 	_actionnxbundleload.OfsNbits = uint16(decoder.ReadUint16())
-	_actionnxbundleload.Dst = uint32(decoder.ReadUint32())
-	decoder.Skip(4)
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxbundleload.Dst = obj
+	}
+
 	return _actionnxbundleload, nil
 }
 
-func NewActionNxBundleLoad() *ActionNxBundleLoad {
+func NewActionNxBundleLoad(_slave_type ActionNxBundleSlaveType) *ActionNxBundleLoad {
 	obj := &ActionNxBundleLoad{
 		ActionNicira: NewActionNicira(13),
 	}
+	obj.SlaveType = _slave_type
 	return obj
 }
-func (self *ActionNxBundleLoad) GetName() string {
+func (self *ActionNxBundleLoad) GetActionName() string {
 	return "nx_bundle_load"
 }
 
-func (self *ActionNxBundleLoad) GetFields() map[string]interface{} {
+func (self *ActionNxBundleLoad) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Algorithm": self.Algorithm,
 		"Fields":    self.Fields,
@@ -866,8 +1235,204 @@ func (self *ActionNxBundleLoad) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionNxBundleLoad) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxBundleLoadInPort struct {
+	*ActionNicira
+	Algorithm NxBdAlgorithms
+	Fields    NxHashFields
+	Basis     uint16
+	SlaveType ActionNxBundleSlaveType
+	NSlaves   uint16
+	OfsNbits  uint16
+	Dst       goloxi.IOxmId
+	InPorts   []*ActionNxBundleLoadSlave
+}
+
+type IActionNxBundleLoadInPort interface {
+	IActionNicira
+	GetAlgorithm() NxBdAlgorithms
+	GetFields() NxHashFields
+	GetBasis() uint16
+	GetSlaveType() ActionNxBundleSlaveType
+	GetNSlaves() uint16
+	GetOfsNbits() uint16
+	GetDst() goloxi.IOxmId
+	GetInPorts() []*ActionNxBundleLoadSlave
+}
+
+func (self *ActionNxBundleLoadInPort) GetAlgorithm() NxBdAlgorithms {
+	return self.Algorithm
+}
+
+func (self *ActionNxBundleLoadInPort) SetAlgorithm(v NxBdAlgorithms) {
+	self.Algorithm = v
+}
+
+func (self *ActionNxBundleLoadInPort) GetFields() NxHashFields {
+	return self.Fields
+}
+
+func (self *ActionNxBundleLoadInPort) SetFields(v NxHashFields) {
+	self.Fields = v
+}
+
+func (self *ActionNxBundleLoadInPort) GetBasis() uint16 {
+	return self.Basis
+}
+
+func (self *ActionNxBundleLoadInPort) SetBasis(v uint16) {
+	self.Basis = v
+}
+
+func (self *ActionNxBundleLoadInPort) GetSlaveType() ActionNxBundleSlaveType {
+	return self.SlaveType
+}
+
+func (self *ActionNxBundleLoadInPort) SetSlaveType(v ActionNxBundleSlaveType) {
+	self.SlaveType = v
+}
+
+func (self *ActionNxBundleLoadInPort) GetNSlaves() uint16 {
+	return self.NSlaves
+}
+
+func (self *ActionNxBundleLoadInPort) SetNSlaves(v uint16) {
+	self.NSlaves = v
+}
+
+func (self *ActionNxBundleLoadInPort) GetOfsNbits() uint16 {
+	return self.OfsNbits
+}
+
+func (self *ActionNxBundleLoadInPort) SetOfsNbits(v uint16) {
+	self.OfsNbits = v
+}
+
+func (self *ActionNxBundleLoadInPort) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *ActionNxBundleLoadInPort) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
+}
+
+func (self *ActionNxBundleLoadInPort) GetInPorts() []*ActionNxBundleLoadSlave {
+	return self.InPorts
+}
+
+func (self *ActionNxBundleLoadInPort) SetInPorts(v []*ActionNxBundleLoadSlave) {
+	self.InPorts = v
+}
+
+func (self *ActionNxBundleLoadInPort) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint16(uint16(self.Algorithm))
+	encoder.PutUint16(uint16(self.Fields))
+	encoder.PutUint16(uint16(self.Basis))
+	encoder.PutUint32(uint32(self.SlaveType))
+	encoder.PutUint16(uint16(self.NSlaves))
+	encoder.PutUint16(uint16(self.OfsNbits))
+	self.Dst.Serialize(encoder)
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+	for _, obj := range self.InPorts {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxBundleLoadInPort(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxBundleLoadInPort, error) {
+	_actionnxbundleloadinport := &ActionNxBundleLoadInPort{ActionNicira: parent}
+	if decoder.Length() < 22 {
+		return nil, fmt.Errorf("ActionNxBundleLoadInPort packet too short: %d < 22", decoder.Length())
+	}
+	_actionnxbundleloadinport.Algorithm = NxBdAlgorithms(decoder.ReadUint16())
+	_actionnxbundleloadinport.Fields = NxHashFields(decoder.ReadUint16())
+	_actionnxbundleloadinport.Basis = uint16(decoder.ReadUint16())
+	_actionnxbundleloadinport.SlaveType = ActionNxBundleSlaveType(decoder.ReadUint32())
+	_actionnxbundleloadinport.NSlaves = uint16(decoder.ReadUint16())
+	_actionnxbundleloadinport.OfsNbits = uint16(decoder.ReadUint16())
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxbundleloadinport.Dst = obj
+	}
+
+	decoder.Skip(4)
+
+	for i := 0; i < int(_actionnxbundleloadinport.NSlaves); i++ {
+		item, err := DecodeActionNxBundleLoadSlave(decoder)
+		if err != nil {
+			return nil, err
+		}
+		if item != nil {
+			_actionnxbundleloadinport.InPorts = append(_actionnxbundleloadinport.InPorts, item)
+		}
+	}
+	return _actionnxbundleloadinport, nil
+}
+
+func NewActionNxBundleLoadInPort() *ActionNxBundleLoadInPort {
+	obj := &ActionNxBundleLoadInPort{
+		ActionNicira: NewActionNicira(13),
+	}
+	return obj
+}
+func (self *ActionNxBundleLoadInPort) GetActionName() string {
+	return "nx_bundle_load_in_port"
+}
+
+func (self *ActionNxBundleLoadInPort) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Algorithm": self.Algorithm,
+		"Fields":    self.Fields,
+		"Basis":     self.Basis,
+		"SlaveType": self.SlaveType,
+		"NSlaves":   self.NSlaves,
+		"OfsNbits":  self.OfsNbits,
+		"Dst":       self.Dst,
+		"InPorts":   self.InPorts,
+	}
+}
+
+func (self *ActionNxBundleLoadInPort) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxClone struct {
 	*ActionNicira
+	Actions []goloxi.IAction
+}
+
+type IActionNxClone interface {
+	IActionNicira
+	GetActions() []goloxi.IAction
+}
+
+func (self *ActionNxClone) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *ActionNxClone) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *ActionNxClone) Serialize(encoder *goloxi.Encoder) error {
@@ -876,8 +1441,12 @@ func (self *ActionNxClone) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.Write(bytes.Repeat([]byte{0}, 6))
+	for _, obj := range self.Actions {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -885,10 +1454,17 @@ func (self *ActionNxClone) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxClone(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxClone, error) {
 	_actionnxclone := &ActionNxClone{ActionNicira: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("ActionNxClone packet too short: %d < 16", decoder.Length())
-	}
 	decoder.Skip(6)
+
+	for decoder.Length() >= 8 {
+		item, err := DecodeAction(decoder)
+		if err != nil {
+			return nil, err
+		}
+		if item != nil {
+			_actionnxclone.Actions = append(_actionnxclone.Actions, item)
+		}
+	}
 	return _actionnxclone, nil
 }
 
@@ -898,12 +1474,22 @@ func NewActionNxClone() *ActionNxClone {
 	}
 	return obj
 }
-func (self *ActionNxClone) GetName() string {
+func (self *ActionNxClone) GetActionName() string {
 	return "nx_clone"
 }
 
-func (self *ActionNxClone) GetFields() map[string]interface{} {
-	return map[string]interface{}{}
+func (self *ActionNxClone) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Actions": self.Actions,
+	}
+}
+
+func (self *ActionNxClone) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxConjunction struct {
@@ -911,6 +1497,37 @@ type ActionNxConjunction struct {
 	Clause   uint8
 	NClauses uint8
 	Id       uint32
+}
+
+type IActionNxConjunction interface {
+	IActionNicira
+	GetClause() uint8
+	GetNClauses() uint8
+	GetId() uint32
+}
+
+func (self *ActionNxConjunction) GetClause() uint8 {
+	return self.Clause
+}
+
+func (self *ActionNxConjunction) SetClause(v uint8) {
+	self.Clause = v
+}
+
+func (self *ActionNxConjunction) GetNClauses() uint8 {
+	return self.NClauses
+}
+
+func (self *ActionNxConjunction) SetNClauses(v uint8) {
+	self.NClauses = v
+}
+
+func (self *ActionNxConjunction) GetId() uint32 {
+	return self.Id
+}
+
+func (self *ActionNxConjunction) SetId(v uint32) {
+	self.Id = v
 }
 
 func (self *ActionNxConjunction) Serialize(encoder *goloxi.Encoder) error {
@@ -922,7 +1539,6 @@ func (self *ActionNxConjunction) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.NClauses))
 	encoder.PutUint32(uint32(self.Id))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -945,11 +1561,11 @@ func NewActionNxConjunction() *ActionNxConjunction {
 	}
 	return obj
 }
-func (self *ActionNxConjunction) GetName() string {
+func (self *ActionNxConjunction) GetActionName() string {
 	return "nx_conjunction"
 }
 
-func (self *ActionNxConjunction) GetFields() map[string]interface{} {
+func (self *ActionNxConjunction) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Clause":   self.Clause,
 		"NClauses": self.NClauses,
@@ -957,11 +1573,50 @@ func (self *ActionNxConjunction) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionNxConjunction) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxController struct {
 	*ActionNicira
 	MaxLen       uint16
 	ControllerId uint16
 	Reason       uint8
+}
+
+type IActionNxController interface {
+	IActionNicira
+	GetMaxLen() uint16
+	GetControllerId() uint16
+	GetReason() uint8
+}
+
+func (self *ActionNxController) GetMaxLen() uint16 {
+	return self.MaxLen
+}
+
+func (self *ActionNxController) SetMaxLen(v uint16) {
+	self.MaxLen = v
+}
+
+func (self *ActionNxController) GetControllerId() uint16 {
+	return self.ControllerId
+}
+
+func (self *ActionNxController) SetControllerId(v uint16) {
+	self.ControllerId = v
+}
+
+func (self *ActionNxController) GetReason() uint8 {
+	return self.Reason
+}
+
+func (self *ActionNxController) SetReason(v uint8) {
+	self.Reason = v
 }
 
 func (self *ActionNxController) Serialize(encoder *goloxi.Encoder) error {
@@ -974,7 +1629,6 @@ func (self *ActionNxController) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.Reason))
 	encoder.Write(bytes.Repeat([]byte{0}, 1))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -998,11 +1652,11 @@ func NewActionNxController() *ActionNxController {
 	}
 	return obj
 }
-func (self *ActionNxController) GetName() string {
+func (self *ActionNxController) GetActionName() string {
 	return "nx_controller"
 }
 
-func (self *ActionNxController) GetFields() map[string]interface{} {
+func (self *ActionNxController) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"MaxLen":       self.MaxLen,
 		"ControllerId": self.ControllerId,
@@ -1010,8 +1664,30 @@ func (self *ActionNxController) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionNxController) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxController2 struct {
 	*ActionNicira
+	Properties []IActionNxController2Property
+}
+
+type IActionNxController2 interface {
+	IActionNicira
+	GetProperties() []IActionNxController2Property
+}
+
+func (self *ActionNxController2) GetProperties() []IActionNxController2Property {
+	return self.Properties
+}
+
+func (self *ActionNxController2) SetProperties(v []IActionNxController2Property) {
+	self.Properties = v
 }
 
 func (self *ActionNxController2) Serialize(encoder *goloxi.Encoder) error {
@@ -1020,8 +1696,12 @@ func (self *ActionNxController2) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.Write(bytes.Repeat([]byte{0}, 6))
+	for _, obj := range self.Properties {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1029,10 +1709,17 @@ func (self *ActionNxController2) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxController2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxController2, error) {
 	_actionnxcontroller2 := &ActionNxController2{ActionNicira: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("ActionNxController2 packet too short: %d < 16", decoder.Length())
-	}
 	decoder.Skip(6)
+
+	for decoder.Length() >= 2 {
+		item, err := DecodeActionNxController2Property(decoder)
+		if err != nil {
+			return nil, err
+		}
+		if item != nil {
+			_actionnxcontroller2.Properties = append(_actionnxcontroller2.Properties, item)
+		}
+	}
 	return _actionnxcontroller2, nil
 }
 
@@ -1042,21 +1729,90 @@ func NewActionNxController2() *ActionNxController2 {
 	}
 	return obj
 }
-func (self *ActionNxController2) GetName() string {
+func (self *ActionNxController2) GetActionName() string {
 	return "nx_controller2"
 }
 
-func (self *ActionNxController2) GetFields() map[string]interface{} {
-	return map[string]interface{}{}
+func (self *ActionNxController2) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Properties": self.Properties,
+	}
+}
+
+func (self *ActionNxController2) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxCt struct {
 	*ActionNicira
-	Flags       uint16
-	ZoneSrc     uint32
+	Flags       NxConntrackFlags
+	ZoneSrc     goloxi.IOxmId
 	Value       uint16
 	RecircTable uint8
 	Alg         uint16
+	Actions     []goloxi.IAction
+}
+
+type IActionNxCt interface {
+	IActionNicira
+	GetFlags() NxConntrackFlags
+	GetZoneSrc() goloxi.IOxmId
+	GetValue() uint16
+	GetRecircTable() uint8
+	GetAlg() uint16
+	GetActions() []goloxi.IAction
+}
+
+func (self *ActionNxCt) GetFlags() NxConntrackFlags {
+	return self.Flags
+}
+
+func (self *ActionNxCt) SetFlags(v NxConntrackFlags) {
+	self.Flags = v
+}
+
+func (self *ActionNxCt) GetZoneSrc() goloxi.IOxmId {
+	return self.ZoneSrc
+}
+
+func (self *ActionNxCt) SetZoneSrc(v goloxi.IOxmId) {
+	self.ZoneSrc = v
+}
+
+func (self *ActionNxCt) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *ActionNxCt) SetValue(v uint16) {
+	self.Value = v
+}
+
+func (self *ActionNxCt) GetRecircTable() uint8 {
+	return self.RecircTable
+}
+
+func (self *ActionNxCt) SetRecircTable(v uint8) {
+	self.RecircTable = v
+}
+
+func (self *ActionNxCt) GetAlg() uint16 {
+	return self.Alg
+}
+
+func (self *ActionNxCt) SetAlg(v uint16) {
+	self.Alg = v
+}
+
+func (self *ActionNxCt) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *ActionNxCt) SetActions(v []goloxi.IAction) {
+	self.Actions = v
 }
 
 func (self *ActionNxCt) Serialize(encoder *goloxi.Encoder) error {
@@ -1065,13 +1821,17 @@ func (self *ActionNxCt) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Flags))
-	encoder.PutUint32(uint32(self.ZoneSrc))
+	self.ZoneSrc.Serialize(encoder)
 	encoder.PutUint16(uint16(self.Value))
 	encoder.PutUint8(uint8(self.RecircTable))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 	encoder.PutUint16(uint16(self.Alg))
+	for _, obj := range self.Actions {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1082,12 +1842,27 @@ func DecodeActionNxCt(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxC
 	if decoder.Length() < 14 {
 		return nil, fmt.Errorf("ActionNxCt packet too short: %d < 14", decoder.Length())
 	}
-	_actionnxct.Flags = uint16(decoder.ReadUint16())
-	_actionnxct.ZoneSrc = uint32(decoder.ReadUint32())
+	_actionnxct.Flags = NxConntrackFlags(decoder.ReadUint16())
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxct.ZoneSrc = obj
+	}
+
 	_actionnxct.Value = uint16(decoder.ReadUint16())
 	_actionnxct.RecircTable = uint8(decoder.ReadByte())
 	decoder.Skip(3)
 	_actionnxct.Alg = uint16(decoder.ReadUint16())
+
+	for decoder.Length() >= 8 {
+		item, err := DecodeAction(decoder)
+		if err != nil {
+			return nil, err
+		}
+		if item != nil {
+			_actionnxct.Actions = append(_actionnxct.Actions, item)
+		}
+	}
 	return _actionnxct, nil
 }
 
@@ -1097,22 +1872,35 @@ func NewActionNxCt() *ActionNxCt {
 	}
 	return obj
 }
-func (self *ActionNxCt) GetName() string {
+func (self *ActionNxCt) GetActionName() string {
 	return "nx_ct"
 }
 
-func (self *ActionNxCt) GetFields() map[string]interface{} {
+func (self *ActionNxCt) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Flags":       self.Flags,
 		"ZoneSrc":     self.ZoneSrc,
 		"Value":       self.Value,
 		"RecircTable": self.RecircTable,
 		"Alg":         self.Alg,
+		"Actions":     self.Actions,
 	}
+}
+
+func (self *ActionNxCt) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxCtClear struct {
 	*ActionNicira
+}
+
+type IActionNxCtClear interface {
+	IActionNicira
 }
 
 func (self *ActionNxCtClear) Serialize(encoder *goloxi.Encoder) error {
@@ -1120,7 +1908,6 @@ func (self *ActionNxCtClear) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1137,16 +1924,28 @@ func NewActionNxCtClear() *ActionNxCtClear {
 	}
 	return obj
 }
-func (self *ActionNxCtClear) GetName() string {
+func (self *ActionNxCtClear) GetActionName() string {
 	return "nx_ct_clear"
 }
 
-func (self *ActionNxCtClear) GetFields() map[string]interface{} {
+func (self *ActionNxCtClear) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionNxCtClear) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxDebugRecirc struct {
 	*ActionNicira
+}
+
+type IActionNxDebugRecirc interface {
+	IActionNicira
 }
 
 func (self *ActionNxDebugRecirc) Serialize(encoder *goloxi.Encoder) error {
@@ -1154,7 +1953,6 @@ func (self *ActionNxDebugRecirc) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1171,17 +1969,173 @@ func NewActionNxDebugRecirc() *ActionNxDebugRecirc {
 	}
 	return obj
 }
-func (self *ActionNxDebugRecirc) GetName() string {
+func (self *ActionNxDebugRecirc) GetActionName() string {
 	return "nx_debug_recirc"
 }
 
-func (self *ActionNxDebugRecirc) GetFields() map[string]interface{} {
+func (self *ActionNxDebugRecirc) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionNxDebugRecirc) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxDebugSlow struct {
+	*ActionNicira
+}
+
+type IActionNxDebugSlow interface {
+	IActionNicira
+}
+
+func (self *ActionNxDebugSlow) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxDebugSlow(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDebugSlow, error) {
+	_actionnxdebugslow := &ActionNxDebugSlow{ActionNicira: parent}
+	return _actionnxdebugslow, nil
+}
+
+func NewActionNxDebugSlow() *ActionNxDebugSlow {
+	obj := &ActionNxDebugSlow{
+		ActionNicira: NewActionNicira(254),
+	}
+	return obj
+}
+func (self *ActionNxDebugSlow) GetActionName() string {
+	return "nx_debug_slow"
+}
+
+func (self *ActionNxDebugSlow) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{}
+}
+
+func (self *ActionNxDebugSlow) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxDecMplsTtl struct {
+	*ActionNicira
+}
+
+type IActionNxDecMplsTtl interface {
+	IActionNicira
+}
+
+func (self *ActionNxDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxDecMplsTtl(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDecMplsTtl, error) {
+	_actionnxdecmplsttl := &ActionNxDecMplsTtl{ActionNicira: parent}
+	return _actionnxdecmplsttl, nil
+}
+
+func NewActionNxDecMplsTtl() *ActionNxDecMplsTtl {
+	obj := &ActionNxDecMplsTtl{
+		ActionNicira: NewActionNicira(26),
+	}
+	return obj
+}
+func (self *ActionNxDecMplsTtl) GetActionName() string {
+	return "nx_dec_mpls_ttl"
+}
+
+func (self *ActionNxDecMplsTtl) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{}
+}
+
+func (self *ActionNxDecMplsTtl) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxDecNshTtl struct {
+	*ActionNicira
+}
+
+type IActionNxDecNshTtl interface {
+	IActionNicira
+}
+
+func (self *ActionNxDecNshTtl) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxDecNshTtl(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDecNshTtl, error) {
+	_actionnxdecnshttl := &ActionNxDecNshTtl{ActionNicira: parent}
+	return _actionnxdecnshttl, nil
+}
+
+func NewActionNxDecNshTtl() *ActionNxDecNshTtl {
+	obj := &ActionNxDecNshTtl{
+		ActionNicira: NewActionNicira(48),
+	}
+	return obj
+}
+func (self *ActionNxDecNshTtl) GetActionName() string {
+	return "nx_dec_nsh_ttl"
+}
+
+func (self *ActionNxDecNshTtl) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{}
+}
+
+func (self *ActionNxDecNshTtl) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxDecTtlCntIds struct {
 	*ActionNicira
 	NControllers uint16
+}
+
+type IActionNxDecTtlCntIds interface {
+	IActionNicira
+	GetNControllers() uint16
+}
+
+func (self *ActionNxDecTtlCntIds) GetNControllers() uint16 {
+	return self.NControllers
+}
+
+func (self *ActionNxDecTtlCntIds) SetNControllers(v uint16) {
+	self.NControllers = v
 }
 
 func (self *ActionNxDecTtlCntIds) Serialize(encoder *goloxi.Encoder) error {
@@ -1192,7 +2146,6 @@ func (self *ActionNxDecTtlCntIds) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.NControllers))
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1214,19 +2167,40 @@ func NewActionNxDecTtlCntIds() *ActionNxDecTtlCntIds {
 	}
 	return obj
 }
-func (self *ActionNxDecTtlCntIds) GetName() string {
+func (self *ActionNxDecTtlCntIds) GetActionName() string {
 	return "nx_dec_ttl_cnt_ids"
 }
 
-func (self *ActionNxDecTtlCntIds) GetFields() map[string]interface{} {
+func (self *ActionNxDecTtlCntIds) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"NControllers": self.NControllers,
 	}
 }
 
+func (self *ActionNxDecTtlCntIds) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxDecap struct {
 	*ActionNicira
 	NewPktType uint32
+}
+
+type IActionNxDecap interface {
+	IActionNicira
+	GetNewPktType() uint32
+}
+
+func (self *ActionNxDecap) GetNewPktType() uint32 {
+	return self.NewPktType
+}
+
+func (self *ActionNxDecap) SetNewPktType(v uint32) {
+	self.NewPktType = v
 }
 
 func (self *ActionNxDecap) Serialize(encoder *goloxi.Encoder) error {
@@ -1237,7 +2211,6 @@ func (self *ActionNxDecap) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.PutUint32(uint32(self.NewPktType))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1259,21 +2232,60 @@ func NewActionNxDecap() *ActionNxDecap {
 	}
 	return obj
 }
-func (self *ActionNxDecap) GetName() string {
+func (self *ActionNxDecap) GetActionName() string {
 	return "nx_decap"
 }
 
-func (self *ActionNxDecap) GetFields() map[string]interface{} {
+func (self *ActionNxDecap) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"NewPktType": self.NewPktType,
 	}
 }
 
+func (self *ActionNxDecap) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxEncap struct {
 	*ActionNicira
 	HdrSize    uint16
-	NewPktType uint32
+	PacketType PacketType
 	Props      []IEdPropHeader
+}
+
+type IActionNxEncap interface {
+	IActionNicira
+	GetHdrSize() uint16
+	GetPacketType() PacketType
+	GetProps() []IEdPropHeader
+}
+
+func (self *ActionNxEncap) GetHdrSize() uint16 {
+	return self.HdrSize
+}
+
+func (self *ActionNxEncap) SetHdrSize(v uint16) {
+	self.HdrSize = v
+}
+
+func (self *ActionNxEncap) GetPacketType() PacketType {
+	return self.PacketType
+}
+
+func (self *ActionNxEncap) SetPacketType(v PacketType) {
+	self.PacketType = v
+}
+
+func (self *ActionNxEncap) GetProps() []IEdPropHeader {
+	return self.Props
+}
+
+func (self *ActionNxEncap) SetProps(v []IEdPropHeader) {
+	self.Props = v
 }
 
 func (self *ActionNxEncap) Serialize(encoder *goloxi.Encoder) error {
@@ -1282,14 +2294,13 @@ func (self *ActionNxEncap) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.HdrSize))
-	encoder.PutUint32(uint32(self.NewPktType))
+	encoder.PutUint32(uint32(self.PacketType))
 	for _, obj := range self.Props {
 		if err := obj.Serialize(encoder); err != nil {
 			return err
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1301,14 +2312,16 @@ func DecodeActionNxEncap(parent *ActionNicira, decoder *goloxi.Decoder) (*Action
 		return nil, fmt.Errorf("ActionNxEncap packet too short: %d < 6", decoder.Length())
 	}
 	_actionnxencap.HdrSize = uint16(decoder.ReadUint16())
-	_actionnxencap.NewPktType = uint32(decoder.ReadUint32())
+	_actionnxencap.PacketType = PacketType(decoder.ReadUint32())
 
 	for decoder.Length() >= 4 {
-		item := &EdPropHeader{}
-		if err := item.Decode(decoder); err != nil {
+		item, err := DecodeEdPropHeader(decoder)
+		if err != nil {
 			return nil, err
 		}
-		_actionnxencap.Props = append(_actionnxencap.Props, item)
+		if item != nil {
+			_actionnxencap.Props = append(_actionnxencap.Props, item)
+		}
 	}
 	return _actionnxencap, nil
 }
@@ -1319,20 +2332,32 @@ func NewActionNxEncap() *ActionNxEncap {
 	}
 	return obj
 }
-func (self *ActionNxEncap) GetName() string {
+func (self *ActionNxEncap) GetActionName() string {
 	return "nx_encap"
 }
 
-func (self *ActionNxEncap) GetFields() map[string]interface{} {
+func (self *ActionNxEncap) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"HdrSize":    self.HdrSize,
-		"NewPktType": self.NewPktType,
+		"PacketType": self.PacketType,
 		"Props":      self.Props,
 	}
 }
 
+func (self *ActionNxEncap) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxExit struct {
 	*ActionNicira
+}
+
+type IActionNxExit interface {
+	IActionNicira
 }
 
 func (self *ActionNxExit) Serialize(encoder *goloxi.Encoder) error {
@@ -1340,7 +2365,6 @@ func (self *ActionNxExit) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1357,18 +2381,48 @@ func NewActionNxExit() *ActionNxExit {
 	}
 	return obj
 }
-func (self *ActionNxExit) GetName() string {
+func (self *ActionNxExit) GetActionName() string {
 	return "nx_exit"
 }
 
-func (self *ActionNxExit) GetFields() map[string]interface{} {
+func (self *ActionNxExit) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionNxExit) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxFinTimeout struct {
 	*ActionNicira
 	FinIdleTimeout uint16
 	FinHardTimeout uint16
+}
+
+type IActionNxFinTimeout interface {
+	IActionNicira
+	GetFinIdleTimeout() uint16
+	GetFinHardTimeout() uint16
+}
+
+func (self *ActionNxFinTimeout) GetFinIdleTimeout() uint16 {
+	return self.FinIdleTimeout
+}
+
+func (self *ActionNxFinTimeout) SetFinIdleTimeout(v uint16) {
+	self.FinIdleTimeout = v
+}
+
+func (self *ActionNxFinTimeout) GetFinHardTimeout() uint16 {
+	return self.FinHardTimeout
+}
+
+func (self *ActionNxFinTimeout) SetFinHardTimeout(v uint16) {
+	self.FinHardTimeout = v
 }
 
 func (self *ActionNxFinTimeout) Serialize(encoder *goloxi.Encoder) error {
@@ -1380,7 +2434,6 @@ func (self *ActionNxFinTimeout) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.FinHardTimeout))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1403,15 +2456,86 @@ func NewActionNxFinTimeout() *ActionNxFinTimeout {
 	}
 	return obj
 }
-func (self *ActionNxFinTimeout) GetName() string {
+func (self *ActionNxFinTimeout) GetActionName() string {
 	return "nx_fin_timeout"
 }
 
-func (self *ActionNxFinTimeout) GetFields() map[string]interface{} {
+func (self *ActionNxFinTimeout) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"FinIdleTimeout": self.FinIdleTimeout,
 		"FinHardTimeout": self.FinHardTimeout,
 	}
+}
+
+func (self *ActionNxFinTimeout) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxGroup struct {
+	*ActionNicira
+	Value uint32
+}
+
+type IActionNxGroup interface {
+	IActionNicira
+	GetValue() uint32
+}
+
+func (self *ActionNxGroup) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *ActionNxGroup) SetValue(v uint32) {
+	self.Value = v
+}
+
+func (self *ActionNxGroup) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint32(uint32(self.Value))
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxGroup(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxGroup, error) {
+	_actionnxgroup := &ActionNxGroup{ActionNicira: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("ActionNxGroup packet too short: %d < 4", decoder.Length())
+	}
+	_actionnxgroup.Value = uint32(decoder.ReadUint32())
+	return _actionnxgroup, nil
+}
+
+func NewActionNxGroup() *ActionNxGroup {
+	obj := &ActionNxGroup{
+		ActionNicira: NewActionNicira(40),
+	}
+	return obj
+}
+func (self *ActionNxGroup) GetActionName() string {
+	return "nx_group"
+}
+
+func (self *ActionNxGroup) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Value": self.Value,
+	}
+}
+
+func (self *ActionNxGroup) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxLearn struct {
@@ -1424,6 +2548,92 @@ type ActionNxLearn struct {
 	TableId        uint8
 	FinIdleTimeout uint16
 	FinHardTimeout uint16
+	FlowMods       []IFlowModSpec
+}
+
+type IActionNxLearn interface {
+	IActionNicira
+	GetIdleTimeout() uint16
+	GetHardTimeout() uint16
+	GetPriority() uint16
+	GetCookie() uint64
+	GetFlags() uint16
+	GetTableId() uint8
+	GetFinIdleTimeout() uint16
+	GetFinHardTimeout() uint16
+	GetFlowMods() []IFlowModSpec
+}
+
+func (self *ActionNxLearn) GetIdleTimeout() uint16 {
+	return self.IdleTimeout
+}
+
+func (self *ActionNxLearn) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
+func (self *ActionNxLearn) GetHardTimeout() uint16 {
+	return self.HardTimeout
+}
+
+func (self *ActionNxLearn) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
+}
+
+func (self *ActionNxLearn) GetPriority() uint16 {
+	return self.Priority
+}
+
+func (self *ActionNxLearn) SetPriority(v uint16) {
+	self.Priority = v
+}
+
+func (self *ActionNxLearn) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *ActionNxLearn) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *ActionNxLearn) GetFlags() uint16 {
+	return self.Flags
+}
+
+func (self *ActionNxLearn) SetFlags(v uint16) {
+	self.Flags = v
+}
+
+func (self *ActionNxLearn) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *ActionNxLearn) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *ActionNxLearn) GetFinIdleTimeout() uint16 {
+	return self.FinIdleTimeout
+}
+
+func (self *ActionNxLearn) SetFinIdleTimeout(v uint16) {
+	self.FinIdleTimeout = v
+}
+
+func (self *ActionNxLearn) GetFinHardTimeout() uint16 {
+	return self.FinHardTimeout
+}
+
+func (self *ActionNxLearn) SetFinHardTimeout(v uint16) {
+	self.FinHardTimeout = v
+}
+
+func (self *ActionNxLearn) GetFlowMods() []IFlowModSpec {
+	return self.FlowMods
+}
+
+func (self *ActionNxLearn) SetFlowMods(v []IFlowModSpec) {
+	self.FlowMods = v
 }
 
 func (self *ActionNxLearn) Serialize(encoder *goloxi.Encoder) error {
@@ -1440,8 +2650,12 @@ func (self *ActionNxLearn) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 1))
 	encoder.PutUint16(uint16(self.FinIdleTimeout))
 	encoder.PutUint16(uint16(self.FinHardTimeout))
+	for _, obj := range self.FlowMods {
+		if err := obj.Serialize(encoder); err != nil {
+			return err
+		}
+	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1461,6 +2675,16 @@ func DecodeActionNxLearn(parent *ActionNicira, decoder *goloxi.Decoder) (*Action
 	decoder.Skip(1)
 	_actionnxlearn.FinIdleTimeout = uint16(decoder.ReadUint16())
 	_actionnxlearn.FinHardTimeout = uint16(decoder.ReadUint16())
+
+	for decoder.Length() >= 2 {
+		item, err := DecodeFlowModSpec(decoder)
+		if err != nil {
+			return nil, err
+		}
+		if item != nil {
+			_actionnxlearn.FlowMods = append(_actionnxlearn.FlowMods, item)
+		}
+	}
 	return _actionnxlearn, nil
 }
 
@@ -1470,11 +2694,11 @@ func NewActionNxLearn() *ActionNxLearn {
 	}
 	return obj
 }
-func (self *ActionNxLearn) GetName() string {
+func (self *ActionNxLearn) GetActionName() string {
 	return "nx_learn"
 }
 
-func (self *ActionNxLearn) GetFields() map[string]interface{} {
+func (self *ActionNxLearn) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"IdleTimeout":    self.IdleTimeout,
 		"HardTimeout":    self.HardTimeout,
@@ -1484,11 +2708,24 @@ func (self *ActionNxLearn) GetFields() map[string]interface{} {
 		"TableId":        self.TableId,
 		"FinIdleTimeout": self.FinIdleTimeout,
 		"FinHardTimeout": self.FinHardTimeout,
+		"FlowMods":       self.FlowMods,
 	}
+}
+
+func (self *ActionNxLearn) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxLearn2 struct {
 	*ActionNicira
+}
+
+type IActionNxLearn2 interface {
+	IActionNicira
 }
 
 func (self *ActionNxLearn2) Serialize(encoder *goloxi.Encoder) error {
@@ -1496,7 +2733,6 @@ func (self *ActionNxLearn2) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1513,23 +2749,98 @@ func NewActionNxLearn2() *ActionNxLearn2 {
 	}
 	return obj
 }
-func (self *ActionNxLearn2) GetName() string {
+func (self *ActionNxLearn2) GetActionName() string {
 	return "nx_learn2"
 }
 
-func (self *ActionNxLearn2) GetFields() map[string]interface{} {
+func (self *ActionNxLearn2) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionNxLearn2) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxMultipath struct {
 	*ActionNicira
-	Fields    uint16
+	Fields    NxHashFields
 	Basis     uint16
-	Algorithm uint16
+	Algorithm NxMpAlgorithm
 	MaxLink   uint16
 	Arg       uint32
 	OfsNbits  uint16
-	Dst       uint32
+	Dst       goloxi.IOxmId
+}
+
+type IActionNxMultipath interface {
+	IActionNicira
+	GetFields() NxHashFields
+	GetBasis() uint16
+	GetAlgorithm() NxMpAlgorithm
+	GetMaxLink() uint16
+	GetArg() uint32
+	GetOfsNbits() uint16
+	GetDst() goloxi.IOxmId
+}
+
+func (self *ActionNxMultipath) GetFields() NxHashFields {
+	return self.Fields
+}
+
+func (self *ActionNxMultipath) SetFields(v NxHashFields) {
+	self.Fields = v
+}
+
+func (self *ActionNxMultipath) GetBasis() uint16 {
+	return self.Basis
+}
+
+func (self *ActionNxMultipath) SetBasis(v uint16) {
+	self.Basis = v
+}
+
+func (self *ActionNxMultipath) GetAlgorithm() NxMpAlgorithm {
+	return self.Algorithm
+}
+
+func (self *ActionNxMultipath) SetAlgorithm(v NxMpAlgorithm) {
+	self.Algorithm = v
+}
+
+func (self *ActionNxMultipath) GetMaxLink() uint16 {
+	return self.MaxLink
+}
+
+func (self *ActionNxMultipath) SetMaxLink(v uint16) {
+	self.MaxLink = v
+}
+
+func (self *ActionNxMultipath) GetArg() uint32 {
+	return self.Arg
+}
+
+func (self *ActionNxMultipath) SetArg(v uint32) {
+	self.Arg = v
+}
+
+func (self *ActionNxMultipath) GetOfsNbits() uint16 {
+	return self.OfsNbits
+}
+
+func (self *ActionNxMultipath) SetOfsNbits(v uint16) {
+	self.OfsNbits = v
+}
+
+func (self *ActionNxMultipath) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *ActionNxMultipath) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
 }
 
 func (self *ActionNxMultipath) Serialize(encoder *goloxi.Encoder) error {
@@ -1545,9 +2856,8 @@ func (self *ActionNxMultipath) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Arg))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.PutUint16(uint16(self.OfsNbits))
-	encoder.PutUint32(uint32(self.Dst))
+	self.Dst.Serialize(encoder)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1558,15 +2868,20 @@ func DecodeActionNxMultipath(parent *ActionNicira, decoder *goloxi.Decoder) (*Ac
 	if decoder.Length() < 22 {
 		return nil, fmt.Errorf("ActionNxMultipath packet too short: %d < 22", decoder.Length())
 	}
-	_actionnxmultipath.Fields = uint16(decoder.ReadUint16())
+	_actionnxmultipath.Fields = NxHashFields(decoder.ReadUint16())
 	_actionnxmultipath.Basis = uint16(decoder.ReadUint16())
 	decoder.Skip(2)
-	_actionnxmultipath.Algorithm = uint16(decoder.ReadUint16())
+	_actionnxmultipath.Algorithm = NxMpAlgorithm(decoder.ReadUint16())
 	_actionnxmultipath.MaxLink = uint16(decoder.ReadUint16())
 	_actionnxmultipath.Arg = uint32(decoder.ReadUint32())
 	decoder.Skip(2)
 	_actionnxmultipath.OfsNbits = uint16(decoder.ReadUint16())
-	_actionnxmultipath.Dst = uint32(decoder.ReadUint32())
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxmultipath.Dst = obj
+	}
+
 	return _actionnxmultipath, nil
 }
 
@@ -1576,11 +2891,11 @@ func NewActionNxMultipath() *ActionNxMultipath {
 	}
 	return obj
 }
-func (self *ActionNxMultipath) GetName() string {
+func (self *ActionNxMultipath) GetActionName() string {
 	return "nx_multipath"
 }
 
-func (self *ActionNxMultipath) GetFields() map[string]interface{} {
+func (self *ActionNxMultipath) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Fields":    self.Fields,
 		"Basis":     self.Basis,
@@ -1592,10 +2907,100 @@ func (self *ActionNxMultipath) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionNxMultipath) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxNat struct {
 	*ActionNicira
 	Flags        uint16
-	RangePresent uint16
+	RangePresent NxNatRange
+	Ipv4Min      net.IP
+	Ipv4Max      net.IP
+	Ipv6Min      net.IP
+	Ipv6Max      net.IP
+	ProtoMin     uint32
+	ProtoMax     uint32
+}
+
+type IActionNxNat interface {
+	IActionNicira
+	GetFlags() uint16
+	GetRangePresent() NxNatRange
+	GetIpv4Min() net.IP
+	GetIpv4Max() net.IP
+	GetIpv6Min() net.IP
+	GetIpv6Max() net.IP
+	GetProtoMin() uint32
+	GetProtoMax() uint32
+}
+
+func (self *ActionNxNat) GetFlags() uint16 {
+	return self.Flags
+}
+
+func (self *ActionNxNat) SetFlags(v uint16) {
+	self.Flags = v
+}
+
+func (self *ActionNxNat) GetRangePresent() NxNatRange {
+	return self.RangePresent
+}
+
+func (self *ActionNxNat) SetRangePresent(v NxNatRange) {
+	self.RangePresent = v
+}
+
+func (self *ActionNxNat) GetIpv4Min() net.IP {
+	return self.Ipv4Min
+}
+
+func (self *ActionNxNat) SetIpv4Min(v net.IP) {
+	self.Ipv4Min = v
+}
+
+func (self *ActionNxNat) GetIpv4Max() net.IP {
+	return self.Ipv4Max
+}
+
+func (self *ActionNxNat) SetIpv4Max(v net.IP) {
+	self.Ipv4Max = v
+}
+
+func (self *ActionNxNat) GetIpv6Min() net.IP {
+	return self.Ipv6Min
+}
+
+func (self *ActionNxNat) SetIpv6Min(v net.IP) {
+	self.Ipv6Min = v
+}
+
+func (self *ActionNxNat) GetIpv6Max() net.IP {
+	return self.Ipv6Max
+}
+
+func (self *ActionNxNat) SetIpv6Max(v net.IP) {
+	self.Ipv6Max = v
+}
+
+func (self *ActionNxNat) GetProtoMin() uint32 {
+	return self.ProtoMin
+}
+
+func (self *ActionNxNat) SetProtoMin(v uint32) {
+	self.ProtoMin = v
+}
+
+func (self *ActionNxNat) GetProtoMax() uint32 {
+	return self.ProtoMax
+}
+
+func (self *ActionNxNat) SetProtoMax(v uint32) {
+	self.ProtoMax = v
 }
 
 func (self *ActionNxNat) Serialize(encoder *goloxi.Encoder) error {
@@ -1606,8 +3011,13 @@ func (self *ActionNxNat) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.PutUint16(uint16(self.Flags))
 	encoder.PutUint16(uint16(self.RangePresent))
+	encoder.Write(self.Ipv4Min.To4())
+	encoder.Write(self.Ipv4Max.To4())
+	encoder.Write(self.Ipv6Min.To16())
+	encoder.Write(self.Ipv6Max.To16())
+	encoder.PutUint32(uint32(self.ProtoMin))
+	encoder.PutUint32(uint32(self.ProtoMax))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1620,7 +3030,25 @@ func DecodeActionNxNat(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNx
 	}
 	decoder.Skip(2)
 	_actionnxnat.Flags = uint16(decoder.ReadUint16())
-	_actionnxnat.RangePresent = uint16(decoder.ReadUint16())
+	_actionnxnat.RangePresent = NxNatRange(decoder.ReadUint16())
+	if _actionnxnat.RangePresent&1 == 1 {
+		_actionnxnat.Ipv4Min = net.IP(decoder.Read(4))
+	}
+	if _actionnxnat.RangePresent&2 == 2 {
+		_actionnxnat.Ipv4Max = net.IP(decoder.Read(4))
+	}
+	if _actionnxnat.RangePresent&4 == 4 {
+		_actionnxnat.Ipv6Min = net.IP(decoder.Read(16))
+	}
+	if _actionnxnat.RangePresent&8 == 8 {
+		_actionnxnat.Ipv6Max = net.IP(decoder.Read(16))
+	}
+	if _actionnxnat.RangePresent&16 == 16 {
+		_actionnxnat.ProtoMin = uint32(decoder.ReadUint32())
+	}
+	if _actionnxnat.RangePresent&32 == 32 {
+		_actionnxnat.ProtoMax = uint32(decoder.ReadUint32())
+	}
 	return _actionnxnat, nil
 }
 
@@ -1630,20 +3058,47 @@ func NewActionNxNat() *ActionNxNat {
 	}
 	return obj
 }
-func (self *ActionNxNat) GetName() string {
+func (self *ActionNxNat) GetActionName() string {
 	return "nx_nat"
 }
 
-func (self *ActionNxNat) GetFields() map[string]interface{} {
+func (self *ActionNxNat) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Flags":        self.Flags,
 		"RangePresent": self.RangePresent,
+		"Ipv4Min":      self.Ipv4Min,
+		"Ipv4Max":      self.Ipv4Max,
+		"Ipv6Min":      self.Ipv6Min,
+		"Ipv6Max":      self.Ipv6Max,
+		"ProtoMin":     self.ProtoMin,
+		"ProtoMax":     self.ProtoMax,
 	}
+}
+
+func (self *ActionNxNat) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxNote struct {
 	*ActionNicira
 	Note []byte
+}
+
+type IActionNxNote interface {
+	IActionNicira
+	GetNote() []byte
+}
+
+func (self *ActionNxNote) GetNote() []byte {
+	return self.Note
+}
+
+func (self *ActionNxNote) SetNote(v []byte) {
+	self.Note = v
 }
 
 func (self *ActionNxNote) Serialize(encoder *goloxi.Encoder) error {
@@ -1653,7 +3108,6 @@ func (self *ActionNxNote) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Note)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1661,7 +3115,7 @@ func (self *ActionNxNote) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxNote(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxNote, error) {
 	_actionnxnote := &ActionNxNote{ActionNicira: parent}
-	_actionnxnote.Note = decoder.Read(decoder.Length())
+	_actionnxnote.Note = decoder.Read(int(decoder.Length()))
 	return _actionnxnote, nil
 }
 
@@ -1671,14 +3125,22 @@ func NewActionNxNote() *ActionNxNote {
 	}
 	return obj
 }
-func (self *ActionNxNote) GetName() string {
+func (self *ActionNxNote) GetActionName() string {
 	return "nx_note"
 }
 
-func (self *ActionNxNote) GetFields() map[string]interface{} {
+func (self *ActionNxNote) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Note": self.Note,
 	}
+}
+
+func (self *ActionNxNote) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxOutputReg struct {
@@ -1686,6 +3148,37 @@ type ActionNxOutputReg struct {
 	OfsNbits uint16
 	Src      uint32
 	MaxLen   uint16
+}
+
+type IActionNxOutputReg interface {
+	IActionNicira
+	GetOfsNbits() uint16
+	GetSrc() uint32
+	GetMaxLen() uint16
+}
+
+func (self *ActionNxOutputReg) GetOfsNbits() uint16 {
+	return self.OfsNbits
+}
+
+func (self *ActionNxOutputReg) SetOfsNbits(v uint16) {
+	self.OfsNbits = v
+}
+
+func (self *ActionNxOutputReg) GetSrc() uint32 {
+	return self.Src
+}
+
+func (self *ActionNxOutputReg) SetSrc(v uint32) {
+	self.Src = v
+}
+
+func (self *ActionNxOutputReg) GetMaxLen() uint16 {
+	return self.MaxLen
+}
+
+func (self *ActionNxOutputReg) SetMaxLen(v uint16) {
+	self.MaxLen = v
 }
 
 func (self *ActionNxOutputReg) Serialize(encoder *goloxi.Encoder) error {
@@ -1698,7 +3191,6 @@ func (self *ActionNxOutputReg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.MaxLen))
 	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1722,11 +3214,11 @@ func NewActionNxOutputReg() *ActionNxOutputReg {
 	}
 	return obj
 }
-func (self *ActionNxOutputReg) GetName() string {
+func (self *ActionNxOutputReg) GetActionName() string {
 	return "nx_output_reg"
 }
 
-func (self *ActionNxOutputReg) GetFields() map[string]interface{} {
+func (self *ActionNxOutputReg) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"OfsNbits": self.OfsNbits,
 		"Src":      self.Src,
@@ -1734,10 +3226,40 @@ func (self *ActionNxOutputReg) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionNxOutputReg) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxOutputReg2 struct {
 	*ActionNicira
 	OfsNbits uint16
 	MaxLen   uint16
+}
+
+type IActionNxOutputReg2 interface {
+	IActionNicira
+	GetOfsNbits() uint16
+	GetMaxLen() uint16
+}
+
+func (self *ActionNxOutputReg2) GetOfsNbits() uint16 {
+	return self.OfsNbits
+}
+
+func (self *ActionNxOutputReg2) SetOfsNbits(v uint16) {
+	self.OfsNbits = v
+}
+
+func (self *ActionNxOutputReg2) GetMaxLen() uint16 {
+	return self.MaxLen
+}
+
+func (self *ActionNxOutputReg2) SetMaxLen(v uint16) {
+	self.MaxLen = v
 }
 
 func (self *ActionNxOutputReg2) Serialize(encoder *goloxi.Encoder) error {
@@ -1749,7 +3271,6 @@ func (self *ActionNxOutputReg2) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.MaxLen))
 	encoder.Write(bytes.Repeat([]byte{0}, 10))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1772,21 +3293,51 @@ func NewActionNxOutputReg2() *ActionNxOutputReg2 {
 	}
 	return obj
 }
-func (self *ActionNxOutputReg2) GetName() string {
+func (self *ActionNxOutputReg2) GetActionName() string {
 	return "nx_output_reg2"
 }
 
-func (self *ActionNxOutputReg2) GetFields() map[string]interface{} {
+func (self *ActionNxOutputReg2) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"OfsNbits": self.OfsNbits,
 		"MaxLen":   self.MaxLen,
 	}
 }
 
+func (self *ActionNxOutputReg2) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxOutputTrunc struct {
 	*ActionNicira
 	Port   uint16
 	MaxLen uint32
+}
+
+type IActionNxOutputTrunc interface {
+	IActionNicira
+	GetPort() uint16
+	GetMaxLen() uint32
+}
+
+func (self *ActionNxOutputTrunc) GetPort() uint16 {
+	return self.Port
+}
+
+func (self *ActionNxOutputTrunc) SetPort(v uint16) {
+	self.Port = v
+}
+
+func (self *ActionNxOutputTrunc) GetMaxLen() uint32 {
+	return self.MaxLen
+}
+
+func (self *ActionNxOutputTrunc) SetMaxLen(v uint32) {
+	self.MaxLen = v
 }
 
 func (self *ActionNxOutputTrunc) Serialize(encoder *goloxi.Encoder) error {
@@ -1797,7 +3348,6 @@ func (self *ActionNxOutputTrunc) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Port))
 	encoder.PutUint32(uint32(self.MaxLen))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1819,19 +3369,94 @@ func NewActionNxOutputTrunc() *ActionNxOutputTrunc {
 	}
 	return obj
 }
-func (self *ActionNxOutputTrunc) GetName() string {
+func (self *ActionNxOutputTrunc) GetActionName() string {
 	return "nx_output_trunc"
 }
 
-func (self *ActionNxOutputTrunc) GetFields() map[string]interface{} {
+func (self *ActionNxOutputTrunc) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Port":   self.Port,
 		"MaxLen": self.MaxLen,
 	}
 }
 
+func (self *ActionNxOutputTrunc) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxPopMpls struct {
+	*ActionNicira
+	Value uint16
+}
+
+type IActionNxPopMpls interface {
+	IActionNicira
+	GetValue() uint16
+}
+
+func (self *ActionNxPopMpls) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *ActionNxPopMpls) SetValue(v uint16) {
+	self.Value = v
+}
+
+func (self *ActionNxPopMpls) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint16(uint16(self.Value))
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxPopMpls(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxPopMpls, error) {
+	_actionnxpopmpls := &ActionNxPopMpls{ActionNicira: parent}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("ActionNxPopMpls packet too short: %d < 2", decoder.Length())
+	}
+	_actionnxpopmpls.Value = uint16(decoder.ReadUint16())
+	return _actionnxpopmpls, nil
+}
+
+func NewActionNxPopMpls() *ActionNxPopMpls {
+	obj := &ActionNxPopMpls{
+		ActionNicira: NewActionNicira(24),
+	}
+	return obj
+}
+func (self *ActionNxPopMpls) GetActionName() string {
+	return "nx_pop_mpls"
+}
+
+func (self *ActionNxPopMpls) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Value": self.Value,
+	}
+}
+
+func (self *ActionNxPopMpls) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxPopQueue struct {
 	*ActionNicira
+}
+
+type IActionNxPopQueue interface {
+	IActionNicira
 }
 
 func (self *ActionNxPopQueue) Serialize(encoder *goloxi.Encoder) error {
@@ -1839,7 +3464,6 @@ func (self *ActionNxPopQueue) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1856,19 +3480,121 @@ func NewActionNxPopQueue() *ActionNxPopQueue {
 	}
 	return obj
 }
-func (self *ActionNxPopQueue) GetName() string {
+func (self *ActionNxPopQueue) GetActionName() string {
 	return "nx_pop_queue"
 }
 
-func (self *ActionNxPopQueue) GetFields() map[string]interface{} {
+func (self *ActionNxPopQueue) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionNxPopQueue) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxPushMpls struct {
+	*ActionNicira
+	Value uint16
+}
+
+type IActionNxPushMpls interface {
+	IActionNicira
+	GetValue() uint16
+}
+
+func (self *ActionNxPushMpls) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *ActionNxPushMpls) SetValue(v uint16) {
+	self.Value = v
+}
+
+func (self *ActionNxPushMpls) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint16(uint16(self.Value))
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxPushMpls(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxPushMpls, error) {
+	_actionnxpushmpls := &ActionNxPushMpls{ActionNicira: parent}
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("ActionNxPushMpls packet too short: %d < 2", decoder.Length())
+	}
+	_actionnxpushmpls.Value = uint16(decoder.ReadUint16())
+	return _actionnxpushmpls, nil
+}
+
+func NewActionNxPushMpls() *ActionNxPushMpls {
+	obj := &ActionNxPushMpls{
+		ActionNicira: NewActionNicira(23),
+	}
+	return obj
+}
+func (self *ActionNxPushMpls) GetActionName() string {
+	return "nx_push_mpls"
+}
+
+func (self *ActionNxPushMpls) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Value": self.Value,
+	}
+}
+
+func (self *ActionNxPushMpls) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxRegLoad struct {
 	*ActionNicira
 	OfsNbits uint16
-	Dst      uint32
+	SrcField goloxi.IOxmId
 	Value    uint64
+}
+
+type IActionNxRegLoad interface {
+	IActionNicira
+	GetOfsNbits() uint16
+	GetSrcField() goloxi.IOxmId
+	GetValue() uint64
+}
+
+func (self *ActionNxRegLoad) GetOfsNbits() uint16 {
+	return self.OfsNbits
+}
+
+func (self *ActionNxRegLoad) SetOfsNbits(v uint16) {
+	self.OfsNbits = v
+}
+
+func (self *ActionNxRegLoad) GetSrcField() goloxi.IOxmId {
+	return self.SrcField
+}
+
+func (self *ActionNxRegLoad) SetSrcField(v goloxi.IOxmId) {
+	self.SrcField = v
+}
+
+func (self *ActionNxRegLoad) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *ActionNxRegLoad) SetValue(v uint64) {
+	self.Value = v
 }
 
 func (self *ActionNxRegLoad) Serialize(encoder *goloxi.Encoder) error {
@@ -1877,10 +3603,9 @@ func (self *ActionNxRegLoad) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.OfsNbits))
-	encoder.PutUint32(uint32(self.Dst))
+	self.SrcField.Serialize(encoder)
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1892,7 +3617,12 @@ func DecodeActionNxRegLoad(parent *ActionNicira, decoder *goloxi.Decoder) (*Acti
 		return nil, fmt.Errorf("ActionNxRegLoad packet too short: %d < 14", decoder.Length())
 	}
 	_actionnxregload.OfsNbits = uint16(decoder.ReadUint16())
-	_actionnxregload.Dst = uint32(decoder.ReadUint32())
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxregload.SrcField = obj
+	}
+
 	_actionnxregload.Value = uint64(decoder.ReadUint64())
 	return _actionnxregload, nil
 }
@@ -1903,20 +3633,32 @@ func NewActionNxRegLoad() *ActionNxRegLoad {
 	}
 	return obj
 }
-func (self *ActionNxRegLoad) GetName() string {
+func (self *ActionNxRegLoad) GetActionName() string {
 	return "nx_reg_load"
 }
 
-func (self *ActionNxRegLoad) GetFields() map[string]interface{} {
+func (self *ActionNxRegLoad) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"OfsNbits": self.OfsNbits,
-		"Dst":      self.Dst,
+		"SrcField": self.SrcField,
 		"Value":    self.Value,
 	}
 }
 
+func (self *ActionNxRegLoad) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxRegLoad2 struct {
 	*ActionNicira
+}
+
+type IActionNxRegLoad2 interface {
+	IActionNicira
 }
 
 func (self *ActionNxRegLoad2) Serialize(encoder *goloxi.Encoder) error {
@@ -1926,7 +3668,6 @@ func (self *ActionNxRegLoad2) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1947,12 +3688,20 @@ func NewActionNxRegLoad2() *ActionNxRegLoad2 {
 	}
 	return obj
 }
-func (self *ActionNxRegLoad2) GetName() string {
+func (self *ActionNxRegLoad2) GetActionName() string {
 	return "nx_reg_load2"
 }
 
-func (self *ActionNxRegLoad2) GetFields() map[string]interface{} {
+func (self *ActionNxRegLoad2) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionNxRegLoad2) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxRegMove struct {
@@ -1960,6 +3709,57 @@ type ActionNxRegMove struct {
 	NBits  uint16
 	SrcOfs uint16
 	DstOfs uint16
+	Src    goloxi.IOxmId
+	Dst    goloxi.IOxmId
+}
+
+type IActionNxRegMove interface {
+	IActionNicira
+	GetNBits() uint16
+	GetSrcOfs() uint16
+	GetDstOfs() uint16
+	GetSrc() goloxi.IOxmId
+	GetDst() goloxi.IOxmId
+}
+
+func (self *ActionNxRegMove) GetNBits() uint16 {
+	return self.NBits
+}
+
+func (self *ActionNxRegMove) SetNBits(v uint16) {
+	self.NBits = v
+}
+
+func (self *ActionNxRegMove) GetSrcOfs() uint16 {
+	return self.SrcOfs
+}
+
+func (self *ActionNxRegMove) SetSrcOfs(v uint16) {
+	self.SrcOfs = v
+}
+
+func (self *ActionNxRegMove) GetDstOfs() uint16 {
+	return self.DstOfs
+}
+
+func (self *ActionNxRegMove) SetDstOfs(v uint16) {
+	self.DstOfs = v
+}
+
+func (self *ActionNxRegMove) GetSrc() goloxi.IOxmId {
+	return self.Src
+}
+
+func (self *ActionNxRegMove) SetSrc(v goloxi.IOxmId) {
+	self.Src = v
+}
+
+func (self *ActionNxRegMove) GetDst() goloxi.IOxmId {
+	return self.Dst
+}
+
+func (self *ActionNxRegMove) SetDst(v goloxi.IOxmId) {
+	self.Dst = v
 }
 
 func (self *ActionNxRegMove) Serialize(encoder *goloxi.Encoder) error {
@@ -1970,8 +3770,9 @@ func (self *ActionNxRegMove) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.NBits))
 	encoder.PutUint16(uint16(self.SrcOfs))
 	encoder.PutUint16(uint16(self.DstOfs))
+	self.Src.Serialize(encoder)
+	self.Dst.Serialize(encoder)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1979,12 +3780,24 @@ func (self *ActionNxRegMove) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxRegMove(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegMove, error) {
 	_actionnxregmove := &ActionNxRegMove{ActionNicira: parent}
-	if decoder.Length() < 6 {
-		return nil, fmt.Errorf("ActionNxRegMove packet too short: %d < 6", decoder.Length())
+	if decoder.Length() < 14 {
+		return nil, fmt.Errorf("ActionNxRegMove packet too short: %d < 14", decoder.Length())
 	}
 	_actionnxregmove.NBits = uint16(decoder.ReadUint16())
 	_actionnxregmove.SrcOfs = uint16(decoder.ReadUint16())
 	_actionnxregmove.DstOfs = uint16(decoder.ReadUint16())
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxregmove.Src = obj
+	}
+
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxregmove.Dst = obj
+	}
+
 	return _actionnxregmove, nil
 }
 
@@ -1994,21 +3807,44 @@ func NewActionNxRegMove() *ActionNxRegMove {
 	}
 	return obj
 }
-func (self *ActionNxRegMove) GetName() string {
+func (self *ActionNxRegMove) GetActionName() string {
 	return "nx_reg_move"
 }
 
-func (self *ActionNxRegMove) GetFields() map[string]interface{} {
+func (self *ActionNxRegMove) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"NBits":  self.NBits,
 		"SrcOfs": self.SrcOfs,
 		"DstOfs": self.DstOfs,
+		"Src":    self.Src,
+		"Dst":    self.Dst,
 	}
+}
+
+func (self *ActionNxRegMove) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxResubmit struct {
 	*ActionNicira
 	Value uint16
+}
+
+type IActionNxResubmit interface {
+	IActionNicira
+	GetValue() uint16
+}
+
+func (self *ActionNxResubmit) GetValue() uint16 {
+	return self.Value
+}
+
+func (self *ActionNxResubmit) SetValue(v uint16) {
+	self.Value = v
 }
 
 func (self *ActionNxResubmit) Serialize(encoder *goloxi.Encoder) error {
@@ -2018,7 +3854,6 @@ func (self *ActionNxResubmit) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2039,20 +3874,50 @@ func NewActionNxResubmit() *ActionNxResubmit {
 	}
 	return obj
 }
-func (self *ActionNxResubmit) GetName() string {
+func (self *ActionNxResubmit) GetActionName() string {
 	return "nx_resubmit"
 }
 
-func (self *ActionNxResubmit) GetFields() map[string]interface{} {
+func (self *ActionNxResubmit) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Value": self.Value,
 	}
+}
+
+func (self *ActionNxResubmit) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxResubmitTable struct {
 	*ActionNicira
 	InPort uint16
 	Table  uint8
+}
+
+type IActionNxResubmitTable interface {
+	IActionNicira
+	GetInPort() uint16
+	GetTable() uint8
+}
+
+func (self *ActionNxResubmitTable) GetInPort() uint16 {
+	return self.InPort
+}
+
+func (self *ActionNxResubmitTable) SetInPort(v uint16) {
+	self.InPort = v
+}
+
+func (self *ActionNxResubmitTable) GetTable() uint8 {
+	return self.Table
+}
+
+func (self *ActionNxResubmitTable) SetTable(v uint8) {
+	self.Table = v
 }
 
 func (self *ActionNxResubmitTable) Serialize(encoder *goloxi.Encoder) error {
@@ -2064,7 +3929,6 @@ func (self *ActionNxResubmitTable) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.Table))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2087,21 +3951,51 @@ func NewActionNxResubmitTable() *ActionNxResubmitTable {
 	}
 	return obj
 }
-func (self *ActionNxResubmitTable) GetName() string {
+func (self *ActionNxResubmitTable) GetActionName() string {
 	return "nx_resubmit_table"
 }
 
-func (self *ActionNxResubmitTable) GetFields() map[string]interface{} {
+func (self *ActionNxResubmitTable) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"InPort": self.InPort,
 		"Table":  self.Table,
 	}
 }
 
+func (self *ActionNxResubmitTable) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxResubmitTableCt struct {
 	*ActionNicira
 	InPort uint16
 	Table  uint8
+}
+
+type IActionNxResubmitTableCt interface {
+	IActionNicira
+	GetInPort() uint16
+	GetTable() uint8
+}
+
+func (self *ActionNxResubmitTableCt) GetInPort() uint16 {
+	return self.InPort
+}
+
+func (self *ActionNxResubmitTableCt) SetInPort(v uint16) {
+	self.InPort = v
+}
+
+func (self *ActionNxResubmitTableCt) GetTable() uint8 {
+	return self.Table
+}
+
+func (self *ActionNxResubmitTableCt) SetTable(v uint8) {
+	self.Table = v
 }
 
 func (self *ActionNxResubmitTableCt) Serialize(encoder *goloxi.Encoder) error {
@@ -2113,7 +4007,6 @@ func (self *ActionNxResubmitTableCt) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.Table))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2136,15 +4029,23 @@ func NewActionNxResubmitTableCt() *ActionNxResubmitTableCt {
 	}
 	return obj
 }
-func (self *ActionNxResubmitTableCt) GetName() string {
+func (self *ActionNxResubmitTableCt) GetActionName() string {
 	return "nx_resubmit_table_ct"
 }
 
-func (self *ActionNxResubmitTableCt) GetFields() map[string]interface{} {
+func (self *ActionNxResubmitTableCt) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"InPort": self.InPort,
 		"Table":  self.Table,
 	}
+}
+
+func (self *ActionNxResubmitTableCt) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxSample struct {
@@ -2153,6 +4054,46 @@ type ActionNxSample struct {
 	CollectorSetId uint32
 	ObsDomainId    uint32
 	ObsPointId     uint32
+}
+
+type IActionNxSample interface {
+	IActionNicira
+	GetProbability() uint16
+	GetCollectorSetId() uint32
+	GetObsDomainId() uint32
+	GetObsPointId() uint32
+}
+
+func (self *ActionNxSample) GetProbability() uint16 {
+	return self.Probability
+}
+
+func (self *ActionNxSample) SetProbability(v uint16) {
+	self.Probability = v
+}
+
+func (self *ActionNxSample) GetCollectorSetId() uint32 {
+	return self.CollectorSetId
+}
+
+func (self *ActionNxSample) SetCollectorSetId(v uint32) {
+	self.CollectorSetId = v
+}
+
+func (self *ActionNxSample) GetObsDomainId() uint32 {
+	return self.ObsDomainId
+}
+
+func (self *ActionNxSample) SetObsDomainId(v uint32) {
+	self.ObsDomainId = v
+}
+
+func (self *ActionNxSample) GetObsPointId() uint32 {
+	return self.ObsPointId
+}
+
+func (self *ActionNxSample) SetObsPointId(v uint32) {
+	self.ObsPointId = v
 }
 
 func (self *ActionNxSample) Serialize(encoder *goloxi.Encoder) error {
@@ -2165,7 +4106,6 @@ func (self *ActionNxSample) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.ObsDomainId))
 	encoder.PutUint32(uint32(self.ObsPointId))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2189,17 +4129,25 @@ func NewActionNxSample() *ActionNxSample {
 	}
 	return obj
 }
-func (self *ActionNxSample) GetName() string {
+func (self *ActionNxSample) GetActionName() string {
 	return "nx_sample"
 }
 
-func (self *ActionNxSample) GetFields() map[string]interface{} {
+func (self *ActionNxSample) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Probability":    self.Probability,
 		"CollectorSetId": self.CollectorSetId,
 		"ObsDomainId":    self.ObsDomainId,
 		"ObsPointId":     self.ObsPointId,
 	}
+}
+
+func (self *ActionNxSample) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxSample2 struct {
@@ -2210,6 +4158,64 @@ type ActionNxSample2 struct {
 	ObsPointId     uint32
 	SamplingPort   uint16
 	Direction      uint8
+}
+
+type IActionNxSample2 interface {
+	IActionNicira
+	GetProbability() uint16
+	GetCollectorSetId() uint32
+	GetObsDomainId() uint32
+	GetObsPointId() uint32
+	GetSamplingPort() uint16
+	GetDirection() uint8
+}
+
+func (self *ActionNxSample2) GetProbability() uint16 {
+	return self.Probability
+}
+
+func (self *ActionNxSample2) SetProbability(v uint16) {
+	self.Probability = v
+}
+
+func (self *ActionNxSample2) GetCollectorSetId() uint32 {
+	return self.CollectorSetId
+}
+
+func (self *ActionNxSample2) SetCollectorSetId(v uint32) {
+	self.CollectorSetId = v
+}
+
+func (self *ActionNxSample2) GetObsDomainId() uint32 {
+	return self.ObsDomainId
+}
+
+func (self *ActionNxSample2) SetObsDomainId(v uint32) {
+	self.ObsDomainId = v
+}
+
+func (self *ActionNxSample2) GetObsPointId() uint32 {
+	return self.ObsPointId
+}
+
+func (self *ActionNxSample2) SetObsPointId(v uint32) {
+	self.ObsPointId = v
+}
+
+func (self *ActionNxSample2) GetSamplingPort() uint16 {
+	return self.SamplingPort
+}
+
+func (self *ActionNxSample2) SetSamplingPort(v uint16) {
+	self.SamplingPort = v
+}
+
+func (self *ActionNxSample2) GetDirection() uint8 {
+	return self.Direction
+}
+
+func (self *ActionNxSample2) SetDirection(v uint8) {
+	self.Direction = v
 }
 
 func (self *ActionNxSample2) Serialize(encoder *goloxi.Encoder) error {
@@ -2225,7 +4231,6 @@ func (self *ActionNxSample2) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.Direction))
 	encoder.Write(bytes.Repeat([]byte{0}, 5))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2252,11 +4257,11 @@ func NewActionNxSample2() *ActionNxSample2 {
 	}
 	return obj
 }
-func (self *ActionNxSample2) GetName() string {
+func (self *ActionNxSample2) GetActionName() string {
 	return "nx_sample2"
 }
 
-func (self *ActionNxSample2) GetFields() map[string]interface{} {
+func (self *ActionNxSample2) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Probability":    self.Probability,
 		"CollectorSetId": self.CollectorSetId,
@@ -2267,6 +4272,14 @@ func (self *ActionNxSample2) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionNxSample2) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxSample3 struct {
 	*ActionNicira
 	Probability    uint16
@@ -2275,6 +4288,64 @@ type ActionNxSample3 struct {
 	ObsPointId     uint32
 	SamplingPort   uint16
 	Direction      uint8
+}
+
+type IActionNxSample3 interface {
+	IActionNicira
+	GetProbability() uint16
+	GetCollectorSetId() uint32
+	GetObsDomainId() uint32
+	GetObsPointId() uint32
+	GetSamplingPort() uint16
+	GetDirection() uint8
+}
+
+func (self *ActionNxSample3) GetProbability() uint16 {
+	return self.Probability
+}
+
+func (self *ActionNxSample3) SetProbability(v uint16) {
+	self.Probability = v
+}
+
+func (self *ActionNxSample3) GetCollectorSetId() uint32 {
+	return self.CollectorSetId
+}
+
+func (self *ActionNxSample3) SetCollectorSetId(v uint32) {
+	self.CollectorSetId = v
+}
+
+func (self *ActionNxSample3) GetObsDomainId() uint32 {
+	return self.ObsDomainId
+}
+
+func (self *ActionNxSample3) SetObsDomainId(v uint32) {
+	self.ObsDomainId = v
+}
+
+func (self *ActionNxSample3) GetObsPointId() uint32 {
+	return self.ObsPointId
+}
+
+func (self *ActionNxSample3) SetObsPointId(v uint32) {
+	self.ObsPointId = v
+}
+
+func (self *ActionNxSample3) GetSamplingPort() uint16 {
+	return self.SamplingPort
+}
+
+func (self *ActionNxSample3) SetSamplingPort(v uint16) {
+	self.SamplingPort = v
+}
+
+func (self *ActionNxSample3) GetDirection() uint8 {
+	return self.Direction
+}
+
+func (self *ActionNxSample3) SetDirection(v uint8) {
+	self.Direction = v
 }
 
 func (self *ActionNxSample3) Serialize(encoder *goloxi.Encoder) error {
@@ -2290,7 +4361,6 @@ func (self *ActionNxSample3) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.Direction))
 	encoder.Write(bytes.Repeat([]byte{0}, 5))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2317,11 +4387,11 @@ func NewActionNxSample3() *ActionNxSample3 {
 	}
 	return obj
 }
-func (self *ActionNxSample3) GetName() string {
+func (self *ActionNxSample3) GetActionName() string {
 	return "nx_sample3"
 }
 
-func (self *ActionNxSample3) GetFields() map[string]interface{} {
+func (self *ActionNxSample3) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Probability":    self.Probability,
 		"CollectorSetId": self.CollectorSetId,
@@ -2332,9 +4402,282 @@ func (self *ActionNxSample3) GetFields() map[string]interface{} {
 	}
 }
 
+func (self *ActionNxSample3) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxSetMplsLabel struct {
+	*ActionNicira
+	Value uint32
+}
+
+type IActionNxSetMplsLabel interface {
+	IActionNicira
+	GetValue() uint32
+}
+
+func (self *ActionNxSetMplsLabel) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *ActionNxSetMplsLabel) SetValue(v uint32) {
+	self.Value = v
+}
+
+func (self *ActionNxSetMplsLabel) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint32(uint32(self.Value))
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxSetMplsLabel(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSetMplsLabel, error) {
+	_actionnxsetmplslabel := &ActionNxSetMplsLabel{ActionNicira: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("ActionNxSetMplsLabel packet too short: %d < 4", decoder.Length())
+	}
+	_actionnxsetmplslabel.Value = uint32(decoder.ReadUint32())
+	return _actionnxsetmplslabel, nil
+}
+
+func NewActionNxSetMplsLabel() *ActionNxSetMplsLabel {
+	obj := &ActionNxSetMplsLabel{
+		ActionNicira: NewActionNicira(30),
+	}
+	return obj
+}
+func (self *ActionNxSetMplsLabel) GetActionName() string {
+	return "nx_set_mpls_label"
+}
+
+func (self *ActionNxSetMplsLabel) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Value": self.Value,
+	}
+}
+
+func (self *ActionNxSetMplsLabel) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxSetMplsTc struct {
+	*ActionNicira
+	Value uint8
+}
+
+type IActionNxSetMplsTc interface {
+	IActionNicira
+	GetValue() uint8
+}
+
+func (self *ActionNxSetMplsTc) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *ActionNxSetMplsTc) SetValue(v uint8) {
+	self.Value = v
+}
+
+func (self *ActionNxSetMplsTc) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.Value))
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxSetMplsTc(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSetMplsTc, error) {
+	_actionnxsetmplstc := &ActionNxSetMplsTc{ActionNicira: parent}
+	if decoder.Length() < 1 {
+		return nil, fmt.Errorf("ActionNxSetMplsTc packet too short: %d < 1", decoder.Length())
+	}
+	_actionnxsetmplstc.Value = uint8(decoder.ReadByte())
+	return _actionnxsetmplstc, nil
+}
+
+func NewActionNxSetMplsTc() *ActionNxSetMplsTc {
+	obj := &ActionNxSetMplsTc{
+		ActionNicira: NewActionNicira(31),
+	}
+	return obj
+}
+func (self *ActionNxSetMplsTc) GetActionName() string {
+	return "nx_set_mpls_tc"
+}
+
+func (self *ActionNxSetMplsTc) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Value": self.Value,
+	}
+}
+
+func (self *ActionNxSetMplsTc) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxSetMplsTtl struct {
+	*ActionNicira
+	Value uint8
+}
+
+type IActionNxSetMplsTtl interface {
+	IActionNicira
+	GetValue() uint8
+}
+
+func (self *ActionNxSetMplsTtl) GetValue() uint8 {
+	return self.Value
+}
+
+func (self *ActionNxSetMplsTtl) SetValue(v uint8) {
+	self.Value = v
+}
+
+func (self *ActionNxSetMplsTtl) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint8(uint8(self.Value))
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxSetMplsTtl(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSetMplsTtl, error) {
+	_actionnxsetmplsttl := &ActionNxSetMplsTtl{ActionNicira: parent}
+	if decoder.Length() < 1 {
+		return nil, fmt.Errorf("ActionNxSetMplsTtl packet too short: %d < 1", decoder.Length())
+	}
+	_actionnxsetmplsttl.Value = uint8(decoder.ReadByte())
+	return _actionnxsetmplsttl, nil
+}
+
+func NewActionNxSetMplsTtl() *ActionNxSetMplsTtl {
+	obj := &ActionNxSetMplsTtl{
+		ActionNicira: NewActionNicira(25),
+	}
+	return obj
+}
+func (self *ActionNxSetMplsTtl) GetActionName() string {
+	return "nx_set_mpls_ttl"
+}
+
+func (self *ActionNxSetMplsTtl) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Value": self.Value,
+	}
+}
+
+func (self *ActionNxSetMplsTtl) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
+type ActionNxSetQueue struct {
+	*ActionNicira
+	Value uint32
+}
+
+type IActionNxSetQueue interface {
+	IActionNicira
+	GetValue() uint32
+}
+
+func (self *ActionNxSetQueue) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *ActionNxSetQueue) SetValue(v uint32) {
+	self.Value = v
+}
+
+func (self *ActionNxSetQueue) Serialize(encoder *goloxi.Encoder) error {
+	if err := self.ActionNicira.Serialize(encoder); err != nil {
+		return err
+	}
+
+	encoder.PutUint32(uint32(self.Value))
+
+	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
+
+	return nil
+}
+
+func DecodeActionNxSetQueue(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxSetQueue, error) {
+	_actionnxsetqueue := &ActionNxSetQueue{ActionNicira: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("ActionNxSetQueue packet too short: %d < 4", decoder.Length())
+	}
+	_actionnxsetqueue.Value = uint32(decoder.ReadUint32())
+	return _actionnxsetqueue, nil
+}
+
+func NewActionNxSetQueue() *ActionNxSetQueue {
+	obj := &ActionNxSetQueue{
+		ActionNicira: NewActionNicira(4),
+	}
+	return obj
+}
+func (self *ActionNxSetQueue) GetActionName() string {
+	return "nx_set_queue"
+}
+
+func (self *ActionNxSetQueue) GetActionFields() map[string]interface{} {
+	return map[string]interface{}{
+		"Value": self.Value,
+	}
+}
+
+func (self *ActionNxSetQueue) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxSetTunnel struct {
 	*ActionNicira
 	Value uint32
+}
+
+type IActionNxSetTunnel interface {
+	IActionNicira
+	GetValue() uint32
+}
+
+func (self *ActionNxSetTunnel) GetValue() uint32 {
+	return self.Value
+}
+
+func (self *ActionNxSetTunnel) SetValue(v uint32) {
+	self.Value = v
 }
 
 func (self *ActionNxSetTunnel) Serialize(encoder *goloxi.Encoder) error {
@@ -2344,7 +4687,6 @@ func (self *ActionNxSetTunnel) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2365,19 +4707,40 @@ func NewActionNxSetTunnel() *ActionNxSetTunnel {
 	}
 	return obj
 }
-func (self *ActionNxSetTunnel) GetName() string {
+func (self *ActionNxSetTunnel) GetActionName() string {
 	return "nx_set_tunnel"
 }
 
-func (self *ActionNxSetTunnel) GetFields() map[string]interface{} {
+func (self *ActionNxSetTunnel) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Value": self.Value,
 	}
 }
 
+func (self *ActionNxSetTunnel) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxSetTunnel64 struct {
 	*ActionNicira
 	Value uint64
+}
+
+type IActionNxSetTunnel64 interface {
+	IActionNicira
+	GetValue() uint64
+}
+
+func (self *ActionNxSetTunnel64) GetValue() uint64 {
+	return self.Value
+}
+
+func (self *ActionNxSetTunnel64) SetValue(v uint64) {
+	self.Value = v
 }
 
 func (self *ActionNxSetTunnel64) Serialize(encoder *goloxi.Encoder) error {
@@ -2387,7 +4750,6 @@ func (self *ActionNxSetTunnel64) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Value))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2408,19 +4770,60 @@ func NewActionNxSetTunnel64() *ActionNxSetTunnel64 {
 	}
 	return obj
 }
-func (self *ActionNxSetTunnel64) GetName() string {
+func (self *ActionNxSetTunnel64) GetActionName() string {
 	return "nx_set_tunnel64"
 }
 
-func (self *ActionNxSetTunnel64) GetFields() map[string]interface{} {
+func (self *ActionNxSetTunnel64) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Value": self.Value,
 	}
 }
 
+func (self *ActionNxSetTunnel64) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionNxStackPop struct {
 	*ActionNicira
 	Offset uint16
+	Field  goloxi.IOxmId
+	NBits  uint16
+}
+
+type IActionNxStackPop interface {
+	IActionNicira
+	GetOffset() uint16
+	GetField() goloxi.IOxmId
+	GetNBits() uint16
+}
+
+func (self *ActionNxStackPop) GetOffset() uint16 {
+	return self.Offset
+}
+
+func (self *ActionNxStackPop) SetOffset(v uint16) {
+	self.Offset = v
+}
+
+func (self *ActionNxStackPop) GetField() goloxi.IOxmId {
+	return self.Field
+}
+
+func (self *ActionNxStackPop) SetField(v goloxi.IOxmId) {
+	self.Field = v
+}
+
+func (self *ActionNxStackPop) GetNBits() uint16 {
+	return self.NBits
+}
+
+func (self *ActionNxStackPop) SetNBits(v uint16) {
+	self.NBits = v
 }
 
 func (self *ActionNxStackPop) Serialize(encoder *goloxi.Encoder) error {
@@ -2429,9 +4832,9 @@ func (self *ActionNxStackPop) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Offset))
-	encoder.Write(bytes.Repeat([]byte{0}, 12))
+	self.Field.Serialize(encoder)
+	encoder.PutUint16(uint16(self.NBits))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2439,11 +4842,17 @@ func (self *ActionNxStackPop) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxStackPop(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxStackPop, error) {
 	_actionnxstackpop := &ActionNxStackPop{ActionNicira: parent}
-	if decoder.Length() < 14 {
-		return nil, fmt.Errorf("ActionNxStackPop packet too short: %d < 14", decoder.Length())
+	if decoder.Length() < 8 {
+		return nil, fmt.Errorf("ActionNxStackPop packet too short: %d < 8", decoder.Length())
 	}
 	_actionnxstackpop.Offset = uint16(decoder.ReadUint16())
-	decoder.Skip(12)
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxstackpop.Field = obj
+	}
+
+	_actionnxstackpop.NBits = uint16(decoder.ReadUint16())
 	return _actionnxstackpop, nil
 }
 
@@ -2453,19 +4862,62 @@ func NewActionNxStackPop() *ActionNxStackPop {
 	}
 	return obj
 }
-func (self *ActionNxStackPop) GetName() string {
+func (self *ActionNxStackPop) GetActionName() string {
 	return "nx_stack_pop"
 }
 
-func (self *ActionNxStackPop) GetFields() map[string]interface{} {
+func (self *ActionNxStackPop) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Offset": self.Offset,
+		"Field":  self.Field,
+		"NBits":  self.NBits,
 	}
+}
+
+func (self *ActionNxStackPop) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxStackPush struct {
 	*ActionNicira
 	Offset uint16
+	Field  goloxi.IOxmId
+	NBits  uint16
+}
+
+type IActionNxStackPush interface {
+	IActionNicira
+	GetOffset() uint16
+	GetField() goloxi.IOxmId
+	GetNBits() uint16
+}
+
+func (self *ActionNxStackPush) GetOffset() uint16 {
+	return self.Offset
+}
+
+func (self *ActionNxStackPush) SetOffset(v uint16) {
+	self.Offset = v
+}
+
+func (self *ActionNxStackPush) GetField() goloxi.IOxmId {
+	return self.Field
+}
+
+func (self *ActionNxStackPush) SetField(v goloxi.IOxmId) {
+	self.Field = v
+}
+
+func (self *ActionNxStackPush) GetNBits() uint16 {
+	return self.NBits
+}
+
+func (self *ActionNxStackPush) SetNBits(v uint16) {
+	self.NBits = v
 }
 
 func (self *ActionNxStackPush) Serialize(encoder *goloxi.Encoder) error {
@@ -2474,9 +4926,9 @@ func (self *ActionNxStackPush) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Offset))
-	encoder.Write(bytes.Repeat([]byte{0}, 12))
+	self.Field.Serialize(encoder)
+	encoder.PutUint16(uint16(self.NBits))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2484,11 +4936,17 @@ func (self *ActionNxStackPush) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxStackPush(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxStackPush, error) {
 	_actionnxstackpush := &ActionNxStackPush{ActionNicira: parent}
-	if decoder.Length() < 14 {
-		return nil, fmt.Errorf("ActionNxStackPush packet too short: %d < 14", decoder.Length())
+	if decoder.Length() < 8 {
+		return nil, fmt.Errorf("ActionNxStackPush packet too short: %d < 8", decoder.Length())
 	}
 	_actionnxstackpush.Offset = uint16(decoder.ReadUint16())
-	decoder.Skip(12)
+	if obj, err := DecodeOxmId(decoder); err != nil {
+		return nil, err
+	} else {
+		_actionnxstackpush.Field = obj
+	}
+
+	_actionnxstackpush.NBits = uint16(decoder.ReadUint16())
 	return _actionnxstackpush, nil
 }
 
@@ -2498,20 +4956,52 @@ func NewActionNxStackPush() *ActionNxStackPush {
 	}
 	return obj
 }
-func (self *ActionNxStackPush) GetName() string {
+func (self *ActionNxStackPush) GetActionName() string {
 	return "nx_stack_push"
 }
 
-func (self *ActionNxStackPush) GetFields() map[string]interface{} {
+func (self *ActionNxStackPush) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Offset": self.Offset,
+		"Field":  self.Field,
+		"NBits":  self.NBits,
 	}
+}
+
+func (self *ActionNxStackPush) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionNxWriteMetadata struct {
 	*ActionNicira
 	Metadata uint64
 	Mask     uint64
+}
+
+type IActionNxWriteMetadata interface {
+	IActionNicira
+	GetMetadata() uint64
+	GetMask() uint64
+}
+
+func (self *ActionNxWriteMetadata) GetMetadata() uint64 {
+	return self.Metadata
+}
+
+func (self *ActionNxWriteMetadata) SetMetadata(v uint64) {
+	self.Metadata = v
+}
+
+func (self *ActionNxWriteMetadata) GetMask() uint64 {
+	return self.Mask
+}
+
+func (self *ActionNxWriteMetadata) SetMask(v uint64) {
+	self.Mask = v
 }
 
 func (self *ActionNxWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
@@ -2523,7 +5013,6 @@ func (self *ActionNxWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint64(uint64(self.Metadata))
 	encoder.PutUint64(uint64(self.Mask))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2546,21 +5035,51 @@ func NewActionNxWriteMetadata() *ActionNxWriteMetadata {
 	}
 	return obj
 }
-func (self *ActionNxWriteMetadata) GetName() string {
+func (self *ActionNxWriteMetadata) GetActionName() string {
 	return "nx_write_metadata"
 }
 
-func (self *ActionNxWriteMetadata) GetFields() map[string]interface{} {
+func (self *ActionNxWriteMetadata) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Metadata": self.Metadata,
 		"Mask":     self.Mask,
 	}
 }
 
+func (self *ActionNxWriteMetadata) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionOutput struct {
 	*Action
-	Port   PortNo
+	Port   Port
 	MaxLen uint16
+}
+
+type IActionOutput interface {
+	goloxi.IAction
+	GetPort() Port
+	GetMaxLen() uint16
+}
+
+func (self *ActionOutput) GetPort() Port {
+	return self.Port
+}
+
+func (self *ActionOutput) SetPort(v Port) {
+	self.Port = v
+}
+
+func (self *ActionOutput) GetMaxLen() uint16 {
+	return self.MaxLen
+}
+
+func (self *ActionOutput) SetMaxLen(v uint16) {
+	self.MaxLen = v
 }
 
 func (self *ActionOutput) Serialize(encoder *goloxi.Encoder) error {
@@ -2572,7 +5091,6 @@ func (self *ActionOutput) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.MaxLen))
 	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2595,20 +5113,41 @@ func NewActionOutput() *ActionOutput {
 	}
 	return obj
 }
-func (self *ActionOutput) GetName() string {
+func (self *ActionOutput) GetActionName() string {
 	return "output"
 }
 
-func (self *ActionOutput) GetFields() map[string]interface{} {
+func (self *ActionOutput) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Port":   self.Port,
 		"MaxLen": self.MaxLen,
 	}
 }
 
+func (self *ActionOutput) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionPopMpls struct {
 	*Action
 	Ethertype uint16
+}
+
+type IActionPopMpls interface {
+	goloxi.IAction
+	GetEthertype() uint16
+}
+
+func (self *ActionPopMpls) GetEthertype() uint16 {
+	return self.Ethertype
+}
+
+func (self *ActionPopMpls) SetEthertype(v uint16) {
+	self.Ethertype = v
 }
 
 func (self *ActionPopMpls) Serialize(encoder *goloxi.Encoder) error {
@@ -2619,7 +5158,6 @@ func (self *ActionPopMpls) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Ethertype))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2641,18 +5179,30 @@ func NewActionPopMpls() *ActionPopMpls {
 	}
 	return obj
 }
-func (self *ActionPopMpls) GetName() string {
+func (self *ActionPopMpls) GetActionName() string {
 	return "pop_mpls"
 }
 
-func (self *ActionPopMpls) GetFields() map[string]interface{} {
+func (self *ActionPopMpls) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Ethertype": self.Ethertype,
 	}
 }
 
+func (self *ActionPopMpls) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionPopVlan struct {
 	*Action
+}
+
+type IActionPopVlan interface {
+	goloxi.IAction
 }
 
 func (self *ActionPopVlan) Serialize(encoder *goloxi.Encoder) error {
@@ -2662,7 +5212,6 @@ func (self *ActionPopVlan) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2683,17 +5232,38 @@ func NewActionPopVlan() *ActionPopVlan {
 	}
 	return obj
 }
-func (self *ActionPopVlan) GetName() string {
+func (self *ActionPopVlan) GetActionName() string {
 	return "pop_vlan"
 }
 
-func (self *ActionPopVlan) GetFields() map[string]interface{} {
+func (self *ActionPopVlan) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{}
+}
+
+func (self *ActionPopVlan) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionPushMpls struct {
 	*Action
 	Ethertype uint16
+}
+
+type IActionPushMpls interface {
+	goloxi.IAction
+	GetEthertype() uint16
+}
+
+func (self *ActionPushMpls) GetEthertype() uint16 {
+	return self.Ethertype
+}
+
+func (self *ActionPushMpls) SetEthertype(v uint16) {
+	self.Ethertype = v
 }
 
 func (self *ActionPushMpls) Serialize(encoder *goloxi.Encoder) error {
@@ -2704,7 +5274,6 @@ func (self *ActionPushMpls) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Ethertype))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2726,19 +5295,40 @@ func NewActionPushMpls() *ActionPushMpls {
 	}
 	return obj
 }
-func (self *ActionPushMpls) GetName() string {
+func (self *ActionPushMpls) GetActionName() string {
 	return "push_mpls"
 }
 
-func (self *ActionPushMpls) GetFields() map[string]interface{} {
+func (self *ActionPushMpls) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Ethertype": self.Ethertype,
 	}
 }
 
+func (self *ActionPushMpls) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionPushVlan struct {
 	*Action
 	Ethertype uint16
+}
+
+type IActionPushVlan interface {
+	goloxi.IAction
+	GetEthertype() uint16
+}
+
+func (self *ActionPushVlan) GetEthertype() uint16 {
+	return self.Ethertype
+}
+
+func (self *ActionPushVlan) SetEthertype(v uint16) {
+	self.Ethertype = v
 }
 
 func (self *ActionPushVlan) Serialize(encoder *goloxi.Encoder) error {
@@ -2749,7 +5339,6 @@ func (self *ActionPushVlan) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Ethertype))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2771,20 +5360,50 @@ func NewActionPushVlan() *ActionPushVlan {
 	}
 	return obj
 }
-func (self *ActionPushVlan) GetName() string {
+func (self *ActionPushVlan) GetActionName() string {
 	return "push_vlan"
 }
 
-func (self *ActionPushVlan) GetFields() map[string]interface{} {
+func (self *ActionPushVlan) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Ethertype": self.Ethertype,
 	}
+}
+
+func (self *ActionPushVlan) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }
 
 type ActionResubmit struct {
 	*ActionNicira
 	InPort uint16
 	Table  uint8
+}
+
+type IActionResubmit interface {
+	IActionNicira
+	GetInPort() uint16
+	GetTable() uint8
+}
+
+func (self *ActionResubmit) GetInPort() uint16 {
+	return self.InPort
+}
+
+func (self *ActionResubmit) SetInPort(v uint16) {
+	self.InPort = v
+}
+
+func (self *ActionResubmit) GetTable() uint8 {
+	return self.Table
+}
+
+func (self *ActionResubmit) SetTable(v uint8) {
+	self.Table = v
 }
 
 func (self *ActionResubmit) Serialize(encoder *goloxi.Encoder) error {
@@ -2796,7 +5415,6 @@ func (self *ActionResubmit) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.Table))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2819,20 +5437,41 @@ func NewActionResubmit() *ActionResubmit {
 	}
 	return obj
 }
-func (self *ActionResubmit) GetName() string {
+func (self *ActionResubmit) GetActionName() string {
 	return "resubmit"
 }
 
-func (self *ActionResubmit) GetFields() map[string]interface{} {
+func (self *ActionResubmit) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"InPort": self.InPort,
 		"Table":  self.Table,
 	}
 }
 
+func (self *ActionResubmit) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionSetField struct {
 	*Action
-	Field IOxm
+	Field goloxi.IOxm
+}
+
+type IActionSetField interface {
+	goloxi.IAction
+	GetField() goloxi.IOxm
+}
+
+func (self *ActionSetField) GetField() goloxi.IOxm {
+	return self.Field
+}
+
+func (self *ActionSetField) SetField(v goloxi.IOxm) {
+	self.Field = v
 }
 
 func (self *ActionSetField) Serialize(encoder *goloxi.Encoder) error {
@@ -2842,7 +5481,6 @@ func (self *ActionSetField) Serialize(encoder *goloxi.Encoder) error {
 
 	self.Field.Serialize(encoder)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2853,11 +5491,12 @@ func DecodeActionSetField(parent *Action, decoder *goloxi.Decoder) (*ActionSetFi
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("ActionSetField packet too short: %d < 4", decoder.Length())
 	}
-	oxm, err := DecodeOxm(decoder)
-	if err != nil {
+	if obj, err := DecodeOxm(decoder); err != nil {
 		return nil, err
+	} else {
+		_actionsetfield.Field = obj
 	}
-	_actionsetfield.Field = oxm
+
 	return _actionsetfield, nil
 }
 
@@ -2867,19 +5506,40 @@ func NewActionSetField() *ActionSetField {
 	}
 	return obj
 }
-func (self *ActionSetField) GetName() string {
+func (self *ActionSetField) GetActionName() string {
 	return "set_field"
 }
 
-func (self *ActionSetField) GetFields() map[string]interface{} {
+func (self *ActionSetField) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"Field": self.Field,
 	}
 }
 
+func (self *ActionSetField) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionSetMplsTtl struct {
 	*Action
 	MplsTtl uint8
+}
+
+type IActionSetMplsTtl interface {
+	goloxi.IAction
+	GetMplsTtl() uint8
+}
+
+func (self *ActionSetMplsTtl) GetMplsTtl() uint8 {
+	return self.MplsTtl
+}
+
+func (self *ActionSetMplsTtl) SetMplsTtl(v uint8) {
+	self.MplsTtl = v
 }
 
 func (self *ActionSetMplsTtl) Serialize(encoder *goloxi.Encoder) error {
@@ -2890,7 +5550,6 @@ func (self *ActionSetMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.MplsTtl))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2912,19 +5571,40 @@ func NewActionSetMplsTtl() *ActionSetMplsTtl {
 	}
 	return obj
 }
-func (self *ActionSetMplsTtl) GetName() string {
+func (self *ActionSetMplsTtl) GetActionName() string {
 	return "set_mpls_ttl"
 }
 
-func (self *ActionSetMplsTtl) GetFields() map[string]interface{} {
+func (self *ActionSetMplsTtl) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"MplsTtl": self.MplsTtl,
 	}
 }
 
+func (self *ActionSetMplsTtl) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionSetNwTtl struct {
 	*Action
 	NwTtl uint8
+}
+
+type IActionSetNwTtl interface {
+	goloxi.IAction
+	GetNwTtl() uint8
+}
+
+func (self *ActionSetNwTtl) GetNwTtl() uint8 {
+	return self.NwTtl
+}
+
+func (self *ActionSetNwTtl) SetNwTtl(v uint8) {
+	self.NwTtl = v
 }
 
 func (self *ActionSetNwTtl) Serialize(encoder *goloxi.Encoder) error {
@@ -2935,7 +5615,6 @@ func (self *ActionSetNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.NwTtl))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2957,19 +5636,40 @@ func NewActionSetNwTtl() *ActionSetNwTtl {
 	}
 	return obj
 }
-func (self *ActionSetNwTtl) GetName() string {
+func (self *ActionSetNwTtl) GetActionName() string {
 	return "set_nw_ttl"
 }
 
-func (self *ActionSetNwTtl) GetFields() map[string]interface{} {
+func (self *ActionSetNwTtl) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"NwTtl": self.NwTtl,
 	}
 }
 
+func (self *ActionSetNwTtl) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
+}
+
 type ActionSetQueue struct {
 	*Action
 	QueueId uint32
+}
+
+type IActionSetQueue interface {
+	goloxi.IAction
+	GetQueueId() uint32
+}
+
+func (self *ActionSetQueue) GetQueueId() uint32 {
+	return self.QueueId
+}
+
+func (self *ActionSetQueue) SetQueueId(v uint32) {
+	self.QueueId = v
 }
 
 func (self *ActionSetQueue) Serialize(encoder *goloxi.Encoder) error {
@@ -2979,7 +5679,6 @@ func (self *ActionSetQueue) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.QueueId))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3000,12 +5699,20 @@ func NewActionSetQueue() *ActionSetQueue {
 	}
 	return obj
 }
-func (self *ActionSetQueue) GetName() string {
+func (self *ActionSetQueue) GetActionName() string {
 	return "set_queue"
 }
 
-func (self *ActionSetQueue) GetFields() map[string]interface{} {
+func (self *ActionSetQueue) GetActionFields() map[string]interface{} {
 	return map[string]interface{}{
 		"QueueId": self.QueueId,
 	}
+}
+
+func (self *ActionSetQueue) MarshalJSON() ([]byte, error) {
+	jsonValue, err := json.Marshal(self.GetActionFields())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Arguments\":%s}", self.GetActionName(), string(jsonValue))), nil
 }

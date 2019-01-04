@@ -37,19 +37,36 @@ func (self *Header) GetVersion() uint8 {
 	return self.Version
 }
 
+func (self *Header) SetVersion(v uint8) {
+	self.Version = v
+}
+
 func (self *Header) GetType() uint8 {
 	return self.Type
+}
+
+func (self *Header) SetType(v uint8) {
+	self.Type = v
 }
 
 func (self *Header) GetLength() uint16 {
 	return self.Length
 }
 
+func (self *Header) SetLength(v uint16) {
+	self.Length = v
+}
+
 func (self *Header) GetXid() uint32 {
 	return self.Xid
 }
 
+func (self *Header) SetXid(v uint32) {
+	self.Xid = v
+}
+
 func (self *Header) Serialize(encoder *goloxi.Encoder) error {
+
 	encoder.PutUint8(uint8(3))
 	encoder.PutUint8(uint8(self.Type))
 	encoder.PutUint16(uint16(self.Length))
@@ -63,11 +80,10 @@ func (self *Header) Decode(decoder *goloxi.Decoder) error {
 	}
 
 	self.Version = uint8(decoder.ReadByte())
-	// if self.Version != 3 {
-	// 	return fmt.Errorf("Wrong value '%d' for type, expected '3'.", self.Version)
-	// }
 	self.Type = uint8(decoder.ReadByte())
 	self.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(self.Length), 2+2)
 	self.Xid = uint32(decoder.ReadUint32())
 
@@ -79,11 +95,10 @@ func DecodeHeader(decoder *goloxi.Decoder) (IHeader, error) {
 		return nil, fmt.Errorf("Header packet too short: %d < 8", decoder.Length())
 	}
 	_header.Version = uint8(decoder.ReadByte())
-	// if _header.Version != 3 {
-	// 	return fmt.Errorf("Wrong value '%d' for type, expected '3'.", _header.Version)
-	// }
 	_header.Type = uint8(decoder.ReadByte())
 	_header.Length = uint16(decoder.ReadUint16())
+	oldDecoder := decoder
+	defer func() { decoder = oldDecoder }()
 	decoder = decoder.SliceDecoder(int(_header.Length), 2+2)
 	_header.Xid = uint32(decoder.ReadUint32())
 
@@ -167,8 +182,16 @@ func (self *StatsReply) GetStatsType() uint16 {
 	return self.StatsType
 }
 
+func (self *StatsReply) SetStatsType(v uint16) {
+	self.StatsType = v
+}
+
 func (self *StatsReply) GetFlags() StatsReplyFlags {
 	return self.Flags
+}
+
+func (self *StatsReply) SetFlags(v StatsReplyFlags) {
+	self.Flags = v
 }
 
 func (self *StatsReply) Serialize(encoder *goloxi.Encoder) error {
@@ -231,6 +254,37 @@ type AggregateStatsReply struct {
 	FlowCount   uint32
 }
 
+type IAggregateStatsReply interface {
+	IStatsReply
+	GetPacketCount() uint64
+	GetByteCount() uint64
+	GetFlowCount() uint32
+}
+
+func (self *AggregateStatsReply) GetPacketCount() uint64 {
+	return self.PacketCount
+}
+
+func (self *AggregateStatsReply) SetPacketCount(v uint64) {
+	self.PacketCount = v
+}
+
+func (self *AggregateStatsReply) GetByteCount() uint64 {
+	return self.ByteCount
+}
+
+func (self *AggregateStatsReply) SetByteCount(v uint64) {
+	self.ByteCount = v
+}
+
+func (self *AggregateStatsReply) GetFlowCount() uint32 {
+	return self.FlowCount
+}
+
+func (self *AggregateStatsReply) SetFlowCount(v uint32) {
+	self.FlowCount = v
+}
+
 func (self *AggregateStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -242,7 +296,6 @@ func (self *AggregateStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.FlowCount))
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -284,8 +337,16 @@ func (self *StatsRequest) GetStatsType() uint16 {
 	return self.StatsType
 }
 
+func (self *StatsRequest) SetStatsType(v uint16) {
+	self.StatsType = v
+}
+
 func (self *StatsRequest) GetFlags() StatsRequestFlags {
 	return self.Flags
+}
+
+func (self *StatsRequest) SetFlags(v StatsRequestFlags) {
+	self.Flags = v
 }
 
 func (self *StatsRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -344,11 +405,69 @@ func NewStatsRequest(_stats_type uint16) *StatsRequest {
 type AggregateStatsRequest struct {
 	*StatsRequest
 	TableId    uint8
-	OutPort    PortNo
+	OutPort    Port
 	OutGroup   uint32
 	Cookie     uint64
 	CookieMask uint64
 	Match      Match
+}
+
+type IAggregateStatsRequest interface {
+	IStatsRequest
+	GetTableId() uint8
+	GetOutPort() Port
+	GetOutGroup() uint32
+	GetCookie() uint64
+	GetCookieMask() uint64
+	GetMatch() Match
+}
+
+func (self *AggregateStatsRequest) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *AggregateStatsRequest) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *AggregateStatsRequest) GetOutPort() Port {
+	return self.OutPort
+}
+
+func (self *AggregateStatsRequest) SetOutPort(v Port) {
+	self.OutPort = v
+}
+
+func (self *AggregateStatsRequest) GetOutGroup() uint32 {
+	return self.OutGroup
+}
+
+func (self *AggregateStatsRequest) SetOutGroup(v uint32) {
+	self.OutGroup = v
+}
+
+func (self *AggregateStatsRequest) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *AggregateStatsRequest) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *AggregateStatsRequest) GetCookieMask() uint64 {
+	return self.CookieMask
+}
+
+func (self *AggregateStatsRequest) SetCookieMask(v uint64) {
+	self.CookieMask = v
+}
+
+func (self *AggregateStatsRequest) GetMatch() Match {
+	return self.Match
+}
+
+func (self *AggregateStatsRequest) SetMatch(v Match) {
+	self.Match = v
 }
 
 func (self *AggregateStatsRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -368,7 +487,6 @@ func (self *AggregateStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -414,6 +532,10 @@ type IErrorMsg interface {
 
 func (self *ErrorMsg) GetErrType() uint16 {
 	return self.ErrType
+}
+
+func (self *ErrorMsg) SetErrType(v uint16) {
+	self.ErrType = v
 }
 
 func (self *ErrorMsg) Serialize(encoder *goloxi.Encoder) error {
@@ -479,6 +601,28 @@ type BadActionErrorMsg struct {
 	Data []byte
 }
 
+type IBadActionErrorMsg interface {
+	IErrorMsg
+	GetCode() BadActionCode
+	GetData() []byte
+}
+
+func (self *BadActionErrorMsg) GetCode() BadActionCode {
+	return self.Code
+}
+
+func (self *BadActionErrorMsg) SetCode(v BadActionCode) {
+	self.Code = v
+}
+
+func (self *BadActionErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *BadActionErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *BadActionErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -487,7 +631,6 @@ func (self *BadActionErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -499,7 +642,7 @@ func DecodeBadActionErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadAct
 		return nil, fmt.Errorf("BadActionErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_badactionerrormsg.Code = BadActionCode(decoder.ReadUint16())
-	_badactionerrormsg.Data = decoder.Read(decoder.Length())
+	_badactionerrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _badactionerrormsg, nil
 }
 
@@ -516,6 +659,28 @@ type BadInstructionErrorMsg struct {
 	Data []byte
 }
 
+type IBadInstructionErrorMsg interface {
+	IErrorMsg
+	GetCode() BadInstructionCode
+	GetData() []byte
+}
+
+func (self *BadInstructionErrorMsg) GetCode() BadInstructionCode {
+	return self.Code
+}
+
+func (self *BadInstructionErrorMsg) SetCode(v BadInstructionCode) {
+	self.Code = v
+}
+
+func (self *BadInstructionErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *BadInstructionErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *BadInstructionErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -524,7 +689,6 @@ func (self *BadInstructionErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -536,7 +700,7 @@ func DecodeBadInstructionErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*B
 		return nil, fmt.Errorf("BadInstructionErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_badinstructionerrormsg.Code = BadInstructionCode(decoder.ReadUint16())
-	_badinstructionerrormsg.Data = decoder.Read(decoder.Length())
+	_badinstructionerrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _badinstructionerrormsg, nil
 }
 
@@ -553,6 +717,28 @@ type BadMatchErrorMsg struct {
 	Data []byte
 }
 
+type IBadMatchErrorMsg interface {
+	IErrorMsg
+	GetCode() BadMatchCode
+	GetData() []byte
+}
+
+func (self *BadMatchErrorMsg) GetCode() BadMatchCode {
+	return self.Code
+}
+
+func (self *BadMatchErrorMsg) SetCode(v BadMatchCode) {
+	self.Code = v
+}
+
+func (self *BadMatchErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *BadMatchErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *BadMatchErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -561,7 +747,6 @@ func (self *BadMatchErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -573,7 +758,7 @@ func DecodeBadMatchErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadMatc
 		return nil, fmt.Errorf("BadMatchErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_badmatcherrormsg.Code = BadMatchCode(decoder.ReadUint16())
-	_badmatcherrormsg.Data = decoder.Read(decoder.Length())
+	_badmatcherrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _badmatcherrormsg, nil
 }
 
@@ -590,6 +775,28 @@ type BadRequestErrorMsg struct {
 	Data []byte
 }
 
+type IBadRequestErrorMsg interface {
+	IErrorMsg
+	GetCode() BadRequestCode
+	GetData() []byte
+}
+
+func (self *BadRequestErrorMsg) GetCode() BadRequestCode {
+	return self.Code
+}
+
+func (self *BadRequestErrorMsg) SetCode(v BadRequestCode) {
+	self.Code = v
+}
+
+func (self *BadRequestErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *BadRequestErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *BadRequestErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -598,7 +805,6 @@ func (self *BadRequestErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -610,7 +816,7 @@ func DecodeBadRequestErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*BadRe
 		return nil, fmt.Errorf("BadRequestErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_badrequesterrormsg.Code = BadRequestCode(decoder.ReadUint16())
-	_badrequesterrormsg.Data = decoder.Read(decoder.Length())
+	_badrequesterrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _badrequesterrormsg, nil
 }
 
@@ -625,12 +831,15 @@ type BarrierReply struct {
 	*Header
 }
 
+type IBarrierReply interface {
+	IHeader
+}
+
 func (self *BarrierReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -652,12 +861,15 @@ type BarrierRequest struct {
 	*Header
 }
 
+type IBarrierRequest interface {
+	IHeader
+}
+
 func (self *BarrierRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -691,8 +903,16 @@ func (self *Experimenter) GetExperimenter() uint32 {
 	return self.Experimenter
 }
 
+func (self *Experimenter) SetExperimenter(v uint32) {
+	self.Experimenter = v
+}
+
 func (self *Experimenter) GetSubtype() uint32 {
 	return self.Subtype
+}
+
+func (self *Experimenter) SetSubtype(v uint32) {
+	self.Subtype = v
 }
 
 func (self *Experimenter) Serialize(encoder *goloxi.Encoder) error {
@@ -814,6 +1034,19 @@ type BsnBwClearDataReply struct {
 	Status uint32
 }
 
+type IBsnBwClearDataReply interface {
+	IBsnHeader
+	GetStatus() uint32
+}
+
+func (self *BsnBwClearDataReply) GetStatus() uint32 {
+	return self.Status
+}
+
+func (self *BsnBwClearDataReply) SetStatus(v uint32) {
+	self.Status = v
+}
+
 func (self *BsnBwClearDataReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -821,7 +1054,6 @@ func (self *BsnBwClearDataReply) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Status))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -847,12 +1079,15 @@ type BsnBwClearDataRequest struct {
 	*BsnHeader
 }
 
+type IBsnBwClearDataRequest interface {
+	IBsnHeader
+}
+
 func (self *BsnBwClearDataRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -875,6 +1110,19 @@ type BsnBwEnableGetReply struct {
 	Enabled uint32
 }
 
+type IBsnBwEnableGetReply interface {
+	IBsnHeader
+	GetEnabled() uint32
+}
+
+func (self *BsnBwEnableGetReply) GetEnabled() uint32 {
+	return self.Enabled
+}
+
+func (self *BsnBwEnableGetReply) SetEnabled(v uint32) {
+	self.Enabled = v
+}
+
 func (self *BsnBwEnableGetReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -882,7 +1130,6 @@ func (self *BsnBwEnableGetReply) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Enabled))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -908,12 +1155,15 @@ type BsnBwEnableGetRequest struct {
 	*BsnHeader
 }
 
+type IBsnBwEnableGetRequest interface {
+	IBsnHeader
+}
+
 func (self *BsnBwEnableGetRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -937,6 +1187,28 @@ type BsnBwEnableSetReply struct {
 	Status uint32
 }
 
+type IBsnBwEnableSetReply interface {
+	IBsnHeader
+	GetEnable() uint32
+	GetStatus() uint32
+}
+
+func (self *BsnBwEnableSetReply) GetEnable() uint32 {
+	return self.Enable
+}
+
+func (self *BsnBwEnableSetReply) SetEnable(v uint32) {
+	self.Enable = v
+}
+
+func (self *BsnBwEnableSetReply) GetStatus() uint32 {
+	return self.Status
+}
+
+func (self *BsnBwEnableSetReply) SetStatus(v uint32) {
+	self.Status = v
+}
+
 func (self *BsnBwEnableSetReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -945,7 +1217,6 @@ func (self *BsnBwEnableSetReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Enable))
 	encoder.PutUint32(uint32(self.Status))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -973,6 +1244,19 @@ type BsnBwEnableSetRequest struct {
 	Enable uint32
 }
 
+type IBsnBwEnableSetRequest interface {
+	IBsnHeader
+	GetEnable() uint32
+}
+
+func (self *BsnBwEnableSetRequest) GetEnable() uint32 {
+	return self.Enable
+}
+
+func (self *BsnBwEnableSetRequest) SetEnable(v uint32) {
+	self.Enable = v
+}
+
 func (self *BsnBwEnableSetRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -980,7 +1264,6 @@ func (self *BsnBwEnableSetRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Enable))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1007,6 +1290,19 @@ type BsnGetInterfacesReply struct {
 	Interfaces []*BsnInterface
 }
 
+type IBsnGetInterfacesReply interface {
+	IBsnHeader
+	GetInterfaces() []*BsnInterface
+}
+
+func (self *BsnGetInterfacesReply) GetInterfaces() []*BsnInterface {
+	return self.Interfaces
+}
+
+func (self *BsnGetInterfacesReply) SetInterfaces(v []*BsnInterface) {
+	self.Interfaces = v
+}
+
 func (self *BsnGetInterfacesReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1018,7 +1314,6 @@ func (self *BsnGetInterfacesReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1032,7 +1327,9 @@ func DecodeBsnGetInterfacesReply(parent *BsnHeader, decoder *goloxi.Decoder) (*B
 		if err != nil {
 			return nil, err
 		}
-		_bsngetinterfacesreply.Interfaces = append(_bsngetinterfacesreply.Interfaces, item)
+		if item != nil {
+			_bsngetinterfacesreply.Interfaces = append(_bsngetinterfacesreply.Interfaces, item)
+		}
 	}
 	return _bsngetinterfacesreply, nil
 }
@@ -1048,12 +1345,15 @@ type BsnGetInterfacesRequest struct {
 	*BsnHeader
 }
 
+type IBsnGetInterfacesRequest interface {
+	IBsnHeader
+}
+
 func (self *BsnGetInterfacesRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1076,6 +1376,19 @@ type BsnGetMirroringReply struct {
 	ReportMirrorPorts uint8
 }
 
+type IBsnGetMirroringReply interface {
+	IBsnHeader
+	GetReportMirrorPorts() uint8
+}
+
+func (self *BsnGetMirroringReply) GetReportMirrorPorts() uint8 {
+	return self.ReportMirrorPorts
+}
+
+func (self *BsnGetMirroringReply) SetReportMirrorPorts(v uint8) {
+	self.ReportMirrorPorts = v
+}
+
 func (self *BsnGetMirroringReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1084,7 +1397,6 @@ func (self *BsnGetMirroringReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1112,6 +1424,19 @@ type BsnGetMirroringRequest struct {
 	ReportMirrorPorts uint8
 }
 
+type IBsnGetMirroringRequest interface {
+	IBsnHeader
+	GetReportMirrorPorts() uint8
+}
+
+func (self *BsnGetMirroringRequest) GetReportMirrorPorts() uint8 {
+	return self.ReportMirrorPorts
+}
+
+func (self *BsnGetMirroringRequest) SetReportMirrorPorts(v uint8) {
+	self.ReportMirrorPorts = v
+}
+
 func (self *BsnGetMirroringRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1120,7 +1445,6 @@ func (self *BsnGetMirroringRequest) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1146,8 +1470,39 @@ func NewBsnGetMirroringRequest() *BsnGetMirroringRequest {
 type BsnPduRxReply struct {
 	*BsnHeader
 	Status  uint32
-	PortNo  PortNo
+	PortNo  Port
 	SlotNum uint8
+}
+
+type IBsnPduRxReply interface {
+	IBsnHeader
+	GetStatus() uint32
+	GetPortNo() Port
+	GetSlotNum() uint8
+}
+
+func (self *BsnPduRxReply) GetStatus() uint32 {
+	return self.Status
+}
+
+func (self *BsnPduRxReply) SetStatus(v uint32) {
+	self.Status = v
+}
+
+func (self *BsnPduRxReply) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *BsnPduRxReply) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *BsnPduRxReply) GetSlotNum() uint8 {
+	return self.SlotNum
+}
+
+func (self *BsnPduRxReply) SetSlotNum(v uint8) {
+	self.SlotNum = v
 }
 
 func (self *BsnPduRxReply) Serialize(encoder *goloxi.Encoder) error {
@@ -1159,7 +1514,6 @@ func (self *BsnPduRxReply) Serialize(encoder *goloxi.Encoder) error {
 	self.PortNo.Serialize(encoder)
 	encoder.PutUint8(uint8(self.SlotNum))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1186,9 +1540,49 @@ func NewBsnPduRxReply() *BsnPduRxReply {
 type BsnPduRxRequest struct {
 	*BsnHeader
 	TimeoutMs uint32
-	PortNo    PortNo
+	PortNo    Port
 	SlotNum   uint8
 	Data      []byte
+}
+
+type IBsnPduRxRequest interface {
+	IBsnHeader
+	GetTimeoutMs() uint32
+	GetPortNo() Port
+	GetSlotNum() uint8
+	GetData() []byte
+}
+
+func (self *BsnPduRxRequest) GetTimeoutMs() uint32 {
+	return self.TimeoutMs
+}
+
+func (self *BsnPduRxRequest) SetTimeoutMs(v uint32) {
+	self.TimeoutMs = v
+}
+
+func (self *BsnPduRxRequest) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *BsnPduRxRequest) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *BsnPduRxRequest) GetSlotNum() uint8 {
+	return self.SlotNum
+}
+
+func (self *BsnPduRxRequest) SetSlotNum(v uint8) {
+	self.SlotNum = v
+}
+
+func (self *BsnPduRxRequest) GetData() []byte {
+	return self.Data
+}
+
+func (self *BsnPduRxRequest) SetData(v []byte) {
+	self.Data = v
 }
 
 func (self *BsnPduRxRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -1202,7 +1596,6 @@ func (self *BsnPduRxRequest) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1217,7 +1610,7 @@ func DecodeBsnPduRxRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduR
 	_bsnpdurxrequest.PortNo.Decode(decoder)
 	_bsnpdurxrequest.SlotNum = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	_bsnpdurxrequest.Data = decoder.Read(decoder.Length())
+	_bsnpdurxrequest.Data = decoder.Read(int(decoder.Length()))
 	return _bsnpdurxrequest, nil
 }
 
@@ -1230,8 +1623,30 @@ func NewBsnPduRxRequest() *BsnPduRxRequest {
 
 type BsnPduRxTimeout struct {
 	*BsnHeader
-	PortNo  PortNo
+	PortNo  Port
 	SlotNum uint8
+}
+
+type IBsnPduRxTimeout interface {
+	IBsnHeader
+	GetPortNo() Port
+	GetSlotNum() uint8
+}
+
+func (self *BsnPduRxTimeout) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *BsnPduRxTimeout) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *BsnPduRxTimeout) GetSlotNum() uint8 {
+	return self.SlotNum
+}
+
+func (self *BsnPduRxTimeout) SetSlotNum(v uint8) {
+	self.SlotNum = v
 }
 
 func (self *BsnPduRxTimeout) Serialize(encoder *goloxi.Encoder) error {
@@ -1242,7 +1657,6 @@ func (self *BsnPduRxTimeout) Serialize(encoder *goloxi.Encoder) error {
 	self.PortNo.Serialize(encoder)
 	encoder.PutUint8(uint8(self.SlotNum))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1268,8 +1682,39 @@ func NewBsnPduRxTimeout() *BsnPduRxTimeout {
 type BsnPduTxReply struct {
 	*BsnHeader
 	Status  uint32
-	PortNo  PortNo
+	PortNo  Port
 	SlotNum uint8
+}
+
+type IBsnPduTxReply interface {
+	IBsnHeader
+	GetStatus() uint32
+	GetPortNo() Port
+	GetSlotNum() uint8
+}
+
+func (self *BsnPduTxReply) GetStatus() uint32 {
+	return self.Status
+}
+
+func (self *BsnPduTxReply) SetStatus(v uint32) {
+	self.Status = v
+}
+
+func (self *BsnPduTxReply) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *BsnPduTxReply) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *BsnPduTxReply) GetSlotNum() uint8 {
+	return self.SlotNum
+}
+
+func (self *BsnPduTxReply) SetSlotNum(v uint8) {
+	self.SlotNum = v
 }
 
 func (self *BsnPduTxReply) Serialize(encoder *goloxi.Encoder) error {
@@ -1281,7 +1726,6 @@ func (self *BsnPduTxReply) Serialize(encoder *goloxi.Encoder) error {
 	self.PortNo.Serialize(encoder)
 	encoder.PutUint8(uint8(self.SlotNum))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1308,9 +1752,49 @@ func NewBsnPduTxReply() *BsnPduTxReply {
 type BsnPduTxRequest struct {
 	*BsnHeader
 	TxIntervalMs uint32
-	PortNo       PortNo
+	PortNo       Port
 	SlotNum      uint8
 	Data         []byte
+}
+
+type IBsnPduTxRequest interface {
+	IBsnHeader
+	GetTxIntervalMs() uint32
+	GetPortNo() Port
+	GetSlotNum() uint8
+	GetData() []byte
+}
+
+func (self *BsnPduTxRequest) GetTxIntervalMs() uint32 {
+	return self.TxIntervalMs
+}
+
+func (self *BsnPduTxRequest) SetTxIntervalMs(v uint32) {
+	self.TxIntervalMs = v
+}
+
+func (self *BsnPduTxRequest) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *BsnPduTxRequest) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *BsnPduTxRequest) GetSlotNum() uint8 {
+	return self.SlotNum
+}
+
+func (self *BsnPduTxRequest) SetSlotNum(v uint8) {
+	self.SlotNum = v
+}
+
+func (self *BsnPduTxRequest) GetData() []byte {
+	return self.Data
+}
+
+func (self *BsnPduTxRequest) SetData(v []byte) {
+	self.Data = v
 }
 
 func (self *BsnPduTxRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -1324,7 +1808,6 @@ func (self *BsnPduTxRequest) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1339,7 +1822,7 @@ func DecodeBsnPduTxRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnPduT
 	_bsnpdutxrequest.PortNo.Decode(decoder)
 	_bsnpdutxrequest.SlotNum = uint8(decoder.ReadByte())
 	decoder.Skip(3)
-	_bsnpdutxrequest.Data = decoder.Read(decoder.Length())
+	_bsnpdutxrequest.Data = decoder.Read(int(decoder.Length()))
 	return _bsnpdutxrequest, nil
 }
 
@@ -1355,6 +1838,19 @@ type BsnSetMirroring struct {
 	ReportMirrorPorts uint8
 }
 
+type IBsnSetMirroring interface {
+	IBsnHeader
+	GetReportMirrorPorts() uint8
+}
+
+func (self *BsnSetMirroring) GetReportMirrorPorts() uint8 {
+	return self.ReportMirrorPorts
+}
+
+func (self *BsnSetMirroring) SetReportMirrorPorts(v uint8) {
+	self.ReportMirrorPorts = v
+}
+
 func (self *BsnSetMirroring) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1363,7 +1859,6 @@ func (self *BsnSetMirroring) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1391,6 +1886,19 @@ type BsnSetPktinSuppressionReply struct {
 	Status uint32
 }
 
+type IBsnSetPktinSuppressionReply interface {
+	IBsnHeader
+	GetStatus() uint32
+}
+
+func (self *BsnSetPktinSuppressionReply) GetStatus() uint32 {
+	return self.Status
+}
+
+func (self *BsnSetPktinSuppressionReply) SetStatus(v uint32) {
+	self.Status = v
+}
+
 func (self *BsnSetPktinSuppressionReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1398,7 +1906,6 @@ func (self *BsnSetPktinSuppressionReply) Serialize(encoder *goloxi.Encoder) erro
 
 	encoder.PutUint32(uint32(self.Status))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1429,6 +1936,55 @@ type BsnSetPktinSuppressionRequest struct {
 	Cookie      uint64
 }
 
+type IBsnSetPktinSuppressionRequest interface {
+	IBsnHeader
+	GetEnabled() uint8
+	GetIdleTimeout() uint16
+	GetHardTimeout() uint16
+	GetPriority() uint16
+	GetCookie() uint64
+}
+
+func (self *BsnSetPktinSuppressionRequest) GetEnabled() uint8 {
+	return self.Enabled
+}
+
+func (self *BsnSetPktinSuppressionRequest) SetEnabled(v uint8) {
+	self.Enabled = v
+}
+
+func (self *BsnSetPktinSuppressionRequest) GetIdleTimeout() uint16 {
+	return self.IdleTimeout
+}
+
+func (self *BsnSetPktinSuppressionRequest) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
+func (self *BsnSetPktinSuppressionRequest) GetHardTimeout() uint16 {
+	return self.HardTimeout
+}
+
+func (self *BsnSetPktinSuppressionRequest) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
+}
+
+func (self *BsnSetPktinSuppressionRequest) GetPriority() uint16 {
+	return self.Priority
+}
+
+func (self *BsnSetPktinSuppressionRequest) SetPriority(v uint16) {
+	self.Priority = v
+}
+
+func (self *BsnSetPktinSuppressionRequest) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *BsnSetPktinSuppressionRequest) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
 func (self *BsnSetPktinSuppressionRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1441,7 +1997,6 @@ func (self *BsnSetPktinSuppressionRequest) Serialize(encoder *goloxi.Encoder) er
 	encoder.PutUint16(uint16(self.Priority))
 	encoder.PutUint64(uint64(self.Cookie))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1484,8 +2039,16 @@ func (self *ExperimenterStatsReply) GetExperimenter() uint32 {
 	return self.Experimenter
 }
 
+func (self *ExperimenterStatsReply) SetExperimenter(v uint32) {
+	self.Experimenter = v
+}
+
 func (self *ExperimenterStatsReply) GetSubtype() uint32 {
 	return self.Subtype
+}
+
+func (self *ExperimenterStatsReply) SetSubtype(v uint32) {
+	self.Subtype = v
 }
 
 func (self *ExperimenterStatsReply) Serialize(encoder *goloxi.Encoder) error {
@@ -1572,8 +2135,16 @@ func (self *ExperimenterStatsRequest) GetExperimenter() uint32 {
 	return self.Experimenter
 }
 
+func (self *ExperimenterStatsRequest) SetExperimenter(v uint32) {
+	self.Experimenter = v
+}
+
 func (self *ExperimenterStatsRequest) GetSubtype() uint32 {
 	return self.Subtype
+}
+
+func (self *ExperimenterStatsRequest) SetSubtype(v uint32) {
+	self.Subtype = v
 }
 
 func (self *ExperimenterStatsRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -1650,6 +2221,28 @@ type BsnVirtualPortCreateReply struct {
 	VportNo uint32
 }
 
+type IBsnVirtualPortCreateReply interface {
+	IBsnHeader
+	GetStatus() uint32
+	GetVportNo() uint32
+}
+
+func (self *BsnVirtualPortCreateReply) GetStatus() uint32 {
+	return self.Status
+}
+
+func (self *BsnVirtualPortCreateReply) SetStatus(v uint32) {
+	self.Status = v
+}
+
+func (self *BsnVirtualPortCreateReply) GetVportNo() uint32 {
+	return self.VportNo
+}
+
+func (self *BsnVirtualPortCreateReply) SetVportNo(v uint32) {
+	self.VportNo = v
+}
+
 func (self *BsnVirtualPortCreateReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1658,7 +2251,6 @@ func (self *BsnVirtualPortCreateReply) Serialize(encoder *goloxi.Encoder) error 
 	encoder.PutUint32(uint32(self.Status))
 	encoder.PutUint32(uint32(self.VportNo))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1686,6 +2278,19 @@ type BsnVirtualPortCreateRequest struct {
 	Vport BSNVport
 }
 
+type IBsnVirtualPortCreateRequest interface {
+	IBsnHeader
+	GetVport() BSNVport
+}
+
+func (self *BsnVirtualPortCreateRequest) GetVport() BSNVport {
+	return self.Vport
+}
+
+func (self *BsnVirtualPortCreateRequest) SetVport(v BSNVport) {
+	self.Vport = v
+}
+
 func (self *BsnVirtualPortCreateRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1695,7 +2300,6 @@ func (self *BsnVirtualPortCreateRequest) Serialize(encoder *goloxi.Encoder) erro
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1725,6 +2329,19 @@ type BsnVirtualPortRemoveReply struct {
 	Status uint32
 }
 
+type IBsnVirtualPortRemoveReply interface {
+	IBsnHeader
+	GetStatus() uint32
+}
+
+func (self *BsnVirtualPortRemoveReply) GetStatus() uint32 {
+	return self.Status
+}
+
+func (self *BsnVirtualPortRemoveReply) SetStatus(v uint32) {
+	self.Status = v
+}
+
 func (self *BsnVirtualPortRemoveReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1732,7 +2349,6 @@ func (self *BsnVirtualPortRemoveReply) Serialize(encoder *goloxi.Encoder) error 
 
 	encoder.PutUint32(uint32(self.Status))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1759,6 +2375,19 @@ type BsnVirtualPortRemoveRequest struct {
 	VportNo uint32
 }
 
+type IBsnVirtualPortRemoveRequest interface {
+	IBsnHeader
+	GetVportNo() uint32
+}
+
+func (self *BsnVirtualPortRemoveRequest) GetVportNo() uint32 {
+	return self.VportNo
+}
+
+func (self *BsnVirtualPortRemoveRequest) SetVportNo(v uint32) {
+	self.VportNo = v
+}
+
 func (self *BsnVirtualPortRemoveRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.BsnHeader.Serialize(encoder); err != nil {
 		return err
@@ -1766,7 +2395,6 @@ func (self *BsnVirtualPortRemoveRequest) Serialize(encoder *goloxi.Encoder) erro
 
 	encoder.PutUint32(uint32(self.VportNo))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1797,6 +2425,55 @@ type DescStatsReply struct {
 	DpDesc    string
 }
 
+type IDescStatsReply interface {
+	IStatsReply
+	GetMfrDesc() string
+	GetHwDesc() string
+	GetSwDesc() string
+	GetSerialNum() string
+	GetDpDesc() string
+}
+
+func (self *DescStatsReply) GetMfrDesc() string {
+	return self.MfrDesc
+}
+
+func (self *DescStatsReply) SetMfrDesc(v string) {
+	self.MfrDesc = v
+}
+
+func (self *DescStatsReply) GetHwDesc() string {
+	return self.HwDesc
+}
+
+func (self *DescStatsReply) SetHwDesc(v string) {
+	self.HwDesc = v
+}
+
+func (self *DescStatsReply) GetSwDesc() string {
+	return self.SwDesc
+}
+
+func (self *DescStatsReply) SetSwDesc(v string) {
+	self.SwDesc = v
+}
+
+func (self *DescStatsReply) GetSerialNum() string {
+	return self.SerialNum
+}
+
+func (self *DescStatsReply) SetSerialNum(v string) {
+	self.SerialNum = v
+}
+
+func (self *DescStatsReply) GetDpDesc() string {
+	return self.DpDesc
+}
+
+func (self *DescStatsReply) SetDpDesc(v string) {
+	self.DpDesc = v
+}
+
 func (self *DescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -1809,7 +2486,6 @@ func (self *DescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write([]byte(self.SerialNum))
 	encoder.Write([]byte(self.DpDesc))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1840,6 +2516,10 @@ type DescStatsRequest struct {
 	*StatsRequest
 }
 
+type IDescStatsRequest interface {
+	IStatsRequest
+}
+
 func (self *DescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsRequest.Serialize(encoder); err != nil {
 		return err
@@ -1847,7 +2527,6 @@ func (self *DescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1874,6 +2553,19 @@ type EchoReply struct {
 	Data []byte
 }
 
+type IEchoReply interface {
+	IHeader
+	GetData() []byte
+}
+
+func (self *EchoReply) GetData() []byte {
+	return self.Data
+}
+
+func (self *EchoReply) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *EchoReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -1881,7 +2573,6 @@ func (self *EchoReply) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1889,7 +2580,7 @@ func (self *EchoReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeEchoReply(parent *Header, decoder *goloxi.Decoder) (*EchoReply, error) {
 	_echoreply := &EchoReply{Header: parent}
-	_echoreply.Data = decoder.Read(decoder.Length())
+	_echoreply.Data = decoder.Read(int(decoder.Length()))
 	return _echoreply, nil
 }
 
@@ -1905,6 +2596,19 @@ type EchoRequest struct {
 	Data []byte
 }
 
+type IEchoRequest interface {
+	IHeader
+	GetData() []byte
+}
+
+func (self *EchoRequest) GetData() []byte {
+	return self.Data
+}
+
+func (self *EchoRequest) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *EchoRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -1912,7 +2616,6 @@ func (self *EchoRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -1920,7 +2623,7 @@ func (self *EchoRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeEchoRequest(parent *Header, decoder *goloxi.Decoder) (*EchoRequest, error) {
 	_echorequest := &EchoRequest{Header: parent}
-	_echorequest.Data = decoder.Read(decoder.Length())
+	_echorequest.Data = decoder.Read(int(decoder.Length()))
 	return _echorequest, nil
 }
 
@@ -1947,8 +2650,16 @@ func (self *ExperimenterErrorMsg) GetSubtype() uint16 {
 	return self.Subtype
 }
 
+func (self *ExperimenterErrorMsg) SetSubtype(v uint16) {
+	self.Subtype = v
+}
+
 func (self *ExperimenterErrorMsg) GetExperimenter() uint32 {
 	return self.Experimenter
+}
+
+func (self *ExperimenterErrorMsg) SetExperimenter(v uint32) {
+	self.Experimenter = v
 }
 
 func (self *ExperimenterErrorMsg) Serialize(encoder *goloxi.Encoder) error {
@@ -1990,6 +2701,64 @@ type FeaturesReply struct {
 	Ports        []*PortDesc
 }
 
+type IFeaturesReply interface {
+	IHeader
+	GetDatapathId() uint64
+	GetNBuffers() uint32
+	GetNTables() uint8
+	GetCapabilities() Capabilities
+	GetReserved() uint32
+	GetPorts() []*PortDesc
+}
+
+func (self *FeaturesReply) GetDatapathId() uint64 {
+	return self.DatapathId
+}
+
+func (self *FeaturesReply) SetDatapathId(v uint64) {
+	self.DatapathId = v
+}
+
+func (self *FeaturesReply) GetNBuffers() uint32 {
+	return self.NBuffers
+}
+
+func (self *FeaturesReply) SetNBuffers(v uint32) {
+	self.NBuffers = v
+}
+
+func (self *FeaturesReply) GetNTables() uint8 {
+	return self.NTables
+}
+
+func (self *FeaturesReply) SetNTables(v uint8) {
+	self.NTables = v
+}
+
+func (self *FeaturesReply) GetCapabilities() Capabilities {
+	return self.Capabilities
+}
+
+func (self *FeaturesReply) SetCapabilities(v Capabilities) {
+	self.Capabilities = v
+}
+
+func (self *FeaturesReply) GetReserved() uint32 {
+	return self.Reserved
+}
+
+func (self *FeaturesReply) SetReserved(v uint32) {
+	self.Reserved = v
+}
+
+func (self *FeaturesReply) GetPorts() []*PortDesc {
+	return self.Ports
+}
+
+func (self *FeaturesReply) SetPorts(v []*PortDesc) {
+	self.Ports = v
+}
+
 func (self *FeaturesReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -2007,7 +2776,6 @@ func (self *FeaturesReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2030,7 +2798,9 @@ func DecodeFeaturesReply(parent *Header, decoder *goloxi.Decoder) (*FeaturesRepl
 		if err := item.Decode(decoder); err != nil {
 			return nil, err
 		}
-		_featuresreply.Ports = append(_featuresreply.Ports, item)
+		if item != nil {
+			_featuresreply.Ports = append(_featuresreply.Ports, item)
+		}
 	}
 	return _featuresreply, nil
 }
@@ -2046,12 +2816,15 @@ type FeaturesRequest struct {
 	*Header
 }
 
+type IFeaturesRequest interface {
+	IHeader
+}
+
 func (self *FeaturesRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2079,7 +2852,7 @@ type FlowMod struct {
 	HardTimeout  uint16
 	Priority     uint16
 	BufferId     uint32
-	OutPort      PortNo
+	OutPort      Port
 	OutGroup     uint32
 	Flags        FlowModFlags
 	Match        Match
@@ -2096,7 +2869,7 @@ type IFlowMod interface {
 	GetHardTimeout() uint16
 	GetPriority() uint16
 	GetBufferId() uint32
-	GetOutPort() PortNo
+	GetOutPort() Port
 	GetOutGroup() uint32
 	GetFlags() FlowModFlags
 	GetMatch() Match
@@ -2107,52 +2880,104 @@ func (self *FlowMod) GetCookie() uint64 {
 	return self.Cookie
 }
 
+func (self *FlowMod) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
 func (self *FlowMod) GetCookieMask() uint64 {
 	return self.CookieMask
+}
+
+func (self *FlowMod) SetCookieMask(v uint64) {
+	self.CookieMask = v
 }
 
 func (self *FlowMod) GetTableId() uint8 {
 	return self.TableId
 }
 
+func (self *FlowMod) SetTableId(v uint8) {
+	self.TableId = v
+}
+
 func (self *FlowMod) GetCommand() FmCmd {
 	return self.Command
+}
+
+func (self *FlowMod) SetCommand(v FmCmd) {
+	self.Command = v
 }
 
 func (self *FlowMod) GetIdleTimeout() uint16 {
 	return self.IdleTimeout
 }
 
+func (self *FlowMod) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
 func (self *FlowMod) GetHardTimeout() uint16 {
 	return self.HardTimeout
+}
+
+func (self *FlowMod) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
 }
 
 func (self *FlowMod) GetPriority() uint16 {
 	return self.Priority
 }
 
+func (self *FlowMod) SetPriority(v uint16) {
+	self.Priority = v
+}
+
 func (self *FlowMod) GetBufferId() uint32 {
 	return self.BufferId
 }
 
-func (self *FlowMod) GetOutPort() PortNo {
+func (self *FlowMod) SetBufferId(v uint32) {
+	self.BufferId = v
+}
+
+func (self *FlowMod) GetOutPort() Port {
 	return self.OutPort
+}
+
+func (self *FlowMod) SetOutPort(v Port) {
+	self.OutPort = v
 }
 
 func (self *FlowMod) GetOutGroup() uint32 {
 	return self.OutGroup
 }
 
+func (self *FlowMod) SetOutGroup(v uint32) {
+	self.OutGroup = v
+}
+
 func (self *FlowMod) GetFlags() FlowModFlags {
 	return self.Flags
+}
+
+func (self *FlowMod) SetFlags(v FlowModFlags) {
+	self.Flags = v
 }
 
 func (self *FlowMod) GetMatch() Match {
 	return self.Match
 }
 
+func (self *FlowMod) SetMatch(v Match) {
+	self.Match = v
+}
+
 func (self *FlowMod) GetInstructions() []IInstruction {
 	return self.Instructions
+}
+
+func (self *FlowMod) SetInstructions(v []IInstruction) {
+	self.Instructions = v
 }
 
 func (self *FlowMod) Serialize(encoder *goloxi.Encoder) error {
@@ -2213,7 +3038,9 @@ func DecodeFlowMod(parent *Header, decoder *goloxi.Decoder) (IFlowMod, error) {
 		if err != nil {
 			return nil, err
 		}
-		_flowmod.Instructions = append(_flowmod.Instructions, item)
+		if item != nil {
+			_flowmod.Instructions = append(_flowmod.Instructions, item)
+		}
 	}
 
 	switch _flowmod.Command {
@@ -2244,12 +3071,15 @@ type FlowAdd struct {
 	*FlowMod
 }
 
+type IFlowAdd interface {
+	IFlowMod
+}
+
 func (self *FlowAdd) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.FlowMod.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2271,12 +3101,15 @@ type FlowDelete struct {
 	*FlowMod
 }
 
+type IFlowDelete interface {
+	IFlowMod
+}
+
 func (self *FlowDelete) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.FlowMod.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2298,12 +3131,15 @@ type FlowDeleteStrict struct {
 	*FlowMod
 }
 
+type IFlowDeleteStrict interface {
+	IFlowMod
+}
+
 func (self *FlowDeleteStrict) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.FlowMod.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2327,6 +3163,28 @@ type FlowModFailedErrorMsg struct {
 	Data []byte
 }
 
+type IFlowModFailedErrorMsg interface {
+	IErrorMsg
+	GetCode() FlowModFailedCode
+	GetData() []byte
+}
+
+func (self *FlowModFailedErrorMsg) GetCode() FlowModFailedCode {
+	return self.Code
+}
+
+func (self *FlowModFailedErrorMsg) SetCode(v FlowModFailedCode) {
+	self.Code = v
+}
+
+func (self *FlowModFailedErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *FlowModFailedErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *FlowModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -2335,7 +3193,6 @@ func (self *FlowModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2347,7 +3204,7 @@ func DecodeFlowModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*Fl
 		return nil, fmt.Errorf("FlowModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_flowmodfailederrormsg.Code = FlowModFailedCode(decoder.ReadUint16())
-	_flowmodfailederrormsg.Data = decoder.Read(decoder.Length())
+	_flowmodfailederrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _flowmodfailederrormsg, nil
 }
 
@@ -2362,12 +3219,15 @@ type FlowModify struct {
 	*FlowMod
 }
 
+type IFlowModify interface {
+	IFlowMod
+}
+
 func (self *FlowModify) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.FlowMod.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2389,12 +3249,15 @@ type FlowModifyStrict struct {
 	*FlowMod
 }
 
+type IFlowModifyStrict interface {
+	IFlowMod
+}
+
 func (self *FlowModifyStrict) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.FlowMod.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2427,6 +3290,109 @@ type FlowRemoved struct {
 	Match        Match
 }
 
+type IFlowRemoved interface {
+	IHeader
+	GetCookie() uint64
+	GetPriority() uint16
+	GetReason() FlowRemovedReason
+	GetTableId() uint8
+	GetDurationSec() uint32
+	GetDurationNsec() uint32
+	GetIdleTimeout() uint16
+	GetHardTimeout() uint16
+	GetPacketCount() uint64
+	GetByteCount() uint64
+	GetMatch() Match
+}
+
+func (self *FlowRemoved) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *FlowRemoved) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *FlowRemoved) GetPriority() uint16 {
+	return self.Priority
+}
+
+func (self *FlowRemoved) SetPriority(v uint16) {
+	self.Priority = v
+}
+
+func (self *FlowRemoved) GetReason() FlowRemovedReason {
+	return self.Reason
+}
+
+func (self *FlowRemoved) SetReason(v FlowRemovedReason) {
+	self.Reason = v
+}
+
+func (self *FlowRemoved) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *FlowRemoved) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *FlowRemoved) GetDurationSec() uint32 {
+	return self.DurationSec
+}
+
+func (self *FlowRemoved) SetDurationSec(v uint32) {
+	self.DurationSec = v
+}
+
+func (self *FlowRemoved) GetDurationNsec() uint32 {
+	return self.DurationNsec
+}
+
+func (self *FlowRemoved) SetDurationNsec(v uint32) {
+	self.DurationNsec = v
+}
+
+func (self *FlowRemoved) GetIdleTimeout() uint16 {
+	return self.IdleTimeout
+}
+
+func (self *FlowRemoved) SetIdleTimeout(v uint16) {
+	self.IdleTimeout = v
+}
+
+func (self *FlowRemoved) GetHardTimeout() uint16 {
+	return self.HardTimeout
+}
+
+func (self *FlowRemoved) SetHardTimeout(v uint16) {
+	self.HardTimeout = v
+}
+
+func (self *FlowRemoved) GetPacketCount() uint64 {
+	return self.PacketCount
+}
+
+func (self *FlowRemoved) SetPacketCount(v uint64) {
+	self.PacketCount = v
+}
+
+func (self *FlowRemoved) GetByteCount() uint64 {
+	return self.ByteCount
+}
+
+func (self *FlowRemoved) SetByteCount(v uint64) {
+	self.ByteCount = v
+}
+
+func (self *FlowRemoved) GetMatch() Match {
+	return self.Match
+}
+
+func (self *FlowRemoved) SetMatch(v Match) {
+	self.Match = v
+}
+
 func (self *FlowRemoved) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -2446,7 +3412,6 @@ func (self *FlowRemoved) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2487,6 +3452,19 @@ type FlowStatsReply struct {
 	Entries []*FlowStatsEntry
 }
 
+type IFlowStatsReply interface {
+	IStatsReply
+	GetEntries() []*FlowStatsEntry
+}
+
+func (self *FlowStatsReply) GetEntries() []*FlowStatsEntry {
+	return self.Entries
+}
+
+func (self *FlowStatsReply) SetEntries(v []*FlowStatsEntry) {
+	self.Entries = v
+}
+
 func (self *FlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -2499,7 +3477,6 @@ func (self *FlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2514,7 +3491,9 @@ func DecodeFlowStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*FlowSta
 		if err != nil {
 			return nil, err
 		}
-		_flowstatsreply.Entries = append(_flowstatsreply.Entries, item)
+		if item != nil {
+			_flowstatsreply.Entries = append(_flowstatsreply.Entries, item)
+		}
 	}
 	return _flowstatsreply, nil
 }
@@ -2529,11 +3508,69 @@ func NewFlowStatsReply() *FlowStatsReply {
 type FlowStatsRequest struct {
 	*StatsRequest
 	TableId    uint8
-	OutPort    PortNo
+	OutPort    Port
 	OutGroup   uint32
 	Cookie     uint64
 	CookieMask uint64
 	Match      Match
+}
+
+type IFlowStatsRequest interface {
+	IStatsRequest
+	GetTableId() uint8
+	GetOutPort() Port
+	GetOutGroup() uint32
+	GetCookie() uint64
+	GetCookieMask() uint64
+	GetMatch() Match
+}
+
+func (self *FlowStatsRequest) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *FlowStatsRequest) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *FlowStatsRequest) GetOutPort() Port {
+	return self.OutPort
+}
+
+func (self *FlowStatsRequest) SetOutPort(v Port) {
+	self.OutPort = v
+}
+
+func (self *FlowStatsRequest) GetOutGroup() uint32 {
+	return self.OutGroup
+}
+
+func (self *FlowStatsRequest) SetOutGroup(v uint32) {
+	self.OutGroup = v
+}
+
+func (self *FlowStatsRequest) GetCookie() uint64 {
+	return self.Cookie
+}
+
+func (self *FlowStatsRequest) SetCookie(v uint64) {
+	self.Cookie = v
+}
+
+func (self *FlowStatsRequest) GetCookieMask() uint64 {
+	return self.CookieMask
+}
+
+func (self *FlowStatsRequest) SetCookieMask(v uint64) {
+	self.CookieMask = v
+}
+
+func (self *FlowStatsRequest) GetMatch() Match {
+	return self.Match
+}
+
+func (self *FlowStatsRequest) SetMatch(v Match) {
+	self.Match = v
 }
 
 func (self *FlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -2553,7 +3590,6 @@ func (self *FlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2593,6 +3629,28 @@ type GetConfigReply struct {
 	MissSendLen uint16
 }
 
+type IGetConfigReply interface {
+	IHeader
+	GetFlags() ConfigFlags
+	GetMissSendLen() uint16
+}
+
+func (self *GetConfigReply) GetFlags() ConfigFlags {
+	return self.Flags
+}
+
+func (self *GetConfigReply) SetFlags(v ConfigFlags) {
+	self.Flags = v
+}
+
+func (self *GetConfigReply) GetMissSendLen() uint16 {
+	return self.MissSendLen
+}
+
+func (self *GetConfigReply) SetMissSendLen(v uint16) {
+	self.MissSendLen = v
+}
+
 func (self *GetConfigReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -2601,7 +3659,6 @@ func (self *GetConfigReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Flags))
 	encoder.PutUint16(uint16(self.MissSendLen))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2628,12 +3685,15 @@ type GetConfigRequest struct {
 	*Header
 }
 
+type IGetConfigRequest interface {
+	IHeader
+}
+
 func (self *GetConfigRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2671,16 +3731,32 @@ func (self *GroupMod) GetCommand() GroupModCommand {
 	return self.Command
 }
 
+func (self *GroupMod) SetCommand(v GroupModCommand) {
+	self.Command = v
+}
+
 func (self *GroupMod) GetGroupType() GroupType {
 	return self.GroupType
+}
+
+func (self *GroupMod) SetGroupType(v GroupType) {
+	self.GroupType = v
 }
 
 func (self *GroupMod) GetGroupId() uint32 {
 	return self.GroupId
 }
 
+func (self *GroupMod) SetGroupId(v uint32) {
+	self.GroupId = v
+}
+
 func (self *GroupMod) GetBuckets() []*Bucket {
 	return self.Buckets
+}
+
+func (self *GroupMod) SetBuckets(v []*Bucket) {
+	self.Buckets = v
 }
 
 func (self *GroupMod) Serialize(encoder *goloxi.Encoder) error {
@@ -2716,7 +3792,9 @@ func DecodeGroupMod(parent *Header, decoder *goloxi.Decoder) (IGroupMod, error) 
 		if err != nil {
 			return nil, err
 		}
-		_groupmod.Buckets = append(_groupmod.Buckets, item)
+		if item != nil {
+			_groupmod.Buckets = append(_groupmod.Buckets, item)
+		}
 	}
 
 	switch _groupmod.Command {
@@ -2743,12 +3821,15 @@ type GroupAdd struct {
 	*GroupMod
 }
 
+type IGroupAdd interface {
+	IGroupMod
+}
+
 func (self *GroupAdd) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.GroupMod.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2770,12 +3851,15 @@ type GroupDelete struct {
 	*GroupMod
 }
 
+type IGroupDelete interface {
+	IGroupMod
+}
+
 func (self *GroupDelete) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.GroupMod.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2798,6 +3882,19 @@ type GroupDescStatsReply struct {
 	Entries []*GroupDescStatsEntry
 }
 
+type IGroupDescStatsReply interface {
+	IStatsReply
+	GetEntries() []*GroupDescStatsEntry
+}
+
+func (self *GroupDescStatsReply) GetEntries() []*GroupDescStatsEntry {
+	return self.Entries
+}
+
+func (self *GroupDescStatsReply) SetEntries(v []*GroupDescStatsEntry) {
+	self.Entries = v
+}
+
 func (self *GroupDescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -2810,7 +3907,6 @@ func (self *GroupDescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2825,7 +3921,9 @@ func DecodeGroupDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*Gr
 		if err != nil {
 			return nil, err
 		}
-		_groupdescstatsreply.Entries = append(_groupdescstatsreply.Entries, item)
+		if item != nil {
+			_groupdescstatsreply.Entries = append(_groupdescstatsreply.Entries, item)
+		}
 	}
 	return _groupdescstatsreply, nil
 }
@@ -2841,6 +3939,10 @@ type GroupDescStatsRequest struct {
 	*StatsRequest
 }
 
+type IGroupDescStatsRequest interface {
+	IStatsRequest
+}
+
 func (self *GroupDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsRequest.Serialize(encoder); err != nil {
 		return err
@@ -2848,7 +3950,6 @@ func (self *GroupDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2884,6 +3985,100 @@ type GroupFeaturesStatsReply struct {
 	ActionsFf         uint32
 }
 
+type IGroupFeaturesStatsReply interface {
+	IStatsReply
+	GetTypes() uint32
+	GetCapabilities() GroupCapabilities
+	GetMaxGroupsAll() uint32
+	GetMaxGroupsSelect() uint32
+	GetMaxGroupsIndirect() uint32
+	GetMaxGroupsFf() uint32
+	GetActionsAll() uint32
+	GetActionsSelect() uint32
+	GetActionsIndirect() uint32
+	GetActionsFf() uint32
+}
+
+func (self *GroupFeaturesStatsReply) GetTypes() uint32 {
+	return self.Types
+}
+
+func (self *GroupFeaturesStatsReply) SetTypes(v uint32) {
+	self.Types = v
+}
+
+func (self *GroupFeaturesStatsReply) GetCapabilities() GroupCapabilities {
+	return self.Capabilities
+}
+
+func (self *GroupFeaturesStatsReply) SetCapabilities(v GroupCapabilities) {
+	self.Capabilities = v
+}
+
+func (self *GroupFeaturesStatsReply) GetMaxGroupsAll() uint32 {
+	return self.MaxGroupsAll
+}
+
+func (self *GroupFeaturesStatsReply) SetMaxGroupsAll(v uint32) {
+	self.MaxGroupsAll = v
+}
+
+func (self *GroupFeaturesStatsReply) GetMaxGroupsSelect() uint32 {
+	return self.MaxGroupsSelect
+}
+
+func (self *GroupFeaturesStatsReply) SetMaxGroupsSelect(v uint32) {
+	self.MaxGroupsSelect = v
+}
+
+func (self *GroupFeaturesStatsReply) GetMaxGroupsIndirect() uint32 {
+	return self.MaxGroupsIndirect
+}
+
+func (self *GroupFeaturesStatsReply) SetMaxGroupsIndirect(v uint32) {
+	self.MaxGroupsIndirect = v
+}
+
+func (self *GroupFeaturesStatsReply) GetMaxGroupsFf() uint32 {
+	return self.MaxGroupsFf
+}
+
+func (self *GroupFeaturesStatsReply) SetMaxGroupsFf(v uint32) {
+	self.MaxGroupsFf = v
+}
+
+func (self *GroupFeaturesStatsReply) GetActionsAll() uint32 {
+	return self.ActionsAll
+}
+
+func (self *GroupFeaturesStatsReply) SetActionsAll(v uint32) {
+	self.ActionsAll = v
+}
+
+func (self *GroupFeaturesStatsReply) GetActionsSelect() uint32 {
+	return self.ActionsSelect
+}
+
+func (self *GroupFeaturesStatsReply) SetActionsSelect(v uint32) {
+	self.ActionsSelect = v
+}
+
+func (self *GroupFeaturesStatsReply) GetActionsIndirect() uint32 {
+	return self.ActionsIndirect
+}
+
+func (self *GroupFeaturesStatsReply) SetActionsIndirect(v uint32) {
+	self.ActionsIndirect = v
+}
+
+func (self *GroupFeaturesStatsReply) GetActionsFf() uint32 {
+	return self.ActionsFf
+}
+
+func (self *GroupFeaturesStatsReply) SetActionsFf(v uint32) {
+	self.ActionsFf = v
+}
+
 func (self *GroupFeaturesStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -2901,7 +4096,6 @@ func (self *GroupFeaturesStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.ActionsIndirect))
 	encoder.PutUint32(uint32(self.ActionsFf))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2937,6 +4131,10 @@ type GroupFeaturesStatsRequest struct {
 	*StatsRequest
 }
 
+type IGroupFeaturesStatsRequest interface {
+	IStatsRequest
+}
+
 func (self *GroupFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsRequest.Serialize(encoder); err != nil {
 		return err
@@ -2944,7 +4142,6 @@ func (self *GroupFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2972,6 +4169,28 @@ type GroupModFailedErrorMsg struct {
 	Data []byte
 }
 
+type IGroupModFailedErrorMsg interface {
+	IErrorMsg
+	GetCode() GroupModFailedCode
+	GetData() []byte
+}
+
+func (self *GroupModFailedErrorMsg) GetCode() GroupModFailedCode {
+	return self.Code
+}
+
+func (self *GroupModFailedErrorMsg) SetCode(v GroupModFailedCode) {
+	self.Code = v
+}
+
+func (self *GroupModFailedErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *GroupModFailedErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *GroupModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -2980,7 +4199,6 @@ func (self *GroupModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -2992,7 +4210,7 @@ func DecodeGroupModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*G
 		return nil, fmt.Errorf("GroupModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_groupmodfailederrormsg.Code = GroupModFailedCode(decoder.ReadUint16())
-	_groupmodfailederrormsg.Data = decoder.Read(decoder.Length())
+	_groupmodfailederrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _groupmodfailederrormsg, nil
 }
 
@@ -3007,12 +4225,15 @@ type GroupModify struct {
 	*GroupMod
 }
 
+type IGroupModify interface {
+	IGroupMod
+}
+
 func (self *GroupModify) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.GroupMod.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3035,6 +4256,19 @@ type GroupStatsReply struct {
 	Entries []*GroupStatsEntry
 }
 
+type IGroupStatsReply interface {
+	IStatsReply
+	GetEntries() []*GroupStatsEntry
+}
+
+func (self *GroupStatsReply) GetEntries() []*GroupStatsEntry {
+	return self.Entries
+}
+
+func (self *GroupStatsReply) SetEntries(v []*GroupStatsEntry) {
+	self.Entries = v
+}
+
 func (self *GroupStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -3047,7 +4281,6 @@ func (self *GroupStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3062,7 +4295,9 @@ func DecodeGroupStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupS
 		if err != nil {
 			return nil, err
 		}
-		_groupstatsreply.Entries = append(_groupstatsreply.Entries, item)
+		if item != nil {
+			_groupstatsreply.Entries = append(_groupstatsreply.Entries, item)
+		}
 	}
 	return _groupstatsreply, nil
 }
@@ -3079,6 +4314,19 @@ type GroupStatsRequest struct {
 	GroupId uint32
 }
 
+type IGroupStatsRequest interface {
+	IStatsRequest
+	GetGroupId() uint32
+}
+
+func (self *GroupStatsRequest) GetGroupId() uint32 {
+	return self.GroupId
+}
+
+func (self *GroupStatsRequest) SetGroupId(v uint32) {
+	self.GroupId = v
+}
+
 func (self *GroupStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsRequest.Serialize(encoder); err != nil {
 		return err
@@ -3088,7 +4336,6 @@ func (self *GroupStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.GroupId))
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3116,12 +4363,15 @@ type Hello struct {
 	*Header
 }
 
+type IHello interface {
+	IHeader
+}
+
 func (self *Hello) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3145,6 +4395,28 @@ type HelloFailedErrorMsg struct {
 	Data []byte
 }
 
+type IHelloFailedErrorMsg interface {
+	IErrorMsg
+	GetCode() HelloFailedCode
+	GetData() []byte
+}
+
+func (self *HelloFailedErrorMsg) GetCode() HelloFailedCode {
+	return self.Code
+}
+
+func (self *HelloFailedErrorMsg) SetCode(v HelloFailedCode) {
+	self.Code = v
+}
+
+func (self *HelloFailedErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *HelloFailedErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *HelloFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -3153,7 +4425,6 @@ func (self *HelloFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3165,7 +4436,7 @@ func DecodeHelloFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*Hell
 		return nil, fmt.Errorf("HelloFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_hellofailederrormsg.Code = HelloFailedCode(decoder.ReadUint16())
-	_hellofailederrormsg.Data = decoder.Read(decoder.Length())
+	_hellofailederrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _hellofailederrormsg, nil
 }
 
@@ -3221,6 +4492,19 @@ type NiciraFlowMonitorReply struct {
 	Updates []INiciraFlowUpdateEvent
 }
 
+type INiciraFlowMonitorReply interface {
+	INiciraStatsReply
+	GetUpdates() []INiciraFlowUpdateEvent
+}
+
+func (self *NiciraFlowMonitorReply) GetUpdates() []INiciraFlowUpdateEvent {
+	return self.Updates
+}
+
+func (self *NiciraFlowMonitorReply) SetUpdates(v []INiciraFlowUpdateEvent) {
+	self.Updates = v
+}
+
 func (self *NiciraFlowMonitorReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.NiciraStatsReply.Serialize(encoder); err != nil {
 		return err
@@ -3233,7 +4517,6 @@ func (self *NiciraFlowMonitorReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3248,7 +4531,9 @@ func DecodeNiciraFlowMonitorReply(parent *NiciraStatsReply, decoder *goloxi.Deco
 		if err != nil {
 			return nil, err
 		}
-		_niciraflowmonitorreply.Updates = append(_niciraflowmonitorreply.Updates, item)
+		if item != nil {
+			_niciraflowmonitorreply.Updates = append(_niciraflowmonitorreply.Updates, item)
+		}
 	}
 	return _niciraflowmonitorreply, nil
 }
@@ -3264,10 +4549,68 @@ type NiciraFlowMonitorRequest struct {
 	*ExperimenterStatsRequest
 	MonitorId    uint32
 	MonitorFlags NxFlowMonitorFlags
-	OutPort      PortNo
+	OutPort      Port
 	MatchLen     uint16
 	TableId      uint8
 	Match        NiciraMatch
+}
+
+type INiciraFlowMonitorRequest interface {
+	IExperimenterStatsRequest
+	GetMonitorId() uint32
+	GetMonitorFlags() NxFlowMonitorFlags
+	GetOutPort() Port
+	GetMatchLen() uint16
+	GetTableId() uint8
+	GetMatch() NiciraMatch
+}
+
+func (self *NiciraFlowMonitorRequest) GetMonitorId() uint32 {
+	return self.MonitorId
+}
+
+func (self *NiciraFlowMonitorRequest) SetMonitorId(v uint32) {
+	self.MonitorId = v
+}
+
+func (self *NiciraFlowMonitorRequest) GetMonitorFlags() NxFlowMonitorFlags {
+	return self.MonitorFlags
+}
+
+func (self *NiciraFlowMonitorRequest) SetMonitorFlags(v NxFlowMonitorFlags) {
+	self.MonitorFlags = v
+}
+
+func (self *NiciraFlowMonitorRequest) GetOutPort() Port {
+	return self.OutPort
+}
+
+func (self *NiciraFlowMonitorRequest) SetOutPort(v Port) {
+	self.OutPort = v
+}
+
+func (self *NiciraFlowMonitorRequest) GetMatchLen() uint16 {
+	return self.MatchLen
+}
+
+func (self *NiciraFlowMonitorRequest) SetMatchLen(v uint16) {
+	self.MatchLen = v
+}
+
+func (self *NiciraFlowMonitorRequest) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *NiciraFlowMonitorRequest) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *NiciraFlowMonitorRequest) GetMatch() NiciraMatch {
+	return self.Match
+}
+
+func (self *NiciraFlowMonitorRequest) SetMatch(v NiciraMatch) {
+	self.Match = v
 }
 
 func (self *NiciraFlowMonitorRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -3285,7 +4628,6 @@ func (self *NiciraFlowMonitorRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3322,6 +4664,19 @@ type NiciraFlowStatsReply struct {
 	Stats []*NiciraFlowStats
 }
 
+type INiciraFlowStatsReply interface {
+	INiciraStatsReply
+	GetStats() []*NiciraFlowStats
+}
+
+func (self *NiciraFlowStatsReply) GetStats() []*NiciraFlowStats {
+	return self.Stats
+}
+
+func (self *NiciraFlowStatsReply) SetStats(v []*NiciraFlowStats) {
+	self.Stats = v
+}
+
 func (self *NiciraFlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.NiciraStatsReply.Serialize(encoder); err != nil {
 		return err
@@ -3334,7 +4689,6 @@ func (self *NiciraFlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3349,7 +4703,9 @@ func DecodeNiciraFlowStatsReply(parent *NiciraStatsReply, decoder *goloxi.Decode
 		if err != nil {
 			return nil, err
 		}
-		_niciraflowstatsreply.Stats = append(_niciraflowstatsreply.Stats, item)
+		if item != nil {
+			_niciraflowstatsreply.Stats = append(_niciraflowstatsreply.Stats, item)
+		}
 	}
 	return _niciraflowstatsreply, nil
 }
@@ -3363,9 +4719,40 @@ func NewNiciraFlowStatsReply() *NiciraFlowStatsReply {
 
 type NiciraFlowStatsRequest struct {
 	*ExperimenterStatsRequest
-	OutPort  PortNo
+	OutPort  Port
 	MatchLen uint16
 	TableId  uint8
+}
+
+type INiciraFlowStatsRequest interface {
+	IExperimenterStatsRequest
+	GetOutPort() Port
+	GetMatchLen() uint16
+	GetTableId() uint8
+}
+
+func (self *NiciraFlowStatsRequest) GetOutPort() Port {
+	return self.OutPort
+}
+
+func (self *NiciraFlowStatsRequest) SetOutPort(v Port) {
+	self.OutPort = v
+}
+
+func (self *NiciraFlowStatsRequest) GetMatchLen() uint16 {
+	return self.MatchLen
+}
+
+func (self *NiciraFlowStatsRequest) SetMatchLen(v uint16) {
+	self.MatchLen = v
+}
+
+func (self *NiciraFlowStatsRequest) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *NiciraFlowStatsRequest) SetTableId(v uint8) {
+	self.TableId = v
 }
 
 func (self *NiciraFlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -3378,7 +4765,6 @@ func (self *NiciraFlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.TableId))
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3442,6 +4828,64 @@ type PacketIn struct {
 	Data     []byte
 }
 
+type IPacketIn interface {
+	IHeader
+	GetBufferId() uint32
+	GetTotalLen() uint16
+	GetReason() uint8
+	GetTableId() uint8
+	GetMatch() Match
+	GetData() []byte
+}
+
+func (self *PacketIn) GetBufferId() uint32 {
+	return self.BufferId
+}
+
+func (self *PacketIn) SetBufferId(v uint32) {
+	self.BufferId = v
+}
+
+func (self *PacketIn) GetTotalLen() uint16 {
+	return self.TotalLen
+}
+
+func (self *PacketIn) SetTotalLen(v uint16) {
+	self.TotalLen = v
+}
+
+func (self *PacketIn) GetReason() uint8 {
+	return self.Reason
+}
+
+func (self *PacketIn) SetReason(v uint8) {
+	self.Reason = v
+}
+
+func (self *PacketIn) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *PacketIn) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *PacketIn) GetMatch() Match {
+	return self.Match
+}
+
+func (self *PacketIn) SetMatch(v Match) {
+	self.Match = v
+}
+
+func (self *PacketIn) GetData() []byte {
+	return self.Data
+}
+
+func (self *PacketIn) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *PacketIn) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -3458,7 +4902,6 @@ func (self *PacketIn) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3479,7 +4922,7 @@ func DecodePacketIn(parent *Header, decoder *goloxi.Decoder) (*PacketIn, error) 
 
 	decoder.SkipAlign()
 	decoder.Skip(2)
-	_packetin.Data = decoder.Read(decoder.Length())
+	_packetin.Data = decoder.Read(int(decoder.Length()))
 	return _packetin, nil
 }
 
@@ -3493,10 +4936,59 @@ func NewPacketIn() *PacketIn {
 type PacketOut struct {
 	*Header
 	BufferId   uint32
-	InPort     PortNo
+	InPort     Port
 	ActionsLen uint16
-	Actions    []IAction
+	Actions    []goloxi.IAction
 	Data       []byte
+}
+
+type IPacketOut interface {
+	IHeader
+	GetBufferId() uint32
+	GetInPort() Port
+	GetActionsLen() uint16
+	GetActions() []goloxi.IAction
+	GetData() []byte
+}
+
+func (self *PacketOut) GetBufferId() uint32 {
+	return self.BufferId
+}
+
+func (self *PacketOut) SetBufferId(v uint32) {
+	self.BufferId = v
+}
+
+func (self *PacketOut) GetInPort() Port {
+	return self.InPort
+}
+
+func (self *PacketOut) SetInPort(v Port) {
+	self.InPort = v
+}
+
+func (self *PacketOut) GetActionsLen() uint16 {
+	return self.ActionsLen
+}
+
+func (self *PacketOut) SetActionsLen(v uint16) {
+	self.ActionsLen = v
+}
+
+func (self *PacketOut) GetActions() []goloxi.IAction {
+	return self.Actions
+}
+
+func (self *PacketOut) SetActions(v []goloxi.IAction) {
+	self.Actions = v
+}
+
+func (self *PacketOut) GetData() []byte {
+	return self.Data
+}
+
+func (self *PacketOut) SetData(v []byte) {
+	self.Data = v
 }
 
 func (self *PacketOut) Serialize(encoder *goloxi.Encoder) error {
@@ -3515,7 +5007,6 @@ func (self *PacketOut) Serialize(encoder *goloxi.Encoder) error {
 	}
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3531,14 +5022,16 @@ func DecodePacketOut(parent *Header, decoder *goloxi.Decoder) (*PacketOut, error
 	_packetout.ActionsLen = uint16(decoder.ReadUint16())
 	decoder.Skip(6)
 
-	for decoder.Length() >= 8 {
+	for i := 0; i < int(_packetout.ActionsLen); i++ {
 		item, err := DecodeAction(decoder)
 		if err != nil {
 			return nil, err
 		}
-		_packetout.Actions = append(_packetout.Actions, item)
+		if item != nil {
+			_packetout.Actions = append(_packetout.Actions, item)
+		}
 	}
-	_packetout.Data = decoder.Read(decoder.Length())
+	_packetout.Data = decoder.Read(int(decoder.Length()))
 	return _packetout, nil
 }
 
@@ -3551,11 +5044,60 @@ func NewPacketOut() *PacketOut {
 
 type PortMod struct {
 	*Header
-	PortNo    PortNo
+	PortNo    Port
 	HwAddr    net.HardwareAddr
 	Config    PortConfig
 	Mask      PortConfig
 	Advertise uint32
+}
+
+type IPortMod interface {
+	IHeader
+	GetPortNo() Port
+	GetHwAddr() net.HardwareAddr
+	GetConfig() PortConfig
+	GetMask() PortConfig
+	GetAdvertise() uint32
+}
+
+func (self *PortMod) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *PortMod) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *PortMod) GetHwAddr() net.HardwareAddr {
+	return self.HwAddr
+}
+
+func (self *PortMod) SetHwAddr(v net.HardwareAddr) {
+	self.HwAddr = v
+}
+
+func (self *PortMod) GetConfig() PortConfig {
+	return self.Config
+}
+
+func (self *PortMod) SetConfig(v PortConfig) {
+	self.Config = v
+}
+
+func (self *PortMod) GetMask() PortConfig {
+	return self.Mask
+}
+
+func (self *PortMod) SetMask(v PortConfig) {
+	self.Mask = v
+}
+
+func (self *PortMod) GetAdvertise() uint32 {
+	return self.Advertise
+}
+
+func (self *PortMod) SetAdvertise(v uint32) {
+	self.Advertise = v
 }
 
 func (self *PortMod) Serialize(encoder *goloxi.Encoder) error {
@@ -3572,7 +5114,6 @@ func (self *PortMod) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Advertise))
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3607,6 +5148,28 @@ type PortModFailedErrorMsg struct {
 	Data []byte
 }
 
+type IPortModFailedErrorMsg interface {
+	IErrorMsg
+	GetCode() PortModFailedCode
+	GetData() []byte
+}
+
+func (self *PortModFailedErrorMsg) GetCode() PortModFailedCode {
+	return self.Code
+}
+
+func (self *PortModFailedErrorMsg) SetCode(v PortModFailedCode) {
+	self.Code = v
+}
+
+func (self *PortModFailedErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *PortModFailedErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *PortModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -3615,7 +5178,6 @@ func (self *PortModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3627,7 +5189,7 @@ func DecodePortModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*Po
 		return nil, fmt.Errorf("PortModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_portmodfailederrormsg.Code = PortModFailedCode(decoder.ReadUint16())
-	_portmodfailederrormsg.Data = decoder.Read(decoder.Length())
+	_portmodfailederrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _portmodfailederrormsg, nil
 }
 
@@ -3643,6 +5205,19 @@ type PortStatsReply struct {
 	Entries []*PortStatsEntry
 }
 
+type IPortStatsReply interface {
+	IStatsReply
+	GetEntries() []*PortStatsEntry
+}
+
+func (self *PortStatsReply) GetEntries() []*PortStatsEntry {
+	return self.Entries
+}
+
+func (self *PortStatsReply) SetEntries(v []*PortStatsEntry) {
+	self.Entries = v
+}
+
 func (self *PortStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -3655,7 +5230,6 @@ func (self *PortStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3670,7 +5244,9 @@ func DecodePortStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*PortSta
 		if err != nil {
 			return nil, err
 		}
-		_portstatsreply.Entries = append(_portstatsreply.Entries, item)
+		if item != nil {
+			_portstatsreply.Entries = append(_portstatsreply.Entries, item)
+		}
 	}
 	return _portstatsreply, nil
 }
@@ -3684,7 +5260,20 @@ func NewPortStatsReply() *PortStatsReply {
 
 type PortStatsRequest struct {
 	*StatsRequest
-	PortNo PortNo
+	PortNo Port
+}
+
+type IPortStatsRequest interface {
+	IStatsRequest
+	GetPortNo() Port
+}
+
+func (self *PortStatsRequest) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *PortStatsRequest) SetPortNo(v Port) {
+	self.PortNo = v
 }
 
 func (self *PortStatsRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -3696,7 +5285,6 @@ func (self *PortStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	self.PortNo.Serialize(encoder)
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3726,6 +5314,28 @@ type PortStatus struct {
 	Desc   PortDesc
 }
 
+type IPortStatus interface {
+	IHeader
+	GetReason() PortReason
+	GetDesc() PortDesc
+}
+
+func (self *PortStatus) GetReason() PortReason {
+	return self.Reason
+}
+
+func (self *PortStatus) SetReason(v PortReason) {
+	self.Reason = v
+}
+
+func (self *PortStatus) GetDesc() PortDesc {
+	return self.Desc
+}
+
+func (self *PortStatus) SetDesc(v PortDesc) {
+	self.Desc = v
+}
+
 func (self *PortStatus) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -3737,7 +5347,6 @@ func (self *PortStatus) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3766,8 +5375,30 @@ func NewPortStatus() *PortStatus {
 
 type QueueGetConfigReply struct {
 	*Header
-	Port   PortNo
+	Port   Port
 	Queues []*PacketQueue
+}
+
+type IQueueGetConfigReply interface {
+	IHeader
+	GetPort() Port
+	GetQueues() []*PacketQueue
+}
+
+func (self *QueueGetConfigReply) GetPort() Port {
+	return self.Port
+}
+
+func (self *QueueGetConfigReply) SetPort(v Port) {
+	self.Port = v
+}
+
+func (self *QueueGetConfigReply) GetQueues() []*PacketQueue {
+	return self.Queues
+}
+
+func (self *QueueGetConfigReply) SetQueues(v []*PacketQueue) {
+	self.Queues = v
 }
 
 func (self *QueueGetConfigReply) Serialize(encoder *goloxi.Encoder) error {
@@ -3783,7 +5414,6 @@ func (self *QueueGetConfigReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3802,7 +5432,9 @@ func DecodeQueueGetConfigReply(parent *Header, decoder *goloxi.Decoder) (*QueueG
 		if err != nil {
 			return nil, err
 		}
-		_queuegetconfigreply.Queues = append(_queuegetconfigreply.Queues, item)
+		if item != nil {
+			_queuegetconfigreply.Queues = append(_queuegetconfigreply.Queues, item)
+		}
 	}
 	return _queuegetconfigreply, nil
 }
@@ -3816,7 +5448,20 @@ func NewQueueGetConfigReply() *QueueGetConfigReply {
 
 type QueueGetConfigRequest struct {
 	*Header
-	Port PortNo
+	Port Port
+}
+
+type IQueueGetConfigRequest interface {
+	IHeader
+	GetPort() Port
+}
+
+func (self *QueueGetConfigRequest) GetPort() Port {
+	return self.Port
+}
+
+func (self *QueueGetConfigRequest) SetPort(v Port) {
+	self.Port = v
 }
 
 func (self *QueueGetConfigRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -3827,7 +5472,6 @@ func (self *QueueGetConfigRequest) Serialize(encoder *goloxi.Encoder) error {
 	self.Port.Serialize(encoder)
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3856,6 +5500,28 @@ type QueueOpFailedErrorMsg struct {
 	Data []byte
 }
 
+type IQueueOpFailedErrorMsg interface {
+	IErrorMsg
+	GetCode() QueueOpFailedCode
+	GetData() []byte
+}
+
+func (self *QueueOpFailedErrorMsg) GetCode() QueueOpFailedCode {
+	return self.Code
+}
+
+func (self *QueueOpFailedErrorMsg) SetCode(v QueueOpFailedCode) {
+	self.Code = v
+}
+
+func (self *QueueOpFailedErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *QueueOpFailedErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *QueueOpFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -3864,7 +5530,6 @@ func (self *QueueOpFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3876,7 +5541,7 @@ func DecodeQueueOpFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*Qu
 		return nil, fmt.Errorf("QueueOpFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_queueopfailederrormsg.Code = QueueOpFailedCode(decoder.ReadUint16())
-	_queueopfailederrormsg.Data = decoder.Read(decoder.Length())
+	_queueopfailederrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _queueopfailederrormsg, nil
 }
 
@@ -3892,6 +5557,19 @@ type QueueStatsReply struct {
 	Entries []*QueueStatsEntry
 }
 
+type IQueueStatsReply interface {
+	IStatsReply
+	GetEntries() []*QueueStatsEntry
+}
+
+func (self *QueueStatsReply) GetEntries() []*QueueStatsEntry {
+	return self.Entries
+}
+
+func (self *QueueStatsReply) SetEntries(v []*QueueStatsEntry) {
+	self.Entries = v
+}
+
 func (self *QueueStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -3904,7 +5582,6 @@ func (self *QueueStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3919,7 +5596,9 @@ func DecodeQueueStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*QueueS
 		if err != nil {
 			return nil, err
 		}
-		_queuestatsreply.Entries = append(_queuestatsreply.Entries, item)
+		if item != nil {
+			_queuestatsreply.Entries = append(_queuestatsreply.Entries, item)
+		}
 	}
 	return _queuestatsreply, nil
 }
@@ -3933,8 +5612,30 @@ func NewQueueStatsReply() *QueueStatsReply {
 
 type QueueStatsRequest struct {
 	*StatsRequest
-	PortNo  PortNo
+	PortNo  Port
 	QueueId uint32
+}
+
+type IQueueStatsRequest interface {
+	IStatsRequest
+	GetPortNo() Port
+	GetQueueId() uint32
+}
+
+func (self *QueueStatsRequest) GetPortNo() Port {
+	return self.PortNo
+}
+
+func (self *QueueStatsRequest) SetPortNo(v Port) {
+	self.PortNo = v
+}
+
+func (self *QueueStatsRequest) GetQueueId() uint32 {
+	return self.QueueId
+}
+
+func (self *QueueStatsRequest) SetQueueId(v uint32) {
+	self.QueueId = v
 }
 
 func (self *QueueStatsRequest) Serialize(encoder *goloxi.Encoder) error {
@@ -3946,7 +5647,6 @@ func (self *QueueStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	self.PortNo.Serialize(encoder)
 	encoder.PutUint32(uint32(self.QueueId))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3976,6 +5676,28 @@ type RoleReply struct {
 	GenerationId uint64
 }
 
+type IRoleReply interface {
+	IHeader
+	GetRole() ControllerRole
+	GetGenerationId() uint64
+}
+
+func (self *RoleReply) GetRole() ControllerRole {
+	return self.Role
+}
+
+func (self *RoleReply) SetRole(v ControllerRole) {
+	self.Role = v
+}
+
+func (self *RoleReply) GetGenerationId() uint64 {
+	return self.GenerationId
+}
+
+func (self *RoleReply) SetGenerationId(v uint64) {
+	self.GenerationId = v
+}
+
 func (self *RoleReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -3985,7 +5707,6 @@ func (self *RoleReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint64(uint64(self.GenerationId))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4015,6 +5736,28 @@ type RoleRequest struct {
 	GenerationId uint64
 }
 
+type IRoleRequest interface {
+	IHeader
+	GetRole() ControllerRole
+	GetGenerationId() uint64
+}
+
+func (self *RoleRequest) GetRole() ControllerRole {
+	return self.Role
+}
+
+func (self *RoleRequest) SetRole(v ControllerRole) {
+	self.Role = v
+}
+
+func (self *RoleRequest) GetGenerationId() uint64 {
+	return self.GenerationId
+}
+
+func (self *RoleRequest) SetGenerationId(v uint64) {
+	self.GenerationId = v
+}
+
 func (self *RoleRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -4024,7 +5767,6 @@ func (self *RoleRequest) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint64(uint64(self.GenerationId))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4054,6 +5796,28 @@ type RoleRequestFailedErrorMsg struct {
 	Data []byte
 }
 
+type IRoleRequestFailedErrorMsg interface {
+	IErrorMsg
+	GetCode() RoleRequestFailedCode
+	GetData() []byte
+}
+
+func (self *RoleRequestFailedErrorMsg) GetCode() RoleRequestFailedCode {
+	return self.Code
+}
+
+func (self *RoleRequestFailedErrorMsg) SetCode(v RoleRequestFailedCode) {
+	self.Code = v
+}
+
+func (self *RoleRequestFailedErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *RoleRequestFailedErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *RoleRequestFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -4062,7 +5826,6 @@ func (self *RoleRequestFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error 
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4074,7 +5837,7 @@ func DecodeRoleRequestFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) 
 		return nil, fmt.Errorf("RoleRequestFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_rolerequestfailederrormsg.Code = RoleRequestFailedCode(decoder.ReadUint16())
-	_rolerequestfailederrormsg.Data = decoder.Read(decoder.Length())
+	_rolerequestfailederrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _rolerequestfailederrormsg, nil
 }
 
@@ -4091,6 +5854,28 @@ type SetConfig struct {
 	MissSendLen uint16
 }
 
+type ISetConfig interface {
+	IHeader
+	GetFlags() ConfigFlags
+	GetMissSendLen() uint16
+}
+
+func (self *SetConfig) GetFlags() ConfigFlags {
+	return self.Flags
+}
+
+func (self *SetConfig) SetFlags(v ConfigFlags) {
+	self.Flags = v
+}
+
+func (self *SetConfig) GetMissSendLen() uint16 {
+	return self.MissSendLen
+}
+
+func (self *SetConfig) SetMissSendLen(v uint16) {
+	self.MissSendLen = v
+}
+
 func (self *SetConfig) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -4099,7 +5884,6 @@ func (self *SetConfig) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Flags))
 	encoder.PutUint16(uint16(self.MissSendLen))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4128,6 +5912,28 @@ type SwitchConfigFailedErrorMsg struct {
 	Data []byte
 }
 
+type ISwitchConfigFailedErrorMsg interface {
+	IErrorMsg
+	GetCode() SwitchConfigFailedCode
+	GetData() []byte
+}
+
+func (self *SwitchConfigFailedErrorMsg) GetCode() SwitchConfigFailedCode {
+	return self.Code
+}
+
+func (self *SwitchConfigFailedErrorMsg) SetCode(v SwitchConfigFailedCode) {
+	self.Code = v
+}
+
+func (self *SwitchConfigFailedErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *SwitchConfigFailedErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *SwitchConfigFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -4136,7 +5942,6 @@ func (self *SwitchConfigFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4148,7 +5953,7 @@ func DecodeSwitchConfigFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder)
 		return nil, fmt.Errorf("SwitchConfigFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_switchconfigfailederrormsg.Code = SwitchConfigFailedCode(decoder.ReadUint16())
-	_switchconfigfailederrormsg.Data = decoder.Read(decoder.Length())
+	_switchconfigfailederrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _switchconfigfailederrormsg, nil
 }
 
@@ -4165,6 +5970,28 @@ type TableMod struct {
 	Config  uint32
 }
 
+type ITableMod interface {
+	IHeader
+	GetTableId() uint8
+	GetConfig() uint32
+}
+
+func (self *TableMod) GetTableId() uint8 {
+	return self.TableId
+}
+
+func (self *TableMod) SetTableId(v uint8) {
+	self.TableId = v
+}
+
+func (self *TableMod) GetConfig() uint32 {
+	return self.Config
+}
+
+func (self *TableMod) SetConfig(v uint32) {
+	self.Config = v
+}
+
 func (self *TableMod) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.Header.Serialize(encoder); err != nil {
 		return err
@@ -4174,7 +6001,6 @@ func (self *TableMod) Serialize(encoder *goloxi.Encoder) error {
 	encoder.Write(bytes.Repeat([]byte{0}, 3))
 	encoder.PutUint32(uint32(self.Config))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4204,6 +6030,28 @@ type TableModFailedErrorMsg struct {
 	Data []byte
 }
 
+type ITableModFailedErrorMsg interface {
+	IErrorMsg
+	GetCode() TableModFailedCode
+	GetData() []byte
+}
+
+func (self *TableModFailedErrorMsg) GetCode() TableModFailedCode {
+	return self.Code
+}
+
+func (self *TableModFailedErrorMsg) SetCode(v TableModFailedCode) {
+	self.Code = v
+}
+
+func (self *TableModFailedErrorMsg) GetData() []byte {
+	return self.Data
+}
+
+func (self *TableModFailedErrorMsg) SetData(v []byte) {
+	self.Data = v
+}
+
 func (self *TableModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.ErrorMsg.Serialize(encoder); err != nil {
 		return err
@@ -4212,7 +6060,6 @@ func (self *TableModFailedErrorMsg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.Code))
 	encoder.Write(self.Data)
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4224,7 +6071,7 @@ func DecodeTableModFailedErrorMsg(parent *ErrorMsg, decoder *goloxi.Decoder) (*T
 		return nil, fmt.Errorf("TableModFailedErrorMsg packet too short: %d < 2", decoder.Length())
 	}
 	_tablemodfailederrormsg.Code = TableModFailedCode(decoder.ReadUint16())
-	_tablemodfailederrormsg.Data = decoder.Read(decoder.Length())
+	_tablemodfailederrormsg.Data = decoder.Read(int(decoder.Length()))
 	return _tablemodfailederrormsg, nil
 }
 
@@ -4240,6 +6087,19 @@ type TableStatsReply struct {
 	Entries []*TableStatsEntry
 }
 
+type ITableStatsReply interface {
+	IStatsReply
+	GetEntries() []*TableStatsEntry
+}
+
+func (self *TableStatsReply) GetEntries() []*TableStatsEntry {
+	return self.Entries
+}
+
+func (self *TableStatsReply) SetEntries(v []*TableStatsEntry) {
+	self.Entries = v
+}
+
 func (self *TableStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsReply.Serialize(encoder); err != nil {
 		return err
@@ -4252,7 +6112,6 @@ func (self *TableStatsReply) Serialize(encoder *goloxi.Encoder) error {
 		}
 	}
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -4267,7 +6126,9 @@ func DecodeTableStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*TableS
 		if err != nil {
 			return nil, err
 		}
-		_tablestatsreply.Entries = append(_tablestatsreply.Entries, item)
+		if item != nil {
+			_tablestatsreply.Entries = append(_tablestatsreply.Entries, item)
+		}
 	}
 	return _tablestatsreply, nil
 }
@@ -4283,6 +6144,10 @@ type TableStatsRequest struct {
 	*StatsRequest
 }
 
+type ITableStatsRequest interface {
+	IStatsRequest
+}
+
 func (self *TableStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	if err := self.StatsRequest.Serialize(encoder); err != nil {
 		return err
@@ -4290,7 +6155,6 @@ func (self *TableStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
-	// Overwrite length
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil

@@ -2280,7 +2280,24 @@ const (
 type GroupModCommand uint16
 
 func (self GroupModCommand) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%d", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
+}
+
+func (self GroupModCommand) String() string {
+	switch self {
+	case OFPGCAdd:
+		return "add"
+	case OFPGCModify:
+		return "modify"
+	case OFPGCDelete:
+		return "delete"
+	case OFPGCInsertBucket:
+		return "insert_bucket"
+	case OFPGCRemoveBucket:
+		return "remove_bucket"
+	default:
+		return fmt.Sprintf("%d", self)
+	}
 }
 
 const (
@@ -2326,7 +2343,22 @@ const (
 type GroupType uint8
 
 func (self GroupType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%d", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
+}
+
+func (self GroupType) String() string {
+	switch self {
+	case OFPGTAll:
+		return "all"
+	case OFPGTSelect:
+		return "select"
+	case OFPGTIndirect:
+		return "indirect"
+	case OFPGTFf:
+		return "ff"
+	default:
+		return fmt.Sprintf("%d", self)
+	}
 }
 
 const (

@@ -1908,7 +1908,22 @@ const (
 type GroupType uint8
 
 func (self GroupType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%d", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
+}
+
+func (self GroupType) String() string {
+	switch self {
+	case OFPGTAll:
+		return "all"
+	case OFPGTSelect:
+		return "select"
+	case OFPGTIndirect:
+		return "indirect"
+	case OFPGTFf:
+		return "ff"
+	default:
+		return fmt.Sprintf("%d", self)
+	}
 }
 
 const (

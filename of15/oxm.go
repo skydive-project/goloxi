@@ -28357,19 +28357,19 @@ func (self *OxmEthSrcMasked) MarshalJSON() ([]byte, error) {
 
 type OxmEthType struct {
 	*Oxm
-	Value uint16
+	Value EthernetType
 }
 
 type IOxmEthType interface {
 	goloxi.IOxm
-	GetValue() uint16
+	GetValue() EthernetType
 }
 
-func (self *OxmEthType) GetValue() uint16 {
+func (self *OxmEthType) GetValue() EthernetType {
 	return self.Value
 }
 
-func (self *OxmEthType) SetValue(v uint16) {
+func (self *OxmEthType) SetValue(v EthernetType) {
 	self.Value = v
 }
 
@@ -28388,7 +28388,7 @@ func DecodeOxmEthType(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthType, error)
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmEthType packet too short: %d < 2", decoder.Length())
 	}
-	_oxmethtype.Value = uint16(decoder.ReadUint16())
+	_oxmethtype.Value = EthernetType(decoder.ReadUint16())
 	return _oxmethtype, nil
 }
 
@@ -28430,21 +28430,21 @@ func (self *OxmEthType) MarshalJSON() ([]byte, error) {
 
 type OxmEthTypeMasked struct {
 	*Oxm
-	Value     uint16
+	Value     EthernetType
 	ValueMask uint16
 }
 
 type IOxmEthTypeMasked interface {
 	goloxi.IOxm
-	GetValue() uint16
+	GetValue() EthernetType
 	GetValueMask() uint16
 }
 
-func (self *OxmEthTypeMasked) GetValue() uint16 {
+func (self *OxmEthTypeMasked) GetValue() EthernetType {
 	return self.Value
 }
 
-func (self *OxmEthTypeMasked) SetValue(v uint16) {
+func (self *OxmEthTypeMasked) SetValue(v EthernetType) {
 	self.Value = v
 }
 
@@ -28472,7 +28472,7 @@ func DecodeOxmEthTypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmEthTypeMa
 	if decoder.Length() < 4 {
 		return nil, fmt.Errorf("OxmEthTypeMasked packet too short: %d < 4", decoder.Length())
 	}
-	_oxmethtypemasked.Value = uint16(decoder.ReadUint16())
+	_oxmethtypemasked.Value = EthernetType(decoder.ReadUint16())
 	_oxmethtypemasked.ValueMask = uint16(decoder.ReadUint16())
 	return _oxmethtypemasked, nil
 }

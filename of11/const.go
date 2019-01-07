@@ -61,17 +61,17 @@ const (
 type NxBdAlgorithms uint16
 
 func (self NxBdAlgorithms) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%s", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
 }
 
 func (self NxBdAlgorithms) String() string {
 	switch self {
 	case NxBdAlgActiveBackup:
-		return "\"active_backup\""
+		return "active_backup"
 	case NxBdAlgHrw:
-		return "\"hrw\""
+		return "hrw"
 	default:
-		return fmt.Sprintf("\"Invalid value '%d' for NxBdAlgorithms\"", self)
+		return fmt.Sprintf("Invalid value '%d' for NxBdAlgorithms", self)
 	}
 }
 
@@ -143,27 +143,27 @@ const (
 type NxHashFields uint16
 
 func (self NxHashFields) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%s", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
 }
 
 func (self NxHashFields) String() string {
 	switch self {
 	case NxHashFieldsEthSrc:
-		return "\"eth_src\""
+		return "eth_src"
 	case NxHashFieldsSymmetricL4:
-		return "\"symmetric_l4\""
+		return "symmetric_l4"
 	case NxHashFieldsSymmetricL3L4:
-		return "\"symmetric_l3l4\""
+		return "symmetric_l3l4"
 	case NxHashFieldsSymmetricL3L4Udp:
-		return "\"symmetric_l3l4_udp\""
+		return "symmetric_l3l4_udp"
 	case NxHashFieldsNwSrc:
-		return "\"nw_src\""
+		return "nw_src"
 	case NxHashFieldsNwDst:
-		return "\"nw_dst\""
+		return "nw_dst"
 	case NxHashFieldsSymmetricL3:
-		return "\"symmetric_l3\""
+		return "symmetric_l3"
 	default:
-		return fmt.Sprintf("\"Invalid value '%d' for NxHashFields\"", self)
+		return fmt.Sprintf("Invalid value '%d' for NxHashFields", self)
 	}
 }
 
@@ -178,21 +178,21 @@ const (
 type NxMpAlgorithm uint16
 
 func (self NxMpAlgorithm) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%s", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
 }
 
 func (self NxMpAlgorithm) String() string {
 	switch self {
 	case NxMpAlgModuloN:
-		return "\"modulo_n\""
+		return "modulo_n"
 	case NxMpAlgHashThreshold:
-		return "\"hash_threshold\""
+		return "hash_threshold"
 	case NxMpAlgHrw:
-		return "\"hrw\""
+		return "hrw"
 	case NxMpAlgIterHash:
-		return "\"iter_hash\""
+		return "iter_hash"
 	default:
-		return fmt.Sprintf("\"Invalid value '%d' for NxMpAlgorithm\"", self)
+		return fmt.Sprintf("Invalid value '%d' for NxMpAlgorithm", self)
 	}
 }
 
@@ -205,17 +205,17 @@ const (
 type ActionNxBundleSlaveType uint32
 
 func (self ActionNxBundleSlaveType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%s", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
 }
 
 func (self ActionNxBundleSlaveType) String() string {
 	switch self {
 	case NxmOfInPort:
-		return "\"in_port\""
+		return "in_port"
 	case NxmOfJustThereToDefinePrefix:
-		return "\"just_there_to_define_prefix\""
+		return "just_there_to_define_prefix"
 	default:
-		return fmt.Sprintf("\"Invalid value '%d' for ActionNxBundleSlaveType\"", self)
+		return fmt.Sprintf("Invalid value '%d' for ActionNxBundleSlaveType", self)
 	}
 }
 
@@ -590,6 +590,143 @@ func (self ErrorType) MarshalJSON() ([]byte, error) {
 }
 
 const (
+	// Identifiers from group ofp_ethernet_type
+	EthPLoop      = 96    // ETH_P_LOOP
+	EthPPup       = 512   // ETH_P_PUP
+	EthPPupat     = 513   // ETH_P_PUPAT
+	EthPIp        = 2048  // ETH_P_IP
+	EthPX25       = 2053  // ETH_P_X25
+	EthPARP       = 2054  // ETH_P_ARP
+	EthPBpq       = 2303  // ETH_P_BPQ
+	EthPIeeepup   = 2560  // ETH_P_IEEEPUP
+	EthPIeeepupat = 2561  // ETH_P_IEEEPUPAT
+	EthPDec       = 24576 // ETH_P_DEC
+	EthPDnaDl     = 24577 // ETH_P_DNA_DL
+	EthPDnaRc     = 24578 // ETH_P_DNA_RC
+	EthPDnaRt     = 24579 // ETH_P_DNA_RT
+	EthPLat       = 24580 // ETH_P_LAT
+	EthPDiag      = 24581 // ETH_P_DIAG
+	EthPCust      = 24582 // ETH_P_CUST
+	EthPSca       = 24583 // ETH_P_SCA
+	EthPTeb       = 25944 // ETH_P_TEB
+	EthPRarp      = 32821 // ETH_P_RARP
+	EthPAtalk     = 32923 // ETH_P_ATALK
+	EthPAarp      = 33011 // ETH_P_AARP
+	EthP8021Q     = 33024 // ETH_P_8021Q
+	EthPIpx       = 33079 // ETH_P_IPX
+	EthPIpv6      = 34525 // ETH_P_IPV6
+	EthPPause     = 34824 // ETH_P_PAUSE
+	EthPSlow      = 34825 // ETH_P_SLOW
+	EthPWccp      = 34878 // ETH_P_WCCP
+	EthPPppDisc   = 34915 // ETH_P_PPP_DISC
+	EthPPppSes    = 34916 // ETH_P_PPP_SES
+	EthPMplsUc    = 34887 // ETH_P_MPLS_UC
+	EthPMplsMc    = 34888 // ETH_P_MPLS_MC
+	EthPAtmmpoa   = 34892 // ETH_P_ATMMPOA
+	EthPAtmfate   = 34948 // ETH_P_ATMFATE
+	EthPPae       = 34958 // ETH_P_PAE
+	EthPAoe       = 34978 // ETH_P_AOE
+	EthPTipc      = 35018 // ETH_P_TIPC
+	EthP1588      = 35063 // ETH_P_1588
+	EthPFcoe      = 35078 // ETH_P_FCOE
+	EthPFip       = 35092 // ETH_P_FIP
+	EthPEdsa      = 56026 // ETH_P_EDSA
+)
+
+type EthernetType uint16
+
+func (self EthernetType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
+}
+
+func (self EthernetType) String() string {
+	switch self {
+	case EthPLoop:
+		return "loop"
+	case EthPPup:
+		return "pup"
+	case EthPPupat:
+		return "pupat"
+	case EthPIp:
+		return "ip"
+	case EthPX25:
+		return "x25"
+	case EthPARP:
+		return "arp"
+	case EthPBpq:
+		return "bpq"
+	case EthPIeeepup:
+		return "ieeepup"
+	case EthPIeeepupat:
+		return "ieeepupat"
+	case EthPDec:
+		return "dec"
+	case EthPDnaDl:
+		return "dna_dl"
+	case EthPDnaRc:
+		return "dna_rc"
+	case EthPDnaRt:
+		return "dna_rt"
+	case EthPLat:
+		return "lat"
+	case EthPDiag:
+		return "diag"
+	case EthPCust:
+		return "cust"
+	case EthPSca:
+		return "sca"
+	case EthPTeb:
+		return "teb"
+	case EthPRarp:
+		return "rarp"
+	case EthPAtalk:
+		return "atalk"
+	case EthPAarp:
+		return "aarp"
+	case EthP8021Q:
+		return "8021q"
+	case EthPIpx:
+		return "ipx"
+	case EthPIpv6:
+		return "ipv6"
+	case EthPPause:
+		return "pause"
+	case EthPSlow:
+		return "slow"
+	case EthPWccp:
+		return "wccp"
+	case EthPPppDisc:
+		return "ppp_disc"
+	case EthPPppSes:
+		return "ppp_ses"
+	case EthPMplsUc:
+		return "mpls_uc"
+	case EthPMplsMc:
+		return "mpls_mc"
+	case EthPAtmmpoa:
+		return "atmmpoa"
+	case EthPAtmfate:
+		return "atmfate"
+	case EthPPae:
+		return "pae"
+	case EthPAoe:
+		return "aoe"
+	case EthPTipc:
+		return "tipc"
+	case EthP1588:
+		return "1588"
+	case EthPFcoe:
+		return "fcoe"
+	case EthPFip:
+		return "fip"
+	case EthPEdsa:
+		return "edsa"
+	default:
+		return fmt.Sprintf("Invalid value '%d' for EthernetType", self)
+	}
+}
+
+const (
 	// Identifiers from group ofp_flow_mod_command
 	OFPFCAdd          = 0 // OFPFC_ADD
 	OFPFCModify       = 1 // OFPFC_MODIFY
@@ -780,23 +917,23 @@ const (
 type HeaderTypeNamespaces uint16
 
 func (self HeaderTypeNamespaces) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%s", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
 }
 
 func (self HeaderTypeNamespaces) String() string {
 	switch self {
 	case OFPHTNOnf:
-		return "\"onf\""
+		return "onf"
 	case OFPHTNEthertype:
-		return "\"ethertype\""
+		return "ethertype"
 	case OFPHTNIpProto:
-		return "\"ip_proto\""
+		return "ip_proto"
 	case OFPHTNUdpTCPPort:
-		return "\"udp_tcp_port\""
+		return "udp_tcp_port"
 	case OFPHTNIpv4Option:
-		return "\"ipv4_option\""
+		return "ipv4_option"
 	default:
-		return fmt.Sprintf("\"Invalid value '%d' for HeaderTypeNamespaces\"", self)
+		return fmt.Sprintf("Invalid value '%d' for HeaderTypeNamespaces", self)
 	}
 }
 
@@ -884,27 +1021,27 @@ const (
 type PacketType uint32
 
 func (self PacketType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%s", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
 }
 
 func (self PacketType) String() string {
 	switch self {
 	case PtEthernet:
-		return "\"ethernet\""
+		return "ethernet"
 	case PtUseNextProto:
-		return "\"use_next_proto\""
+		return "use_next_proto"
 	case PtIpv4:
-		return "\"ipv4\""
+		return "ipv4"
 	case PtMpls:
-		return "\"mpls\""
+		return "mpls"
 	case PtMplsMc:
-		return "\"mpls_mc\""
+		return "mpls_mc"
 	case PtNsh:
-		return "\"nsh\""
+		return "nsh"
 	case PtUnknown:
-		return "\"unknown\""
+		return "unknown"
 	default:
-		return fmt.Sprintf("\"Invalid value '%d' for PacketType\"", self)
+		return fmt.Sprintf("Invalid value '%d' for PacketType", self)
 	}
 }
 
@@ -1235,61 +1372,61 @@ const (
 type Type uint8
 
 func (self Type) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%s", self)), nil
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
 }
 
 func (self Type) String() string {
 	switch self {
 	case OFPTHello:
-		return "\"hello\""
+		return "hello"
 	case OFPTError:
-		return "\"error\""
+		return "error"
 	case OFPTEchoRequest:
-		return "\"echo_request\""
+		return "echo_request"
 	case OFPTEchoReply:
-		return "\"echo_reply\""
+		return "echo_reply"
 	case OFPTExperimenter:
-		return "\"experimenter\""
+		return "experimenter"
 	case OFPTFeaturesRequest:
-		return "\"features_request\""
+		return "features_request"
 	case OFPTFeaturesReply:
-		return "\"features_reply\""
+		return "features_reply"
 	case OFPTGetConfigRequest:
-		return "\"get_config_request\""
+		return "get_config_request"
 	case OFPTGetConfigReply:
-		return "\"get_config_reply\""
+		return "get_config_reply"
 	case OFPTSetConfig:
-		return "\"set_config\""
+		return "set_config"
 	case OFPTPacketIn:
-		return "\"packet_in\""
+		return "packet_in"
 	case OFPTFlowRemoved:
-		return "\"flow_removed\""
+		return "flow_removed"
 	case OFPTPortStatus:
-		return "\"port_status\""
+		return "port_status"
 	case OFPTPacketOut:
-		return "\"packet_out\""
+		return "packet_out"
 	case OFPTFlowMod:
-		return "\"flow_mod\""
+		return "flow_mod"
 	case OFPTGroupMod:
-		return "\"group_mod\""
+		return "group_mod"
 	case OFPTPortMod:
-		return "\"port_mod\""
+		return "port_mod"
 	case OFPTTableMod:
-		return "\"table_mod\""
+		return "table_mod"
 	case OFPTStatsRequest:
-		return "\"stats_request\""
+		return "stats_request"
 	case OFPTStatsReply:
-		return "\"stats_reply\""
+		return "stats_reply"
 	case OFPTBarrierRequest:
-		return "\"barrier_request\""
+		return "barrier_request"
 	case OFPTBarrierReply:
-		return "\"barrier_reply\""
+		return "barrier_reply"
 	case OFPTQueueGetConfigRequest:
-		return "\"queue_get_config_request\""
+		return "queue_get_config_request"
 	case OFPTQueueGetConfigReply:
-		return "\"queue_get_config_reply\""
+		return "queue_get_config_reply"
 	default:
-		return fmt.Sprintf("\"Invalid value '%d' for Type\"", self)
+		return fmt.Sprintf("Invalid value '%d' for Type", self)
 	}
 }
 

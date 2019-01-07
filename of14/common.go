@@ -127,8 +127,6 @@ func DecodeOxmId(decoder *goloxi.Decoder) (IOxmId, error) {
 		return DecodeOxmIdIpProto(_oxmid, decoder)
 	case 199172:
 		return DecodeOxmIdBsnL3SrcClassId(_oxmid, decoder)
-	case 2147506440:
-		return DecodeOxmIdPacketTypeMasked(_oxmid, decoder)
 	case 100732:
 		return DecodeOxmIdTunMetadata28Masked(_oxmid, decoder)
 	case 68612:
@@ -31777,45 +31775,6 @@ func (self *OxmIdPacketType) GetOXMName() string {
 }
 
 func (self *OxmIdPacketType) MarshalJSON() ([]byte, error) {
-	if self.TypeLen == 0 {
-		return []byte("\"\""), nil
-	} else {
-		return []byte("\"" + self.GetOXMName() + "\""), nil
-	}
-}
-
-type OxmIdPacketTypeMasked struct {
-	*OxmId
-}
-
-type IOxmIdPacketTypeMasked interface {
-	IOxmId
-}
-
-func (self *OxmIdPacketTypeMasked) Serialize(encoder *goloxi.Encoder) error {
-	if err := self.OxmId.Serialize(encoder); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func DecodeOxmIdPacketTypeMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdPacketTypeMasked, error) {
-	_oxmidpackettypemasked := &OxmIdPacketTypeMasked{OxmId: parent}
-	return _oxmidpackettypemasked, nil
-}
-
-func NewOxmIdPacketTypeMasked() *OxmIdPacketTypeMasked {
-	obj := &OxmIdPacketTypeMasked{
-		OxmId: NewOxmId(2147506440),
-	}
-	return obj
-}
-func (self *OxmIdPacketTypeMasked) GetOXMName() string {
-	return "packet_type_masked"
-}
-
-func (self *OxmIdPacketTypeMasked) MarshalJSON() ([]byte, error) {
 	if self.TypeLen == 0 {
 		return []byte("\"\""), nil
 	} else {

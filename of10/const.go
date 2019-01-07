@@ -70,7 +70,7 @@ func (self NxBdAlgorithms) String() string {
 	case NxBdAlgHrw:
 		return "hrw"
 	default:
-		return fmt.Sprintf("Invalid value '%d' for NxBdAlgorithms", self)
+		return fmt.Sprintf("%d", self)
 	}
 }
 
@@ -162,7 +162,7 @@ func (self NxHashFields) String() string {
 	case NxHashFieldsSymmetricL3:
 		return "symmetric_l3"
 	default:
-		return fmt.Sprintf("Invalid value '%d' for NxHashFields", self)
+		return fmt.Sprintf("%d", self)
 	}
 }
 
@@ -191,7 +191,7 @@ func (self NxMpAlgorithm) String() string {
 	case NxMpAlgIterHash:
 		return "iter_hash"
 	default:
-		return fmt.Sprintf("Invalid value '%d' for NxMpAlgorithm", self)
+		return fmt.Sprintf("%d", self)
 	}
 }
 
@@ -214,7 +214,7 @@ func (self ActionNxBundleSlaveType) String() string {
 	case NxmOfJustThereToDefinePrefix:
 		return "just_there_to_define_prefix"
 	default:
-		return fmt.Sprintf("Invalid value '%d' for ActionNxBundleSlaveType", self)
+		return fmt.Sprintf("%d", self)
 	}
 }
 
@@ -664,7 +664,7 @@ func (self EthernetType) String() string {
 	case EthPEdsa:
 		return "edsa"
 	default:
-		return fmt.Sprintf("Invalid value '%d' for EthernetType", self)
+		return fmt.Sprintf("%d", self)
 	}
 }
 
@@ -850,7 +850,7 @@ func (self HeaderTypeNamespaces) String() string {
 	case OFPHTNIpv4Option:
 		return "ipv4_option"
 	default:
-		return fmt.Sprintf("Invalid value '%d' for HeaderTypeNamespaces", self)
+		return fmt.Sprintf("%d", self)
 	}
 }
 
@@ -864,6 +864,228 @@ type HelloFailedCode uint16
 
 func (self HelloFailedCode) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf("%d", self)), nil
+}
+
+const (
+	// Identifiers from group ofp_icmp_type
+	IcmpEchoreply      = 0  // ICMP_ECHOREPLY
+	IcmpDestUnreach    = 3  // ICMP_DEST_UNREACH
+	IcmpSourceQuench   = 4  // ICMP_SOURCE_QUENCH
+	IcmpRedirect       = 5  // ICMP_REDIRECT
+	IcmpEcho           = 8  // ICMP_ECHO
+	IcmpTimeExceeded   = 11 // ICMP_TIME_EXCEEDED
+	IcmpParameterprob  = 12 // ICMP_PARAMETERPROB
+	IcmpTimestamp      = 13 // ICMP_TIMESTAMP
+	IcmpTimestampreply = 14 // ICMP_TIMESTAMPREPLY
+	IcmpInfoRequest    = 15 // ICMP_INFO_REQUEST
+	IcmpInfoReply      = 16 // ICMP_INFO_REPLY
+	IcmpAddress        = 17 // ICMP_ADDRESS
+	IcmpAddressreply   = 18 // ICMP_ADDRESSREPLY
+)
+
+type IcmpType uint8
+
+func (self IcmpType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
+}
+
+func (self IcmpType) String() string {
+	switch self {
+	case IcmpEchoreply:
+		return "echoreply"
+	case IcmpDestUnreach:
+		return "dest_unreach"
+	case IcmpSourceQuench:
+		return "source_quench"
+	case IcmpRedirect:
+		return "redirect"
+	case IcmpEcho:
+		return "echo"
+	case IcmpTimeExceeded:
+		return "time_exceeded"
+	case IcmpParameterprob:
+		return "parameterprob"
+	case IcmpTimestamp:
+		return "timestamp"
+	case IcmpTimestampreply:
+		return "timestampreply"
+	case IcmpInfoRequest:
+		return "info_request"
+	case IcmpInfoReply:
+		return "info_reply"
+	case IcmpAddress:
+		return "address"
+	case IcmpAddressreply:
+		return "addressreply"
+	default:
+		return fmt.Sprintf("%d", self)
+	}
+}
+
+const (
+	// Identifiers from group ofp_icmpv6_type
+	Icmpv6EchoRequest     = 128 // ICMPV6_ECHO_REQUEST
+	Icmpv6EchoReply       = 129 // ICMPV6_ECHO_REPLY
+	Icmpv6MgmQuery        = 130 // ICMPV6_MGM_QUERY
+	Icmpv6MgmReport       = 131 // ICMPV6_MGM_REPORT
+	Icmpv6MgmReduction    = 132 // ICMPV6_MGM_REDUCTION
+	Icmpv6NiQuery         = 139 // ICMPV6_NI_QUERY
+	Icmpv6NiReply         = 140 // ICMPV6_NI_REPLY
+	Icmpv6Mld2Report      = 143 // ICMPV6_MLD2_REPORT
+	Icmpv6DhaadRequest    = 144 // ICMPV6_DHAAD_REQUEST
+	Icmpv6DhaadReply      = 145 // ICMPV6_DHAAD_REPLY
+	Icmpv6MobilePrefixSol = 146 // ICMPV6_MOBILE_PREFIX_SOL
+	Icmpv6MobilePrefixAdv = 147 // ICMPV6_MOBILE_PREFIX_ADV
+)
+
+type Icmpv6Type uint8
+
+func (self Icmpv6Type) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
+}
+
+func (self Icmpv6Type) String() string {
+	switch self {
+	case Icmpv6EchoRequest:
+		return "echo_request"
+	case Icmpv6EchoReply:
+		return "echo_reply"
+	case Icmpv6MgmQuery:
+		return "mgm_query"
+	case Icmpv6MgmReport:
+		return "mgm_report"
+	case Icmpv6MgmReduction:
+		return "mgm_reduction"
+	case Icmpv6NiQuery:
+		return "ni_query"
+	case Icmpv6NiReply:
+		return "ni_reply"
+	case Icmpv6Mld2Report:
+		return "mld2_report"
+	case Icmpv6DhaadRequest:
+		return "dhaad_request"
+	case Icmpv6DhaadReply:
+		return "dhaad_reply"
+	case Icmpv6MobilePrefixSol:
+		return "mobile_prefix_sol"
+	case Icmpv6MobilePrefixAdv:
+		return "mobile_prefix_adv"
+	default:
+		return fmt.Sprintf("%d", self)
+	}
+}
+
+const (
+	// Identifiers from group ofp_ip_prototype
+	IpprotoIp       = 0   // IPPROTO_IP
+	IpprotoICMP     = 1   // IPPROTO_ICMP
+	IpprotoIgmp     = 2   // IPPROTO_IGMP
+	IpprotoIpip     = 4   // IPPROTO_IPIP
+	IpprotoTCP      = 6   // IPPROTO_TCP
+	IpprotoEgp      = 8   // IPPROTO_EGP
+	IpprotoPup      = 12  // IPPROTO_PUP
+	IpprotoUdp      = 17  // IPPROTO_UDP
+	IpprotoIdp      = 22  // IPPROTO_IDP
+	IpprotoTp       = 29  // IPPROTO_TP
+	IpprotoDccp     = 33  // IPPROTO_DCCP
+	IpprotoIpv6     = 41  // IPPROTO_IPV6
+	IpprotoRsvp     = 46  // IPPROTO_RSVP
+	IpprotoGRE      = 47  // IPPROTO_GRE
+	IpprotoEsp      = 50  // IPPROTO_ESP
+	IpprotoAh       = 51  // IPPROTO_AH
+	IpprotoMtp      = 92  // IPPROTO_MTP
+	IpprotoBeetph   = 94  // IPPROTO_BEETPH
+	IpprotoEncap    = 98  // IPPROTO_ENCAP
+	IpprotoPim      = 103 // IPPROTO_PIM
+	IpprotoComp     = 108 // IPPROTO_COMP
+	IpprotoSctp     = 132 // IPPROTO_SCTP
+	IpprotoUdplite  = 136 // IPPROTO_UDPLITE
+	IpprotoMpls     = 137 // IPPROTO_MPLS
+	IpprotoRaw      = 255 // IPPROTO_RAW
+	IpprotoRouting  = 43  // IPPROTO_ROUTING
+	IpprotoFragment = 44  // IPPROTO_FRAGMENT
+	IpprotoIcmpv6   = 58  // IPPROTO_ICMPV6
+	IpprotoNone     = 59  // IPPROTO_NONE
+	IpprotoDstopts  = 60  // IPPROTO_DSTOPTS
+	IpprotoMh       = 135 // IPPROTO_MH
+	IpprotoL2Tp     = 115 // IPPROTO_L2TP
+)
+
+type IpPrototype uint8
+
+func (self IpPrototype) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("\"%s\"", self)), nil
+}
+
+func (self IpPrototype) String() string {
+	switch self {
+	case IpprotoIp:
+		return "ip"
+	case IpprotoICMP:
+		return "icmp"
+	case IpprotoIgmp:
+		return "igmp"
+	case IpprotoIpip:
+		return "ipip"
+	case IpprotoTCP:
+		return "tcp"
+	case IpprotoEgp:
+		return "egp"
+	case IpprotoPup:
+		return "pup"
+	case IpprotoUdp:
+		return "udp"
+	case IpprotoIdp:
+		return "idp"
+	case IpprotoTp:
+		return "tp"
+	case IpprotoDccp:
+		return "dccp"
+	case IpprotoIpv6:
+		return "ipv6"
+	case IpprotoRsvp:
+		return "rsvp"
+	case IpprotoGRE:
+		return "gre"
+	case IpprotoEsp:
+		return "esp"
+	case IpprotoAh:
+		return "ah"
+	case IpprotoMtp:
+		return "mtp"
+	case IpprotoBeetph:
+		return "beetph"
+	case IpprotoEncap:
+		return "encap"
+	case IpprotoPim:
+		return "pim"
+	case IpprotoComp:
+		return "comp"
+	case IpprotoSctp:
+		return "sctp"
+	case IpprotoUdplite:
+		return "udplite"
+	case IpprotoMpls:
+		return "mpls"
+	case IpprotoRaw:
+		return "raw"
+	case IpprotoRouting:
+		return "routing"
+	case IpprotoFragment:
+		return "fragment"
+	case IpprotoIcmpv6:
+		return "icmpv6"
+	case IpprotoNone:
+		return "none"
+	case IpprotoDstopts:
+		return "dstopts"
+	case IpprotoMh:
+		return "mh"
+	case IpprotoL2Tp:
+		return "l2tp"
+	default:
+		return fmt.Sprintf("%d", self)
+	}
 }
 
 const (
@@ -925,7 +1147,7 @@ func (self PacketType) String() string {
 	case PtUnknown:
 		return "unknown"
 	default:
-		return fmt.Sprintf("Invalid value '%d' for PacketType", self)
+		return fmt.Sprintf("%d", self)
 	}
 }
 
@@ -1257,6 +1479,6 @@ func (self Type) String() string {
 	case OFPTQueueGetConfigReply:
 		return "queue_get_config_reply"
 	default:
-		return fmt.Sprintf("Invalid value '%d' for Type", self)
+		return fmt.Sprintf("%d", self)
 	}
 }

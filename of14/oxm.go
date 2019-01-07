@@ -133,8 +133,6 @@ func DecodeOxm(decoder *goloxi.Decoder) (goloxi.IOxm, error) {
 		return DecodeOxmIpProto(_oxm, decoder)
 	case 199172:
 		return DecodeOxmBsnL3SrcClassId(_oxm, decoder)
-	case 2147506440:
-		return DecodeOxmPacketTypeMasked(_oxm, decoder)
 	case 100732:
 		return DecodeNxmTunMetadata28Masked(_oxm, decoder)
 	case 1030:
@@ -28673,19 +28671,19 @@ func (self *OxmIcmpv4CodeMasked) MarshalJSON() ([]byte, error) {
 
 type OxmIcmpv4Type struct {
 	*Oxm
-	Value uint8
+	Value IcmpType
 }
 
 type IOxmIcmpv4Type interface {
 	goloxi.IOxm
-	GetValue() uint8
+	GetValue() IcmpType
 }
 
-func (self *OxmIcmpv4Type) GetValue() uint8 {
+func (self *OxmIcmpv4Type) GetValue() IcmpType {
 	return self.Value
 }
 
-func (self *OxmIcmpv4Type) SetValue(v uint8) {
+func (self *OxmIcmpv4Type) SetValue(v IcmpType) {
 	self.Value = v
 }
 
@@ -28704,7 +28702,7 @@ func DecodeOxmIcmpv4Type(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4Type, 
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIcmpv4Type packet too short: %d < 1", decoder.Length())
 	}
-	_oxmicmpv4type.Value = uint8(decoder.ReadByte())
+	_oxmicmpv4type.Value = IcmpType(decoder.ReadByte())
 	return _oxmicmpv4type, nil
 }
 
@@ -28746,21 +28744,21 @@ func (self *OxmIcmpv4Type) MarshalJSON() ([]byte, error) {
 
 type OxmIcmpv4TypeMasked struct {
 	*Oxm
-	Value     uint8
+	Value     IcmpType
 	ValueMask uint8
 }
 
 type IOxmIcmpv4TypeMasked interface {
 	goloxi.IOxm
-	GetValue() uint8
+	GetValue() IcmpType
 	GetValueMask() uint8
 }
 
-func (self *OxmIcmpv4TypeMasked) GetValue() uint8 {
+func (self *OxmIcmpv4TypeMasked) GetValue() IcmpType {
 	return self.Value
 }
 
-func (self *OxmIcmpv4TypeMasked) SetValue(v uint8) {
+func (self *OxmIcmpv4TypeMasked) SetValue(v IcmpType) {
 	self.Value = v
 }
 
@@ -28788,7 +28786,7 @@ func DecodeOxmIcmpv4TypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv4
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIcmpv4TypeMasked packet too short: %d < 2", decoder.Length())
 	}
-	_oxmicmpv4typemasked.Value = uint8(decoder.ReadByte())
+	_oxmicmpv4typemasked.Value = IcmpType(decoder.ReadByte())
 	_oxmicmpv4typemasked.ValueMask = uint8(decoder.ReadByte())
 	return _oxmicmpv4typemasked, nil
 }
@@ -28989,19 +28987,19 @@ func (self *OxmIcmpv6CodeMasked) MarshalJSON() ([]byte, error) {
 
 type OxmIcmpv6Type struct {
 	*Oxm
-	Value uint8
+	Value Icmpv6Type
 }
 
 type IOxmIcmpv6Type interface {
 	goloxi.IOxm
-	GetValue() uint8
+	GetValue() Icmpv6Type
 }
 
-func (self *OxmIcmpv6Type) GetValue() uint8 {
+func (self *OxmIcmpv6Type) GetValue() Icmpv6Type {
 	return self.Value
 }
 
-func (self *OxmIcmpv6Type) SetValue(v uint8) {
+func (self *OxmIcmpv6Type) SetValue(v Icmpv6Type) {
 	self.Value = v
 }
 
@@ -29020,7 +29018,7 @@ func DecodeOxmIcmpv6Type(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6Type, 
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIcmpv6Type packet too short: %d < 1", decoder.Length())
 	}
-	_oxmicmpv6type.Value = uint8(decoder.ReadByte())
+	_oxmicmpv6type.Value = Icmpv6Type(decoder.ReadByte())
 	return _oxmicmpv6type, nil
 }
 
@@ -29062,21 +29060,21 @@ func (self *OxmIcmpv6Type) MarshalJSON() ([]byte, error) {
 
 type OxmIcmpv6TypeMasked struct {
 	*Oxm
-	Value     uint8
+	Value     Icmpv6Type
 	ValueMask uint8
 }
 
 type IOxmIcmpv6TypeMasked interface {
 	goloxi.IOxm
-	GetValue() uint8
+	GetValue() Icmpv6Type
 	GetValueMask() uint8
 }
 
-func (self *OxmIcmpv6TypeMasked) GetValue() uint8 {
+func (self *OxmIcmpv6TypeMasked) GetValue() Icmpv6Type {
 	return self.Value
 }
 
-func (self *OxmIcmpv6TypeMasked) SetValue(v uint8) {
+func (self *OxmIcmpv6TypeMasked) SetValue(v Icmpv6Type) {
 	self.Value = v
 }
 
@@ -29104,7 +29102,7 @@ func DecodeOxmIcmpv6TypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIcmpv6
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIcmpv6TypeMasked packet too short: %d < 2", decoder.Length())
 	}
-	_oxmicmpv6typemasked.Value = uint8(decoder.ReadByte())
+	_oxmicmpv6typemasked.Value = Icmpv6Type(decoder.ReadByte())
 	_oxmicmpv6typemasked.ValueMask = uint8(decoder.ReadByte())
 	return _oxmicmpv6typemasked, nil
 }
@@ -29779,19 +29777,19 @@ func (self *OxmIpEcnMasked) MarshalJSON() ([]byte, error) {
 
 type OxmIpProto struct {
 	*Oxm
-	Value uint8
+	Value IpPrototype
 }
 
 type IOxmIpProto interface {
 	goloxi.IOxm
-	GetValue() uint8
+	GetValue() IpPrototype
 }
 
-func (self *OxmIpProto) GetValue() uint8 {
+func (self *OxmIpProto) GetValue() IpPrototype {
 	return self.Value
 }
 
-func (self *OxmIpProto) SetValue(v uint8) {
+func (self *OxmIpProto) SetValue(v IpPrototype) {
 	self.Value = v
 }
 
@@ -29810,7 +29808,7 @@ func DecodeOxmIpProto(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpProto, error)
 	if decoder.Length() < 1 {
 		return nil, fmt.Errorf("OxmIpProto packet too short: %d < 1", decoder.Length())
 	}
-	_oxmipproto.Value = uint8(decoder.ReadByte())
+	_oxmipproto.Value = IpPrototype(decoder.ReadByte())
 	return _oxmipproto, nil
 }
 
@@ -29852,21 +29850,21 @@ func (self *OxmIpProto) MarshalJSON() ([]byte, error) {
 
 type OxmIpProtoMasked struct {
 	*Oxm
-	Value     uint8
+	Value     IpPrototype
 	ValueMask uint8
 }
 
 type IOxmIpProtoMasked interface {
 	goloxi.IOxm
-	GetValue() uint8
+	GetValue() IpPrototype
 	GetValueMask() uint8
 }
 
-func (self *OxmIpProtoMasked) GetValue() uint8 {
+func (self *OxmIpProtoMasked) GetValue() IpPrototype {
 	return self.Value
 }
 
-func (self *OxmIpProtoMasked) SetValue(v uint8) {
+func (self *OxmIpProtoMasked) SetValue(v IpPrototype) {
 	self.Value = v
 }
 
@@ -29894,7 +29892,7 @@ func DecodeOxmIpProtoMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmIpProtoMa
 	if decoder.Length() < 2 {
 		return nil, fmt.Errorf("OxmIpProtoMasked packet too short: %d < 2", decoder.Length())
 	}
-	_oxmipprotomasked.Value = uint8(decoder.ReadByte())
+	_oxmipprotomasked.Value = IpPrototype(decoder.ReadByte())
 	_oxmipprotomasked.ValueMask = uint8(decoder.ReadByte())
 	return _oxmipprotomasked, nil
 }
@@ -32173,19 +32171,19 @@ func (self *OxmOvsTcpFlagsMasked) MarshalJSON() ([]byte, error) {
 
 type OxmPacketType struct {
 	*Oxm
-	Value uint8
+	Value PacketType
 }
 
 type IOxmPacketType interface {
 	goloxi.IOxm
-	GetValue() uint8
+	GetValue() PacketType
 }
 
-func (self *OxmPacketType) GetValue() uint8 {
+func (self *OxmPacketType) GetValue() PacketType {
 	return self.Value
 }
 
-func (self *OxmPacketType) SetValue(v uint8) {
+func (self *OxmPacketType) SetValue(v PacketType) {
 	self.Value = v
 }
 
@@ -32194,17 +32192,17 @@ func (self *OxmPacketType) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.PutUint8(uint8(self.Value))
+	encoder.PutUint32(uint32(self.Value))
 
 	return nil
 }
 
 func DecodeOxmPacketType(parent *Oxm, decoder *goloxi.Decoder) (*OxmPacketType, error) {
 	_oxmpackettype := &OxmPacketType{Oxm: parent}
-	if decoder.Length() < 1 {
-		return nil, fmt.Errorf("OxmPacketType packet too short: %d < 1", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("OxmPacketType packet too short: %d < 4", decoder.Length())
 	}
-	_oxmpackettype.Value = uint8(decoder.ReadByte())
+	_oxmpackettype.Value = PacketType(decoder.ReadUint32())
 	return _oxmpackettype, nil
 }
 
@@ -32223,91 +32221,6 @@ func (self *OxmPacketType) GetOXMValue() interface{} {
 }
 
 func (self *OxmPacketType) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
-	if err != nil {
-		return nil, err
-	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
-}
-
-type OxmPacketTypeMasked struct {
-	*Oxm
-	Value     uint8
-	ValueMask uint8
-}
-
-type IOxmPacketTypeMasked interface {
-	goloxi.IOxm
-	GetValue() uint8
-	GetValueMask() uint8
-}
-
-func (self *OxmPacketTypeMasked) GetValue() uint8 {
-	return self.Value
-}
-
-func (self *OxmPacketTypeMasked) SetValue(v uint8) {
-	self.Value = v
-}
-
-func (self *OxmPacketTypeMasked) GetValueMask() uint8 {
-	return self.ValueMask
-}
-
-func (self *OxmPacketTypeMasked) SetValueMask(v uint8) {
-	self.ValueMask = v
-}
-
-func (self *OxmPacketTypeMasked) Serialize(encoder *goloxi.Encoder) error {
-	if err := self.Oxm.Serialize(encoder); err != nil {
-		return err
-	}
-
-	encoder.PutUint8(uint8(self.Value))
-	encoder.PutUint8(uint8(self.ValueMask))
-
-	return nil
-}
-
-func DecodeOxmPacketTypeMasked(parent *Oxm, decoder *goloxi.Decoder) (*OxmPacketTypeMasked, error) {
-	_oxmpackettypemasked := &OxmPacketTypeMasked{Oxm: parent}
-	if decoder.Length() < 2 {
-		return nil, fmt.Errorf("OxmPacketTypeMasked packet too short: %d < 2", decoder.Length())
-	}
-	_oxmpackettypemasked.Value = uint8(decoder.ReadByte())
-	_oxmpackettypemasked.ValueMask = uint8(decoder.ReadByte())
-	return _oxmpackettypemasked, nil
-}
-
-func NewOxmPacketTypeMasked() *OxmPacketTypeMasked {
-	obj := &OxmPacketTypeMasked{
-		Oxm: NewOxm(2147506440),
-	}
-	return obj
-}
-func (self *OxmPacketTypeMasked) GetOXMName() string {
-	return "packet_type_masked"
-}
-
-func (self *OxmPacketTypeMasked) GetOXMValue() interface{} {
-	return self.Value
-}
-
-func (self *OxmPacketTypeMasked) MarshalJSON() ([]byte, error) {
 	var value interface{} = self.GetOXMValue()
 	switch t := value.(type) {
 	case net.HardwareAddr:

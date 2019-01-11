@@ -8705,19 +8705,19 @@ func (self *NxmTcpDstMasked) MarshalJSON() ([]byte, error) {
 
 type NxmTcpFlags struct {
 	*Oxm
-	Value []byte
+	Value TcpFlags
 }
 
 type INxmTcpFlags interface {
 	goloxi.IOxm
-	GetValue() []byte
+	GetValue() TcpFlags
 }
 
-func (self *NxmTcpFlags) GetValue() []byte {
+func (self *NxmTcpFlags) GetValue() TcpFlags {
 	return self.Value
 }
 
-func (self *NxmTcpFlags) SetValue(v []byte) {
+func (self *NxmTcpFlags) SetValue(v TcpFlags) {
 	self.Value = v
 }
 
@@ -8726,14 +8726,17 @@ func (self *NxmTcpFlags) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(self.Value)
+	encoder.PutUint16(uint16(self.Value))
 
 	return nil
 }
 
 func DecodeNxmTcpFlags(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpFlags, error) {
 	_nxmtcpflags := &NxmTcpFlags{Oxm: parent}
-	_nxmtcpflags.Value = decoder.Read(int(_nxmtcpflags.TypeLen & 0xFF))
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("NxmTcpFlags packet too short: %d < 2", decoder.Length())
+	}
+	_nxmtcpflags.Value = TcpFlags(decoder.ReadUint16())
 	return _nxmtcpflags, nil
 }
 
@@ -8775,29 +8778,29 @@ func (self *NxmTcpFlags) MarshalJSON() ([]byte, error) {
 
 type NxmTcpFlagsMasked struct {
 	*Oxm
-	Value     []byte
-	ValueMask []byte
+	Value     TcpFlags
+	ValueMask uint16
 }
 
 type INxmTcpFlagsMasked interface {
 	goloxi.IOxm
-	GetValue() []byte
-	GetValueMask() []byte
+	GetValue() TcpFlags
+	GetValueMask() uint16
 }
 
-func (self *NxmTcpFlagsMasked) GetValue() []byte {
+func (self *NxmTcpFlagsMasked) GetValue() TcpFlags {
 	return self.Value
 }
 
-func (self *NxmTcpFlagsMasked) SetValue(v []byte) {
+func (self *NxmTcpFlagsMasked) SetValue(v TcpFlags) {
 	self.Value = v
 }
 
-func (self *NxmTcpFlagsMasked) GetValueMask() []byte {
+func (self *NxmTcpFlagsMasked) GetValueMask() uint16 {
 	return self.ValueMask
 }
 
-func (self *NxmTcpFlagsMasked) SetValueMask(v []byte) {
+func (self *NxmTcpFlagsMasked) SetValueMask(v uint16) {
 	self.ValueMask = v
 }
 
@@ -8806,16 +8809,19 @@ func (self *NxmTcpFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(self.Value)
-	encoder.Write(self.ValueMask)
+	encoder.PutUint16(uint16(self.Value))
+	encoder.PutUint16(uint16(self.ValueMask))
 
 	return nil
 }
 
 func DecodeNxmTcpFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpFlagsMasked, error) {
 	_nxmtcpflagsmasked := &NxmTcpFlagsMasked{Oxm: parent}
-	_nxmtcpflagsmasked.Value = decoder.Read(int(_nxmtcpflagsmasked.TypeLen & 0xFF))
-	_nxmtcpflagsmasked.ValueMask = decoder.Read(int(_nxmtcpflagsmasked.TypeLen & 0xFF))
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("NxmTcpFlagsMasked packet too short: %d < 4", decoder.Length())
+	}
+	_nxmtcpflagsmasked.Value = TcpFlags(decoder.ReadUint16())
+	_nxmtcpflagsmasked.ValueMask = uint16(decoder.ReadUint16())
 	return _nxmtcpflagsmasked, nil
 }
 

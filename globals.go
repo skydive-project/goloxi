@@ -19,6 +19,8 @@ type Deserializable interface {
 
 type Message interface {
 	Serializable
+	GetVersion() uint8
+	GetLength() uint16
 	MessageType() uint8
 	MessageName() string
 	GetXid() uint32

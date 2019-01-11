@@ -2280,24 +2280,7 @@ const (
 type GroupModCommand uint16
 
 func (self GroupModCommand) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("\"%s\"", self)), nil
-}
-
-func (self GroupModCommand) String() string {
-	switch self {
-	case OFPGCAdd:
-		return "add"
-	case OFPGCModify:
-		return "modify"
-	case OFPGCDelete:
-		return "delete"
-	case OFPGCInsertBucket:
-		return "insert_bucket"
-	case OFPGCRemoveBucket:
-		return "remove_bucket"
-	default:
-		return fmt.Sprintf("%d", self)
-	}
+	return []byte(fmt.Sprintf("%d", self)), nil
 }
 
 const (
@@ -2374,38 +2357,6 @@ type HeaderTypeNamespace uint16
 
 func (self HeaderTypeNamespace) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf("%d", self)), nil
-}
-
-const (
-	// Identifiers from group ofp_header_type_namespaces
-	OFPHTNOnf        = 0 // OFPHTN_ONF
-	OFPHTNEthertype  = 1 // OFPHTN_ETHERTYPE
-	OFPHTNIpProto    = 2 // OFPHTN_IP_PROTO
-	OFPHTNUdpTCPPort = 3 // OFPHTN_UDP_TCP_PORT
-	OFPHTNIpv4Option = 4 // OFPHTN_IPV4_OPTION
-)
-
-type HeaderTypeNamespaces uint16
-
-func (self HeaderTypeNamespaces) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("\"%s\"", self)), nil
-}
-
-func (self HeaderTypeNamespaces) String() string {
-	switch self {
-	case OFPHTNOnf:
-		return "onf"
-	case OFPHTNEthertype:
-		return "ethertype"
-	case OFPHTNIpProto:
-		return "ip_proto"
-	case OFPHTNUdpTCPPort:
-		return "udp_tcp_port"
-	case OFPHTNIpv4Option:
-		return "ipv4_option"
-	default:
-		return fmt.Sprintf("%d", self)
-	}
 }
 
 const (
@@ -3614,6 +3565,49 @@ type TableReason uint8
 
 func (self TableReason) MarshalJSON() ([]byte, error) {
 	return []byte(fmt.Sprintf("%d", self)), nil
+}
+
+const (
+	// Identifiers from group ofp_tcp_flags
+	TcpFlagCwr = 128 // TCP_FLAG_CWR
+	TcpFlagEce = 64  // TCP_FLAG_ECE
+	TcpFlagUrg = 32  // TCP_FLAG_URG
+	TcpFlagAck = 16  // TCP_FLAG_ACK
+	TcpFlagPsh = 8   // TCP_FLAG_PSH
+	TcpFlagRst = 4   // TCP_FLAG_RST
+	TcpFlagSyn = 2   // TCP_FLAG_SYN
+	TcpFlagFin = 1   // TCP_FLAG_FIN
+)
+
+type TcpFlags uint16
+
+func (self TcpFlags) MarshalJSON() ([]byte, error) {
+	var flags []string
+	if self&TcpFlagCwr == TcpFlagCwr {
+		flags = append(flags, "\"Cwr\": true")
+	}
+	if self&TcpFlagEce == TcpFlagEce {
+		flags = append(flags, "\"Ece\": true")
+	}
+	if self&TcpFlagUrg == TcpFlagUrg {
+		flags = append(flags, "\"Urg\": true")
+	}
+	if self&TcpFlagAck == TcpFlagAck {
+		flags = append(flags, "\"Ack\": true")
+	}
+	if self&TcpFlagPsh == TcpFlagPsh {
+		flags = append(flags, "\"Psh\": true")
+	}
+	if self&TcpFlagRst == TcpFlagRst {
+		flags = append(flags, "\"Rst\": true")
+	}
+	if self&TcpFlagSyn == TcpFlagSyn {
+		flags = append(flags, "\"Syn\": true")
+	}
+	if self&TcpFlagFin == TcpFlagFin {
+		flags = append(flags, "\"Fin\": true")
+	}
+	return []byte("{" + strings.Join(flags, ", ") + "}"), nil
 }
 
 const (

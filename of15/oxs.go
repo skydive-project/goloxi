@@ -10,7 +10,9 @@
 package of15
 
 import (
+	"encoding/json"
 	"fmt"
+	"net"
 
 	"github.com/skydive-project/goloxi"
 )
@@ -22,6 +24,8 @@ type Oxs struct {
 type IOxs interface {
 	goloxi.Serializable
 	GetTypeLen() uint32
+	GetOXSName() string
+	GetOXSValue() interface{}
 }
 
 func (self *Oxs) GetTypeLen() uint32 {
@@ -111,6 +115,35 @@ func NewOxsByteCount() *OxsByteCount {
 	}
 	return obj
 }
+func (self *OxsByteCount) GetOXSName() string {
+	return "byte_count"
+}
+
+func (self *OxsByteCount) GetOXSValue() interface{} {
+	return self.Value
+}
+
+func (self *OxsByteCount) MarshalJSON() ([]byte, error) {
+	var value interface{} = self.GetOXSValue()
+	switch t := value.(type) {
+	case net.HardwareAddr:
+		value = t.String()
+	case net.IP:
+		value = t.String()
+	default:
+		if s, ok := t.(fmt.Stringer); ok {
+			value = s.String()
+		} else {
+			value = t
+		}
+	}
+
+	jsonValue, err := json.Marshal(value)
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXSName(), string(jsonValue))), nil
+}
 
 type OxsDuration struct {
 	*Oxs
@@ -154,6 +187,35 @@ func NewOxsDuration() *OxsDuration {
 		Oxs: NewOxs(2147614728),
 	}
 	return obj
+}
+func (self *OxsDuration) GetOXSName() string {
+	return "duration"
+}
+
+func (self *OxsDuration) GetOXSValue() interface{} {
+	return self.Value
+}
+
+func (self *OxsDuration) MarshalJSON() ([]byte, error) {
+	var value interface{} = self.GetOXSValue()
+	switch t := value.(type) {
+	case net.HardwareAddr:
+		value = t.String()
+	case net.IP:
+		value = t.String()
+	default:
+		if s, ok := t.(fmt.Stringer); ok {
+			value = s.String()
+		} else {
+			value = t
+		}
+	}
+
+	jsonValue, err := json.Marshal(value)
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXSName(), string(jsonValue))), nil
 }
 
 type OxsFlowCount struct {
@@ -199,6 +261,35 @@ func NewOxsFlowCount() *OxsFlowCount {
 	}
 	return obj
 }
+func (self *OxsFlowCount) GetOXSName() string {
+	return "flow_count"
+}
+
+func (self *OxsFlowCount) GetOXSValue() interface{} {
+	return self.Value
+}
+
+func (self *OxsFlowCount) MarshalJSON() ([]byte, error) {
+	var value interface{} = self.GetOXSValue()
+	switch t := value.(type) {
+	case net.HardwareAddr:
+		value = t.String()
+	case net.IP:
+		value = t.String()
+	default:
+		if s, ok := t.(fmt.Stringer); ok {
+			value = s.String()
+		} else {
+			value = t
+		}
+	}
+
+	jsonValue, err := json.Marshal(value)
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXSName(), string(jsonValue))), nil
+}
 
 type OxsIdleTime struct {
 	*Oxs
@@ -243,6 +334,35 @@ func NewOxsIdleTime() *OxsIdleTime {
 	}
 	return obj
 }
+func (self *OxsIdleTime) GetOXSName() string {
+	return "idle_time"
+}
+
+func (self *OxsIdleTime) GetOXSValue() interface{} {
+	return self.Value
+}
+
+func (self *OxsIdleTime) MarshalJSON() ([]byte, error) {
+	var value interface{} = self.GetOXSValue()
+	switch t := value.(type) {
+	case net.HardwareAddr:
+		value = t.String()
+	case net.IP:
+		value = t.String()
+	default:
+		if s, ok := t.(fmt.Stringer); ok {
+			value = s.String()
+		} else {
+			value = t
+		}
+	}
+
+	jsonValue, err := json.Marshal(value)
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXSName(), string(jsonValue))), nil
+}
 
 type OxsPacketCount struct {
 	*Oxs
@@ -286,4 +406,33 @@ func NewOxsPacketCount() *OxsPacketCount {
 		Oxs: NewOxs(2147616264),
 	}
 	return obj
+}
+func (self *OxsPacketCount) GetOXSName() string {
+	return "packet_count"
+}
+
+func (self *OxsPacketCount) GetOXSValue() interface{} {
+	return self.Value
+}
+
+func (self *OxsPacketCount) MarshalJSON() ([]byte, error) {
+	var value interface{} = self.GetOXSValue()
+	switch t := value.(type) {
+	case net.HardwareAddr:
+		value = t.String()
+	case net.IP:
+		value = t.String()
+	default:
+		if s, ok := t.(fmt.Stringer); ok {
+			value = s.String()
+		} else {
+			value = t
+		}
+	}
+
+	jsonValue, err := json.Marshal(value)
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXSName(), string(jsonValue))), nil
 }

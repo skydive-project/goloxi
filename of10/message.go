@@ -281,7 +281,6 @@ func (self *AggregateStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint64(uint64(self.PacketCount))
 	encoder.PutUint64(uint64(self.ByteCount))
 	encoder.PutUint32(uint32(self.FlowCount))
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -296,7 +295,6 @@ func DecodeAggregateStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*Ag
 	_aggregatestatsreply.PacketCount = uint64(decoder.ReadUint64())
 	_aggregatestatsreply.ByteCount = uint64(decoder.ReadUint64())
 	_aggregatestatsreply.FlowCount = uint32(decoder.ReadUint32())
-	decoder.Skip(4)
 	return _aggregatestatsreply, nil
 }
 
@@ -1293,7 +1291,6 @@ func (self *BsnGetIpMaskRequest) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.Index))
-	encoder.Write(bytes.Repeat([]byte{0}, 7))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -1306,7 +1303,6 @@ func DecodeBsnGetIpMaskRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*Bsn
 		return nil, fmt.Errorf("BsnGetIpMaskRequest packet too short: %d < 8", decoder.Length())
 	}
 	_bsngetipmaskrequest.Index = uint8(decoder.ReadByte())
-	decoder.Skip(7)
 	return _bsngetipmaskrequest, nil
 }
 
@@ -1353,7 +1349,6 @@ func (self *BsnGetL2TableReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.L2TableEnable))
 	encoder.Write(bytes.Repeat([]byte{0}, 1))
 	encoder.PutUint16(uint16(self.L2TablePriority))
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -1368,7 +1363,6 @@ func DecodeBsnGetL2TableReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnG
 	_bsngetl2tablereply.L2TableEnable = uint8(decoder.ReadByte())
 	decoder.Skip(1)
 	_bsngetl2tablereply.L2TablePriority = uint16(decoder.ReadUint16())
-	decoder.Skip(4)
 	return _bsngetl2tablereply, nil
 }
 
@@ -1433,7 +1427,6 @@ func (self *BsnGetMirroringReply) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -1446,7 +1439,6 @@ func DecodeBsnGetMirroringReply(parent *BsnHeader, decoder *goloxi.Decoder) (*Bs
 		return nil, fmt.Errorf("BsnGetMirroringReply packet too short: %d < 4", decoder.Length())
 	}
 	_bsngetmirroringreply.ReportMirrorPorts = uint8(decoder.ReadByte())
-	decoder.Skip(3)
 	return _bsngetmirroringreply, nil
 }
 
@@ -1481,7 +1473,6 @@ func (self *BsnGetMirroringRequest) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -1494,7 +1485,6 @@ func DecodeBsnGetMirroringRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*
 		return nil, fmt.Errorf("BsnGetMirroringRequest packet too short: %d < 4", decoder.Length())
 	}
 	_bsngetmirroringrequest.ReportMirrorPorts = uint8(decoder.ReadByte())
-	decoder.Skip(3)
 	return _bsngetmirroringrequest, nil
 }
 
@@ -1541,7 +1531,6 @@ func (self *BsnHybridGetReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.HybridEnable))
 	encoder.Write(bytes.Repeat([]byte{0}, 1))
 	encoder.PutUint16(uint16(self.HybridVersion))
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -1556,7 +1545,6 @@ func DecodeBsnHybridGetReply(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnHy
 	_bsnhybridgetreply.HybridEnable = uint8(decoder.ReadByte())
 	decoder.Skip(1)
 	_bsnhybridgetreply.HybridVersion = uint16(decoder.ReadUint16())
-	decoder.Skip(4)
 	return _bsnhybridgetreply, nil
 }
 
@@ -2131,7 +2119,6 @@ func (self *BsnSetL2TableRequest) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.L2TableEnable))
 	encoder.Write(bytes.Repeat([]byte{0}, 1))
 	encoder.PutUint16(uint16(self.L2TablePriority))
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -2146,7 +2133,6 @@ func DecodeBsnSetL2TableRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*Bs
 	_bsnsetl2tablerequest.L2TableEnable = uint8(decoder.ReadByte())
 	decoder.Skip(1)
 	_bsnsetl2tablerequest.L2TablePriority = uint16(decoder.ReadUint16())
-	decoder.Skip(4)
 	return _bsnsetl2tablerequest, nil
 }
 
@@ -2181,7 +2167,6 @@ func (self *BsnSetMirroring) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -2194,7 +2179,6 @@ func DecodeBsnSetMirroring(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetM
 		return nil, fmt.Errorf("BsnSetMirroring packet too short: %d < 4", decoder.Length())
 	}
 	_bsnsetmirroring.ReportMirrorPorts = uint8(decoder.ReadByte())
-	decoder.Skip(3)
 	return _bsnsetmirroring, nil
 }
 
@@ -4608,7 +4592,6 @@ func (self *NiciraFlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	self.OutPort.Serialize(encoder)
 	encoder.PutUint16(uint16(self.MatchLen))
 	encoder.PutUint8(uint8(self.TableId))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -4625,7 +4608,6 @@ func DecodeNiciraFlowStatsRequest(parent *ExperimenterStatsRequest, decoder *gol
 	_niciraflowstatsrequest.OutPort.Decode(decoder)
 	_niciraflowstatsrequest.MatchLen = uint16(decoder.ReadUint16())
 	_niciraflowstatsrequest.TableId = uint8(decoder.ReadByte())
-	decoder.Skip(3)
 	return _niciraflowstatsrequest, nil
 }
 
@@ -4907,7 +4889,6 @@ func (self *PortMod) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Config))
 	encoder.PutUint32(uint32(self.Mask))
 	encoder.PutUint32(uint32(self.Advertise))
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -4924,7 +4905,6 @@ func DecodePortMod(parent *Header, decoder *goloxi.Decoder) (*PortMod, error) {
 	_portmod.Config = PortConfig(decoder.ReadUint32())
 	_portmod.Mask = PortConfig(decoder.ReadUint32())
 	_portmod.Advertise = uint32(decoder.ReadUint32())
-	decoder.Skip(4)
 	return _portmod, nil
 }
 
@@ -5073,7 +5053,6 @@ func (self *PortStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	self.PortNo.Serialize(encoder)
-	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5086,7 +5065,6 @@ func DecodePortStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*Por
 		return nil, fmt.Errorf("PortStatsRequest packet too short: %d < 8", decoder.Length())
 	}
 	_portstatsrequest.PortNo.Decode(decoder)
-	decoder.Skip(6)
 	return _portstatsrequest, nil
 }
 
@@ -5259,7 +5237,6 @@ func (self *QueueGetConfigRequest) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	self.Port.Serialize(encoder)
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5272,7 +5249,6 @@ func DecodeQueueGetConfigRequest(parent *Header, decoder *goloxi.Decoder) (*Queu
 		return nil, fmt.Errorf("QueueGetConfigRequest packet too short: %d < 4", decoder.Length())
 	}
 	_queuegetconfigrequest.Port.Decode(decoder)
-	decoder.Skip(2)
 	return _queuegetconfigrequest, nil
 }
 

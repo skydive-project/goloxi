@@ -158,8 +158,6 @@ func (self *InstructionClearActions) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
-
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -167,10 +165,9 @@ func (self *InstructionClearActions) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeInstructionClearActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionClearActions, error) {
 	_instructionclearactions := &InstructionClearActions{Instruction: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("InstructionClearActions packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("InstructionClearActions packet too short: %d < 4", decoder.Length())
 	}
-	decoder.Skip(4)
 	return _instructionclearactions, nil
 }
 
@@ -250,7 +247,6 @@ func (self *InstructionGotoTable) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.TableId))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -263,7 +259,6 @@ func DecodeInstructionGotoTable(parent *Instruction, decoder *goloxi.Decoder) (*
 		return nil, fmt.Errorf("InstructionGotoTable packet too short: %d < 4", decoder.Length())
 	}
 	_instructiongototable.TableId = uint8(decoder.ReadByte())
-	decoder.Skip(3)
 	return _instructiongototable, nil
 }
 

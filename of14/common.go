@@ -2319,7 +2319,6 @@ func (self *BsnGentableDescStatsEntry) Serialize(encoder *goloxi.Encoder) error 
 	encoder.Write([]byte(self.Name))
 	encoder.PutUint32(uint32(self.BucketsSize))
 	encoder.PutUint32(uint32(self.MaxEntries))
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
@@ -2339,7 +2338,6 @@ func DecodeBsnGentableDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentableDescS
 	_bsngentabledescstatsentry.Name = string(bytes.Trim(decoder.Read(32), "\x00"))
 	_bsngentabledescstatsentry.BucketsSize = uint32(decoder.ReadUint32())
 	_bsngentabledescstatsentry.MaxEntries = uint32(decoder.ReadUint32())
-	decoder.Skip(4)
 	return _bsngentabledescstatsentry, nil
 }
 
@@ -2852,7 +2850,6 @@ func (self *BsnLacpStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.PartnerPortPriority))
 	encoder.PutUint16(uint16(self.PartnerPortNum))
 	encoder.PutUint16(uint16(self.PartnerKey))
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	return nil
 }
@@ -2875,7 +2872,6 @@ func DecodeBsnLacpStatsEntry(decoder *goloxi.Decoder) (*BsnLacpStatsEntry, error
 	_bsnlacpstatsentry.PartnerPortPriority = uint16(decoder.ReadUint16())
 	_bsnlacpstatsentry.PartnerPortNum = uint16(decoder.ReadUint16())
 	_bsnlacpstatsentry.PartnerKey = uint16(decoder.ReadUint16())
-	decoder.Skip(2)
 	return _bsnlacpstatsentry, nil
 }
 
@@ -12497,7 +12493,6 @@ func (self *EdPropNshMdType) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.MdType))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	encoder.Bytes()[3] = uint8(len(encoder.Bytes()))
 
@@ -12510,7 +12505,6 @@ func DecodeEdPropNshMdType(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropN
 		return nil, fmt.Errorf("EdPropNshMdType packet too short: %d < 4", decoder.Length())
 	}
 	_edpropnshmdtype.MdType = uint8(decoder.ReadByte())
-	decoder.Skip(3)
 	return _edpropnshmdtype, nil
 }
 
@@ -15473,7 +15467,6 @@ func (self *MeterBandDrop) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Rate))
 	encoder.PutUint32(uint32(self.BurstSize))
-	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -15487,7 +15480,6 @@ func DecodeMeterBandDrop(parent *MeterBand, decoder *goloxi.Decoder) (*MeterBand
 	}
 	_meterbanddrop.Rate = uint32(decoder.ReadUint32())
 	_meterbanddrop.BurstSize = uint32(decoder.ReadUint32())
-	decoder.Skip(4)
 	return _meterbanddrop, nil
 }
 
@@ -15544,7 +15536,6 @@ func (self *MeterBandDscpRemark) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Rate))
 	encoder.PutUint32(uint32(self.BurstSize))
 	encoder.PutUint8(uint8(self.PrecLevel))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -15559,7 +15550,6 @@ func DecodeMeterBandDscpRemark(parent *MeterBand, decoder *goloxi.Decoder) (*Met
 	_meterbanddscpremark.Rate = uint32(decoder.ReadUint32())
 	_meterbanddscpremark.BurstSize = uint32(decoder.ReadUint32())
 	_meterbanddscpremark.PrecLevel = uint8(decoder.ReadByte())
-	decoder.Skip(3)
 	return _meterbanddscpremark, nil
 }
 
@@ -15846,7 +15836,6 @@ func (self *MeterFeatures) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Capabilities))
 	encoder.PutUint8(uint8(self.MaxBands))
 	encoder.PutUint8(uint8(self.MaxColor))
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	return nil
 }
@@ -15860,7 +15849,6 @@ func (self *MeterFeatures) Decode(decoder *goloxi.Decoder) error {
 	self.Capabilities = uint32(decoder.ReadUint32())
 	self.MaxBands = uint8(decoder.ReadByte())
 	self.MaxColor = uint8(decoder.ReadByte())
-	decoder.Skip(2)
 
 	return nil
 }
@@ -34931,7 +34919,6 @@ func (self *QueueDescPropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Rate))
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -34944,7 +34931,6 @@ func DecodeQueueDescPropMaxRate(parent *QueueDescProp, decoder *goloxi.Decoder) 
 		return nil, fmt.Errorf("QueueDescPropMaxRate packet too short: %d < 4", decoder.Length())
 	}
 	_queuedescpropmaxrate.Rate = uint16(decoder.ReadUint16())
-	decoder.Skip(2)
 	return _queuedescpropmaxrate, nil
 }
 
@@ -34979,7 +34965,6 @@ func (self *QueueDescPropMinRate) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Rate))
-	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -34992,7 +34977,6 @@ func DecodeQueueDescPropMinRate(parent *QueueDescProp, decoder *goloxi.Decoder) 
 		return nil, fmt.Errorf("QueueDescPropMinRate packet too short: %d < 4", decoder.Length())
 	}
 	_queuedescpropminrate.Rate = uint16(decoder.ReadUint16())
-	decoder.Skip(2)
 	return _queuedescpropminrate, nil
 }
 
@@ -35141,7 +35125,6 @@ func (self *QueuePropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.Rate))
-	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -35155,7 +35138,6 @@ func DecodeQueuePropMaxRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueueP
 	}
 	decoder.Skip(4)
 	_queuepropmaxrate.Rate = uint16(decoder.ReadUint16())
-	decoder.Skip(6)
 	return _queuepropmaxrate, nil
 }
 
@@ -35191,7 +35173,6 @@ func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.Rate))
-	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -35205,7 +35186,6 @@ func DecodeQueuePropMinRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueueP
 	}
 	decoder.Skip(4)
 	_queuepropminrate.Rate = uint16(decoder.ReadUint16())
-	decoder.Skip(6)
 	return _queuepropminrate, nil
 }
 
@@ -37177,7 +37157,6 @@ func (self *TableModPropVacancy) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.VacancyDown))
 	encoder.PutUint8(uint8(self.VacancyUp))
 	encoder.PutUint8(uint8(self.Vacancy))
-	encoder.Write(bytes.Repeat([]byte{0}, 1))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -37197,7 +37176,6 @@ func DecodeTableModPropVacancy(decoder *goloxi.Decoder) (*TableModPropVacancy, e
 	_tablemodpropvacancy.VacancyDown = uint8(decoder.ReadByte())
 	_tablemodpropvacancy.VacancyUp = uint8(decoder.ReadByte())
 	_tablemodpropvacancy.Vacancy = uint8(decoder.ReadByte())
-	decoder.Skip(1)
 	return _tablemodpropvacancy, nil
 }
 

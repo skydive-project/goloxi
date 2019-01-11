@@ -1648,7 +1648,6 @@ func (self *EdPropNshMdType) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.MdType))
-	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	encoder.Bytes()[3] = uint8(len(encoder.Bytes()))
 
@@ -1661,7 +1660,6 @@ func DecodeEdPropNshMdType(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropN
 		return nil, fmt.Errorf("EdPropNshMdType packet too short: %d < 4", decoder.Length())
 	}
 	_edpropnshmdtype.MdType = uint8(decoder.ReadByte())
-	decoder.Skip(3)
 	return _edpropnshmdtype, nil
 }
 
@@ -16750,7 +16748,6 @@ func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.Rate))
-	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -16764,7 +16761,6 @@ func DecodeQueuePropMinRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueueP
 	}
 	decoder.Skip(4)
 	_queuepropminrate.Rate = uint16(decoder.ReadUint16())
-	decoder.Skip(6)
 	return _queuepropminrate, nil
 }
 

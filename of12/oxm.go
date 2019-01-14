@@ -10,7 +10,6 @@
 package of12
 
 import (
-	"encoding/json"
 	"fmt"
 	"net"
 
@@ -51,182 +50,174 @@ func DecodeOxm(decoder *goloxi.Decoder) (goloxi.IOxm, error) {
 	_oxm.TypeLen = uint32(decoder.ReadUint32())
 
 	switch _oxm.TypeLen {
-	case 2147493889:
-		return DecodeOxmIcmpv4Code(_oxm, decoder)
+	case 110204:
+		return DecodeNxmTunMetadata47(_oxm, decoder)
 	case 129026:
 		return DecodeOxmConnTrackingTpSrc(_oxm, decoder)
-	case 65540:
-		return DecodeNxmReg0(_oxm, decoder)
+	case 2147483652:
+		return DecodeOxmInPort(_oxm, decoder)
 	case 77830:
 		return DecodeNxmNdSll(_oxm, decoder)
-	case 80897:
-		return DecodeNxmMplsTtl(_oxm, decoder)
+	case 2147499009:
+		return DecodeOxmIcmpv6Code(_oxm, decoder)
 	case 73736:
 		return DecodeNxmTunId(_oxm, decoder)
 	case 2:
 		return DecodeNxmInPort(_oxm, decoder)
-	case 2147484944:
-		return DecodeOxmMetadataMasked(_oxm, decoder)
-	case 122896:
-		return DecodeNxmXxreg1(_oxm, decoder)
-	case 94588:
-		return DecodeNxmTunMetadata16Masked(_oxm, decoder)
+	case 120848:
+		return DecodeOxmConnTrackingLabel(_oxm, decoder)
+	case 199684:
+		return DecodeOxmBsnL3DstClassId(_oxm, decoder)
 	case 111228:
 		return DecodeNxmTunMetadata49(_oxm, decoder)
-	case 2147485702:
-		return DecodeOxmEthSrc(_oxm, decoder)
-	case 2147499266:
-		return DecodeOxmIcmpv6CodeMasked(_oxm, decoder)
-	case 95612:
-		return DecodeNxmTunMetadata18Masked(_oxm, decoder)
+	case 1030:
+		return DecodeNxmEthSrc(_oxm, decoder)
 	case 112252:
 		return DecodeNxmTunMetadata51(_oxm, decoder)
-	case 96892:
-		return DecodeNxmTunMetadata21(_oxm, decoder)
-	case 96636:
-		return DecodeNxmTunMetadata20Masked(_oxm, decoder)
+	case 108024:
+		return DecodeNxmTunMetadata42Masked(_oxm, decoder)
 	case 2147495176:
 		return DecodeOxmArpSpaMasked(_oxm, decoder)
-	case 121872:
-		return DecodeNxmTunIpv6Dst(_oxm, decoder)
-	case 110204:
-		return DecodeNxmTunMetadata47(_oxm, decoder)
-	case 126980:
-		return DecodeOxmConnTrackingNwSrc(_oxm, decoder)
-	case 97660:
-		return DecodeNxmTunMetadata22Masked(_oxm, decoder)
+	case 113276:
+		return DecodeNxmTunMetadata53(_oxm, decoder)
+	case 109048:
+		return DecodeNxmTunMetadata44Masked(_oxm, decoder)
 	case 94332:
 		return DecodeNxmTunMetadata16(_oxm, decoder)
-	case 2147483652:
-		return DecodeOxmInPort(_oxm, decoder)
+	case 65540:
+		return DecodeNxmReg0(_oxm, decoder)
+	case 114300:
+		return DecodeNxmTunMetadata55(_oxm, decoder)
 	case 2050:
 		return DecodeNxmVlanTci(_oxm, decoder)
 	case 3073:
 		return DecodeNxmNwProto(_oxm, decoder)
-	case 82180:
-		return DecodeNxmTunDstMasked(_oxm, decoder)
-	case 98684:
-		return DecodeNxmTunMetadata24Masked(_oxm, decoder)
+	case 110072:
+		return DecodeNxmTunMetadata46Masked(_oxm, decoder)
 	case 66564:
 		return DecodeNxmReg2(_oxm, decoder)
 	case 115324:
 		return DecodeNxmTunMetadata57(_oxm, decoder)
-	case 95356:
-		return DecodeNxmTunMetadata18(_oxm, decoder)
+	case 2147486722:
+		return DecodeOxmVlanVid(_oxm, decoder)
 	case 2147487745:
 		return DecodeOxmIpDscp(_oxm, decoder)
-	case 120848:
-		return DecodeOxmConnTrackingLabel(_oxm, decoder)
-	case 85250:
-		return DecodeNxmTunGbpIdMasked(_oxm, decoder)
-	case 2147490564:
-		return DecodeOxmTcpSrcMasked(_oxm, decoder)
-	case 99708:
-		return DecodeNxmTunMetadata26Masked(_oxm, decoder)
+	case 111096:
+		return DecodeNxmTunMetadata48Masked(_oxm, decoder)
+	case 83204:
+		return DecodeNxmTcpFlagsMasked(_oxm, decoder)
+	case 3588:
+		return DecodeNxmIpSrc(_oxm, decoder)
 	case 198660:
 		return DecodeOxmBsnL3InterfaceClassId(_oxm, decoder)
 	case 2147488769:
 		return DecodeOxmIpProto(_oxm, decoder)
+	case 112120:
+		return DecodeNxmTunMetadata50Masked(_oxm, decoder)
+	case 121872:
+		return DecodeNxmTunIpv6Dst(_oxm, decoder)
 	case 199172:
 		return DecodeOxmBsnL3SrcClassId(_oxm, decoder)
-	case 100732:
-		return DecodeNxmTunMetadata28Masked(_oxm, decoder)
 	case 68612:
 		return DecodeNxmReg6(_oxm, decoder)
 	case 117372:
 		return DecodeNxmTunMetadata61(_oxm, decoder)
 	case 5122:
 		return DecodeNxmTcpDst(_oxm, decoder)
-	case 93564:
-		return DecodeNxmTunMetadata14Masked(_oxm, decoder)
-	case 101244:
-		return DecodeNxmTunMetadata29Masked(_oxm, decoder)
+	case 113144:
+		return DecodeNxmTunMetadata52Masked(_oxm, decoder)
+	case 122896:
+		return DecodeNxmXxreg1(_oxm, decoder)
+	case 124192:
+		return DecodeNxmXxreg3Masked(_oxm, decoder)
 	case 81672:
 		return DecodeOxmTunnelIpv4SrcMasked(_oxm, decoder)
-	case 101756:
-		return DecodeNxmTunMetadata30Masked(_oxm, decoder)
+	case 2147485702:
+		return DecodeOxmEthSrc(_oxm, decoder)
 	case 4100:
 		return DecodeNxmIpDst(_oxm, decoder)
 	case 118396:
 		return DecodeNxmTunMetadata63(_oxm, decoder)
-	case 119042:
-		return DecodeNxmTunFlagsMasked(_oxm, decoder)
-	case 127236:
-		return DecodeNxmCtNwSrcMasked(_oxm, decoder)
-	case 78086:
-		return DecodeNxmNdSllMasked(_oxm, decoder)
+	case 2147494146:
+		return DecodeOxmIcmpv4CodeMasked(_oxm, decoder)
+	case 129284:
+		return DecodeOxmConnTrackingTpSrcMasked(_oxm, decoder)
+	case 114168:
+		return DecodeNxmTunMetadata54Masked(_oxm, decoder)
+	case 123920:
+		return DecodeNxmXxreg3(_oxm, decoder)
 	case 200968:
 		return DecodeOxmBsnUdf0Masked(_oxm, decoder)
+	case 78091:
+		return DecodeNxmNdSllMasked(_oxm, decoder)
 	case 2147496204:
 		return DecodeOxmArpShaMasked(_oxm, decoder)
-	case 76048:
-		return DecodeNxmIpv6DstMasked(_oxm, decoder)
+	case 74000:
+		return DecodeNxmTunIdMasked(_oxm, decoder)
 	case 86140:
 		return DecodeNxmTunMetadata0(_oxm, decoder)
-	case 119556:
-		return DecodeNxmCtStateMasked(_oxm, decoder)
-	case 102780:
-		return DecodeNxmTunMetadata32Masked(_oxm, decoder)
 	case 70660:
 		return DecodeNxmReg10(_oxm, decoder)
-	case 2147491076:
-		return DecodeOxmTcpDstMasked(_oxm, decoder)
 	case 121120:
 		return DecodeOxmConnTrackingLabelMasked(_oxm, decoder)
-	case 78849:
-		return DecodeNxmIpFrag(_oxm, decoder)
+	case 107000:
+		return DecodeNxmTunMetadata40Masked(_oxm, decoder)
+	case 3848:
+		return DecodeNxmIpSrcMasked(_oxm, decoder)
 	case 87164:
 		return DecodeNxmTunMetadata2(_oxm, decoder)
-	case 120580:
-		return DecodeNxmCtMarkMasked(_oxm, decoder)
-	case 103804:
-		return DecodeNxmTunMetadata34Masked(_oxm, decoder)
 	case 202756:
 		return DecodeOxmBsnUdf4(_oxm, decoder)
 	case 204802:
 		return DecodeOxmBsnTcpFlags(_oxm, decoder)
 	case 205825:
 		return DecodeOxmBsnL2CacheHit(_oxm, decoder)
+	case 116216:
+		return DecodeNxmTunMetadata58Masked(_oxm, decoder)
+	case 199432:
+		return DecodeOxmBsnL3SrcClassIdMasked(_oxm, decoder)
 	case 88188:
 		return DecodeNxmTunMetadata4(_oxm, decoder)
-	case 2147491588:
-		return DecodeOxmUdpSrcMasked(_oxm, decoder)
-	case 104828:
-		return DecodeNxmTunMetadata36Masked(_oxm, decoder)
 	case 72708:
 		return DecodeNxmReg14(_oxm, decoder)
 	case 2147492866:
 		return DecodeOxmSctpDst(_oxm, decoder)
+	case 2147493889:
+		return DecodeOxmIcmpv4Code(_oxm, decoder)
+	case 117240:
+		return DecodeNxmTunMetadata60Masked(_oxm, decoder)
 	case 200196:
 		return DecodeOxmBsnEgrPortGroupId(_oxm, decoder)
+	case 128288:
+		return DecodeOxmConnTrackingIpv6SrcMasked(_oxm, decoder)
 	case 89212:
 		return DecodeNxmTunMetadata6(_oxm, decoder)
 	case 2147500300:
 		return DecodeOxmIpv6NdSllMasked(_oxm, decoder)
-	case 105852:
-		return DecodeNxmTunMetadata38Masked(_oxm, decoder)
-	case 113020:
-		return DecodeNxmTunMetadata52Masked(_oxm, decoder)
 	case 8196:
 		return DecodeNxmArpSpa(_oxm, decoder)
 	case 76801:
 		return DecodeNxmIcmpv6Code(_oxm, decoder)
+	case 118264:
+		return DecodeNxmTunMetadata62Masked(_oxm, decoder)
 	case 70148:
 		return DecodeNxmReg9(_oxm, decoder)
 	case 119560:
 		return DecodeOxmConnTrackingStateMasked(_oxm, decoder)
 	case 90236:
 		return DecodeNxmTunMetadata8(_oxm, decoder)
-	case 106876:
-		return DecodeNxmTunMetadata40Masked(_oxm, decoder)
+	case 119044:
+		return DecodeNxmTunFlagsMasked(_oxm, decoder)
+	case 82696:
+		return DecodeNxmPktMarkMasked(_oxm, decoder)
 	case 4294923528:
 		return DecodeOxmOvsTcpFlagsMasked(_oxm, decoder)
 	case 120584:
 		return DecodeOxmConnTrackingMarkMasked(_oxm, decoder)
 	case 91260:
 		return DecodeNxmTunMetadata10(_oxm, decoder)
-	case 107900:
-		return DecodeNxmTunMetadata42Masked(_oxm, decoder)
+	case 87032:
+		return DecodeNxmTunMetadata1Masked(_oxm, decoder)
 	case 126722:
 		return DecodeOxmConnTrackingNwProtoMasked(_oxm, decoder)
 	case 206852:
@@ -237,24 +228,22 @@ func DecodeOxm(decoder *goloxi.Decoder) (goloxi.IOxm, error) {
 		return DecodeOxmBsnInPorts128Masked(_oxm, decoder)
 	case 92284:
 		return DecodeNxmTunMetadata12(_oxm, decoder)
-	case 108924:
-		return DecodeNxmTunMetadata44Masked(_oxm, decoder)
-	case 74758:
-		return DecodeNxmArpTha(_oxm, decoder)
-	case 121104:
-		return DecodeNxmCtLabelMasked(_oxm, decoder)
+	case 88056:
+		return DecodeNxmTunMetadata3Masked(_oxm, decoder)
 	case 2147494916:
 		return DecodeOxmArpSpa(_oxm, decoder)
 	case 79873:
 		return DecodeNxmNwEcn(_oxm, decoder)
 	case 196624:
 		return DecodeOxmBsnInPorts128(_oxm, decoder)
+	case 200456:
+		return DecodeOxmBsnEgrPortGroupIdMasked(_oxm, decoder)
 	case 2147489284:
 		return DecodeOxmIpv4Src(_oxm, decoder)
 	case 93308:
 		return DecodeNxmTunMetadata14(_oxm, decoder)
-	case 2147492612:
-		return DecodeOxmSctpSrcMasked(_oxm, decoder)
+	case 115192:
+		return DecodeNxmTunMetadata56Masked(_oxm, decoder)
 	case 2147498497:
 		return DecodeOxmIcmpv6Type(_oxm, decoder)
 	case 129538:
@@ -263,190 +252,184 @@ func DecodeOxm(decoder *goloxi.Decoder) (goloxi.IOxm, error) {
 		return DecodeOxmIpv6NdTll(_oxm, decoder)
 	case 84484:
 		return DecodeNxmConjId(_oxm, decoder)
-	case 78342:
-		return DecodeNxmNdTll(_oxm, decoder)
-	case 4866:
-		return DecodeNxmTcpSrcMasked(_oxm, decoder)
-	case 121360:
-		return DecodeNxmTunIpv6Src(_oxm, decoder)
-	case 71428:
-		return DecodeNxmReg11Masked(_oxm, decoder)
-	case 2147499009:
-		return DecodeOxmIcmpv6Code(_oxm, decoder)
-	case 774:
-		return DecodeNxmEthDstMasked(_oxm, decoder)
-	case 201480:
-		return DecodeOxmBsnUdf1Masked(_oxm, decoder)
-	case 111996:
-		return DecodeNxmTunMetadata50Masked(_oxm, decoder)
+	case 74246:
+		return DecodeNxmArpSha(_oxm, decoder)
+	case 198402:
+		return DecodeOxmBsnGlobalVrfAllowedMasked(_oxm, decoder)
+	case 123408:
+		return DecodeNxmXxreg2(_oxm, decoder)
+	case 90104:
+		return DecodeNxmTunMetadata7Masked(_oxm, decoder)
+	case 129796:
+		return DecodeOxmConnTrackingTpDstMasked(_oxm, decoder)
+	case 70408:
+		return DecodeNxmReg9Masked(_oxm, decoder)
+	case 91128:
+		return DecodeNxmTunMetadata9Masked(_oxm, decoder)
+	case 83720:
+		return DecodeNxmDpHashMasked(_oxm, decoder)
 	case 2147495942:
 		return DecodeOxmArpSha(_oxm, decoder)
 	case 2147497988:
 		return DecodeOxmIpv6Flabel(_oxm, decoder)
+	case 78603:
+		return DecodeNxmNdTllMasked(_oxm, decoder)
 	case 2147500812:
 		return DecodeOxmIpv6NdTllMasked(_oxm, decoder)
 	case 96380:
 		return DecodeNxmTunMetadata20(_oxm, decoder)
-	case 113276:
-		return DecodeNxmTunMetadata53(_oxm, decoder)
-	case 129796:
-		return DecodeOxmConnTrackingTpDstMasked(_oxm, decoder)
-	case 75536:
-		return DecodeNxmIpv6SrcMasked(_oxm, decoder)
+	case 92152:
+		return DecodeNxmTunMetadata11Masked(_oxm, decoder)
+	case 80897:
+		return DecodeNxmMplsTtl(_oxm, decoder)
 	case 2147489544:
 		return DecodeOxmIpv4SrcMasked(_oxm, decoder)
 	case 97404:
 		return DecodeNxmTunMetadata22(_oxm, decoder)
-	case 114044:
-		return DecodeNxmTunMetadata54Masked(_oxm, decoder)
-	case 198402:
-		return DecodeOxmBsnGlobalVrfAllowedMasked(_oxm, decoder)
+	case 93176:
+		return DecodeNxmTunMetadata13Masked(_oxm, decoder)
 	case 94844:
 		return DecodeNxmTunMetadata17(_oxm, decoder)
 	case 81924:
 		return DecodeOxmTunnelIpv4Dst(_oxm, decoder)
-	case 2147486980:
-		return DecodeOxmVlanVidMasked(_oxm, decoder)
 	case 127752:
 		return DecodeOxmConnTrackingNwDstMasked(_oxm, decoder)
 	case 98428:
 		return DecodeNxmTunMetadata24(_oxm, decoder)
-	case 66308:
-		return DecodeNxmReg1Masked(_oxm, decoder)
+	case 94200:
+		return DecodeNxmTunMetadata15Masked(_oxm, decoder)
 	case 2147489026:
 		return DecodeOxmIpProtoMasked(_oxm, decoder)
-	case 115068:
-		return DecodeNxmTunMetadata56Masked(_oxm, decoder)
 	case 2147501060:
 		return DecodeOxmMplsLabel(_oxm, decoder)
 	case 84994:
 		return DecodeNxmTunGbpId(_oxm, decoder)
-	case 202244:
-		return DecodeOxmBsnUdf3(_oxm, decoder)
 	case 99452:
 		return DecodeNxmTunMetadata26(_oxm, decoder)
-	case 67332:
-		return DecodeNxmReg3Masked(_oxm, decoder)
-	case 116092:
-		return DecodeNxmTunMetadata58Masked(_oxm, decoder)
+	case 95224:
+		return DecodeNxmTunMetadata17Masked(_oxm, decoder)
 	case 2147500038:
 		return DecodeOxmIpv6NdSll(_oxm, decoder)
 	case 83972:
 		return DecodeNxmRecircId(_oxm, decoder)
-	case 2147497760:
-		return DecodeOxmIpv6DstMasked(_oxm, decoder)
+	case 128800:
+		return DecodeOxmConnTrackingIpv6DstMasked(_oxm, decoder)
 	case 72196:
 		return DecodeNxmReg13(_oxm, decoder)
 	case 100476:
 		return DecodeNxmTunMetadata28(_oxm, decoder)
-	case 68356:
-		return DecodeNxmReg5Masked(_oxm, decoder)
-	case 117116:
-		return DecodeNxmTunMetadata60Masked(_oxm, decoder)
+	case 96248:
+		return DecodeNxmTunMetadata19Masked(_oxm, decoder)
 	case 2147488514:
 		return DecodeOxmIpEcnMasked(_oxm, decoder)
 	case 112764:
 		return DecodeNxmTunMetadata52(_oxm, decoder)
-	case 110972:
-		return DecodeNxmTunMetadata48Masked(_oxm, decoder)
 	case 101500:
 		return DecodeNxmTunMetadata30(_oxm, decoder)
-	case 3844:
-		return DecodeNxmIpSrcMasked(_oxm, decoder)
-	case 118140:
-		return DecodeNxmTunMetadata62Masked(_oxm, decoder)
-	case 123664:
-		return DecodeNxmXxreg2Masked(_oxm, decoder)
-	case 117628:
-		return DecodeNxmTunMetadata61Masked(_oxm, decoder)
-	case 129794:
-		return DecodeNxmCtTpDstMasked(_oxm, decoder)
-	case 127748:
-		return DecodeNxmCtNwDstMasked(_oxm, decoder)
-	case 78598:
-		return DecodeNxmNdTllMasked(_oxm, decoder)
-	case 197384:
-		return DecodeOxmBsnLagIdMasked(_oxm, decoder)
+	case 97272:
+		return DecodeNxmTunMetadata21Masked(_oxm, decoder)
+	case 2147498754:
+		return DecodeOxmIcmpv6TypeMasked(_oxm, decoder)
+	case 2147486468:
+		return DecodeOxmEthTypeMasked(_oxm, decoder)
+	case 2147484424:
+		return DecodeOxmInPhyPortMasked(_oxm, decoder)
+	case 74507:
+		return DecodeNxmArpShaMasked(_oxm, decoder)
 	case 2147496716:
 		return DecodeOxmArpThaMasked(_oxm, decoder)
-	case 119300:
-		return DecodeOxmConnTrackingState(_oxm, decoder)
-	case 121616:
-		return DecodeNxmTunIpv6SrcMasked(_oxm, decoder)
+	case 197384:
+		return DecodeOxmBsnLagIdMasked(_oxm, decoder)
+	case 76064:
+		return DecodeNxmIpv6DstMasked(_oxm, decoder)
 	case 102524:
 		return DecodeNxmTunMetadata32(_oxm, decoder)
-	case 70404:
-		return DecodeNxmReg9Masked(_oxm, decoder)
+	case 98296:
+		return DecodeNxmTunMetadata23Masked(_oxm, decoder)
+	case 4868:
+		return DecodeNxmTcpSrcMasked(_oxm, decoder)
+	case 121632:
+		return DecodeNxmTunIpv6SrcMasked(_oxm, decoder)
 	case 75792:
 		return DecodeNxmIpv6Dst(_oxm, decoder)
-	case 86908:
-		return DecodeNxmTunMetadata1Masked(_oxm, decoder)
+	case 202504:
+		return DecodeOxmBsnUdf3Masked(_oxm, decoder)
 	case 120324:
 		return DecodeOxmConnTrackingMark(_oxm, decoder)
-	case 87932:
-		return DecodeNxmTunMetadata3Masked(_oxm, decoder)
-	case 199432:
-		return DecodeOxmBsnL3SrcClassIdMasked(_oxm, decoder)
+	case 99320:
+		return DecodeNxmTunMetadata25Masked(_oxm, decoder)
+	case 65800:
+		return DecodeNxmReg0Masked(_oxm, decoder)
+	case 66824:
+		return DecodeNxmReg2Masked(_oxm, decoder)
+	case 72456:
+		return DecodeNxmReg13Masked(_oxm, decoder)
+	case 68360:
+		return DecodeNxmReg5Masked(_oxm, decoder)
 	case 104572:
 		return DecodeNxmTunMetadata36(_oxm, decoder)
-	case 3588:
-		return DecodeNxmIpSrc(_oxm, decoder)
-	case 72452:
-		return DecodeNxmReg13Masked(_oxm, decoder)
+	case 95356:
+		return DecodeNxmTunMetadata18(_oxm, decoder)
+	case 100344:
+		return DecodeNxmTunMetadata27Masked(_oxm, decoder)
+	case 2147490564:
+		return DecodeOxmTcpSrcMasked(_oxm, decoder)
 	case 4294923270:
 		return DecodeOxmOvsTcpFlags(_oxm, decoder)
-	case 69892:
-		return DecodeNxmReg8Masked(_oxm, decoder)
-	case 88956:
-		return DecodeNxmTunMetadata5Masked(_oxm, decoder)
-	case 200456:
-		return DecodeOxmBsnEgrPortGroupIdMasked(_oxm, decoder)
+	case 779:
+		return DecodeNxmEthDstMasked(_oxm, decoder)
+	case 69384:
+		return DecodeNxmReg7Masked(_oxm, decoder)
 	case 2147497248:
 		return DecodeOxmIpv6SrcMasked(_oxm, decoder)
 	case 105596:
 		return DecodeNxmTunMetadata38(_oxm, decoder)
-	case 73476:
-		return DecodeNxmReg15Masked(_oxm, decoder)
-	case 2147493634:
-		return DecodeOxmIcmpv4TypeMasked(_oxm, decoder)
-	case 95100:
-		return DecodeNxmTunMetadata17Masked(_oxm, decoder)
-	case 2147496976:
-		return DecodeOxmIpv6Src(_oxm, decoder)
-	case 106620:
-		return DecodeNxmTunMetadata40(_oxm, decoder)
-	case 8964:
-		return DecodeNxmArpTpaMasked(_oxm, decoder)
-	case 128784:
-		return DecodeNxmCtIpv6DstMasked(_oxm, decoder)
-	case 91004:
-		return DecodeNxmTunMetadata9Masked(_oxm, decoder)
-	case 202504:
-		return DecodeOxmBsnUdf3Masked(_oxm, decoder)
-	case 107644:
-		return DecodeNxmTunMetadata42(_oxm, decoder)
-	case 2147498248:
-		return DecodeOxmIpv6FlabelMasked(_oxm, decoder)
-	case 92028:
-		return DecodeNxmTunMetadata11Masked(_oxm, decoder)
-	case 203528:
-		return DecodeOxmBsnUdf5Masked(_oxm, decoder)
-	case 8708:
-		return DecodeNxmArpTpa(_oxm, decoder)
+	case 101368:
+		return DecodeNxmTunMetadata29Masked(_oxm, decoder)
+	case 2147491588:
+		return DecodeOxmUdpSrcMasked(_oxm, decoder)
 	case 108668:
 		return DecodeNxmTunMetadata44(_oxm, decoder)
-	case 74502:
-		return DecodeNxmArpShaMasked(_oxm, decoder)
+	case 2147496976:
+		return DecodeOxmIpv6Src(_oxm, decoder)
+	case 201480:
+		return DecodeOxmBsnUdf1Masked(_oxm, decoder)
+	case 106620:
+		return DecodeNxmTunMetadata40(_oxm, decoder)
+	case 102392:
+		return DecodeNxmTunMetadata31Masked(_oxm, decoder)
+	case 2147492612:
+		return DecodeOxmSctpSrcMasked(_oxm, decoder)
+	case 73480:
+		return DecodeNxmReg15Masked(_oxm, decoder)
+	case 204292:
+		return DecodeOxmBsnUdf7(_oxm, decoder)
+	case 71432:
+		return DecodeNxmReg11Masked(_oxm, decoder)
+	case 107644:
+		return DecodeNxmTunMetadata42(_oxm, decoder)
+	case 103416:
+		return DecodeNxmTunMetadata33Masked(_oxm, decoder)
+	case 2147498248:
+		return DecodeOxmIpv6FlabelMasked(_oxm, decoder)
+	case 203528:
+		return DecodeOxmBsnUdf5Masked(_oxm, decoder)
+	case 89592:
+		return DecodeNxmTunMetadata6Masked(_oxm, decoder)
+	case 104440:
+		return DecodeNxmTunMetadata35Masked(_oxm, decoder)
 	case 2147494660:
 		return DecodeOxmArpOpMasked(_oxm, decoder)
 	case 197636:
 		return DecodeOxmBsnVrf(_oxm, decoder)
-	case 93052:
-		return DecodeNxmTunMetadata13Masked(_oxm, decoder)
-	case 204292:
-		return DecodeOxmBsnUdf7(_oxm, decoder)
+	case 204552:
+		return DecodeOxmBsnUdf7Masked(_oxm, decoder)
 	case 109692:
 		return DecodeNxmTunMetadata46(_oxm, decoder)
+	case 105464:
+		return DecodeNxmTunMetadata37Masked(_oxm, decoder)
+	case 89080:
+		return DecodeNxmTunMetadata5Masked(_oxm, decoder)
 	case 67588:
 		return DecodeNxmReg4(_oxm, decoder)
 	case 7169:
@@ -455,78 +438,78 @@ func DecodeOxm(decoder *goloxi.Decoder) (goloxi.IOxm, error) {
 		return DecodeNxmTcpFlags(_oxm, decoder)
 	case 203780:
 		return DecodeOxmBsnUdf6(_oxm, decoder)
-	case 1030:
-		return DecodeNxmEthSrc(_oxm, decoder)
+	case 74758:
+		return DecodeNxmArpTha(_oxm, decoder)
 	case 198145:
 		return DecodeOxmBsnGlobalVrfAllowed(_oxm, decoder)
 	case 2147484680:
 		return DecodeOxmMetadata(_oxm, decoder)
 	case 1538:
 		return DecodeNxmEthType(_oxm, decoder)
-	case 205576:
-		return DecodeOxmBsnVlanXlatePortGroupIdMasked(_oxm, decoder)
+	case 8968:
+		return DecodeNxmArpTpaMasked(_oxm, decoder)
 	case 128016:
 		return DecodeOxmConnTrackingIpv6Src(_oxm, decoder)
 	case 110716:
 		return DecodeNxmTunMetadata48(_oxm, decoder)
 	case 127492:
 		return DecodeOxmConnTrackingNwDst(_oxm, decoder)
-	case 2147498754:
-		return DecodeOxmIcmpv6TypeMasked(_oxm, decoder)
-	case 518:
-		return DecodeNxmEthDst(_oxm, decoder)
+	case 78342:
+		return DecodeNxmNdTll(_oxm, decoder)
 	case 111740:
 		return DecodeNxmTunMetadata50(_oxm, decoder)
-	case 96124:
-		return DecodeNxmTunMetadata19Masked(_oxm, decoder)
-	case 122384:
-		return DecodeNxmXxreg0(_oxm, decoder)
-	case 97148:
-		return DecodeNxmTunMetadata21Masked(_oxm, decoder)
+	case 107512:
+		return DecodeNxmTunMetadata41Masked(_oxm, decoder)
+	case 121360:
+		return DecodeNxmTunIpv6Src(_oxm, decoder)
 	case 2147495688:
 		return DecodeOxmArpTpaMasked(_oxm, decoder)
 	case 113788:
 		return DecodeNxmTunMetadata54(_oxm, decoder)
 	case 2561:
 		return DecodeNxmNwTos(_oxm, decoder)
-	case 81668:
-		return DecodeNxmTunSrcMasked(_oxm, decoder)
+	case 109560:
+		return DecodeNxmTunMetadata45Masked(_oxm, decoder)
 	case 2147501826:
 		return DecodeOxmMplsTcMasked(_oxm, decoder)
 	case 103548:
 		return DecodeNxmTunMetadata34(_oxm, decoder)
-	case 98172:
-		return DecodeNxmTunMetadata23Masked(_oxm, decoder)
-	case 66052:
-		return DecodeNxmReg1(_oxm, decoder)
+	case 2147484164:
+		return DecodeOxmInPhyPort(_oxm, decoder)
+	case 205316:
+		return DecodeOxmBsnVlanXlatePortGroupId(_oxm, decoder)
 	case 114812:
 		return DecodeNxmTunMetadata56(_oxm, decoder)
 	case 2147486210:
 		return DecodeOxmEthType(_oxm, decoder)
 	case 2147487233:
 		return DecodeOxmVlanPcp(_oxm, decoder)
-	case 82692:
-		return DecodeNxmPktMarkMasked(_oxm, decoder)
-	case 99196:
-		return DecodeNxmTunMetadata25Masked(_oxm, decoder)
-	case 67076:
-		return DecodeNxmReg3(_oxm, decoder)
+	case 110584:
+		return DecodeNxmTunMetadata47Masked(_oxm, decoder)
+	case 79624:
+		return DecodeNxmIpv6LabelMasked(_oxm, decoder)
 	case 115836:
 		return DecodeNxmTunMetadata58(_oxm, decoder)
 	case 2147488257:
 		return DecodeOxmIpEcn(_oxm, decoder)
-	case 83716:
-		return DecodeNxmDpHashMasked(_oxm, decoder)
-	case 100220:
-		return DecodeNxmTunMetadata27Masked(_oxm, decoder)
+	case 111608:
+		return DecodeNxmTunMetadata49Masked(_oxm, decoder)
+	case 85762:
+		return DecodeNxmTunGbpFlagsMasked(_oxm, decoder)
+	case 518:
+		return DecodeNxmEthDst(_oxm, decoder)
 	case 68100:
 		return DecodeNxmReg5(_oxm, decoder)
 	case 116860:
 		return DecodeNxmTunMetadata60(_oxm, decoder)
 	case 4610:
 		return DecodeNxmTcpSrc(_oxm, decoder)
-	case 89980:
-		return DecodeNxmTunMetadata7Masked(_oxm, decoder)
+	case 112632:
+		return DecodeNxmTunMetadata51Masked(_oxm, decoder)
+	case 122384:
+		return DecodeNxmXxreg0(_oxm, decoder)
+	case 123680:
+		return DecodeNxmXxreg2Masked(_oxm, decoder)
 	case 69124:
 		return DecodeNxmReg7(_oxm, decoder)
 	case 117884:
@@ -535,132 +518,126 @@ func DecodeOxm(decoder *goloxi.Decoder) (goloxi.IOxm, error) {
 		return DecodeNxmUdpSrc(_oxm, decoder)
 	case 6657:
 		return DecodeNxmIcmpType(_oxm, decoder)
-	case 123408:
-		return DecodeNxmXxreg2(_oxm, decoder)
-	case 79105:
-		return DecodeNxmIpFragMasked(_oxm, decoder)
+	case 113656:
+		return DecodeNxmTunMetadata53Masked(_oxm, decoder)
+	case 198920:
+		return DecodeOxmBsnL3InterfaceClassIdMasked(_oxm, decoder)
 	case 210178:
 		return DecodeOxmBsnIpFragmentationMasked(_oxm, decoder)
-	case 70916:
-		return DecodeNxmReg10Masked(_oxm, decoder)
+	case 120068:
+		return DecodeOxmConnTrackingZoneMasked(_oxm, decoder)
 	case 1286:
 		return DecodeNxmEthSrcMasked(_oxm, decoder)
 	case 204040:
 		return DecodeOxmBsnUdf6Masked(_oxm, decoder)
-	case 102268:
-		return DecodeNxmTunMetadata31Masked(_oxm, decoder)
+	case 75019:
+		return DecodeNxmArpThaMasked(_oxm, decoder)
 	case 201220:
 		return DecodeOxmBsnUdf1(_oxm, decoder)
-	case 128272:
-		return DecodeNxmCtIpv6SrcMasked(_oxm, decoder)
+	case 205576:
+		return DecodeOxmBsnVlanXlatePortGroupIdMasked(_oxm, decoder)
+	case 2147484944:
+		return DecodeOxmMetadataMasked(_oxm, decoder)
 	case 6146:
 		return DecodeNxmUdpDst(_oxm, decoder)
 	case 2147490306:
 		return DecodeOxmTcpSrc(_oxm, decoder)
-	case 199684:
-		return DecodeOxmBsnL3DstClassId(_oxm, decoder)
-	case 128288:
-		return DecodeOxmConnTrackingIpv6SrcMasked(_oxm, decoder)
+	case 114680:
+		return DecodeNxmTunMetadata55Masked(_oxm, decoder)
+	case 122144:
+		return DecodeNxmTunIpv6DstMasked(_oxm, decoder)
 	case 86652:
 		return DecodeNxmTunMetadata1(_oxm, decoder)
-	case 120068:
-		return DecodeOxmConnTrackingZoneMasked(_oxm, decoder)
-	case 103292:
-		return DecodeNxmTunMetadata33Masked(_oxm, decoder)
-	case 71172:
-		return DecodeNxmReg11(_oxm, decoder)
+	case 202244:
+		return DecodeOxmBsnUdf3(_oxm, decoder)
 	case 2147491330:
 		return DecodeOxmUdpSrc(_oxm, decoder)
+	case 115704:
+		return DecodeNxmTunMetadata57Masked(_oxm, decoder)
 	case 69636:
 		return DecodeNxmReg8(_oxm, decoder)
 	case 87676:
 		return DecodeNxmTunMetadata3(_oxm, decoder)
 	case 82184:
 		return DecodeOxmTunnelIpv4DstMasked(_oxm, decoder)
-	case 104316:
-		return DecodeNxmTunMetadata35Masked(_oxm, decoder)
 	case 203268:
 		return DecodeOxmBsnUdf5(_oxm, decoder)
 	case 2147492354:
 		return DecodeOxmSctpSrc(_oxm, decoder)
 	case 2147493377:
 		return DecodeOxmIcmpv4Type(_oxm, decoder)
-	case 102012:
-		return DecodeNxmTunMetadata31(_oxm, decoder)
-	case 77584:
-		return DecodeNxmNdTargetMasked(_oxm, decoder)
+	case 116728:
+		return DecodeNxmTunMetadata59Masked(_oxm, decoder)
 	case 88700:
 		return DecodeNxmTunMetadata5(_oxm, decoder)
-	case 105340:
-		return DecodeNxmTunMetadata37Masked(_oxm, decoder)
 	case 73220:
 		return DecodeNxmReg15(_oxm, decoder)
 	case 76289:
 		return DecodeNxmIcmpv6Type(_oxm, decoder)
-	case 109948:
-		return DecodeNxmTunMetadata46Masked(_oxm, decoder)
+	case 117752:
+		return DecodeNxmTunMetadata61Masked(_oxm, decoder)
+	case 4360:
+		return DecodeNxmIpDstMasked(_oxm, decoder)
 	case 89724:
 		return DecodeNxmTunMetadata7(_oxm, decoder)
-	case 106364:
-		return DecodeNxmTunMetadata39Masked(_oxm, decoder)
-	case 205316:
-		return DecodeOxmBsnVlanXlatePortGroupId(_oxm, decoder)
+	case 8708:
+		return DecodeNxmArpTpa(_oxm, decoder)
 	case 2147494402:
 		return DecodeOxmArpOp(_oxm, decoder)
-	case 128528:
-		return DecodeOxmConnTrackingIpv6Dst(_oxm, decoder)
-	case 123920:
-		return DecodeNxmXxreg3(_oxm, decoder)
+	case 118776:
+		return DecodeNxmTunMetadata63Masked(_oxm, decoder)
+	case 199944:
+		return DecodeOxmBsnL3DstClassIdMasked(_oxm, decoder)
 	case 90748:
 		return DecodeNxmTunMetadata9(_oxm, decoder)
+	case 86520:
+		return DecodeNxmTunMetadata0Masked(_oxm, decoder)
 	case 2147487490:
 		return DecodeOxmVlanPcpMasked(_oxm, decoder)
 	case 2147492100:
 		return DecodeOxmUdpDstMasked(_oxm, decoder)
 	case 2147501320:
 		return DecodeOxmMplsLabelMasked(_oxm, decoder)
-	case 107388:
-		return DecodeNxmTunMetadata41Masked(_oxm, decoder)
+	case 197124:
+		return DecodeOxmBsnLagId(_oxm, decoder)
+	case 78849:
+		return DecodeNxmIpFrag(_oxm, decoder)
 	case 2147490818:
 		return DecodeOxmTcpDst(_oxm, decoder)
 	case 200708:
 		return DecodeOxmBsnUdf0(_oxm, decoder)
 	case 91772:
 		return DecodeNxmTunMetadata11(_oxm, decoder)
-	case 108412:
-		return DecodeNxmTunMetadata43Masked(_oxm, decoder)
-	case 74246:
-		return DecodeNxmArpSha(_oxm, decoder)
+	case 87544:
+		return DecodeNxmTunMetadata2Masked(_oxm, decoder)
 	case 92796:
 		return DecodeNxmTunMetadata13(_oxm, decoder)
-	case 109436:
-		return DecodeNxmTunMetadata45Masked(_oxm, decoder)
+	case 88568:
+		return DecodeNxmTunMetadata4Masked(_oxm, decoder)
 	case 2147495428:
 		return DecodeOxmArpTpa(_oxm, decoder)
 	case 80385:
 		return DecodeNxmNwTtl(_oxm, decoder)
+	case 105976:
+		return DecodeNxmTunMetadata38Masked(_oxm, decoder)
 	case 126465:
 		return DecodeOxmConnTrackingNwProto(_oxm, decoder)
 	case 7682:
 		return DecodeNxmArpOp(_oxm, decoder)
-	case 79364:
-		return DecodeNxmIpv6Label(_oxm, decoder)
+	case 71172:
+		return DecodeNxmReg11(_oxm, decoder)
 	case 2147485190:
 		return DecodeOxmEthDst(_oxm, decoder)
-	case 110460:
-		return DecodeNxmTunMetadata47Masked(_oxm, decoder)
-	case 129282:
-		return DecodeNxmCtTpSrcMasked(_oxm, decoder)
-	case 83202:
-		return DecodeNxmTcpFlagsMasked(_oxm, decoder)
-	case 75280:
-		return DecodeNxmIpv6Src(_oxm, decoder)
-	case 8452:
-		return DecodeNxmArpSpaMasked(_oxm, decoder)
-	case 75014:
-		return DecodeNxmArpThaMasked(_oxm, decoder)
-	case 111484:
-		return DecodeNxmTunMetadata49Masked(_oxm, decoder)
+	case 2147499266:
+		return DecodeOxmIcmpv6CodeMasked(_oxm, decoder)
+	case 128528:
+		return DecodeOxmConnTrackingIpv6Dst(_oxm, decoder)
+	case 85252:
+		return DecodeNxmTunGbpIdMasked(_oxm, decoder)
+	case 90616:
+		return DecodeNxmTunMetadata8Masked(_oxm, decoder)
+	case 79364:
+		return DecodeNxmIpv6Label(_oxm, decoder)
 	case 207112:
 		return DecodeOxmBsnIngressPortGroupIdMasked(_oxm, decoder)
 	case 2147489796:
@@ -669,8 +646,8 @@ func DecodeOxm(decoder *goloxi.Decoder) (goloxi.IOxm, error) {
 		return DecodeOxmBsnInPorts512(_oxm, decoder)
 	case 95868:
 		return DecodeNxmTunMetadata19(_oxm, decoder)
-	case 129284:
-		return DecodeOxmConnTrackingTpSrcMasked(_oxm, decoder)
+	case 91640:
+		return DecodeNxmTunMetadata10Masked(_oxm, decoder)
 	case 2147485964:
 		return DecodeOxmEthSrcMasked(_oxm, decoder)
 	case 2147496454:
@@ -679,168 +656,168 @@ func DecodeOxm(decoder *goloxi.Decoder) (goloxi.IOxm, error) {
 		return DecodeOxmUdpDst(_oxm, decoder)
 	case 2147501569:
 		return DecodeOxmMplsTc(_oxm, decoder)
-	case 201732:
-		return DecodeOxmBsnUdf2(_oxm, decoder)
-	case 122128:
-		return DecodeNxmTunIpv6DstMasked(_oxm, decoder)
-	case 113532:
-		return DecodeNxmTunMetadata53Masked(_oxm, decoder)
+	case 70920:
+		return DecodeNxmReg10Masked(_oxm, decoder)
+	case 96892:
+		return DecodeNxmTunMetadata21(_oxm, decoder)
+	case 92664:
+		return DecodeNxmTunMetadata12Masked(_oxm, decoder)
+	case 205060:
+		return DecodeOxmBsnTcpFlagsMasked(_oxm, decoder)
 	case 81412:
 		return DecodeOxmTunnelIpv4Src(_oxm, decoder)
-	case 114300:
-		return DecodeNxmTunMetadata55(_oxm, decoder)
+	case 99964:
+		return DecodeNxmTunMetadata27(_oxm, decoder)
 	case 71684:
 		return DecodeNxmReg12(_oxm, decoder)
 	case 127240:
 		return DecodeOxmConnTrackingNwSrcMasked(_oxm, decoder)
 	case 97916:
 		return DecodeNxmTunMetadata23(_oxm, decoder)
-	case 65796:
-		return DecodeNxmReg0Masked(_oxm, decoder)
-	case 114556:
-		return DecodeNxmTunMetadata55Masked(_oxm, decoder)
-	case 2306:
-		return DecodeNxmVlanTciMasked(_oxm, decoder)
+	case 93688:
+		return DecodeNxmTunMetadata14Masked(_oxm, decoder)
 	case 82436:
 		return DecodeNxmPktMark(_oxm, decoder)
 	case 85505:
 		return DecodeNxmTunGbpFlags(_oxm, decoder)
 	case 98940:
 		return DecodeNxmTunMetadata25(_oxm, decoder)
-	case 66820:
-		return DecodeNxmReg2Masked(_oxm, decoder)
-	case 115580:
-		return DecodeNxmTunMetadata57Masked(_oxm, decoder)
+	case 94712:
+		return DecodeNxmTunMetadata16Masked(_oxm, decoder)
 	case 83460:
 		return DecodeNxmDpHash(_oxm, decoder)
 	case 2147490056:
 		return DecodeOxmIpv4DstMasked(_oxm, decoder)
-	case 99964:
-		return DecodeNxmTunMetadata27(_oxm, decoder)
+	case 123168:
+		return DecodeNxmXxreg1Masked(_oxm, decoder)
 	case 118786:
 		return DecodeNxmTunFlags(_oxm, decoder)
-	case 67844:
-		return DecodeNxmReg4Masked(_oxm, decoder)
-	case 2147484164:
-		return DecodeOxmInPhyPort(_oxm, decoder)
-	case 116604:
-		return DecodeNxmTunMetadata59Masked(_oxm, decoder)
+	case 95736:
+		return DecodeNxmTunMetadata18Masked(_oxm, decoder)
+	case 2308:
+		return DecodeNxmVlanTciMasked(_oxm, decoder)
 	case 2147488002:
 		return DecodeOxmIpDscpMasked(_oxm, decoder)
 	case 100988:
 		return DecodeNxmTunMetadata29(_oxm, decoder)
 	case 119810:
 		return DecodeOxmConnTrackingZone(_oxm, decoder)
-	case 68868:
-		return DecodeNxmReg6Masked(_oxm, decoder)
+	case 96760:
+		return DecodeNxmTunMetadata20Masked(_oxm, decoder)
+	case 2147486980:
+		return DecodeOxmVlanVidMasked(_oxm, decoder)
 	case 116348:
 		return DecodeNxmTunMetadata59(_oxm, decoder)
 	case 5378:
 		return DecodeNxmTcpDstMasked(_oxm, decoder)
-	case 123152:
-		return DecodeNxmXxreg1Masked(_oxm, decoder)
-	case 2147486468:
-		return DecodeOxmEthTypeMasked(_oxm, decoder)
+	case 71944:
+		return DecodeNxmReg12Masked(_oxm, decoder)
 	case 2147483912:
 		return DecodeOxmInPortMasked(_oxm, decoder)
-	case 85761:
-		return DecodeNxmTunGbpFlagsMasked(_oxm, decoder)
-	case 5890:
+	case 75552:
+		return DecodeNxmIpv6SrcMasked(_oxm, decoder)
+	case 102012:
+		return DecodeNxmTunMetadata31(_oxm, decoder)
+	case 2147493634:
+		return DecodeOxmIcmpv4TypeMasked(_oxm, decoder)
+	case 5892:
 		return DecodeNxmUdpSrcMasked(_oxm, decoder)
-	case 79620:
-		return DecodeNxmIpv6LabelMasked(_oxm, decoder)
-	case 4356:
-		return DecodeNxmIpDstMasked(_oxm, decoder)
-	case 204552:
-		return DecodeOxmBsnUdf7Masked(_oxm, decoder)
-	case 118652:
-		return DecodeNxmTunMetadata63Masked(_oxm, decoder)
-	case 6402:
-		return DecodeNxmUdpDstMasked(_oxm, decoder)
+	case 97784:
+		return DecodeNxmTunMetadata22Masked(_oxm, decoder)
+	case 66052:
+		return DecodeNxmReg1(_oxm, decoder)
+	case 67336:
+		return DecodeNxmReg3Masked(_oxm, decoder)
 	case 2147485452:
 		return DecodeOxmEthDstMasked(_oxm, decoder)
-	case 124176:
-		return DecodeNxmXxreg3Masked(_oxm, decoder)
-	case 122640:
-		return DecodeNxmXxreg0Masked(_oxm, decoder)
-	case 69380:
-		return DecodeNxmReg7Masked(_oxm, decoder)
-	case 86396:
-		return DecodeNxmTunMetadata0Masked(_oxm, decoder)
+	case 75280:
+		return DecodeNxmIpv6Src(_oxm, decoder)
 	case 197896:
 		return DecodeOxmBsnVrfMasked(_oxm, decoder)
-	case 128800:
-		return DecodeOxmConnTrackingIpv6DstMasked(_oxm, decoder)
+	case 122656:
+		return DecodeNxmXxreg0Masked(_oxm, decoder)
 	case 103036:
 		return DecodeNxmTunMetadata33(_oxm, decoder)
-	case 87420:
-		return DecodeNxmTunMetadata2Masked(_oxm, decoder)
-	case 198920:
-		return DecodeOxmBsnL3InterfaceClassIdMasked(_oxm, decoder)
+	case 98808:
+		return DecodeNxmTunMetadata24Masked(_oxm, decoder)
+	case 67848:
+		return DecodeNxmReg4Masked(_oxm, decoder)
+	case 77600:
+		return DecodeNxmNdTargetMasked(_oxm, decoder)
 	case 104060:
 		return DecodeNxmTunMetadata35(_oxm, decoder)
-	case 71940:
-		return DecodeNxmReg12Masked(_oxm, decoder)
-	case 2147484424:
-		return DecodeOxmInPhyPortMasked(_oxm, decoder)
+	case 99832:
+		return DecodeNxmTunMetadata26Masked(_oxm, decoder)
+	case 6404:
+		return DecodeNxmUdpDstMasked(_oxm, decoder)
 	case 77328:
 		return DecodeNxmNdTarget(_oxm, decoder)
-	case 88444:
-		return DecodeNxmTunMetadata4Masked(_oxm, decoder)
-	case 199944:
-		return DecodeOxmBsnL3DstClassIdMasked(_oxm, decoder)
+	case 68872:
+		return DecodeNxmReg6Masked(_oxm, decoder)
 	case 105084:
 		return DecodeNxmTunMetadata37(_oxm, decoder)
-	case 72964:
-		return DecodeNxmReg14Masked(_oxm, decoder)
+	case 100856:
+		return DecodeNxmTunMetadata28Masked(_oxm, decoder)
+	case 2147491076:
+		return DecodeOxmTcpDstMasked(_oxm, decoder)
 	case 206082:
 		return DecodeOxmBsnL2CacheHitMasked(_oxm, decoder)
-	case 89468:
-		return DecodeNxmTunMetadata6Masked(_oxm, decoder)
-	case 94076:
-		return DecodeNxmTunMetadata15Masked(_oxm, decoder)
+	case 69896:
+		return DecodeNxmReg8Masked(_oxm, decoder)
+	case 2147497760:
+		return DecodeOxmIpv6DstMasked(_oxm, decoder)
 	case 206720:
 		return DecodeOxmBsnInPorts512Masked(_oxm, decoder)
 	case 106108:
 		return DecodeNxmTunMetadata39(_oxm, decoder)
-	case 205060:
-		return DecodeOxmBsnTcpFlagsMasked(_oxm, decoder)
-	case 197124:
-		return DecodeOxmBsnLagId(_oxm, decoder)
-	case 2147494146:
-		return DecodeOxmIcmpv4CodeMasked(_oxm, decoder)
+	case 101880:
+		return DecodeNxmTunMetadata30Masked(_oxm, decoder)
+	case 8452:
+		return DecodeNxmArpSpaMasked(_oxm, decoder)
+	case 66312:
+		return DecodeNxmReg1Masked(_oxm, decoder)
 	case 2147497488:
 		return DecodeOxmIpv6Dst(_oxm, decoder)
-	case 90492:
-		return DecodeNxmTunMetadata8Masked(_oxm, decoder)
 	case 201992:
 		return DecodeOxmBsnUdf2Masked(_oxm, decoder)
 	case 107132:
 		return DecodeNxmTunMetadata41(_oxm, decoder)
+	case 102904:
+		return DecodeNxmTunMetadata32Masked(_oxm, decoder)
 	case 2147493124:
 		return DecodeOxmSctpDstMasked(_oxm, decoder)
-	case 91516:
-		return DecodeNxmTunMetadata10Masked(_oxm, decoder)
+	case 67076:
+		return DecodeNxmReg3(_oxm, decoder)
+	case 119300:
+		return DecodeOxmConnTrackingState(_oxm, decoder)
 	case 203016:
 		return DecodeOxmBsnUdf4Masked(_oxm, decoder)
 	case 2147499808:
 		return DecodeOxmIpv6NdTargetMasked(_oxm, decoder)
 	case 108156:
 		return DecodeNxmTunMetadata43(_oxm, decoder)
+	case 103928:
+		return DecodeNxmTunMetadata34Masked(_oxm, decoder)
+	case 106488:
+		return DecodeNxmTunMetadata39Masked(_oxm, decoder)
+	case 201732:
+		return DecodeOxmBsnUdf2(_oxm, decoder)
 	case 2147499536:
 		return DecodeOxmIpv6NdTarget(_oxm, decoder)
-	case 92540:
-		return DecodeNxmTunMetadata12Masked(_oxm, decoder)
-	case 112508:
-		return DecodeNxmTunMetadata51Masked(_oxm, decoder)
+	case 72968:
+		return DecodeNxmReg14Masked(_oxm, decoder)
 	case 109180:
 		return DecodeNxmTunMetadata45(_oxm, decoder)
-	case 2147486722:
-		return DecodeOxmVlanVid(_oxm, decoder)
+	case 104952:
+		return DecodeNxmTunMetadata36Masked(_oxm, decoder)
 	case 93820:
 		return DecodeNxmTunMetadata15(_oxm, decoder)
-	case 73992:
-		return DecodeNxmTunIdMasked(_oxm, decoder)
+	case 79106:
+		return DecodeNxmIpFragMasked(_oxm, decoder)
+	case 108536:
+		return DecodeNxmTunMetadata43Masked(_oxm, decoder)
+	case 126980:
+		return DecodeOxmConnTrackingNwSrc(_oxm, decoder)
 	default:
 		return nil, nil
 	}
@@ -904,25 +881,11 @@ func (self *NxmArpOp) GetOXMValue() interface{} {
 }
 
 func (self *NxmArpOp) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmArpSha struct {
@@ -977,25 +940,11 @@ func (self *NxmArpSha) GetOXMValue() interface{} {
 }
 
 func (self *NxmArpSha) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmArpShaMasked struct {
@@ -1049,7 +998,7 @@ func DecodeNxmArpShaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpShaMask
 
 func NewNxmArpShaMasked() *NxmArpShaMasked {
 	obj := &NxmArpShaMasked{
-		Oxm: NewOxm(74502),
+		Oxm: NewOxm(74507),
 	}
 	return obj
 }
@@ -1061,26 +1010,20 @@ func (self *NxmArpShaMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmArpShaMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmArpShaMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmArpShaMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmArpSpa struct {
@@ -1135,25 +1078,11 @@ func (self *NxmArpSpa) GetOXMValue() interface{} {
 }
 
 func (self *NxmArpSpa) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmArpSpaMasked struct {
@@ -1219,26 +1148,20 @@ func (self *NxmArpSpaMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmArpSpaMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmArpSpaMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmArpSpaMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmArpTha struct {
@@ -1293,25 +1216,11 @@ func (self *NxmArpTha) GetOXMValue() interface{} {
 }
 
 func (self *NxmArpTha) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmArpThaMasked struct {
@@ -1365,7 +1274,7 @@ func DecodeNxmArpThaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpThaMask
 
 func NewNxmArpThaMasked() *NxmArpThaMasked {
 	obj := &NxmArpThaMasked{
-		Oxm: NewOxm(75014),
+		Oxm: NewOxm(75019),
 	}
 	return obj
 }
@@ -1377,26 +1286,20 @@ func (self *NxmArpThaMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmArpThaMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmArpThaMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmArpThaMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmArpTpa struct {
@@ -1451,25 +1354,11 @@ func (self *NxmArpTpa) GetOXMValue() interface{} {
 }
 
 func (self *NxmArpTpa) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmArpTpaMasked struct {
@@ -1523,7 +1412,7 @@ func DecodeNxmArpTpaMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmArpTpaMask
 
 func NewNxmArpTpaMasked() *NxmArpTpaMasked {
 	obj := &NxmArpTpaMasked{
-		Oxm: NewOxm(8964),
+		Oxm: NewOxm(8968),
 	}
 	return obj
 }
@@ -1535,26 +1424,20 @@ func (self *NxmArpTpaMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmArpTpaMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmArpTpaMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmArpTpaMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmConjId struct {
@@ -1609,25 +1492,11 @@ func (self *NxmConjId) GetOXMValue() interface{} {
 }
 
 func (self *NxmConjId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtIpv6Dst struct {
@@ -1682,25 +1551,11 @@ func (self *NxmCtIpv6Dst) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtIpv6Dst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtIpv6DstMasked struct {
@@ -1754,7 +1609,7 @@ func DecodeNxmCtIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6D
 
 func NewNxmCtIpv6DstMasked() *NxmCtIpv6DstMasked {
 	obj := &NxmCtIpv6DstMasked{
-		Oxm: NewOxm(128784),
+		Oxm: NewOxm(128800),
 	}
 	return obj
 }
@@ -1766,26 +1621,20 @@ func (self *NxmCtIpv6DstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtIpv6DstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtIpv6DstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtIpv6Src struct {
@@ -1840,25 +1689,11 @@ func (self *NxmCtIpv6Src) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtIpv6Src) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtIpv6SrcMasked struct {
@@ -1912,7 +1747,7 @@ func DecodeNxmCtIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtIpv6S
 
 func NewNxmCtIpv6SrcMasked() *NxmCtIpv6SrcMasked {
 	obj := &NxmCtIpv6SrcMasked{
-		Oxm: NewOxm(128272),
+		Oxm: NewOxm(128288),
 	}
 	return obj
 }
@@ -1924,26 +1759,20 @@ func (self *NxmCtIpv6SrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtIpv6SrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtIpv6SrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtLabel struct {
@@ -1998,25 +1827,11 @@ func (self *NxmCtLabel) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtLabel) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtLabelMasked struct {
@@ -2070,7 +1885,7 @@ func DecodeNxmCtLabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtLabelMa
 
 func NewNxmCtLabelMasked() *NxmCtLabelMasked {
 	obj := &NxmCtLabelMasked{
-		Oxm: NewOxm(121104),
+		Oxm: NewOxm(121120),
 	}
 	return obj
 }
@@ -2082,26 +1897,20 @@ func (self *NxmCtLabelMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtLabelMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtLabelMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtLabelMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtMark struct {
@@ -2156,25 +1965,11 @@ func (self *NxmCtMark) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtMark) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtMarkMasked struct {
@@ -2228,7 +2023,7 @@ func DecodeNxmCtMarkMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtMarkMask
 
 func NewNxmCtMarkMasked() *NxmCtMarkMasked {
 	obj := &NxmCtMarkMasked{
-		Oxm: NewOxm(120580),
+		Oxm: NewOxm(120584),
 	}
 	return obj
 }
@@ -2240,26 +2035,20 @@ func (self *NxmCtMarkMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtMarkMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtMarkMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtMarkMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtNwDst struct {
@@ -2314,25 +2103,11 @@ func (self *NxmCtNwDst) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtNwDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtNwDstMasked struct {
@@ -2386,7 +2161,7 @@ func DecodeNxmCtNwDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwDstMa
 
 func NewNxmCtNwDstMasked() *NxmCtNwDstMasked {
 	obj := &NxmCtNwDstMasked{
-		Oxm: NewOxm(127748),
+		Oxm: NewOxm(127752),
 	}
 	return obj
 }
@@ -2398,26 +2173,20 @@ func (self *NxmCtNwDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtNwDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtNwDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtNwDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtNwProto struct {
@@ -2472,25 +2241,11 @@ func (self *NxmCtNwProto) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtNwProto) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtNwSrc struct {
@@ -2545,25 +2300,11 @@ func (self *NxmCtNwSrc) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtNwSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtNwSrcMasked struct {
@@ -2617,7 +2358,7 @@ func DecodeNxmCtNwSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtNwSrcMa
 
 func NewNxmCtNwSrcMasked() *NxmCtNwSrcMasked {
 	obj := &NxmCtNwSrcMasked{
-		Oxm: NewOxm(127236),
+		Oxm: NewOxm(127240),
 	}
 	return obj
 }
@@ -2629,26 +2370,20 @@ func (self *NxmCtNwSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtNwSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtNwSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtNwSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtState struct {
@@ -2700,25 +2435,11 @@ func (self *NxmCtState) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtState) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtStateMasked struct {
@@ -2769,7 +2490,7 @@ func DecodeNxmCtStateMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtStateMa
 
 func NewNxmCtStateMasked() *NxmCtStateMasked {
 	obj := &NxmCtStateMasked{
-		Oxm: NewOxm(119556),
+		Oxm: NewOxm(119560),
 	}
 	return obj
 }
@@ -2781,26 +2502,20 @@ func (self *NxmCtStateMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtStateMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtStateMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtStateMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtTpDst struct {
@@ -2855,25 +2570,11 @@ func (self *NxmCtTpDst) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtTpDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtTpDstMasked struct {
@@ -2927,7 +2628,7 @@ func DecodeNxmCtTpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpDstMa
 
 func NewNxmCtTpDstMasked() *NxmCtTpDstMasked {
 	obj := &NxmCtTpDstMasked{
-		Oxm: NewOxm(129794),
+		Oxm: NewOxm(129796),
 	}
 	return obj
 }
@@ -2939,26 +2640,20 @@ func (self *NxmCtTpDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtTpDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtTpDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtTpDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtTpSrc struct {
@@ -3013,25 +2708,11 @@ func (self *NxmCtTpSrc) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtTpSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmCtTpSrcMasked struct {
@@ -3085,7 +2766,7 @@ func DecodeNxmCtTpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmCtTpSrcMa
 
 func NewNxmCtTpSrcMasked() *NxmCtTpSrcMasked {
 	obj := &NxmCtTpSrcMasked{
-		Oxm: NewOxm(129282),
+		Oxm: NewOxm(129284),
 	}
 	return obj
 }
@@ -3097,26 +2778,20 @@ func (self *NxmCtTpSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmCtTpSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmCtTpSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmCtTpSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmCtZone struct {
@@ -3171,25 +2846,11 @@ func (self *NxmCtZone) GetOXMValue() interface{} {
 }
 
 func (self *NxmCtZone) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmDpHash struct {
@@ -3244,25 +2905,11 @@ func (self *NxmDpHash) GetOXMValue() interface{} {
 }
 
 func (self *NxmDpHash) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmDpHashMasked struct {
@@ -3316,7 +2963,7 @@ func DecodeNxmDpHashMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmDpHashMask
 
 func NewNxmDpHashMasked() *NxmDpHashMasked {
 	obj := &NxmDpHashMasked{
-		Oxm: NewOxm(83716),
+		Oxm: NewOxm(83720),
 	}
 	return obj
 }
@@ -3328,26 +2975,20 @@ func (self *NxmDpHashMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmDpHashMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmDpHashMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmDpHashMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmEthDst struct {
@@ -3402,25 +3043,11 @@ func (self *NxmEthDst) GetOXMValue() interface{} {
 }
 
 func (self *NxmEthDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmEthDstMasked struct {
@@ -3474,7 +3101,7 @@ func DecodeNxmEthDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmEthDstMask
 
 func NewNxmEthDstMasked() *NxmEthDstMasked {
 	obj := &NxmEthDstMasked{
-		Oxm: NewOxm(774),
+		Oxm: NewOxm(779),
 	}
 	return obj
 }
@@ -3486,26 +3113,20 @@ func (self *NxmEthDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmEthDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmEthDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmEthDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmEthSrc struct {
@@ -3560,25 +3181,11 @@ func (self *NxmEthSrc) GetOXMValue() interface{} {
 }
 
 func (self *NxmEthSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmEthSrcMasked struct {
@@ -3644,26 +3251,20 @@ func (self *NxmEthSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmEthSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmEthSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmEthSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmEthType struct {
@@ -3718,25 +3319,11 @@ func (self *NxmEthType) GetOXMValue() interface{} {
 }
 
 func (self *NxmEthType) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIcmpCode struct {
@@ -3791,25 +3378,11 @@ func (self *NxmIcmpCode) GetOXMValue() interface{} {
 }
 
 func (self *NxmIcmpCode) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIcmpType struct {
@@ -3864,25 +3437,11 @@ func (self *NxmIcmpType) GetOXMValue() interface{} {
 }
 
 func (self *NxmIcmpType) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIcmpv6Code struct {
@@ -3937,25 +3496,11 @@ func (self *NxmIcmpv6Code) GetOXMValue() interface{} {
 }
 
 func (self *NxmIcmpv6Code) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIcmpv6Type struct {
@@ -4010,42 +3555,28 @@ func (self *NxmIcmpv6Type) GetOXMValue() interface{} {
 }
 
 func (self *NxmIcmpv6Type) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmInPort struct {
 	*Oxm
-	Value []byte
+	Value Port
 }
 
 type INxmInPort interface {
 	goloxi.IOxm
-	GetValue() []byte
+	GetValue() Port
 }
 
-func (self *NxmInPort) GetValue() []byte {
+func (self *NxmInPort) GetValue() Port {
 	return self.Value
 }
 
-func (self *NxmInPort) SetValue(v []byte) {
+func (self *NxmInPort) SetValue(v Port) {
 	self.Value = v
 }
 
@@ -4054,14 +3585,17 @@ func (self *NxmInPort) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(self.Value)
+	self.Value.Serialize(encoder)
 
 	return nil
 }
 
 func DecodeNxmInPort(parent *Oxm, decoder *goloxi.Decoder) (*NxmInPort, error) {
 	_nxminport := &NxmInPort{Oxm: parent}
-	_nxminport.Value = decoder.Read(int(_nxminport.TypeLen & 0xFF))
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("NxmInPort packet too short: %d < 4", decoder.Length())
+	}
+	_nxminport.Value.Decode(decoder)
 	return _nxminport, nil
 }
 
@@ -4080,25 +3614,11 @@ func (self *NxmInPort) GetOXMValue() interface{} {
 }
 
 func (self *NxmInPort) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIpDst struct {
@@ -4153,25 +3673,11 @@ func (self *NxmIpDst) GetOXMValue() interface{} {
 }
 
 func (self *NxmIpDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIpDstMasked struct {
@@ -4225,7 +3731,7 @@ func DecodeNxmIpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpDstMasked
 
 func NewNxmIpDstMasked() *NxmIpDstMasked {
 	obj := &NxmIpDstMasked{
-		Oxm: NewOxm(4356),
+		Oxm: NewOxm(4360),
 	}
 	return obj
 }
@@ -4237,26 +3743,20 @@ func (self *NxmIpDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmIpDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmIpDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmIpDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmIpFrag struct {
@@ -4308,25 +3808,11 @@ func (self *NxmIpFrag) GetOXMValue() interface{} {
 }
 
 func (self *NxmIpFrag) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIpFragMasked struct {
@@ -4377,7 +3863,7 @@ func DecodeNxmIpFragMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpFragMask
 
 func NewNxmIpFragMasked() *NxmIpFragMasked {
 	obj := &NxmIpFragMasked{
-		Oxm: NewOxm(79105),
+		Oxm: NewOxm(79106),
 	}
 	return obj
 }
@@ -4389,26 +3875,20 @@ func (self *NxmIpFragMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmIpFragMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmIpFragMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmIpFragMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmIpSrc struct {
@@ -4463,25 +3943,11 @@ func (self *NxmIpSrc) GetOXMValue() interface{} {
 }
 
 func (self *NxmIpSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIpSrcMasked struct {
@@ -4535,7 +4001,7 @@ func DecodeNxmIpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpSrcMasked
 
 func NewNxmIpSrcMasked() *NxmIpSrcMasked {
 	obj := &NxmIpSrcMasked{
-		Oxm: NewOxm(3844),
+		Oxm: NewOxm(3848),
 	}
 	return obj
 }
@@ -4547,26 +4013,20 @@ func (self *NxmIpSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmIpSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmIpSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmIpSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmIpv6Dst struct {
@@ -4621,25 +4081,11 @@ func (self *NxmIpv6Dst) GetOXMValue() interface{} {
 }
 
 func (self *NxmIpv6Dst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIpv6DstMasked struct {
@@ -4693,7 +4139,7 @@ func DecodeNxmIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6DstMa
 
 func NewNxmIpv6DstMasked() *NxmIpv6DstMasked {
 	obj := &NxmIpv6DstMasked{
-		Oxm: NewOxm(76048),
+		Oxm: NewOxm(76064),
 	}
 	return obj
 }
@@ -4705,26 +4151,20 @@ func (self *NxmIpv6DstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmIpv6DstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmIpv6DstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmIpv6Label struct {
@@ -4779,25 +4219,11 @@ func (self *NxmIpv6Label) GetOXMValue() interface{} {
 }
 
 func (self *NxmIpv6Label) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIpv6LabelMasked struct {
@@ -4851,7 +4277,7 @@ func DecodeNxmIpv6LabelMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6Lab
 
 func NewNxmIpv6LabelMasked() *NxmIpv6LabelMasked {
 	obj := &NxmIpv6LabelMasked{
-		Oxm: NewOxm(79620),
+		Oxm: NewOxm(79624),
 	}
 	return obj
 }
@@ -4863,26 +4289,20 @@ func (self *NxmIpv6LabelMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmIpv6LabelMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmIpv6LabelMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmIpv6LabelMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmIpv6Src struct {
@@ -4937,25 +4357,11 @@ func (self *NxmIpv6Src) GetOXMValue() interface{} {
 }
 
 func (self *NxmIpv6Src) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmIpv6SrcMasked struct {
@@ -5009,7 +4415,7 @@ func DecodeNxmIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmIpv6SrcMa
 
 func NewNxmIpv6SrcMasked() *NxmIpv6SrcMasked {
 	obj := &NxmIpv6SrcMasked{
-		Oxm: NewOxm(75536),
+		Oxm: NewOxm(75552),
 	}
 	return obj
 }
@@ -5021,26 +4427,20 @@ func (self *NxmIpv6SrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmIpv6SrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmIpv6SrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmMplsTtl struct {
@@ -5095,25 +4495,11 @@ func (self *NxmMplsTtl) GetOXMValue() interface{} {
 }
 
 func (self *NxmMplsTtl) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmNdSll struct {
@@ -5168,25 +4554,11 @@ func (self *NxmNdSll) GetOXMValue() interface{} {
 }
 
 func (self *NxmNdSll) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmNdSllMasked struct {
@@ -5240,7 +4612,7 @@ func DecodeNxmNdSllMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdSllMasked
 
 func NewNxmNdSllMasked() *NxmNdSllMasked {
 	obj := &NxmNdSllMasked{
-		Oxm: NewOxm(78086),
+		Oxm: NewOxm(78091),
 	}
 	return obj
 }
@@ -5252,26 +4624,20 @@ func (self *NxmNdSllMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmNdSllMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmNdSllMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmNdSllMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmNdTarget struct {
@@ -5326,25 +4692,11 @@ func (self *NxmNdTarget) GetOXMValue() interface{} {
 }
 
 func (self *NxmNdTarget) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmNdTargetMasked struct {
@@ -5398,7 +4750,7 @@ func DecodeNxmNdTargetMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTarget
 
 func NewNxmNdTargetMasked() *NxmNdTargetMasked {
 	obj := &NxmNdTargetMasked{
-		Oxm: NewOxm(77584),
+		Oxm: NewOxm(77600),
 	}
 	return obj
 }
@@ -5410,26 +4762,20 @@ func (self *NxmNdTargetMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmNdTargetMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmNdTargetMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmNdTargetMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmNdTll struct {
@@ -5484,25 +4830,11 @@ func (self *NxmNdTll) GetOXMValue() interface{} {
 }
 
 func (self *NxmNdTll) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmNdTllMasked struct {
@@ -5556,7 +4888,7 @@ func DecodeNxmNdTllMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmNdTllMasked
 
 func NewNxmNdTllMasked() *NxmNdTllMasked {
 	obj := &NxmNdTllMasked{
-		Oxm: NewOxm(78598),
+		Oxm: NewOxm(78603),
 	}
 	return obj
 }
@@ -5568,26 +4900,20 @@ func (self *NxmNdTllMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmNdTllMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmNdTllMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmNdTllMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmNwEcn struct {
@@ -5642,25 +4968,11 @@ func (self *NxmNwEcn) GetOXMValue() interface{} {
 }
 
 func (self *NxmNwEcn) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmNwProto struct {
@@ -5715,25 +5027,11 @@ func (self *NxmNwProto) GetOXMValue() interface{} {
 }
 
 func (self *NxmNwProto) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmNwTos struct {
@@ -5788,25 +5086,11 @@ func (self *NxmNwTos) GetOXMValue() interface{} {
 }
 
 func (self *NxmNwTos) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmNwTtl struct {
@@ -5861,25 +5145,11 @@ func (self *NxmNwTtl) GetOXMValue() interface{} {
 }
 
 func (self *NxmNwTtl) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmPktMark struct {
@@ -5934,25 +5204,11 @@ func (self *NxmPktMark) GetOXMValue() interface{} {
 }
 
 func (self *NxmPktMark) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmPktMarkMasked struct {
@@ -6006,7 +5262,7 @@ func DecodeNxmPktMarkMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmPktMarkMa
 
 func NewNxmPktMarkMasked() *NxmPktMarkMasked {
 	obj := &NxmPktMarkMasked{
-		Oxm: NewOxm(82692),
+		Oxm: NewOxm(82696),
 	}
 	return obj
 }
@@ -6018,26 +5274,20 @@ func (self *NxmPktMarkMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmPktMarkMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmPktMarkMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmPktMarkMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmRecircId struct {
@@ -6092,25 +5342,11 @@ func (self *NxmRecircId) GetOXMValue() interface{} {
 }
 
 func (self *NxmRecircId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg0 struct {
@@ -6165,25 +5401,11 @@ func (self *NxmReg0) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg0) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg0Masked struct {
@@ -6237,7 +5459,7 @@ func DecodeNxmReg0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg0Masked, 
 
 func NewNxmReg0Masked() *NxmReg0Masked {
 	obj := &NxmReg0Masked{
-		Oxm: NewOxm(65796),
+		Oxm: NewOxm(65800),
 	}
 	return obj
 }
@@ -6249,26 +5471,20 @@ func (self *NxmReg0Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg0Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg0Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg0Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg1 struct {
@@ -6323,25 +5539,11 @@ func (self *NxmReg1) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg1) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg10 struct {
@@ -6396,25 +5598,11 @@ func (self *NxmReg10) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg10) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg10Masked struct {
@@ -6468,7 +5656,7 @@ func DecodeNxmReg10Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg10Masked
 
 func NewNxmReg10Masked() *NxmReg10Masked {
 	obj := &NxmReg10Masked{
-		Oxm: NewOxm(70916),
+		Oxm: NewOxm(70920),
 	}
 	return obj
 }
@@ -6480,26 +5668,20 @@ func (self *NxmReg10Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg10Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg10Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg10Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg11 struct {
@@ -6554,25 +5736,11 @@ func (self *NxmReg11) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg11) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg11Masked struct {
@@ -6626,7 +5794,7 @@ func DecodeNxmReg11Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg11Masked
 
 func NewNxmReg11Masked() *NxmReg11Masked {
 	obj := &NxmReg11Masked{
-		Oxm: NewOxm(71428),
+		Oxm: NewOxm(71432),
 	}
 	return obj
 }
@@ -6638,26 +5806,20 @@ func (self *NxmReg11Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg11Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg11Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg11Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg12 struct {
@@ -6712,25 +5874,11 @@ func (self *NxmReg12) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg12) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg12Masked struct {
@@ -6784,7 +5932,7 @@ func DecodeNxmReg12Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg12Masked
 
 func NewNxmReg12Masked() *NxmReg12Masked {
 	obj := &NxmReg12Masked{
-		Oxm: NewOxm(71940),
+		Oxm: NewOxm(71944),
 	}
 	return obj
 }
@@ -6796,26 +5944,20 @@ func (self *NxmReg12Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg12Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg12Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg12Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg13 struct {
@@ -6870,25 +6012,11 @@ func (self *NxmReg13) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg13) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg13Masked struct {
@@ -6942,7 +6070,7 @@ func DecodeNxmReg13Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg13Masked
 
 func NewNxmReg13Masked() *NxmReg13Masked {
 	obj := &NxmReg13Masked{
-		Oxm: NewOxm(72452),
+		Oxm: NewOxm(72456),
 	}
 	return obj
 }
@@ -6954,26 +6082,20 @@ func (self *NxmReg13Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg13Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg13Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg13Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg14 struct {
@@ -7028,25 +6150,11 @@ func (self *NxmReg14) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg14) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg14Masked struct {
@@ -7100,7 +6208,7 @@ func DecodeNxmReg14Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg14Masked
 
 func NewNxmReg14Masked() *NxmReg14Masked {
 	obj := &NxmReg14Masked{
-		Oxm: NewOxm(72964),
+		Oxm: NewOxm(72968),
 	}
 	return obj
 }
@@ -7112,26 +6220,20 @@ func (self *NxmReg14Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg14Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg14Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg14Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg15 struct {
@@ -7186,25 +6288,11 @@ func (self *NxmReg15) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg15) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg15Masked struct {
@@ -7258,7 +6346,7 @@ func DecodeNxmReg15Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg15Masked
 
 func NewNxmReg15Masked() *NxmReg15Masked {
 	obj := &NxmReg15Masked{
-		Oxm: NewOxm(73476),
+		Oxm: NewOxm(73480),
 	}
 	return obj
 }
@@ -7270,26 +6358,20 @@ func (self *NxmReg15Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg15Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg15Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg15Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg1Masked struct {
@@ -7343,7 +6425,7 @@ func DecodeNxmReg1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg1Masked, 
 
 func NewNxmReg1Masked() *NxmReg1Masked {
 	obj := &NxmReg1Masked{
-		Oxm: NewOxm(66308),
+		Oxm: NewOxm(66312),
 	}
 	return obj
 }
@@ -7355,26 +6437,20 @@ func (self *NxmReg1Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg1Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg1Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg1Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg2 struct {
@@ -7429,25 +6505,11 @@ func (self *NxmReg2) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg2) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg2Masked struct {
@@ -7501,7 +6563,7 @@ func DecodeNxmReg2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg2Masked, 
 
 func NewNxmReg2Masked() *NxmReg2Masked {
 	obj := &NxmReg2Masked{
-		Oxm: NewOxm(66820),
+		Oxm: NewOxm(66824),
 	}
 	return obj
 }
@@ -7513,26 +6575,20 @@ func (self *NxmReg2Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg2Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg2Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg2Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg3 struct {
@@ -7587,25 +6643,11 @@ func (self *NxmReg3) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg3) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg3Masked struct {
@@ -7659,7 +6701,7 @@ func DecodeNxmReg3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg3Masked, 
 
 func NewNxmReg3Masked() *NxmReg3Masked {
 	obj := &NxmReg3Masked{
-		Oxm: NewOxm(67332),
+		Oxm: NewOxm(67336),
 	}
 	return obj
 }
@@ -7671,26 +6713,20 @@ func (self *NxmReg3Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg3Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg3Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg3Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg4 struct {
@@ -7745,25 +6781,11 @@ func (self *NxmReg4) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg4) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg4Masked struct {
@@ -7817,7 +6839,7 @@ func DecodeNxmReg4Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg4Masked, 
 
 func NewNxmReg4Masked() *NxmReg4Masked {
 	obj := &NxmReg4Masked{
-		Oxm: NewOxm(67844),
+		Oxm: NewOxm(67848),
 	}
 	return obj
 }
@@ -7829,26 +6851,20 @@ func (self *NxmReg4Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg4Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg4Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg4Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg5 struct {
@@ -7903,25 +6919,11 @@ func (self *NxmReg5) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg5) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg5Masked struct {
@@ -7975,7 +6977,7 @@ func DecodeNxmReg5Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg5Masked, 
 
 func NewNxmReg5Masked() *NxmReg5Masked {
 	obj := &NxmReg5Masked{
-		Oxm: NewOxm(68356),
+		Oxm: NewOxm(68360),
 	}
 	return obj
 }
@@ -7987,26 +6989,20 @@ func (self *NxmReg5Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg5Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg5Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg5Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg6 struct {
@@ -8061,25 +7057,11 @@ func (self *NxmReg6) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg6) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg6Masked struct {
@@ -8133,7 +7115,7 @@ func DecodeNxmReg6Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg6Masked, 
 
 func NewNxmReg6Masked() *NxmReg6Masked {
 	obj := &NxmReg6Masked{
-		Oxm: NewOxm(68868),
+		Oxm: NewOxm(68872),
 	}
 	return obj
 }
@@ -8145,26 +7127,20 @@ func (self *NxmReg6Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg6Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg6Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg6Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg7 struct {
@@ -8219,25 +7195,11 @@ func (self *NxmReg7) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg7) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg7Masked struct {
@@ -8291,7 +7253,7 @@ func DecodeNxmReg7Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg7Masked, 
 
 func NewNxmReg7Masked() *NxmReg7Masked {
 	obj := &NxmReg7Masked{
-		Oxm: NewOxm(69380),
+		Oxm: NewOxm(69384),
 	}
 	return obj
 }
@@ -8303,26 +7265,20 @@ func (self *NxmReg7Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg7Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg7Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg7Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg8 struct {
@@ -8377,25 +7333,11 @@ func (self *NxmReg8) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg8) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg8Masked struct {
@@ -8449,7 +7391,7 @@ func DecodeNxmReg8Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg8Masked, 
 
 func NewNxmReg8Masked() *NxmReg8Masked {
 	obj := &NxmReg8Masked{
-		Oxm: NewOxm(69892),
+		Oxm: NewOxm(69896),
 	}
 	return obj
 }
@@ -8461,26 +7403,20 @@ func (self *NxmReg8Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg8Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg8Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg8Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmReg9 struct {
@@ -8535,25 +7471,11 @@ func (self *NxmReg9) GetOXMValue() interface{} {
 }
 
 func (self *NxmReg9) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmReg9Masked struct {
@@ -8607,7 +7529,7 @@ func DecodeNxmReg9Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmReg9Masked, 
 
 func NewNxmReg9Masked() *NxmReg9Masked {
 	obj := &NxmReg9Masked{
-		Oxm: NewOxm(70404),
+		Oxm: NewOxm(70408),
 	}
 	return obj
 }
@@ -8619,26 +7541,20 @@ func (self *NxmReg9Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmReg9Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmReg9Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmReg9Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTcpDst struct {
@@ -8693,25 +7609,11 @@ func (self *NxmTcpDst) GetOXMValue() interface{} {
 }
 
 func (self *NxmTcpDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTcpDstMasked struct {
@@ -8777,26 +7679,20 @@ func (self *NxmTcpDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTcpDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTcpDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTcpDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTcpFlags struct {
@@ -8851,25 +7747,11 @@ func (self *NxmTcpFlags) GetOXMValue() interface{} {
 }
 
 func (self *NxmTcpFlags) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTcpFlagsMasked struct {
@@ -8923,7 +7805,7 @@ func DecodeNxmTcpFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpFlags
 
 func NewNxmTcpFlagsMasked() *NxmTcpFlagsMasked {
 	obj := &NxmTcpFlagsMasked{
-		Oxm: NewOxm(83202),
+		Oxm: NewOxm(83204),
 	}
 	return obj
 }
@@ -8935,26 +7817,20 @@ func (self *NxmTcpFlagsMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTcpFlagsMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTcpFlagsMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTcpFlagsMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTcpSrc struct {
@@ -9009,25 +7885,11 @@ func (self *NxmTcpSrc) GetOXMValue() interface{} {
 }
 
 func (self *NxmTcpSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTcpSrcMasked struct {
@@ -9081,7 +7943,7 @@ func DecodeNxmTcpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTcpSrcMask
 
 func NewNxmTcpSrcMasked() *NxmTcpSrcMasked {
 	obj := &NxmTcpSrcMasked{
-		Oxm: NewOxm(4866),
+		Oxm: NewOxm(4868),
 	}
 	return obj
 }
@@ -9093,26 +7955,20 @@ func (self *NxmTcpSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTcpSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTcpSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTcpSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunDst struct {
@@ -9167,25 +8023,11 @@ func (self *NxmTunDst) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunDstMasked struct {
@@ -9239,7 +8081,7 @@ func DecodeNxmTunDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunDstMask
 
 func NewNxmTunDstMasked() *NxmTunDstMasked {
 	obj := &NxmTunDstMasked{
-		Oxm: NewOxm(82180),
+		Oxm: NewOxm(82184),
 	}
 	return obj
 }
@@ -9251,43 +8093,37 @@ func (self *NxmTunDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunFlags struct {
 	*Oxm
-	Value []byte
+	Value uint16
 }
 
 type INxmTunFlags interface {
 	goloxi.IOxm
-	GetValue() []byte
+	GetValue() uint16
 }
 
-func (self *NxmTunFlags) GetValue() []byte {
+func (self *NxmTunFlags) GetValue() uint16 {
 	return self.Value
 }
 
-func (self *NxmTunFlags) SetValue(v []byte) {
+func (self *NxmTunFlags) SetValue(v uint16) {
 	self.Value = v
 }
 
@@ -9296,14 +8132,17 @@ func (self *NxmTunFlags) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(self.Value)
+	encoder.PutUint16(uint16(self.Value))
 
 	return nil
 }
 
 func DecodeNxmTunFlags(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunFlags, error) {
 	_nxmtunflags := &NxmTunFlags{Oxm: parent}
-	_nxmtunflags.Value = decoder.Read(int(_nxmtunflags.TypeLen & 0xFF))
+	if decoder.Length() < 2 {
+		return nil, fmt.Errorf("NxmTunFlags packet too short: %d < 2", decoder.Length())
+	}
+	_nxmtunflags.Value = uint16(decoder.ReadUint16())
 	return _nxmtunflags, nil
 }
 
@@ -9322,52 +8161,38 @@ func (self *NxmTunFlags) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunFlags) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunFlagsMasked struct {
 	*Oxm
-	Value     []byte
-	ValueMask []byte
+	Value     uint16
+	ValueMask uint16
 }
 
 type INxmTunFlagsMasked interface {
 	goloxi.IOxm
-	GetValue() []byte
-	GetValueMask() []byte
+	GetValue() uint16
+	GetValueMask() uint16
 }
 
-func (self *NxmTunFlagsMasked) GetValue() []byte {
+func (self *NxmTunFlagsMasked) GetValue() uint16 {
 	return self.Value
 }
 
-func (self *NxmTunFlagsMasked) SetValue(v []byte) {
+func (self *NxmTunFlagsMasked) SetValue(v uint16) {
 	self.Value = v
 }
 
-func (self *NxmTunFlagsMasked) GetValueMask() []byte {
+func (self *NxmTunFlagsMasked) GetValueMask() uint16 {
 	return self.ValueMask
 }
 
-func (self *NxmTunFlagsMasked) SetValueMask(v []byte) {
+func (self *NxmTunFlagsMasked) SetValueMask(v uint16) {
 	self.ValueMask = v
 }
 
@@ -9376,22 +8201,25 @@ func (self *NxmTunFlagsMasked) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
-	encoder.Write(self.Value)
-	encoder.Write(self.ValueMask)
+	encoder.PutUint16(uint16(self.Value))
+	encoder.PutUint16(uint16(self.ValueMask))
 
 	return nil
 }
 
 func DecodeNxmTunFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunFlagsMasked, error) {
 	_nxmtunflagsmasked := &NxmTunFlagsMasked{Oxm: parent}
-	_nxmtunflagsmasked.Value = decoder.Read(int(_nxmtunflagsmasked.TypeLen & 0xFF))
-	_nxmtunflagsmasked.ValueMask = decoder.Read(int(_nxmtunflagsmasked.TypeLen & 0xFF))
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("NxmTunFlagsMasked packet too short: %d < 4", decoder.Length())
+	}
+	_nxmtunflagsmasked.Value = uint16(decoder.ReadUint16())
+	_nxmtunflagsmasked.ValueMask = uint16(decoder.ReadUint16())
 	return _nxmtunflagsmasked, nil
 }
 
 func NewNxmTunFlagsMasked() *NxmTunFlagsMasked {
 	obj := &NxmTunFlagsMasked{
-		Oxm: NewOxm(119042),
+		Oxm: NewOxm(119044),
 	}
 	return obj
 }
@@ -9403,26 +8231,20 @@ func (self *NxmTunFlagsMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunFlagsMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunFlagsMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunFlagsMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunGbpFlags struct {
@@ -9477,25 +8299,11 @@ func (self *NxmTunGbpFlags) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunGbpFlags) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunGbpFlagsMasked struct {
@@ -9549,7 +8357,7 @@ func DecodeNxmTunGbpFlagsMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGb
 
 func NewNxmTunGbpFlagsMasked() *NxmTunGbpFlagsMasked {
 	obj := &NxmTunGbpFlagsMasked{
-		Oxm: NewOxm(85761),
+		Oxm: NewOxm(85762),
 	}
 	return obj
 }
@@ -9561,26 +8369,20 @@ func (self *NxmTunGbpFlagsMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunGbpFlagsMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunGbpFlagsMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunGbpFlagsMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunGbpId struct {
@@ -9635,25 +8437,11 @@ func (self *NxmTunGbpId) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunGbpId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunGbpIdMasked struct {
@@ -9707,7 +8495,7 @@ func DecodeNxmTunGbpIdMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunGbpId
 
 func NewNxmTunGbpIdMasked() *NxmTunGbpIdMasked {
 	obj := &NxmTunGbpIdMasked{
-		Oxm: NewOxm(85250),
+		Oxm: NewOxm(85252),
 	}
 	return obj
 }
@@ -9719,26 +8507,20 @@ func (self *NxmTunGbpIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunGbpIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunGbpIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunGbpIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunId struct {
@@ -9793,25 +8575,11 @@ func (self *NxmTunId) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunIdMasked struct {
@@ -9865,7 +8633,7 @@ func DecodeNxmTunIdMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIdMasked
 
 func NewNxmTunIdMasked() *NxmTunIdMasked {
 	obj := &NxmTunIdMasked{
-		Oxm: NewOxm(73992),
+		Oxm: NewOxm(74000),
 	}
 	return obj
 }
@@ -9877,26 +8645,20 @@ func (self *NxmTunIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunIpv6Dst struct {
@@ -9951,25 +8713,11 @@ func (self *NxmTunIpv6Dst) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunIpv6Dst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunIpv6DstMasked struct {
@@ -10023,7 +8771,7 @@ func DecodeNxmTunIpv6DstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv
 
 func NewNxmTunIpv6DstMasked() *NxmTunIpv6DstMasked {
 	obj := &NxmTunIpv6DstMasked{
-		Oxm: NewOxm(122128),
+		Oxm: NewOxm(122144),
 	}
 	return obj
 }
@@ -10035,26 +8783,20 @@ func (self *NxmTunIpv6DstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunIpv6DstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunIpv6DstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunIpv6Src struct {
@@ -10109,25 +8851,11 @@ func (self *NxmTunIpv6Src) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunIpv6Src) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunIpv6SrcMasked struct {
@@ -10181,7 +8909,7 @@ func DecodeNxmTunIpv6SrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunIpv
 
 func NewNxmTunIpv6SrcMasked() *NxmTunIpv6SrcMasked {
 	obj := &NxmTunIpv6SrcMasked{
-		Oxm: NewOxm(121616),
+		Oxm: NewOxm(121632),
 	}
 	return obj
 }
@@ -10193,26 +8921,20 @@ func (self *NxmTunIpv6SrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunIpv6SrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunIpv6SrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata0 struct {
@@ -10264,25 +8986,11 @@ func (self *NxmTunMetadata0) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata0) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata0Masked struct {
@@ -10333,7 +9041,7 @@ func DecodeNxmTunMetadata0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata0Masked() *NxmTunMetadata0Masked {
 	obj := &NxmTunMetadata0Masked{
-		Oxm: NewOxm(86396),
+		Oxm: NewOxm(86520),
 	}
 	return obj
 }
@@ -10345,26 +9053,20 @@ func (self *NxmTunMetadata0Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata0Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata0Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata0Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata1 struct {
@@ -10416,25 +9118,11 @@ func (self *NxmTunMetadata1) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata1) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata10 struct {
@@ -10486,25 +9174,11 @@ func (self *NxmTunMetadata10) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata10) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata10Masked struct {
@@ -10555,7 +9229,7 @@ func DecodeNxmTunMetadata10Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata10Masked() *NxmTunMetadata10Masked {
 	obj := &NxmTunMetadata10Masked{
-		Oxm: NewOxm(91516),
+		Oxm: NewOxm(91640),
 	}
 	return obj
 }
@@ -10567,26 +9241,20 @@ func (self *NxmTunMetadata10Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata10Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata10Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata10Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata11 struct {
@@ -10638,25 +9306,11 @@ func (self *NxmTunMetadata11) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata11) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata11Masked struct {
@@ -10707,7 +9361,7 @@ func DecodeNxmTunMetadata11Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata11Masked() *NxmTunMetadata11Masked {
 	obj := &NxmTunMetadata11Masked{
-		Oxm: NewOxm(92028),
+		Oxm: NewOxm(92152),
 	}
 	return obj
 }
@@ -10719,26 +9373,20 @@ func (self *NxmTunMetadata11Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata11Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata11Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata11Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata12 struct {
@@ -10790,25 +9438,11 @@ func (self *NxmTunMetadata12) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata12) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata12Masked struct {
@@ -10859,7 +9493,7 @@ func DecodeNxmTunMetadata12Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata12Masked() *NxmTunMetadata12Masked {
 	obj := &NxmTunMetadata12Masked{
-		Oxm: NewOxm(92540),
+		Oxm: NewOxm(92664),
 	}
 	return obj
 }
@@ -10871,26 +9505,20 @@ func (self *NxmTunMetadata12Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata12Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata12Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata12Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata13 struct {
@@ -10942,25 +9570,11 @@ func (self *NxmTunMetadata13) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata13) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata13Masked struct {
@@ -11011,7 +9625,7 @@ func DecodeNxmTunMetadata13Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata13Masked() *NxmTunMetadata13Masked {
 	obj := &NxmTunMetadata13Masked{
-		Oxm: NewOxm(93052),
+		Oxm: NewOxm(93176),
 	}
 	return obj
 }
@@ -11023,26 +9637,20 @@ func (self *NxmTunMetadata13Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata13Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata13Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata13Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata14 struct {
@@ -11094,25 +9702,11 @@ func (self *NxmTunMetadata14) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata14) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata14Masked struct {
@@ -11163,7 +9757,7 @@ func DecodeNxmTunMetadata14Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata14Masked() *NxmTunMetadata14Masked {
 	obj := &NxmTunMetadata14Masked{
-		Oxm: NewOxm(93564),
+		Oxm: NewOxm(93688),
 	}
 	return obj
 }
@@ -11175,26 +9769,20 @@ func (self *NxmTunMetadata14Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata14Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata14Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata14Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata15 struct {
@@ -11246,25 +9834,11 @@ func (self *NxmTunMetadata15) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata15) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata15Masked struct {
@@ -11315,7 +9889,7 @@ func DecodeNxmTunMetadata15Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata15Masked() *NxmTunMetadata15Masked {
 	obj := &NxmTunMetadata15Masked{
-		Oxm: NewOxm(94076),
+		Oxm: NewOxm(94200),
 	}
 	return obj
 }
@@ -11327,26 +9901,20 @@ func (self *NxmTunMetadata15Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata15Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata15Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata15Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata16 struct {
@@ -11398,25 +9966,11 @@ func (self *NxmTunMetadata16) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata16) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata16Masked struct {
@@ -11467,7 +10021,7 @@ func DecodeNxmTunMetadata16Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata16Masked() *NxmTunMetadata16Masked {
 	obj := &NxmTunMetadata16Masked{
-		Oxm: NewOxm(94588),
+		Oxm: NewOxm(94712),
 	}
 	return obj
 }
@@ -11479,26 +10033,20 @@ func (self *NxmTunMetadata16Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata16Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata16Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata16Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata17 struct {
@@ -11550,25 +10098,11 @@ func (self *NxmTunMetadata17) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata17) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata17Masked struct {
@@ -11619,7 +10153,7 @@ func DecodeNxmTunMetadata17Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata17Masked() *NxmTunMetadata17Masked {
 	obj := &NxmTunMetadata17Masked{
-		Oxm: NewOxm(95100),
+		Oxm: NewOxm(95224),
 	}
 	return obj
 }
@@ -11631,26 +10165,20 @@ func (self *NxmTunMetadata17Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata17Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata17Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata17Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata18 struct {
@@ -11702,25 +10230,11 @@ func (self *NxmTunMetadata18) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata18) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata18Masked struct {
@@ -11771,7 +10285,7 @@ func DecodeNxmTunMetadata18Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata18Masked() *NxmTunMetadata18Masked {
 	obj := &NxmTunMetadata18Masked{
-		Oxm: NewOxm(95612),
+		Oxm: NewOxm(95736),
 	}
 	return obj
 }
@@ -11783,26 +10297,20 @@ func (self *NxmTunMetadata18Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata18Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata18Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata18Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata19 struct {
@@ -11854,25 +10362,11 @@ func (self *NxmTunMetadata19) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata19) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata19Masked struct {
@@ -11923,7 +10417,7 @@ func DecodeNxmTunMetadata19Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata19Masked() *NxmTunMetadata19Masked {
 	obj := &NxmTunMetadata19Masked{
-		Oxm: NewOxm(96124),
+		Oxm: NewOxm(96248),
 	}
 	return obj
 }
@@ -11935,26 +10429,20 @@ func (self *NxmTunMetadata19Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata19Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata19Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata19Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata1Masked struct {
@@ -12005,7 +10493,7 @@ func DecodeNxmTunMetadata1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata1Masked() *NxmTunMetadata1Masked {
 	obj := &NxmTunMetadata1Masked{
-		Oxm: NewOxm(86908),
+		Oxm: NewOxm(87032),
 	}
 	return obj
 }
@@ -12017,26 +10505,20 @@ func (self *NxmTunMetadata1Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata1Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata1Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata1Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata2 struct {
@@ -12088,25 +10570,11 @@ func (self *NxmTunMetadata2) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata2) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata20 struct {
@@ -12158,25 +10626,11 @@ func (self *NxmTunMetadata20) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata20) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata20Masked struct {
@@ -12227,7 +10681,7 @@ func DecodeNxmTunMetadata20Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata20Masked() *NxmTunMetadata20Masked {
 	obj := &NxmTunMetadata20Masked{
-		Oxm: NewOxm(96636),
+		Oxm: NewOxm(96760),
 	}
 	return obj
 }
@@ -12239,26 +10693,20 @@ func (self *NxmTunMetadata20Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata20Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata20Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata20Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata21 struct {
@@ -12310,25 +10758,11 @@ func (self *NxmTunMetadata21) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata21) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata21Masked struct {
@@ -12379,7 +10813,7 @@ func DecodeNxmTunMetadata21Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata21Masked() *NxmTunMetadata21Masked {
 	obj := &NxmTunMetadata21Masked{
-		Oxm: NewOxm(97148),
+		Oxm: NewOxm(97272),
 	}
 	return obj
 }
@@ -12391,26 +10825,20 @@ func (self *NxmTunMetadata21Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata21Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata21Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata21Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata22 struct {
@@ -12462,25 +10890,11 @@ func (self *NxmTunMetadata22) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata22) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata22Masked struct {
@@ -12531,7 +10945,7 @@ func DecodeNxmTunMetadata22Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata22Masked() *NxmTunMetadata22Masked {
 	obj := &NxmTunMetadata22Masked{
-		Oxm: NewOxm(97660),
+		Oxm: NewOxm(97784),
 	}
 	return obj
 }
@@ -12543,26 +10957,20 @@ func (self *NxmTunMetadata22Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata22Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata22Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata22Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata23 struct {
@@ -12614,25 +11022,11 @@ func (self *NxmTunMetadata23) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata23) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata23Masked struct {
@@ -12683,7 +11077,7 @@ func DecodeNxmTunMetadata23Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata23Masked() *NxmTunMetadata23Masked {
 	obj := &NxmTunMetadata23Masked{
-		Oxm: NewOxm(98172),
+		Oxm: NewOxm(98296),
 	}
 	return obj
 }
@@ -12695,26 +11089,20 @@ func (self *NxmTunMetadata23Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata23Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata23Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata23Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata24 struct {
@@ -12766,25 +11154,11 @@ func (self *NxmTunMetadata24) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata24) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata24Masked struct {
@@ -12835,7 +11209,7 @@ func DecodeNxmTunMetadata24Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata24Masked() *NxmTunMetadata24Masked {
 	obj := &NxmTunMetadata24Masked{
-		Oxm: NewOxm(98684),
+		Oxm: NewOxm(98808),
 	}
 	return obj
 }
@@ -12847,26 +11221,20 @@ func (self *NxmTunMetadata24Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata24Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata24Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata24Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata25 struct {
@@ -12918,25 +11286,11 @@ func (self *NxmTunMetadata25) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata25) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata25Masked struct {
@@ -12987,7 +11341,7 @@ func DecodeNxmTunMetadata25Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata25Masked() *NxmTunMetadata25Masked {
 	obj := &NxmTunMetadata25Masked{
-		Oxm: NewOxm(99196),
+		Oxm: NewOxm(99320),
 	}
 	return obj
 }
@@ -12999,26 +11353,20 @@ func (self *NxmTunMetadata25Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata25Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata25Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata25Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata26 struct {
@@ -13070,25 +11418,11 @@ func (self *NxmTunMetadata26) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata26) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata26Masked struct {
@@ -13139,7 +11473,7 @@ func DecodeNxmTunMetadata26Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata26Masked() *NxmTunMetadata26Masked {
 	obj := &NxmTunMetadata26Masked{
-		Oxm: NewOxm(99708),
+		Oxm: NewOxm(99832),
 	}
 	return obj
 }
@@ -13151,26 +11485,20 @@ func (self *NxmTunMetadata26Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata26Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata26Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata26Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata27 struct {
@@ -13222,25 +11550,11 @@ func (self *NxmTunMetadata27) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata27) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata27Masked struct {
@@ -13291,7 +11605,7 @@ func DecodeNxmTunMetadata27Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata27Masked() *NxmTunMetadata27Masked {
 	obj := &NxmTunMetadata27Masked{
-		Oxm: NewOxm(100220),
+		Oxm: NewOxm(100344),
 	}
 	return obj
 }
@@ -13303,26 +11617,20 @@ func (self *NxmTunMetadata27Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata27Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata27Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata27Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata28 struct {
@@ -13374,25 +11682,11 @@ func (self *NxmTunMetadata28) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata28) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata28Masked struct {
@@ -13443,7 +11737,7 @@ func DecodeNxmTunMetadata28Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata28Masked() *NxmTunMetadata28Masked {
 	obj := &NxmTunMetadata28Masked{
-		Oxm: NewOxm(100732),
+		Oxm: NewOxm(100856),
 	}
 	return obj
 }
@@ -13455,26 +11749,20 @@ func (self *NxmTunMetadata28Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata28Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata28Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata28Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata29 struct {
@@ -13526,25 +11814,11 @@ func (self *NxmTunMetadata29) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata29) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata29Masked struct {
@@ -13595,7 +11869,7 @@ func DecodeNxmTunMetadata29Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata29Masked() *NxmTunMetadata29Masked {
 	obj := &NxmTunMetadata29Masked{
-		Oxm: NewOxm(101244),
+		Oxm: NewOxm(101368),
 	}
 	return obj
 }
@@ -13607,26 +11881,20 @@ func (self *NxmTunMetadata29Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata29Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata29Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata29Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata2Masked struct {
@@ -13677,7 +11945,7 @@ func DecodeNxmTunMetadata2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata2Masked() *NxmTunMetadata2Masked {
 	obj := &NxmTunMetadata2Masked{
-		Oxm: NewOxm(87420),
+		Oxm: NewOxm(87544),
 	}
 	return obj
 }
@@ -13689,26 +11957,20 @@ func (self *NxmTunMetadata2Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata2Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata2Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata2Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata3 struct {
@@ -13760,25 +12022,11 @@ func (self *NxmTunMetadata3) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata3) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata30 struct {
@@ -13830,25 +12078,11 @@ func (self *NxmTunMetadata30) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata30) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata30Masked struct {
@@ -13899,7 +12133,7 @@ func DecodeNxmTunMetadata30Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata30Masked() *NxmTunMetadata30Masked {
 	obj := &NxmTunMetadata30Masked{
-		Oxm: NewOxm(101756),
+		Oxm: NewOxm(101880),
 	}
 	return obj
 }
@@ -13911,26 +12145,20 @@ func (self *NxmTunMetadata30Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata30Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata30Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata30Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata31 struct {
@@ -13982,25 +12210,11 @@ func (self *NxmTunMetadata31) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata31) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata31Masked struct {
@@ -14051,7 +12265,7 @@ func DecodeNxmTunMetadata31Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata31Masked() *NxmTunMetadata31Masked {
 	obj := &NxmTunMetadata31Masked{
-		Oxm: NewOxm(102268),
+		Oxm: NewOxm(102392),
 	}
 	return obj
 }
@@ -14063,26 +12277,20 @@ func (self *NxmTunMetadata31Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata31Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata31Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata31Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata32 struct {
@@ -14134,25 +12342,11 @@ func (self *NxmTunMetadata32) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata32) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata32Masked struct {
@@ -14203,7 +12397,7 @@ func DecodeNxmTunMetadata32Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata32Masked() *NxmTunMetadata32Masked {
 	obj := &NxmTunMetadata32Masked{
-		Oxm: NewOxm(102780),
+		Oxm: NewOxm(102904),
 	}
 	return obj
 }
@@ -14215,26 +12409,20 @@ func (self *NxmTunMetadata32Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata32Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata32Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata32Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata33 struct {
@@ -14286,25 +12474,11 @@ func (self *NxmTunMetadata33) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata33) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata33Masked struct {
@@ -14355,7 +12529,7 @@ func DecodeNxmTunMetadata33Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata33Masked() *NxmTunMetadata33Masked {
 	obj := &NxmTunMetadata33Masked{
-		Oxm: NewOxm(103292),
+		Oxm: NewOxm(103416),
 	}
 	return obj
 }
@@ -14367,26 +12541,20 @@ func (self *NxmTunMetadata33Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata33Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata33Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata33Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata34 struct {
@@ -14438,25 +12606,11 @@ func (self *NxmTunMetadata34) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata34) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata34Masked struct {
@@ -14507,7 +12661,7 @@ func DecodeNxmTunMetadata34Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata34Masked() *NxmTunMetadata34Masked {
 	obj := &NxmTunMetadata34Masked{
-		Oxm: NewOxm(103804),
+		Oxm: NewOxm(103928),
 	}
 	return obj
 }
@@ -14519,26 +12673,20 @@ func (self *NxmTunMetadata34Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata34Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata34Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata34Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata35 struct {
@@ -14590,25 +12738,11 @@ func (self *NxmTunMetadata35) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata35) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata35Masked struct {
@@ -14659,7 +12793,7 @@ func DecodeNxmTunMetadata35Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata35Masked() *NxmTunMetadata35Masked {
 	obj := &NxmTunMetadata35Masked{
-		Oxm: NewOxm(104316),
+		Oxm: NewOxm(104440),
 	}
 	return obj
 }
@@ -14671,26 +12805,20 @@ func (self *NxmTunMetadata35Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata35Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata35Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata35Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata36 struct {
@@ -14742,25 +12870,11 @@ func (self *NxmTunMetadata36) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata36) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata36Masked struct {
@@ -14811,7 +12925,7 @@ func DecodeNxmTunMetadata36Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata36Masked() *NxmTunMetadata36Masked {
 	obj := &NxmTunMetadata36Masked{
-		Oxm: NewOxm(104828),
+		Oxm: NewOxm(104952),
 	}
 	return obj
 }
@@ -14823,26 +12937,20 @@ func (self *NxmTunMetadata36Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata36Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata36Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata36Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata37 struct {
@@ -14894,25 +13002,11 @@ func (self *NxmTunMetadata37) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata37) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata37Masked struct {
@@ -14963,7 +13057,7 @@ func DecodeNxmTunMetadata37Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata37Masked() *NxmTunMetadata37Masked {
 	obj := &NxmTunMetadata37Masked{
-		Oxm: NewOxm(105340),
+		Oxm: NewOxm(105464),
 	}
 	return obj
 }
@@ -14975,26 +13069,20 @@ func (self *NxmTunMetadata37Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata37Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata37Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata37Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata38 struct {
@@ -15046,25 +13134,11 @@ func (self *NxmTunMetadata38) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata38) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata38Masked struct {
@@ -15115,7 +13189,7 @@ func DecodeNxmTunMetadata38Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata38Masked() *NxmTunMetadata38Masked {
 	obj := &NxmTunMetadata38Masked{
-		Oxm: NewOxm(105852),
+		Oxm: NewOxm(105976),
 	}
 	return obj
 }
@@ -15127,26 +13201,20 @@ func (self *NxmTunMetadata38Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata38Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata38Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata38Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata39 struct {
@@ -15198,25 +13266,11 @@ func (self *NxmTunMetadata39) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata39) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata39Masked struct {
@@ -15267,7 +13321,7 @@ func DecodeNxmTunMetadata39Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata39Masked() *NxmTunMetadata39Masked {
 	obj := &NxmTunMetadata39Masked{
-		Oxm: NewOxm(106364),
+		Oxm: NewOxm(106488),
 	}
 	return obj
 }
@@ -15279,26 +13333,20 @@ func (self *NxmTunMetadata39Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata39Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata39Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata39Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata3Masked struct {
@@ -15349,7 +13397,7 @@ func DecodeNxmTunMetadata3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata3Masked() *NxmTunMetadata3Masked {
 	obj := &NxmTunMetadata3Masked{
-		Oxm: NewOxm(87932),
+		Oxm: NewOxm(88056),
 	}
 	return obj
 }
@@ -15361,26 +13409,20 @@ func (self *NxmTunMetadata3Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata3Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata3Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata3Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata4 struct {
@@ -15432,25 +13474,11 @@ func (self *NxmTunMetadata4) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata4) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata40 struct {
@@ -15502,25 +13530,11 @@ func (self *NxmTunMetadata40) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata40) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata40Masked struct {
@@ -15571,7 +13585,7 @@ func DecodeNxmTunMetadata40Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata40Masked() *NxmTunMetadata40Masked {
 	obj := &NxmTunMetadata40Masked{
-		Oxm: NewOxm(106876),
+		Oxm: NewOxm(107000),
 	}
 	return obj
 }
@@ -15583,26 +13597,20 @@ func (self *NxmTunMetadata40Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata40Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata40Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata40Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata41 struct {
@@ -15654,25 +13662,11 @@ func (self *NxmTunMetadata41) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata41) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata41Masked struct {
@@ -15723,7 +13717,7 @@ func DecodeNxmTunMetadata41Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata41Masked() *NxmTunMetadata41Masked {
 	obj := &NxmTunMetadata41Masked{
-		Oxm: NewOxm(107388),
+		Oxm: NewOxm(107512),
 	}
 	return obj
 }
@@ -15735,26 +13729,20 @@ func (self *NxmTunMetadata41Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata41Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata41Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata41Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata42 struct {
@@ -15806,25 +13794,11 @@ func (self *NxmTunMetadata42) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata42) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata42Masked struct {
@@ -15875,7 +13849,7 @@ func DecodeNxmTunMetadata42Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata42Masked() *NxmTunMetadata42Masked {
 	obj := &NxmTunMetadata42Masked{
-		Oxm: NewOxm(107900),
+		Oxm: NewOxm(108024),
 	}
 	return obj
 }
@@ -15887,26 +13861,20 @@ func (self *NxmTunMetadata42Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata42Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata42Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata42Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata43 struct {
@@ -15958,25 +13926,11 @@ func (self *NxmTunMetadata43) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata43) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata43Masked struct {
@@ -16027,7 +13981,7 @@ func DecodeNxmTunMetadata43Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata43Masked() *NxmTunMetadata43Masked {
 	obj := &NxmTunMetadata43Masked{
-		Oxm: NewOxm(108412),
+		Oxm: NewOxm(108536),
 	}
 	return obj
 }
@@ -16039,26 +13993,20 @@ func (self *NxmTunMetadata43Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata43Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata43Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata43Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata44 struct {
@@ -16110,25 +14058,11 @@ func (self *NxmTunMetadata44) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata44) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata44Masked struct {
@@ -16179,7 +14113,7 @@ func DecodeNxmTunMetadata44Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata44Masked() *NxmTunMetadata44Masked {
 	obj := &NxmTunMetadata44Masked{
-		Oxm: NewOxm(108924),
+		Oxm: NewOxm(109048),
 	}
 	return obj
 }
@@ -16191,26 +14125,20 @@ func (self *NxmTunMetadata44Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata44Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata44Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata44Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata45 struct {
@@ -16262,25 +14190,11 @@ func (self *NxmTunMetadata45) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata45) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata45Masked struct {
@@ -16331,7 +14245,7 @@ func DecodeNxmTunMetadata45Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata45Masked() *NxmTunMetadata45Masked {
 	obj := &NxmTunMetadata45Masked{
-		Oxm: NewOxm(109436),
+		Oxm: NewOxm(109560),
 	}
 	return obj
 }
@@ -16343,26 +14257,20 @@ func (self *NxmTunMetadata45Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata45Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata45Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata45Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata46 struct {
@@ -16414,25 +14322,11 @@ func (self *NxmTunMetadata46) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata46) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata46Masked struct {
@@ -16483,7 +14377,7 @@ func DecodeNxmTunMetadata46Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata46Masked() *NxmTunMetadata46Masked {
 	obj := &NxmTunMetadata46Masked{
-		Oxm: NewOxm(109948),
+		Oxm: NewOxm(110072),
 	}
 	return obj
 }
@@ -16495,26 +14389,20 @@ func (self *NxmTunMetadata46Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata46Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata46Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata46Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata47 struct {
@@ -16566,25 +14454,11 @@ func (self *NxmTunMetadata47) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata47) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata47Masked struct {
@@ -16635,7 +14509,7 @@ func DecodeNxmTunMetadata47Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata47Masked() *NxmTunMetadata47Masked {
 	obj := &NxmTunMetadata47Masked{
-		Oxm: NewOxm(110460),
+		Oxm: NewOxm(110584),
 	}
 	return obj
 }
@@ -16647,26 +14521,20 @@ func (self *NxmTunMetadata47Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata47Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata47Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata47Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata48 struct {
@@ -16718,25 +14586,11 @@ func (self *NxmTunMetadata48) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata48) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata48Masked struct {
@@ -16787,7 +14641,7 @@ func DecodeNxmTunMetadata48Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata48Masked() *NxmTunMetadata48Masked {
 	obj := &NxmTunMetadata48Masked{
-		Oxm: NewOxm(110972),
+		Oxm: NewOxm(111096),
 	}
 	return obj
 }
@@ -16799,26 +14653,20 @@ func (self *NxmTunMetadata48Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata48Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata48Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata48Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata49 struct {
@@ -16870,25 +14718,11 @@ func (self *NxmTunMetadata49) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata49) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata49Masked struct {
@@ -16939,7 +14773,7 @@ func DecodeNxmTunMetadata49Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata49Masked() *NxmTunMetadata49Masked {
 	obj := &NxmTunMetadata49Masked{
-		Oxm: NewOxm(111484),
+		Oxm: NewOxm(111608),
 	}
 	return obj
 }
@@ -16951,26 +14785,20 @@ func (self *NxmTunMetadata49Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata49Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata49Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata49Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata4Masked struct {
@@ -17021,7 +14849,7 @@ func DecodeNxmTunMetadata4Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata4Masked() *NxmTunMetadata4Masked {
 	obj := &NxmTunMetadata4Masked{
-		Oxm: NewOxm(88444),
+		Oxm: NewOxm(88568),
 	}
 	return obj
 }
@@ -17033,26 +14861,20 @@ func (self *NxmTunMetadata4Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata4Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata4Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata4Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata5 struct {
@@ -17104,25 +14926,11 @@ func (self *NxmTunMetadata5) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata5) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata50 struct {
@@ -17174,25 +14982,11 @@ func (self *NxmTunMetadata50) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata50) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata50Masked struct {
@@ -17243,7 +15037,7 @@ func DecodeNxmTunMetadata50Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata50Masked() *NxmTunMetadata50Masked {
 	obj := &NxmTunMetadata50Masked{
-		Oxm: NewOxm(111996),
+		Oxm: NewOxm(112120),
 	}
 	return obj
 }
@@ -17255,26 +15049,20 @@ func (self *NxmTunMetadata50Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata50Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata50Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata50Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata51 struct {
@@ -17326,25 +15114,11 @@ func (self *NxmTunMetadata51) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata51) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata51Masked struct {
@@ -17395,7 +15169,7 @@ func DecodeNxmTunMetadata51Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata51Masked() *NxmTunMetadata51Masked {
 	obj := &NxmTunMetadata51Masked{
-		Oxm: NewOxm(112508),
+		Oxm: NewOxm(112632),
 	}
 	return obj
 }
@@ -17407,26 +15181,20 @@ func (self *NxmTunMetadata51Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata51Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata51Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata51Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata52 struct {
@@ -17478,25 +15246,11 @@ func (self *NxmTunMetadata52) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata52) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata52Masked struct {
@@ -17547,7 +15301,7 @@ func DecodeNxmTunMetadata52Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata52Masked() *NxmTunMetadata52Masked {
 	obj := &NxmTunMetadata52Masked{
-		Oxm: NewOxm(113020),
+		Oxm: NewOxm(113144),
 	}
 	return obj
 }
@@ -17559,26 +15313,20 @@ func (self *NxmTunMetadata52Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata52Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata52Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata52Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata53 struct {
@@ -17630,25 +15378,11 @@ func (self *NxmTunMetadata53) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata53) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata53Masked struct {
@@ -17699,7 +15433,7 @@ func DecodeNxmTunMetadata53Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata53Masked() *NxmTunMetadata53Masked {
 	obj := &NxmTunMetadata53Masked{
-		Oxm: NewOxm(113532),
+		Oxm: NewOxm(113656),
 	}
 	return obj
 }
@@ -17711,26 +15445,20 @@ func (self *NxmTunMetadata53Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata53Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata53Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata53Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata54 struct {
@@ -17782,25 +15510,11 @@ func (self *NxmTunMetadata54) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata54) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata54Masked struct {
@@ -17851,7 +15565,7 @@ func DecodeNxmTunMetadata54Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata54Masked() *NxmTunMetadata54Masked {
 	obj := &NxmTunMetadata54Masked{
-		Oxm: NewOxm(114044),
+		Oxm: NewOxm(114168),
 	}
 	return obj
 }
@@ -17863,26 +15577,20 @@ func (self *NxmTunMetadata54Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata54Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata54Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata54Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata55 struct {
@@ -17934,25 +15642,11 @@ func (self *NxmTunMetadata55) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata55) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata55Masked struct {
@@ -18003,7 +15697,7 @@ func DecodeNxmTunMetadata55Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata55Masked() *NxmTunMetadata55Masked {
 	obj := &NxmTunMetadata55Masked{
-		Oxm: NewOxm(114556),
+		Oxm: NewOxm(114680),
 	}
 	return obj
 }
@@ -18015,26 +15709,20 @@ func (self *NxmTunMetadata55Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata55Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata55Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata55Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata56 struct {
@@ -18086,25 +15774,11 @@ func (self *NxmTunMetadata56) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata56) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata56Masked struct {
@@ -18155,7 +15829,7 @@ func DecodeNxmTunMetadata56Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata56Masked() *NxmTunMetadata56Masked {
 	obj := &NxmTunMetadata56Masked{
-		Oxm: NewOxm(115068),
+		Oxm: NewOxm(115192),
 	}
 	return obj
 }
@@ -18167,26 +15841,20 @@ func (self *NxmTunMetadata56Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata56Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata56Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata56Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata57 struct {
@@ -18238,25 +15906,11 @@ func (self *NxmTunMetadata57) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata57) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata57Masked struct {
@@ -18307,7 +15961,7 @@ func DecodeNxmTunMetadata57Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata57Masked() *NxmTunMetadata57Masked {
 	obj := &NxmTunMetadata57Masked{
-		Oxm: NewOxm(115580),
+		Oxm: NewOxm(115704),
 	}
 	return obj
 }
@@ -18319,26 +15973,20 @@ func (self *NxmTunMetadata57Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata57Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata57Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata57Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata58 struct {
@@ -18390,25 +16038,11 @@ func (self *NxmTunMetadata58) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata58) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata58Masked struct {
@@ -18459,7 +16093,7 @@ func DecodeNxmTunMetadata58Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata58Masked() *NxmTunMetadata58Masked {
 	obj := &NxmTunMetadata58Masked{
-		Oxm: NewOxm(116092),
+		Oxm: NewOxm(116216),
 	}
 	return obj
 }
@@ -18471,26 +16105,20 @@ func (self *NxmTunMetadata58Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata58Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata58Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata58Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata59 struct {
@@ -18542,25 +16170,11 @@ func (self *NxmTunMetadata59) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata59) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata59Masked struct {
@@ -18611,7 +16225,7 @@ func DecodeNxmTunMetadata59Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata59Masked() *NxmTunMetadata59Masked {
 	obj := &NxmTunMetadata59Masked{
-		Oxm: NewOxm(116604),
+		Oxm: NewOxm(116728),
 	}
 	return obj
 }
@@ -18623,26 +16237,20 @@ func (self *NxmTunMetadata59Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata59Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata59Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata59Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata5Masked struct {
@@ -18693,7 +16301,7 @@ func DecodeNxmTunMetadata5Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata5Masked() *NxmTunMetadata5Masked {
 	obj := &NxmTunMetadata5Masked{
-		Oxm: NewOxm(88956),
+		Oxm: NewOxm(89080),
 	}
 	return obj
 }
@@ -18705,26 +16313,20 @@ func (self *NxmTunMetadata5Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata5Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata5Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata5Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata6 struct {
@@ -18776,25 +16378,11 @@ func (self *NxmTunMetadata6) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata6) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata60 struct {
@@ -18846,25 +16434,11 @@ func (self *NxmTunMetadata60) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata60) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata60Masked struct {
@@ -18915,7 +16489,7 @@ func DecodeNxmTunMetadata60Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata60Masked() *NxmTunMetadata60Masked {
 	obj := &NxmTunMetadata60Masked{
-		Oxm: NewOxm(117116),
+		Oxm: NewOxm(117240),
 	}
 	return obj
 }
@@ -18927,26 +16501,20 @@ func (self *NxmTunMetadata60Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata60Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata60Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata60Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata61 struct {
@@ -18998,25 +16566,11 @@ func (self *NxmTunMetadata61) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata61) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata61Masked struct {
@@ -19067,7 +16621,7 @@ func DecodeNxmTunMetadata61Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata61Masked() *NxmTunMetadata61Masked {
 	obj := &NxmTunMetadata61Masked{
-		Oxm: NewOxm(117628),
+		Oxm: NewOxm(117752),
 	}
 	return obj
 }
@@ -19079,26 +16633,20 @@ func (self *NxmTunMetadata61Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata61Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata61Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata61Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata62 struct {
@@ -19150,25 +16698,11 @@ func (self *NxmTunMetadata62) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata62) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata62Masked struct {
@@ -19219,7 +16753,7 @@ func DecodeNxmTunMetadata62Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata62Masked() *NxmTunMetadata62Masked {
 	obj := &NxmTunMetadata62Masked{
-		Oxm: NewOxm(118140),
+		Oxm: NewOxm(118264),
 	}
 	return obj
 }
@@ -19231,26 +16765,20 @@ func (self *NxmTunMetadata62Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata62Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata62Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata62Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata63 struct {
@@ -19302,25 +16830,11 @@ func (self *NxmTunMetadata63) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata63) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata63Masked struct {
@@ -19371,7 +16885,7 @@ func DecodeNxmTunMetadata63Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTun
 
 func NewNxmTunMetadata63Masked() *NxmTunMetadata63Masked {
 	obj := &NxmTunMetadata63Masked{
-		Oxm: NewOxm(118652),
+		Oxm: NewOxm(118776),
 	}
 	return obj
 }
@@ -19383,26 +16897,20 @@ func (self *NxmTunMetadata63Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata63Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata63Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata63Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata6Masked struct {
@@ -19453,7 +16961,7 @@ func DecodeNxmTunMetadata6Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata6Masked() *NxmTunMetadata6Masked {
 	obj := &NxmTunMetadata6Masked{
-		Oxm: NewOxm(89468),
+		Oxm: NewOxm(89592),
 	}
 	return obj
 }
@@ -19465,26 +16973,20 @@ func (self *NxmTunMetadata6Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata6Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata6Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata6Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata7 struct {
@@ -19536,25 +17038,11 @@ func (self *NxmTunMetadata7) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata7) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata7Masked struct {
@@ -19605,7 +17093,7 @@ func DecodeNxmTunMetadata7Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata7Masked() *NxmTunMetadata7Masked {
 	obj := &NxmTunMetadata7Masked{
-		Oxm: NewOxm(89980),
+		Oxm: NewOxm(90104),
 	}
 	return obj
 }
@@ -19617,26 +17105,20 @@ func (self *NxmTunMetadata7Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata7Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata7Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata7Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata8 struct {
@@ -19688,25 +17170,11 @@ func (self *NxmTunMetadata8) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata8) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata8Masked struct {
@@ -19757,7 +17225,7 @@ func DecodeNxmTunMetadata8Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata8Masked() *NxmTunMetadata8Masked {
 	obj := &NxmTunMetadata8Masked{
-		Oxm: NewOxm(90492),
+		Oxm: NewOxm(90616),
 	}
 	return obj
 }
@@ -19769,26 +17237,20 @@ func (self *NxmTunMetadata8Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata8Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata8Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata8Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunMetadata9 struct {
@@ -19840,25 +17302,11 @@ func (self *NxmTunMetadata9) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunMetadata9) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunMetadata9Masked struct {
@@ -19909,7 +17357,7 @@ func DecodeNxmTunMetadata9Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunM
 
 func NewNxmTunMetadata9Masked() *NxmTunMetadata9Masked {
 	obj := &NxmTunMetadata9Masked{
-		Oxm: NewOxm(91004),
+		Oxm: NewOxm(91128),
 	}
 	return obj
 }
@@ -19921,26 +17369,20 @@ func (self *NxmTunMetadata9Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunMetadata9Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunMetadata9Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunMetadata9Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmTunSrc struct {
@@ -19995,25 +17437,11 @@ func (self *NxmTunSrc) GetOXMValue() interface{} {
 }
 
 func (self *NxmTunSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmTunSrcMasked struct {
@@ -20067,7 +17495,7 @@ func DecodeNxmTunSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmTunSrcMask
 
 func NewNxmTunSrcMasked() *NxmTunSrcMasked {
 	obj := &NxmTunSrcMasked{
-		Oxm: NewOxm(81668),
+		Oxm: NewOxm(81672),
 	}
 	return obj
 }
@@ -20079,26 +17507,20 @@ func (self *NxmTunSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmTunSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmTunSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmTunSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmUdpDst struct {
@@ -20153,25 +17575,11 @@ func (self *NxmUdpDst) GetOXMValue() interface{} {
 }
 
 func (self *NxmUdpDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmUdpDstMasked struct {
@@ -20225,7 +17633,7 @@ func DecodeNxmUdpDstMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpDstMask
 
 func NewNxmUdpDstMasked() *NxmUdpDstMasked {
 	obj := &NxmUdpDstMasked{
-		Oxm: NewOxm(6402),
+		Oxm: NewOxm(6404),
 	}
 	return obj
 }
@@ -20237,26 +17645,20 @@ func (self *NxmUdpDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmUdpDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmUdpDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmUdpDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmUdpSrc struct {
@@ -20311,25 +17713,11 @@ func (self *NxmUdpSrc) GetOXMValue() interface{} {
 }
 
 func (self *NxmUdpSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmUdpSrcMasked struct {
@@ -20383,7 +17771,7 @@ func DecodeNxmUdpSrcMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmUdpSrcMask
 
 func NewNxmUdpSrcMasked() *NxmUdpSrcMasked {
 	obj := &NxmUdpSrcMasked{
-		Oxm: NewOxm(5890),
+		Oxm: NewOxm(5892),
 	}
 	return obj
 }
@@ -20395,26 +17783,20 @@ func (self *NxmUdpSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmUdpSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmUdpSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmUdpSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmVlanTci struct {
@@ -20469,25 +17851,11 @@ func (self *NxmVlanTci) GetOXMValue() interface{} {
 }
 
 func (self *NxmVlanTci) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmVlanTciMasked struct {
@@ -20541,7 +17909,7 @@ func DecodeNxmVlanTciMasked(parent *Oxm, decoder *goloxi.Decoder) (*NxmVlanTciMa
 
 func NewNxmVlanTciMasked() *NxmVlanTciMasked {
 	obj := &NxmVlanTciMasked{
-		Oxm: NewOxm(2306),
+		Oxm: NewOxm(2308),
 	}
 	return obj
 }
@@ -20553,26 +17921,20 @@ func (self *NxmVlanTciMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmVlanTciMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmVlanTciMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmVlanTciMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmXxreg0 struct {
@@ -20627,25 +17989,11 @@ func (self *NxmXxreg0) GetOXMValue() interface{} {
 }
 
 func (self *NxmXxreg0) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmXxreg0Masked struct {
@@ -20699,7 +18047,7 @@ func DecodeNxmXxreg0Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg0Mask
 
 func NewNxmXxreg0Masked() *NxmXxreg0Masked {
 	obj := &NxmXxreg0Masked{
-		Oxm: NewOxm(122640),
+		Oxm: NewOxm(122656),
 	}
 	return obj
 }
@@ -20711,26 +18059,20 @@ func (self *NxmXxreg0Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmXxreg0Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmXxreg0Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmXxreg0Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmXxreg1 struct {
@@ -20785,25 +18127,11 @@ func (self *NxmXxreg1) GetOXMValue() interface{} {
 }
 
 func (self *NxmXxreg1) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmXxreg1Masked struct {
@@ -20857,7 +18185,7 @@ func DecodeNxmXxreg1Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg1Mask
 
 func NewNxmXxreg1Masked() *NxmXxreg1Masked {
 	obj := &NxmXxreg1Masked{
-		Oxm: NewOxm(123152),
+		Oxm: NewOxm(123168),
 	}
 	return obj
 }
@@ -20869,26 +18197,20 @@ func (self *NxmXxreg1Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmXxreg1Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmXxreg1Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmXxreg1Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmXxreg2 struct {
@@ -20943,25 +18265,11 @@ func (self *NxmXxreg2) GetOXMValue() interface{} {
 }
 
 func (self *NxmXxreg2) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmXxreg2Masked struct {
@@ -21015,7 +18323,7 @@ func DecodeNxmXxreg2Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg2Mask
 
 func NewNxmXxreg2Masked() *NxmXxreg2Masked {
 	obj := &NxmXxreg2Masked{
-		Oxm: NewOxm(123664),
+		Oxm: NewOxm(123680),
 	}
 	return obj
 }
@@ -21027,26 +18335,20 @@ func (self *NxmXxreg2Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmXxreg2Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmXxreg2Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmXxreg2Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type NxmXxreg3 struct {
@@ -21101,25 +18403,11 @@ func (self *NxmXxreg3) GetOXMValue() interface{} {
 }
 
 func (self *NxmXxreg3) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type NxmXxreg3Masked struct {
@@ -21173,7 +18461,7 @@ func DecodeNxmXxreg3Masked(parent *Oxm, decoder *goloxi.Decoder) (*NxmXxreg3Mask
 
 func NewNxmXxreg3Masked() *NxmXxreg3Masked {
 	obj := &NxmXxreg3Masked{
-		Oxm: NewOxm(124176),
+		Oxm: NewOxm(124192),
 	}
 	return obj
 }
@@ -21185,26 +18473,20 @@ func (self *NxmXxreg3Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *NxmXxreg3Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *NxmXxreg3Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *NxmXxreg3Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmArpOp struct {
@@ -21259,25 +18541,11 @@ func (self *OxmArpOp) GetOXMValue() interface{} {
 }
 
 func (self *OxmArpOp) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmArpOpMasked struct {
@@ -21343,26 +18611,20 @@ func (self *OxmArpOpMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmArpOpMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmArpOpMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmArpOpMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmArpSha struct {
@@ -21417,25 +18679,11 @@ func (self *OxmArpSha) GetOXMValue() interface{} {
 }
 
 func (self *OxmArpSha) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmArpShaMasked struct {
@@ -21501,26 +18749,20 @@ func (self *OxmArpShaMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmArpShaMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmArpShaMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmArpShaMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmArpSpa struct {
@@ -21575,25 +18817,11 @@ func (self *OxmArpSpa) GetOXMValue() interface{} {
 }
 
 func (self *OxmArpSpa) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmArpSpaMasked struct {
@@ -21659,26 +18887,20 @@ func (self *OxmArpSpaMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmArpSpaMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmArpSpaMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmArpSpaMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmArpTha struct {
@@ -21733,25 +18955,11 @@ func (self *OxmArpTha) GetOXMValue() interface{} {
 }
 
 func (self *OxmArpTha) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmArpThaMasked struct {
@@ -21817,26 +19025,20 @@ func (self *OxmArpThaMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmArpThaMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmArpThaMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmArpThaMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmArpTpa struct {
@@ -21891,25 +19093,11 @@ func (self *OxmArpTpa) GetOXMValue() interface{} {
 }
 
 func (self *OxmArpTpa) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmArpTpaMasked struct {
@@ -21975,26 +19163,20 @@ func (self *OxmArpTpaMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmArpTpaMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmArpTpaMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmArpTpaMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnEgrPortGroupId struct {
@@ -22049,25 +19231,11 @@ func (self *OxmBsnEgrPortGroupId) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnEgrPortGroupId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnEgrPortGroupIdMasked struct {
@@ -22133,26 +19301,20 @@ func (self *OxmBsnEgrPortGroupIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnEgrPortGroupIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnEgrPortGroupIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnEgrPortGroupIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnGlobalVrfAllowed struct {
@@ -22207,25 +19369,11 @@ func (self *OxmBsnGlobalVrfAllowed) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnGlobalVrfAllowed) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnGlobalVrfAllowedMasked struct {
@@ -22291,26 +19439,20 @@ func (self *OxmBsnGlobalVrfAllowedMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnGlobalVrfAllowedMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnGlobalVrfAllowedMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnGlobalVrfAllowedMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnInPorts128 struct {
@@ -22365,25 +19507,11 @@ func (self *OxmBsnInPorts128) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnInPorts128) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnInPorts128Masked struct {
@@ -22449,26 +19577,20 @@ func (self *OxmBsnInPorts128Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnInPorts128Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnInPorts128Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnInPorts128Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnInPorts512 struct {
@@ -22523,25 +19645,11 @@ func (self *OxmBsnInPorts512) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnInPorts512) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnInPorts512Masked struct {
@@ -22607,26 +19715,20 @@ func (self *OxmBsnInPorts512Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnInPorts512Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnInPorts512Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnInPorts512Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnIngressPortGroupId struct {
@@ -22681,25 +19783,11 @@ func (self *OxmBsnIngressPortGroupId) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnIngressPortGroupId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnIngressPortGroupIdMasked struct {
@@ -22765,26 +19853,20 @@ func (self *OxmBsnIngressPortGroupIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnIngressPortGroupIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnIngressPortGroupIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnIngressPortGroupIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnIpFragmentation struct {
@@ -22839,25 +19921,11 @@ func (self *OxmBsnIpFragmentation) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnIpFragmentation) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnIpFragmentationMasked struct {
@@ -22923,26 +19991,20 @@ func (self *OxmBsnIpFragmentationMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnIpFragmentationMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnIpFragmentationMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnIpFragmentationMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnL2CacheHit struct {
@@ -22997,25 +20059,11 @@ func (self *OxmBsnL2CacheHit) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnL2CacheHit) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnL2CacheHitMasked struct {
@@ -23081,26 +20129,20 @@ func (self *OxmBsnL2CacheHitMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnL2CacheHitMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnL2CacheHitMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnL2CacheHitMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnL3DstClassId struct {
@@ -23155,25 +20197,11 @@ func (self *OxmBsnL3DstClassId) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnL3DstClassId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnL3DstClassIdMasked struct {
@@ -23239,26 +20267,20 @@ func (self *OxmBsnL3DstClassIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnL3DstClassIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnL3DstClassIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnL3DstClassIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnL3InterfaceClassId struct {
@@ -23313,25 +20335,11 @@ func (self *OxmBsnL3InterfaceClassId) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnL3InterfaceClassId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnL3InterfaceClassIdMasked struct {
@@ -23397,26 +20405,20 @@ func (self *OxmBsnL3InterfaceClassIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnL3InterfaceClassIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnL3InterfaceClassIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnL3InterfaceClassIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnL3SrcClassId struct {
@@ -23471,25 +20473,11 @@ func (self *OxmBsnL3SrcClassId) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnL3SrcClassId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnL3SrcClassIdMasked struct {
@@ -23555,26 +20543,20 @@ func (self *OxmBsnL3SrcClassIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnL3SrcClassIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnL3SrcClassIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnL3SrcClassIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnLagId struct {
@@ -23629,25 +20611,11 @@ func (self *OxmBsnLagId) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnLagId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnLagIdMasked struct {
@@ -23713,26 +20681,20 @@ func (self *OxmBsnLagIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnLagIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnLagIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnLagIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnTcpFlags struct {
@@ -23787,25 +20749,11 @@ func (self *OxmBsnTcpFlags) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnTcpFlags) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnTcpFlagsMasked struct {
@@ -23871,26 +20819,20 @@ func (self *OxmBsnTcpFlagsMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnTcpFlagsMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnTcpFlagsMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnTcpFlagsMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnUdf0 struct {
@@ -23945,25 +20887,11 @@ func (self *OxmBsnUdf0) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnUdf0) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnUdf0Masked struct {
@@ -24029,26 +20957,20 @@ func (self *OxmBsnUdf0Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnUdf0Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnUdf0Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnUdf0Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnUdf1 struct {
@@ -24103,25 +21025,11 @@ func (self *OxmBsnUdf1) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnUdf1) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnUdf1Masked struct {
@@ -24187,26 +21095,20 @@ func (self *OxmBsnUdf1Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnUdf1Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnUdf1Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnUdf1Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnUdf2 struct {
@@ -24261,25 +21163,11 @@ func (self *OxmBsnUdf2) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnUdf2) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnUdf2Masked struct {
@@ -24345,26 +21233,20 @@ func (self *OxmBsnUdf2Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnUdf2Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnUdf2Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnUdf2Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnUdf3 struct {
@@ -24419,25 +21301,11 @@ func (self *OxmBsnUdf3) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnUdf3) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnUdf3Masked struct {
@@ -24503,26 +21371,20 @@ func (self *OxmBsnUdf3Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnUdf3Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnUdf3Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnUdf3Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnUdf4 struct {
@@ -24577,25 +21439,11 @@ func (self *OxmBsnUdf4) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnUdf4) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnUdf4Masked struct {
@@ -24661,26 +21509,20 @@ func (self *OxmBsnUdf4Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnUdf4Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnUdf4Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnUdf4Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnUdf5 struct {
@@ -24735,25 +21577,11 @@ func (self *OxmBsnUdf5) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnUdf5) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnUdf5Masked struct {
@@ -24819,26 +21647,20 @@ func (self *OxmBsnUdf5Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnUdf5Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnUdf5Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnUdf5Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnUdf6 struct {
@@ -24893,25 +21715,11 @@ func (self *OxmBsnUdf6) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnUdf6) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnUdf6Masked struct {
@@ -24977,26 +21785,20 @@ func (self *OxmBsnUdf6Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnUdf6Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnUdf6Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnUdf6Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnUdf7 struct {
@@ -25051,25 +21853,11 @@ func (self *OxmBsnUdf7) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnUdf7) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnUdf7Masked struct {
@@ -25135,26 +21923,20 @@ func (self *OxmBsnUdf7Masked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnUdf7Masked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnUdf7Masked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnUdf7Masked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnVlanXlatePortGroupId struct {
@@ -25209,25 +21991,11 @@ func (self *OxmBsnVlanXlatePortGroupId) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnVlanXlatePortGroupId) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnVlanXlatePortGroupIdMasked struct {
@@ -25293,26 +22061,20 @@ func (self *OxmBsnVlanXlatePortGroupIdMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnVlanXlatePortGroupIdMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnVlanXlatePortGroupIdMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnVlanXlatePortGroupIdMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmBsnVrf struct {
@@ -25367,25 +22129,11 @@ func (self *OxmBsnVrf) GetOXMValue() interface{} {
 }
 
 func (self *OxmBsnVrf) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmBsnVrfMasked struct {
@@ -25451,26 +22199,20 @@ func (self *OxmBsnVrfMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmBsnVrfMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmBsnVrfMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmBsnVrfMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingIpv6Dst struct {
@@ -25525,25 +22267,11 @@ func (self *OxmConnTrackingIpv6Dst) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingIpv6Dst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingIpv6DstMasked struct {
@@ -25609,26 +22337,20 @@ func (self *OxmConnTrackingIpv6DstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingIpv6DstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingIpv6DstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingIpv6Src struct {
@@ -25683,25 +22405,11 @@ func (self *OxmConnTrackingIpv6Src) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingIpv6Src) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingIpv6SrcMasked struct {
@@ -25767,26 +22475,20 @@ func (self *OxmConnTrackingIpv6SrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingIpv6SrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingIpv6SrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingLabel struct {
@@ -25841,25 +22543,11 @@ func (self *OxmConnTrackingLabel) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingLabel) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingLabelMasked struct {
@@ -25925,26 +22613,20 @@ func (self *OxmConnTrackingLabelMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingLabelMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingLabelMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingLabelMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingMark struct {
@@ -25999,25 +22681,11 @@ func (self *OxmConnTrackingMark) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingMark) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingMarkMasked struct {
@@ -26083,26 +22751,20 @@ func (self *OxmConnTrackingMarkMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingMarkMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingMarkMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingMarkMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingNwDst struct {
@@ -26157,25 +22819,11 @@ func (self *OxmConnTrackingNwDst) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingNwDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingNwDstMasked struct {
@@ -26241,26 +22889,20 @@ func (self *OxmConnTrackingNwDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingNwDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingNwDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingNwDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingNwProto struct {
@@ -26315,25 +22957,11 @@ func (self *OxmConnTrackingNwProto) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingNwProto) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingNwProtoMasked struct {
@@ -26399,26 +23027,20 @@ func (self *OxmConnTrackingNwProtoMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingNwProtoMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingNwProtoMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingNwProtoMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingNwSrc struct {
@@ -26473,25 +23095,11 @@ func (self *OxmConnTrackingNwSrc) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingNwSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingNwSrcMasked struct {
@@ -26557,26 +23165,20 @@ func (self *OxmConnTrackingNwSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingNwSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingNwSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingNwSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingState struct {
@@ -26631,25 +23233,11 @@ func (self *OxmConnTrackingState) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingState) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingStateMasked struct {
@@ -26715,26 +23303,20 @@ func (self *OxmConnTrackingStateMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingStateMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingStateMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingStateMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingTpDst struct {
@@ -26789,25 +23371,11 @@ func (self *OxmConnTrackingTpDst) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingTpDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingTpDstMasked struct {
@@ -26873,26 +23441,20 @@ func (self *OxmConnTrackingTpDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingTpDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingTpDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingTpDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingTpSrc struct {
@@ -26947,25 +23509,11 @@ func (self *OxmConnTrackingTpSrc) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingTpSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingTpSrcMasked struct {
@@ -27031,26 +23579,20 @@ func (self *OxmConnTrackingTpSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingTpSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingTpSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingTpSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmConnTrackingZone struct {
@@ -27105,25 +23647,11 @@ func (self *OxmConnTrackingZone) GetOXMValue() interface{} {
 }
 
 func (self *OxmConnTrackingZone) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmConnTrackingZoneMasked struct {
@@ -27189,26 +23717,20 @@ func (self *OxmConnTrackingZoneMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmConnTrackingZoneMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmConnTrackingZoneMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmConnTrackingZoneMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmEthDst struct {
@@ -27263,25 +23785,11 @@ func (self *OxmEthDst) GetOXMValue() interface{} {
 }
 
 func (self *OxmEthDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmEthDstMasked struct {
@@ -27347,26 +23855,20 @@ func (self *OxmEthDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmEthDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmEthDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmEthDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmEthSrc struct {
@@ -27421,25 +23923,11 @@ func (self *OxmEthSrc) GetOXMValue() interface{} {
 }
 
 func (self *OxmEthSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmEthSrcMasked struct {
@@ -27505,26 +23993,20 @@ func (self *OxmEthSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmEthSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmEthSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmEthSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmEthType struct {
@@ -27579,25 +24061,11 @@ func (self *OxmEthType) GetOXMValue() interface{} {
 }
 
 func (self *OxmEthType) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmEthTypeMasked struct {
@@ -27663,26 +24131,20 @@ func (self *OxmEthTypeMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmEthTypeMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmEthTypeMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmEthTypeMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIcmpv4Code struct {
@@ -27737,25 +24199,11 @@ func (self *OxmIcmpv4Code) GetOXMValue() interface{} {
 }
 
 func (self *OxmIcmpv4Code) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIcmpv4CodeMasked struct {
@@ -27821,26 +24269,20 @@ func (self *OxmIcmpv4CodeMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIcmpv4CodeMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIcmpv4CodeMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIcmpv4CodeMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIcmpv4Type struct {
@@ -27895,25 +24337,11 @@ func (self *OxmIcmpv4Type) GetOXMValue() interface{} {
 }
 
 func (self *OxmIcmpv4Type) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIcmpv4TypeMasked struct {
@@ -27979,26 +24407,20 @@ func (self *OxmIcmpv4TypeMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIcmpv4TypeMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIcmpv4TypeMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIcmpv4TypeMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIcmpv6Code struct {
@@ -28053,25 +24475,11 @@ func (self *OxmIcmpv6Code) GetOXMValue() interface{} {
 }
 
 func (self *OxmIcmpv6Code) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIcmpv6CodeMasked struct {
@@ -28137,26 +24545,20 @@ func (self *OxmIcmpv6CodeMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIcmpv6CodeMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIcmpv6CodeMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIcmpv6CodeMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIcmpv6Type struct {
@@ -28211,25 +24613,11 @@ func (self *OxmIcmpv6Type) GetOXMValue() interface{} {
 }
 
 func (self *OxmIcmpv6Type) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIcmpv6TypeMasked struct {
@@ -28295,26 +24683,20 @@ func (self *OxmIcmpv6TypeMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIcmpv6TypeMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIcmpv6TypeMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIcmpv6TypeMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmInPhyPort struct {
@@ -28369,25 +24751,11 @@ func (self *OxmInPhyPort) GetOXMValue() interface{} {
 }
 
 func (self *OxmInPhyPort) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmInPhyPortMasked struct {
@@ -28453,26 +24821,20 @@ func (self *OxmInPhyPortMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmInPhyPortMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmInPhyPortMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmInPhyPortMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmInPort struct {
@@ -28527,25 +24889,11 @@ func (self *OxmInPort) GetOXMValue() interface{} {
 }
 
 func (self *OxmInPort) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmInPortMasked struct {
@@ -28611,26 +24959,20 @@ func (self *OxmInPortMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmInPortMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmInPortMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmInPortMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpDscp struct {
@@ -28685,25 +25027,11 @@ func (self *OxmIpDscp) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpDscp) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpDscpMasked struct {
@@ -28769,26 +25097,20 @@ func (self *OxmIpDscpMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpDscpMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpDscpMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpDscpMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpEcn struct {
@@ -28843,25 +25165,11 @@ func (self *OxmIpEcn) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpEcn) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpEcnMasked struct {
@@ -28927,26 +25235,20 @@ func (self *OxmIpEcnMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpEcnMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpEcnMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpEcnMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpProto struct {
@@ -29001,25 +25303,11 @@ func (self *OxmIpProto) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpProto) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpProtoMasked struct {
@@ -29085,26 +25373,20 @@ func (self *OxmIpProtoMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpProtoMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpProtoMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpProtoMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpv4Dst struct {
@@ -29159,25 +25441,11 @@ func (self *OxmIpv4Dst) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpv4Dst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpv4DstMasked struct {
@@ -29243,26 +25511,20 @@ func (self *OxmIpv4DstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpv4DstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpv4DstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpv4DstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpv4Src struct {
@@ -29317,25 +25579,11 @@ func (self *OxmIpv4Src) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpv4Src) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpv4SrcMasked struct {
@@ -29401,26 +25649,20 @@ func (self *OxmIpv4SrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpv4SrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpv4SrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpv4SrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpv6Dst struct {
@@ -29475,25 +25717,11 @@ func (self *OxmIpv6Dst) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpv6Dst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpv6DstMasked struct {
@@ -29559,26 +25787,20 @@ func (self *OxmIpv6DstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpv6DstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpv6DstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpv6DstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpv6Flabel struct {
@@ -29633,25 +25855,11 @@ func (self *OxmIpv6Flabel) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpv6Flabel) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpv6FlabelMasked struct {
@@ -29717,26 +25925,20 @@ func (self *OxmIpv6FlabelMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpv6FlabelMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpv6FlabelMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpv6FlabelMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpv6NdSll struct {
@@ -29791,25 +25993,11 @@ func (self *OxmIpv6NdSll) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpv6NdSll) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpv6NdSllMasked struct {
@@ -29875,26 +26063,20 @@ func (self *OxmIpv6NdSllMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpv6NdSllMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpv6NdSllMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpv6NdSllMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpv6NdTarget struct {
@@ -29949,25 +26131,11 @@ func (self *OxmIpv6NdTarget) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpv6NdTarget) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpv6NdTargetMasked struct {
@@ -30033,26 +26201,20 @@ func (self *OxmIpv6NdTargetMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpv6NdTargetMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpv6NdTargetMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpv6NdTargetMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpv6NdTll struct {
@@ -30107,25 +26269,11 @@ func (self *OxmIpv6NdTll) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpv6NdTll) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpv6NdTllMasked struct {
@@ -30191,26 +26339,20 @@ func (self *OxmIpv6NdTllMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpv6NdTllMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpv6NdTllMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpv6NdTllMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmIpv6Src struct {
@@ -30265,25 +26407,11 @@ func (self *OxmIpv6Src) GetOXMValue() interface{} {
 }
 
 func (self *OxmIpv6Src) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmIpv6SrcMasked struct {
@@ -30349,26 +26477,20 @@ func (self *OxmIpv6SrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmIpv6SrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmIpv6SrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmIpv6SrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmMetadata struct {
@@ -30423,25 +26545,11 @@ func (self *OxmMetadata) GetOXMValue() interface{} {
 }
 
 func (self *OxmMetadata) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmMetadataMasked struct {
@@ -30507,26 +26615,20 @@ func (self *OxmMetadataMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmMetadataMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmMetadataMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmMetadataMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmMplsLabel struct {
@@ -30581,25 +26683,11 @@ func (self *OxmMplsLabel) GetOXMValue() interface{} {
 }
 
 func (self *OxmMplsLabel) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmMplsLabelMasked struct {
@@ -30665,26 +26753,20 @@ func (self *OxmMplsLabelMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmMplsLabelMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmMplsLabelMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmMplsLabelMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmMplsTc struct {
@@ -30739,25 +26821,11 @@ func (self *OxmMplsTc) GetOXMValue() interface{} {
 }
 
 func (self *OxmMplsTc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmMplsTcMasked struct {
@@ -30823,26 +26891,20 @@ func (self *OxmMplsTcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmMplsTcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmMplsTcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmMplsTcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmOvsTcpFlags struct {
@@ -30909,25 +26971,11 @@ func (self *OxmOvsTcpFlags) GetOXMValue() interface{} {
 }
 
 func (self *OxmOvsTcpFlags) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmOvsTcpFlagsMasked struct {
@@ -31005,26 +27053,20 @@ func (self *OxmOvsTcpFlagsMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmOvsTcpFlagsMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmOvsTcpFlagsMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmOvsTcpFlagsMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmSctpDst struct {
@@ -31079,25 +27121,11 @@ func (self *OxmSctpDst) GetOXMValue() interface{} {
 }
 
 func (self *OxmSctpDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmSctpDstMasked struct {
@@ -31163,26 +27191,20 @@ func (self *OxmSctpDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmSctpDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmSctpDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmSctpDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmSctpSrc struct {
@@ -31237,25 +27259,11 @@ func (self *OxmSctpSrc) GetOXMValue() interface{} {
 }
 
 func (self *OxmSctpSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmSctpSrcMasked struct {
@@ -31321,26 +27329,20 @@ func (self *OxmSctpSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmSctpSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmSctpSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmSctpSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmTcpDst struct {
@@ -31395,25 +27397,11 @@ func (self *OxmTcpDst) GetOXMValue() interface{} {
 }
 
 func (self *OxmTcpDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmTcpDstMasked struct {
@@ -31479,26 +27467,20 @@ func (self *OxmTcpDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmTcpDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmTcpDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmTcpDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmTcpSrc struct {
@@ -31553,25 +27535,11 @@ func (self *OxmTcpSrc) GetOXMValue() interface{} {
 }
 
 func (self *OxmTcpSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmTcpSrcMasked struct {
@@ -31637,26 +27605,20 @@ func (self *OxmTcpSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmTcpSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmTcpSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmTcpSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmTunnelIpv4Dst struct {
@@ -31711,25 +27673,11 @@ func (self *OxmTunnelIpv4Dst) GetOXMValue() interface{} {
 }
 
 func (self *OxmTunnelIpv4Dst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmTunnelIpv4DstMasked struct {
@@ -31795,26 +27743,20 @@ func (self *OxmTunnelIpv4DstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmTunnelIpv4DstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmTunnelIpv4DstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmTunnelIpv4DstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmTunnelIpv4Src struct {
@@ -31869,25 +27811,11 @@ func (self *OxmTunnelIpv4Src) GetOXMValue() interface{} {
 }
 
 func (self *OxmTunnelIpv4Src) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmTunnelIpv4SrcMasked struct {
@@ -31953,26 +27881,20 @@ func (self *OxmTunnelIpv4SrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmTunnelIpv4SrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmTunnelIpv4SrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmTunnelIpv4SrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmUdpDst struct {
@@ -32027,25 +27949,11 @@ func (self *OxmUdpDst) GetOXMValue() interface{} {
 }
 
 func (self *OxmUdpDst) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmUdpDstMasked struct {
@@ -32111,26 +28019,20 @@ func (self *OxmUdpDstMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmUdpDstMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmUdpDstMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmUdpDstMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmUdpSrc struct {
@@ -32185,25 +28087,11 @@ func (self *OxmUdpSrc) GetOXMValue() interface{} {
 }
 
 func (self *OxmUdpSrc) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmUdpSrcMasked struct {
@@ -32269,26 +28157,20 @@ func (self *OxmUdpSrcMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmUdpSrcMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmUdpSrcMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmUdpSrcMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmVlanPcp struct {
@@ -32343,25 +28225,11 @@ func (self *OxmVlanPcp) GetOXMValue() interface{} {
 }
 
 func (self *OxmVlanPcp) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmVlanPcpMasked struct {
@@ -32427,26 +28295,20 @@ func (self *OxmVlanPcpMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmVlanPcpMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmVlanPcpMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmVlanPcpMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }
 
 type OxmVlanVid struct {
@@ -32501,25 +28363,11 @@ func (self *OxmVlanVid) GetOXMValue() interface{} {
 }
 
 func (self *OxmVlanVid) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
-
-	jsonValue, err := json.Marshal(value)
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(value))), nil
 }
 
 type OxmVlanVidMasked struct {
@@ -32585,24 +28433,18 @@ func (self *OxmVlanVidMasked) GetOXMValue() interface{} {
 	return self.Value
 }
 
-func (self *OxmVlanVidMasked) MarshalJSON() ([]byte, error) {
-	var value interface{} = self.GetOXMValue()
-	switch t := value.(type) {
-	case net.HardwareAddr:
-		value = t.String()
-	case net.IP:
-		value = t.String()
-	default:
-		if s, ok := t.(fmt.Stringer); ok {
-			value = s.String()
-		} else {
-			value = t
-		}
-	}
+func (self *OxmVlanVidMasked) GetOXMValueMask() interface{} {
+	return self.ValueMask
+}
 
-	jsonValue, err := json.Marshal(value)
+func (self *OxmVlanVidMasked) MarshalJSON() ([]byte, error) {
+	value, err := jsonValue(self.GetOXMValue())
 	if err != nil {
 		return nil, err
 	}
-	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s}", self.GetOXMName(), string(jsonValue))), nil
+	valueMask, err := jsonValue(self.GetOXMValueMask())
+	if err != nil {
+		return nil, err
+	}
+	return []byte(fmt.Sprintf("{\"Type\":\"%s\",\"Value\":%s,\"Mask\":%s}", self.GetOXMName(), string(value), string(valueMask))), nil
 }

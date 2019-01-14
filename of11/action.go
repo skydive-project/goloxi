@@ -382,6 +382,7 @@ func (self *ActionBsnMirror) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.DestPort))
 	encoder.PutUint32(uint32(self.VlanTag))
 	encoder.PutUint8(uint8(self.CopyStage))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -396,6 +397,7 @@ func DecodeActionBsnMirror(parent *ActionBsn, decoder *goloxi.Decoder) (*ActionB
 	_actionbsnmirror.DestPort = uint32(decoder.ReadUint32())
 	_actionbsnmirror.VlanTag = uint32(decoder.ReadUint32())
 	_actionbsnmirror.CopyStage = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionbsnmirror, nil
 }
 
@@ -501,6 +503,8 @@ func (self *ActionCopyTtlIn) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -508,9 +512,10 @@ func (self *ActionCopyTtlIn) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionCopyTtlIn(parent *Action, decoder *goloxi.Decoder) (*ActionCopyTtlIn, error) {
 	_actioncopyttlin := &ActionCopyTtlIn{Action: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("ActionCopyTtlIn packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 8 {
+		return nil, fmt.Errorf("ActionCopyTtlIn packet too short: %d < 8", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _actioncopyttlin, nil
 }
 
@@ -549,6 +554,8 @@ func (self *ActionCopyTtlOut) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -556,9 +563,10 @@ func (self *ActionCopyTtlOut) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionCopyTtlOut(parent *Action, decoder *goloxi.Decoder) (*ActionCopyTtlOut, error) {
 	_actioncopyttlout := &ActionCopyTtlOut{Action: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("ActionCopyTtlOut packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 8 {
+		return nil, fmt.Errorf("ActionCopyTtlOut packet too short: %d < 8", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _actioncopyttlout, nil
 }
 
@@ -597,6 +605,8 @@ func (self *ActionDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -604,9 +614,10 @@ func (self *ActionDecMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionDecMplsTtl(parent *Action, decoder *goloxi.Decoder) (*ActionDecMplsTtl, error) {
 	_actiondecmplsttl := &ActionDecMplsTtl{Action: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("ActionDecMplsTtl packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 8 {
+		return nil, fmt.Errorf("ActionDecMplsTtl packet too short: %d < 8", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _actiondecmplsttl, nil
 }
 
@@ -645,6 +656,8 @@ func (self *ActionDecNwTtl) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -652,9 +665,10 @@ func (self *ActionDecNwTtl) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionDecNwTtl(parent *Action, decoder *goloxi.Decoder) (*ActionDecNwTtl, error) {
 	_actiondecnwttl := &ActionDecNwTtl{Action: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("ActionDecNwTtl packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 8 {
+		return nil, fmt.Errorf("ActionDecNwTtl packet too short: %d < 8", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _actiondecnwttl, nil
 }
 
@@ -919,6 +933,7 @@ func (self *ActionNiciraDecTtl) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -931,6 +946,7 @@ func DecodeActionNiciraDecTtl(parent *ActionNicira, decoder *goloxi.Decoder) (*A
 		return nil, fmt.Errorf("ActionNiciraDecTtl packet too short: %d < 16", decoder.Length())
 	}
 	decoder.Skip(2)
+	decoder.Skip(4)
 	return _actionniciradecttl, nil
 }
 
@@ -1046,6 +1062,7 @@ func (self *ActionNxBundle) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.NSlaves))
 	encoder.PutUint16(uint16(self.OfsNbits))
 	self.Dst.Serialize(encoder)
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -1069,6 +1086,7 @@ func DecodeActionNxBundle(parent *ActionNicira, decoder *goloxi.Decoder) (*Actio
 		_actionnxbundle.Dst = obj
 	}
 
+	decoder.Skip(4)
 	return _actionnxbundle, nil
 }
 
@@ -1631,6 +1649,7 @@ func (self *ActionNxController) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.MaxLen))
 	encoder.PutUint16(uint16(self.ControllerId))
 	encoder.PutUint8(uint8(self.Reason))
+	encoder.Write(bytes.Repeat([]byte{0}, 1))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -1645,6 +1664,7 @@ func DecodeActionNxController(parent *ActionNicira, decoder *goloxi.Decoder) (*A
 	_actionnxcontroller.MaxLen = uint16(decoder.ReadUint16())
 	_actionnxcontroller.ControllerId = uint16(decoder.ReadUint16())
 	_actionnxcontroller.Reason = uint8(decoder.ReadByte())
+	decoder.Skip(1)
 	return _actionnxcontroller, nil
 }
 
@@ -2146,6 +2166,7 @@ func (self *ActionNxDecTtlCntIds) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.NControllers))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -2158,6 +2179,7 @@ func DecodeActionNxDecTtlCntIds(parent *ActionNicira, decoder *goloxi.Decoder) (
 		return nil, fmt.Errorf("ActionNxDecTtlCntIds packet too short: %d < 6", decoder.Length())
 	}
 	_actionnxdecttlcntids.NControllers = uint16(decoder.ReadUint16())
+	decoder.Skip(4)
 	return _actionnxdecttlcntids, nil
 }
 
@@ -2432,6 +2454,7 @@ func (self *ActionNxFinTimeout) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.FinIdleTimeout))
 	encoder.PutUint16(uint16(self.FinHardTimeout))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -2445,6 +2468,7 @@ func DecodeActionNxFinTimeout(parent *ActionNicira, decoder *goloxi.Decoder) (*A
 	}
 	_actionnxfintimeout.FinIdleTimeout = uint16(decoder.ReadUint16())
 	_actionnxfintimeout.FinHardTimeout = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _actionnxfintimeout, nil
 }
 
@@ -3187,6 +3211,7 @@ func (self *ActionNxOutputReg) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.OfsNbits))
 	encoder.PutUint32(uint32(self.Src))
 	encoder.PutUint16(uint16(self.MaxLen))
+	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -3201,6 +3226,7 @@ func DecodeActionNxOutputReg(parent *ActionNicira, decoder *goloxi.Decoder) (*Ac
 	_actionnxoutputreg.OfsNbits = uint16(decoder.ReadUint16())
 	_actionnxoutputreg.Src = uint32(decoder.ReadUint32())
 	_actionnxoutputreg.MaxLen = uint16(decoder.ReadUint16())
+	decoder.Skip(6)
 	return _actionnxoutputreg, nil
 }
 
@@ -3265,6 +3291,7 @@ func (self *ActionNxOutputReg2) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.OfsNbits))
 	encoder.PutUint16(uint16(self.MaxLen))
+	encoder.Write(bytes.Repeat([]byte{0}, 10))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -3278,6 +3305,7 @@ func DecodeActionNxOutputReg2(parent *ActionNicira, decoder *goloxi.Decoder) (*A
 	}
 	_actionnxoutputreg2.OfsNbits = uint16(decoder.ReadUint16())
 	_actionnxoutputreg2.MaxLen = uint16(decoder.ReadUint16())
+	decoder.Skip(10)
 	return _actionnxoutputreg2, nil
 }
 
@@ -3660,6 +3688,8 @@ func (self *ActionNxRegLoad2) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 6))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -3667,9 +3697,10 @@ func (self *ActionNxRegLoad2) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxRegLoad2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegLoad2, error) {
 	_actionnxregload2 := &ActionNxRegLoad2{ActionNicira: parent}
-	if decoder.Length() < 6 {
-		return nil, fmt.Errorf("ActionNxRegLoad2 packet too short: %d < 6", decoder.Length())
+	if decoder.Length() < 16 {
+		return nil, fmt.Errorf("ActionNxRegLoad2 packet too short: %d < 16", decoder.Length())
 	}
+	decoder.Skip(6)
 	return _actionnxregload2, nil
 }
 
@@ -3918,6 +3949,7 @@ func (self *ActionNxResubmitTable) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.InPort))
 	encoder.PutUint8(uint8(self.Table))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -3931,6 +3963,7 @@ func DecodeActionNxResubmitTable(parent *ActionNicira, decoder *goloxi.Decoder) 
 	}
 	_actionnxresubmittable.InPort = uint16(decoder.ReadUint16())
 	_actionnxresubmittable.Table = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionnxresubmittable, nil
 }
 
@@ -3994,6 +4027,7 @@ func (self *ActionNxResubmitTableCt) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.InPort))
 	encoder.PutUint8(uint8(self.Table))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -4007,6 +4041,7 @@ func DecodeActionNxResubmitTableCt(parent *ActionNicira, decoder *goloxi.Decoder
 	}
 	_actionnxresubmittablect.InPort = uint16(decoder.ReadUint16())
 	_actionnxresubmittablect.Table = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionnxresubmittablect, nil
 }
 
@@ -4216,6 +4251,7 @@ func (self *ActionNxSample2) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.ObsPointId))
 	encoder.PutUint16(uint16(self.SamplingPort))
 	encoder.PutUint8(uint8(self.Direction))
+	encoder.Write(bytes.Repeat([]byte{0}, 5))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -4233,6 +4269,7 @@ func DecodeActionNxSample2(parent *ActionNicira, decoder *goloxi.Decoder) (*Acti
 	_actionnxsample2.ObsPointId = uint32(decoder.ReadUint32())
 	_actionnxsample2.SamplingPort = uint16(decoder.ReadUint16())
 	_actionnxsample2.Direction = uint8(decoder.ReadByte())
+	decoder.Skip(5)
 	return _actionnxsample2, nil
 }
 
@@ -4344,6 +4381,7 @@ func (self *ActionNxSample3) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.ObsPointId))
 	encoder.PutUint16(uint16(self.SamplingPort))
 	encoder.PutUint8(uint8(self.Direction))
+	encoder.Write(bytes.Repeat([]byte{0}, 5))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -4361,6 +4399,7 @@ func DecodeActionNxSample3(parent *ActionNicira, decoder *goloxi.Decoder) (*Acti
 	_actionnxsample3.ObsPointId = uint32(decoder.ReadUint32())
 	_actionnxsample3.SamplingPort = uint16(decoder.ReadUint16())
 	_actionnxsample3.Direction = uint8(decoder.ReadByte())
+	decoder.Skip(5)
 	return _actionnxsample3, nil
 }
 
@@ -5072,6 +5111,7 @@ func (self *ActionOutput) Serialize(encoder *goloxi.Encoder) error {
 
 	self.Port.Serialize(encoder)
 	encoder.PutUint16(uint16(self.MaxLen))
+	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5085,6 +5125,7 @@ func DecodeActionOutput(parent *Action, decoder *goloxi.Decoder) (*ActionOutput,
 	}
 	_actionoutput.Port.Decode(decoder)
 	_actionoutput.MaxLen = uint16(decoder.ReadUint16())
+	decoder.Skip(6)
 	return _actionoutput, nil
 }
 
@@ -5137,6 +5178,7 @@ func (self *ActionPopMpls) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Ethertype))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5149,6 +5191,7 @@ func DecodeActionPopMpls(parent *Action, decoder *goloxi.Decoder) (*ActionPopMpl
 		return nil, fmt.Errorf("ActionPopMpls packet too short: %d < 4", decoder.Length())
 	}
 	_actionpopmpls.Ethertype = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _actionpopmpls, nil
 }
 
@@ -5189,6 +5232,8 @@ func (self *ActionPopVlan) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -5196,9 +5241,10 @@ func (self *ActionPopVlan) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionPopVlan(parent *Action, decoder *goloxi.Decoder) (*ActionPopVlan, error) {
 	_actionpopvlan := &ActionPopVlan{Action: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("ActionPopVlan packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 8 {
+		return nil, fmt.Errorf("ActionPopVlan packet too short: %d < 8", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _actionpopvlan, nil
 }
 
@@ -5248,6 +5294,7 @@ func (self *ActionPushMpls) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Ethertype))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5260,6 +5307,7 @@ func DecodeActionPushMpls(parent *Action, decoder *goloxi.Decoder) (*ActionPushM
 		return nil, fmt.Errorf("ActionPushMpls packet too short: %d < 4", decoder.Length())
 	}
 	_actionpushmpls.Ethertype = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _actionpushmpls, nil
 }
 
@@ -5311,6 +5359,7 @@ func (self *ActionPushVlan) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Ethertype))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5323,6 +5372,7 @@ func DecodeActionPushVlan(parent *Action, decoder *goloxi.Decoder) (*ActionPushV
 		return nil, fmt.Errorf("ActionPushVlan packet too short: %d < 4", decoder.Length())
 	}
 	_actionpushvlan.Ethertype = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _actionpushvlan, nil
 }
 
@@ -5385,6 +5435,7 @@ func (self *ActionResubmit) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint16(uint16(self.InPort))
 	encoder.PutUint8(uint8(self.Table))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5398,6 +5449,7 @@ func DecodeActionResubmit(parent *ActionNicira, decoder *goloxi.Decoder) (*Actio
 	}
 	_actionresubmit.InPort = uint16(decoder.ReadUint16())
 	_actionresubmit.Table = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionresubmit, nil
 }
 
@@ -5450,6 +5502,7 @@ func (self *ActionSetDlDst) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.Write(self.DlAddr)
+	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5462,6 +5515,7 @@ func DecodeActionSetDlDst(parent *Action, decoder *goloxi.Decoder) (*ActionSetDl
 		return nil, fmt.Errorf("ActionSetDlDst packet too short: %d < 12", decoder.Length())
 	}
 	_actionsetdldst.DlAddr = net.HardwareAddr(decoder.Read(6))
+	decoder.Skip(6)
 	return _actionsetdldst, nil
 }
 
@@ -5513,6 +5567,7 @@ func (self *ActionSetDlSrc) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.Write(self.DlAddr)
+	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5525,6 +5580,7 @@ func DecodeActionSetDlSrc(parent *Action, decoder *goloxi.Decoder) (*ActionSetDl
 		return nil, fmt.Errorf("ActionSetDlSrc packet too short: %d < 12", decoder.Length())
 	}
 	_actionsetdlsrc.DlAddr = net.HardwareAddr(decoder.Read(6))
+	decoder.Skip(6)
 	return _actionsetdlsrc, nil
 }
 
@@ -5639,6 +5695,7 @@ func (self *ActionSetMplsTc) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.MplsTc))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5651,6 +5708,7 @@ func DecodeActionSetMplsTc(parent *Action, decoder *goloxi.Decoder) (*ActionSetM
 		return nil, fmt.Errorf("ActionSetMplsTc packet too short: %d < 4", decoder.Length())
 	}
 	_actionsetmplstc.MplsTc = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionsetmplstc, nil
 }
 
@@ -5702,6 +5760,7 @@ func (self *ActionSetMplsTtl) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.MplsTtl))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5714,6 +5773,7 @@ func DecodeActionSetMplsTtl(parent *Action, decoder *goloxi.Decoder) (*ActionSet
 		return nil, fmt.Errorf("ActionSetMplsTtl packet too short: %d < 4", decoder.Length())
 	}
 	_actionsetmplsttl.MplsTtl = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionsetmplsttl, nil
 }
 
@@ -5828,6 +5888,7 @@ func (self *ActionSetNwEcn) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.NwEcn))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5840,6 +5901,7 @@ func DecodeActionSetNwEcn(parent *Action, decoder *goloxi.Decoder) (*ActionSetNw
 		return nil, fmt.Errorf("ActionSetNwEcn packet too short: %d < 4", decoder.Length())
 	}
 	_actionsetnwecn.NwEcn = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionsetnwecn, nil
 }
 
@@ -5954,6 +6016,7 @@ func (self *ActionSetNwTos) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.NwTos))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5966,6 +6029,7 @@ func DecodeActionSetNwTos(parent *Action, decoder *goloxi.Decoder) (*ActionSetNw
 		return nil, fmt.Errorf("ActionSetNwTos packet too short: %d < 4", decoder.Length())
 	}
 	_actionsetnwtos.NwTos = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionsetnwtos, nil
 }
 
@@ -6017,6 +6081,7 @@ func (self *ActionSetNwTtl) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.NwTtl))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -6029,6 +6094,7 @@ func DecodeActionSetNwTtl(parent *Action, decoder *goloxi.Decoder) (*ActionSetNw
 		return nil, fmt.Errorf("ActionSetNwTtl packet too short: %d < 4", decoder.Length())
 	}
 	_actionsetnwttl.NwTtl = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionsetnwttl, nil
 }
 
@@ -6143,6 +6209,7 @@ func (self *ActionSetTpDst) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.TpPort))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -6155,6 +6222,7 @@ func DecodeActionSetTpDst(parent *Action, decoder *goloxi.Decoder) (*ActionSetTp
 		return nil, fmt.Errorf("ActionSetTpDst packet too short: %d < 4", decoder.Length())
 	}
 	_actionsettpdst.TpPort = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _actionsettpdst, nil
 }
 
@@ -6206,6 +6274,7 @@ func (self *ActionSetTpSrc) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.TpPort))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -6218,6 +6287,7 @@ func DecodeActionSetTpSrc(parent *Action, decoder *goloxi.Decoder) (*ActionSetTp
 		return nil, fmt.Errorf("ActionSetTpSrc packet too short: %d < 4", decoder.Length())
 	}
 	_actionsettpsrc.TpPort = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _actionsettpsrc, nil
 }
 
@@ -6269,6 +6339,7 @@ func (self *ActionSetVlanPcp) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.VlanPcp))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -6281,6 +6352,7 @@ func DecodeActionSetVlanPcp(parent *Action, decoder *goloxi.Decoder) (*ActionSet
 		return nil, fmt.Errorf("ActionSetVlanPcp packet too short: %d < 4", decoder.Length())
 	}
 	_actionsetvlanpcp.VlanPcp = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _actionsetvlanpcp, nil
 }
 
@@ -6332,6 +6404,7 @@ func (self *ActionSetVlanVid) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.VlanVid))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -6344,6 +6417,7 @@ func DecodeActionSetVlanVid(parent *Action, decoder *goloxi.Decoder) (*ActionSet
 		return nil, fmt.Errorf("ActionSetVlanVid packet too short: %d < 4", decoder.Length())
 	}
 	_actionsetvlanvid.VlanVid = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _actionsetvlanvid, nil
 }
 

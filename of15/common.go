@@ -51,12 +51,12 @@ func DecodeOxmId(decoder *goloxi.Decoder) (IOxmId, error) {
 	_oxmid.TypeLen = uint32(decoder.ReadUint32())
 
 	switch _oxmid.TypeLen {
-	case 2147487745:
-		return DecodeOxmIdIpDscp(_oxmid, decoder)
+	case 110204:
+		return DecodeOxmIdTunMetadata47(_oxmid, decoder)
 	case 129026:
 		return DecodeOxmIdConnTrackingTpSrc(_oxmid, decoder)
-	case 65540:
-		return DecodeOxmIdReg0(_oxmid, decoder)
+	case 2147489796:
+		return DecodeOxmIdIpv4Dst(_oxmid, decoder)
 	case 77830:
 		return DecodeOxmIdNdSll(_oxmid, decoder)
 	case 80897:
@@ -65,164 +65,162 @@ func DecodeOxmId(decoder *goloxi.Decoder) (IOxmId, error) {
 		return DecodeOxmIdTunId(_oxmid, decoder)
 	case 2:
 		return DecodeOxmIdInPort(_oxmid, decoder)
-	case 2147484944:
-		return DecodeOxmIdMetadataMasked(_oxmid, decoder)
-	case 122896:
-		return DecodeOxmIdXxreg1(_oxmid, decoder)
-	case 94588:
-		return DecodeOxmIdTunMetadata16Masked(_oxmid, decoder)
+	case 120848:
+		return DecodeOxmIdConnTrackingLabel(_oxmid, decoder)
+	case 65540:
+		return DecodeOxmIdReg0(_oxmid, decoder)
 	case 111228:
 		return DecodeOxmIdTunMetadata49(_oxmid, decoder)
-	case 1030:
-		return DecodeOxmIdEthSrc(_oxmid, decoder)
+	case 74758:
+		return DecodeOxmIdArpTha(_oxmid, decoder)
 	case 2147499266:
 		return DecodeOxmIdIcmpv6CodeMasked(_oxmid, decoder)
 	case 2147503112:
 		return DecodeOxmIdTunnelId(_oxmid, decoder)
-	case 95612:
-		return DecodeOxmIdTunMetadata18Masked(_oxmid, decoder)
 	case 112252:
 		return DecodeOxmIdTunMetadata51(_oxmid, decoder)
-	case 96892:
-		return DecodeOxmIdTunMetadata21(_oxmid, decoder)
-	case 96636:
-		return DecodeOxmIdTunMetadata20Masked(_oxmid, decoder)
-	case 121872:
-		return DecodeOxmIdTunIpv6Dst(_oxmid, decoder)
-	case 110204:
-		return DecodeOxmIdTunMetadata47(_oxmid, decoder)
-	case 126980:
-		return DecodeOxmIdConnTrackingNwSrc(_oxmid, decoder)
-	case 97660:
-		return DecodeOxmIdTunMetadata22Masked(_oxmid, decoder)
+	case 108024:
+		return DecodeOxmIdTunMetadata42Masked(_oxmid, decoder)
+	case 113276:
+		return DecodeOxmIdTunMetadata53(_oxmid, decoder)
+	case 109048:
+		return DecodeOxmIdTunMetadata44Masked(_oxmid, decoder)
 	case 94332:
 		return DecodeOxmIdTunMetadata16(_oxmid, decoder)
+	case 114300:
+		return DecodeOxmIdTunMetadata55(_oxmid, decoder)
 	case 2050:
 		return DecodeOxmIdVlanTci(_oxmid, decoder)
 	case 3073:
 		return DecodeOxmIdNwProto(_oxmid, decoder)
-	case 82180:
-		return DecodeOxmIdTunDstMasked(_oxmid, decoder)
+	case 110072:
+		return DecodeOxmIdTunMetadata46Masked(_oxmid, decoder)
 	case 2147502338:
 		return DecodeOxmIdMplsBosMasked(_oxmid, decoder)
-	case 121120:
-		return DecodeOxmIdConnTrackingLabelMasked(_oxmid, decoder)
-	case 98684:
-		return DecodeOxmIdTunMetadata24Masked(_oxmid, decoder)
 	case 66564:
 		return DecodeOxmIdReg2(_oxmid, decoder)
 	case 115324:
 		return DecodeOxmIdTunMetadata57(_oxmid, decoder)
-	case 95356:
-		return DecodeOxmIdTunMetadata18(_oxmid, decoder)
-	case 120848:
-		return DecodeOxmIdConnTrackingLabel(_oxmid, decoder)
-	case 85250:
-		return DecodeOxmIdTunGbpIdMasked(_oxmid, decoder)
-	case 99708:
-		return DecodeOxmIdTunMetadata26Masked(_oxmid, decoder)
+	case 2147486722:
+		return DecodeOxmIdVlanVid(_oxmid, decoder)
+	case 2147487745:
+		return DecodeOxmIdIpDscp(_oxmid, decoder)
+	case 111096:
+		return DecodeOxmIdTunMetadata48Masked(_oxmid, decoder)
+	case 83204:
+		return DecodeOxmIdTcpFlagsMasked(_oxmid, decoder)
+	case 3588:
+		return DecodeOxmIdIpSrc(_oxmid, decoder)
 	case 198660:
 		return DecodeOxmIdBsnL3InterfaceClassId(_oxmid, decoder)
 	case 2147488769:
 		return DecodeOxmIdIpProto(_oxmid, decoder)
+	case 112120:
+		return DecodeOxmIdTunMetadata50Masked(_oxmid, decoder)
+	case 121872:
+		return DecodeOxmIdTunIpv6Dst(_oxmid, decoder)
 	case 199172:
 		return DecodeOxmIdBsnL3SrcClassId(_oxmid, decoder)
-	case 100732:
-		return DecodeOxmIdTunMetadata28Masked(_oxmid, decoder)
+	case 1030:
+		return DecodeOxmIdEthSrc(_oxmid, decoder)
 	case 68612:
 		return DecodeOxmIdReg6(_oxmid, decoder)
 	case 117372:
 		return DecodeOxmIdTunMetadata61(_oxmid, decoder)
 	case 5122:
 		return DecodeOxmIdTcpDst(_oxmid, decoder)
-	case 93564:
-		return DecodeOxmIdTunMetadata14Masked(_oxmid, decoder)
+	case 113144:
+		return DecodeOxmIdTunMetadata52Masked(_oxmid, decoder)
+	case 122896:
+		return DecodeOxmIdXxreg1(_oxmid, decoder)
 	case 209156:
 		return DecodeOxmIdBsnInnerVlanVidMasked(_oxmid, decoder)
-	case 101244:
-		return DecodeOxmIdTunMetadata29Masked(_oxmid, decoder)
+	case 124192:
+		return DecodeOxmIdXxreg3Masked(_oxmid, decoder)
 	case 81672:
 		return DecodeOxmIdTunnelIpv4SrcMasked(_oxmid, decoder)
-	case 101756:
-		return DecodeOxmIdTunMetadata30Masked(_oxmid, decoder)
 	case 4100:
 		return DecodeOxmIdIpDst(_oxmid, decoder)
 	case 118396:
 		return DecodeOxmIdTunMetadata63(_oxmid, decoder)
-	case 119042:
-		return DecodeOxmIdTunFlagsMasked(_oxmid, decoder)
-	case 127236:
-		return DecodeOxmIdCtNwSrcMasked(_oxmid, decoder)
-	case 78086:
-		return DecodeOxmIdNdSllMasked(_oxmid, decoder)
+	case 2147494146:
+		return DecodeOxmIdIcmpv4CodeMasked(_oxmid, decoder)
+	case 129284:
+		return DecodeOxmIdConnTrackingTpSrcMasked(_oxmid, decoder)
+	case 114168:
+		return DecodeOxmIdTunMetadata54Masked(_oxmid, decoder)
+	case 123920:
+		return DecodeOxmIdXxreg3(_oxmid, decoder)
 	case 200968:
 		return DecodeOxmIdBsnUdf0Masked(_oxmid, decoder)
+	case 78091:
+		return DecodeOxmIdNdSllMasked(_oxmid, decoder)
 	case 2147500300:
 		return DecodeOxmIdIpv6NdSllMasked(_oxmid, decoder)
-	case 76048:
-		return DecodeOxmIdIpv6DstMasked(_oxmid, decoder)
+	case 74000:
+		return DecodeOxmIdTunIdMasked(_oxmid, decoder)
 	case 86140:
 		return DecodeOxmIdTunMetadata0(_oxmid, decoder)
-	case 119556:
-		return DecodeOxmIdCtStateMasked(_oxmid, decoder)
-	case 102780:
-		return DecodeOxmIdTunMetadata32Masked(_oxmid, decoder)
 	case 70660:
 		return DecodeOxmIdReg10(_oxmid, decoder)
-	case 196896:
-		return DecodeOxmIdBsnInPorts128Masked(_oxmid, decoder)
-	case 78849:
-		return DecodeOxmIdIpFrag(_oxmid, decoder)
+	case 121120:
+		return DecodeOxmIdConnTrackingLabelMasked(_oxmid, decoder)
+	case 107000:
+		return DecodeOxmIdTunMetadata40Masked(_oxmid, decoder)
+	case 3848:
+		return DecodeOxmIdIpSrcMasked(_oxmid, decoder)
 	case 87164:
 		return DecodeOxmIdTunMetadata2(_oxmid, decoder)
-	case 120580:
-		return DecodeOxmIdCtMarkMasked(_oxmid, decoder)
-	case 103804:
-		return DecodeOxmIdTunMetadata34Masked(_oxmid, decoder)
 	case 202756:
 		return DecodeOxmIdBsnUdf4(_oxmid, decoder)
 	case 204802:
 		return DecodeOxmIdBsnTcpFlags(_oxmid, decoder)
 	case 205825:
 		return DecodeOxmIdBsnL2CacheHit(_oxmid, decoder)
+	case 116216:
+		return DecodeOxmIdTunMetadata58Masked(_oxmid, decoder)
+	case 199432:
+		return DecodeOxmIdBsnL3SrcClassIdMasked(_oxmid, decoder)
 	case 88188:
 		return DecodeOxmIdTunMetadata4(_oxmid, decoder)
-	case 104828:
-		return DecodeOxmIdTunMetadata36Masked(_oxmid, decoder)
 	case 72708:
 		return DecodeOxmIdReg14(_oxmid, decoder)
 	case 2147492866:
 		return DecodeOxmIdSctpDst(_oxmid, decoder)
 	case 2147493889:
 		return DecodeOxmIdIcmpv4Code(_oxmid, decoder)
+	case 117240:
+		return DecodeOxmIdTunMetadata60Masked(_oxmid, decoder)
 	case 200196:
 		return DecodeOxmIdBsnEgrPortGroupId(_oxmid, decoder)
+	case 128288:
+		return DecodeOxmIdConnTrackingIpv6SrcMasked(_oxmid, decoder)
 	case 89212:
 		return DecodeOxmIdTunMetadata6(_oxmid, decoder)
-	case 105852:
-		return DecodeOxmIdTunMetadata38Masked(_oxmid, decoder)
-	case 113020:
-		return DecodeOxmIdTunMetadata52Masked(_oxmid, decoder)
 	case 8196:
 		return DecodeOxmIdArpSpa(_oxmid, decoder)
 	case 76801:
 		return DecodeOxmIdIcmpv6Code(_oxmid, decoder)
+	case 118264:
+		return DecodeOxmIdTunMetadata62Masked(_oxmid, decoder)
 	case 70148:
 		return DecodeOxmIdReg9(_oxmid, decoder)
 	case 119560:
 		return DecodeOxmIdConnTrackingStateMasked(_oxmid, decoder)
 	case 90236:
 		return DecodeOxmIdTunMetadata8(_oxmid, decoder)
-	case 106876:
-		return DecodeOxmIdTunMetadata40Masked(_oxmid, decoder)
+	case 119044:
+		return DecodeOxmIdTunFlagsMasked(_oxmid, decoder)
+	case 82696:
+		return DecodeOxmIdPktMarkMasked(_oxmid, decoder)
 	case 4294923528:
 		return DecodeOxmIdOvsTcpFlagsMasked(_oxmid, decoder)
 	case 120584:
 		return DecodeOxmIdConnTrackingMarkMasked(_oxmid, decoder)
 	case 91260:
 		return DecodeOxmIdTunMetadata10(_oxmid, decoder)
-	case 107900:
-		return DecodeOxmIdTunMetadata42Masked(_oxmid, decoder)
+	case 87032:
+		return DecodeOxmIdTunMetadata1Masked(_oxmid, decoder)
 	case 126722:
 		return DecodeOxmIdConnTrackingNwProtoMasked(_oxmid, decoder)
 	case 206852:
@@ -231,24 +229,24 @@ func DecodeOxmId(decoder *goloxi.Decoder) (IOxmId, error) {
 		return DecodeOxmIdBsnInnerVlanVid(_oxmid, decoder)
 	case 209921:
 		return DecodeOxmIdBsnIpFragmentation(_oxmid, decoder)
+	case 196896:
+		return DecodeOxmIdBsnInPorts128Masked(_oxmid, decoder)
 	case 92284:
 		return DecodeOxmIdTunMetadata12(_oxmid, decoder)
-	case 108924:
-		return DecodeOxmIdTunMetadata44Masked(_oxmid, decoder)
-	case 74758:
-		return DecodeOxmIdArpTha(_oxmid, decoder)
-	case 121104:
-		return DecodeOxmIdCtLabelMasked(_oxmid, decoder)
+	case 88056:
+		return DecodeOxmIdTunMetadata3Masked(_oxmid, decoder)
 	case 79873:
 		return DecodeOxmIdNwEcn(_oxmid, decoder)
 	case 196624:
 		return DecodeOxmIdBsnInPorts128(_oxmid, decoder)
+	case 200456:
+		return DecodeOxmIdBsnEgrPortGroupIdMasked(_oxmid, decoder)
 	case 2147489284:
 		return DecodeOxmIdIpv4Src(_oxmid, decoder)
 	case 93308:
 		return DecodeOxmIdTunMetadata14(_oxmid, decoder)
-	case 2147492612:
-		return DecodeOxmIdSctpSrcMasked(_oxmid, decoder)
+	case 115192:
+		return DecodeOxmIdTunMetadata56Masked(_oxmid, decoder)
 	case 2561:
 		return DecodeOxmIdNwTos(_oxmid, decoder)
 	case 129538:
@@ -257,186 +255,176 @@ func DecodeOxmId(decoder *goloxi.Decoder) (IOxmId, error) {
 		return DecodeOxmIdIpv6NdTll(_oxmid, decoder)
 	case 84484:
 		return DecodeOxmIdConjId(_oxmid, decoder)
-	case 78342:
-		return DecodeOxmIdNdTll(_oxmid, decoder)
-	case 2147498754:
-		return DecodeOxmIdIcmpv6TypeMasked(_oxmid, decoder)
-	case 121360:
-		return DecodeOxmIdTunIpv6Src(_oxmid, decoder)
-	case 71428:
-		return DecodeOxmIdReg11Masked(_oxmid, decoder)
-	case 774:
-		return DecodeOxmIdEthDstMasked(_oxmid, decoder)
-	case 207624:
-		return DecodeOxmIdBsnVxlanNetworkIdMasked(_oxmid, decoder)
-	case 111996:
-		return DecodeOxmIdTunMetadata50Masked(_oxmid, decoder)
+	case 74246:
+		return DecodeOxmIdArpSha(_oxmid, decoder)
+	case 2147488514:
+		return DecodeOxmIdIpEcnMasked(_oxmid, decoder)
+	case 123408:
+		return DecodeOxmIdXxreg2(_oxmid, decoder)
+	case 90104:
+		return DecodeOxmIdTunMetadata7Masked(_oxmid, decoder)
+	case 2147486468:
+		return DecodeOxmIdEthTypeMasked(_oxmid, decoder)
+	case 70408:
+		return DecodeOxmIdReg9Masked(_oxmid, decoder)
+	case 91128:
+		return DecodeOxmIdTunMetadata9Masked(_oxmid, decoder)
+	case 83720:
+		return DecodeOxmIdDpHashMasked(_oxmid, decoder)
 	case 2147497988:
 		return DecodeOxmIdIpv6Flabel(_oxmid, decoder)
+	case 78603:
+		return DecodeOxmIdNdTllMasked(_oxmid, decoder)
 	case 2147503376:
 		return DecodeOxmIdTunnelIdMasked(_oxmid, decoder)
 	case 96380:
 		return DecodeOxmIdTunMetadata20(_oxmid, decoder)
-	case 113276:
-		return DecodeOxmIdTunMetadata53(_oxmid, decoder)
+	case 92152:
+		return DecodeOxmIdTunMetadata11Masked(_oxmid, decoder)
 	case 129796:
 		return DecodeOxmIdConnTrackingTpDstMasked(_oxmid, decoder)
-	case 75536:
-		return DecodeOxmIdIpv6SrcMasked(_oxmid, decoder)
 	case 2147502081:
 		return DecodeOxmIdMplsBos(_oxmid, decoder)
-	case 2147489544:
-		return DecodeOxmIdIpv4SrcMasked(_oxmid, decoder)
 	case 97404:
 		return DecodeOxmIdTunMetadata22(_oxmid, decoder)
-	case 114044:
-		return DecodeOxmIdTunMetadata54Masked(_oxmid, decoder)
+	case 93176:
+		return DecodeOxmIdTunMetadata13Masked(_oxmid, decoder)
 	case 94844:
 		return DecodeOxmIdTunMetadata17(_oxmid, decoder)
 	case 81924:
 		return DecodeOxmIdTunnelIpv4Dst(_oxmid, decoder)
-	case 2147486980:
-		return DecodeOxmIdVlanVidMasked(_oxmid, decoder)
 	case 127752:
 		return DecodeOxmIdConnTrackingNwDstMasked(_oxmid, decoder)
 	case 98428:
 		return DecodeOxmIdTunMetadata24(_oxmid, decoder)
-	case 66308:
-		return DecodeOxmIdReg1Masked(_oxmid, decoder)
-	case 2147489026:
-		return DecodeOxmIdIpProtoMasked(_oxmid, decoder)
-	case 115068:
-		return DecodeOxmIdTunMetadata56Masked(_oxmid, decoder)
+	case 94200:
+		return DecodeOxmIdTunMetadata15Masked(_oxmid, decoder)
 	case 2147501060:
 		return DecodeOxmIdMplsLabel(_oxmid, decoder)
 	case 84994:
 		return DecodeOxmIdTunGbpId(_oxmid, decoder)
-	case 202244:
-		return DecodeOxmIdBsnUdf3(_oxmid, decoder)
+	case 71432:
+		return DecodeOxmIdReg11Masked(_oxmid, decoder)
 	case 99452:
 		return DecodeOxmIdTunMetadata26(_oxmid, decoder)
-	case 67332:
-		return DecodeOxmIdReg3Masked(_oxmid, decoder)
-	case 116092:
-		return DecodeOxmIdTunMetadata58Masked(_oxmid, decoder)
+	case 95224:
+		return DecodeOxmIdTunMetadata17Masked(_oxmid, decoder)
 	case 2147500038:
 		return DecodeOxmIdIpv6NdSll(_oxmid, decoder)
 	case 83972:
 		return DecodeOxmIdRecircId(_oxmid, decoder)
-	case 2147499808:
-		return DecodeOxmIdIpv6NdTargetMasked(_oxmid, decoder)
+	case 128800:
+		return DecodeOxmIdConnTrackingIpv6DstMasked(_oxmid, decoder)
 	case 72196:
 		return DecodeOxmIdReg13(_oxmid, decoder)
 	case 100476:
 		return DecodeOxmIdTunMetadata28(_oxmid, decoder)
-	case 68356:
-		return DecodeOxmIdReg5Masked(_oxmid, decoder)
-	case 117116:
-		return DecodeOxmIdTunMetadata60Masked(_oxmid, decoder)
-	case 4866:
-		return DecodeOxmIdTcpSrcMasked(_oxmid, decoder)
+	case 96248:
+		return DecodeOxmIdTunMetadata19Masked(_oxmid, decoder)
 	case 112764:
 		return DecodeOxmIdTunMetadata52(_oxmid, decoder)
-	case 110972:
-		return DecodeOxmIdTunMetadata48Masked(_oxmid, decoder)
 	case 101500:
 		return DecodeOxmIdTunMetadata30(_oxmid, decoder)
-	case 3844:
-		return DecodeOxmIdIpSrcMasked(_oxmid, decoder)
-	case 118140:
-		return DecodeOxmIdTunMetadata62Masked(_oxmid, decoder)
-	case 123664:
-		return DecodeOxmIdXxreg2Masked(_oxmid, decoder)
-	case 117628:
-		return DecodeOxmIdTunMetadata61Masked(_oxmid, decoder)
-	case 129794:
-		return DecodeOxmIdCtTpDstMasked(_oxmid, decoder)
-	case 127748:
-		return DecodeOxmIdCtNwDstMasked(_oxmid, decoder)
-	case 78598:
-		return DecodeOxmIdNdTllMasked(_oxmid, decoder)
+	case 97272:
+		return DecodeOxmIdTunMetadata21Masked(_oxmid, decoder)
+	case 2147498754:
+		return DecodeOxmIdIcmpv6TypeMasked(_oxmid, decoder)
+	case 209668:
+		return DecodeOxmIdBsnVfiMasked(_oxmid, decoder)
 	case 2147484424:
 		return DecodeOxmIdInPhyPortMasked(_oxmid, decoder)
+	case 74507:
+		return DecodeOxmIdArpShaMasked(_oxmid, decoder)
 	case 2147500812:
 		return DecodeOxmIdIpv6NdTllMasked(_oxmid, decoder)
 	case 197384:
 		return DecodeOxmIdBsnLagIdMasked(_oxmid, decoder)
-	case 121616:
-		return DecodeOxmIdTunIpv6SrcMasked(_oxmid, decoder)
+	case 76064:
+		return DecodeOxmIdIpv6DstMasked(_oxmid, decoder)
 	case 102524:
 		return DecodeOxmIdTunMetadata32(_oxmid, decoder)
-	case 70404:
-		return DecodeOxmIdReg9Masked(_oxmid, decoder)
+	case 98296:
+		return DecodeOxmIdTunMetadata23Masked(_oxmid, decoder)
+	case 4868:
+		return DecodeOxmIdTcpSrcMasked(_oxmid, decoder)
+	case 121632:
+		return DecodeOxmIdTunIpv6SrcMasked(_oxmid, decoder)
 	case 75792:
 		return DecodeOxmIdIpv6Dst(_oxmid, decoder)
-	case 86908:
-		return DecodeOxmIdTunMetadata1Masked(_oxmid, decoder)
+	case 202504:
+		return DecodeOxmIdBsnUdf3Masked(_oxmid, decoder)
 	case 120324:
 		return DecodeOxmIdConnTrackingMark(_oxmid, decoder)
+	case 99320:
+		return DecodeOxmIdTunMetadata25Masked(_oxmid, decoder)
+	case 65800:
+		return DecodeOxmIdReg0Masked(_oxmid, decoder)
+	case 66824:
+		return DecodeOxmIdReg2Masked(_oxmid, decoder)
 	case 2147506180:
 		return DecodeOxmIdPacketType(_oxmid, decoder)
-	case 87932:
-		return DecodeOxmIdTunMetadata3Masked(_oxmid, decoder)
-	case 199432:
-		return DecodeOxmIdBsnL3SrcClassIdMasked(_oxmid, decoder)
+	case 72456:
+		return DecodeOxmIdReg13Masked(_oxmid, decoder)
+	case 68360:
+		return DecodeOxmIdReg5Masked(_oxmid, decoder)
 	case 104572:
 		return DecodeOxmIdTunMetadata36(_oxmid, decoder)
-	case 3588:
-		return DecodeOxmIdIpSrc(_oxmid, decoder)
-	case 72452:
-		return DecodeOxmIdReg13Masked(_oxmid, decoder)
+	case 95356:
+		return DecodeOxmIdTunMetadata18(_oxmid, decoder)
+	case 100344:
+		return DecodeOxmIdTunMetadata27Masked(_oxmid, decoder)
 	case 4294923270:
 		return DecodeOxmIdOvsTcpFlags(_oxmid, decoder)
-	case 69892:
-		return DecodeOxmIdReg8Masked(_oxmid, decoder)
-	case 88956:
-		return DecodeOxmIdTunMetadata5Masked(_oxmid, decoder)
-	case 200456:
-		return DecodeOxmIdBsnEgrPortGroupIdMasked(_oxmid, decoder)
+	case 779:
+		return DecodeOxmIdEthDstMasked(_oxmid, decoder)
+	case 69384:
+		return DecodeOxmIdReg7Masked(_oxmid, decoder)
 	case 105596:
 		return DecodeOxmIdTunMetadata38(_oxmid, decoder)
-	case 73476:
-		return DecodeOxmIdReg15Masked(_oxmid, decoder)
+	case 101368:
+		return DecodeOxmIdTunMetadata29Masked(_oxmid, decoder)
 	case 2147493634:
 		return DecodeOxmIdIcmpv4TypeMasked(_oxmid, decoder)
-	case 95100:
-		return DecodeOxmIdTunMetadata17Masked(_oxmid, decoder)
+	case 108668:
+		return DecodeOxmIdTunMetadata44(_oxmid, decoder)
 	case 201480:
 		return DecodeOxmIdBsnUdf1Masked(_oxmid, decoder)
 	case 106620:
 		return DecodeOxmIdTunMetadata40(_oxmid, decoder)
-	case 8964:
-		return DecodeOxmIdArpTpaMasked(_oxmid, decoder)
-	case 128784:
-		return DecodeOxmIdCtIpv6DstMasked(_oxmid, decoder)
-	case 91004:
-		return DecodeOxmIdTunMetadata9Masked(_oxmid, decoder)
-	case 202504:
-		return DecodeOxmIdBsnUdf3Masked(_oxmid, decoder)
+	case 102392:
+		return DecodeOxmIdTunMetadata31Masked(_oxmid, decoder)
+	case 2147492612:
+		return DecodeOxmIdSctpSrcMasked(_oxmid, decoder)
+	case 73480:
+		return DecodeOxmIdReg15Masked(_oxmid, decoder)
+	case 204292:
+		return DecodeOxmIdBsnUdf7(_oxmid, decoder)
+	case 2147489544:
+		return DecodeOxmIdIpv4SrcMasked(_oxmid, decoder)
 	case 107644:
 		return DecodeOxmIdTunMetadata42(_oxmid, decoder)
+	case 103416:
+		return DecodeOxmIdTunMetadata33Masked(_oxmid, decoder)
 	case 2147498248:
 		return DecodeOxmIdIpv6FlabelMasked(_oxmid, decoder)
-	case 92028:
-		return DecodeOxmIdTunMetadata11Masked(_oxmid, decoder)
 	case 203528:
 		return DecodeOxmIdBsnUdf5Masked(_oxmid, decoder)
-	case 8708:
-		return DecodeOxmIdArpTpa(_oxmid, decoder)
-	case 108668:
-		return DecodeOxmIdTunMetadata44(_oxmid, decoder)
-	case 74502:
-		return DecodeOxmIdArpShaMasked(_oxmid, decoder)
+	case 89592:
+		return DecodeOxmIdTunMetadata6Masked(_oxmid, decoder)
+	case 104440:
+		return DecodeOxmIdTunMetadata35Masked(_oxmid, decoder)
 	case 2147494660:
 		return DecodeOxmIdArpOpMasked(_oxmid, decoder)
 	case 197636:
 		return DecodeOxmIdBsnVrf(_oxmid, decoder)
-	case 93052:
-		return DecodeOxmIdTunMetadata13Masked(_oxmid, decoder)
-	case 204292:
-		return DecodeOxmIdBsnUdf7(_oxmid, decoder)
+	case 204552:
+		return DecodeOxmIdBsnUdf7Masked(_oxmid, decoder)
 	case 109692:
 		return DecodeOxmIdTunMetadata46(_oxmid, decoder)
+	case 105464:
+		return DecodeOxmIdTunMetadata37Masked(_oxmid, decoder)
+	case 89080:
+		return DecodeOxmIdTunMetadata5Masked(_oxmid, decoder)
 	case 67588:
 		return DecodeOxmIdReg4(_oxmid, decoder)
 	case 7169:
@@ -453,68 +441,66 @@ func DecodeOxmId(decoder *goloxi.Decoder) (IOxmId, error) {
 		return DecodeOxmIdMetadata(_oxmid, decoder)
 	case 1538:
 		return DecodeOxmIdEthType(_oxmid, decoder)
-	case 205576:
-		return DecodeOxmIdBsnVlanXlatePortGroupIdMasked(_oxmid, decoder)
+	case 8968:
+		return DecodeOxmIdArpTpaMasked(_oxmid, decoder)
 	case 128016:
 		return DecodeOxmIdConnTrackingIpv6Src(_oxmid, decoder)
 	case 110716:
 		return DecodeOxmIdTunMetadata48(_oxmid, decoder)
-	case 209668:
-		return DecodeOxmIdBsnVfiMasked(_oxmid, decoder)
 	case 127492:
 		return DecodeOxmIdConnTrackingNwDst(_oxmid, decoder)
-	case 518:
-		return DecodeOxmIdEthDst(_oxmid, decoder)
+	case 78342:
+		return DecodeOxmIdNdTll(_oxmid, decoder)
 	case 111740:
 		return DecodeOxmIdTunMetadata50(_oxmid, decoder)
-	case 96124:
-		return DecodeOxmIdTunMetadata19Masked(_oxmid, decoder)
-	case 122384:
-		return DecodeOxmIdXxreg0(_oxmid, decoder)
-	case 97148:
-		return DecodeOxmIdTunMetadata21Masked(_oxmid, decoder)
-	case 2147503876:
-		return DecodeOxmIdIpv6ExthdrMasked(_oxmid, decoder)
+	case 107512:
+		return DecodeOxmIdTunMetadata41Masked(_oxmid, decoder)
+	case 207624:
+		return DecodeOxmIdBsnVxlanNetworkIdMasked(_oxmid, decoder)
+	case 121360:
+		return DecodeOxmIdTunIpv6Src(_oxmid, decoder)
 	case 113788:
 		return DecodeOxmIdTunMetadata54(_oxmid, decoder)
-	case 81668:
-		return DecodeOxmIdTunSrcMasked(_oxmid, decoder)
+	case 109560:
+		return DecodeOxmIdTunMetadata45Masked(_oxmid, decoder)
 	case 2147501826:
 		return DecodeOxmIdMplsTcMasked(_oxmid, decoder)
 	case 103548:
 		return DecodeOxmIdTunMetadata34(_oxmid, decoder)
-	case 98172:
-		return DecodeOxmIdTunMetadata23Masked(_oxmid, decoder)
-	case 66052:
-		return DecodeOxmIdReg1(_oxmid, decoder)
+	case 2147484164:
+		return DecodeOxmIdInPhyPort(_oxmid, decoder)
+	case 205316:
+		return DecodeOxmIdBsnVlanXlatePortGroupId(_oxmid, decoder)
 	case 114812:
 		return DecodeOxmIdTunMetadata56(_oxmid, decoder)
 	case 2147487233:
 		return DecodeOxmIdVlanPcp(_oxmid, decoder)
-	case 82692:
-		return DecodeOxmIdPktMarkMasked(_oxmid, decoder)
-	case 99196:
-		return DecodeOxmIdTunMetadata25Masked(_oxmid, decoder)
+	case 110584:
+		return DecodeOxmIdTunMetadata47Masked(_oxmid, decoder)
 	case 210696:
 		return DecodeOxmIdBsnIfpClassIdMasked(_oxmid, decoder)
 	case 115836:
 		return DecodeOxmIdTunMetadata58(_oxmid, decoder)
 	case 2147488257:
 		return DecodeOxmIdIpEcn(_oxmid, decoder)
-	case 83716:
-		return DecodeOxmIdDpHashMasked(_oxmid, decoder)
-	case 100220:
-		return DecodeOxmIdTunMetadata27Masked(_oxmid, decoder)
+	case 111608:
+		return DecodeOxmIdTunMetadata49Masked(_oxmid, decoder)
+	case 518:
+		return DecodeOxmIdEthDst(_oxmid, decoder)
 	case 68100:
 		return DecodeOxmIdReg5(_oxmid, decoder)
 	case 116860:
 		return DecodeOxmIdTunMetadata60(_oxmid, decoder)
 	case 4610:
 		return DecodeOxmIdTcpSrc(_oxmid, decoder)
+	case 112632:
+		return DecodeOxmIdTunMetadata51Masked(_oxmid, decoder)
+	case 122384:
+		return DecodeOxmIdXxreg0(_oxmid, decoder)
 	case 2147504898:
 		return DecodeOxmIdPbbUcaMasked(_oxmid, decoder)
-	case 89980:
-		return DecodeOxmIdTunMetadata7Masked(_oxmid, decoder)
+	case 123680:
+		return DecodeOxmIdXxreg2Masked(_oxmid, decoder)
 	case 69124:
 		return DecodeOxmIdReg7(_oxmid, decoder)
 	case 117884:
@@ -523,304 +509,296 @@ func DecodeOxmId(decoder *goloxi.Decoder) (IOxmId, error) {
 		return DecodeOxmIdUdpSrc(_oxmid, decoder)
 	case 6657:
 		return DecodeOxmIdIcmpType(_oxmid, decoder)
-	case 123408:
-		return DecodeOxmIdXxreg2(_oxmid, decoder)
-	case 79105:
-		return DecodeOxmIdIpFragMasked(_oxmid, decoder)
-	case 210178:
-		return DecodeOxmIdBsnIpFragmentationMasked(_oxmid, decoder)
-	case 70916:
-		return DecodeOxmIdReg10Masked(_oxmid, decoder)
+	case 113656:
+		return DecodeOxmIdTunMetadata53Masked(_oxmid, decoder)
+	case 2147503876:
+		return DecodeOxmIdIpv6ExthdrMasked(_oxmid, decoder)
+	case 198920:
+		return DecodeOxmIdBsnL3InterfaceClassIdMasked(_oxmid, decoder)
+	case 2147489026:
+		return DecodeOxmIdIpProtoMasked(_oxmid, decoder)
+	case 120068:
+		return DecodeOxmIdConnTrackingZoneMasked(_oxmid, decoder)
 	case 1286:
 		return DecodeOxmIdEthSrcMasked(_oxmid, decoder)
-	case 197896:
-		return DecodeOxmIdBsnVrfMasked(_oxmid, decoder)
-	case 102268:
-		return DecodeOxmIdTunMetadata31Masked(_oxmid, decoder)
+	case 204040:
+		return DecodeOxmIdBsnUdf6Masked(_oxmid, decoder)
+	case 75019:
+		return DecodeOxmIdArpThaMasked(_oxmid, decoder)
 	case 208140:
 		return DecodeOxmIdBsnInnerEthDstMasked(_oxmid, decoder)
 	case 201220:
 		return DecodeOxmIdBsnUdf1(_oxmid, decoder)
-	case 128272:
-		return DecodeOxmIdCtIpv6SrcMasked(_oxmid, decoder)
+	case 205576:
+		return DecodeOxmIdBsnVlanXlatePortGroupIdMasked(_oxmid, decoder)
+	case 2147484944:
+		return DecodeOxmIdMetadataMasked(_oxmid, decoder)
 	case 6146:
 		return DecodeOxmIdUdpDst(_oxmid, decoder)
-	case 128288:
-		return DecodeOxmIdConnTrackingIpv6SrcMasked(_oxmid, decoder)
+	case 114680:
+		return DecodeOxmIdTunMetadata55Masked(_oxmid, decoder)
+	case 122144:
+		return DecodeOxmIdTunIpv6DstMasked(_oxmid, decoder)
 	case 86652:
 		return DecodeOxmIdTunMetadata1(_oxmid, decoder)
-	case 120068:
-		return DecodeOxmIdConnTrackingZoneMasked(_oxmid, decoder)
-	case 103292:
-		return DecodeOxmIdTunMetadata33Masked(_oxmid, decoder)
-	case 71172:
-		return DecodeOxmIdReg11(_oxmid, decoder)
+	case 202244:
+		return DecodeOxmIdBsnUdf3(_oxmid, decoder)
+	case 115704:
+		return DecodeOxmIdTunMetadata57Masked(_oxmid, decoder)
 	case 69636:
 		return DecodeOxmIdReg8(_oxmid, decoder)
 	case 87676:
 		return DecodeOxmIdTunMetadata3(_oxmid, decoder)
 	case 82184:
 		return DecodeOxmIdTunnelIpv4DstMasked(_oxmid, decoder)
-	case 104316:
-		return DecodeOxmIdTunMetadata35Masked(_oxmid, decoder)
 	case 203268:
 		return DecodeOxmIdBsnUdf5(_oxmid, decoder)
 	case 2147492354:
 		return DecodeOxmIdSctpSrc(_oxmid, decoder)
 	case 2147493377:
 		return DecodeOxmIdIcmpv4Type(_oxmid, decoder)
-	case 102012:
-		return DecodeOxmIdTunMetadata31(_oxmid, decoder)
-	case 77584:
-		return DecodeOxmIdNdTargetMasked(_oxmid, decoder)
+	case 116728:
+		return DecodeOxmIdTunMetadata59Masked(_oxmid, decoder)
 	case 88700:
 		return DecodeOxmIdTunMetadata5(_oxmid, decoder)
-	case 105340:
-		return DecodeOxmIdTunMetadata37Masked(_oxmid, decoder)
 	case 73220:
 		return DecodeOxmIdReg15(_oxmid, decoder)
 	case 76289:
 		return DecodeOxmIdIcmpv6Type(_oxmid, decoder)
-	case 109948:
-		return DecodeOxmIdTunMetadata46Masked(_oxmid, decoder)
+	case 117752:
+		return DecodeOxmIdTunMetadata61Masked(_oxmid, decoder)
+	case 4360:
+		return DecodeOxmIdIpDstMasked(_oxmid, decoder)
 	case 89724:
 		return DecodeOxmIdTunMetadata7(_oxmid, decoder)
-	case 106364:
-		return DecodeOxmIdTunMetadata39Masked(_oxmid, decoder)
-	case 205316:
-		return DecodeOxmIdBsnVlanXlatePortGroupId(_oxmid, decoder)
-	case 128528:
-		return DecodeOxmIdConnTrackingIpv6Dst(_oxmid, decoder)
-	case 123920:
-		return DecodeOxmIdXxreg3(_oxmid, decoder)
+	case 8708:
+		return DecodeOxmIdArpTpa(_oxmid, decoder)
+	case 118776:
+		return DecodeOxmIdTunMetadata63Masked(_oxmid, decoder)
 	case 90748:
 		return DecodeOxmIdTunMetadata9(_oxmid, decoder)
+	case 86520:
+		return DecodeOxmIdTunMetadata0Masked(_oxmid, decoder)
 	case 2147487490:
 		return DecodeOxmIdVlanPcpMasked(_oxmid, decoder)
 	case 2147501320:
 		return DecodeOxmIdMplsLabelMasked(_oxmid, decoder)
-	case 107388:
-		return DecodeOxmIdTunMetadata41Masked(_oxmid, decoder)
+	case 197124:
+		return DecodeOxmIdBsnLagId(_oxmid, decoder)
+	case 78849:
+		return DecodeOxmIdIpFrag(_oxmid, decoder)
 	case 2147505928:
 		return DecodeOxmIdActsetOutputMasked(_oxmid, decoder)
 	case 200708:
 		return DecodeOxmIdBsnUdf0(_oxmid, decoder)
 	case 91772:
 		return DecodeOxmIdTunMetadata11(_oxmid, decoder)
-	case 108412:
-		return DecodeOxmIdTunMetadata43Masked(_oxmid, decoder)
-	case 74246:
-		return DecodeOxmIdArpSha(_oxmid, decoder)
+	case 87544:
+		return DecodeOxmIdTunMetadata2Masked(_oxmid, decoder)
 	case 207364:
 		return DecodeOxmIdBsnVxlanNetworkId(_oxmid, decoder)
 	case 209410:
 		return DecodeOxmIdBsnVfi(_oxmid, decoder)
 	case 92796:
 		return DecodeOxmIdTunMetadata13(_oxmid, decoder)
-	case 109436:
-		return DecodeOxmIdTunMetadata45Masked(_oxmid, decoder)
+	case 88568:
+		return DecodeOxmIdTunMetadata4Masked(_oxmid, decoder)
 	case 80385:
 		return DecodeOxmIdNwTtl(_oxmid, decoder)
+	case 105976:
+		return DecodeOxmIdTunMetadata38Masked(_oxmid, decoder)
 	case 126465:
 		return DecodeOxmIdConnTrackingNwProto(_oxmid, decoder)
 	case 7682:
 		return DecodeOxmIdArpOp(_oxmid, decoder)
-	case 79364:
-		return DecodeOxmIdIpv6Label(_oxmid, decoder)
+	case 71172:
+		return DecodeOxmIdReg11(_oxmid, decoder)
 	case 208390:
 		return DecodeOxmIdBsnInnerEthSrc(_oxmid, decoder)
-	case 110460:
-		return DecodeOxmIdTunMetadata47Masked(_oxmid, decoder)
-	case 129282:
-		return DecodeOxmIdCtTpSrcMasked(_oxmid, decoder)
-	case 83202:
-		return DecodeOxmIdTcpFlagsMasked(_oxmid, decoder)
-	case 75280:
-		return DecodeOxmIdIpv6Src(_oxmid, decoder)
-	case 8452:
-		return DecodeOxmIdArpSpaMasked(_oxmid, decoder)
-	case 75014:
-		return DecodeOxmIdArpThaMasked(_oxmid, decoder)
-	case 111484:
-		return DecodeOxmIdTunMetadata49Masked(_oxmid, decoder)
-	case 210436:
-		return DecodeOxmIdBsnIfpClassId(_oxmid, decoder)
+	case 210178:
+		return DecodeOxmIdBsnIpFragmentationMasked(_oxmid, decoder)
+	case 128528:
+		return DecodeOxmIdConnTrackingIpv6Dst(_oxmid, decoder)
+	case 85252:
+		return DecodeOxmIdTunGbpIdMasked(_oxmid, decoder)
+	case 90616:
+		return DecodeOxmIdTunMetadata8Masked(_oxmid, decoder)
+	case 79364:
+		return DecodeOxmIdIpv6Label(_oxmid, decoder)
 	case 207112:
 		return DecodeOxmIdBsnIngressPortGroupIdMasked(_oxmid, decoder)
-	case 2147489796:
-		return DecodeOxmIdIpv4Dst(_oxmid, decoder)
 	case 206400:
 		return DecodeOxmIdBsnInPorts512(_oxmid, decoder)
 	case 95868:
 		return DecodeOxmIdTunMetadata19(_oxmid, decoder)
-	case 129284:
-		return DecodeOxmIdConnTrackingTpSrcMasked(_oxmid, decoder)
-	case 2147488514:
-		return DecodeOxmIdIpEcnMasked(_oxmid, decoder)
-	case 112508:
-		return DecodeOxmIdTunMetadata51Masked(_oxmid, decoder)
+	case 91640:
+		return DecodeOxmIdTunMetadata10Masked(_oxmid, decoder)
 	case 2147501569:
 		return DecodeOxmIdMplsTc(_oxmid, decoder)
-	case 201732:
-		return DecodeOxmIdBsnUdf2(_oxmid, decoder)
-	case 122128:
-		return DecodeOxmIdTunIpv6DstMasked(_oxmid, decoder)
-	case 113532:
-		return DecodeOxmIdTunMetadata53Masked(_oxmid, decoder)
+	case 70920:
+		return DecodeOxmIdReg10Masked(_oxmid, decoder)
+	case 96892:
+		return DecodeOxmIdTunMetadata21(_oxmid, decoder)
+	case 92664:
+		return DecodeOxmIdTunMetadata12Masked(_oxmid, decoder)
+	case 205060:
+		return DecodeOxmIdBsnTcpFlagsMasked(_oxmid, decoder)
 	case 81412:
 		return DecodeOxmIdTunnelIpv4Src(_oxmid, decoder)
-	case 114300:
-		return DecodeOxmIdTunMetadata55(_oxmid, decoder)
+	case 99964:
+		return DecodeOxmIdTunMetadata27(_oxmid, decoder)
 	case 71684:
 		return DecodeOxmIdReg12(_oxmid, decoder)
 	case 127240:
 		return DecodeOxmIdConnTrackingNwSrcMasked(_oxmid, decoder)
 	case 97916:
 		return DecodeOxmIdTunMetadata23(_oxmid, decoder)
-	case 65796:
-		return DecodeOxmIdReg0Masked(_oxmid, decoder)
-	case 114556:
-		return DecodeOxmIdTunMetadata55Masked(_oxmid, decoder)
-	case 2306:
-		return DecodeOxmIdVlanTciMasked(_oxmid, decoder)
+	case 93688:
+		return DecodeOxmIdTunMetadata14Masked(_oxmid, decoder)
+	case 210436:
+		return DecodeOxmIdBsnIfpClassId(_oxmid, decoder)
 	case 82436:
 		return DecodeOxmIdPktMark(_oxmid, decoder)
 	case 98940:
 		return DecodeOxmIdTunMetadata25(_oxmid, decoder)
-	case 66820:
-		return DecodeOxmIdReg2Masked(_oxmid, decoder)
-	case 115580:
-		return DecodeOxmIdTunMetadata57Masked(_oxmid, decoder)
+	case 94712:
+		return DecodeOxmIdTunMetadata16Masked(_oxmid, decoder)
 	case 83460:
 		return DecodeOxmIdDpHash(_oxmid, decoder)
 	case 2147503618:
 		return DecodeOxmIdIpv6Exthdr(_oxmid, decoder)
 	case 2147504641:
 		return DecodeOxmIdPbbUca(_oxmid, decoder)
-	case 2147490056:
-		return DecodeOxmIdIpv4DstMasked(_oxmid, decoder)
-	case 99964:
-		return DecodeOxmIdTunMetadata27(_oxmid, decoder)
+	case 123168:
+		return DecodeOxmIdXxreg1Masked(_oxmid, decoder)
 	case 118786:
 		return DecodeOxmIdTunFlags(_oxmid, decoder)
-	case 67844:
-		return DecodeOxmIdReg4Masked(_oxmid, decoder)
-	case 2147484164:
-		return DecodeOxmIdInPhyPort(_oxmid, decoder)
-	case 116604:
-		return DecodeOxmIdTunMetadata59Masked(_oxmid, decoder)
+	case 95736:
+		return DecodeOxmIdTunMetadata18Masked(_oxmid, decoder)
+	case 2308:
+		return DecodeOxmIdVlanTciMasked(_oxmid, decoder)
 	case 2147488002:
 		return DecodeOxmIdIpDscpMasked(_oxmid, decoder)
 	case 100988:
 		return DecodeOxmIdTunMetadata29(_oxmid, decoder)
 	case 119810:
 		return DecodeOxmIdConnTrackingZone(_oxmid, decoder)
-	case 68868:
-		return DecodeOxmIdReg6Masked(_oxmid, decoder)
+	case 96760:
+		return DecodeOxmIdTunMetadata20Masked(_oxmid, decoder)
+	case 2147486980:
+		return DecodeOxmIdVlanVidMasked(_oxmid, decoder)
 	case 116348:
 		return DecodeOxmIdTunMetadata59(_oxmid, decoder)
 	case 5378:
 		return DecodeOxmIdTcpDstMasked(_oxmid, decoder)
-	case 123152:
-		return DecodeOxmIdXxreg1Masked(_oxmid, decoder)
-	case 2147486468:
-		return DecodeOxmIdEthTypeMasked(_oxmid, decoder)
+	case 71944:
+		return DecodeOxmIdReg12Masked(_oxmid, decoder)
 	case 2147483912:
 		return DecodeOxmIdInPortMasked(_oxmid, decoder)
-	case 85761:
+	case 75552:
+		return DecodeOxmIdIpv6SrcMasked(_oxmid, decoder)
+	case 102012:
+		return DecodeOxmIdTunMetadata31(_oxmid, decoder)
+	case 85762:
 		return DecodeOxmIdTunGbpFlagsMasked(_oxmid, decoder)
-	case 5890:
+	case 5892:
 		return DecodeOxmIdUdpSrcMasked(_oxmid, decoder)
-	case 79620:
-		return DecodeOxmIdIpv6LabelMasked(_oxmid, decoder)
-	case 4356:
-		return DecodeOxmIdIpDstMasked(_oxmid, decoder)
-	case 204552:
-		return DecodeOxmIdBsnUdf7Masked(_oxmid, decoder)
-	case 118652:
-		return DecodeOxmIdTunMetadata63Masked(_oxmid, decoder)
-	case 6402:
-		return DecodeOxmIdUdpDstMasked(_oxmid, decoder)
+	case 97784:
+		return DecodeOxmIdTunMetadata22Masked(_oxmid, decoder)
+	case 66052:
+		return DecodeOxmIdReg1(_oxmid, decoder)
+	case 67336:
+		return DecodeOxmIdReg3Masked(_oxmid, decoder)
 	case 208652:
 		return DecodeOxmIdBsnInnerEthSrcMasked(_oxmid, decoder)
-	case 124176:
-		return DecodeOxmIdXxreg3Masked(_oxmid, decoder)
-	case 122640:
+	case 75280:
+		return DecodeOxmIdIpv6Src(_oxmid, decoder)
+	case 197896:
+		return DecodeOxmIdBsnVrfMasked(_oxmid, decoder)
+	case 122656:
 		return DecodeOxmIdXxreg0Masked(_oxmid, decoder)
-	case 69380:
-		return DecodeOxmIdReg7Masked(_oxmid, decoder)
-	case 86396:
-		return DecodeOxmIdTunMetadata0Masked(_oxmid, decoder)
-	case 128800:
-		return DecodeOxmIdConnTrackingIpv6DstMasked(_oxmid, decoder)
 	case 103036:
 		return DecodeOxmIdTunMetadata33(_oxmid, decoder)
+	case 98808:
+		return DecodeOxmIdTunMetadata24Masked(_oxmid, decoder)
 	case 2147505668:
 		return DecodeOxmIdActsetOutput(_oxmid, decoder)
-	case 87420:
-		return DecodeOxmIdTunMetadata2Masked(_oxmid, decoder)
-	case 198920:
-		return DecodeOxmIdBsnL3InterfaceClassIdMasked(_oxmid, decoder)
+	case 67848:
+		return DecodeOxmIdReg4Masked(_oxmid, decoder)
+	case 77600:
+		return DecodeOxmIdNdTargetMasked(_oxmid, decoder)
 	case 104060:
 		return DecodeOxmIdTunMetadata35(_oxmid, decoder)
-	case 71940:
-		return DecodeOxmIdReg12Masked(_oxmid, decoder)
+	case 99832:
+		return DecodeOxmIdTunMetadata26Masked(_oxmid, decoder)
+	case 6404:
+		return DecodeOxmIdUdpDstMasked(_oxmid, decoder)
 	case 77328:
 		return DecodeOxmIdNdTarget(_oxmid, decoder)
-	case 88444:
-		return DecodeOxmIdTunMetadata4Masked(_oxmid, decoder)
+	case 68872:
+		return DecodeOxmIdReg6Masked(_oxmid, decoder)
 	case 105084:
 		return DecodeOxmIdTunMetadata37(_oxmid, decoder)
-	case 72964:
-		return DecodeOxmIdReg14Masked(_oxmid, decoder)
+	case 100856:
+		return DecodeOxmIdTunMetadata28Masked(_oxmid, decoder)
 	case 206082:
 		return DecodeOxmIdBsnL2CacheHitMasked(_oxmid, decoder)
-	case 89468:
-		return DecodeOxmIdTunMetadata6Masked(_oxmid, decoder)
-	case 94076:
-		return DecodeOxmIdTunMetadata15Masked(_oxmid, decoder)
+	case 203016:
+		return DecodeOxmIdBsnUdf4Masked(_oxmid, decoder)
+	case 69896:
+		return DecodeOxmIdReg8Masked(_oxmid, decoder)
 	case 206720:
 		return DecodeOxmIdBsnInPorts512Masked(_oxmid, decoder)
 	case 106108:
 		return DecodeOxmIdTunMetadata39(_oxmid, decoder)
-	case 205060:
-		return DecodeOxmIdBsnTcpFlagsMasked(_oxmid, decoder)
-	case 197124:
-		return DecodeOxmIdBsnLagId(_oxmid, decoder)
-	case 2147494146:
-		return DecodeOxmIdIcmpv4CodeMasked(_oxmid, decoder)
-	case 90492:
-		return DecodeOxmIdTunMetadata8Masked(_oxmid, decoder)
+	case 101880:
+		return DecodeOxmIdTunMetadata30Masked(_oxmid, decoder)
+	case 8452:
+		return DecodeOxmIdArpSpaMasked(_oxmid, decoder)
+	case 66312:
+		return DecodeOxmIdReg1Masked(_oxmid, decoder)
 	case 201992:
 		return DecodeOxmIdBsnUdf2Masked(_oxmid, decoder)
 	case 107132:
 		return DecodeOxmIdTunMetadata41(_oxmid, decoder)
+	case 102904:
+		return DecodeOxmIdTunMetadata32Masked(_oxmid, decoder)
 	case 2147493124:
 		return DecodeOxmIdSctpDstMasked(_oxmid, decoder)
 	case 67076:
 		return DecodeOxmIdReg3(_oxmid, decoder)
-	case 91516:
-		return DecodeOxmIdTunMetadata10Masked(_oxmid, decoder)
+	case 79624:
+		return DecodeOxmIdIpv6LabelMasked(_oxmid, decoder)
 	case 119300:
 		return DecodeOxmIdConnTrackingState(_oxmid, decoder)
-	case 203016:
-		return DecodeOxmIdBsnUdf4Masked(_oxmid, decoder)
+	case 2147490056:
+		return DecodeOxmIdIpv4DstMasked(_oxmid, decoder)
+	case 2147499808:
+		return DecodeOxmIdIpv6NdTargetMasked(_oxmid, decoder)
 	case 108156:
 		return DecodeOxmIdTunMetadata43(_oxmid, decoder)
+	case 103928:
+		return DecodeOxmIdTunMetadata34Masked(_oxmid, decoder)
+	case 106488:
+		return DecodeOxmIdTunMetadata39Masked(_oxmid, decoder)
+	case 201732:
+		return DecodeOxmIdBsnUdf2(_oxmid, decoder)
 	case 2147499536:
 		return DecodeOxmIdIpv6NdTarget(_oxmid, decoder)
-	case 92540:
-		return DecodeOxmIdTunMetadata12Masked(_oxmid, decoder)
-	case 204040:
-		return DecodeOxmIdBsnUdf6Masked(_oxmid, decoder)
+	case 72968:
+		return DecodeOxmIdReg14Masked(_oxmid, decoder)
 	case 109180:
 		return DecodeOxmIdTunMetadata45(_oxmid, decoder)
-	case 2147486722:
-		return DecodeOxmIdVlanVid(_oxmid, decoder)
+	case 104952:
+		return DecodeOxmIdTunMetadata36Masked(_oxmid, decoder)
 	case 93820:
 		return DecodeOxmIdTunMetadata15(_oxmid, decoder)
-	case 73992:
-		return DecodeOxmIdTunIdMasked(_oxmid, decoder)
+	case 79106:
+		return DecodeOxmIdIpFragMasked(_oxmid, decoder)
+	case 108536:
+		return DecodeOxmIdTunMetadata43Masked(_oxmid, decoder)
+	case 126980:
+		return DecodeOxmIdConnTrackingNwSrc(_oxmid, decoder)
 	default:
 		return _oxmid, nil
 	}
@@ -2511,6 +2489,7 @@ func (self *BsnGentableDescStatsEntry) Serialize(encoder *goloxi.Encoder) error 
 	encoder.Write([]byte(self.Name))
 	encoder.PutUint32(uint32(self.BucketsSize))
 	encoder.PutUint32(uint32(self.MaxEntries))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[0:2], uint16(len(encoder.Bytes())))
 
@@ -2530,6 +2509,7 @@ func DecodeBsnGentableDescStatsEntry(decoder *goloxi.Decoder) (*BsnGentableDescS
 	_bsngentabledescstatsentry.Name = string(bytes.Trim(decoder.Read(32), "\x00"))
 	_bsngentabledescstatsentry.BucketsSize = uint32(decoder.ReadUint32())
 	_bsngentabledescstatsentry.MaxEntries = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 	return _bsngentabledescstatsentry, nil
 }
 
@@ -3042,6 +3022,7 @@ func (self *BsnLacpStatsEntry) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint16(uint16(self.PartnerPortPriority))
 	encoder.PutUint16(uint16(self.PartnerPortNum))
 	encoder.PutUint16(uint16(self.PartnerKey))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	return nil
 }
@@ -3064,6 +3045,7 @@ func DecodeBsnLacpStatsEntry(decoder *goloxi.Decoder) (*BsnLacpStatsEntry, error
 	_bsnlacpstatsentry.PartnerPortPriority = uint16(decoder.ReadUint16())
 	_bsnlacpstatsentry.PartnerPortNum = uint16(decoder.ReadUint16())
 	_bsnlacpstatsentry.PartnerKey = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _bsnlacpstatsentry, nil
 }
 
@@ -12529,6 +12511,7 @@ func (self *Time) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint64(uint64(self.Seconds))
 	encoder.PutUint32(uint32(self.Nanoseconds))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	return nil
 }
@@ -12540,6 +12523,7 @@ func DecodeTime(decoder *goloxi.Decoder) (*Time, error) {
 	}
 	_time.Seconds = uint64(decoder.ReadUint64())
 	_time.Nanoseconds = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 	return _time, nil
 }
 
@@ -13150,6 +13134,7 @@ func (self *EdPropNshMdType) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.MdType))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	encoder.Bytes()[3] = uint8(len(encoder.Bytes()))
 
@@ -13162,6 +13147,7 @@ func DecodeEdPropNshMdType(parent *EdPropNsh, decoder *goloxi.Decoder) (*EdPropN
 		return nil, fmt.Errorf("EdPropNshMdType packet too short: %d < 4", decoder.Length())
 	}
 	_edpropnshmdtype.MdType = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _edpropnshmdtype, nil
 }
 
@@ -15051,6 +15037,7 @@ func (self *GroupBucketPropWeight) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Weight))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -15063,6 +15050,7 @@ func DecodeGroupBucketPropWeight(parent *GroupBucketProp, decoder *goloxi.Decode
 		return nil, fmt.Errorf("GroupBucketPropWeight packet too short: %d < 4", decoder.Length())
 	}
 	_groupbucketpropweight.Weight = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _groupbucketpropweight, nil
 }
 
@@ -16696,6 +16684,7 @@ func (self *MeterBandDrop) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.PutUint32(uint32(self.Rate))
 	encoder.PutUint32(uint32(self.BurstSize))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -16709,6 +16698,7 @@ func DecodeMeterBandDrop(parent *MeterBand, decoder *goloxi.Decoder) (*MeterBand
 	}
 	_meterbanddrop.Rate = uint32(decoder.ReadUint32())
 	_meterbanddrop.BurstSize = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 	return _meterbanddrop, nil
 }
 
@@ -16765,6 +16755,7 @@ func (self *MeterBandDscpRemark) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Rate))
 	encoder.PutUint32(uint32(self.BurstSize))
 	encoder.PutUint8(uint8(self.PrecLevel))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -16779,6 +16770,7 @@ func DecodeMeterBandDscpRemark(parent *MeterBand, decoder *goloxi.Decoder) (*Met
 	_meterbanddscpremark.Rate = uint32(decoder.ReadUint32())
 	_meterbanddscpremark.BurstSize = uint32(decoder.ReadUint32())
 	_meterbanddscpremark.PrecLevel = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _meterbanddscpremark, nil
 }
 
@@ -17077,6 +17069,7 @@ func (self *MeterFeatures) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.MaxColor))
 	encoder.Write(bytes.Repeat([]byte{0}, 2))
 	encoder.PutUint32(uint32(self.Features))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	return nil
 }
@@ -17092,6 +17085,7 @@ func (self *MeterFeatures) Decode(decoder *goloxi.Decoder) error {
 	self.MaxColor = uint8(decoder.ReadByte())
 	decoder.Skip(2)
 	self.Features = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 
 	return nil
 }
@@ -18184,7 +18178,7 @@ func DecodeOxmIdArpShaMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpS
 
 func NewOxmIdArpShaMasked() *OxmIdArpShaMasked {
 	obj := &OxmIdArpShaMasked{
-		OxmId: NewOxmId(74502),
+		OxmId: NewOxmId(74507),
 	}
 	return obj
 }
@@ -18340,7 +18334,7 @@ func DecodeOxmIdArpThaMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpT
 
 func NewOxmIdArpThaMasked() *OxmIdArpThaMasked {
 	obj := &OxmIdArpThaMasked{
-		OxmId: NewOxmId(75014),
+		OxmId: NewOxmId(75019),
 	}
 	return obj
 }
@@ -18418,7 +18412,7 @@ func DecodeOxmIdArpTpaMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdArpT
 
 func NewOxmIdArpTpaMasked() *OxmIdArpTpaMasked {
 	obj := &OxmIdArpTpaMasked{
-		OxmId: NewOxmId(8964),
+		OxmId: NewOxmId(8968),
 	}
 	return obj
 }
@@ -18535,7 +18529,7 @@ func DecodeOxmIdCtIpv6DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdC
 
 func NewOxmIdCtIpv6DstMasked() *OxmIdCtIpv6DstMasked {
 	obj := &OxmIdCtIpv6DstMasked{
-		OxmId: NewOxmId(128784),
+		OxmId: NewOxmId(128800),
 	}
 	return obj
 }
@@ -18613,7 +18607,7 @@ func DecodeOxmIdCtIpv6SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdC
 
 func NewOxmIdCtIpv6SrcMasked() *OxmIdCtIpv6SrcMasked {
 	obj := &OxmIdCtIpv6SrcMasked{
-		OxmId: NewOxmId(128272),
+		OxmId: NewOxmId(128288),
 	}
 	return obj
 }
@@ -18691,7 +18685,7 @@ func DecodeOxmIdCtLabelMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtL
 
 func NewOxmIdCtLabelMasked() *OxmIdCtLabelMasked {
 	obj := &OxmIdCtLabelMasked{
-		OxmId: NewOxmId(121104),
+		OxmId: NewOxmId(121120),
 	}
 	return obj
 }
@@ -18769,7 +18763,7 @@ func DecodeOxmIdCtMarkMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtMa
 
 func NewOxmIdCtMarkMasked() *OxmIdCtMarkMasked {
 	obj := &OxmIdCtMarkMasked{
-		OxmId: NewOxmId(120580),
+		OxmId: NewOxmId(120584),
 	}
 	return obj
 }
@@ -18847,7 +18841,7 @@ func DecodeOxmIdCtNwDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtN
 
 func NewOxmIdCtNwDstMasked() *OxmIdCtNwDstMasked {
 	obj := &OxmIdCtNwDstMasked{
-		OxmId: NewOxmId(127748),
+		OxmId: NewOxmId(127752),
 	}
 	return obj
 }
@@ -18964,7 +18958,7 @@ func DecodeOxmIdCtNwSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtN
 
 func NewOxmIdCtNwSrcMasked() *OxmIdCtNwSrcMasked {
 	obj := &OxmIdCtNwSrcMasked{
-		OxmId: NewOxmId(127236),
+		OxmId: NewOxmId(127240),
 	}
 	return obj
 }
@@ -19042,7 +19036,7 @@ func DecodeOxmIdCtStateMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtS
 
 func NewOxmIdCtStateMasked() *OxmIdCtStateMasked {
 	obj := &OxmIdCtStateMasked{
-		OxmId: NewOxmId(119556),
+		OxmId: NewOxmId(119560),
 	}
 	return obj
 }
@@ -19120,7 +19114,7 @@ func DecodeOxmIdCtTpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtT
 
 func NewOxmIdCtTpDstMasked() *OxmIdCtTpDstMasked {
 	obj := &OxmIdCtTpDstMasked{
-		OxmId: NewOxmId(129794),
+		OxmId: NewOxmId(129796),
 	}
 	return obj
 }
@@ -19198,7 +19192,7 @@ func DecodeOxmIdCtTpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdCtT
 
 func NewOxmIdCtTpSrcMasked() *OxmIdCtTpSrcMasked {
 	obj := &OxmIdCtTpSrcMasked{
-		OxmId: NewOxmId(129282),
+		OxmId: NewOxmId(129284),
 	}
 	return obj
 }
@@ -19315,7 +19309,7 @@ func DecodeOxmIdDpHashMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdDpHa
 
 func NewOxmIdDpHashMasked() *OxmIdDpHashMasked {
 	obj := &OxmIdDpHashMasked{
-		OxmId: NewOxmId(83716),
+		OxmId: NewOxmId(83720),
 	}
 	return obj
 }
@@ -19393,7 +19387,7 @@ func DecodeOxmIdEthDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdEthD
 
 func NewOxmIdEthDstMasked() *OxmIdEthDstMasked {
 	obj := &OxmIdEthDstMasked{
-		OxmId: NewOxmId(774),
+		OxmId: NewOxmId(779),
 	}
 	return obj
 }
@@ -19783,7 +19777,7 @@ func DecodeOxmIdIpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpDst
 
 func NewOxmIdIpDstMasked() *OxmIdIpDstMasked {
 	obj := &OxmIdIpDstMasked{
-		OxmId: NewOxmId(4356),
+		OxmId: NewOxmId(4360),
 	}
 	return obj
 }
@@ -19861,7 +19855,7 @@ func DecodeOxmIdIpFragMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpFr
 
 func NewOxmIdIpFragMasked() *OxmIdIpFragMasked {
 	obj := &OxmIdIpFragMasked{
-		OxmId: NewOxmId(79105),
+		OxmId: NewOxmId(79106),
 	}
 	return obj
 }
@@ -19939,7 +19933,7 @@ func DecodeOxmIdIpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpSrc
 
 func NewOxmIdIpSrcMasked() *OxmIdIpSrcMasked {
 	obj := &OxmIdIpSrcMasked{
-		OxmId: NewOxmId(3844),
+		OxmId: NewOxmId(3848),
 	}
 	return obj
 }
@@ -20017,7 +20011,7 @@ func DecodeOxmIdIpv6DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv
 
 func NewOxmIdIpv6DstMasked() *OxmIdIpv6DstMasked {
 	obj := &OxmIdIpv6DstMasked{
-		OxmId: NewOxmId(76048),
+		OxmId: NewOxmId(76064),
 	}
 	return obj
 }
@@ -20095,7 +20089,7 @@ func DecodeOxmIdIpv6LabelMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdI
 
 func NewOxmIdIpv6LabelMasked() *OxmIdIpv6LabelMasked {
 	obj := &OxmIdIpv6LabelMasked{
-		OxmId: NewOxmId(79620),
+		OxmId: NewOxmId(79624),
 	}
 	return obj
 }
@@ -20173,7 +20167,7 @@ func DecodeOxmIdIpv6SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdIpv
 
 func NewOxmIdIpv6SrcMasked() *OxmIdIpv6SrcMasked {
 	obj := &OxmIdIpv6SrcMasked{
-		OxmId: NewOxmId(75536),
+		OxmId: NewOxmId(75552),
 	}
 	return obj
 }
@@ -20290,7 +20284,7 @@ func DecodeOxmIdNdSllMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNdSll
 
 func NewOxmIdNdSllMasked() *OxmIdNdSllMasked {
 	obj := &OxmIdNdSllMasked{
-		OxmId: NewOxmId(78086),
+		OxmId: NewOxmId(78091),
 	}
 	return obj
 }
@@ -20368,7 +20362,7 @@ func DecodeOxmIdNdTargetMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNd
 
 func NewOxmIdNdTargetMasked() *OxmIdNdTargetMasked {
 	obj := &OxmIdNdTargetMasked{
-		OxmId: NewOxmId(77584),
+		OxmId: NewOxmId(77600),
 	}
 	return obj
 }
@@ -20446,7 +20440,7 @@ func DecodeOxmIdNdTllMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdNdTll
 
 func NewOxmIdNdTllMasked() *OxmIdNdTllMasked {
 	obj := &OxmIdNdTllMasked{
-		OxmId: NewOxmId(78598),
+		OxmId: NewOxmId(78603),
 	}
 	return obj
 }
@@ -20680,7 +20674,7 @@ func DecodeOxmIdPktMarkMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdPkt
 
 func NewOxmIdPktMarkMasked() *OxmIdPktMarkMasked {
 	obj := &OxmIdPktMarkMasked{
-		OxmId: NewOxmId(82692),
+		OxmId: NewOxmId(82696),
 	}
 	return obj
 }
@@ -20797,7 +20791,7 @@ func DecodeOxmIdReg0Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg0Ma
 
 func NewOxmIdReg0Masked() *OxmIdReg0Masked {
 	obj := &OxmIdReg0Masked{
-		OxmId: NewOxmId(65796),
+		OxmId: NewOxmId(65800),
 	}
 	return obj
 }
@@ -20914,7 +20908,7 @@ func DecodeOxmIdReg10Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg10
 
 func NewOxmIdReg10Masked() *OxmIdReg10Masked {
 	obj := &OxmIdReg10Masked{
-		OxmId: NewOxmId(70916),
+		OxmId: NewOxmId(70920),
 	}
 	return obj
 }
@@ -20992,7 +20986,7 @@ func DecodeOxmIdReg11Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg11
 
 func NewOxmIdReg11Masked() *OxmIdReg11Masked {
 	obj := &OxmIdReg11Masked{
-		OxmId: NewOxmId(71428),
+		OxmId: NewOxmId(71432),
 	}
 	return obj
 }
@@ -21070,7 +21064,7 @@ func DecodeOxmIdReg12Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg12
 
 func NewOxmIdReg12Masked() *OxmIdReg12Masked {
 	obj := &OxmIdReg12Masked{
-		OxmId: NewOxmId(71940),
+		OxmId: NewOxmId(71944),
 	}
 	return obj
 }
@@ -21148,7 +21142,7 @@ func DecodeOxmIdReg13Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg13
 
 func NewOxmIdReg13Masked() *OxmIdReg13Masked {
 	obj := &OxmIdReg13Masked{
-		OxmId: NewOxmId(72452),
+		OxmId: NewOxmId(72456),
 	}
 	return obj
 }
@@ -21226,7 +21220,7 @@ func DecodeOxmIdReg14Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg14
 
 func NewOxmIdReg14Masked() *OxmIdReg14Masked {
 	obj := &OxmIdReg14Masked{
-		OxmId: NewOxmId(72964),
+		OxmId: NewOxmId(72968),
 	}
 	return obj
 }
@@ -21304,7 +21298,7 @@ func DecodeOxmIdReg15Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg15
 
 func NewOxmIdReg15Masked() *OxmIdReg15Masked {
 	obj := &OxmIdReg15Masked{
-		OxmId: NewOxmId(73476),
+		OxmId: NewOxmId(73480),
 	}
 	return obj
 }
@@ -21343,7 +21337,7 @@ func DecodeOxmIdReg1Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg1Ma
 
 func NewOxmIdReg1Masked() *OxmIdReg1Masked {
 	obj := &OxmIdReg1Masked{
-		OxmId: NewOxmId(66308),
+		OxmId: NewOxmId(66312),
 	}
 	return obj
 }
@@ -21421,7 +21415,7 @@ func DecodeOxmIdReg2Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg2Ma
 
 func NewOxmIdReg2Masked() *OxmIdReg2Masked {
 	obj := &OxmIdReg2Masked{
-		OxmId: NewOxmId(66820),
+		OxmId: NewOxmId(66824),
 	}
 	return obj
 }
@@ -21499,7 +21493,7 @@ func DecodeOxmIdReg3Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg3Ma
 
 func NewOxmIdReg3Masked() *OxmIdReg3Masked {
 	obj := &OxmIdReg3Masked{
-		OxmId: NewOxmId(67332),
+		OxmId: NewOxmId(67336),
 	}
 	return obj
 }
@@ -21577,7 +21571,7 @@ func DecodeOxmIdReg4Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg4Ma
 
 func NewOxmIdReg4Masked() *OxmIdReg4Masked {
 	obj := &OxmIdReg4Masked{
-		OxmId: NewOxmId(67844),
+		OxmId: NewOxmId(67848),
 	}
 	return obj
 }
@@ -21655,7 +21649,7 @@ func DecodeOxmIdReg5Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg5Ma
 
 func NewOxmIdReg5Masked() *OxmIdReg5Masked {
 	obj := &OxmIdReg5Masked{
-		OxmId: NewOxmId(68356),
+		OxmId: NewOxmId(68360),
 	}
 	return obj
 }
@@ -21733,7 +21727,7 @@ func DecodeOxmIdReg6Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg6Ma
 
 func NewOxmIdReg6Masked() *OxmIdReg6Masked {
 	obj := &OxmIdReg6Masked{
-		OxmId: NewOxmId(68868),
+		OxmId: NewOxmId(68872),
 	}
 	return obj
 }
@@ -21811,7 +21805,7 @@ func DecodeOxmIdReg7Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg7Ma
 
 func NewOxmIdReg7Masked() *OxmIdReg7Masked {
 	obj := &OxmIdReg7Masked{
-		OxmId: NewOxmId(69380),
+		OxmId: NewOxmId(69384),
 	}
 	return obj
 }
@@ -21889,7 +21883,7 @@ func DecodeOxmIdReg8Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg8Ma
 
 func NewOxmIdReg8Masked() *OxmIdReg8Masked {
 	obj := &OxmIdReg8Masked{
-		OxmId: NewOxmId(69892),
+		OxmId: NewOxmId(69896),
 	}
 	return obj
 }
@@ -21967,7 +21961,7 @@ func DecodeOxmIdReg9Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdReg9Ma
 
 func NewOxmIdReg9Masked() *OxmIdReg9Masked {
 	obj := &OxmIdReg9Masked{
-		OxmId: NewOxmId(70404),
+		OxmId: NewOxmId(70408),
 	}
 	return obj
 }
@@ -22123,7 +22117,7 @@ func DecodeOxmIdTcpFlagsMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTc
 
 func NewOxmIdTcpFlagsMasked() *OxmIdTcpFlagsMasked {
 	obj := &OxmIdTcpFlagsMasked{
-		OxmId: NewOxmId(83202),
+		OxmId: NewOxmId(83204),
 	}
 	return obj
 }
@@ -22201,7 +22195,7 @@ func DecodeOxmIdTcpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTcpS
 
 func NewOxmIdTcpSrcMasked() *OxmIdTcpSrcMasked {
 	obj := &OxmIdTcpSrcMasked{
-		OxmId: NewOxmId(4866),
+		OxmId: NewOxmId(4868),
 	}
 	return obj
 }
@@ -22279,7 +22273,7 @@ func DecodeOxmIdTunDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunD
 
 func NewOxmIdTunDstMasked() *OxmIdTunDstMasked {
 	obj := &OxmIdTunDstMasked{
-		OxmId: NewOxmId(82180),
+		OxmId: NewOxmId(82184),
 	}
 	return obj
 }
@@ -22357,7 +22351,7 @@ func DecodeOxmIdTunFlagsMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTu
 
 func NewOxmIdTunFlagsMasked() *OxmIdTunFlagsMasked {
 	obj := &OxmIdTunFlagsMasked{
-		OxmId: NewOxmId(119042),
+		OxmId: NewOxmId(119044),
 	}
 	return obj
 }
@@ -22435,7 +22429,7 @@ func DecodeOxmIdTunGbpFlagsMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmI
 
 func NewOxmIdTunGbpFlagsMasked() *OxmIdTunGbpFlagsMasked {
 	obj := &OxmIdTunGbpFlagsMasked{
-		OxmId: NewOxmId(85761),
+		OxmId: NewOxmId(85762),
 	}
 	return obj
 }
@@ -22513,7 +22507,7 @@ func DecodeOxmIdTunGbpIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTu
 
 func NewOxmIdTunGbpIdMasked() *OxmIdTunGbpIdMasked {
 	obj := &OxmIdTunGbpIdMasked{
-		OxmId: NewOxmId(85250),
+		OxmId: NewOxmId(85252),
 	}
 	return obj
 }
@@ -22591,7 +22585,7 @@ func DecodeOxmIdTunIdMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunId
 
 func NewOxmIdTunIdMasked() *OxmIdTunIdMasked {
 	obj := &OxmIdTunIdMasked{
-		OxmId: NewOxmId(73992),
+		OxmId: NewOxmId(74000),
 	}
 	return obj
 }
@@ -22669,7 +22663,7 @@ func DecodeOxmIdTunIpv6DstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmId
 
 func NewOxmIdTunIpv6DstMasked() *OxmIdTunIpv6DstMasked {
 	obj := &OxmIdTunIpv6DstMasked{
-		OxmId: NewOxmId(122128),
+		OxmId: NewOxmId(122144),
 	}
 	return obj
 }
@@ -22747,7 +22741,7 @@ func DecodeOxmIdTunIpv6SrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmId
 
 func NewOxmIdTunIpv6SrcMasked() *OxmIdTunIpv6SrcMasked {
 	obj := &OxmIdTunIpv6SrcMasked{
-		OxmId: NewOxmId(121616),
+		OxmId: NewOxmId(121632),
 	}
 	return obj
 }
@@ -22825,7 +22819,7 @@ func DecodeOxmIdTunMetadata0Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata0Masked() *OxmIdTunMetadata0Masked {
 	obj := &OxmIdTunMetadata0Masked{
-		OxmId: NewOxmId(86396),
+		OxmId: NewOxmId(86520),
 	}
 	return obj
 }
@@ -22942,7 +22936,7 @@ func DecodeOxmIdTunMetadata10Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata10Masked() *OxmIdTunMetadata10Masked {
 	obj := &OxmIdTunMetadata10Masked{
-		OxmId: NewOxmId(91516),
+		OxmId: NewOxmId(91640),
 	}
 	return obj
 }
@@ -23020,7 +23014,7 @@ func DecodeOxmIdTunMetadata11Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata11Masked() *OxmIdTunMetadata11Masked {
 	obj := &OxmIdTunMetadata11Masked{
-		OxmId: NewOxmId(92028),
+		OxmId: NewOxmId(92152),
 	}
 	return obj
 }
@@ -23098,7 +23092,7 @@ func DecodeOxmIdTunMetadata12Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata12Masked() *OxmIdTunMetadata12Masked {
 	obj := &OxmIdTunMetadata12Masked{
-		OxmId: NewOxmId(92540),
+		OxmId: NewOxmId(92664),
 	}
 	return obj
 }
@@ -23176,7 +23170,7 @@ func DecodeOxmIdTunMetadata13Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata13Masked() *OxmIdTunMetadata13Masked {
 	obj := &OxmIdTunMetadata13Masked{
-		OxmId: NewOxmId(93052),
+		OxmId: NewOxmId(93176),
 	}
 	return obj
 }
@@ -23254,7 +23248,7 @@ func DecodeOxmIdTunMetadata14Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata14Masked() *OxmIdTunMetadata14Masked {
 	obj := &OxmIdTunMetadata14Masked{
-		OxmId: NewOxmId(93564),
+		OxmId: NewOxmId(93688),
 	}
 	return obj
 }
@@ -23332,7 +23326,7 @@ func DecodeOxmIdTunMetadata15Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata15Masked() *OxmIdTunMetadata15Masked {
 	obj := &OxmIdTunMetadata15Masked{
-		OxmId: NewOxmId(94076),
+		OxmId: NewOxmId(94200),
 	}
 	return obj
 }
@@ -23410,7 +23404,7 @@ func DecodeOxmIdTunMetadata16Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata16Masked() *OxmIdTunMetadata16Masked {
 	obj := &OxmIdTunMetadata16Masked{
-		OxmId: NewOxmId(94588),
+		OxmId: NewOxmId(94712),
 	}
 	return obj
 }
@@ -23488,7 +23482,7 @@ func DecodeOxmIdTunMetadata17Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata17Masked() *OxmIdTunMetadata17Masked {
 	obj := &OxmIdTunMetadata17Masked{
-		OxmId: NewOxmId(95100),
+		OxmId: NewOxmId(95224),
 	}
 	return obj
 }
@@ -23566,7 +23560,7 @@ func DecodeOxmIdTunMetadata18Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata18Masked() *OxmIdTunMetadata18Masked {
 	obj := &OxmIdTunMetadata18Masked{
-		OxmId: NewOxmId(95612),
+		OxmId: NewOxmId(95736),
 	}
 	return obj
 }
@@ -23644,7 +23638,7 @@ func DecodeOxmIdTunMetadata19Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata19Masked() *OxmIdTunMetadata19Masked {
 	obj := &OxmIdTunMetadata19Masked{
-		OxmId: NewOxmId(96124),
+		OxmId: NewOxmId(96248),
 	}
 	return obj
 }
@@ -23683,7 +23677,7 @@ func DecodeOxmIdTunMetadata1Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata1Masked() *OxmIdTunMetadata1Masked {
 	obj := &OxmIdTunMetadata1Masked{
-		OxmId: NewOxmId(86908),
+		OxmId: NewOxmId(87032),
 	}
 	return obj
 }
@@ -23800,7 +23794,7 @@ func DecodeOxmIdTunMetadata20Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata20Masked() *OxmIdTunMetadata20Masked {
 	obj := &OxmIdTunMetadata20Masked{
-		OxmId: NewOxmId(96636),
+		OxmId: NewOxmId(96760),
 	}
 	return obj
 }
@@ -23878,7 +23872,7 @@ func DecodeOxmIdTunMetadata21Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata21Masked() *OxmIdTunMetadata21Masked {
 	obj := &OxmIdTunMetadata21Masked{
-		OxmId: NewOxmId(97148),
+		OxmId: NewOxmId(97272),
 	}
 	return obj
 }
@@ -23956,7 +23950,7 @@ func DecodeOxmIdTunMetadata22Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata22Masked() *OxmIdTunMetadata22Masked {
 	obj := &OxmIdTunMetadata22Masked{
-		OxmId: NewOxmId(97660),
+		OxmId: NewOxmId(97784),
 	}
 	return obj
 }
@@ -24034,7 +24028,7 @@ func DecodeOxmIdTunMetadata23Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata23Masked() *OxmIdTunMetadata23Masked {
 	obj := &OxmIdTunMetadata23Masked{
-		OxmId: NewOxmId(98172),
+		OxmId: NewOxmId(98296),
 	}
 	return obj
 }
@@ -24112,7 +24106,7 @@ func DecodeOxmIdTunMetadata24Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata24Masked() *OxmIdTunMetadata24Masked {
 	obj := &OxmIdTunMetadata24Masked{
-		OxmId: NewOxmId(98684),
+		OxmId: NewOxmId(98808),
 	}
 	return obj
 }
@@ -24190,7 +24184,7 @@ func DecodeOxmIdTunMetadata25Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata25Masked() *OxmIdTunMetadata25Masked {
 	obj := &OxmIdTunMetadata25Masked{
-		OxmId: NewOxmId(99196),
+		OxmId: NewOxmId(99320),
 	}
 	return obj
 }
@@ -24268,7 +24262,7 @@ func DecodeOxmIdTunMetadata26Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata26Masked() *OxmIdTunMetadata26Masked {
 	obj := &OxmIdTunMetadata26Masked{
-		OxmId: NewOxmId(99708),
+		OxmId: NewOxmId(99832),
 	}
 	return obj
 }
@@ -24346,7 +24340,7 @@ func DecodeOxmIdTunMetadata27Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata27Masked() *OxmIdTunMetadata27Masked {
 	obj := &OxmIdTunMetadata27Masked{
-		OxmId: NewOxmId(100220),
+		OxmId: NewOxmId(100344),
 	}
 	return obj
 }
@@ -24424,7 +24418,7 @@ func DecodeOxmIdTunMetadata28Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata28Masked() *OxmIdTunMetadata28Masked {
 	obj := &OxmIdTunMetadata28Masked{
-		OxmId: NewOxmId(100732),
+		OxmId: NewOxmId(100856),
 	}
 	return obj
 }
@@ -24502,7 +24496,7 @@ func DecodeOxmIdTunMetadata29Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata29Masked() *OxmIdTunMetadata29Masked {
 	obj := &OxmIdTunMetadata29Masked{
-		OxmId: NewOxmId(101244),
+		OxmId: NewOxmId(101368),
 	}
 	return obj
 }
@@ -24541,7 +24535,7 @@ func DecodeOxmIdTunMetadata2Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata2Masked() *OxmIdTunMetadata2Masked {
 	obj := &OxmIdTunMetadata2Masked{
-		OxmId: NewOxmId(87420),
+		OxmId: NewOxmId(87544),
 	}
 	return obj
 }
@@ -24658,7 +24652,7 @@ func DecodeOxmIdTunMetadata30Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata30Masked() *OxmIdTunMetadata30Masked {
 	obj := &OxmIdTunMetadata30Masked{
-		OxmId: NewOxmId(101756),
+		OxmId: NewOxmId(101880),
 	}
 	return obj
 }
@@ -24736,7 +24730,7 @@ func DecodeOxmIdTunMetadata31Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata31Masked() *OxmIdTunMetadata31Masked {
 	obj := &OxmIdTunMetadata31Masked{
-		OxmId: NewOxmId(102268),
+		OxmId: NewOxmId(102392),
 	}
 	return obj
 }
@@ -24814,7 +24808,7 @@ func DecodeOxmIdTunMetadata32Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata32Masked() *OxmIdTunMetadata32Masked {
 	obj := &OxmIdTunMetadata32Masked{
-		OxmId: NewOxmId(102780),
+		OxmId: NewOxmId(102904),
 	}
 	return obj
 }
@@ -24892,7 +24886,7 @@ func DecodeOxmIdTunMetadata33Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata33Masked() *OxmIdTunMetadata33Masked {
 	obj := &OxmIdTunMetadata33Masked{
-		OxmId: NewOxmId(103292),
+		OxmId: NewOxmId(103416),
 	}
 	return obj
 }
@@ -24970,7 +24964,7 @@ func DecodeOxmIdTunMetadata34Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata34Masked() *OxmIdTunMetadata34Masked {
 	obj := &OxmIdTunMetadata34Masked{
-		OxmId: NewOxmId(103804),
+		OxmId: NewOxmId(103928),
 	}
 	return obj
 }
@@ -25048,7 +25042,7 @@ func DecodeOxmIdTunMetadata35Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata35Masked() *OxmIdTunMetadata35Masked {
 	obj := &OxmIdTunMetadata35Masked{
-		OxmId: NewOxmId(104316),
+		OxmId: NewOxmId(104440),
 	}
 	return obj
 }
@@ -25126,7 +25120,7 @@ func DecodeOxmIdTunMetadata36Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata36Masked() *OxmIdTunMetadata36Masked {
 	obj := &OxmIdTunMetadata36Masked{
-		OxmId: NewOxmId(104828),
+		OxmId: NewOxmId(104952),
 	}
 	return obj
 }
@@ -25204,7 +25198,7 @@ func DecodeOxmIdTunMetadata37Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata37Masked() *OxmIdTunMetadata37Masked {
 	obj := &OxmIdTunMetadata37Masked{
-		OxmId: NewOxmId(105340),
+		OxmId: NewOxmId(105464),
 	}
 	return obj
 }
@@ -25282,7 +25276,7 @@ func DecodeOxmIdTunMetadata38Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata38Masked() *OxmIdTunMetadata38Masked {
 	obj := &OxmIdTunMetadata38Masked{
-		OxmId: NewOxmId(105852),
+		OxmId: NewOxmId(105976),
 	}
 	return obj
 }
@@ -25360,7 +25354,7 @@ func DecodeOxmIdTunMetadata39Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata39Masked() *OxmIdTunMetadata39Masked {
 	obj := &OxmIdTunMetadata39Masked{
-		OxmId: NewOxmId(106364),
+		OxmId: NewOxmId(106488),
 	}
 	return obj
 }
@@ -25399,7 +25393,7 @@ func DecodeOxmIdTunMetadata3Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata3Masked() *OxmIdTunMetadata3Masked {
 	obj := &OxmIdTunMetadata3Masked{
-		OxmId: NewOxmId(87932),
+		OxmId: NewOxmId(88056),
 	}
 	return obj
 }
@@ -25516,7 +25510,7 @@ func DecodeOxmIdTunMetadata40Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata40Masked() *OxmIdTunMetadata40Masked {
 	obj := &OxmIdTunMetadata40Masked{
-		OxmId: NewOxmId(106876),
+		OxmId: NewOxmId(107000),
 	}
 	return obj
 }
@@ -25594,7 +25588,7 @@ func DecodeOxmIdTunMetadata41Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata41Masked() *OxmIdTunMetadata41Masked {
 	obj := &OxmIdTunMetadata41Masked{
-		OxmId: NewOxmId(107388),
+		OxmId: NewOxmId(107512),
 	}
 	return obj
 }
@@ -25672,7 +25666,7 @@ func DecodeOxmIdTunMetadata42Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata42Masked() *OxmIdTunMetadata42Masked {
 	obj := &OxmIdTunMetadata42Masked{
-		OxmId: NewOxmId(107900),
+		OxmId: NewOxmId(108024),
 	}
 	return obj
 }
@@ -25750,7 +25744,7 @@ func DecodeOxmIdTunMetadata43Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata43Masked() *OxmIdTunMetadata43Masked {
 	obj := &OxmIdTunMetadata43Masked{
-		OxmId: NewOxmId(108412),
+		OxmId: NewOxmId(108536),
 	}
 	return obj
 }
@@ -25828,7 +25822,7 @@ func DecodeOxmIdTunMetadata44Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata44Masked() *OxmIdTunMetadata44Masked {
 	obj := &OxmIdTunMetadata44Masked{
-		OxmId: NewOxmId(108924),
+		OxmId: NewOxmId(109048),
 	}
 	return obj
 }
@@ -25906,7 +25900,7 @@ func DecodeOxmIdTunMetadata45Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata45Masked() *OxmIdTunMetadata45Masked {
 	obj := &OxmIdTunMetadata45Masked{
-		OxmId: NewOxmId(109436),
+		OxmId: NewOxmId(109560),
 	}
 	return obj
 }
@@ -25984,7 +25978,7 @@ func DecodeOxmIdTunMetadata46Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata46Masked() *OxmIdTunMetadata46Masked {
 	obj := &OxmIdTunMetadata46Masked{
-		OxmId: NewOxmId(109948),
+		OxmId: NewOxmId(110072),
 	}
 	return obj
 }
@@ -26062,7 +26056,7 @@ func DecodeOxmIdTunMetadata47Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata47Masked() *OxmIdTunMetadata47Masked {
 	obj := &OxmIdTunMetadata47Masked{
-		OxmId: NewOxmId(110460),
+		OxmId: NewOxmId(110584),
 	}
 	return obj
 }
@@ -26140,7 +26134,7 @@ func DecodeOxmIdTunMetadata48Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata48Masked() *OxmIdTunMetadata48Masked {
 	obj := &OxmIdTunMetadata48Masked{
-		OxmId: NewOxmId(110972),
+		OxmId: NewOxmId(111096),
 	}
 	return obj
 }
@@ -26218,7 +26212,7 @@ func DecodeOxmIdTunMetadata49Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata49Masked() *OxmIdTunMetadata49Masked {
 	obj := &OxmIdTunMetadata49Masked{
-		OxmId: NewOxmId(111484),
+		OxmId: NewOxmId(111608),
 	}
 	return obj
 }
@@ -26257,7 +26251,7 @@ func DecodeOxmIdTunMetadata4Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata4Masked() *OxmIdTunMetadata4Masked {
 	obj := &OxmIdTunMetadata4Masked{
-		OxmId: NewOxmId(88444),
+		OxmId: NewOxmId(88568),
 	}
 	return obj
 }
@@ -26374,7 +26368,7 @@ func DecodeOxmIdTunMetadata50Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata50Masked() *OxmIdTunMetadata50Masked {
 	obj := &OxmIdTunMetadata50Masked{
-		OxmId: NewOxmId(111996),
+		OxmId: NewOxmId(112120),
 	}
 	return obj
 }
@@ -26452,7 +26446,7 @@ func DecodeOxmIdTunMetadata51Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata51Masked() *OxmIdTunMetadata51Masked {
 	obj := &OxmIdTunMetadata51Masked{
-		OxmId: NewOxmId(112508),
+		OxmId: NewOxmId(112632),
 	}
 	return obj
 }
@@ -26530,7 +26524,7 @@ func DecodeOxmIdTunMetadata52Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata52Masked() *OxmIdTunMetadata52Masked {
 	obj := &OxmIdTunMetadata52Masked{
-		OxmId: NewOxmId(113020),
+		OxmId: NewOxmId(113144),
 	}
 	return obj
 }
@@ -26608,7 +26602,7 @@ func DecodeOxmIdTunMetadata53Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata53Masked() *OxmIdTunMetadata53Masked {
 	obj := &OxmIdTunMetadata53Masked{
-		OxmId: NewOxmId(113532),
+		OxmId: NewOxmId(113656),
 	}
 	return obj
 }
@@ -26686,7 +26680,7 @@ func DecodeOxmIdTunMetadata54Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata54Masked() *OxmIdTunMetadata54Masked {
 	obj := &OxmIdTunMetadata54Masked{
-		OxmId: NewOxmId(114044),
+		OxmId: NewOxmId(114168),
 	}
 	return obj
 }
@@ -26764,7 +26758,7 @@ func DecodeOxmIdTunMetadata55Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata55Masked() *OxmIdTunMetadata55Masked {
 	obj := &OxmIdTunMetadata55Masked{
-		OxmId: NewOxmId(114556),
+		OxmId: NewOxmId(114680),
 	}
 	return obj
 }
@@ -26842,7 +26836,7 @@ func DecodeOxmIdTunMetadata56Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata56Masked() *OxmIdTunMetadata56Masked {
 	obj := &OxmIdTunMetadata56Masked{
-		OxmId: NewOxmId(115068),
+		OxmId: NewOxmId(115192),
 	}
 	return obj
 }
@@ -26920,7 +26914,7 @@ func DecodeOxmIdTunMetadata57Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata57Masked() *OxmIdTunMetadata57Masked {
 	obj := &OxmIdTunMetadata57Masked{
-		OxmId: NewOxmId(115580),
+		OxmId: NewOxmId(115704),
 	}
 	return obj
 }
@@ -26998,7 +26992,7 @@ func DecodeOxmIdTunMetadata58Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata58Masked() *OxmIdTunMetadata58Masked {
 	obj := &OxmIdTunMetadata58Masked{
-		OxmId: NewOxmId(116092),
+		OxmId: NewOxmId(116216),
 	}
 	return obj
 }
@@ -27076,7 +27070,7 @@ func DecodeOxmIdTunMetadata59Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata59Masked() *OxmIdTunMetadata59Masked {
 	obj := &OxmIdTunMetadata59Masked{
-		OxmId: NewOxmId(116604),
+		OxmId: NewOxmId(116728),
 	}
 	return obj
 }
@@ -27115,7 +27109,7 @@ func DecodeOxmIdTunMetadata5Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata5Masked() *OxmIdTunMetadata5Masked {
 	obj := &OxmIdTunMetadata5Masked{
-		OxmId: NewOxmId(88956),
+		OxmId: NewOxmId(89080),
 	}
 	return obj
 }
@@ -27232,7 +27226,7 @@ func DecodeOxmIdTunMetadata60Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata60Masked() *OxmIdTunMetadata60Masked {
 	obj := &OxmIdTunMetadata60Masked{
-		OxmId: NewOxmId(117116),
+		OxmId: NewOxmId(117240),
 	}
 	return obj
 }
@@ -27310,7 +27304,7 @@ func DecodeOxmIdTunMetadata61Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata61Masked() *OxmIdTunMetadata61Masked {
 	obj := &OxmIdTunMetadata61Masked{
-		OxmId: NewOxmId(117628),
+		OxmId: NewOxmId(117752),
 	}
 	return obj
 }
@@ -27388,7 +27382,7 @@ func DecodeOxmIdTunMetadata62Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata62Masked() *OxmIdTunMetadata62Masked {
 	obj := &OxmIdTunMetadata62Masked{
-		OxmId: NewOxmId(118140),
+		OxmId: NewOxmId(118264),
 	}
 	return obj
 }
@@ -27466,7 +27460,7 @@ func DecodeOxmIdTunMetadata63Masked(parent *OxmId, decoder *goloxi.Decoder) (*Ox
 
 func NewOxmIdTunMetadata63Masked() *OxmIdTunMetadata63Masked {
 	obj := &OxmIdTunMetadata63Masked{
-		OxmId: NewOxmId(118652),
+		OxmId: NewOxmId(118776),
 	}
 	return obj
 }
@@ -27505,7 +27499,7 @@ func DecodeOxmIdTunMetadata6Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata6Masked() *OxmIdTunMetadata6Masked {
 	obj := &OxmIdTunMetadata6Masked{
-		OxmId: NewOxmId(89468),
+		OxmId: NewOxmId(89592),
 	}
 	return obj
 }
@@ -27583,7 +27577,7 @@ func DecodeOxmIdTunMetadata7Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata7Masked() *OxmIdTunMetadata7Masked {
 	obj := &OxmIdTunMetadata7Masked{
-		OxmId: NewOxmId(89980),
+		OxmId: NewOxmId(90104),
 	}
 	return obj
 }
@@ -27661,7 +27655,7 @@ func DecodeOxmIdTunMetadata8Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata8Masked() *OxmIdTunMetadata8Masked {
 	obj := &OxmIdTunMetadata8Masked{
-		OxmId: NewOxmId(90492),
+		OxmId: NewOxmId(90616),
 	}
 	return obj
 }
@@ -27739,7 +27733,7 @@ func DecodeOxmIdTunMetadata9Masked(parent *OxmId, decoder *goloxi.Decoder) (*Oxm
 
 func NewOxmIdTunMetadata9Masked() *OxmIdTunMetadata9Masked {
 	obj := &OxmIdTunMetadata9Masked{
-		OxmId: NewOxmId(91004),
+		OxmId: NewOxmId(91128),
 	}
 	return obj
 }
@@ -27817,7 +27811,7 @@ func DecodeOxmIdTunSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdTunS
 
 func NewOxmIdTunSrcMasked() *OxmIdTunSrcMasked {
 	obj := &OxmIdTunSrcMasked{
-		OxmId: NewOxmId(81668),
+		OxmId: NewOxmId(81672),
 	}
 	return obj
 }
@@ -27895,7 +27889,7 @@ func DecodeOxmIdUdpDstMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdUdpD
 
 func NewOxmIdUdpDstMasked() *OxmIdUdpDstMasked {
 	obj := &OxmIdUdpDstMasked{
-		OxmId: NewOxmId(6402),
+		OxmId: NewOxmId(6404),
 	}
 	return obj
 }
@@ -27973,7 +27967,7 @@ func DecodeOxmIdUdpSrcMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdUdpS
 
 func NewOxmIdUdpSrcMasked() *OxmIdUdpSrcMasked {
 	obj := &OxmIdUdpSrcMasked{
-		OxmId: NewOxmId(5890),
+		OxmId: NewOxmId(5892),
 	}
 	return obj
 }
@@ -28051,7 +28045,7 @@ func DecodeOxmIdVlanTciMasked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdVla
 
 func NewOxmIdVlanTciMasked() *OxmIdVlanTciMasked {
 	obj := &OxmIdVlanTciMasked{
-		OxmId: NewOxmId(2306),
+		OxmId: NewOxmId(2308),
 	}
 	return obj
 }
@@ -28129,7 +28123,7 @@ func DecodeOxmIdXxreg0Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxre
 
 func NewOxmIdXxreg0Masked() *OxmIdXxreg0Masked {
 	obj := &OxmIdXxreg0Masked{
-		OxmId: NewOxmId(122640),
+		OxmId: NewOxmId(122656),
 	}
 	return obj
 }
@@ -28207,7 +28201,7 @@ func DecodeOxmIdXxreg1Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxre
 
 func NewOxmIdXxreg1Masked() *OxmIdXxreg1Masked {
 	obj := &OxmIdXxreg1Masked{
-		OxmId: NewOxmId(123152),
+		OxmId: NewOxmId(123168),
 	}
 	return obj
 }
@@ -28285,7 +28279,7 @@ func DecodeOxmIdXxreg2Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxre
 
 func NewOxmIdXxreg2Masked() *OxmIdXxreg2Masked {
 	obj := &OxmIdXxreg2Masked{
-		OxmId: NewOxmId(123664),
+		OxmId: NewOxmId(123680),
 	}
 	return obj
 }
@@ -28363,7 +28357,7 @@ func DecodeOxmIdXxreg3Masked(parent *OxmId, decoder *goloxi.Decoder) (*OxmIdXxre
 
 func NewOxmIdXxreg3Masked() *OxmIdXxreg3Masked {
 	obj := &OxmIdXxreg3Masked{
-		OxmId: NewOxmId(124176),
+		OxmId: NewOxmId(124192),
 	}
 	return obj
 }
@@ -36296,6 +36290,7 @@ func (self *QueueDescPropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Rate))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -36308,6 +36303,7 @@ func DecodeQueueDescPropMaxRate(parent *QueueDescProp, decoder *goloxi.Decoder) 
 		return nil, fmt.Errorf("QueueDescPropMaxRate packet too short: %d < 4", decoder.Length())
 	}
 	_queuedescpropmaxrate.Rate = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _queuedescpropmaxrate, nil
 }
 
@@ -36342,6 +36338,7 @@ func (self *QueueDescPropMinRate) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint16(uint16(self.Rate))
+	encoder.Write(bytes.Repeat([]byte{0}, 2))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -36354,6 +36351,7 @@ func DecodeQueueDescPropMinRate(parent *QueueDescProp, decoder *goloxi.Decoder) 
 		return nil, fmt.Errorf("QueueDescPropMinRate packet too short: %d < 4", decoder.Length())
 	}
 	_queuedescpropminrate.Rate = uint16(decoder.ReadUint16())
+	decoder.Skip(2)
 	return _queuedescpropminrate, nil
 }
 
@@ -36502,6 +36500,7 @@ func (self *QueuePropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.Rate))
+	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -36515,6 +36514,7 @@ func DecodeQueuePropMaxRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueueP
 	}
 	decoder.Skip(4)
 	_queuepropmaxrate.Rate = uint16(decoder.ReadUint16())
+	decoder.Skip(6)
 	return _queuepropmaxrate, nil
 }
 
@@ -36550,6 +36550,7 @@ func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint16(uint16(self.Rate))
+	encoder.Write(bytes.Repeat([]byte{0}, 6))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -36563,6 +36564,7 @@ func DecodeQueuePropMinRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueueP
 	}
 	decoder.Skip(4)
 	_queuepropminrate.Rate = uint16(decoder.ReadUint16())
+	decoder.Skip(6)
 	return _queuepropminrate, nil
 }
 
@@ -38949,6 +38951,7 @@ func (self *TableModPropVacancy) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint8(uint8(self.VacancyDown))
 	encoder.PutUint8(uint8(self.VacancyUp))
 	encoder.PutUint8(uint8(self.Vacancy))
+	encoder.Write(bytes.Repeat([]byte{0}, 1))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -38963,6 +38966,7 @@ func DecodeTableModPropVacancy(parent *TableModProp, decoder *goloxi.Decoder) (*
 	_tablemodpropvacancy.VacancyDown = uint8(decoder.ReadByte())
 	_tablemodpropvacancy.VacancyUp = uint8(decoder.ReadByte())
 	_tablemodpropvacancy.Vacancy = uint8(decoder.ReadByte())
+	decoder.Skip(1)
 	return _tablemodpropvacancy, nil
 }
 

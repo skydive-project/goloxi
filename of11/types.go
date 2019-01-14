@@ -1,6 +1,10 @@
 package of11
 
 import (
+	"encoding/json"
+	"fmt"
+	"net"
+
 	"github.com/skydive-project/goloxi"
 )
 
@@ -129,4 +133,21 @@ func (self *Port) Decode(decoder *goloxi.Decoder) error {
 	}
 	*self = Port(portNo)
 	return nil
+}
+
+func jsonValue(value interface{}) ([]byte, error) {
+	switch t := value.(type) {
+	case net.HardwareAddr:
+		value = t.String()
+	case net.IP:
+		value = t.String()
+	default:
+		if s, ok := t.(fmt.Stringer); ok {
+			value = s.String()
+		} else {
+			value = t
+		}
+	}
+
+	return json.Marshal(value)
 }

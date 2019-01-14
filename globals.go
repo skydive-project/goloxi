@@ -1,5 +1,7 @@
 package goloxi
 
+import "fmt"
+
 const (
 	VERSION_1_0 = 1
 	VERSION_1_1 = 2
@@ -15,6 +17,13 @@ type Serializable interface {
 
 type Deserializable interface {
 	Decode(decoder *Decoder) error
+}
+
+type Header struct {
+	Version uint8
+	Type    uint8
+	Length  uint16
+	Xid     uint32
 }
 
 type Message interface {
@@ -38,6 +47,13 @@ type IOxm interface {
 	GetOXMValue() interface{}
 }
 
+type IOxmMasked interface {
+	Serializable
+	GetOXMName() string
+	GetOXMValue() interface{}
+	GetOXMValueMask() interface{}
+}
+
 type IOxmId interface {
 	Serializable
 	GetOXMName() string
@@ -49,4 +65,27 @@ type IAction interface {
 	GetLen() uint16
 	GetActionName() string
 	GetActionFields() map[string]interface{}
+}
+
+func (self *Header) Decode(decoder *Decoder) (err error) {
+	if decoder.Length() < 8 {
+		return fmt.Errorf("Header packet too short: %d < 4", decoder.Length())
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			var ok bool
+			err, ok = r.(error)
+			if !ok {
+				err = fmt.Errorf("Error while parsing OpenFlow packet: %+v", r)
+			}
+		}
+	}()
+
+	self.Version = decoder.ReadByte()
+	self.Type = decoder.ReadByte()
+	self.Length = decoder.ReadUint16()
+	self.Xid = decoder.ReadUint32()
+
+	return nil
 }

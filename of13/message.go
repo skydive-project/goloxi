@@ -312,6 +312,7 @@ func (self *AggregateStatsReply) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint64(uint64(self.PacketCount))
 	encoder.PutUint64(uint64(self.ByteCount))
 	encoder.PutUint32(uint32(self.FlowCount))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -327,6 +328,7 @@ func DecodeAggregateStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*Ag
 	_aggregatestatsreply.PacketCount = uint64(decoder.ReadUint64())
 	_aggregatestatsreply.ByteCount = uint64(decoder.ReadUint64())
 	_aggregatestatsreply.FlowCount = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 	return _aggregatestatsreply, nil
 }
 
@@ -3941,6 +3943,7 @@ func (self *BsnGetMirroringReply) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -3953,6 +3956,7 @@ func DecodeBsnGetMirroringReply(parent *BsnHeader, decoder *goloxi.Decoder) (*Bs
 		return nil, fmt.Errorf("BsnGetMirroringReply packet too short: %d < 4", decoder.Length())
 	}
 	_bsngetmirroringreply.ReportMirrorPorts = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _bsngetmirroringreply, nil
 }
 
@@ -3987,6 +3991,7 @@ func (self *BsnGetMirroringRequest) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -3999,6 +4004,7 @@ func DecodeBsnGetMirroringRequest(parent *BsnHeader, decoder *goloxi.Decoder) (*
 		return nil, fmt.Errorf("BsnGetMirroringRequest packet too short: %d < 4", decoder.Length())
 	}
 	_bsngetmirroringrequest.ReportMirrorPorts = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _bsngetmirroringrequest, nil
 }
 
@@ -5542,6 +5548,7 @@ func (self *BsnSetMirroring) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	encoder.PutUint8(uint8(self.ReportMirrorPorts))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -5554,6 +5561,7 @@ func DecodeBsnSetMirroring(parent *BsnHeader, decoder *goloxi.Decoder) (*BsnSetM
 		return nil, fmt.Errorf("BsnSetMirroring packet too short: %d < 4", decoder.Length())
 	}
 	_bsnsetmirroring.ReportMirrorPorts = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _bsnsetmirroring, nil
 }
 
@@ -6668,6 +6676,8 @@ func (self *DescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -6675,9 +6685,10 @@ func (self *DescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*DescStatsRequest, error) {
 	_descstatsrequest := &DescStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("DescStatsRequest packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 16 {
+		return nil, fmt.Errorf("DescStatsRequest packet too short: %d < 16", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _descstatsrequest, nil
 }
 
@@ -8018,6 +8029,8 @@ func (self *GroupDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8025,9 +8038,10 @@ func (self *GroupDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeGroupDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupDescStatsRequest, error) {
 	_groupdescstatsrequest := &GroupDescStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("GroupDescStatsRequest packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 16 {
+		return nil, fmt.Errorf("GroupDescStatsRequest packet too short: %d < 16", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _groupdescstatsrequest, nil
 }
 
@@ -8207,6 +8221,8 @@ func (self *GroupFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8214,9 +8230,10 @@ func (self *GroupFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 
 func DecodeGroupFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupFeaturesStatsRequest, error) {
 	_groupfeaturesstatsrequest := &GroupFeaturesStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("GroupFeaturesStatsRequest packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 16 {
+		return nil, fmt.Errorf("GroupFeaturesStatsRequest packet too short: %d < 16", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _groupfeaturesstatsrequest, nil
 }
 
@@ -8398,6 +8415,7 @@ func (self *GroupStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint32(uint32(self.GroupId))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -8411,6 +8429,7 @@ func DecodeGroupStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*Gr
 	}
 	decoder.Skip(4)
 	_groupstatsrequest.GroupId = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 	return _groupstatsrequest, nil
 }
 
@@ -8618,6 +8637,7 @@ func (self *MeterConfigStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint32(uint32(self.MeterId))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -8631,6 +8651,7 @@ func DecodeMeterConfigStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder
 	}
 	decoder.Skip(4)
 	_meterconfigstatsrequest.MeterId = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 	return _meterconfigstatsrequest, nil
 }
 
@@ -8707,6 +8728,8 @@ func (self *MeterFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -8714,9 +8737,10 @@ func (self *MeterFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 
 func DecodeMeterFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*MeterFeaturesStatsRequest, error) {
 	_meterfeaturesstatsrequest := &MeterFeaturesStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("MeterFeaturesStatsRequest packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 16 {
+		return nil, fmt.Errorf("MeterFeaturesStatsRequest packet too short: %d < 16", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _meterfeaturesstatsrequest, nil
 }
 
@@ -8963,6 +8987,7 @@ func (self *MeterStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	encoder.PutUint32(uint32(self.MeterId))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -8976,6 +9001,7 @@ func DecodeMeterStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*Me
 	}
 	decoder.Skip(4)
 	_meterstatsrequest.MeterId = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 	return _meterstatsrequest, nil
 }
 
@@ -9305,6 +9331,7 @@ func (self *NiciraFlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 	self.OutPort.Serialize(encoder)
 	encoder.PutUint16(uint16(self.MatchLen))
 	encoder.PutUint8(uint8(self.TableId))
+	encoder.Write(bytes.Repeat([]byte{0}, 3))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -9320,6 +9347,7 @@ func DecodeNiciraFlowStatsRequest(parent *ExperimenterStatsRequest, decoder *gol
 	_niciraflowstatsrequest.OutPort.Decode(decoder)
 	_niciraflowstatsrequest.MatchLen = uint16(decoder.ReadUint16())
 	_niciraflowstatsrequest.TableId = uint8(decoder.ReadByte())
+	decoder.Skip(3)
 	return _niciraflowstatsrequest, nil
 }
 
@@ -9666,6 +9694,8 @@ func (self *PortDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -9673,9 +9703,10 @@ func (self *PortDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodePortDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*PortDescStatsRequest, error) {
 	_portdescstatsrequest := &PortDescStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("PortDescStatsRequest packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 16 {
+		return nil, fmt.Errorf("PortDescStatsRequest packet too short: %d < 16", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _portdescstatsrequest, nil
 }
 
@@ -9756,6 +9787,7 @@ func (self *PortMod) Serialize(encoder *goloxi.Encoder) error {
 	encoder.PutUint32(uint32(self.Config))
 	encoder.PutUint32(uint32(self.Mask))
 	encoder.PutUint32(uint32(self.Advertise))
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -9774,6 +9806,7 @@ func DecodePortMod(parent *Header, decoder *goloxi.Decoder) (*PortMod, error) {
 	_portmod.Config = PortConfig(decoder.ReadUint32())
 	_portmod.Mask = PortConfig(decoder.ReadUint32())
 	_portmod.Advertise = uint32(decoder.ReadUint32())
+	decoder.Skip(4)
 	return _portmod, nil
 }
 
@@ -9925,6 +9958,7 @@ func (self *PortStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 	encoder.Write(bytes.Repeat([]byte{0}, 4))
 	self.PortNo.Serialize(encoder)
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -9938,6 +9972,7 @@ func DecodePortStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*Por
 	}
 	decoder.Skip(4)
 	_portstatsrequest.PortNo.Decode(decoder)
+	decoder.Skip(4)
 	return _portstatsrequest, nil
 }
 
@@ -10110,6 +10145,7 @@ func (self *QueueGetConfigRequest) Serialize(encoder *goloxi.Encoder) error {
 	}
 
 	self.Port.Serialize(encoder)
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
 
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
@@ -10122,6 +10158,7 @@ func DecodeQueueGetConfigRequest(parent *Header, decoder *goloxi.Decoder) (*Queu
 		return nil, fmt.Errorf("QueueGetConfigRequest packet too short: %d < 8", decoder.Length())
 	}
 	_queuegetconfigrequest.Port.Decode(decoder)
+	decoder.Skip(4)
 	return _queuegetconfigrequest, nil
 }
 
@@ -10965,6 +11002,8 @@ func (self *TableStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 		return err
 	}
 
+	encoder.Write(bytes.Repeat([]byte{0}, 4))
+
 	binary.BigEndian.PutUint16(encoder.Bytes()[2:4], uint16(len(encoder.Bytes())))
 
 	return nil
@@ -10972,9 +11011,10 @@ func (self *TableStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeTableStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*TableStatsRequest, error) {
 	_tablestatsrequest := &TableStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("TableStatsRequest packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 16 {
+		return nil, fmt.Errorf("TableStatsRequest packet too short: %d < 16", decoder.Length())
 	}
+	decoder.Skip(4)
 	return _tablestatsrequest, nil
 }
 

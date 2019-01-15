@@ -124,6 +124,9 @@ func (self *InstructionApplyActions) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeInstructionApplyActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionApplyActions, error) {
 	_instructionapplyactions := &InstructionApplyActions{Instruction: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("InstructionApplyActions packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
@@ -167,8 +170,8 @@ func (self *InstructionClearActions) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeInstructionClearActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionClearActions, error) {
 	_instructionclearactions := &InstructionClearActions{Instruction: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("InstructionClearActions packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("InstructionClearActions packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	return _instructionclearactions, nil
@@ -311,6 +314,9 @@ func (self *InstructionWriteActions) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeInstructionWriteActions(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteActions, error) {
 	_instructionwriteactions := &InstructionWriteActions{Instruction: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("InstructionWriteActions packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
@@ -376,8 +382,8 @@ func (self *InstructionWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeInstructionWriteMetadata(parent *Instruction, decoder *goloxi.Decoder) (*InstructionWriteMetadata, error) {
 	_instructionwritemetadata := &InstructionWriteMetadata{Instruction: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("InstructionWriteMetadata packet too short: %d < 16", decoder.Length())
+	if decoder.Length() < 20 {
+		return nil, fmt.Errorf("InstructionWriteMetadata packet too short: %d < 20", decoder.Length())
 	}
 	decoder.Skip(4)
 	_instructionwritemetadata.Metadata = uint64(decoder.ReadUint64())

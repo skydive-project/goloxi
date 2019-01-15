@@ -17528,8 +17528,8 @@ func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueuePropMinRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMinRate, error) {
 	_queuepropminrate := &QueuePropMinRate{QueueProp: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("QueuePropMinRate packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("QueuePropMinRate packet too short: %d < 12", decoder.Length())
 	}
 	decoder.Skip(4)
 	_queuepropminrate.Rate = uint16(decoder.ReadUint16())

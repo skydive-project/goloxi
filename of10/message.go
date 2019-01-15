@@ -4343,6 +4343,9 @@ func (self *NiciraFlowMonitorReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeNiciraFlowMonitorReply(parent *NiciraStatsReply, decoder *goloxi.Decoder) (*NiciraFlowMonitorReply, error) {
 	_niciraflowmonitorreply := &NiciraFlowMonitorReply{NiciraStatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("NiciraFlowMonitorReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 4 {
@@ -4529,6 +4532,9 @@ func (self *NiciraFlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeNiciraFlowStatsReply(parent *NiciraStatsReply, decoder *goloxi.Decoder) (*NiciraFlowStatsReply, error) {
 	_niciraflowstatsreply := &NiciraFlowStatsReply{NiciraStatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("NiciraFlowStatsReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 48 {

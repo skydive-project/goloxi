@@ -31236,8 +31236,8 @@ func (self *QueuePropExperimenter) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueuePropExperimenter(parent *QueueProp, decoder *goloxi.Decoder) (IQueuePropExperimenter, error) {
 	_queuepropexperimenter := &QueuePropExperimenter{QueueProp: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("QueuePropExperimenter packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("QueuePropExperimenter packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	_queuepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
@@ -31287,8 +31287,8 @@ func (self *QueuePropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueuePropMaxRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMaxRate, error) {
 	_queuepropmaxrate := &QueuePropMaxRate{QueueProp: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("QueuePropMaxRate packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("QueuePropMaxRate packet too short: %d < 12", decoder.Length())
 	}
 	decoder.Skip(4)
 	_queuepropmaxrate.Rate = uint16(decoder.ReadUint16())
@@ -31337,8 +31337,8 @@ func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueuePropMinRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMinRate, error) {
 	_queuepropminrate := &QueuePropMinRate{QueueProp: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("QueuePropMinRate packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("QueuePropMinRate packet too short: %d < 12", decoder.Length())
 	}
 	decoder.Skip(4)
 	_queuepropminrate.Rate = uint16(decoder.ReadUint16())

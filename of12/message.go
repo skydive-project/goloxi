@@ -303,8 +303,8 @@ func (self *AggregateStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeAggregateStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*AggregateStatsReply, error) {
 	_aggregatestatsreply := &AggregateStatsReply{StatsReply: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("AggregateStatsReply packet too short: %d < 24", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("AggregateStatsReply packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	_aggregatestatsreply.PacketCount = uint64(decoder.ReadUint64())
@@ -494,8 +494,8 @@ func (self *AggregateStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeAggregateStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*AggregateStatsRequest, error) {
 	_aggregatestatsrequest := &AggregateStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 40 {
-		return nil, fmt.Errorf("AggregateStatsRequest packet too short: %d < 40", decoder.Length())
+	if decoder.Length() < 28 {
+		return nil, fmt.Errorf("AggregateStatsRequest packet too short: %d < 28", decoder.Length())
 	}
 	decoder.Skip(4)
 	_aggregatestatsrequest.TableId = uint8(decoder.ReadByte())
@@ -2065,8 +2065,8 @@ func (self *ExperimenterStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeExperimenterStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (IExperimenterStatsReply, error) {
 	_experimenterstatsreply := &ExperimenterStatsReply{StatsReply: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("ExperimenterStatsReply packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("ExperimenterStatsReply packet too short: %d < 12", decoder.Length())
 	}
 	decoder.Skip(4)
 	_experimenterstatsreply.Experimenter = uint32(decoder.ReadUint32())
@@ -2161,8 +2161,8 @@ func (self *ExperimenterStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeExperimenterStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (IExperimenterStatsRequest, error) {
 	_experimenterstatsrequest := &ExperimenterStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("ExperimenterStatsRequest packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("ExperimenterStatsRequest packet too short: %d < 12", decoder.Length())
 	}
 	decoder.Skip(4)
 	_experimenterstatsrequest.Experimenter = uint32(decoder.ReadUint32())
@@ -2493,8 +2493,8 @@ func (self *DescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*DescStatsReply, error) {
 	_descstatsreply := &DescStatsReply{StatsReply: parent}
-	if decoder.Length() < 1056 {
-		return nil, fmt.Errorf("DescStatsReply packet too short: %d < 1056", decoder.Length())
+	if decoder.Length() < 1060 {
+		return nil, fmt.Errorf("DescStatsReply packet too short: %d < 1060", decoder.Length())
 	}
 	decoder.Skip(4)
 	_descstatsreply.MfrDesc = string(bytes.Trim(decoder.Read(256), "\x00"))
@@ -2534,8 +2534,8 @@ func (self *DescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*DescStatsRequest, error) {
 	_descstatsrequest := &DescStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("DescStatsRequest packet too short: %d < 16", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("DescStatsRequest packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	return _descstatsrequest, nil
@@ -3484,6 +3484,9 @@ func (self *FlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeFlowStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*FlowStatsReply, error) {
 	_flowstatsreply := &FlowStatsReply{StatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("FlowStatsReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 56 {
@@ -3597,8 +3600,8 @@ func (self *FlowStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeFlowStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*FlowStatsRequest, error) {
 	_flowstatsrequest := &FlowStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 40 {
-		return nil, fmt.Errorf("FlowStatsRequest packet too short: %d < 40", decoder.Length())
+	if decoder.Length() < 28 {
+		return nil, fmt.Errorf("FlowStatsRequest packet too short: %d < 28", decoder.Length())
 	}
 	decoder.Skip(4)
 	_flowstatsrequest.TableId = uint8(decoder.ReadByte())
@@ -3914,6 +3917,9 @@ func (self *GroupDescStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeGroupDescStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupDescStatsReply, error) {
 	_groupdescstatsreply := &GroupDescStatsReply{StatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("GroupDescStatsReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 8 {
@@ -3957,8 +3963,8 @@ func (self *GroupDescStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeGroupDescStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupDescStatsRequest, error) {
 	_groupdescstatsrequest := &GroupDescStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("GroupDescStatsRequest packet too short: %d < 16", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("GroupDescStatsRequest packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	return _groupdescstatsrequest, nil
@@ -4103,8 +4109,8 @@ func (self *GroupFeaturesStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeGroupFeaturesStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupFeaturesStatsReply, error) {
 	_groupfeaturesstatsreply := &GroupFeaturesStatsReply{StatsReply: parent}
-	if decoder.Length() < 40 {
-		return nil, fmt.Errorf("GroupFeaturesStatsReply packet too short: %d < 40", decoder.Length())
+	if decoder.Length() < 44 {
+		return nil, fmt.Errorf("GroupFeaturesStatsReply packet too short: %d < 44", decoder.Length())
 	}
 	decoder.Skip(4)
 	_groupfeaturesstatsreply.Types = uint32(decoder.ReadUint32())
@@ -4149,8 +4155,8 @@ func (self *GroupFeaturesStatsRequest) Serialize(encoder *goloxi.Encoder) error 
 
 func DecodeGroupFeaturesStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupFeaturesStatsRequest, error) {
 	_groupfeaturesstatsrequest := &GroupFeaturesStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("GroupFeaturesStatsRequest packet too short: %d < 16", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("GroupFeaturesStatsRequest packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	return _groupfeaturesstatsrequest, nil
@@ -4288,6 +4294,9 @@ func (self *GroupStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeGroupStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*GroupStatsReply, error) {
 	_groupstatsreply := &GroupStatsReply{StatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("GroupStatsReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 32 {
@@ -4343,8 +4352,8 @@ func (self *GroupStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeGroupStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*GroupStatsRequest, error) {
 	_groupstatsrequest := &GroupStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("GroupStatsRequest packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("GroupStatsRequest packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	_groupstatsrequest.GroupId = uint32(decoder.ReadUint32())
@@ -4524,6 +4533,9 @@ func (self *NiciraFlowMonitorReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeNiciraFlowMonitorReply(parent *NiciraStatsReply, decoder *goloxi.Decoder) (*NiciraFlowMonitorReply, error) {
 	_niciraflowmonitorreply := &NiciraFlowMonitorReply{NiciraStatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("NiciraFlowMonitorReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 4 {
@@ -4696,6 +4708,9 @@ func (self *NiciraFlowStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeNiciraFlowStatsReply(parent *NiciraStatsReply, decoder *goloxi.Decoder) (*NiciraFlowStatsReply, error) {
 	_niciraflowstatsreply := &NiciraFlowStatsReply{NiciraStatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("NiciraFlowStatsReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 48 {
@@ -5237,6 +5252,9 @@ func (self *PortStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodePortStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*PortStatsReply, error) {
 	_portstatsreply := &PortStatsReply{StatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("PortStatsReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 104 {
@@ -5292,8 +5310,8 @@ func (self *PortStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodePortStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*PortStatsRequest, error) {
 	_portstatsrequest := &PortStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("PortStatsRequest packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("PortStatsRequest packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	_portstatsrequest.PortNo.Decode(decoder)
@@ -5589,6 +5607,9 @@ func (self *QueueStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueueStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*QueueStatsReply, error) {
 	_queuestatsreply := &QueueStatsReply{StatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("QueueStatsReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 32 {
@@ -5654,8 +5675,8 @@ func (self *QueueStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueueStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*QueueStatsRequest, error) {
 	_queuestatsrequest := &QueueStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("QueueStatsRequest packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("QueueStatsRequest packet too short: %d < 12", decoder.Length())
 	}
 	decoder.Skip(4)
 	_queuestatsrequest.PortNo.Decode(decoder)
@@ -6119,6 +6140,9 @@ func (self *TableStatsReply) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeTableStatsReply(parent *StatsReply, decoder *goloxi.Decoder) (*TableStatsReply, error) {
 	_tablestatsreply := &TableStatsReply{StatsReply: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("TableStatsReply packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 128 {
@@ -6162,8 +6186,8 @@ func (self *TableStatsRequest) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeTableStatsRequest(parent *StatsRequest, decoder *goloxi.Decoder) (*TableStatsRequest, error) {
 	_tablestatsrequest := &TableStatsRequest{StatsRequest: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("TableStatsRequest packet too short: %d < 16", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("TableStatsRequest packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	return _tablestatsrequest, nil

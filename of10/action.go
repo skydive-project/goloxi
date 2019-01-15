@@ -727,8 +727,8 @@ func (self *ActionNiciraDecTtl) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNiciraDecTtl(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNiciraDecTtl, error) {
 	_actionniciradecttl := &ActionNiciraDecTtl{ActionNicira: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("ActionNiciraDecTtl packet too short: %d < 16", decoder.Length())
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("ActionNiciraDecTtl packet too short: %d < 6", decoder.Length())
 	}
 	decoder.Skip(2)
 	decoder.Skip(4)
@@ -1261,6 +1261,9 @@ func (self *ActionNxClone) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxClone(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxClone, error) {
 	_actionnxclone := &ActionNxClone{ActionNicira: parent}
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("ActionNxClone packet too short: %d < 6", decoder.Length())
+	}
 	decoder.Skip(6)
 
 	for decoder.Length() >= 8 {
@@ -1516,6 +1519,9 @@ func (self *ActionNxController2) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxController2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxController2, error) {
 	_actionnxcontroller2 := &ActionNxController2{ActionNicira: parent}
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("ActionNxController2 packet too short: %d < 6", decoder.Length())
+	}
 	decoder.Skip(6)
 
 	for decoder.Length() >= 2 {
@@ -2025,8 +2031,8 @@ func (self *ActionNxDecap) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxDecap(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxDecap, error) {
 	_actionnxdecap := &ActionNxDecap{ActionNicira: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("ActionNxDecap packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("ActionNxDecap packet too short: %d < 6", decoder.Length())
 	}
 	decoder.Skip(2)
 	_actionnxdecap.NewPktType = uint32(decoder.ReadUint32())
@@ -2832,8 +2838,8 @@ func (self *ActionNxNat) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxNat(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxNat, error) {
 	_actionnxnat := &ActionNxNat{ActionNicira: parent}
-	if decoder.Length() < 4 {
-		return nil, fmt.Errorf("ActionNxNat packet too short: %d < 4", decoder.Length())
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("ActionNxNat packet too short: %d < 6", decoder.Length())
 	}
 	decoder.Skip(2)
 	_actionnxnat.Flags = uint16(decoder.ReadUint16())
@@ -3482,8 +3488,8 @@ func (self *ActionNxRegLoad2) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxRegLoad2(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxRegLoad2, error) {
 	_actionnxregload2 := &ActionNxRegLoad2{ActionNicira: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("ActionNxRegLoad2 packet too short: %d < 16", decoder.Length())
+	if decoder.Length() < 6 {
+		return nil, fmt.Errorf("ActionNxRegLoad2 packet too short: %d < 6", decoder.Length())
 	}
 	decoder.Skip(6)
 	return _actionnxregload2, nil
@@ -4827,8 +4833,8 @@ func (self *ActionNxWriteMetadata) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionNxWriteMetadata(parent *ActionNicira, decoder *goloxi.Decoder) (*ActionNxWriteMetadata, error) {
 	_actionnxwritemetadata := &ActionNxWriteMetadata{ActionNicira: parent}
-	if decoder.Length() < 16 {
-		return nil, fmt.Errorf("ActionNxWriteMetadata packet too short: %d < 16", decoder.Length())
+	if decoder.Length() < 22 {
+		return nil, fmt.Errorf("ActionNxWriteMetadata packet too short: %d < 22", decoder.Length())
 	}
 	decoder.Skip(6)
 	_actionnxwritemetadata.Metadata = uint64(decoder.ReadUint64())
@@ -5618,8 +5624,8 @@ func (self *ActionStripVlan) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeActionStripVlan(parent *Action, decoder *goloxi.Decoder) (*ActionStripVlan, error) {
 	_actionstripvlan := &ActionStripVlan{Action: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("ActionStripVlan packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("ActionStripVlan packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	return _actionstripvlan, nil

@@ -12598,8 +12598,8 @@ func (self *BundleFeaturesPropTime) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeBundleFeaturesPropTime(parent *BundleFeaturesProp, decoder *goloxi.Decoder) (*BundleFeaturesPropTime, error) {
 	_bundlefeaturesproptime := &BundleFeaturesPropTime{BundleFeaturesProp: parent}
-	if decoder.Length() < 64 {
-		return nil, fmt.Errorf("BundleFeaturesPropTime packet too short: %d < 64", decoder.Length())
+	if decoder.Length() < 68 {
+		return nil, fmt.Errorf("BundleFeaturesPropTime packet too short: %d < 68", decoder.Length())
 	}
 	decoder.Skip(4)
 	if obj, err := DecodeTime(decoder); err != nil {
@@ -12792,6 +12792,9 @@ func (self *BundlePropTime) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeBundlePropTime(parent *BundleProp, decoder *goloxi.Decoder) (*BundlePropTime, error) {
 	_bundleproptime := &BundlePropTime{BundleProp: parent}
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("BundlePropTime packet too short: %d < 4", decoder.Length())
+	}
 	decoder.Skip(4)
 
 	for decoder.Length() >= 16 {
@@ -34606,8 +34609,8 @@ func (self *PortDescPropEthernet) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodePortDescPropEthernet(parent *PortDescProp, decoder *goloxi.Decoder) (*PortDescPropEthernet, error) {
 	_portdescpropethernet := &PortDescPropEthernet{PortDescProp: parent}
-	if decoder.Length() < 24 {
-		return nil, fmt.Errorf("PortDescPropEthernet packet too short: %d < 24", decoder.Length())
+	if decoder.Length() < 28 {
+		return nil, fmt.Errorf("PortDescPropEthernet packet too short: %d < 28", decoder.Length())
 	}
 	decoder.Skip(4)
 	_portdescpropethernet.Curr = uint32(decoder.ReadUint32())
@@ -34814,8 +34817,8 @@ func (self *PortDescPropOptical) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodePortDescPropOptical(parent *PortDescProp, decoder *goloxi.Decoder) (*PortDescPropOptical, error) {
 	_portdescpropoptical := &PortDescPropOptical{PortDescProp: parent}
-	if decoder.Length() < 36 {
-		return nil, fmt.Errorf("PortDescPropOptical packet too short: %d < 36", decoder.Length())
+	if decoder.Length() < 40 {
+		return nil, fmt.Errorf("PortDescPropOptical packet too short: %d < 40", decoder.Length())
 	}
 	decoder.Skip(4)
 	_portdescpropoptical.Supported = uint32(decoder.ReadUint32())
@@ -35430,8 +35433,8 @@ func (self *PortStatsPropEthernet) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodePortStatsPropEthernet(parent *PortStatsProp, decoder *goloxi.Decoder) (*PortStatsPropEthernet, error) {
 	_portstatspropethernet := &PortStatsPropEthernet{PortStatsProp: parent}
-	if decoder.Length() < 32 {
-		return nil, fmt.Errorf("PortStatsPropEthernet packet too short: %d < 32", decoder.Length())
+	if decoder.Length() < 36 {
+		return nil, fmt.Errorf("PortStatsPropEthernet packet too short: %d < 36", decoder.Length())
 	}
 	decoder.Skip(4)
 	_portstatspropethernet.RxFrameErr = uint64(decoder.ReadUint64())
@@ -35764,8 +35767,8 @@ func (self *PortStatsPropExperimenterIntel) Serialize(encoder *goloxi.Encoder) e
 
 func DecodePortStatsPropExperimenterIntel(parent *PortStatsPropExperimenter, decoder *goloxi.Decoder) (*PortStatsPropExperimenterIntel, error) {
 	_portstatspropexperimenterintel := &PortStatsPropExperimenterIntel{PortStatsPropExperimenter: parent}
-	if decoder.Length() < 168 {
-		return nil, fmt.Errorf("PortStatsPropExperimenterIntel packet too short: %d < 168", decoder.Length())
+	if decoder.Length() < 172 {
+		return nil, fmt.Errorf("PortStatsPropExperimenterIntel packet too short: %d < 172", decoder.Length())
 	}
 	decoder.Skip(4)
 	_portstatspropexperimenterintel.Rx1To64Packets = uint64(decoder.ReadUint64())
@@ -35942,8 +35945,8 @@ func (self *PortStatsPropOptical) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodePortStatsPropOptical(parent *PortStatsProp, decoder *goloxi.Decoder) (*PortStatsPropOptical, error) {
 	_portstatspropoptical := &PortStatsPropOptical{PortStatsProp: parent}
-	if decoder.Length() < 36 {
-		return nil, fmt.Errorf("PortStatsPropOptical packet too short: %d < 36", decoder.Length())
+	if decoder.Length() < 40 {
+		return nil, fmt.Errorf("PortStatsPropOptical packet too short: %d < 40", decoder.Length())
 	}
 	decoder.Skip(4)
 	_portstatspropoptical.Flags = uint32(decoder.ReadUint32())
@@ -36458,8 +36461,8 @@ func (self *QueuePropExperimenter) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueuePropExperimenter(parent *QueueProp, decoder *goloxi.Decoder) (IQueuePropExperimenter, error) {
 	_queuepropexperimenter := &QueuePropExperimenter{QueueProp: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("QueuePropExperimenter packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 4 {
+		return nil, fmt.Errorf("QueuePropExperimenter packet too short: %d < 4", decoder.Length())
 	}
 	decoder.Skip(4)
 	_queuepropexperimenter.Experimenter = uint32(decoder.ReadUint32())
@@ -36509,8 +36512,8 @@ func (self *QueuePropMaxRate) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueuePropMaxRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMaxRate, error) {
 	_queuepropmaxrate := &QueuePropMaxRate{QueueProp: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("QueuePropMaxRate packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("QueuePropMaxRate packet too short: %d < 12", decoder.Length())
 	}
 	decoder.Skip(4)
 	_queuepropmaxrate.Rate = uint16(decoder.ReadUint16())
@@ -36559,8 +36562,8 @@ func (self *QueuePropMinRate) Serialize(encoder *goloxi.Encoder) error {
 
 func DecodeQueuePropMinRate(parent *QueueProp, decoder *goloxi.Decoder) (*QueuePropMinRate, error) {
 	_queuepropminrate := &QueuePropMinRate{QueueProp: parent}
-	if decoder.Length() < 8 {
-		return nil, fmt.Errorf("QueuePropMinRate packet too short: %d < 8", decoder.Length())
+	if decoder.Length() < 12 {
+		return nil, fmt.Errorf("QueuePropMinRate packet too short: %d < 12", decoder.Length())
 	}
 	decoder.Skip(4)
 	_queuepropminrate.Rate = uint16(decoder.ReadUint16())

@@ -1505,14 +1505,14 @@ func (self ControllerRole) MarshalJSON() ([]byte, error) {
 
 const (
 	// Identifiers from group ofp_cs_states
-	CsNew         = 0  // OFP_CS_NEW
-	CsEstablished = 1  // OFP_CS_ESTABLISHED
-	CsRelated     = 2  // OFP_CS_RELATED
-	CsReplyDir    = 4  // OFP_CS_REPLY_DIR
-	CsInvalid     = 8  // OFP_CS_INVALID
-	CsTracked     = 16 // OFP_CS_TRACKED
-	CsSrcNat      = 32 // OFP_CS_SRC_NAT
-	CsDstNat      = 64 // OFP_CS_DST_NAT
+	CsNew         = 1   // OFP_CS_NEW
+	CsEstablished = 2   // OFP_CS_ESTABLISHED
+	CsRelated     = 4   // OFP_CS_RELATED
+	CsReplyDir    = 8   // OFP_CS_REPLY_DIR
+	CsInvalid     = 16  // OFP_CS_INVALID
+	CsTracked     = 32  // OFP_CS_TRACKED
+	CsSrcNat      = 64  // OFP_CS_SRC_NAT
+	CsDstNat      = 128 // OFP_CS_DST_NAT
 )
 
 type CsStates uint32

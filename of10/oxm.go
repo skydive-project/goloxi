@@ -20115,13 +20115,13 @@ func (self *OxmConnTrackingState) MarshalJSON() ([]byte, error) {
 type OxmConnTrackingStateMasked struct {
 	*Oxm
 	Value     CsStates
-	ValueMask uint32
+	ValueMask CsStates
 }
 
 type IOxmConnTrackingStateMasked interface {
 	goloxi.IOxm
 	GetValue() CsStates
-	GetValueMask() uint32
+	GetValueMask() CsStates
 }
 
 func (self *OxmConnTrackingStateMasked) GetValue() CsStates {
@@ -20132,11 +20132,11 @@ func (self *OxmConnTrackingStateMasked) SetValue(v CsStates) {
 	self.Value = v
 }
 
-func (self *OxmConnTrackingStateMasked) GetValueMask() uint32 {
+func (self *OxmConnTrackingStateMasked) GetValueMask() CsStates {
 	return self.ValueMask
 }
 
-func (self *OxmConnTrackingStateMasked) SetValueMask(v uint32) {
+func (self *OxmConnTrackingStateMasked) SetValueMask(v CsStates) {
 	self.ValueMask = v
 }
 
@@ -20157,7 +20157,7 @@ func DecodeOxmConnTrackingStateMasked(parent *Oxm, decoder *goloxi.Decoder) (*Ox
 		return nil, fmt.Errorf("OxmConnTrackingStateMasked packet too short: %d < 8", decoder.Length())
 	}
 	_oxmconntrackingstatemasked.Value = CsStates(decoder.ReadUint32())
-	_oxmconntrackingstatemasked.ValueMask = uint32(decoder.ReadUint32())
+	_oxmconntrackingstatemasked.ValueMask = CsStates(decoder.ReadUint32())
 	return _oxmconntrackingstatemasked, nil
 }
 
